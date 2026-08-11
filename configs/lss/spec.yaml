@@ -1,0 +1,51 @@
+# Scientific decisions frozen before any measurement (leaf fragment).
+# These values become `freeze/spec_freeze_v1.json`, which later stages verify
+# by hash before they run.
+
+steering_spec:
+  # csasr.models.hooks.apply_steering computes h + alpha * scale * gain * d.
+  # `scale` was `projection_std` in E4 but was absent from plan v1's freeze, so
+  # rho=1 was not reproducible from the artifact and energy-matched controls
+  # would not have been matched.
+  scale: projection_std
+  scale_estimator: csasr.directions.accumulators.DirectionAccumulator.projection_std
+  norm_preserve: true
+  # models.hooks.DecoderSteeringHook divides alpha by sqrt(num_layers). At the
+  # post-cross-attention site that implicit second scale is disabled so that
+  # rho=1 means the same intervention strength at the encoder and the decoder.
+  decoder_depth_rescale: false
+  encoder_candidate_layers: [15, 23, 27, 31]
+  decoder_candidate_layers: [8, 16, 24, 31]
+  strengths: [0.5, 1.0, 2.0]
+
+sites:
+  encoder_tensor: encoder_block_output
+  # The proposal defines the decoder intervention on the residual AFTER
+  # cross-attention. The pre-existing DecoderSteeringHook acts on the whole
+  # block output (after the FFN), which is a different representation.
+  decoder_tensor: decoder_post_cross_attn_residual
+  reconstruction_tolerance: 0.001
+  verify_layer: 1
+
+alignment_prereg:
+  consensus_estimator_primary: both_edges
+  alternates_allowed_if: >-
+    the primary estimator passes external accuracy but fails span coverage
+  tolerance_selection_rule: >-
+    the largest swept tolerance whose accepted spans still satisfy human median
+    <= 100 ms and p90 <= 200 ms
+  erosion_rule: >-
+    erosion_ms = min(measured median human absolute boundary error,
+    erosion_fraction * span duration); union padding = measured p90
+  calibration:
+    fit_on: synthetic
+    validate_on: human_audit
+    primary_arm: calibrated
+  synthetic_sets:
+    dev_purpose: synthetic_dev
+    gate_purpose: synthetic_gate
+    source_disjoint: true
+  # Stage l1a may never apply a correction fitted to inter-aligner agreement: a
+  # constant offset would lift 200 ms acceptance from 0.482 to 0.685 (EN 0.167
+  # to 0.438) without any external evidence that it is right.
+  corrections_require_external_truth: true

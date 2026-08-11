@@ -1,0 +1,61 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+stage: e1
+alignment:
+  source: whisper_crossattn_dtw
+  exclude_boundary_ms: 100
+  audit_boundaries: 100
+  # Deliberately NOT raised with decoding.batch_size. E1 is the one stage that
+  # requests output_attentions=True, which materialises every layer's attention
+  # map: ~2.9 GB per utterance (32 layers x 20 heads x 1500 x 1500, bf16). A
+  # batch of 8 already holds ~23 GB; 16 would risk the card.
+  batch_size: 8
+  # Align the full eligible training set once. E1 derives the pilot alignment
+  # from this table, avoiding a second pass over the pilot audio.
+  subsets: [dev_select, dev_confirm, train_direction_full]
+  median_filter_width: 7
+  language_token: zh          # forced-decoding prefix language for alignment
+  max_text_tokens: 220
+
+  # Synthetic ground truth: monolingual ZH and EN utterances concatenated at a
+  # known instant. The only component of the no-human protocol that yields real
+  # boundary error rather than a consistency proxy.
+  synthetic:
+    num_pairs: 100
+    gap_ms: 0.0               # 0 = hard splice; raise to model inter-turn pauses
+    # Corpus clips carry ~0.7 s of silence at each edge. Splicing them untrimmed
+    # puts the "true" boundary in the middle of ~1.3 s of silence, roughly 0.9 s
+    # away from the instant speech actually switches language -- which is what the
+    # aligner marks. Job 31473 measured exactly that artefact. Trim first so the
+    # constructed instant is a real speech transition.
+    trim_silence: true
+    trim_pad_ms: 20.0
+    # Whisper sees 30 s. A longer pair simply hides its own boundary, and the
+    # resulting error measures the window rather than the aligner.
+    max_duration_sec: 28.0
+
+  # Independent CTC forced aligner used to audit the DTW boundaries. DTW stays
+  # the source of truth for E2/E4/E5 spans, but production E1 cannot pass unless
+  # this independent audit runs and agrees at the configured thresholds.
+  ctc:
+    enabled: true
+    model_id: /mnt/data/tungnx/models/mms-fa
+    num_utterances: 200
+
+  # Blocking production E1 gate. Do not weaken these values to continue the
+  # workflow; fix alignment/auditing first.
+  gate:
+    require_units_validate: true
+    require_human_audit: true
+    human_audit_items: 100
+    min_human_usable_fraction: 0.90
+    min_synthetic_boundaries: 100
+    min_synthetic_within_100ms: 0.90   # measured against known concatenation points
+    max_abs_synthetic_bias_ms: 50      # systematic early/late drift in ms
+    min_agreement_within_100ms: 0.90   # zh/median-7 vs en/median-3 configurations
+    require_independent_alignment_audit: true
+    independent_audit_items: 200
+    min_independent_within_100ms: 0.90
+    max_independent_median_abs_ms: 100
+    max_absorption_rate: 0.20          # spans whose edge sits inside silence
+    silence_sample_utterances: 200

@@ -1,0 +1,18 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+stage: e2
+directions:
+  encoder_layers: [15, 23, 27, 31]
+  variants:
+    - within_utterance_correct_only
+    - within_utterance_all_valid
+    - global_centroid_correct_only
+  seeds: [42, 43, 44, 45, 46]
+  random_seeds: [142, 143, 144, 145, 146]
+  min_en_frames: 4
+  min_zh_frames: 4
+  batch_size: 8
+  subset: train_direction_pilot     # switch to train_direction_full for confirmation
+  build_decoder: true
+  decoder_max_utterances: 2000
+  checkpoint_every: 200

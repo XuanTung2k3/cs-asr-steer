@@ -1,0 +1,16 @@
+include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml, lss/align.yaml]
+
+stage: l1a_diag
+
+# This stage produces diagnostics only. It may not declare that alignment is
+# good or bad; that verdict belongs to Gate A in l1b_valid. Its gate therefore
+# checks that every diagnostic ran and reproduces, and reports the coverage
+# numbers without thresholding them.
+gate:
+  require_nat5h_reproduction: true
+  min_ladder_rungs: 3   # unit_edge_canonical, unit_edge_first_only, switch_midpoint_legacy
+  min_pred_start_offsets: 2
+  require_overlap_inventory: true
+  require_mapping_failure_causes: 1.0
+  require_uroman_probe: true
+  terminal_qwen_states: [ok, blocked, completed_no_go]

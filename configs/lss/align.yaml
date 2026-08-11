@@ -1,0 +1,72 @@
+# Alignment: aligner families, diagnostics and consensus (leaf fragment).
+alignment:
+  families: [existing_ctc, whisper_dtw, qwen_forced_aligner]
+  batch_size: 4
+  language_token: zh
+  median_filter_width: 7
+  max_text_tokens: 220
+  canonical_sample_rate: 16000
+
+  ctc:
+    enabled: true
+    model_id: /mnt/data/tungnx/models/mms-fa
+    frame_sec: 0.02
+
+  qwen:
+    model_id: Qwen/Qwen3-ForcedAligner-0.6B
+    local_model_dir: /mnt/data/tungnx/cs-asr-steer/models/Qwen3-ForcedAligner-0.6B
+    dtype: bfloat16
+    probe_utterances: 8
+    probe_deadline_minutes: 30
+    on_failure: blocked          # never fails the stage; consensus falls back to 2-of-2
+
+  # Whisper-DTW places boundaries ~490 ms early against synthetic ground truth
+  # while agreeing with itself to 10 ms across configurations: the signature of
+  # an indexing convention, not an acoustic failure. data/alignment.py:200 takes
+  # the query that PREDICTS token k as token k's row, where OpenAI's reference
+  # implementation slices at the query AT token k. One decoder step is 220-400 ms
+  # here, so the sweep below is the cheapest test of that hypothesis.
+  dtw_variants:
+    pred_start_offsets: [-1, 0]
+    median_filter_widths: [7]
+
+  repair:
+    adjacent_overlap:
+      enabled: true
+      policy: truncate_earlier
+      same_language: report_only   # the existing resolver only handles cross-language pairs
+      benign_overlap_frames: 1     # sec_to_frames floors starts and ceils ends
+
+  consensus:
+    estimator: both_edges
+    # `iou` and `center_duration` were listed here but changed nothing: `build`
+    # only ever ran `both_edges`, so output labelled with an alternate would
+    # have described an ablation that never happened. Removed rather than left
+    # decorative; re-add them together with an implementation in
+    # `csasr.lss.align.consensus_prod.build`, which now refuses unknown names.
+    alternates: []
+    min_families: 2
+    tolerance_sweep_ms: [50, 100, 200, 300]
+    primary_tolerance_ms: null     # chosen by the preregistered rule in spec.yaml
+    bins: {high: 50, medium: 100, low: 200}
+    # NOT inherited from configs/nat5h.yaml, whose erosion of 250 ms with a
+    # 200 ms minimum interior requires spans >= 700 ms. Measured consensus
+    # medians are 225 ms (EN) and 140 ms (ZH): that setting rejects every span.
+    erosion_ms: null               # derived from the measured human error
+    erosion_fraction: 0.25
+    min_safe_interior_ms: 60
+    union_padding_ms: null         # derived from the measured p90 human error
+
+  diagnostics:
+    sample_utterances: 300
+    sample_role: D-construct
+    reproduce_nat5h_smoke: true
+    ladder: [legacy_e1, nat5h_unit_index, canonical_coordinates, unit_edge_comparison]
+    nat5h_candidates: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2/metrics/n1_canonical_candidates.parquet
+    nat5h_consensus: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2/metrics/n1_consensus_spans.parquet
+    nat5h_aligner_summary: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2/metrics/n1_aligner_summary.parquet
+    nat5h_recorded_gate:
+      consensus_spans: 222
+      consensus_en_spans: 16
+      consensus_utterances: 20
+    reproduction_tolerance: 0.02

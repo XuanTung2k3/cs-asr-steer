@@ -1,0 +1,113 @@
+# Base configuration for the CS-ASR local language activation steering study (P0, E1-E5).
+# Paths are resolved for this cluster: code in /home/tungnx/cs-asr-steer,
+# all generated data under /mnt/data/tungnx/cs-asr-steer.
+
+experiment:
+  name: csasr_e1_e5
+  seed: 42
+  # Production-v2 is deliberately separate from earlier diagnostic artifacts.
+  # Never point a smoke run at this directory.
+  output_root: /mnt/data/tungnx/cs-asr-steer/artifacts_v2
+  prohibit_test_split: true
+  normalization_version: v1
+
+defaults:
+  data: cs_dialogue
+  model: whisper_large_v3
+
+decoding:
+  task: transcribe
+  language: null           # B0_AUTO uses null (auto), B1_ZH overrides with "zh"
+  temperature: 0.0
+  do_sample: false
+  num_beams: 1
+  return_dict_in_generate: true
+  output_scores: true
+  # Whisper's generate() switches to the segment/long-form return path when
+  # timestamps are requested (returns a plain dict, and per-step scores move
+  # inside the segments), which breaks avg_logprob and changes the decoding
+  # path. Nothing in P0/E1-E5 consumes Whisper's own timestamps: E1 derives
+  # boundaries from cross-attention DTW under a `<|notimestamps|>` prefix.
+  return_timestamps: false
+  max_new_tokens: 200
+  # NOTE: this value is baked into every prediction cache's provenance metadata,
+  # so changing it later invalidates all cached decodes and forces a full re-run.
+  # It therefore has to be chosen before the first production job, not tuned after.
+  # 16 is conservative on an 80 GB H100: eager encoder self-attention costs
+  # ~90 MB per utterance per layer at 1500 frames, so a batch of 16 holds ~1.4 GB
+  # of transient attention per layer against a 3.1 GB bf16 model. decode_manifest
+  # also falls back to one-at-a-time decoding on OOM, so a bad guess degrades
+  # rather than crashes. Do not raise further without reading runs/*/gpu_stats.json.
+  batch_size: 16
+
+alignment:
+  source: whisper_crossattn_dtw
+  exclude_boundary_ms: 100
+  audit_boundaries: 100
+  min_unit_dur_sec: 0.02
+  batch_size: 8
+
+directions:
+  encoder_layers: [15, 23, 27, 31]
+  variants:
+    - within_utterance_correct_only
+    - within_utterance_all_valid
+    - global_centroid_correct_only
+  seeds: [42, 43, 44, 45, 46]
+  random_seeds: [142, 143, 144, 145, 146]
+  min_en_frames: 4
+  min_zh_frames: 4
+  batch_size: 8
+  decoder_layers: all
+
+e3:
+  pass_auroc: 0.80
+  conditional_auroc: 0.70
+  max_seed_std: 0.03
+  keep_top_layers: 2
+  max_utterances: 1000
+  bootstrap_resamples: 1000
+
+e4:
+  pilot_wrong: 100
+  pilot_correct: 100
+  confirm_wrong: 300
+  confirm_correct: 300
+  encoder_alphas_pilot: [0.5, 1.0, 2.0]
+  encoder_alphas_refine: [0.25, 0.5, 0.75, 1.0, 1.5, 2.0]
+  decoder_alphas: [0.05, 0.1, 0.2, 0.4, 0.8]
+  norm_preserve: true
+  primary_mask: tapered
+  shoulder_ms: 100
+  min_relative_pier_gain: 0.05
+  min_correction_corruption_ratio: 2.0
+  pilot_max_mer_degradation_abs: 0.005
+  confirm_max_mer_degradation_abs: 0.002
+  pilot_max_zh_cer_degradation_abs: 0.005
+  confirm_max_zh_cer_degradation_abs: 0.002
+  max_outside_region_edit_rate: 0.05
+  bootstrap_resamples: 10000
+  bootstrap_seed: 342
+
+e5:
+  expand_ms: [50, 100, 200]
+  jitter_ms: [50, 100, 200]
+  jitter_seeds: [242, 243, 244, 245, 246]
+  min_retained_gain_at_100ms: 0.70
+  min_exact_pier_gain_abs: 0.005
+  masks:
+    - EXACT_HARD
+    - EXACT_TAPER
+    - EXPAND_50
+    - EXPAND_100
+    - EXPAND_200
+    - JITTER_50
+    - JITTER_100
+    - JITTER_200
+    - BOUNDARY_ONLY
+    - WHOLE_WORD_PLUS_CONTEXT
+
+runtime:
+  device: cuda
+  log_level: INFO
+  cache_dir: /mnt/data/tungnx/cs-asr-steer/cache

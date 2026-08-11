@@ -1,0 +1,26 @@
+# CS-Dialogue as laid out on this machine.
+# Only the `short_wav` release is present; `long_wav` (with TextGrids) was not
+# downloaded, therefore E1 cannot use dataset-provided word boundaries.
+
+data:
+  dataset: cs_dialogue
+  root: /mnt/data/tungnx/CS-Dialogue/data
+  audio_root: /mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted
+  index_root: /mnt/data/tungnx/CS-Dialogue/data/index/short_wav
+  information_index: /mnt/data/tungnx/CS-Dialogue/data/index/total_information/Information_Index.txt
+  manifest: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/manifests/cs_dialogue.parquet
+  splits: [train, dev, test]
+  sample_rate: 16000
+
+  # internal development sub-split (speaker level)
+  dev_select_speakers: 20
+  split_seed: 42
+
+  # direction-construction subsets
+  direction_pilot_utterances: 5000
+  direction_pilot_seed: 42
+  bootstrap_seeds: [42, 43, 44, 45, 46]
+
+  # hashing 21 GB of audio on every manifest build is wasteful: hash the file
+  # size plus a 64 KB prefix, which still detects any re-encode or truncation
+  audio_hash_bytes: 65536

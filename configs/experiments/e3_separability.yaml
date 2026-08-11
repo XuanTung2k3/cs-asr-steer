@@ -1,0 +1,14 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+stage: e3
+e3:
+  subset: dev_select
+  max_utterances: 1000
+  pass_auroc: 0.80
+  conditional_auroc: 0.70
+  max_seed_std: 0.03
+  keep_top_layers: 2
+  bootstrap_resamples: 1000
+  bootstrap_seed: 342
+  include_boundary_report: true
+  batch_size: 8

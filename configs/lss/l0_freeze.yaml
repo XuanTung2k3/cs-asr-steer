@@ -1,0 +1,29 @@
+include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml]
+
+stage: l0_freeze
+
+pilot:
+  utterances: 200
+  role: D-construct
+  decode_batch_sizes: [8, 16]
+  teacher_forced_batch_size: 8
+  encoder_layers: [27]
+  decoder_layers: [16]
+  aligner_families: [existing_ctc, whisper_dtw]
+  aligner_utterances: 20
+  measure_storage: true
+
+gate:
+  min_pilot_utterances: 200
+  max_abs_smd: 0.25
+  max_categorical_tv: 0.15
+  min_poi_index_agreement: 1.0
+  poi_index_sample: 500
+  max_decoder_site_rel_err: 0.001
+  # E1 aligned ~10.8k utterances in 6h10m at batch 8 with attention enabled;
+  # l1a+l1b need ~3k utterances across three families
+  max_projected_l1_alignment_gpu_hours: 12.0
+  # measured 6.0-6.5 utt/s free decoding, so ~3.5k second passes is ~10 minutes;
+  # this is a 30x guard against a wrong measurement, not a budget
+  max_projected_l7a_label_gpu_hours: 6.0
+  max_projected_storage_gb: 500.0

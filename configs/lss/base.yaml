@@ -1,0 +1,59 @@
+# Localize-Select-Steer: shared settings for every LSS stage.
+#
+# The LSS pipeline writes to its own artifacts root and reads the frozen P0
+# outputs (manifest, splits, baseline predictions) from the E1-E5 root, which it
+# never modifies.
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+experiment:
+  name: lss
+  spec_version: v1
+  seed: 42
+  output_root: /mnt/data/tungnx/cs-asr-steer/artifacts_lss
+  # read-only inputs
+  source_artifacts_root: /mnt/data/tungnx/cs-asr-steer/artifacts_v2
+  nat5h_artifacts_root: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2
+  prohibit_test_split: true
+  normalization_version: v1
+  spec_freeze_path: freeze/spec_freeze_v1.json
+  environment_lock: environment.lock.txt
+
+data:
+  # frozen P0 artifacts consumed as inputs
+  primary_baseline: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/baselines/primary_baseline.json
+  baseline_predictions_dir: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/baselines/B0_AUTO
+  poi_tables_dir: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/manifests
+
+statistics:
+  # conversation_id and speaker_id are 1:1 in CS-Dialogue (140/140, 20/20,
+  # 10/10, 30/30), so a conversation block bootstrap is also speaker-clustered
+  cluster_key: conversation_id
+  bootstrap_resamples: 10000
+  bootstrap_seed: 342
+  ci: 0.95
+
+# Every source of randomness in the pipeline. csasr.lss.seeds refuses any
+# purpose that is not listed here, so a new random draw cannot enter unrecorded.
+seeds:
+  role_assignment: 20260810
+  role_draws: 20000
+  pilot_sample: 101
+  synthetic_dev: 201          # used to CHOOSE an aligner configuration
+  synthetic_gate: 202         # used to JUDGE it; must stay disjoint from dev
+  audit_sample: 303
+  audit_blinding: 313
+  audit_perturb: 323
+  jitter: [242, 243, 244, 245, 246]
+  bootstrap: 342
+  direction_subsample: [42, 43, 44, 45, 46]
+  permutation_null: [542, 543, 544, 545, 546]
+  localizer_init: [1, 2, 3]
+  minibatch_order: 777
+  lora: 888
+  selector: 999
+  calibration_folds: 1234
+
+runtime:
+  device: cuda
+  log_level: INFO
+  stop_file: /mnt/data/tungnx/cs-asr-steer/artifacts_lss/REQUEST_STOP

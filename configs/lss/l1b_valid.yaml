@@ -1,0 +1,9 @@
+include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml, lss/align.yaml, lss/audit.yaml]
+
+stage: l1b_valid
+
+# Gate A lives here. Thresholds are in lss/audit.yaml; the grouping (mechanical /
+# external / jitter / coverage / reporting) decides which pre-registered failure
+# response applies, and only a coverage-group failure is a valid negative rather
+# than a defect.
+roles_to_label: [D-construct, loc-train, util-train, router-calib, D-dev-select, D-dev-confirm]

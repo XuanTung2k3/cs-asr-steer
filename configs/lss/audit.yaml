@@ -1,0 +1,99 @@
+# Gate-A evidence: synthetic ground truth, human audit, jitter (leaf fragment).
+# Thresholds live here rather than in code so the gate is data, and so the
+# pre-decided failure responses are written down before any number is seen.
+
+synthetic:
+  num_pairs_dev: 100
+  num_pairs_gate: 100
+  gap_ms: 0.0
+  trim_silence: true
+  trim_pad_ms: 20.0
+  max_duration_sec: 28.0
+  source_role: D-construct
+  conventions: [unit_edge_canonical, midpoint_legacy]
+
+audit:
+  n_en: 100
+  n_zh: 100
+  context_sec: 1.5
+  duplicate_fraction: 0.10
+  perturbed_fraction: 0.10
+  perturb_ms: 250.0
+  strata: [language, confidence_bin, duration_tercile]
+  min_annotators: 2
+  overlap_items: 60
+  require_corrected_times: 120
+  pool_roles: [D-construct]
+  clip_format: wav
+  render_figures: true
+
+jitter:
+  offsets_ms: [50, 100]
+  independent_edges: true
+
+gate_a:
+  # M - mechanical: is there a well-formed second opinion at all
+  min_valid_families: 2            # counted by independence class, so two
+                                   # variants of one estimator are still one
+  min_family_valid_unit_coverage: 0.95
+  min_unit_coverage: 0.95          # proposal 4.1: coverage >= 0.95
+  max_nonmonotonic_rate: 0.01      # proposal 4.1: invalid/nonmonotonic <= 0.01
+  # X - external accuracy; these are the ones that are never weakened.
+  #
+  # Two kinds of evidence live here and they are NOT interchangeable.
+  # `cross_aligner_*` is measured between two independent aligners on natural
+  # speech: it is estimator disagreement, and a shared bias makes both aligners
+  # agree while both are wrong. `synthetic_*` and `human_*` are absolute error,
+  # because the boundary is known by construction or was annotated. The
+  # proposal's 100/200/30 ms thresholds are error thresholds; they are applied
+  # unchanged to the error quantities, and the disagreement quantities carry
+  # their own limits at the same numbers because a disagreement larger than the
+  # tolerated error cannot be consistent with both aligners being accurate.
+  max_cross_aligner_boundary_disagreement_ms: 100.0
+  max_cross_aligner_boundary_disagreement_p90_ms: 200.0
+  max_cross_aligner_en_zh_diff_ms: 30.0
+  min_synthetic_boundaries: 100
+  min_synthetic_within_100ms: 0.90
+  max_synthetic_abs_bias_ms: 50.0
+  min_human_units: 200
+  min_human_units_per_language: 100
+  min_human_units_with_times: 120
+  min_human_usable_fraction: 0.90
+  max_human_median_abs_error_ms: 100.0
+  max_human_p90_abs_error_ms: 200.0
+  max_human_en_zh_median_diff_ms: 30.0
+  min_inter_annotator_alpha: 0.67
+  min_decoy_detection_rate: 0.80
+  max_calibration_offset_inconsistency_ms: 50.0
+  # J - jitter stability (proposal 4.1 requires BOTH +/-50 and +/-100 ms).
+  # The 100 ms limits are unchanged; the 50 ms ones are new and are set to the
+  # same numbers, which is the weaker requirement at the smaller perturbation.
+  min_jitter_mask_iou_50ms: 0.60
+  max_jitter_cross_language_contamination_50ms: 0.05
+  min_jitter_safe_interior_survival_50ms: 0.90
+  min_jitter_mask_iou_100ms: 0.60
+  max_jitter_cross_language_contamination_100ms: 0.05
+  min_jitter_safe_interior_survival_100ms: 0.90
+  # C - coverage, as absolute counts: a rate threshold above what the data can
+  # deliver turns a gate into a schedule bomb, and weakening it is forbidden
+  min_construct_bilingual_utterances: 500
+  min_loc_train_en_spans: 1000
+  min_dev_select_targets: 300
+  min_dev_confirm_targets: 150
+
+failure_response:
+  external_fails_on_high_bin: stop_and_repair
+  external_fails_on_medium_bin: restrict_to_high_bin
+  coverage_fails:
+    - long_span_subset
+    - calibrated_arm
+    - alternate_estimator
+    - fallback_manuscript
+  qwen_blocked: proceed_with_two_families
+  # Blocked reasons are not failures: they name evidence that does not exist
+  # yet. Each has one response and none of them is "use a different metric".
+  blocked_missing_synthetic_calibration: implement_synthetic_scoring_or_manual_mode
+  blocked_insufficient_independent_aligners: repair_whisper_dtw_or_enable_qwen
+  blocked_no_candidate_alignments: run_the_aligner_sweep
+  blocked_tainted_inputs: rerun_prerequisites_without_force_prereq
+  blocked_missing_manual_verdicts: annotate_the_audit_pack

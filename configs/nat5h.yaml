@@ -1,0 +1,105 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+experiment:
+  name: natural_consensus_5h
+  seed: 42
+  output_root: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2
+  exploratory: true
+  max_wall_minutes: 300
+  summary_reserve_minutes: 30
+  normalization_version: v1
+  prohibit_test_split: true
+  production_artifacts_root: /mnt/data/tungnx/cs-asr-steer/artifacts_v2
+  smoke_artifacts_root: /mnt/data/tungnx/cs-asr-steer/artifacts_smoke
+
+data:
+  dataset: cs_dialogue
+  train_candidate_utterances: 500
+  dev_candidate_utterances: 300
+  max_candidate_duration_sec: 18.0
+  use_dev_confirm: false
+  use_test: false
+  one_poi_per_utterance: true
+  train_manifest: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/manifests/train.parquet
+  dev_select_manifest: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/manifests/dev_select.parquet
+  baseline_dev_select: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/baselines/B0_AUTO/dev_select.parquet
+  primary_baseline_metadata: /mnt/data/tungnx/cs-asr-steer/artifacts_v2/baselines/primary_baseline.json
+
+alignment:
+  canonical_sample_rate: 16000
+  batch_size: 4
+  language_token: zh
+  n1_max_duration_sec: 18.0
+  median_filter_width: 7
+  max_text_tokens: 220
+  candidate_aligners:
+    - whisper_dtw
+    - existing_ctc
+    - qwen3_forced_aligner
+  consensus_min_aligners: 2
+  max_start_disagreement_ms: 200
+  max_end_disagreement_ms: 200
+  min_unit_coverage: 0.95
+  max_zero_duration_rate: 0.05
+  schema_version: nat5h_alignment_v2
+  n1_gate:
+    min_valid_families: 2
+    min_consensus_utterances: 10
+    min_consensus_spans: 50
+    min_consensus_en_spans: 20
+    min_consensus_zh_spans: 20
+  safe_interior_erosion_ms: 250
+  min_safe_interior_ms: 200
+  steering_union_padding_ms: 100
+  taper_ms: 100
+  ctc:
+    enabled: true
+    model_id: /mnt/data/tungnx/models/mms-fa
+    frame_sec: 0.02
+
+qwen_aligner:
+  model_id: Qwen/Qwen3-ForcedAligner-0.6B
+  local_model_dir: /mnt/data/tungnx/cs-asr-steer/models/Qwen3-ForcedAligner-0.6B
+  dtype: bfloat16
+  device: cuda:0
+  lock_timeout_seconds: 7200
+  run_during_align_only: false
+
+model_cache:
+  hf_home: /mnt/data/tungnx/cs-asr-steer/model_cache/huggingface
+  hf_hub_cache: /mnt/data/tungnx/cs-asr-steer/model_cache/huggingface/hub
+  torch_home: /mnt/data/tungnx/cs-asr-steer/model_cache/torch
+
+direction:
+  layers: [15, 23, 27, 31]
+  seeds: [42, 43]
+  random_seeds: [142]
+  min_cross_seed_cosine: 0.85
+  batch_size: 4
+  min_en_frames: 4
+  min_zh_frames: 4
+  checkpoint_every: 50
+
+availability:
+  min_auroc: 0.80
+  select_one_layer: true
+  batch_size: 4
+
+steering:
+  alpha_select: [0.5, 1.0]
+  select_wrong: 20
+  select_correct: 20
+  check_wrong: 50
+  check_correct: 50
+  norm_preserve: true
+  run_wrong_sign: true
+  run_random_direction: true
+  run_random_location: true
+  run_global_encoder: true
+  run_decoder_all_layers: false
+  batch_size: 4
+
+runtime:
+  device: cuda
+  log_level: INFO
+  stop_file: /mnt/data/tungnx/cs-asr-steer/artifacts_nat5h_r2/REQUEST_STOP

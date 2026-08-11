@@ -1,0 +1,41 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+stage: e4
+e4:
+  pilot_wrong: 100
+  pilot_correct: 100
+  confirm_wrong: 300
+  confirm_correct: 300
+  min_confirm_wrong: 300
+  encoder_alphas_pilot: [0.5, 1.0, 2.0]
+  encoder_alphas_refine: [0.25, 0.5, 0.75, 1.0, 1.5, 2.0]
+  decoder_alphas: [0.05, 0.1, 0.2, 0.4, 0.8]
+  norm_preserve: true
+  primary_mask: EXACT_TAPER
+  shoulder_ms: 100
+  direction_variant: within_utterance_correct_only
+  direction_seed: 42
+  random_seeds: [142, 143, 144, 145, 146]
+  systems:
+    - ENC-LOCAL-1L
+    - ENC-GLOBAL-1L
+    - ENC-WRONG-1L
+    - ENC-RAND-1L
+    - DEC-ALL-GLOBAL
+    # Additional to the guide's section 40 list. Primary direction and identical
+    # mask width, applied at a random disjoint location in the same utterance.
+    # Under the no-human alignment protocol this is the strongest available
+    # evidence that the spans are correct, measured on the task itself.
+    # Reported and analysed, but NOT part of the section 45 gate.
+    - ENC-RANDLOC-1L
+  randloc_min_gap_frames: 0
+  min_relative_pier_gain: 0.05
+  min_correction_corruption_ratio: 2.0
+  pilot_max_mer_degradation_abs: 0.005
+  confirm_max_mer_degradation_abs: 0.002
+  pilot_max_zh_cer_degradation_abs: 0.005
+  confirm_max_zh_cer_degradation_abs: 0.002
+  max_outside_region_edit_rate: 0.05
+  bootstrap_resamples: 10000
+  bootstrap_seed: 342
+  batch_size: 8

@@ -1,0 +1,27 @@
+include: [base.yaml, data/cs_dialogue.yaml, model/whisper_large_v3.yaml]
+
+stage: e5
+e5:
+  subset: dev_confirm
+  masks:
+    - EXACT_HARD
+    - EXACT_TAPER
+    - EXPAND_50
+    - EXPAND_100
+    - EXPAND_200
+    - JITTER_50
+    - JITTER_100
+    - JITTER_200
+    - BOUNDARY_ONLY
+    - WHOLE_WORD_PLUS_CONTEXT
+  expand_ms: [50, 100, 200]
+  jitter_ms: [50, 100, 200]
+  jitter_seeds: [242, 243, 244, 245, 246]
+  shoulder_ms: 100
+  boundary_only_ms: 100
+  min_retained_gain_at_100ms: 0.70
+  min_exact_pier_gain_abs: 0.005
+  bootstrap_resamples: 10000
+  bootstrap_seed: 342
+  batch_size: 8
+  plot_examples: 10

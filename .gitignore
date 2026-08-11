@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Experiment outputs. Artifacts live under /mnt/data/tungnx/cs-asr-steer and are
+# reproduced by the pipeline, not versioned: they are large, machine-specific,
+# and their provenance is recorded in their own manifests.
+artifacts*/
+logs/
+runs/
+*.parquet
+*.wav
+
+# written by `cs_asr_lss.sh preflight`; machine-specific
+environment.lock.txt
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/

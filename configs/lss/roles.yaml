@@ -1,0 +1,38 @@
+# Data-role construction (leaf fragment; included by stage configs).
+#
+# 140 training conversations are split four ways. router-calib holds 20 rather
+# than plan v1's 10 because ten conversations cannot support isotonic
+# calibration, threshold selection, and a 95% gate comparison at once; it is
+# split again so calibration and threshold selection never share conversations.
+roles:
+  version: v1
+  train_conversation_targets:
+    D-construct: 60
+    loc-train: 35
+    util-train: 25
+    router-calib: 20
+  router_calib_split:
+    calib-prob: 10
+    calib-thresh: 10
+  passthrough:
+    D-dev-select: dev_select
+    D-dev-confirm: dev_confirm
+    D-test: test
+  balance:
+    # Sorted-identifier slicing can preserve collection order, device, topic or
+    # chronology; conversations are assigned by seeded rerandomization instead.
+    continuous: [hours, utterances, cs_utterances, cs_rate, embedded_en_units, mean_duration_sec]
+    categorical: [gender, device, region]
+    distributional: [topics]
+    # `region` has 28 levels across 140 conversations, so a 20-conversation role
+    # cannot represent it: the best of 4000 random draws still gives TV = 0.21.
+    # It is optimized and reported, but only the two-level covariates are gated.
+    gated_categorical: [gender, device]
+    max_abs_smd: 0.25
+    max_categorical_tv: 0.15
+    draws: 20000
+  derived_views:
+    router-all: [loc-train, util-train, router-calib]
+    # the two data-matching arms the LoRA comparison needs
+    full-method-data: [D-construct, loc-train, util-train]
+    lora-router-matched: [loc-train, util-train]

@@ -141,6 +141,110 @@ def repair_adjacent_overlaps(candidates: pd.DataFrame,
     return out, report
 
 
+#: Overlap causes, most specific first. `shared_source_token` is the one that
+#: matters: it is not an alignment error at all.
+OVERLAP_CAUSES = ("shared_source_token", "frame_grid_artifact", "partial_overlap")
+
+
+def attribute_overlaps(candidates: pd.DataFrame, *, sample_rate: int = 16000,
+                       frame_sec: float = 0.02,
+                       family: str = "whisper_dtw") -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Why a family's adjacent spans overlap, distinguished by their geometry.
+
+    The finding this exists to record, measured on job 38573's 88,246 Whisper-DTW
+    candidates over 1,800 utterances: **15,112 rows (17.1%) are flagged
+    `adjacent_overlap`, all of them Mandarin, and in 100.0% of them the two spans
+    are byte-identical** -- same start, same end. The overlap equals the unit's own
+    duration exactly (mean 391.747 ms on both), which is only possible if the two
+    reference units were assigned the same token span.
+
+    That is exactly what happens: Whisper's BPE emits one token for several Han
+    characters ("他们"), `data.alignment.align_batch` maps a unit to every token
+    whose character range it intersects, and both characters therefore inherit the
+    same `tok_start`/`tok_end`. There is no sub-token resolution to recover, so
+    Whisper-DTW *cannot* place an independent boundary between them.
+
+    Which is why nothing here repairs it. Truncating the earlier span would invent
+    a boundary inside one token from no acoustic evidence, and it would buy exactly
+    the coverage number the 0.95 threshold exists to measure. The honest reading is
+    that these units have no second opinion from this family, which is what the
+    invalid flag already says.
+    """
+    empty = {"family": family, "overlaps": 0, "causes": {},
+             "identical_span_fraction": float("nan"),
+             "cross_language_fraction": float("nan"),
+             "note": "no overlapping spans"}
+    if candidates is None or not len(candidates):
+        return pd.DataFrame(), empty
+    frame = candidates[candidates["aligner_family"].astype(str) == str(family)]
+    frame = frame[(frame["start_sample"].astype(float) >= 0)
+                  & (frame["end_sample"].astype(float)
+                     > frame["start_sample"].astype(float))]
+    if not len(frame):
+        return pd.DataFrame(), empty
+
+    frame = frame.sort_values(["utterance_id", "reference_unit_index"])
+    grouped = frame.groupby("utterance_id", sort=False)
+    previous_end = grouped["end_sample"].shift(1)
+    previous_start = grouped["start_sample"].shift(1)
+    previous_index = grouped["reference_unit_index"].shift(1)
+    previous_text = grouped["reference_text"].shift(1) \
+        if "reference_text" in frame.columns else previous_index
+    previous_language = grouped["reference_language"].shift(1) \
+        if "reference_language" in frame.columns else previous_index
+
+    overlap = previous_end.astype(float) - frame["start_sample"].astype(float)
+    mask = overlap > 0
+    if not bool(mask.any()):
+        return pd.DataFrame(), empty
+
+    rows = frame[mask].copy()
+    rows["previous_unit_index"] = previous_index[mask]
+    rows["previous_reference_text"] = previous_text[mask]
+    rows["previous_language"] = previous_language[mask]
+    rows["overlap_ms"] = overlap[mask] / sample_rate * 1000.0
+    rows["duration_ms"] = ((rows["end_sample"].astype(float)
+                            - rows["start_sample"].astype(float))
+                           / sample_rate * 1000.0)
+    rows["identical_span"] = (
+        np.isclose(previous_end[mask].astype(float),
+                   rows["end_sample"].astype(float))
+        & np.isclose(previous_start[mask].astype(float),
+                     rows["start_sample"].astype(float)))
+    rows["cross_language"] = (rows["previous_language"].astype(str)
+                              != rows["reference_language"].astype(str))
+    frame_ms = frame_sec * 1000.0
+    rows["cause"] = np.where(
+        rows["identical_span"], "shared_source_token",
+        np.where(rows["overlap_ms"] <= frame_ms + 1e-9, "frame_grid_artifact",
+                 "partial_overlap"))
+
+    keep = ["utterance_id", "reference_unit_index", "previous_unit_index",
+            "reference_text", "previous_reference_text", "reference_language",
+            "previous_language", "overlap_ms", "duration_ms", "identical_span",
+            "cross_language", "cause"]
+    table = rows[[c for c in keep if c in rows.columns]].reset_index(drop=True)
+    report = {
+        "family": family,
+        "overlaps": int(len(table)),
+        "candidates": int(len(frame)),
+        "overlap_rate": float(len(table) / len(frame)),
+        "causes": {str(k): int(v) for k, v in table["cause"].value_counts().items()},
+        "identical_span_fraction": float(table["identical_span"].mean()),
+        "cross_language_fraction": float(table["cross_language"].mean()),
+        "median_overlap_ms": float(table["overlap_ms"].median()),
+        "by_language": {str(k): int(v) for k, v in
+                        table["reference_language"].value_counts().items()}
+        if "reference_language" in table else {},
+        "note": ("`shared_source_token` means two reference units were assigned "
+                 "the same Whisper token span, so this aligner has no sub-token "
+                 "resolution for them. It is not repairable by truncation: that "
+                 "would invent a boundary inside one token to buy the coverage "
+                 "number the threshold exists to measure."),
+    }
+    return table, report
+
+
 def repair_delta_report(before: pd.DataFrame, after: pd.DataFrame) -> dict[str, Any]:
     """Validity before and after repair, per family and language."""
     def summarize(frame: pd.DataFrame) -> dict[str, float]:

@@ -22,6 +22,12 @@ ALIGNER_VARIANT_ORDER = [
     "whisper_dtw/zh_median7",
     "qwen_forced_aligner/Chinese",
     "qwen_forced_aligner/English",
+    # The decoder-query convention selected by the L1a development sweep. Only
+    # ever appended, never reordered: `_order_index` returns a position in this
+    # list, so inserting would silently change which variant represents a family
+    # in every recorded artifact. `whisper_dtw/zh_median7` remains the label for
+    # the historical pred_start_offset of -1.
+    "whisper_dtw/zh_median7_pred0",
 ]
 
 REQUIRED_CANDIDATE_COLUMNS = [

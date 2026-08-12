@@ -17,6 +17,9 @@ Three distinctions this file is careful about.
   own code surfaces as a defect instead of hiding behind a missing dependency.
 * **Partial output is quarantined.** Any candidate table from a run that did not
   complete is moved aside rather than left where the cache would reuse it.
+* **One language variant, chosen deliberately.** The adapter requires a
+  `language` and labels its output with it, so the probe must pick. See
+  `PROBE_LANGUAGE` for the measurement that says one variant is all there is.
 """
 from __future__ import annotations
 
@@ -42,6 +45,34 @@ INFRASTRUCTURE_ERRORS = (
     TimeoutError, ImportError, ModuleNotFoundError, FileNotFoundError,
     OSError, MemoryError, NotImplementedError,
 )
+
+#: The one language variant this probe runs, and why it is one and not two.
+#:
+#: `Qwen3ForcedAlignerAdapter.run` takes a *required* `language` and tags its
+#: output `qwen_forced_aligner/{language}`, so "which language" is a decision
+#: the probe has to make rather than inherit. In qwen_asr 0.0.6 the argument
+#: only selects a tokenizer: `Qwen3ForceAlignProcessor.encode_timestamp`
+#: lowercases it, branches to a Japanese or a Korean tokenizer, and sends
+#: everything else -- Chinese and English alike -- through
+#: `tokenize_space_lang`. `align()` uses it nowhere else. Measured on this
+#: machine, both names return the identical token list for the same
+#: code-switched transcript:
+#:
+#:     encode_timestamp("我们 用 machine learning 来 做", "Chinese")
+#:     encode_timestamp("我们 用 machine learning 来 做", "English")
+#:       -> ['我', '们', '用', 'machine', 'learning', '来', '做']
+#:
+#: A second variant would therefore be a bit-identical duplicate at twice the
+#: GPU cost, not a second opinion -- and `nat5h.consensus` would discard it
+#: anyway, since `_family_representatives` allows one vote per *family* and
+#: `ALIGNER_VARIANT_ORDER` ranks Chinese first. Running only that variant makes
+#: the probe's table and the consensus representative agree by construction.
+#:
+#: This is a claim about a pinned dependency, so every result records
+#: `package_version`: that field is what says the decision was made under
+#: qwen_asr 0.0.6, and `probe_qwen` blocks rather than guesses if the
+#: checkpoint stops declaring the language it was frozen on.
+PROBE_LANGUAGE = "Chinese"
 
 
 @dataclass
@@ -115,6 +146,35 @@ class _Deadline:
         except (ValueError, AttributeError):
             pass
         return False
+
+
+#: Env var naming a substitute adapter class as `module:QualName`.
+#:
+#: The production path is `probe_qwen_subprocess`, which re-enters this module
+#: in a *fresh interpreter*; a `monkeypatch` in the parent cannot reach it, so
+#: for a long time nothing exercised the child, the result round-trip or
+#: `publish_attempt` at all -- which is how a call that did not match
+#: `Qwen3ForcedAlignerAdapter.run`'s signature reached the cluster instead of a
+#: test. This is the seam that lets a test drive the real subprocess with a stub
+#: adapter. Nothing in the pipeline sets it, and the default is the real class.
+ADAPTER_ENV_VAR = "CSASR_QWEN_ADAPTER_CLASS"
+
+
+def _adapter_class() -> Any:
+    """The adapter class to probe: the real one unless a test substitutes it."""
+    spec = os.environ.get(ADAPTER_ENV_VAR)
+    if not spec:
+        from ...nat5h.aligners import Qwen3ForcedAlignerAdapter
+
+        return Qwen3ForcedAlignerAdapter
+    import importlib
+
+    module_name, _, qual_name = spec.partition(":")
+    if not module_name or not qual_name:
+        raise ValueError(f"{ADAPTER_ENV_VAR} must be 'module:QualName', got {spec!r}")
+    log.warning("using a substituted Qwen adapter from %s; this is a test seam "
+                "and must never appear in a production run", spec)
+    return getattr(importlib.import_module(module_name), qual_name)
 
 
 def _release_gpu(adapter: Any) -> None:
@@ -260,7 +320,7 @@ def probe_qwen(cfg: dict, manifest: pd.DataFrame, geometry, identity, *,
     adapter = None
     try:
         with _Deadline(deadline_seconds):
-            from ...nat5h.aligners import Qwen3ForcedAlignerAdapter
+            adapter_class = _adapter_class()
 
             adapter_cfg = dict(cfg)
             adapter_cfg["qwen_aligner"] = {
@@ -270,13 +330,39 @@ def probe_qwen(cfg: dict, manifest: pd.DataFrame, geometry, identity, *,
                 "dtype": qcfg.get("dtype", "bfloat16"),
                 "device": (cfg.get("model") or {}).get("device", "cuda"),
             }
-            adapter = Qwen3ForcedAlignerAdapter(adapter_cfg)
+            adapter = adapter_class(adapter_cfg)
             adapter.load()
+            package_version = getattr(adapter, "package_version", None)
             n = int(qcfg.get("probe_utterances", 8))
             sample = manifest.head(n)
-            table = adapter.run(sample, geometry=geometry, identity=identity)
+
+            # The frozen variant must still be one the checkpoint declares. If
+            # it is not, the capability changed under us and the honest answer
+            # is `blocked` -- not a run against a language the model does not
+            # claim, whose output would be labelled as if it did.
+            language = str(qcfg.get("probe_language", PROBE_LANGUAGE))
+            declared = list(adapter.supported_languages() or [])
+            if language.lower() not in {str(x).lower() for x in declared}:
+                return QwenProbeResult(
+                    state="blocked",
+                    reason=(f"probe_language_unsupported: {language} is not in "
+                            f"{declared}"),
+                    model_dir=model_dir, package_version=package_version,
+                    elapsed_seconds=time.monotonic() - started,
+                    deadline_seconds=float(deadline_seconds),
+                    language_diagnostics=[{"language": language,
+                                           "declared": declared,
+                                           "ran": False}],
+                    quarantined=_sweep_stale_cache(out_dir))
+
+            table = adapter.run(sample, geometry=geometry, language=language,
+                                identity=identity)
             rows = int(len(table)) if table is not None else 0
             valid = int(table["is_valid"].sum()) if rows and "is_valid" in table else 0
+            diagnostics = [{"language": language, "declared": declared,
+                            "ran": True, "rows": rows, "valid_rows": valid,
+                            "variants": sorted(table["aligner_variant"].unique().tolist())
+                            if rows and "aligner_variant" in table else []}]
             elapsed = time.monotonic() - started
             if rows and out_dir is not None:
                 # A probe that discards its output proves the aligner works and
@@ -292,13 +378,17 @@ def probe_qwen(cfg: dict, manifest: pd.DataFrame, geometry, identity, *,
                 return QwenProbeResult(
                     state="completed_no_go",
                     reason="adapter_returned_no_candidates",
-                    model_dir=model_dir, elapsed_seconds=elapsed,
+                    model_dir=model_dir, package_version=package_version,
+                    elapsed_seconds=elapsed,
                     deadline_seconds=float(deadline_seconds),
+                    language_diagnostics=diagnostics,
                     quarantined=_sweep_stale_cache(out_dir))
             return QwenProbeResult(state="ok", model_dir=model_dir,
+                                   package_version=package_version,
                                    candidate_rows=rows, valid_rows=valid,
                                    elapsed_seconds=elapsed,
-                                   deadline_seconds=float(deadline_seconds))
+                                   deadline_seconds=float(deadline_seconds),
+                                   language_diagnostics=diagnostics)
     except BaseException as exc:
         elapsed = time.monotonic() - started
         timed_out = isinstance(exc, TimeoutError)

@@ -18,6 +18,7 @@ from csasr.lss.specfreeze import (
     assert_matches,
     build,
     canonical_payload,
+    compare,
     load,
     seal,
     supersede,
@@ -176,3 +177,32 @@ def test_every_allowlisted_feature_declares_its_three_contract_fields():
         assert isinstance(f.inference_available, bool) and f.inference_available
         assert f.missing_policy in {"nan_plus_flag", "zero", "forbidden"}
         assert f.candidate_mapping
+
+
+def test_a_rerun_with_unchanged_decisions_reports_no_drift(tmp_path):
+    """Measured pilot numbers must not read as a changed decision.
+
+    L0 seals the freeze with the pilot's throughput and the site-check residual
+    inside it. Those are wall-clock and floating-point measurements: rerunning
+    the identical configuration produces different values, and if `compare`
+    counted them the stage could never pass twice -- which is exactly the
+    situation after a transient failure.
+    """
+    import copy
+
+    first = _spec(extra={"pilot": {"projected": {"decode_rate_utt_per_s": 5.819},
+                                   "decoder_site_check": {"rel_err": 0.00167}}})
+    second = _spec(extra={"pilot": {"projected": {"decode_rate_utt_per_s": 5.744},
+                                    "decoder_site_check": {"rel_err": 0.00181}}})
+    drift = compare(first, second)
+    assert drift["identical"], drift["differing_sections"]
+
+    # a real decision change must still be caught
+    moved = copy.deepcopy(CFG)
+    moved["steering_spec"] = {**moved["steering_spec"], "norm_preserve": False}
+    changed = compare(first, build(
+        moved, roles={"assignment_hash": "abc"},
+        sites={"decoder": {"tensor": "decoder_post_cross_attn_residual"}},
+        model_assets={"config.json": "sha"}, environment={"lock_sha256": "envsha"}))
+    assert not changed["identical"]
+    assert "steering_scale" in changed["differing_sections"]

@@ -247,8 +247,15 @@ def verify(path: str | Path, *, expected_sha: str | None = None,
 
 #: keys whose value legitimately differs between two builds of the same
 #: decisions: they record *when* and *where* a build ran, not *what* it decided.
+#:
+#: `pilot` is here because it holds measured throughput and the site-check
+#: residual -- wall-clock rates and floating-point noise that never reproduce
+#: bit-for-bit. Comparing them would report drift on every rerun of an
+#: unchanged configuration, which makes L0 impossible to re-run after a
+#: transient failure. The numbers stay recorded in the sealed freeze as
+#: provenance; they are simply not evidence that a decision changed.
 VOLATILE_KEYS = frozenset({"sha256", "created_at", "sealed_at", "run_dir",
-                           "slurm_job_id", "supersedes", "environment"})
+                           "slurm_job_id", "supersedes", "environment", "pilot"})
 
 
 def _comparable(payload: Mapping[str, Any]) -> dict[str, Any]:

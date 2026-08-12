@@ -63,6 +63,36 @@ BLOCKED_EMPTY_CONSENSUS = "blocked_empty_consensus"
 BLOCKED_MISSING_JITTER = "blocked_missing_jitter_evidence"
 BLOCKED_MISSING_LANGUAGE = "blocked_missing_language_subset"
 BLOCKED_EXPLORATORY_CANDIDATES = "blocked_exploratory_candidate_source"
+#: The selection never ran, or its frozen record is not authentic. Distinct from
+#: BLOCKED_MISSING_SYNTHETIC, which used to cover this too: once synthetic scores
+#: exist, a run reporting "missing synthetic calibration" while a valid score
+#: table sits on disk tells a reader the opposite of what is wrong.
+BLOCKED_UNSELECTED_TOLERANCE = "blocked_unselected_operating_tolerance"
+
+#: The selection *ran* on development boundaries and no swept tolerance met the
+#: preregistered accuracy. Deliberately not `completed_no_go`: with no selected
+#: operating point every downstream number describes a configuration nobody
+#: chose, so the gate has not measured the experiment it would be reporting. The
+#: measured evidence is in `metrics/l1b_tolerance_selection.parquet` and in the
+#: frozen operating point, so nothing is hidden by blocking.
+BLOCKED_NO_QUALIFYING_TOLERANCE = "blocked_no_qualifying_operating_tolerance"
+
+#: A family qualifies on natural speech but has no synthetic-gate calibration.
+#: Without this, CTC+Qwen could qualify naturally while the accuracy evidence
+#: came from CTC+Whisper -- two independence classes on each side, a different
+#: pair on each side, and an absolute-error claim about aligners that did not
+#: produce the spans.
+BLOCKED_UNCALIBRATED_FAMILIES = "blocked_uncalibrated_natural_families"
+
+#: L1a's authenticated synthetic development set is missing, so no configuration
+#: can be selected from development-only evidence.
+BLOCKED_MISSING_DEVELOPMENT_SET = "blocked_missing_development_set"
+
+#: The gate set could only be built from source audio an earlier generation
+#: already exposed. Missing evidence, not a defect: a set whose results have been
+#: read cannot confirm a configuration chosen after reading them, so there is
+#: nothing here to judge with (`csasr.lss.align.exposure`).
+BLOCKED_EXPOSED_GATE_SET = "blocked_exposed_gate_set"
 
 #: substrings no natural-speech criterion may contain. Natural speech supports
 #: statements about *disagreement between estimators*, never about error.
@@ -336,6 +366,47 @@ def agreement_for_qualifying_pair(candidates: pd.DataFrame,
                                    family_b=families[1], **kwargs)
 
 
+def family_correspondence(qualifying: Sequence[str],
+                          synthetically_scored: Sequence[str], *,
+                          min_families: int = 2) -> dict[str, Any]:
+    """Do the families that qualify on natural speech have accuracy evidence?
+
+    Gate A used to check two things separately: that two independence classes
+    qualified on natural speech, and that two independence classes were scored on
+    the synthetic gate set. Nothing required them to be the *same* two. So
+    CTC+Qwen could supply the spans and the cross-aligner disagreement while
+    CTC+Whisper supplied the absolute error -- a false-pass path in which the
+    accuracy claim is about an aligner that produced none of the spans being
+    claimed about.
+
+    The corresponding pair is what both statements must be made on: the
+    intersection of the two class sets, and it must itself reach `min_families`.
+    A synthetic score from a family that was *rejected* on natural speech cannot
+    stand in for a qualifying family's missing calibration, because it is not the
+    aligner whose boundaries the gate is about.
+    """
+    natural = {INDEPENDENCE_CLASS.get(str(f), str(f)): str(f) for f in qualifying}
+    scored = {INDEPENDENCE_CLASS.get(str(f), str(f)): str(f)
+              for f in synthetically_scored}
+    corresponding = sorted(set(natural) & set(scored))
+    uncalibrated = sorted(set(natural) - set(scored))
+    return {
+        "natural_qualifying_classes": sorted(natural),
+        "synthetically_scored_classes": sorted(scored),
+        "corresponding_classes": corresponding,
+        "corresponding_families": [natural[c] for c in corresponding],
+        "uncalibrated_natural_classes": uncalibrated,
+        "uncalibrated_natural_families": [natural[c] for c in uncalibrated],
+        # scored but rejected naturally: recorded so a reader can see that the
+        # evidence exists and why it cannot be used
+        "scored_but_not_qualifying_classes": sorted(set(scored) - set(natural)),
+        "n_corresponding": len(corresponding),
+        "min_families": int(min_families),
+        "sufficient": bool(len(corresponding) >= int(min_families)
+                           and not uncalibrated),
+    }
+
+
 # --------------------------------------------------------------------------
 # synthetic exact-boundary calibration
 # --------------------------------------------------------------------------
@@ -343,19 +414,19 @@ def agreement_for_qualifying_pair(candidates: pd.DataFrame,
 SYNTHETIC_SCORES_FILE = "metrics/l1b_synthetic_scores.parquet"
 
 MISSING_SYNTHETIC_DESCRIPTION = (
-    "Synthetic exact-boundary calibration is NOT implemented. "
-    "`csasr.lss.align.synthetic.build_set` renders ZH+EN splices with known "
-    "construction boundaries and `score_family` / `fit_offsets` can score a "
-    "prediction against them, but nothing runs the aligner families over the "
-    "rendered synthetic audio, so no absolute boundary error is ever measured. "
-    "What is missing: (1) a manifest for the rendered pairs carrying the "
-    "constructed boundary and per-unit reference text; (2) a call into "
-    "`csasr.lss.align.candidates.run_families` over that manifest; (3) mapping "
-    "predicted unit edges onto the constructed boundary under both the "
-    "unit-edge-canonical and midpoint-legacy conventions; (4) writing the "
-    f"per-family scores to {SYNTHETIC_SCORES_FILE}. Until that exists the "
-    "automatic gate has no source of absolute boundary error and blocks. "
-    "Cross-aligner disagreement is not a substitute and is never used as one."
+    "No authenticated synthetic exact-boundary scores were found, so the "
+    "automatic gate has no source of absolute boundary error. Scoring is "
+    "implemented -- `lss_l1b_valid._score_synthetic_sets` renders the splices "
+    "via `synthetic.build_set`, aligns them with `candidates.run_families`, maps "
+    "predicted unit edges onto the constructed boundary "
+    "(`synthetic.score_rendered_set`) and publishes "
+    f"{SYNTHETIC_SCORES_FILE} -- so an absent table means that step did not run "
+    "or its output was rejected. Check, in order: was the `synthetic` part "
+    "included (it is skipped by `--only` and by `--dry-run`); did the aligner "
+    "families produce candidates for the rendered audio "
+    "(`diagnostics/l1b_automatic_evidence.json` and the stage log); is the "
+    "table manifested and untainted. Cross-aligner disagreement is not a "
+    "substitute for accuracy and is never used as one."
 )
 
 
@@ -374,13 +445,22 @@ SYNTHETIC_REQUIRED_COLUMNS = (
 def synthetic_calibration_status(artifacts_root: str | Path,
                                  *, min_boundaries: int = 100,
                                  cfg: Mapping[str, Any] | None = None,
-                                 require_authentication: bool = True
+                                 require_authentication: bool = True,
+                                 expected_gate_generation: int | None = None,
+                                 expected_gate_request_sha256: str | None = None,
+                                 expected_gate_item_sha256: str | None = None
                                  ) -> dict[str, Any]:
     """Is there scored synthetic ground truth, and what does it say?
 
     Returns ``available: False`` with an explicit reason when the scores do not
     exist, are not authentic, or do not declare the schema this reader
     understands. It never falls back to any other measurement.
+
+    The expected generation, aligner request, and full item-set fingerprint bind
+    the score table to both the model inputs and the construction truth it was
+    scored against. The generation number or aligner request alone is
+    insufficient: known boundaries could change while audio/transcript inputs
+    remain byte-for-byte identical.
     """
     from ..manifest import read_verified
 
@@ -394,6 +474,7 @@ def synthetic_calibration_status(artifacts_root: str | Path,
     if not path.is_file():
         return unavailable(BLOCKED_MISSING_SYNTHETIC, "the score table does not exist")
 
+    manifest: Mapping[str, Any] = {}
     if require_authentication:
         scored, verdict = read_verified(path, cfg=cfg, require_identity=cfg is not None)
         if not verdict["ok"]:
@@ -406,6 +487,40 @@ def synthetic_calibration_status(artifacts_root: str | Path,
                                f"produced by {manifest.get('taint_reasons')}")
     else:
         scored = pd.read_parquet(path)
+
+    if expected_gate_generation is not None:
+        recorded = manifest.get("synthetic_gate_generation")
+        if recorded != expected_gate_generation:
+            return unavailable(
+                BLOCKED_EXPOSED_GATE_SET,
+                f"the score table was produced from gate generation {recorded!r}, "
+                f"and the exposure ledger's unexposed generation is now "
+                f"{expected_gate_generation!r}; those items' scores have already "
+                "been read")
+        if not expected_gate_request_sha256:
+            return unavailable(
+                BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                f"gate generation {expected_gate_generation!r} has no immutable "
+                "alignment-request fingerprint in the exposure ledger")
+        recorded_request = manifest.get("synthetic_gate_request_sha256")
+        if recorded_request != expected_gate_request_sha256:
+            return unavailable(
+                BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                f"the score table describes gate request {recorded_request!r}, "
+                f"but generation {expected_gate_generation!r} is bound to "
+                f"{expected_gate_request_sha256!r}")
+        if not expected_gate_item_sha256:
+            return unavailable(
+                BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                f"gate generation {expected_gate_generation!r} has no immutable "
+                "full item-set fingerprint in the exposure ledger")
+        recorded_items = manifest.get("synthetic_gate_item_sha256")
+        if recorded_items != expected_gate_item_sha256:
+            return unavailable(
+                BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                f"the score table describes gate items {recorded_items!r}, but "
+                f"generation {expected_gate_generation!r} is bound to full "
+                f"item set {expected_gate_item_sha256!r}")
 
     missing = sorted(set(SYNTHETIC_REQUIRED_COLUMNS) - set(scored.columns))
     if missing or not len(scored):

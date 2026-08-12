@@ -1,4 +1,7 @@
-include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml]
+# align.yaml is included for the pilot only: sizing the L1 alignment budget
+# means timing every family, and without it the CTC probe has no model_id and
+# the projection is made from whisper_dtw alone.
+include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml, lss/align.yaml]
 
 stage: l0_freeze
 
@@ -19,10 +22,24 @@ gate:
   max_categorical_tv: 0.15
   min_poi_index_agreement: 1.0
   poi_index_sample: 500
-  max_decoder_site_rel_err: 0.001
+  # The steering identity is exact in real arithmetic, so in bfloat16 (eps
+  # 7.8e-3) it can only be verified to within rounding -- the old absolute
+  # 1e-3 bound was below the precision of the dtype and no correct
+  # implementation could satisfy it. float32 checks the wiring; the other two
+  # bound the production-dtype error as noise. err_vs_block_gap is the sharp
+  # one: a misplaced hook misses by the size of that gap, not by 1% of it.
+  max_decoder_site_fp32_rel_err: 1.0e-5
+  max_decoder_site_ulp: 4.0
+  # 4 ULP of bfloat16 against the measured site/block gap is ~0.12, while
+  # steering the wrong tensor leaves the site untouched and scores >= 1. 0.25
+  # sits between the two; the ULP bound above does the precision work.
+  max_decoder_site_err_vs_block_gap: 0.25
   # E1 aligned ~10.8k utterances in 6h10m at batch 8 with attention enabled;
-  # l1a+l1b need ~3k utterances across three families
+  # l1a+l1b need ~3k utterances across the families that can actually load
   max_projected_l1_alignment_gpu_hours: 12.0
+  # the aligner pilot must be timed on audio representative of the role, or
+  # the budget above is measured on the easy tail
+  max_aligner_sample_duration_skew: 0.25
   # measured 6.0-6.5 utt/s free decoding, so ~3.5k second passes is ~10 minutes;
   # this is a 30x guard against a wrong measurement, not a budget
   max_projected_l7a_label_gpu_hours: 6.0

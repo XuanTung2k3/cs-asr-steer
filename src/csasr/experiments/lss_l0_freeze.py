@@ -38,6 +38,7 @@ from ..lss.specfreeze import load as load_spec
 from ..lss.specfreeze import seal, verify
 from ..utils.config import art
 from ..utils.hashing import sha256_file
+from ..utils.logging import get_logger
 from ..utils.status import StageLock
 from ._common import (
     base_parser,
@@ -51,6 +52,8 @@ from ._common import (
 )
 
 STAGE = "l0_freeze"
+
+log = get_logger(__name__)
 
 
 def _model_assets(cfg: dict) -> dict:
@@ -160,10 +163,25 @@ def _run_pilot(cfg: dict, log, limit: int | None) -> tuple[dict, list]:
     results.append(pilot_mod.pilot_steered_decode(
         bundle, sample, cfg, int(list(pcfg.get("encoder_layers", [27]))[0])))
 
-    align_sample = sample.head(int(pcfg.get("aligner_utterances", 20)))
-    results.extend(pilot_mod.pilot_aligners(
-        align_sample, cfg, geometry, identity,
-        list(pcfg.get("aligner_families", ["existing_ctc"])), bundle=bundle))
+    # `sample` is sorted by duration so decoding batches efficiently, which
+    # makes head() the *shortest* utterances in the role -- 1.75 s mean against
+    # a 9.86 s corpus mean on this data. Alignment cost scales with audio
+    # length, so timing those and projecting from them understates L1 by
+    # several fold. Spread the picks evenly across the duration range instead.
+    import numpy as np
+
+    align_n = min(int(pcfg.get("aligner_utterances", 20)), len(sample))
+    picks = np.unique(np.linspace(0, len(sample) - 1, align_n).round().astype(int))
+    align_sample = sample.iloc[picks].reset_index(drop=True)
+    align_families = list(pcfg.get("aligner_families", ["existing_ctc"]))
+    align_results = pilot_mod.pilot_aligners(
+        align_sample, cfg, geometry, identity, align_families, bundle=bundle)
+    results.extend(align_results)
+    # The L1 budget is projected from the slowest family, so a family that
+    # failed to run silently makes the projection optimistic rather than wrong-
+    # looking. Count what actually produced a rate.
+    aligners_measured = sum(1 for r in align_results
+                            if r.mode.startswith("align_") and r.rate == r.rate)
 
     storage = pilot_mod.pilot_storage(bundle, sample,
                                       list(pcfg.get("encoder_layers", [27])))
@@ -180,6 +198,15 @@ def _run_pilot(cfg: dict, log, limit: int | None) -> tuple[dict, list]:
         "storage": storage,
         "projected": projected,
         "decoder_site_check": site_check,
+        "aligner_families_requested": sum(
+            1 for f in align_families if f in pilot_mod.TIMEABLE_ALIGNERS),
+        "aligner_families_measured": int(aligners_measured),
+        "aligner_sample": {
+            "utterances": int(len(align_sample)),
+            "mean_duration_sec": float(align_sample["duration_sec"].mean()),
+            "role_mean_duration_sec": float(manifest["duration_sec"].mean()),
+            "audio_seconds": float(align_sample["duration_sec"].sum()),
+        },
     }
     return payload, results
 
@@ -202,19 +229,48 @@ def _verify_site(bundle, sample: pd.DataFrame, layer: int) -> dict:
         with torch.inference_mode():
             teacher_forced_forward(bundle, paths, seqs)
 
-    return assert_site_reconstruction(bundle, forward, layer)
+    report = assert_site_reconstruction(bundle, forward, layer)
+
+    # The identity above is exact in real arithmetic, so in the production
+    # dtype it can only ever be verified to within rounding. Repeat it once in
+    # float32, where the tolerance is a statement about the wiring rather than
+    # about bfloat16. Round-tripping is lossless: every bfloat16 value is
+    # exactly representable in float32, so the model is returned unchanged.
+    original = bundle.dtype
+    try:
+        bundle.model.to(torch.float32)
+        bundle.dtype = torch.float32
+        report["float32"] = assert_site_reconstruction(
+            bundle, forward, layer, tol=1e-5)
+    except torch.cuda.OutOfMemoryError as exc:                 # pragma: no cover
+        log.warning("float32 site check skipped: %s", exc)
+        report["float32"] = {"skipped": repr(exc)}
+    finally:
+        bundle.model.to(original)
+        bundle.dtype = original
+        torch.cuda.empty_cache()
+    return report
 
 
 def _workload(cfg: dict) -> dict:
     """Item counts the projections are made against."""
+    from ..lss import pilot as pilot_mod
+
     roles = cfg.get("roles") or {}
     targets = roles.get("train_conversation_targets") or {}
     # ~35 CS utterances per training conversation, measured on this corpus
     per_conversation = 35
     align_utts = int(sum(targets.values()) * per_conversation)
+    # Only families this environment can actually load are budgeted for. A
+    # configured-but-unloadable family (qwen, whose architecture the pinned
+    # transformers does not implement) would otherwise add a full family's
+    # worth of GPU hours for work that never happens.
+    families = pilot_mod.runnable_families(cfg)
+    n_runnable = sum(1 for v in families.values() if v["runnable"])
     return {
         "alignment_utterances": align_utts,
-        "alignment_families": len((cfg.get("alignment") or {}).get("families", [])) or 2,
+        "alignment_families": n_runnable or 2,
+        "alignment_families_detail": families,
         "utility_candidates": int(targets.get("util-train", 25) * per_conversation * 4),
         "prompt_decodes": int(align_utts * 4),
         "cached_utterances": align_utts,
@@ -358,10 +414,31 @@ def _run(argv: list[str] | None = None) -> int:
         criteria += [
             check("pilot_utterances_measured", pilot_payload["utterances"],
                   int(gcfg.get("min_pilot_utterances", 200)), ">="),
-            check("decoder_site_reconstruction_rel_err", site["rel_err"],
-                  float(gcfg.get("max_decoder_site_rel_err", 1e-3)), "<="),
+            check("pilot_aligner_families_measured",
+                  pilot_payload["aligner_families_measured"],
+                  pilot_payload["aligner_families_requested"], ">="),
+            # The alignment budget is only as good as the audio it was timed
+            # on, and cost scales with duration. Timing a sample far shorter
+            # than the corpus understates L1 without looking wrong.
+            check("pilot_aligner_sample_duration_ratio",
+                  abs(pilot_payload["aligner_sample"]["mean_duration_sec"]
+                      / max(1e-9, pilot_payload["aligner_sample"]["role_mean_duration_sec"])
+                      - 1.0),
+                  float(gcfg.get("max_aligner_sample_duration_skew", 0.25)), "<="),
+            # Three checks, because one absolute tolerance cannot express this
+            # at two precisions. float32 pins the wiring exactly; the ULP and
+            # block-gap ratios say the production-dtype run is rounding noise
+            # and not a misplaced hook. See assert_site_reconstruction.
+            check("decoder_site_reconstruction_fp32_rel_err",
+                  float((site.get("float32") or {}).get("rel_err", float("nan"))),
+                  float(gcfg.get("max_decoder_site_fp32_rel_err", 1e-5)), "<="),
+            check("decoder_site_reconstruction_ulp", site["rel_err_ulp"],
+                  float(gcfg.get("max_decoder_site_ulp", 4.0)), "<="),
+            check("decoder_site_err_vs_block_gap", site["err_vs_block_gap"],
+                  float(gcfg.get("max_decoder_site_err_vs_block_gap", 0.25)), "<="),
             check("decoder_site_differs_from_block_output",
                   int(bool(site["site_differs_from_block_output"])), 1, "=="),
+            reported("decoder_site_reconstruction_rel_err", site["rel_err"]),
             check("projected_l1_alignment_gpu_hours",
                   projected["l1_alignment_gpu_hours"],
                   float(gcfg.get("max_projected_l1_alignment_gpu_hours", 12.0)), "<="),

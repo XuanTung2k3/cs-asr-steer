@@ -38,9 +38,12 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
-# The chain holds L0 (pilot + seal), L1a (a 30-minute-deadlined probe) and
-# L1b's aligner sweep, which the L0 pilot projects at 6-10 GPU-hours. 8 h was a
-# schedule bomb; the chain is also resumable, so an allocation that ends mid-way
+# The chain holds L0 (pilot + seal), L1a (a 30-minute-deadlined Qwen probe plus
+# the synthetic development set and the decoder-query convention sweep) and L1b's
+# aligner sweep, which now runs three families -- Qwen's production path carries
+# its own bound, `alignment.qwen.production_deadline_minutes` plus a per-utterance
+# allowance. Job 38573 did the whole chain in 01:13:46 with two families. 8 h was
+# a schedule bomb; the chain is also resumable, so an allocation that ends mid-way
 # is continued by resubmitting it.
 #SBATCH --time=20:00:00
 #SBATCH --signal=B:USR1@300
@@ -161,6 +164,25 @@ stage_status() {
     --stage-status "$1" 2>/dev/null || echo "unknown"
 }
 
+# May the chain skip this stage? `reusable` only when it passed AND passed under
+# the same resolved config. See `lss_status.stage_reusable` for why the source
+# hash is not part of this and `--overwrite` is the lever for a code change.
+stage_reusable() {
+  "${PY}" -m csasr.experiments.lss_status --config configs/lss/base.yaml \
+    --stage-reusable "$1" --stage-config "$2" 2>/dev/null || echo "stale:unknown"
+}
+
+# Why a stage is about to run rather than be skipped. A function, not a bare
+# `[[ ... ]] && echo`: under `set -e` a false test at statement level ends the job.
+say_why_running() {
+  local name="$1" overwrite="$2" reuse="$3"
+  if (( overwrite )); then
+    echo "${name}: --overwrite given; re-running even though it passed."
+  elif [[ "${reuse}" != "reusable" ]]; then
+    echo "${name}: not reusable (${reuse})."
+  fi
+}
+
 # Run one stage and report both facets: did the command work, and what did it
 # find. A nonzero code here means something is broken, not that the answer is no.
 run_stage() {
@@ -188,9 +210,15 @@ chain() {
   # through -- and `--overwrite` recomputed L0 while L1a/L1b reused stale bytes.
   local -a common=()
   local -a l0_extra=()
+  local overwrite=0
   while (( $# )); do
     case "$1" in
-      --force-prereq|--overwrite|--resume|--dry-run) common+=("$1"); shift ;;
+      # --overwrite was forwarded to every stage but never consulted here, so the
+      # "already passed; skipping" branch below ran first and L0/L1a were skipped
+      # anyway -- the flag was a no-op for exactly the two stages whose message
+      # advertised it. It now suppresses the skip as well as being forwarded.
+      --overwrite) common+=("$1"); overwrite=1; shift ;;
+      --force-prereq|--resume|--dry-run) common+=("$1"); shift ;;
       --set) common+=("$1" "$2"); shift 2 ;;
       --pilot-utterances|--limit|--seed) l0_extra+=("$1" "$2"); shift 2 ;;
       *) echo "chain: unsupported option '$1'." >&2
@@ -205,11 +233,15 @@ chain() {
   preflight
   local rc=0
 
-  # Each stage is skipped if it already passed, so a chain that ran out of wall
-  # clock is resumed by resubmitting it rather than restarted from L0.
-  if [[ "$(stage_status l0_freeze)" == "passed" ]]; then
-    echo "L0 already passed; skipping (pass --overwrite to redo it)."
+  # Each stage is skipped if it already passed *under this configuration*, so a
+  # chain that ran out of wall clock is resumed by resubmitting it rather than
+  # restarted from L0 -- while a configuration change re-runs it.
+  local reuse
+  reuse="$(stage_reusable l0_freeze configs/lss/l0_freeze.yaml)"
+  if [[ ${overwrite} -eq 0 && "${reuse}" == "reusable" ]]; then
+    echo "L0 already passed under this configuration; skipping (pass --overwrite to redo it)."
   else
+    say_why_running "L0" "${overwrite}" "${reuse}"
     run_stage "L0 freeze" l0_freeze \
       csasr.experiments.lss_l0_freeze configs/lss/l0_freeze.yaml \
       "${common[@]+"${common[@]}"}" "${l0_extra[@]+"${l0_extra[@]}"}" || rc=$?
@@ -219,9 +251,11 @@ chain() {
     exit "${rc}"
   fi
 
-  if [[ "$(stage_status l1a_diag)" == "passed" ]]; then
-    echo "L1a already passed; skipping."
+  reuse="$(stage_reusable l1a_diag configs/lss/l1a_diag.yaml)"
+  if [[ ${overwrite} -eq 0 && "${reuse}" == "reusable" ]]; then
+    echo "L1a already passed under this configuration; skipping."
   else
+    say_why_running "L1a" "${overwrite}" "${reuse}"
     run_stage "L1a diagnostics" l1a_diag \
       csasr.experiments.lss_l1a_diag configs/lss/l1a_diag.yaml \
       "${common[@]+"${common[@]}"}" || rc=$?

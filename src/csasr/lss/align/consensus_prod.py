@@ -16,6 +16,13 @@ without editing it.
   do the tightening downstream.
 * **Confidence bins are recomputed.** `nat5h.consensus` hard-codes the `high`
   bin at 100 ms independently of the configured criteria.
+* **`role` survives.** `build_unit_consensus_v2` copies a fixed list of columns
+  from the winning candidate and `role` is not on it, so every span came out
+  role-less and `_role_span_counts` reported zero spans for all six roles --
+  three per-role absolute-count criteria and the bilingual-utterance criterion
+  therefore failed on bookkeeping while 32,086 spans sat on disk. The frozen
+  utterance-to-role mapping is joined back on here rather than by editing
+  `csasr.nat5h`, whose recorded artifacts must stay reproducible.
 """
 from __future__ import annotations
 
@@ -29,6 +36,54 @@ from ...nat5h.consensus import ConsensusCriteria, build_unit_consensus_v2
 
 DEFAULT_BINS = {"high": 50.0, "medium": 100.0, "low": 200.0}
 
+#: the column that says which role a span belongs to. Every per-role threshold
+#: is evaluated against it, so a span table without it cannot support any
+#: role-specific claim.
+ROLE_COLUMN = "role"
+
+
+def utterance_roles(candidates: pd.DataFrame) -> dict[str, str]:
+    """`utterance_id` -> role, refusing an ambiguous mapping.
+
+    One utterance belongs to exactly one role -- that is what `csasr.lss.roles`
+    freezes. Two roles claiming the same utterance would make every per-role
+    count depend on which candidate row happened to be first, so it raises
+    instead of picking.
+    """
+    if candidates is None or not len(candidates) or ROLE_COLUMN not in candidates:
+        return {}
+    pairs = (candidates[["utterance_id", ROLE_COLUMN]].astype(str)
+             .drop_duplicates().dropna())
+    conflicting = pairs[pairs.duplicated("utterance_id", keep=False)]
+    if len(conflicting):
+        examples = conflicting.head(5).to_dict(orient="records")
+        raise ValueError(
+            "the candidate table maps an utterance to more than one role, so no "
+            f"per-role count is well defined: {examples}")
+    return dict(zip(pairs["utterance_id"], pairs[ROLE_COLUMN]))
+
+
+def attach_roles(frame: pd.DataFrame, roles: Mapping[str, str], *,
+                 what: str) -> pd.DataFrame:
+    """Join the utterance-to-role mapping onto consensus output.
+
+    Raises when an utterance in the output has no role: a silent NaN there is
+    exactly what produced six zero-span roles, and a missing role means the
+    mapping and the spans came from different sets of utterances.
+    """
+    if frame is None or not len(frame):
+        return frame
+    out = frame.copy()
+    out[ROLE_COLUMN] = out["utterance_id"].astype(str).map(dict(roles))
+    missing = out[ROLE_COLUMN].isna()
+    if missing.any():
+        unmapped = sorted(set(out.loc[missing, "utterance_id"].astype(str)))[:5]
+        raise ValueError(
+            f"{int(missing.sum())} {what} row(s) have no role in the frozen "
+            f"utterance-to-role mapping (e.g. {unmapped}); per-role coverage "
+            "would silently read zero")
+    return out
+
 
 @dataclass(frozen=True)
 class ConsensusConfig:
@@ -41,12 +96,19 @@ class ConsensusConfig:
     min_safe_interior_ms: float = 60.0
     union_padding_ms: float | None = None
 
-    #: True when `primary_tolerance_ms` was not configured and the widest bin
-    #: was used instead. That is a provisional value for sweeps and diagnostics,
-    #: never a selection: `select_primary_tolerance` is what selects, and it
-    #: needs authenticated external accuracy, which does not exist yet.
+    #: True when the tolerance was actually selected -- either configured
+    #: explicitly or chosen by the preregistered rule from measured external
+    #: accuracy (`csasr.lss.align.devselect`). False means the widest confidence
+    #: bin was used as a provisional value for sweeps and diagnostics, which is
+    #: not a decision and must never be recorded as one.
     tolerance_selected: bool = False
     selection_rule: str = "unselected: widest confidence bin, provisional"
+
+    #: which instrument measured the error the erosion and padding come from.
+    #: `synthetic_dev` and `human_audit` are both external truth; `unmeasured`
+    #: means erosion fell back to the configured fraction of the span duration,
+    #: which is a shape assumption rather than a measurement.
+    measurement_instrument: str = "unmeasured"
 
     #: estimators this module actually implements. Recording a name that changes
     #: nothing would label output as coming from an ablation that never ran.
@@ -88,16 +150,20 @@ class ConsensusConfig:
                               else float(block["union_padding_ms"])),
         )
 
-    def with_measured(self, *, median_error_ms: float,
-                      p90_error_ms: float) -> "ConsensusConfig":
-        """Set erosion and padding from the measured human boundary error."""
-        return ConsensusConfig(
-            estimator=self.estimator, tolerance_ms=self.tolerance_ms,
-            min_families=self.min_families, bins=self.bins,
-            erosion_ms=float(median_error_ms),
-            erosion_fraction=self.erosion_fraction,
-            min_safe_interior_ms=self.min_safe_interior_ms,
-            union_padding_ms=float(p90_error_ms))
+    def with_measured(self, *, median_error_ms: float, p90_error_ms: float,
+                      instrument: str = "human_audit") -> "ConsensusConfig":
+        """Set erosion and padding from a measured absolute boundary error.
+
+        `dataclasses.replace` rather than a fresh constructor: the old version
+        rebuilt the object field by field and silently dropped
+        `tolerance_selected` and `selection_rule`, so measuring the error
+        un-selected the tolerance that had just been selected.
+        """
+        import dataclasses
+
+        return dataclasses.replace(self, erosion_ms=float(median_error_ms),
+                                   union_padding_ms=float(p90_error_ms),
+                                   measurement_instrument=str(instrument))
 
 
 def _criteria(config: ConsensusConfig, tolerance_ms: float) -> ConsensusCriteria:
@@ -116,10 +182,19 @@ def _criteria(config: ConsensusConfig, tolerance_ms: float) -> ConsensusCriteria
 def build(candidates: pd.DataFrame, config: ConsensusConfig, *,
           tolerance_ms: float | None = None
           ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Accepted spans, rejected units and the pairwise agreement table."""
+    """Accepted spans, rejected units and the pairwise agreement table.
+
+    `role` is carried through from the candidate table. When the candidates do
+    not have it, neither do the spans, and `_span_schema_ok` fails the gate
+    mechanically -- which is the loud version of the silent zero it replaces.
+    """
     tolerance = float(tolerance_ms if tolerance_ms is not None else config.tolerance_ms)
+    roles = utterance_roles(candidates)
     accepted, rejected, pairwise = build_unit_consensus_v2(
         candidates, _criteria(config, tolerance))
+    if roles:
+        accepted = attach_roles(accepted, roles, what="accepted span")
+        rejected = attach_roles(rejected, roles, what="rejected unit")
     if len(accepted):
         accepted = assign_confidence_bins(accepted, config.bins)
         accepted = add_safe_interior(accepted, config)

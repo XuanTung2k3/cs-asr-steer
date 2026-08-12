@@ -18,6 +18,14 @@ Defined in `csasr.utils.status.ALLOWED`, classified by `csasr.lss.gates.classify
 | `failed` | implementation defect, corrupt artifact, malformed result, or an unhandled exception | 2 |
 | `running` / `pending` | not terminal | — |
 
+`complete` in the status file answers **"did this run finish the work it set out to
+do"**, not "did the gate pass" — `status` already says that. It is true for every
+terminal status except `failed`. It used to be `gate["passed"]`, which recorded a
+truthful terminal `blocked` as an incomplete run: the same shape as a job killed
+mid-write, which is the case `complete` exists to distinguish. Prerequisites are
+unaffected either way, because `prereq._status_problem` rejects any status that is
+not `passed` before it looks at `complete`.
+
 Precedence when several apply: **`failed` > `blocked` > `completed_no_go` > `passed`**.
 
 A malformed artifact outranks everything, because no reading of it means
@@ -125,28 +133,72 @@ never substituted for accuracy. The naming rule is enforced in code by
 `autoevidence.assert_no_absolute_error_claims`, which fails the run if a
 natural-speech criterion is ever named as an error.
 
-**Currently unimplemented:** synthetic exact-boundary *scoring*. The splices are
-rendered and the scoring helpers exist, but nothing runs the aligners over the
-rendered audio. Automatic Gate A therefore blocks with
-`blocked_missing_synthetic_calibration` and names the four missing pieces in
-`autoevidence.MISSING_SYNTHETIC_DESCRIPTION`.
+Synthetic exact-boundary scoring **is implemented** and ran in job 38573
+(`lss_l1b_valid._score_synthetic_sets`). An earlier revision of this document said
+it was not; that is out of date.
+
+## Configuration selection: development evidence only
+
+Automatic mode chooses its own configuration and never waits on a person. Two
+decisions, both made on synthetic **development** items whose boundaries are known
+by construction, both frozen with the instrument recorded:
+
+| decision | stage | artifact |
+|---|---|---|
+| Whisper decoder-query convention (`pred_start_offset`) | l1a | `freeze/l1a_alignment_selection.json` + `metrics/l1a_pred_start_sweep.parquet` |
+| operating tolerance, erosion, union padding | l1b | `freeze/l1b_operating_point.json` + `metrics/l1b_tolerance_selection.parquet` |
+
+`configs/lss/spec.yaml` states the tolerance rule on **human** median ≤ 100 ms and
+p90 ≤ 200 ms. The estimand is the absolute boundary error of the spans a tolerance
+accepts; "human" names the instrument, and the automatic path measures the same
+quantity against constructed boundaries, which the same freeze already registers
+as external truth. **The numbers are unchanged.** The instrument is recorded as
+`synthetic_dev` (automatic) or `human_audit` (manual mode), so no reader can
+confuse them. `devselect.assert_development_only` raises if a gate-set row ever
+reaches a selection.
+
+If no swept tolerance meets the rule, the outcome is
+`blocked_no_qualifying_operating_tolerance` — never a silent fallback to 200 ms,
+because every downstream number would then describe a configuration nobody chose.
+
+## A gate set is confirmatory once
+
+`synthetic/exposure_ledger.json` records the source utterance ids and fingerprint of
+every rendered generation. **Evaluating Gate A exposes the generation it read**, so
+the next evaluation renders generation *N+1* from sources no earlier generation
+used; the score table's manifest records `synthetic_gate_generation` and a later
+evaluation refuses a table from an exposed generation however authentic its bytes
+are. Sets rendered before the ledger existed are bootstrapped from the item tables
+they left behind and recorded as exposed. The **development** set is deliberately
+not filtered by exposure: it is meant to be reused, and `partition_sources` keeps
+the two pools disjoint.
 
 ## Blocked reasons
 
 | code | response |
 |---|---|
-| `blocked_missing_synthetic_calibration` | implement synthetic scoring, or run the optional manual audit |
-| `blocked_insufficient_independent_aligners` | repair `whisper_dtw` or enable `qwen_forced_aligner` |
+| `blocked_missing_synthetic_calibration` | re-run the `synthetic` part; the score table is absent |
+| `blocked_unauthenticated_synthetic_evidence` | the score table is unsigned, stale or malformed |
+| `blocked_missing_development_set` | run l1a; every automatic configuration choice is made on it |
+| `blocked_unselected_operating_tolerance` | the selection never ran, or its frozen record is not authentic |
+| `blocked_no_qualifying_operating_tolerance` | it *did* run and no tolerance met the rule: repair alignment accuracy |
+| `blocked_exposed_gate_set` | no unexposed source audio is left for a fresh confirmatory gate |
+| `blocked_uncalibrated_natural_families` | a family qualifies naturally but has no synthetic-gate score |
+| `blocked_insufficient_independent_aligners` | repair `whisper_dtw` or bring `qwen_forced_aligner` to full-manifest coverage |
 | `blocked_no_candidate_alignments` | run the aligner sweep (`l1b --align`) |
 | `blocked_unauthenticated_candidate_evidence` | the candidate table has no valid manifest; re-run the sweep |
 | `blocked_exploratory_candidate_source` | only the recorded NAT5H table was available; run the sweep |
-| `blocked_unauthenticated_synthetic_evidence` | the score table is unsigned, stale or malformed |
 | `blocked_no_paired_cross_aligner_evidence` | no unit was aligned by two independent families |
 | `blocked_empty_consensus` | no accepted span reaches the primary confidence bins |
 | `blocked_missing_jitter_evidence` | the ±50/±100 ms robustness checks did not run |
 | `blocked_missing_language_subset` | one of EN/ZH has no primary spans, so EN−ZH compares nothing |
 | `blocked_tainted_inputs` | re-run the prerequisite stages without `--force-prereq` |
 | `blocked_missing_manual_verdicts` | annotate the audit pack (manual mode only) |
+
+Every blocker **and** every failing criterion gets an entry in `next_actions`,
+ordered by dependency. Annotation appears once, last, marked `optional`: it repairs
+a missing human verdict and nothing else, and recommending it for an aligner that
+cannot align was misleading.
 
 ## Mandatory Gate-A evidence
 
@@ -159,11 +211,13 @@ omitted criterion is how a gate passes vacuously.
 | two independent valid aligners | counted by estimator class; a family must clear coverage ≥0.95 **and** invalid ≤0.01 **and** nonmonotonic ≤0.01 |
 | paired cross-aligner units | > 0, and ≥ `min_paired_units`, with both EN and ZH present |
 | alignment coverage | ≥0.95 against the **frozen expected-unit universe** of the roles being labelled, not against the candidate rows |
-| synthetic absolute error | scored on the **gate** set only, ≥2 independent families, boundary count = min over families (never summed across rows) |
+| synthetic absolute error | scored on the **gate** set only, from the **unexposed** generation, ≥2 independent families, boundary count = min over families (never summed across rows) |
+| corresponding families | the families that qualify on natural speech and the families with synthetic calibration must be the **same** independence classes, and the disagreement is measured between those |
 | jitter | measured and gated at ±50 **and** ±100 ms, on the frozen high/medium subset |
 | automatic usable-item rate | ≥0.90 |
-| per-role absolute counts | evaluated against the role each threshold is about |
-| span schema | present, monotonic, and bound to the spec freeze by `spec_freeze_sha256` |
+| per-role absolute counts | evaluated against the role each threshold is about, from a span table that **carries `role`** |
+| span schema | present, monotonic, carrying `role`, and bound to the spec freeze by `spec_freeze_sha256` |
+| operating point | selected by the preregistered rule on development items and frozen, or the gate blocks |
 
 ## Commands
 
@@ -175,6 +229,11 @@ sbatch cs_asr_lss.sh l1b --align    # --mode automatic is the default
 sbatch cs_asr_lss.sh l1b --prepare-audit    # evidence only, status `completed`
 sbatch cs_asr_lss.sh l1b --evaluate-gate    # decide Gate A
 ```
+
+`--evaluate-gate` on its own decides from what is on disk, which after a previous
+evaluation means the gate generation is already exposed and the run blocks with
+`blocked_exposed_gate_set`. To evaluate again, include the `synthetic` part so a
+fresh generation is rendered; the default (prepare + evaluate) does.
 
 `chain` is **resumable**: a stage that already passed is skipped, so an
 allocation that ran out of wall clock is continued by resubmitting the same

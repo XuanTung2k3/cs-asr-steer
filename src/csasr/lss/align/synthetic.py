@@ -93,9 +93,21 @@ def assert_sources_disjoint(sets: Mapping[str, pd.DataFrame]) -> dict[str, Any]:
     return report
 
 
+def set_label(purpose: str, generation: int | None = None) -> str:
+    """Storage label for one rendered set.
+
+    A gate generation gets its own label so a fresh gate can never read the audio
+    or the cached candidate tables of the generation it replaces
+    (`csasr.lss.align.exposure`). The scored `purpose` stays `gate`, because that
+    is what Gate A judges; only the storage identity is versioned.
+    """
+    return str(purpose) if generation in (None, 0) else f"{purpose}_g{int(generation)}"
+
+
 def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
               seed: int, out_dir: Path, purpose: str,
-              sources: pd.DataFrame | None = None
+              sources: pd.DataFrame | None = None,
+              generation: int | None = None
               ) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Render `n_pairs` ZH+EN splices with known boundaries.
 
@@ -104,7 +116,8 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
     sets will overlap.
     """
     scfg = dict(cfg.get("synthetic") or {})
-    out_dir = Path(out_dir) / purpose
+    label = set_label(purpose, generation)
+    out_dir = Path(out_dir) / label
     out_dir.mkdir(parents=True, exist_ok=True)
     pool = manifest if sources is None else sources
 
@@ -119,14 +132,16 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
     settings = {"gap_ms": scfg.get("gap_ms", 0.0),
                 "trim_silence": scfg.get("trim_silence", True),
                 "trim_pad_ms": scfg.get("trim_pad_ms", 20.0),
-                "purpose": purpose, "seed": int(seed)}
+                "purpose": purpose, "generation": generation,
+                "seed": int(seed)}
     fingerprint = synthetic_harness_fingerprint(pairs, settings)
 
     rendered = []
     for pair in pairs:
         # pair ids restart at syn_0000 for every purpose, so they are namespaced
-        # here; otherwise dev and gate items collide in any joined table
-        pair = {**pair, "pair_id": f"{purpose}_{pair['pair_id']}"}
+        # here; otherwise dev and gate items collide in any joined table, and two
+        # gate generations collide with each other
+        pair = {**pair, "pair_id": f"{label}_{pair['pair_id']}"}
         target = out_dir / f"{pair['pair_id']}.wav"
         rendered.append(render_synthetic_pair(
             pair, target, trim_silence=bool(scfg.get("trim_silence", True)),
@@ -134,7 +149,11 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
     frame = pd.DataFrame(rendered)
     frame["utterance_id"] = frame["pair_id"]
     frame["purpose"] = purpose
-    return frame, {"purpose": purpose, "pairs": int(len(frame)),
+    frame["set_label"] = label
+    frame["generation"] = 0 if generation is None else int(generation)
+    return frame, {"purpose": purpose, "generation": generation,
+                   "set_label": label, "pairs": int(len(frame)),
+                   "out_dir": str(out_dir),
                    "fingerprint": fingerprint["sha256"], "settings": settings,
                    "source_utterances": sorted(source_ids(frame))}
 
@@ -147,6 +166,240 @@ SCORES_SCHEMA_VERSION = "lss_synthetic_scores_v1"
 #: which boundary each row describes. `combined` is the worse of the two edges
 #: for a unit, and is what a steering mask actually depends on.
 EDGES = ("start", "end", "combined")
+
+#: The convention the pipeline actually consumes: a steering mask is built from
+#: reference-unit edges, so the boundary a family predicts is the end of the last
+#: Mandarin unit and the start of the first English unit.
+CANONICAL_CONVENTION = "unit_edge_canonical"
+
+#: E1's convention: one instant per switch, the midpoint between the two units.
+#: Scored on the same audio so the two can be compared, but kept out of the
+#: gate's score table -- see `score_rendered_set`.
+LEGACY_CONVENTION = "midpoint_legacy"
+
+
+def aligner_manifest(rendered: pd.DataFrame) -> pd.DataFrame:
+    """A manifest the aligner families can consume, from rendered splices.
+
+    `build_synthetic_pairs` admits only single-script sources, so the
+    concatenated transcript segments into Mandarin units followed by English
+    units and the constructed instant is the seam between them. That is what
+    makes a *unit-edge* prediction comparable to the construction: no unit
+    straddles the boundary.
+
+    `conversation_id` and `split` are labelled synthetic rather than left empty,
+    so a synthetic candidate row can never be mistaken for a corpus row if the
+    two ever land in the same table.
+    """
+    if rendered is None or not len(rendered):
+        return pd.DataFrame()
+    out = pd.DataFrame({
+        "utterance_id": rendered["pair_id"].astype(str),
+        "audio_path": rendered["audio_path"].astype(str),
+        # the aligner segments this into reference units itself
+        "transcript_raw": (rendered["zh_text"].astype(str).str.strip() + " "
+                           + rendered["en_text"].astype(str).str.strip()),
+        "duration_sec": rendered["duration_sec"].astype(float),
+        "conversation_id": "synthetic",
+        "split": "synthetic_" + rendered["purpose"].astype(str)
+        if "purpose" in rendered else "synthetic",
+        "contains_code_switch": True,
+    })
+    return out.reset_index(drop=True)
+
+
+#: why a rendered pair could not be scored for a family
+UNSCORABLE = {
+    "no_candidates": "the family produced no rows for this item",
+    "no_valid_zh_unit": "no valid Mandarin unit, so no end-of-Mandarin estimate",
+    "no_valid_en_unit": "no valid English unit, so no start-of-English estimate",
+}
+
+
+def boundary_predictions(rendered: pd.DataFrame, candidates: pd.DataFrame
+                         ) -> pd.DataFrame:
+    """One row per (item, family, variant): the predicted seam and the truth.
+
+    The prediction is read off the *reference units*, which is what a steering
+    mask is built from:
+
+    ``end``    the end of the last valid Mandarin unit, against ``zh_end_sec``
+    ``start``  the start of the first valid English unit, against ``en_start_sec``
+
+    With the default zero gap those two truths are the same instant; with a gap
+    they bracket it, and each edge is scored against the instant it actually
+    predicts rather than against the midpoint. The legacy midpoint estimate
+    ``(end + start) / 2`` is scored against ``true_boundary_sec``, which is the
+    midpoint convention `switch_boundaries` uses.
+
+    A family that produced no valid unit on one side of the seam is *not* scored
+    as a large error -- it made no prediction, and charging it for one would read
+    as an accuracy failure instead of missing coverage. Such items are returned
+    with ``scorable=False`` and a reason.
+    """
+    if rendered is None or not len(rendered) or candidates is None or not len(candidates):
+        return pd.DataFrame()
+
+    truth = rendered.set_index(rendered["pair_id"].astype(str))
+    valid = candidates[candidates["is_valid"].astype(bool)] \
+        if "is_valid" in candidates else candidates
+
+    rows: list[dict[str, Any]] = []
+    group_cols = ["aligner_family"]
+    if "aligner_variant" in candidates.columns:
+        group_cols.append("aligner_variant")
+
+    for keys, family_rows in candidates.groupby(group_cols, sort=True):
+        keys = keys if isinstance(keys, tuple) else (keys,)
+        family = str(keys[0])
+        variant = str(keys[1]) if len(keys) > 1 else family
+        family_valid = valid[valid["aligner_family"].astype(str) == family]
+        if "aligner_variant" in valid.columns:
+            family_valid = family_valid[
+                family_valid["aligner_variant"].astype(str) == variant]
+        by_item = dict(tuple(family_valid.groupby(
+            family_valid["utterance_id"].astype(str), sort=False)))
+
+        for item_id in truth.index:
+            item = truth.loc[item_id]
+            base = {"pair_id": str(item_id), "family": family,
+                    "variant": variant,
+                    "true_boundary_sec": float(item["true_boundary_sec"]),
+                    "true_zh_end_sec": float(item["zh_end_sec"]),
+                    "true_en_start_sec": float(item["en_start_sec"])}
+            got = by_item.get(str(item_id))
+            if got is None or not len(got):
+                rows.append({**base, "scorable": False, "reason": "no_candidates"})
+                continue
+            zh = got[got["reference_language"].astype(str) == "ZH"]
+            en = got[got["reference_language"].astype(str) == "EN"]
+            if not len(zh):
+                rows.append({**base, "scorable": False,
+                             "reason": "no_valid_zh_unit"})
+                continue
+            if not len(en):
+                rows.append({**base, "scorable": False,
+                             "reason": "no_valid_en_unit"})
+                continue
+            last_zh = zh.loc[zh["reference_unit_index"].astype(int).idxmax()]
+            first_en = en.loc[en["reference_unit_index"].astype(int).idxmin()]
+            predicted_end = float(last_zh["end_sec"])
+            predicted_start = float(first_en["start_sec"])
+            rows.append({
+                **base,
+                "scorable": True,
+                "reason": "",
+                "predicted_end_sec": predicted_end,
+                "predicted_start_sec": predicted_start,
+                "predicted_midpoint_sec": (predicted_end + predicted_start) / 2.0,
+                "last_zh_unit_index": int(last_zh["reference_unit_index"]),
+                "first_en_unit_index": int(first_en["reference_unit_index"]),
+            })
+    return pd.DataFrame(rows)
+
+
+#: predicted/truth column pair for each (convention, edge) that gets a score row
+_SCORED_EDGES: tuple[tuple[str, str, str, str], ...] = (
+    (CANONICAL_CONVENTION, "end", "predicted_end_sec", "true_zh_end_sec"),
+    (CANONICAL_CONVENTION, "start", "predicted_start_sec", "true_en_start_sec"),
+    (LEGACY_CONVENTION, "combined", "predicted_midpoint_sec", "true_boundary_sec"),
+)
+
+
+def score_rendered_set(rendered: pd.DataFrame, candidates: pd.DataFrame, *,
+                       purpose: str = "gate"
+                       ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Score every family's boundary predictions. Returns (scores, per-item).
+
+    Two tables, because they answer different questions and only one of them is
+    evidence: `scores` is what Gate A reads, `per_item` is what a reviewer reads
+    to find out why.
+
+    **Only the canonical convention goes into `scores`.** Gate A takes the worst
+    case over every row in that table, so including the legacy midpoint rows
+    would judge the pipeline on a convention nothing downstream consumes -- and
+    E1 measured that convention roughly 490 ms out, which would fail the bias
+    criterion for a reason unrelated to the spans steering uses. The legacy rows
+    are still computed on the same audio and returned in `per_item`, and
+    `convention_comparison` summarises them, so the comparison is available
+    without being mistaken for the gate's own measurement.
+
+    ``combined`` is the canonical convention's worse edge, per item: for each
+    item the edge with the larger absolute error is taken, keeping its signed
+    error, because a steering mask is wrong at whichever end is wrong.
+    """
+    per_item = boundary_predictions(rendered, candidates)
+    if not len(per_item):
+        return pd.DataFrame(), per_item
+    per_item = per_item.copy()
+    per_item["purpose"] = str(purpose)
+
+    scorable = per_item[per_item["scorable"].astype(bool)]
+    rows: list[dict[str, Any]] = []
+    canonical_edges = [e for e in _SCORED_EDGES if e[0] == CANONICAL_CONVENTION]
+    for family, group in scorable.groupby("family", sort=True):
+        for convention, edge, pred_col, truth_col in canonical_edges:
+            rows.append(score_family(
+                group[pred_col].to_numpy(dtype=float),
+                group[truth_col].to_numpy(dtype=float),
+                family=str(family), convention=convention, edge=edge,
+                purpose=purpose))
+        # combined: the worse edge of each item, signed error preserved
+        end_err = (group["predicted_end_sec"] - group["true_zh_end_sec"]).abs()
+        start_err = (group["predicted_start_sec"] - group["true_en_start_sec"]).abs()
+        take_end = (end_err >= start_err).to_numpy()
+        predicted = np.where(take_end, group["predicted_end_sec"],
+                             group["predicted_start_sec"])
+        true = np.where(take_end, group["true_zh_end_sec"],
+                        group["true_en_start_sec"])
+        rows.append(score_family(predicted, true, family=str(family),
+                                 convention=CANONICAL_CONVENTION,
+                                 edge="combined", purpose=purpose))
+    return scores_table(rows), per_item
+
+
+def convention_comparison(per_item: pd.DataFrame) -> pd.DataFrame:
+    """Canonical vs legacy absolute error on the same items, per family.
+
+    This is the diagnostic the "coordinate bug" hypothesis needs: a constant
+    offset that appears under the midpoint convention and not under unit edges
+    is a convention artefact, not an acoustic failure.
+    """
+    if per_item is None or not len(per_item):
+        return pd.DataFrame()
+    scorable = per_item[per_item["scorable"].astype(bool)]
+    if not len(scorable):
+        return pd.DataFrame()
+    rows: list[dict[str, Any]] = []
+    for (family, purpose), group in scorable.groupby(["family", "purpose"],
+                                                     sort=True):
+        for convention, edge, pred_col, truth_col in _SCORED_EDGES:
+            signed = (group[pred_col] - group[truth_col]) * 1000.0
+            rows.append({
+                "family": str(family), "purpose": str(purpose),
+                "convention": convention, "edge": edge,
+                "n": int(len(group)),
+                "median_signed_error_ms": float(signed.median()),
+                "median_abs_error_ms": float(signed.abs().median()),
+                "p90_abs_error_ms": float(np.percentile(signed.abs(), 90)),
+            })
+    return pd.DataFrame(rows)
+
+
+def unscorable_summary(per_item: pd.DataFrame) -> dict[str, Any]:
+    """How many items each family could not predict a seam for, and why."""
+    if per_item is None or not len(per_item):
+        return {}
+    out: dict[str, Any] = {}
+    for family, group in per_item.groupby("family", sort=True):
+        missed = group[~group["scorable"].astype(bool)]
+        out[str(family)] = {
+            "items": int(len(group)),
+            "scored": int(len(group) - len(missed)),
+            "unscorable": int(len(missed)),
+            "reasons": missed["reason"].value_counts().to_dict() if len(missed) else {},
+        }
+    return out
 
 
 def score_family(predicted_sec: Sequence[float], truth: Sequence[float], *,

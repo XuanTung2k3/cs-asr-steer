@@ -34,6 +34,7 @@ than failing the stage.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
@@ -92,6 +93,51 @@ def load_ctc_aligner(cfg: dict) -> CTCAligner:
     return CTCAligner(model=model, processor=processor, device=device, blank_id=blank_id)
 
 
+#: Han numerals, and the pronunciation uroman throws away.
+#:
+#: uroman transliterates CJK numerals to **digits**: `一` -> `1`, `十` -> `10`,
+#: `百` -> `100`, and `一百二十三` -> `123`. MMS-FA's vocabulary is 31 romanized
+#: letters with no digits, so `align_units` skipped every character of the
+#: romanization and the unit came out of `run_existing_ctc` as `mapping_failed`
+#: with no span at all. Measured on job 38573's D-construct sweep: 2,283 of
+#: 88,426 CTC candidates were invalid, **all** of them Mandarin, and 2,010 of
+#: those were the single character `一`. Every one of the fourteen distinct
+#: surfaces involved is in this table.
+#:
+#: That is a 2.58% invalid rate against a 1% limit, i.e. it alone kept
+#: `existing_ctc` -- the family that covers 97.4% of units -- from qualifying as
+#: an independent aligner. The repair is to give the model the syllable the
+#: speaker actually said instead of a digit it cannot represent; it invents no
+#: boundary and relabels nothing, the acoustic model still has to find the span.
+#:
+#: Toneless pinyin, because the vocabulary has no tone marks. Financial and
+#: variant forms are included: they read the same and uroman digitises them too
+#: (`陌` -> `100`, which is also simply wrong -- it reads `mo`).
+CJK_NUMERAL_PINYIN = {
+    "零": "ling", "〇": "ling", "一": "yi", "二": "er", "三": "san", "四": "si",
+    "五": "wu", "六": "liu", "七": "qi", "八": "ba", "九": "jiu", "十": "shi",
+    "百": "bai", "千": "qian",
+    # financial/variant forms, same readings
+    "壹": "yi", "贰": "er", "叁": "san", "肆": "si", "伍": "wu", "陆": "liu",
+    "柒": "qi", "捌": "ba", "玖": "jiu", "拾": "shi", "佰": "bai", "仟": "qian",
+    "陌": "mo",
+}
+
+
+def pronounce_numerals(text: str) -> str:
+    """Replace Han numerals with their pinyin before uroman sees them.
+
+    Separated by spaces so two adjacent numerals cannot fuse into a syllable
+    neither of them is; `align_units` drops whitespace after romanizing, and the
+    CTC trellis is over characters, so the spacing costs nothing.
+    """
+    out: list[str] = []
+    for char in str(text):
+        pinyin = CJK_NUMERAL_PINYIN.get(char)
+        out.append(f" {pinyin} " if pinyin else char)
+    return "".join(out)
+
+
 def romanize(text: str) -> str:
     """Map any script to Latin so one vocabulary covers Mandarin and English.
 
@@ -99,13 +145,30 @@ def romanize(text: str) -> str:
     no Latin letters and an English one has no Han characters. Romanizing both
     sides collapses them into a single alphabet, which is how the MMS aligner
     handles arbitrary languages.
+
+    Han numerals are pronounced first -- see `CJK_NUMERAL_PINYIN` for the
+    measurement that made this necessary.
+    """
+    return _uroman().romanize_string(pronounce_numerals(str(text)))
+
+
+@lru_cache(maxsize=1)
+def _uroman():
+    """One romanizer for the process.
+
+    Constructing `Uroman()` loads its romanization tables and costs ~3.1 s,
+    against ~1 ms to romanize a string with an existing instance. `align_units`
+    romanizes every reference unit separately, so building one per call charged
+    that 3.1 s per *unit*: ~59 s for a typical utterance, which is what made
+    CTC forced alignment look like an 80 GPU-hour job. Exceptions are not
+    cached by `lru_cache`, so a missing package still raises on every call.
     """
     try:
         import uroman as ur
     except Exception as exc:                                   # pragma: no cover
         raise CTCUnavailable(
             "the `uroman` package is required to align mixed-script text") from exc
-    return ur.Uroman().romanize_string(str(text))
+    return ur.Uroman()
 
 
 @torch.inference_mode()
@@ -138,26 +201,40 @@ def viterbi_align(log_probs: torch.Tensor, token_ids: list[int],
         raise ValueError(f"cannot align {len(token_ids)} tokens to {T} frames")
 
     neg = float("-inf")
-    score = torch.full((S,), neg, dtype=torch.float64)
-    score[0] = float(log_probs[0, ext[0]])
+    ext_a = np.asarray(ext, dtype=np.int64)
+    # (T, S): each trellis state's emission score at each frame, gathered once
+    # instead of indexed scalar-by-scalar inside the loop. numpy rather than
+    # torch throughout: the trellis is small (a few hundred states) and at that
+    # size torch's per-call overhead dominates -- a torch version of this same
+    # loop measured 6x *slower* than the scalar original.
+    emit = np.asarray(log_probs.to(torch.float64).numpy())[:, ext_a]
+
+    # a blank may be skipped only between two *different* real tokens
+    skip_ok = np.zeros(S, dtype=bool)
+    if S > 2:
+        skip_ok[2:] = (ext_a[2:] != blank_id) & (ext_a[2:] != ext_a[:-2])
+
+    score = np.full(S, neg, dtype=np.float64)
+    score[0] = emit[0, 0]
     if S > 1:
-        score[1] = float(log_probs[0, ext[1]])
+        score[1] = emit[0, 1]
     back = np.zeros((T, S), dtype=np.int8)          # 0 stay, 1 from s-1, 2 from s-2
 
+    cand = np.empty((3, S), dtype=np.float64)
+    # All three moves are evaluated for every state at once. `argmax` returns
+    # the *first* maximal index, which reproduces the original's tie-break
+    # order exactly: stay, then advance, then skip.
     for t in range(1, T):
-        prev = score
-        cur = torch.full((S,), neg, dtype=torch.float64)
-        for s in range(S):
-            best, arg = prev[s], 0
-            if s >= 1 and prev[s - 1] > best:
-                best, arg = prev[s - 1], 1
-            # a blank may be skipped only between two *different* real tokens
-            if s >= 2 and ext[s] != blank_id and ext[s] != ext[s - 2] and prev[s - 2] > best:
-                best, arg = prev[s - 2], 2
-            if best > neg:
-                cur[s] = best + float(log_probs[t, ext[s]])
-                back[t, s] = arg
-        score = cur
+        cand[0] = score
+        cand[1, 0] = neg
+        cand[1, 1:] = score[:-1]
+        cand[2, :2] = neg
+        cand[2, 2:] = np.where(skip_ok[2:], score[:-2], neg)
+        arg = cand.argmax(axis=0)
+        best = cand[arg, np.arange(S)]
+        finite = best > neg
+        score = np.where(finite, best + emit[t], neg)
+        back[t] = np.where(finite, arg, 0)
 
     s = S - 1 if score[S - 1] >= score[S - 2] else S - 2
     path = np.zeros(T, dtype=np.int32)

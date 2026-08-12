@@ -159,10 +159,18 @@ def finish(cfg: dict, stage: str, rdir: Path, metrics: dict, gate: dict | None,
         json.dumps(metrics, indent=2, ensure_ascii=False, default=str), encoding="utf-8"
     )
     status = status_override or ("passed" if (gate is None or gate["passed"]) else "failed")
+    # `complete` answers "did this run finish the work it set out to do", not
+    # "did the gate pass" -- `status` already says that. It used to be
+    # `gate["passed"]`, so a truthful terminal `blocked` or `completed_no_go` was
+    # recorded as an incomplete run: the same shape as a job killed mid-write,
+    # which is what `complete` exists to distinguish. Prerequisites are unaffected
+    # (`prereq._status_problem` rejects any status that is not `passed` before it
+    # looks at `complete`), and `failed` stays incomplete because a stage that
+    # raised did not finish.
     payload = write_status(cfg["experiment"]["output_root"], stage, status, gate=gate,
                            run_dir=str(rdir), artifacts=artifacts or [],
                            provenance=provenance,
-                           complete=bool(gate is None or gate["passed"]),
+                           complete=bool(status != "failed"),
                            **extra)
     manifest_path = Path(cfg.get("data", {}).get("manifest", ""))
     if manifest_path.is_file():
@@ -188,19 +196,36 @@ def save_report(path: str | Path, title: str, sections: list[tuple[str, str]]) -
     return path
 
 
+def _md_cell(value: Any, floatfmt: str) -> str:
+    """One table cell as a string, missing values included.
+
+    `astype(str)` does not make a column safe to `join`: it preserves a missing
+    value as a missing value, so a table built from records where some keys are
+    absent -- a list of per-outcome next actions, for example -- still reaches
+    `" ".join` with a float NaN in it and raises.
+    """
+    if value is None:
+        return ""
+    if isinstance(value, float):
+        return "" if value != value else floatfmt.format(value)
+    try:
+        if pd.isna(value):
+            return ""
+    except (TypeError, ValueError):                 # a list or dict cell
+        pass
+    return str(value)
+
+
 def md_table(df: pd.DataFrame, floatfmt: str = "{:.4f}", max_rows: int = 200) -> str:
     """Small dependency-free markdown table renderer."""
     if df is None or len(df) == 0:
         return "_(empty)_"
     d = df.head(max_rows).copy()
     for c in d.columns:
-        if pd.api.types.is_float_dtype(d[c]):
-            d[c] = d[c].map(lambda v: "" if pd.isna(v) else floatfmt.format(v))
-        else:
-            d[c] = d[c].astype(str)
+        d[c] = [_md_cell(v, floatfmt) for v in d[c]]
     header = "| " + " | ".join(map(str, d.columns)) + " |"
     sep = "|" + "|".join(["---"] * len(d.columns)) + "|"
-    rows = ["| " + " | ".join(r) + " |" for r in d.astype(str).values]
+    rows = ["| " + " | ".join(r) + " |" for r in d.values]
     return "\n".join([header, sep] + rows)
 
 

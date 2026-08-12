@@ -103,13 +103,56 @@ def reference_units_table(manifest: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def run_whisper_dtw(bundle, manifest: pd.DataFrame, cfg: dict, identity: RunIdentity) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Run the existing Whisper cross-attention DTW aligner and convert schema."""
+#: `align_batch`'s historical convention: the query that *predicts* token k. The
+#: variant label below is unsuffixed for this value so every artifact recorded
+#: before the convention was swept keeps its name.
+DEFAULT_PRED_START_OFFSET = -1
+
+
+def dtw_variant_label(pred_start_offset: int = DEFAULT_PRED_START_OFFSET) -> str:
+    """Variant name for a decoder-query convention.
+
+    The convention has to be in the name. Two candidate tables produced under
+    different offsets are different estimators, and a shared label would let a
+    consensus vote silently mix them -- while still counting as one independence
+    class, which is correct, so the label is the only place the difference can be
+    recorded.
+    """
+    if int(pred_start_offset) == DEFAULT_PRED_START_OFFSET:
+        return "whisper_dtw/zh_median7"
+    return f"whisper_dtw/zh_median7_pred{int(pred_start_offset)}"
+
+
+def selected_pred_start_offset(cfg: dict) -> int:
+    """The convention this run aligns with.
+
+    `alignment.dtw_selected.pred_start_offset` is written by the L1a development
+    sweep's frozen selection. Absent, the historical default is used, which is
+    what every earlier recorded artifact was produced under.
+    """
+    selected = ((cfg.get("alignment") or {}).get("dtw_selected") or {})
+    value = selected.get("pred_start_offset")
+    return DEFAULT_PRED_START_OFFSET if value is None else int(value)
+
+
+def run_whisper_dtw(bundle, manifest: pd.DataFrame, cfg: dict, identity: RunIdentity,
+                    *, pred_start_offset: int | None = None) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Run the existing Whisper cross-attention DTW aligner and convert schema.
+
+    ``pred_start_offset`` overrides the configured decoder-query convention; it
+    is what the L1a development sweep varies. Omitted, the value comes from
+    `alignment.dtw_selected` and falls back to the historical default, so nothing
+    recorded before the sweep existed changes.
+    """
     geometry = EncoderGeometry.from_bundle(bundle)
+    offset = int(selected_pred_start_offset(cfg) if pred_start_offset is None
+                 else pred_start_offset)
+    variant = dtw_variant_label(offset)
     rows: list[dict] = []
     mapping_summary: dict[str, Any] = {
         "aligner_family": "whisper_dtw",
-        "aligner_variant": "whisper_dtw/zh_median7",
+        "aligner_variant": variant,
+        "pred_start_offset": offset,
         "expected_reference_units": 0,
         "raw_whisper_unit_rows": 0,
         "mapped_unit_rows": 0,
@@ -131,6 +174,7 @@ def run_whisper_dtw(bundle, manifest: pd.DataFrame, cfg: dict, identity: RunIden
             language=language,
             median_filter_width=median_filter_width,
             max_text_tokens=max_text_tokens,
+            pred_start_offset=offset,
         )
         by_utt = {str(r["utterance_id"]): r for _, r in batch.iterrows()}
         for result in results:
@@ -153,7 +197,7 @@ def run_whisper_dtw(bundle, manifest: pd.DataFrame, cfg: dict, identity: RunIden
                     manifest_row=by_utt[str(result.utterance_id)],
                     unit=unit,
                     aligner_family="whisper_dtw",
-                    aligner_variant="whisper_dtw/zh_median7",
+                    aligner_variant=variant,
                     start_sec=float(ur["start_sec"]),
                     end_sec=float(ur["end_sec"]),
                     geometry=geometry,
@@ -166,6 +210,7 @@ def run_whisper_dtw(bundle, manifest: pd.DataFrame, cfg: dict, identity: RunIden
                         "alignment_source": ur.get("alignment_source"),
                         "origin_verified": "converted_from_short_wav_dtw_seconds",
                         "alignment_confidence": float(ur.get("alignment_confidence", np.nan)),
+                        "pred_start_offset": offset,
                     },
                 ))
                 mapping_summary["mapped_unit_rows"] += 1

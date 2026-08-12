@@ -200,10 +200,13 @@ def test_missing_synthetic_calibration_is_explicit_and_never_substituted(tmp_pat
     status = autoevidence.synthetic_calibration_status(tmp_path)
     assert status["available"] is False
     assert status["reason"] == autoevidence.BLOCKED_MISSING_SYNTHETIC
-    assert "NOT implemented" in status["missing_implementation"]
-    # it names what is missing rather than gesturing at it
+    # it says what to check rather than gesturing at it, and names the pieces
+    # that produce the table so a reader can tell which one did not run
     assert "run_families" in status["missing_implementation"]
+    assert "_score_synthetic_sets" in status["missing_implementation"]
     assert autoevidence.SYNTHETIC_SCORES_FILE in status["missing_implementation"]
+    # and it never offers agreement as a stand-in
+    assert "not a substitute" in status["missing_implementation"]
 
 
 def _synthetic_row(family, *, edge="combined", purpose="gate", n=120,
@@ -645,14 +648,19 @@ def test_automatic_mode_never_reads_human_verdicts(kw):
 
 
 def test_manual_preparation_is_the_only_path_that_waits_for_people():
-    from csasr.experiments.lss_l1b_valid import _next_action
+    from csasr.experiments.lss_l1b_valid import _next_action, _next_actions
 
     parts, mode, intent = _resolve(prepare_manual_audit=True)
     assert mode == "manual" and intent == "prepare"
     assert "pack" in parts and "gate" not in parts
     assert exit_code("awaiting_manual_verdicts") == 0     # not a failed job
-    assert _next_action("blocked", "manual",
-                        [autoevidence.BLOCKED_MISSING_VERDICTS]) == "annotate_audit_pack"
+    assert "annotate the audit pack" in _next_action(
+        "blocked", "manual", [autoevidence.BLOCKED_MISSING_VERDICTS])
+    # and in manual mode annotation is the *only* action, because it is the only
+    # thing missing -- the optional-audit footnote belongs to automatic mode
+    actions = _next_actions("blocked", "manual",
+                            [autoevidence.BLOCKED_MISSING_VERDICTS])
+    assert [a["kind"] for a in actions] == ["manual"]
 
 
 def test_manual_evaluation_reads_verdicts_and_blocks_without_them():
@@ -739,7 +747,115 @@ def test_next_action_names_the_missing_evidence():
 
     action = _next_action("blocked", "automatic",
                           [autoevidence.BLOCKED_MISSING_SYNTHETIC])
-    assert "synthetic" in action and "--prepare-manual-audit" in action
+    assert "synthetic" in action
     action = _next_action("blocked", "automatic",
                           [autoevidence.BLOCKED_INSUFFICIENT_ALIGNERS])
     assert "second independent valid aligner" in action
+
+
+def test_every_blocker_and_failing_criterion_gets_an_action():
+    """`_next_action` returned the *first* blocker and, for the commonest one,
+    recommended manual annotation -- which repairs none of a 17% invalid rate, a
+    failed accuracy threshold, a failed jitter check or a coverage shortfall. All
+    of them must be enumerated, automatic repair first."""
+    from csasr.experiments.lss_l1b_valid import _next_actions
+
+    actions = _next_actions(
+        "blocked", "automatic",
+        [autoevidence.BLOCKED_INSUFFICIENT_ALIGNERS,
+         autoevidence.BLOCKED_TAINTED_INPUTS],
+        [check("invalid_rate_whisper_dtw", 0.17, 0.01, "<=", group="external"),
+         check("jitter_median_mask_iou_100ms", 0.44, 0.60, ">=", group="jitter"),
+         check("automatic_usable_item_rate", 0.28, 0.90, ">=", group="external"),
+         check("alignment_unit_coverage", 0.99, 0.95, ">=", group="coverage")],
+    )
+    kinds = [a["kind"] for a in actions]
+    text = " | ".join(a["action"] for a in actions)
+
+    # dependency order: provenance before alignment, and taint outranks the
+    # aligner because a tainted input cannot produce a production result at all
+    assert kinds[0] == "provenance"
+    assert "alignment" in kinds and "robustness" in kinds and "coverage" in kinds
+    assert "invalid spans" in text and "does not survive" in text
+    # the criterion that passed contributes nothing
+    assert "expected universe" not in text
+    # annotation appears exactly once, last, and marked optional
+    assert kinds[-1] == "optional"
+    assert sum(1 for k in kinds if k in ("manual", "optional")) == 1
+    assert [a["priority"] for a in actions] == list(range(1, len(actions) + 1))
+
+
+def test_a_passed_gate_asks_for_the_next_stage_and_nothing_else():
+    from csasr.experiments.lss_l1b_valid import _next_actions
+
+    actions = _next_actions("passed", "automatic", [], [])
+    assert [a["action"] for a in actions] == ["run l1c_labels"]
+
+
+# --------------------------------------------------------------------------
+# the pair Gate A speaks about must be one pair
+# --------------------------------------------------------------------------
+def test_ctc_plus_qwen_natural_and_ctc_plus_whisper_synthetic_is_not_a_pass():
+    """The exact false-pass path this closes.
+
+    Two independence classes qualify on natural speech and two are scored on the
+    synthetic gate set -- but a *different* two. The absolute-error claim would
+    then be about an aligner that produced none of the spans being claimed about,
+    while both criteria read as satisfied.
+    """
+    correspondence = autoevidence.family_correspondence(
+        qualifying=["existing_ctc", "qwen_forced_aligner"],
+        synthetically_scored=["existing_ctc", "whisper_dtw"],
+        min_families=2)
+
+    assert correspondence["n_corresponding"] == 1
+    assert correspondence["corresponding_families"] == ["existing_ctc"]
+    assert correspondence["uncalibrated_natural_families"] == ["qwen_forced_aligner"]
+    assert correspondence["sufficient"] is False
+    # the evidence that exists but cannot be used is named, not hidden
+    assert correspondence["scored_but_not_qualifying_classes"] == \
+        ["whisper_cross_attention_dtw"]
+
+    # and the gate criterion built from it fails
+    criterion = check("corresponding_qualifying_families",
+                      correspondence["n_corresponding"], 2, ">=", group="external")
+    assert criterion["passed"] is False
+
+
+def test_the_same_two_families_on_both_sides_is_a_pass():
+    correspondence = autoevidence.family_correspondence(
+        qualifying=["existing_ctc", "whisper_dtw"],
+        synthetically_scored=["existing_ctc", "whisper_dtw"], min_families=2)
+    assert correspondence["sufficient"] is True
+    assert correspondence["n_corresponding"] == 2
+    assert correspondence["uncalibrated_natural_families"] == []
+
+
+def test_a_score_from_a_rejected_family_cannot_stand_in_for_a_missing_one():
+    """Whisper is rejected naturally; its synthetic score is real but is not
+    evidence about CTC's or Qwen's boundaries."""
+    correspondence = autoevidence.family_correspondence(
+        qualifying=["existing_ctc", "qwen_forced_aligner"],
+        synthetically_scored=["whisper_dtw"], min_families=2)
+    assert correspondence["n_corresponding"] == 0
+    assert correspondence["sufficient"] is False
+    assert set(correspondence["uncalibrated_natural_families"]) == \
+        {"existing_ctc", "qwen_forced_aligner"}
+
+
+def test_two_variants_of_one_family_stay_one_independence_class_on_both_sides():
+    correspondence = autoevidence.family_correspondence(
+        qualifying=["whisper_dtw"], synthetically_scored=["whisper_dtw"],
+        min_families=2)
+    assert correspondence["n_corresponding"] == 1
+    assert correspondence["sufficient"] is False, \
+        "one estimator scored twice is still one second opinion"
+
+
+def test_no_synthetic_calibration_at_all_leaves_every_family_uncalibrated():
+    correspondence = autoevidence.family_correspondence(
+        qualifying=["existing_ctc", "whisper_dtw"], synthetically_scored=[],
+        min_families=2)
+    assert correspondence["corresponding_classes"] == []
+    assert len(correspondence["uncalibrated_natural_families"]) == 2
+    assert correspondence["sufficient"] is False

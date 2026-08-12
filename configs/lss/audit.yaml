@@ -55,6 +55,33 @@ gate_a:
   min_synthetic_boundaries: 100
   min_synthetic_within_100ms: 0.90
   max_synthetic_abs_bias_ms: 50.0
+  # A - automatic configuration selection, on DEVELOPMENT items only.
+  #
+  # Deliberately the same numbers as max_human_*_abs_error_ms below.
+  # `spec.yaml alignment_prereg.tolerance_selection_rule` states the rule on the
+  # absolute boundary error of the spans a tolerance accepts and names the human
+  # audit as the instrument, because that was the only instrument implemented
+  # when it was written. The automatic path measures the same quantity with the
+  # instrument it has -- synthetic splices whose boundaries are known by
+  # construction, which the same freeze already registers as external truth --
+  # and records which instrument was used. No threshold is relaxed; only the
+  # measuring device changes, and the choice is never made on the gate set.
+  max_selection_median_abs_error_ms: 100.0
+  max_selection_p90_abs_error_ms: 200.0
+  # A median over a handful of items that happened to agree is not a selection.
+  min_selection_boundaries: 50
+  min_pred_start_boundaries: 50
+  # Prospective amendment, disclosed after job 38573 and before the next fresh
+  # confirmatory gate generation. The sealed v1 spec literally names the human
+  # audit as the tolerance-selection instrument; automatic mode instead uses
+  # known synthetic development boundaries. This is an amendment, not an
+  # interpretation silently attributed to the original freeze. Its bytes and
+  # hash are recorded in the frozen operating-point artifact.
+  automatic_instrument_amendment:
+    id: gate-a-automatic-instrument-amendment-2026-08-11
+    document: docs/proposal_arr/GATE_A_AUTOMATIC_INSTRUMENT_AMENDMENT_2026-08-11.md
+    status: adopted_prospectively
+    effective_from_gate_generation: 1
   min_human_units: 200
   min_human_units_per_language: 100
   min_human_units_with_times: 120
@@ -97,3 +124,8 @@ failure_response:
   blocked_no_candidate_alignments: run_the_aligner_sweep
   blocked_tainted_inputs: rerun_prerequisites_without_force_prereq
   blocked_missing_manual_verdicts: annotate_the_audit_pack
+  blocked_unselected_operating_tolerance: run_the_synthetic_part_so_the_development_selection_exists
+  blocked_no_qualifying_operating_tolerance: repair_alignment_accuracy_no_tolerance_meets_the_rule
+  blocked_uncalibrated_natural_families: score_the_qualifying_families_on_the_synthetic_gate_set
+  blocked_missing_development_set: run_l1a_so_the_synthetic_development_set_exists
+  blocked_exposed_gate_set: render_a_fresh_gate_generation_from_unexposed_sources

@@ -19,6 +19,25 @@ alignment:
     probe_utterances: 8
     probe_deadline_minutes: 30
     on_failure: blocked          # never fails the stage; consensus falls back to 2-of-2
+    # One frozen variant. qwen_asr 0.0.6 routes Chinese and English through the
+    # same tokenizer (`qwen_probe.PROBE_LANGUAGE` records the measurement), so a
+    # second variant is a bit-identical duplicate at twice the cost, and
+    # `nat5h.consensus._family_representatives` would discard it anyway.
+    probe_language: Chinese
+    # The production path (`csasr.lss.align.qwen_prod`) has its own bound. The
+    # probe's 30 minutes is for eight utterances; the L1b sweep is 1,800, and
+    # inheriting a bound set for eight is how a run gets killed for being the size
+    # it was asked to be. Whichever of the two below is larger applies.
+    #
+    # Sizing: the probe aligned 8 utterances in 16.2 s including a checkpoint load
+    # (job 38573), so ~1 s/utterance once loaded. 4 s/utterance is a 4x guard, and
+    # 1,800 utterances at that rate is 2 h -- which is also why the runner is
+    # chunked and killable rather than trusted.
+    production_deadline_minutes: 60
+    production_seconds_per_utterance: 4.0
+    # Utterances per chunk. A chunk is written whole or not at all, and a run that
+    # does not finish every chunk publishes nothing.
+    production_chunk_size: 200
 
   # Whisper-DTW places boundaries ~490 ms early against synthetic ground truth
   # while agreeing with itself to 10 ms across configurations: the signature of

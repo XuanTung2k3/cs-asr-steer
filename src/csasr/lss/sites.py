@@ -254,7 +254,7 @@ def site_report(bundle, layers: Sequence[int] | None = None) -> dict[str, Any]:
 @torch.inference_mode()
 def assert_site_reconstruction(bundle, forward_fn, layer: int, *,
                                alpha: float = 0.5, scale: float = 1.0,
-                               tol: float = 1e-3) -> dict[str, Any]:
+                               tol: float = 1e-3, ulp_tol: float = 4.0) -> dict[str, Any]:
     """Verify on the real model that steering the site does exactly what it says.
 
     ``forward_fn`` runs one teacher-forced forward pass with no hooks of its
@@ -264,6 +264,24 @@ def assert_site_reconstruction(bundle, forward_fn, layer: int, *,
       plus `alpha * scale * direction` (norm preservation off), and
     * the site is *not* the decoder block output, so the intervention is
       demonstrably happening at the tensor the proposal names.
+
+    The identity is exact in real arithmetic, so the residual error is pure
+    rounding: the hook rewrites the cross-attention output and the layer then
+    recomputes `residual + attn_out` in the model dtype. Measured on a fixed
+    tiny model the error tracks the dtype epsilon and nothing else -- 6.7 ULP in
+    float32, 2.9 in float16, 1.5 in bfloat16 -- so an absolute `tol` alone
+    states a different requirement at each precision, and at bfloat16
+    (eps 7.8e-3) a 1e-3 tolerance is not satisfiable by any correct
+    implementation. Two scale-free quantities are therefore reported alongside
+    it:
+
+    * ``rel_err_ulp`` -- error in units of the dtype's epsilon, and
+    * ``err_vs_block_gap`` -- error relative to how far the site sits from the
+      decoder block output.
+
+    The second is the one that actually discriminates: hooking the wrong tensor
+    or getting the arithmetic wrong misses by the size of that gap, so a correct
+    implementation sits orders of magnitude below 1 no matter the precision.
     """
     from ..models.hooks import ActivationRecorder
 
@@ -290,12 +308,27 @@ def assert_site_reconstruction(bundle, forward_fn, layer: int, *,
     site_vs_block = float((base_site - base_block).abs().max())
 
     assert_no_site_hooks(bundle)
+    rel_err = delta / scale_ref
+    # The recorder upcasts what it captures to float32, so the recorded tensor's
+    # dtype says nothing about the precision the arithmetic ran at. Take it from
+    # the weights of the layer that was actually hooked.
+    try:
+        compute_dtype = next(bundle.decoder_layer(layer).parameters()).dtype
+    except (StopIteration, AttributeError):                    # pragma: no cover
+        compute_dtype = getattr(bundle, "dtype", base_site.dtype)
+    eps = float(torch.finfo(compute_dtype).eps)
+    tol_eff = max(float(tol), float(ulp_tol) * eps)
     report = {
         "layer": int(layer),
         "abs_err": delta,
-        "rel_err": delta / scale_ref,
+        "rel_err": rel_err,
+        "dtype": str(compute_dtype),
+        "dtype_eps": eps,
+        "rel_err_ulp": rel_err / eps,
+        "err_vs_block_gap": delta / (site_vs_block or float("inf")),
         "tol": float(tol),
-        "reconstruction_ok": bool(delta / scale_ref <= tol),
+        "tol_effective": tol_eff,
+        "reconstruction_ok": bool(rel_err <= tol_eff),
         "site_vs_block_max_abs_diff": site_vs_block,
         "site_differs_from_block_output": bool(site_vs_block > 0.0),
         "steered_calls": int(hook.steered_calls),

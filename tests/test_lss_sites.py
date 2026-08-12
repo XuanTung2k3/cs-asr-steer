@@ -6,6 +6,8 @@ the difference, so the two can never be silently swapped.
 """
 from __future__ import annotations
 
+import copy
+
 import pytest
 import torch
 
@@ -154,3 +156,73 @@ def test_site_report_names_the_rejected_site(tiny_bundle):
     assert report["decoder"]["rejected_site"] == "decoder_block_output"
     assert report["decoder"]["depth_rescale"] is False
     assert "encoder_attn_layer_norm" in report["decoder"]["capture"]["residual_in"]
+
+
+@pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16, torch.float16])
+def test_reconstruction_error_is_rounding_not_wiring(tiny_bundle, dtype):
+    """The site identity is exact in real arithmetic, so error tracks the dtype.
+
+    The production H100 run failed a flat `rel_err <= 1e-3` at 1.674e-3 in
+    bfloat16 -- 0.21 of a single epsilon. Measured here on one fixed set of
+    weights the error is 6.7 ULP in float32, 2.9 in float16 and 1.5 in
+    bfloat16, i.e. it is a property of the float format and not of the hook.
+    An absolute tolerance below the dtype's epsilon is therefore unsatisfiable
+    by any correct implementation, which is why the gate checks ULP and the
+    block gap instead.
+    """
+    import dataclasses
+
+    bundle = dataclasses.replace(
+        tiny_bundle, model=copy.deepcopy(tiny_bundle.model).to(dtype), dtype=dtype)
+    features, ids = _inputs(bundle)
+
+    def run():
+        with torch.inference_mode():
+            bundle.model(input_features=features.to(dtype),
+                         decoder_input_ids=ids, use_cache=False)
+
+    report = assert_site_reconstruction(bundle, run, LAYER)
+
+    assert report["rel_err_ulp"] <= 8.0, report
+    assert report["err_vs_block_gap"] <= 0.25, report
+    assert report["reconstruction_ok"], report
+
+
+def test_a_misplaced_hook_fails_the_block_gap_check(tiny_bundle):
+    """Steering the block output instead of the site must not pass the gate.
+
+    This is the failure the three replacement criteria exist to catch, and the
+    one a loosened absolute tolerance would have let through.
+    """
+    from csasr.models.hooks import DecoderSteeringHook
+
+    features, ids = _inputs(tiny_bundle)
+
+    def run():
+        with torch.inference_mode():
+            tiny_bundle.model(input_features=features, decoder_input_ids=ids,
+                              use_cache=False)
+
+    with DecoderPostCrossAttnRecorder(tiny_bundle, [LAYER]) as rec, \
+            ActivationRecorder(tiny_bundle, [LAYER], module="decoder") as block_rec:
+        run()
+        base_site = rec.states[LAYER].clone()
+        block = block_rec.states[LAYER].clone()
+
+    direction = torch.zeros(tiny_bundle.d_model, dtype=torch.float32)
+    direction[0] = 1.0
+    hook = DecoderSteeringHook(tiny_bundle, LAYER, direction, alpha=0.5, scale=1.0,
+                               num_layers=tiny_bundle.num_decoder_layers,
+                               norm_preserve=False, steer_prefill=True)
+    with hook, DecoderPostCrossAttnRecorder(tiny_bundle, [LAYER]) as rec:
+        run()
+        wrong_site = rec.states[LAYER].clone()
+
+    expected = base_site.clone()
+    expected[..., 0] += 0.5
+    gap = float((base_site - block).abs().max())
+    err = float((wrong_site - expected).abs().max())
+    # the site sits upstream of the block output, so steering the block leaves
+    # it untouched and the whole requested delta shows up as error
+    assert err / gap > 1.0, (err, gap)
+    assert err / gap > 4 * 0.25, "must be far outside the gate's rounding bound"

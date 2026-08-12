@@ -13,6 +13,20 @@ The stage is also structurally barred from improving agreement: the only
 correction it computes is an explicit counterfactual, marked not-applied,
 because an offset fitted to inter-aligner agreement optimizes the statistic it
 would then be judged by.
+
+Two things it *does* decide, and both on external truth only:
+
+* it renders the synthetic **development** set (boundaries known by
+  construction) and publishes it authenticated, so l1b reads the same 100 items
+  rather than rendering its own;
+* it runs the configured `pred_start_offset` conventions over that set, scores
+  each against the constructed seam, and freezes the selected variant in
+  `freeze/l1a_alignment_selection.json`. This experiment was previously deferred
+  to l1b, which requires l1a -- so it could never run at all.
+
+Selecting a convention on development data is not judging it. The gate set is
+untouched by everything here, and Gate A's accuracy thresholds still have to be
+cleared on data no selection has seen.
 """
 from __future__ import annotations
 
@@ -61,6 +75,91 @@ def _ctc_vocab(cfg: dict) -> dict | None:
         return load_ctc_aligner(cfg).vocab()
     except Exception:                       # the probe still runs without it
         return None
+
+
+def _select_aligner_configuration(cfg: dict, log, rdir, taint: dict, *,
+                                  qwen: dict | None = None) -> dict:
+    """Build the development set, sweep the decoder-query convention, freeze it.
+
+    Why this lives here and not in l1b
+    ----------------------------------
+    `bias.pred_start_sweep` existed but was never executable: it needs synthetic
+    development data, which was built by l1b, which requires l1a. The experiment
+    was stranded across a dependency boundary, so the ~700 ms Whisper bias could
+    be described in a comment and never tested. The development set is
+    prerequisite-safe -- it needs the D-construct role manifest, which L0 froze --
+    so it is built here, published with a manifest, and reused by l1b for the
+    operating-tolerance selection.
+
+    Nothing in here judges anything. Both conventions are legitimate readings of
+    the same attention; the sweep says which one places boundaries where the
+    construction put them, and Gate A still has to clear the proposal's
+    thresholds on a fresh gate set afterwards.
+    """
+    from ..lss.align import devselect
+    from ..models.whisper import load_whisper
+    from ..nat5h.schema import RunIdentity
+
+    root = Path(cfg["experiment"]["output_root"])
+    acfg = (cfg.get("alignment") or {})
+    gcfg = cfg.get("gate_a") or {}
+    offsets = list(((acfg.get("dtw_variants") or {}).get("pred_start_offsets")
+                    or [-1, 0]))
+
+    dev, dev_meta = devselect.build_dev_set(
+        cfg, stage=STAGE, run_dir=rdir, taint_reasons=taint["taint_reasons"])
+    log.info("synthetic development set: %d pairs from %d source utterances "
+             "(sha256 %s)", len(dev), len(dev_meta.get("source_utterances") or []),
+             str(dev_meta.get("sha256"))[:12])
+    out: dict = {"development_artifact": {
+        "path": dev_meta.get("path"), "sha256": dev_meta.get("sha256"),
+        "pairs": int(len(dev)), "fingerprint": dev_meta.get("fingerprint"),
+        "settings": dev_meta.get("settings"),
+    }, "offsets": offsets}
+    if not len(dev):
+        log.error("no synthetic development pairs were rendered; the pred_start "
+                  "sweep has nothing to score against")
+        out["whisper"] = {"pred_start_offset": None,
+                          "rejected": {"*": ["no development pairs"]}}
+        return out
+
+    bundle = load_whisper(cfg)
+    sweep = devselect.whisper_variant_sweep(
+        bundle, dev, cfg, RunIdentity.from_cfg(cfg), offsets=offsets,
+        out_dir=root / "synthetic" / "dev" / "alignments")
+    sweep_path = art(cfg, "metrics", "l1a_pred_start_sweep.parquet")
+    write_parquet(sweep, sweep_path)
+    log.info("pred_start sweep against known development boundaries:\n%s",
+             sweep.to_string(index=False) if len(sweep) else "(empty)")
+
+    whisper = devselect.select_whisper_variant(
+        sweep, min_boundaries=int(gcfg.get("min_pred_start_boundaries", 50)))
+    log.info("selected decoder-query convention: offset=%s variant=%s "
+             "(default %s, changed=%s)", whisper.get("pred_start_offset"),
+             whisper.get("aligner_variant"),
+             whisper.get("default_pred_start_offset"),
+             whisper.get("changed_the_default"))
+
+    payload = devselect.aligner_selection(
+        whisper,
+        # the probe's frozen language, recorded here so one artifact answers
+        # "which variants produced this alignment" for every family
+        qwen_language=((qwen or {}).get("language_diagnostics") or [{}])[0]
+        .get("language") if qwen else None,
+        dev_artifact=out["development_artifact"],
+        seeds={"synthetic_dev": seed_for(cfg, "synthetic_dev"),
+               "synthetic_gate": seed_for(cfg, "synthetic_gate")},
+        thresholds={"min_pred_start_boundaries":
+                    int(gcfg.get("min_pred_start_boundaries", 50))})
+    selection_path = root / devselect.ALIGNER_SELECTION_FILE
+    write_json(payload, selection_path)
+    manifest_mod.publish(selection_path, None, stage=STAGE, cfg=cfg, run_dir=rdir,
+                         taint_reasons=taint["taint_reasons"],
+                         schema=devselect.ALIGNER_SELECTION_SCHEMA)
+    out.update({"sweep": sweep.to_dict(orient="records"),
+                "sweep_path": str(sweep_path), "whisper": whisper,
+                "selection_path": str(selection_path), "payload": payload})
+    return out
 
 
 def _run(argv: list[str] | None = None) -> int:
@@ -159,11 +258,32 @@ def _run(argv: list[str] | None = None) -> int:
             log.info("overlaps: %d found, %.2f benign (<=1 frame), %d repaired",
                      effect["overlaps_found"], effect.get("benign_fraction", float("nan")),
                      effect["repaired"])
+            # Why they overlap, not just how many. On the production table this
+            # attributes the whole Whisper invalid rate to reference units that
+            # share one Whisper token, which is not repairable by truncation --
+            # see `repair.attribute_overlaps`.
+            attribution, attribution_report = repair.attribute_overlaps(nat5h)
+            write_parquet(attribution,
+                          art(cfg, "metrics", "l1a_overlap_attribution.parquet"))
+            write_json(attribution_report,
+                       art(cfg, "diagnostics", "l1a_overlap_attribution.json"))
+            metrics["overlap_attribution"] = attribution_report
+            log.info("overlap attribution (%s): %s of %d overlapping rows; "
+                     "identical spans %.3f", attribution_report["family"],
+                     attribution_report["causes"],
+                     attribution_report["overlaps"],
+                     attribution_report["identical_span_fraction"])
             criteria += [
                 check("overlap_inventory_written", 1, 1, "=="),
                 check("overlap_repair_measured", 1, 1, "=="),
+                check("overlap_causes_attributed",
+                      int(bool(attribution_report["overlaps"] == 0
+                               or attribution_report["causes"])), 1, "=="),
                 reported("overlaps_found", effect["overlaps_found"]),
                 reported("benign_overlap_fraction", effect.get("benign_fraction")),
+                reported("overlap_causes", json.dumps(attribution_report["causes"])),
+                reported("overlap_identical_span_fraction",
+                         attribution_report["identical_span_fraction"]),
                 reported("median_boundary_movement_ms",
                          effect.get("median_boundary_movement_ms")),
             ]
@@ -272,13 +392,37 @@ def _run(argv: list[str] | None = None) -> int:
                          json.dumps(result.process_group or {})),
             ]
 
-        # ---- GPU sweep: the decoder-query convention ------------------------
+        # ---- the decoder-query convention, selected on development data -----
         if "bias" in parts and not args.dry_run and args.sample != 0:
-            log.info("pred_start sweep is a GPU experiment; run it with the "
-                     "synthetic development set produced by l1b --only synthetic")
-            criteria.append(reported(
-                "pred_start_sweep",
-                "deferred: needs the synthetic development set from l1b"))
+            selection = _select_aligner_configuration(
+                cfg, log, rdir, prereq["taint"], qwen=metrics.get("qwen"))
+            metrics["aligner_selection"] = selection
+            sweep = selection.get("sweep") or []
+            criteria += [
+                # The sweep used to be a log line saying it was deferred to a
+                # stage that depends on this one, so the experiment could never
+                # run. These are mechanical: an absent artifact is a defect, not
+                # a scientific negative.
+                check("pred_start_sweep_offsets_scored", len(sweep),
+                      int(gcfg.get("min_pred_start_offsets", 2)), ">="),
+                check("pred_start_sweep_artifact_written",
+                      int(bool(selection.get("sweep_path"))), 1, "=="),
+                check("whisper_variant_selected",
+                      int(selection.get("whisper", {}).get("pred_start_offset")
+                          is not None), 1, "=="),
+                check("aligner_selection_frozen",
+                      int(bool(selection.get("selection_path"))), 1, "=="),
+                check("development_set_published",
+                      int(bool(selection.get("development_artifact", {})
+                               .get("sha256"))), 1, "=="),
+                reported("selected_pred_start_offset",
+                         selection.get("whisper", {}).get("pred_start_offset")),
+                reported("selected_aligner_variant",
+                         selection.get("whisper", {}).get("aligner_variant")),
+                reported("selection_instrument",
+                         selection.get("whisper", {}).get("instrument")),
+                reported("pred_start_sweep", json.dumps(sweep, default=str)),
+            ]
 
         criteria.append(check("no_scientific_claim", 1, 1, "=="))
 
@@ -310,7 +454,11 @@ def _run(argv: list[str] | None = None) -> int:
                artifacts=[str(art(cfg, "reports", "l1a_diagnostics.md"))],
                status_override=status if status != "passed" else None,
                forced_prereq=bool(prereq.get("forced_run")),
-               full_stage_pass=bool(status == "passed" and not args.only),
+               # A dry run skips the development set and the convention sweep, so
+               # it has not done L1b's prerequisite work whatever its own checks
+               # say. `--only` was already excluded for the same reason.
+               full_stage_pass=bool(status == "passed" and not args.only
+                                    and not args.dry_run),
                taint=prereq["taint"])
         log.info("L1a gate: %s", status.upper())
         return exit_code(status)

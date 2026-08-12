@@ -1,4 +1,10 @@
-include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml, lss/align.yaml]
+# audit.yaml is included for its `synthetic` block and the selection thresholds:
+# this stage builds the synthetic development set and selects the decoder-query
+# convention on it, so the numbers that decision is made against have to be the
+# same ones Gate A reads. The `gate_a` thresholds come along and are unused here;
+# only l1b evaluates them.
+include: [lss/base.yaml, lss/roles.yaml, lss/spec.yaml, lss/align.yaml,
+          lss/audit.yaml]
 
 stage: l1a_diag
 

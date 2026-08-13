@@ -16,7 +16,7 @@ import numpy as np
 from ..data.normalize import normalize_text
 from ..utils.logging import get_logger
 from .hooks import MultiHook, assert_no_hooks
-from .whisper import WhisperBundle, batch_features
+from .whisper import WhisperBundle, batch_model_inputs
 
 log = get_logger(__name__)
 
@@ -32,16 +32,20 @@ HookBuilder = Callable[[pd.DataFrame], Sequence]
 
 def _generate_kwargs(cfg: dict, language: str | None) -> dict:
     dec = cfg["decoding"]
+    consume_scores = bool(dec.get("output_scores", True))
     kwargs = dict(
         task=dec.get("task", "transcribe"),
         do_sample=bool(dec.get("do_sample", False)),
         num_beams=int(dec.get("num_beams", 1)),
         max_new_tokens=int(dec.get("max_new_tokens", 200)),
-        return_dict_in_generate=True,
-        output_scores=bool(dec.get("output_scores", True)),
+        # Scores are consumed below for avg/token log-probabilities. Structured
+        # return and score output are enabled together or both omitted.
+        return_dict_in_generate=consume_scores,
         return_timestamps=bool(dec.get("return_timestamps", False)),
         condition_on_prev_tokens=False,
     )
+    if consume_scores:
+        kwargs["output_scores"] = True
     if language is not None:
         kwargs["language"] = language
     temp = dec.get("temperature", 0.0)
@@ -55,15 +59,18 @@ def decode_batch(bundle: WhisperBundle, audio_paths: Sequence[str], cfg: dict,
                  language: str | None = None,
                  hooks: Sequence | None = None) -> list[dict]:
     """Decode one batch; ``hooks`` are active only for this call."""
-    features = batch_features(bundle, audio_paths)
+    model_inputs = batch_model_inputs(bundle, audio_paths)
     kwargs = _generate_kwargs(cfg, language)
     with MultiHook(hooks or []):
-        out = bundle.model.generate(features, **kwargs)
+        out = bundle.model.generate(**model_inputs, **kwargs)
     assert_no_hooks(bundle)
 
     # With return_timestamps=True Whisper returns a plain dict (sequences +
     # per-segment results) instead of a ModelOutput; accept both shapes.
-    if isinstance(out, dict) and not hasattr(out, "sequences"):
+    if isinstance(out, torch.Tensor):
+        sequences = out
+        scores = None
+    elif isinstance(out, dict) and not hasattr(out, "sequences"):
         sequences = out["sequences"]
         scores = out.get("scores")
     else:
@@ -216,9 +223,9 @@ def teacher_forced_forward(bundle: WhisperBundle, audio_paths: Sequence[str],
     padded = padded.to(bundle.device)
     mask = mask.to(bundle.device)
 
-    features = batch_features(bundle, audio_paths)
+    model_inputs = batch_model_inputs(bundle, audio_paths)
     out = bundle.model(
-        input_features=features,
+        **model_inputs,
         decoder_input_ids=padded,
         output_attentions=output_attentions,
         output_hidden_states=output_hidden_states,

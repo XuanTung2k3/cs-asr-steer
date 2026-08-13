@@ -21,9 +21,9 @@ decision, taken before any E4 result is seen.
 
 Frame geometry
 --------------
-wav2vec2-style encoders stride 320 samples at 16 kHz -> 20 ms per frame, exactly
-matching Whisper's encoder step (hop 160 x conv stride 2). Frame indices here and
-in the alignment tables therefore refer to the same instants, with no rescaling.
+Emission indices are mapped onto the actual waveform duration.  A nominal model
+stride is not sufficient: processor padding and convolution length rules can
+make ``T * 20 ms`` differ from the samples the model actually received.
 
 Availability
 ------------
@@ -44,9 +44,6 @@ from ..utils.logging import get_logger
 
 log = get_logger(__name__)
 
-FRAME_SEC = 0.02
-
-
 class CTCUnavailable(RuntimeError):
     """The CTC aligner model or its romanizer is not installed."""
 
@@ -57,7 +54,6 @@ class CTCAligner:
     processor: object
     device: str
     blank_id: int
-    frame_sec: float = FRAME_SEC
 
     def vocab(self) -> dict:
         return self.processor.tokenizer.get_vocab()
@@ -174,7 +170,11 @@ def _uroman():
 @torch.inference_mode()
 def ctc_log_posteriors(aligner: CTCAligner, audio: np.ndarray,
                        sample_rate: int = 16000) -> torch.Tensor:
-    """(T, V) log-probabilities on the 20 ms grid."""
+    """Return ``(emission_frames, vocabulary)`` log-probabilities.
+
+    No fixed frame duration is implied here; :func:`align_units` maps these
+    frames over the actual waveform duration.
+    """
     inputs = aligner.processor(audio, sampling_rate=sample_rate, return_tensors="pt")
     values = inputs.input_values.to(aligner.device)
     logits = aligner.model(values).logits[0]
@@ -284,6 +284,11 @@ def align_units(aligner: CTCAligner, audio: np.ndarray, surfaces: list[str],
                          f"{log_probs.shape[0]} frames")
     spans = viterbi_align(log_probs, token_ids, aligner.blank_id)
 
+    emission_frames = int(log_probs.shape[0])
+    waveform_samples = int(len(audio))
+    if emission_frames <= 0 or waveform_samples <= 0 or sample_rate <= 0:
+        raise ValueError("CTC timing requires positive waveform and emission lengths")
+    seconds_per_emission = waveform_samples / (float(sample_rate) * emission_frames)
     out: list[dict] = []
     for ui, surface in enumerate(surfaces):
         picks = [spans[i] for i, o in enumerate(owner) if o == ui and spans[i][0] >= 0]
@@ -296,7 +301,13 @@ def align_units(aligner: CTCAligner, audio: np.ndarray, surfaces: list[str],
             "surface": surface,
             "start_frame": int(start),
             "end_frame": int(end),
-            "start_sec": float(start * aligner.frame_sec),
-            "end_sec": float(end * aligner.frame_sec),
+            # viterbi_align returns [start, end), so end maps to the exclusive
+            # emission edge rather than the centre of the last frame.
+            "start_sec": float(start * seconds_per_emission),
+            "end_sec": float(end * seconds_per_emission),
+            "sample_rate": int(sample_rate),
+            "waveform_samples": waveform_samples,
+            "emission_frames": emission_frames,
+            "seconds_per_emission": float(seconds_per_emission),
         })
     return out

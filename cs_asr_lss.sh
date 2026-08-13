@@ -291,9 +291,10 @@ codes and the next action are in
   ${OUTPUT_ROOT}/status/l1b_valid.json      (.blocked_reasons, .next_action)
   ${OUTPUT_ROOT}/reports/l1b_gate_a.md
 
-If the block is blocked_missing_synthetic_calibration, the automatic path has
-no source of absolute boundary error yet. The optional manual audit is the
-other way to obtain one:
+If the block is blocked_missing_genuine_lexical_calibration, the RMS/VAD
+synthetic splice is only a known audio seam, not a known lexical boundary.
+Provide manual/gold/exactly constructed lexical edges before another automatic
+confirmatory run. The optional manual audit is one valid instrument:
 
   sbatch cs_asr_lss.sh l1b --prepare-manual-audit
   #   read  ${OUTPUT_ROOT}/audit/l1b/ANNOTATION_GUIDE.md
@@ -311,6 +312,18 @@ EOF
   esac
   exit "${rc}"
 }
+
+# CPU-only development re-evaluation (run directly on a login/CPU node):
+#
+#   PYTHONPATH=src python -m csasr.experiments.lss_alignment_dev_diagnostic \
+#     --config lss/l1b_valid.yaml \
+#     --diagnostic-output /tmp/csasr_gate_a_dev_diagnostic
+#
+# It reads authenticated cached candidates and writes only diagnostic-tainted
+# JSON/Markdown plus manifests. It never allocates a held-out gate generation,
+# freezes spans, writes a production status, or unlocks L1c. Do this before a
+# future `sbatch cs_asr_lss.sh chain --overwrite`; the full chain is intentionally
+# not submitted while genuine lexical calibration is unavailable.
 
 case "${PHASE}" in
   chain)        chain "$@" ;;

@@ -166,9 +166,11 @@ def align_batch(bundle, rows: pd.DataFrame, *, language: str = "zh",
     original convention), ``0`` uses the query *at* token k (the convention in
     OpenAI's ``whisper.timing.find_alignment``, which slices at
     ``len(sot_sequence)``). One decoder step is 220-400 ms on this corpus, so
-    the two conventions differ by roughly the systematic error E1 measured
-    against synthetic ground truth. The default preserves existing behaviour;
-    `csasr.lss.align.bias` sweeps it against that ground truth.
+    the two conventions differ by roughly the systematic offset E1 measured
+    relative to a constructed audio seam. The default preserves existing
+    behaviour; `csasr.lss.align.devselect` compares the alternatives using an
+    explicitly seam-relative development diagnostic. That diagnostic is not
+    lexical-boundary accuracy evidence.
     """
     from ..models.generation import teacher_forced_forward
 

@@ -6,16 +6,16 @@ canonical sample coordinates):
     EN: median signed start (DTW - CTC) = -360 ms, median span 470 vs 270 ms
     ZH: median signed start (DTW - CTC) = -180 ms, median span 220 vs 100 ms
 
-and, against synthetic ground truth, Whisper-DTW's own median signed error was
--490 ms. DTW is precisely self-consistent (two configurations agree to 10 ms)
+and, relative to the constructed audio seam, Whisper-DTW's own median signed
+offset was -490 ms. DTW is precisely self-consistent (two configurations agree to 10 ms)
 but externally early, and it does not absorb silence. That is the signature of
 an indexing convention rather than an acoustic failure, which is what
 `pred_start_sweep` tests.
 
 `offset_correction_counterfactual` exists to be *reported and not applied*. A
 constant offset would lift 200 ms acceptance from 0.482 to 0.685 (EN 0.167 to
-0.438) with no external evidence that it is right; corrections may only be
-fitted to ground truth, which happens in the validation stage.
+0.438) with no lexical reference evidence that it is right; corrections may
+only be fitted to a genuine lexical reference.
 """
 from __future__ import annotations
 
@@ -139,11 +139,12 @@ def disagreement_regression(pairs: pd.DataFrame, *, edge: str = "start",
 def pred_start_sweep(bundle, manifest: pd.DataFrame, cfg: dict, truth: pd.DataFrame, *,
                      offsets: Sequence[int] = (-1, 0),
                      language: str = "zh") -> pd.DataFrame:
-    """Score each decoder-query convention against synthetic ground truth.
+    """Compare each decoder-query convention with a constructed audio seam.
 
     ``truth`` needs `utterance_id` and `true_boundary_sec` (the instant Mandarin
     stops in a spliced ZH+EN item). For each offset the first ZH->EN switch
-    predicted by DTW is compared with that instant.
+    predicted by DTW is compared with that instant.  These are seam-relative
+    coordinate diagnostics, not absolute lexical-boundary errors.
     """
     from ...data.alignment import align_batch
 
@@ -174,11 +175,18 @@ def pred_start_sweep(bundle, manifest: pd.DataFrame, cfg: dict, truth: pd.DataFr
             "pred_start_offset": int(offset),
             "convention": "query_predicting_token" if offset == -1 else "query_at_token",
             "n_pairs": int(len(error)),
-            "median_signed_error_ms": float(np.median(error)) if len(error) else float("nan"),
-            "mean_signed_error_ms": float(error.mean()) if len(error) else float("nan"),
-            "median_abs_error_ms": float(np.median(np.abs(error))) if len(error) else float("nan"),
-            "within_100ms": float((np.abs(error) <= 100).mean()) if len(error) else float("nan"),
-            "within_200ms": float((np.abs(error) <= 200).mean()) if len(error) else float("nan"),
+            "reference_kind": "audio_splice",
+            "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+            "median_switch_minus_splice_ms": float(np.median(error))
+            if len(error) else float("nan"),
+            "mean_switch_minus_splice_ms": float(error.mean())
+            if len(error) else float("nan"),
+            "median_absolute_splice_offset_ms": float(np.median(np.abs(error)))
+            if len(error) else float("nan"),
+            "within_100ms_of_splice": float((np.abs(error) <= 100).mean())
+            if len(error) else float("nan"),
+            "within_200ms_of_splice": float((np.abs(error) <= 200).mean())
+            if len(error) else float("nan"),
         })
     return pd.DataFrame(rows)
 
@@ -203,7 +211,7 @@ def offset_correction_counterfactual(pairs: pd.DataFrame,
 
     Never applied in this stage: an offset fitted to inter-aligner agreement
     optimizes the very statistic it would then be judged by. Corrections are
-    fitted to external ground truth in the validation stage.
+    fitted only to a genuine lexical reference in the validation stage.
     """
     if not len(pairs):
         return pd.DataFrame()
@@ -226,6 +234,6 @@ def offset_correction_counterfactual(pairs: pd.DataFrame,
                 if (pairs["language"] == "EN").any() else float("nan"),
                 "n": int(len(pairs)),
                 "applied": False,
-                "note": "diagnostic only; corrections must be fitted to external truth",
+        "note": "diagnostic only; corrections require genuine lexical truth",
             })
     return pd.DataFrame(rows)

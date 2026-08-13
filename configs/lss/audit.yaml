@@ -1,15 +1,18 @@
-# Gate-A evidence: synthetic ground truth, human audit, jitter (leaf fragment).
+# Gate-A evidence: typed synthetic/reference data, optional human audit, jitter.
 # Thresholds live here rather than in code so the gate is data, and so the
 # pre-decided failure responses are written down before any number is seen.
 
 synthetic:
-  num_pairs_dev: 100
-  num_pairs_gate: 100
+  # Candidate pools exceed the 100-boundary usable requirement.  Exactly 100
+  # generated items would silently turn that requirement into 100% scorability.
+  num_pairs_dev: 150
+  num_pairs_gate: 150
   gap_ms: 0.0
   trim_silence: true
   trim_pad_ms: 20.0
   max_duration_sec: 28.0
   source_role: D-construct
+  reference_kind: audio_splice
   conventions: [unit_edge_canonical, midpoint_legacy]
 
 audit:
@@ -37,18 +40,20 @@ gate_a:
                                    # variants of one estimator are still one
   min_family_valid_unit_coverage: 0.95
   min_unit_coverage: 0.95          # proposal 4.1: coverage >= 0.95
+  min_paired_units: 100
+  min_paired_target_rate: 0.90
   max_nonmonotonic_rate: 0.01      # proposal 4.1: invalid/nonmonotonic <= 0.01
   # X - external accuracy; these are the ones that are never weakened.
   #
   # Two kinds of evidence live here and they are NOT interchangeable.
   # `cross_aligner_*` is measured between two independent aligners on natural
   # speech: it is estimator disagreement, and a shared bias makes both aligners
-  # agree while both are wrong. `synthetic_*` and `human_*` are absolute error,
-  # because the boundary is known by construction or was annotated. The
-  # proposal's 100/200/30 ms thresholds are error thresholds; they are applied
-  # unchanged to the error quantities, and the disagreement quantities carry
-  # their own limits at the same numbers because a disagreement larger than the
-  # tolerated error cannot be consistent with both aligners being accurate.
+  # agree while both are wrong. Absolute error is permitted only for explicit
+  # lexical reference kinds (manual, existing gold, or genuinely exact lexical
+  # construction). The configured RMS/VAD splice is only an audio seam and
+  # cannot satisfy those criteria. The disagreement quantities carry their own
+  # limits at the same numbers because disagreement larger than the tolerated
+  # error cannot be consistent with both aligners being accurate.
   max_cross_aligner_boundary_disagreement_ms: 100.0
   max_cross_aligner_boundary_disagreement_p90_ms: 200.0
   max_cross_aligner_en_zh_diff_ms: 30.0
@@ -57,15 +62,9 @@ gate_a:
   max_synthetic_abs_bias_ms: 50.0
   # A - automatic configuration selection, on DEVELOPMENT items only.
   #
-  # Deliberately the same numbers as max_human_*_abs_error_ms below.
-  # `spec.yaml alignment_prereg.tolerance_selection_rule` states the rule on the
-  # absolute boundary error of the spans a tolerance accepts and names the human
-  # audit as the instrument, because that was the only instrument implemented
-  # when it was written. The automatic path measures the same quantity with the
-  # instrument it has -- synthetic splices whose boundaries are known by
-  # construction, which the same freeze already registers as external truth --
-  # and records which instrument was used. No threshold is relaxed; only the
-  # measuring device changes, and the choice is never made on the gate set.
+  # Deliberately the same numbers as max_human_*_abs_error_ms below. They may be
+  # applied only to genuine lexical reference kinds. The present RMS/VAD splice
+  # is an audio seam and therefore leaves automatic tolerance selection blocked.
   max_selection_median_abs_error_ms: 100.0
   max_selection_p90_abs_error_ms: 200.0
   # A median over a handful of items that happened to agree is not a selection.
@@ -74,13 +73,14 @@ gate_a:
   # Prospective amendment, disclosed after job 38573 and before the next fresh
   # confirmatory gate generation. The sealed v1 spec literally names the human
   # audit as the tolerance-selection instrument; automatic mode instead uses
-  # known synthetic development boundaries. This is an amendment, not an
-  # interpretation silently attributed to the original freeze. Its bytes and
-  # hash are recorded in the frozen operating-point artifact.
+  # genuine exact lexical development boundaries. This is an amendment, not an
+  # interpretation silently attributed to the original freeze. The present
+  # audio-splice instrument does not qualify, so the amendment is superseded and
+  # Gate A remains blocked until compatible evidence exists.
   automatic_instrument_amendment:
     id: gate-a-automatic-instrument-amendment-2026-08-11
     document: docs/proposal_arr/GATE_A_AUTOMATIC_INSTRUMENT_AMENDMENT_2026-08-11.md
-    status: adopted_prospectively
+    status: superseded_pending_genuine_lexical_reference
     effective_from_gate_generation: 1
   min_human_units: 200
   min_human_units_per_language: 100
@@ -107,6 +107,9 @@ gate_a:
   min_loc_train_en_spans: 1000
   min_dev_select_targets: 300
   min_dev_confirm_targets: 150
+  # Role sufficiency is a property of the complete L0-frozen role manifests,
+  # not of alignment.diagnostics.sample_utterances.
+  data_sufficiency_universe: full_l0_role_manifest
 
 failure_response:
   external_fails_on_high_bin: stop_and_repair
@@ -120,6 +123,7 @@ failure_response:
   # Blocked reasons are not failures: they name evidence that does not exist
   # yet. Each has one response and none of them is "use a different metric".
   blocked_missing_synthetic_calibration: implement_synthetic_scoring_or_manual_mode
+  blocked_missing_genuine_lexical_calibration: provide_manual_gold_or_constructed_exact_lexical_boundaries
   blocked_insufficient_independent_aligners: repair_whisper_dtw_or_enable_qwen
   blocked_no_candidate_alignments: run_the_aligner_sweep
   blocked_tainted_inputs: rerun_prerequisites_without_force_prereq

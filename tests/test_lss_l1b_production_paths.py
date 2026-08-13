@@ -218,6 +218,8 @@ def _fake_rendered(purpose: str, n: int, *, offset_sec: float = 0.0):
             "duration_sec": 4.0, "purpose": purpose,
             "zh_end_sec": zh_end, "en_start_sec": zh_end,
             "true_boundary_sec": zh_end,
+            "reference_kind": "constructed_exact_lexical",
+            "reference_semantics": "test_fixture_exact_lexical_edges",
             # source ids namespaced per purpose, so the disjointness check is real
             "zh_utterance_id": f"{purpose}_zh_{i}",
             "en_utterance_id": f"{purpose}_en_{i}",
@@ -349,7 +351,11 @@ def test_the_operating_tolerance_is_selected_from_development_evidence(
     amendment = point["selection"]["scientific_amendment"]
     assert amendment["id"] == \
         "gate-a-automatic-instrument-amendment-2026-08-11"
-    assert amendment["status"] == "adopted_prospectively"
+    # The repository's real RMS/VAD development set is only an audio seam, so
+    # the amendment stays pending even though this exact-lexical fixture is
+    # sufficient to exercise the future supported path.
+    assert amendment["status"] == \
+        "superseded_pending_genuine_lexical_reference"
     assert len(amendment["sha256"]) == 64
     assert "not an unchanged execution" in amendment["disclosure"]
 
@@ -450,7 +456,7 @@ def test_the_published_score_table_is_authenticated(root, synthetic_stubs):
     verdict = mm.verify(root / autoevidence.SYNTHETIC_SCORES_FILE,
                         cfg=_resolved_cfg(root), require_identity=True)
     assert verdict["ok"], verdict
-    assert verdict["manifest"]["schema"] == "lss_synthetic_scores_v1"
+    assert verdict["manifest"]["schema"] == autoevidence.SYNTHETIC_SCORES_SCHEMA
     amendment = verdict["manifest"]["scientific_amendment"]
     assert amendment["id"] == \
         "gate-a-automatic-instrument-amendment-2026-08-11"
@@ -466,10 +472,16 @@ def test_the_convention_comparison_is_written_for_a_reviewer(root, synthetic_stu
         root / "metrics" / "l1b_synthetic_convention_comparison.parquet")
     assert set(comparison["convention"]) == {"unit_edge_canonical",
                                             "midpoint_legacy"}
+    assert {"reference_kind", "metric_semantics",
+            "median_signed_offset_ms", "median_absolute_offset_ms"} \
+        <= set(comparison.columns)
     per_item = pd.read_parquet(
-        root / "metrics" / "l1b_synthetic_boundary_error.parquet")
+        root / autoevidence.SYNTHETIC_ITEMS_FILE)
     assert set(per_item["purpose"]) == {"dev", "gate"}
     assert per_item["scorable"].all()
+    assert set(per_item["reference_kind"]) == {"constructed_exact_lexical"}
+    assert {"signed_start_error_ms", "signed_end_error_ms",
+            "absolute_boundary_error_ms"} <= set(per_item.columns)
 
 
 # --------------------------------------------------------------------------
@@ -533,9 +545,11 @@ def test_a_probe_sized_family_cannot_count_as_an_independent_aligner(root):
     assert "qwen_forced_aligner" in independence["rejected_families"]
     reason = " ".join(independence["rejection_reasons"]["qwen_forced_aligner"])
     assert "valid_units" in reason
-    # a perfect validity rate on a tiny sample is not what disqualified it
+    # Target coverage is measured against the full expected target universe;
+    # a perfect candidate-relative rate can no longer appear here.
     validity = {row["aligner_family"]: row for row in evidence["family_validity"]}
-    assert validity["qwen_forced_aligner"]["valid_unit_coverage"] == pytest.approx(1.0)
+    assert validity["qwen_forced_aligner"]["valid_unit_coverage"] == \
+        pytest.approx(2 / 30)
     # the two real families are unaffected
     assert independence["n_independent_valid_families"] == 2
     _assert_not_a_pass(status, code)
@@ -544,17 +558,28 @@ def test_a_probe_sized_family_cannot_count_as_an_independent_aligner(root):
 # --------------------------------------------------------------------------
 # the false-pass paths
 # --------------------------------------------------------------------------
-def test_two_valid_aligners_but_disjoint_units_cannot_pass(root):
-    """Both families qualify, candidate-relative coverage is 1.0, and not one
-    unit was aligned by both -- so there is no cross-aligner evidence at all."""
+def test_two_qualifying_aligners_with_insufficient_paired_overlap_cannot_pass(root):
+    """Both families clear 95% target coverage but their paired rate misses the
+    explicitly tightened test requirement. This is the paired-evidence blocker,
+    unlike the one-qualifying-family case, and it never claims disjoint inputs."""
     manifest = _manifest(30)
-    ctc = _candidate_rows(manifest.iloc[:15], ["existing_ctc"])
-    dtw = _candidate_rows(manifest.iloc[15:], ["whisper_dtw"])
-    _publish_candidates(root, pd.concat([ctc, dtw], ignore_index=True))
+    ctc = _candidate_rows(manifest.iloc[:-1], ["existing_ctc"])
+    dtw = _candidate_rows(manifest.iloc[1:], ["whisper_dtw"])
+    override = "gate_a.min_paired_target_rate=0.95"
+    from csasr.utils.config import load_config
+    configured = load_config("lss/l1b_valid.yaml", _OVERRIDES(root) + [override])
+    _publish_candidates(root, pd.concat([ctc, dtw], ignore_index=True),
+                        cfg=configured)
 
-    code, status = _run(root)
+    code, status = _run(root, "--set", override)
     _assert_not_a_pass(status, code)
+    assert autoevidence.BLOCKED_INSUFFICIENT_ALIGNERS not in status["blocked_reasons"]
     assert autoevidence.BLOCKED_NO_PAIRED_AGREEMENT in status["blocked_reasons"]
+    evidence = json.loads(
+        (root / "diagnostics/l1b_automatic_evidence.json").read_text())
+    pair = evidence["pair_selection"]
+    assert pair["reason"] == "insufficient_paired_target_overlap"
+    assert pair["pair_diagnostics"][0]["paired_target_objects"] > 0
     _assert_l1c_locked(root)
 
 
@@ -568,6 +593,7 @@ def test_empty_consensus_cannot_pass(root):
     code, status = _run(root)
     _assert_not_a_pass(status, code)
     assert status["blocked_reasons"]
+    assert status["status"] == "blocked" and code == 0
     _assert_l1c_locked(root)
 
 
@@ -579,6 +605,7 @@ def test_an_unauthenticated_candidate_table_cannot_pass(root):
     code, status = _run(root)
     _assert_not_a_pass(status, code)
     assert autoevidence.BLOCKED_UNAUTHENTICATED_CANDIDATES in status["blocked_reasons"]
+    assert status["status"] == "blocked" and code == 0
     _assert_l1c_locked(root)
 
 
@@ -602,7 +629,28 @@ def test_four_percent_invalid_rows_cannot_pass(root):
     code, status = _run(root)
     _assert_not_a_pass(status, code)
     names = {c["name"] for c in status["gate"]["criteria"]}
-    assert "invalid_rate_whisper_dtw" in names
+    assert "target_invalid_rate_whisper_dtw" in names
+    _assert_l1c_locked(root)
+
+
+def test_rejected_third_family_is_diagnostic_after_a_pair_is_selected(root):
+    """A configured experimental aligner may fail qualification without vetoing
+    the deterministic CTC+Whisper production pair. Its failure is retained, but
+    it is not a gate criterion and cannot contaminate that pair's result."""
+    frame = _candidate_rows(
+        _manifest(30),
+        ["existing_ctc", "whisper_dtw", "qwen_forced_aligner"],
+        invalid_family="qwen_forced_aligner")
+    _publish_candidates(root, frame)
+
+    code, status = _run(root)
+
+    _assert_not_a_pass(status, code)  # lexical calibration is still unavailable
+    criteria = {c["name"]: c for c in status["gate"]["criteria"]}
+    assert criteria["target_invalid_rate_qwen_forced_aligner"]["comparison"] == "report"
+    assert criteria["family_role_qwen_forced_aligner"]["value"] \
+        == "diagnostic_rejected_not_selected_pair"
+    assert criteria["target_invalid_rate_whisper_dtw"]["comparison"] == "<="
     _assert_l1c_locked(root)
 
 
@@ -615,8 +663,11 @@ def test_omitted_utterances_are_visible_in_coverage(root):
     code, status = _run(root)
     _assert_not_a_pass(status, code)
     coverage = [c for c in status["gate"]["criteria"]
-                if c["name"] == "alignment_unit_coverage"]
+                if c["name"] == "alignment_target_object_coverage"]
     assert coverage and coverage[0]["passed"] is False
+    structural = [c for c in status["gate"]["criteria"]
+                  if c["name"] == "accepted_rejected_partition_structurally_valid"]
+    assert structural and structural[0]["passed"] is True
     _assert_l1c_locked(root)
 
 
@@ -734,8 +785,9 @@ def test_the_lock_is_taken_before_the_status_is_claimed(root):
 # --------------------------------------------------------------------------
 def test_per_role_counts_are_real_numbers_not_zeros(root):
     """Job 38573 accepted 32,086 spans and reported 0 for all six roles, so three
-    per-role thresholds and `construct_bilingual_utterances` failed on a dropped
-    column rather than on the data."""
+    per-role span diagnostics failed on a dropped column rather than on data.
+    Data sufficiency itself is now independently counted from the full L0 role
+    manifest."""
     _publish_candidates(root, _candidate_rows(_manifest(30),
                                               ["existing_ctc", "whisper_dtw"]))
     _run(root)
@@ -751,8 +803,12 @@ def test_per_role_counts_are_real_numbers_not_zeros(root):
 
     names = {c["name"]: c for c in read_status(root, "l1b_valid")["gate"]["criteria"]}
     assert names["role_counts_available"]["passed"] is True
-    # the real count is what the threshold is now evaluated against
-    assert names["construct_bilingual_utterances"]["value"] == 30
+    # the full role-manifest count, not the audit sample or span count, is what
+    # the data-sufficiency threshold is evaluated against.
+    criterion = names["data_sufficiency_construct_bilingual_utterances"]
+    assert criterion["value"] == 30
+    assert coverage["data_sufficiency"]["data_sufficiency_universe"] == \
+        "full_l0_role_manifest"
 
 
 def test_a_span_table_without_role_fails_the_schema_criterion(root, monkeypatch):
@@ -790,13 +846,16 @@ def test_a_naturally_qualifying_family_without_synthetic_calibration_blocks(
 
     evidence = json.loads(
         (root / "diagnostics" / "l1b_automatic_evidence.json").read_text())
-    correspondence = evidence["family_correspondence"]
-    assert correspondence["uncalibrated_natural_families"] == ["qwen_forced_aligner"]
-    assert correspondence["n_corresponding"] == 1
+    assert evidence["pair_selection"]["selected_pair"] == [
+        "existing_ctc", "qwen_forced_aligner"]
+    calibration = evidence["synthetic_calibration"]
+    assert calibration["available"] is False
+    assert "qwen_forced_aligner" in calibration["detail"]
     assert autoevidence.BLOCKED_UNCALIBRATED_FAMILIES in status["blocked_reasons"]
 
     names = {c["name"]: c for c in status["gate"]["criteria"]}
-    assert names["corresponding_qualifying_families"]["passed"] is False
+    assert names["synthetic_calibration"]["value"] == \
+        autoevidence.BLOCKED_UNCALIBRATED_FAMILIES
     _assert_not_a_pass(status, code)
     _assert_l1c_locked(root)
 
@@ -876,7 +935,7 @@ def test_the_disagreement_is_measured_between_the_corresponding_families(
 
     evidence = json.loads(
         (root / "diagnostics" / "l1b_automatic_evidence.json").read_text())
-    pair = evidence["family_correspondence"]["corresponding_families"]
+    pair = evidence["pair_selection"]["selected_pair"]
     agreement = evidence["cross_aligner_agreement"]
     assert set(pair) == {"existing_ctc", "whisper_dtw"}
     assert {agreement["family_a"], agreement["family_b"]} == set(pair)
@@ -1062,7 +1121,8 @@ def test_interrupted_synthetic_preparation_retries_with_a_new_generation(
     # Even an otherwise authentic score artifact is unavailable when its exact
     # gate request does not match the generation the evaluator is about to read.
     stale = autoevidence.synthetic_calibration_status(
-        root, cfg=_resolved_cfg(root), require_authentication=True,
+        root, selected_pair=["existing_ctc", "whisper_dtw"],
+        cfg=_resolved_cfg(root), require_authentication=True,
         expected_gate_generation=2,
         expected_gate_request_sha256=second_entry["alignment_request_sha256"],
         expected_gate_item_sha256=first_entry["item_set_sha256"])
@@ -1134,7 +1194,8 @@ def test_a_score_table_from_an_exposed_generation_is_refused(root, synthetic_stu
     assert exposure.current_generation(exposure.load_ledger(root), "gate") == 2
 
     status = autoevidence.synthetic_calibration_status(
-        root, cfg=_resolved_cfg(root), expected_gate_generation=2)
+        root, selected_pair=["existing_ctc", "whisper_dtw"],
+        cfg=_resolved_cfg(root), expected_gate_generation=2)
     assert status["available"] is False
     assert status["reason"] == autoevidence.BLOCKED_EXPOSED_GATE_SET
     assert "already been read" in status["detail"]
@@ -1169,8 +1230,9 @@ def test_a_truncated_score_table_cannot_pass_even_with_a_manifest(root,
     assert verdict["ok"] is False
     assert verdict["verdict"] in ("sha256_mismatch", "expected_keys_mismatch")
 
-    status = autoevidence.synthetic_calibration_status(root,
-                                                      cfg=_resolved_cfg(root))
+    status = autoevidence.synthetic_calibration_status(
+        root, selected_pair=["existing_ctc", "whisper_dtw"],
+        cfg=_resolved_cfg(root))
     assert status["available"] is False
     assert status["reason"] == autoevidence.BLOCKED_UNAUTHENTICATED_SYNTHETIC
 

@@ -1,8 +1,8 @@
 """Configuration selection from development-only evidence.
 
 The automatic Gate-A path requires no new human annotation, and this module is
-what makes that true for the one decision that previously needed it: the
-operating tolerance.
+what owns the development-only configuration choices.  It deliberately does
+not turn an audio splice into lexical calibration evidence.
 
 The conflict, and the disclosed amendment
 ------------------------------------------
@@ -11,23 +11,18 @@ The conflict, and the disclosed amendment
     the largest swept tolerance whose accepted spans still satisfy **human**
     median <= 100 ms and p90 <= 200 ms
 
-so a literal reading makes the automatic path depend on annotation, and L1b
-blocked on it. Automatic mode uses synthetic development splices instead. That
-is an instrument substitution after the v1 freeze, even though the estimand and
-thresholds are unchanged. It is therefore disclosed as the prospective
-amendment configured by `gate_a.automatic_instrument_amendment`, whose document
-hash is written into the operating point.
+so a literal reading makes the automatic path depend on annotation.  A prior
+amendment proposed substituting RMS/VAD-trimmed synthetic development splices,
+but those provide known audio seams rather than known lexical edges.  The
+amendment is retained as an authenticated scientific record and marked
+superseded.  Until a genuine lexical reference kind is supplied, automatic
+tolerance selection is truthfully blocked.
 
-Under the amendment, the same form and numbers -- 100 ms and 200 ms -- are
-applied against the synthetic **development** set, and the instrument is
-recorded in the frozen selection so no reader can confuse the two:
-
-    automatic mode  instrument = synthetic_dev    (development items only)
-    manual mode     instrument = human_audit      (the preregistered validation)
-
-Nothing here is weakened: the thresholds are the spec's, the gate set is never
-touched by selection, and if no swept tolerance qualifies the honest answer is
-`blocked` -- never a silent fallback to 200 ms.
+The decoder-query convention may still be selected on development-only
+seam-relative diagnostics: that is an implementation-coordinate choice, not a
+claim of lexical accuracy.  Its artifact uses explicit splice-offset field
+names.  The 100/200 ms lexical thresholds are applied only to genuine lexical
+reference kinds, never to the seam diagnostic.
 
 Two properties are enforced rather than assumed:
 
@@ -51,7 +46,8 @@ import pandas as pd
 from . import synthetic as synthetic_mod
 from .consensus_prod import ConsensusConfig, build, select_primary_tolerance
 
-#: the instrument that measured the absolute error a selection was made on
+#: development instruments.  The reference kind determines which claims are
+#: permitted; the name alone never licenses an absolute-error claim.
 INSTRUMENT_SYNTHETIC_DEV = "synthetic_dev"
 INSTRUMENT_HUMAN_AUDIT = "human_audit"
 
@@ -70,12 +66,12 @@ OPERATING_POINT_SCHEMA = "lss_operating_point_v1"
 
 
 def scientific_amendment(cfg: Mapping[str, Any]) -> dict[str, Any]:
-    """Authenticated disclosure for the automatic instrument substitution.
+    """Authenticated disclosure for the proposed instrument substitution.
 
-    The sealed v1 text literally names a human instrument. Automatic selection
-    on synthetic development truth is therefore a prospective amendment, not a
-    silent interpretation. The operating point records the document hash so a
-    later edit cannot change the method an existing result claims to follow.
+    The sealed v1 text literally names a human instrument. Any future automatic
+    selection on genuine exact lexical development references is therefore a
+    prospective amendment, not a silent interpretation. The record also makes
+    the current superseded state immutable and reviewable.
     """
     from ...utils.config import REPO_ROOT
     from ...utils.hashing import sha256_file
@@ -151,7 +147,7 @@ def consensus_as_candidates(spans: pd.DataFrame, *,
 
 def _combined_error(rendered: pd.DataFrame, spans: pd.DataFrame, *,
                     estimator: str) -> dict[str, Any]:
-    """Absolute seam error of consensus spans against known boundaries.
+    """Absolute lexical-edge error of consensus spans against known references.
 
     The `combined` edge is used -- the worse of the two edges of each item --
     because a steering mask is wrong at whichever end is wrong, and because Gate
@@ -203,6 +199,30 @@ def tolerance_accuracy(rendered: pd.DataFrame, candidates: pd.DataFrame,
             or not len(candidates):
         return pd.DataFrame()
     assert_development_only(rendered, what="the tolerance-selection item set")
+
+    reference_kinds = set(rendered.get(
+        "reference_kind", pd.Series([synthetic_mod.AUDIO_SPLICE] * len(rendered)))
+        .astype(str))
+    if not reference_kinds <= synthetic_mod.LEXICAL_REFERENCE_KINDS:
+        # An RMS/VAD seam can diagnose systematic coordinate offsets but is not
+        # the lexical reference required by the sealed selection estimand.
+        return pd.DataFrame([{
+            "tolerance_ms": float(tolerance),
+            "purpose": DEVELOPMENT_PURPOSE,
+            "instrument": "audio_splice_diagnostic",
+            "reference_kinds": ",".join(sorted(reference_kinds)),
+            "eligible": False,
+            "accepted_spans": 0,
+            "rejected_units": 0,
+            "items_scored": 0,
+            "min_boundaries": int(min_boundaries),
+            "reason": "missing_genuine_lexical_boundaries",
+            "n": 0,
+            "median_abs_error_ms": float("nan"),
+            "p90_abs_error_ms": float("nan"),
+            "median_signed_error_ms": float("nan"),
+            "within_100ms": float("nan"),
+        } for tolerance in tolerances_ms])
 
     rows: list[dict[str, Any]] = []
     for tol in tolerances_ms:
@@ -266,6 +286,8 @@ def select_operating_tolerance(evidence: pd.DataFrame, *,
 
     for _, row in evidence.iterrows():
         why: list[str] = []
+        if row.get("reason"):
+            why.append(str(row["reason"]))
         if not bool(row["eligible"]):
             why.append(f"items_scored={int(row['items_scored'])}"
                        f"<{int(row['min_boundaries'])}")
@@ -324,8 +346,8 @@ def apply_selection(config: ConsensusConfig, record: Mapping[str, Any]
 #: Published by L1a, read by L1b. It lives under `synthetic/` rather than under a
 #: stage-prefixed metrics name because two stages depend on it: L1a selects the
 #: decoder-query convention on it, L1b selects the operating tolerance on it, and
-#: both must be looking at the same 100 items or the two decisions were made on
-#: different data.
+#: both must be looking at the same configured candidate pool or the two
+#: decisions were made on different data.
 DEV_ITEMS_FILE = "synthetic/dev_items.parquet"
 DEV_ITEMS_SCHEMA = "lss_synthetic_dev_items_v1"
 
@@ -417,14 +439,15 @@ ALIGNER_SELECTION_SCHEMA = "lss_aligner_selection_v1"
 def whisper_variant_sweep(bundle, rendered: pd.DataFrame, cfg: Mapping[str, Any],
                           identity, *, offsets: Sequence[int] = (-1, 0),
                           out_dir: str | Path | None = None) -> pd.DataFrame:
-    """Score each decoder-query convention against known development boundaries.
+    """Score each decoder-query convention against typed development references.
 
     Runs through `nat5h.aligners.run_whisper_dtw` -- the same function production
     alignment uses -- so what is selected here is what will actually run. The
     older `bias.pred_start_sweep` called `align_batch` directly and scored the
     first ZH->EN switch under the legacy midpoint convention, which is not the
-    quantity a steering mask consumes; this scores unit edges, the canonical
-    convention, exactly as Gate A does.
+    quantity a steering mask consumes; this scores unit edges.  For the current
+    RMS/VAD construction the output is explicitly seam-relative and cannot be
+    consumed as lexical Gate-A calibration.
     """
     from ...nat5h.aligners import dtw_variant_label, run_whisper_dtw
 
@@ -454,21 +477,67 @@ def whisper_variant_sweep(bundle, rendered: pd.DataFrame, cfg: Mapping[str, Any]
             "scorable_items": int(per_item["scorable"].sum()) if len(per_item) else 0,
             "unit_coverage": float(mapping.get("unit_coverage", float("nan"))),
         }
-        if len(combined):
-            best = combined.iloc[0]
-            row.update({
-                "n_boundaries": int(best["num_boundaries"]),
-                "median_abs_error_ms": float(best["median_abs_error_ms"]),
-                "p90_abs_error_ms": float(best["p90_abs_error_ms"]),
-                "median_signed_error_ms": float(best["median_signed_error_ms"]),
-                "within_100ms": float(best["within_100ms"]),
-            })
+        reference_kinds = sorted(set(rendered.get(
+            "reference_kind",
+            pd.Series([synthetic_mod.AUDIO_SPLICE] * len(rendered))).astype(str)))
+        row["reference_kinds"] = ",".join(reference_kinds)
+        if set(reference_kinds) == {synthetic_mod.AUDIO_SPLICE}:
+            seam = scores[(scores["reference_kind"] == synthetic_mod.AUDIO_SPLICE)
+                          & (scores["convention"] == "audio_splice")
+                          & (scores["edge"] == "seam")] if len(scores) else scores
+            if len(seam):
+                best = seam.iloc[0]
+                row.update({
+                    "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+                    "selection_metric": "median_absolute_splice_edge_offset_ms",
+                    "n_boundaries": int(best["num_boundaries"]),
+                    "median_absolute_splice_edge_offset_ms": float(
+                        best["median_absolute_splice_edge_offset_ms"]),
+                    "p90_absolute_splice_edge_offset_ms": float(
+                        best["p90_absolute_splice_edge_offset_ms"]),
+                    "median_zh_end_minus_splice_ms": float(
+                        best["median_zh_end_minus_splice_ms"]),
+                    "median_en_start_minus_splice_ms": float(
+                        best["median_en_start_minus_splice_ms"]),
+                    "within_100ms_of_splice": float(
+                        best["within_100ms_of_splice"]),
+                })
+            else:
+                row.update({
+                    "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+                    "selection_metric": "median_absolute_splice_edge_offset_ms",
+                    "n_boundaries": 0,
+                    "median_absolute_splice_edge_offset_ms": float("nan"),
+                    "p90_absolute_splice_edge_offset_ms": float("nan"),
+                    "median_zh_end_minus_splice_ms": float("nan"),
+                    "median_en_start_minus_splice_ms": float("nan"),
+                    "within_100ms_of_splice": float("nan"),
+                })
+        elif set(reference_kinds) <= synthetic_mod.LEXICAL_REFERENCE_KINDS:
+            if len(combined):
+                best = combined.iloc[0]
+                row.update({
+                    "metric_semantics": "absolute_lexical_boundary_accuracy",
+                    "selection_metric": "median_abs_error_ms",
+                    "n_boundaries": int(best["num_boundaries"]),
+                    "median_abs_error_ms": float(best["median_abs_error_ms"]),
+                    "p90_abs_error_ms": float(best["p90_abs_error_ms"]),
+                    "median_signed_error_ms": float(best["median_signed_error_ms"]),
+                    "within_100ms": float(best["within_100ms"]),
+                })
+            else:
+                row.update({
+                    "metric_semantics": "absolute_lexical_boundary_accuracy",
+                    "selection_metric": "median_abs_error_ms",
+                    "n_boundaries": 0,
+                    "median_abs_error_ms": float("nan"),
+                    "p90_abs_error_ms": float("nan"),
+                    "median_signed_error_ms": float("nan"),
+                    "within_100ms": float("nan"),
+                })
         else:
-            row.update({"n_boundaries": 0,
-                        "median_abs_error_ms": float("nan"),
-                        "p90_abs_error_ms": float("nan"),
-                        "median_signed_error_ms": float("nan"),
-                        "within_100ms": float("nan")})
+            raise ValueError("a pred_start sweep cannot mix incompatible "
+                             f"reference kinds: {reference_kinds}")
         rows.append(row)
         if out_dir is not None and len(table):
             path = Path(out_dir) / f"candidates_whisper_dtw_pred{int(offset)}.parquet"
@@ -479,7 +548,7 @@ def whisper_variant_sweep(bundle, rendered: pd.DataFrame, cfg: Mapping[str, Any]
 
 def select_whisper_variant(sweep: pd.DataFrame, *,
                            min_boundaries: int = 50) -> dict[str, Any]:
-    """Pick the convention with the smallest development error.
+    """Pick the convention with the smallest compatible development offset.
 
     Selection, not a gate: both conventions are legitimate implementations of the
     same estimator, and the question is only which one reads the attention the way
@@ -488,11 +557,25 @@ def select_whisper_variant(sweep: pd.DataFrame, *,
     """
     from ...nat5h.aligners import DEFAULT_PRED_START_OFFSET, dtw_variant_label
 
+    is_splice = (sweep is not None and "metric_semantics" in sweep.columns
+                 and len(sweep)
+                 and set(sweep["metric_semantics"].astype(str))
+                 == {"audio_seam_relative_not_lexical_accuracy"})
+    median_column = ("median_absolute_splice_edge_offset_ms" if is_splice
+                     else "median_abs_error_ms")
+    p90_column = ("p90_absolute_splice_edge_offset_ms" if is_splice
+                  else "p90_abs_error_ms")
     record: dict[str, Any] = {
         "instrument": INSTRUMENT_SYNTHETIC_DEV,
-        "rule": ("smallest median absolute seam error on the synthetic "
-                 "development set (canonical unit-edge convention, worse edge "
-                 "per item); ties broken by p90, then by the configured order"),
+        "metric_semantics": ("audio_seam_relative_not_lexical_accuracy"
+                             if is_splice else
+                             "absolute_lexical_boundary_accuracy"),
+        "rule": ("smallest median absolute audio-splice edge offset on the "
+                 "synthetic development set; this selects a decoder coordinate "
+                 "convention and is not lexical Gate-A calibration; ties broken "
+                 "by p90, then by the configured order" if is_splice else
+                 "smallest median absolute lexical-boundary error on the "
+                 "development set; ties broken by p90, then by the configured order"),
         "min_boundaries": int(min_boundaries),
         "default_pred_start_offset": int(DEFAULT_PRED_START_OFFSET),
         "pred_start_offset": None,
@@ -505,19 +588,23 @@ def select_whisper_variant(sweep: pd.DataFrame, *,
         record["rejected"]["*"] = ["no development evidence"]
         return record
     record["evidence"] = sweep.to_dict(orient="records")
+    if median_column not in sweep or p90_column not in sweep:
+        record["rejected"]["*"] = [
+            f"missing compatible selection columns {median_column}, {p90_column}"]
+        return record
     eligible = sweep[sweep["n_boundaries"].astype(int) >= int(min_boundaries)]
-    eligible = eligible[np.isfinite(eligible["median_abs_error_ms"].to_numpy(dtype=float))]
+    eligible = eligible[np.isfinite(eligible[median_column].to_numpy(dtype=float))]
     for _, row in sweep.iterrows():
         why: list[str] = []
         if int(row["n_boundaries"]) < int(min_boundaries):
             why.append(f"n_boundaries={int(row['n_boundaries'])}<{min_boundaries}")
-        if not np.isfinite(float(row["median_abs_error_ms"])):
-            why.append("median_abs_error_ms is not finite")
+        if not np.isfinite(float(row[median_column])):
+            why.append(f"{median_column} is not finite")
         if why:
             record["rejected"][str(int(row["pred_start_offset"]))] = why
     if not len(eligible):
         return record
-    ordered = eligible.sort_values(["median_abs_error_ms", "p90_abs_error_ms"],
+    ordered = eligible.sort_values([median_column, p90_column],
                                    kind="mergesort")
     best = ordered.iloc[0]
     offset = int(best["pred_start_offset"])
@@ -525,13 +612,22 @@ def select_whisper_variant(sweep: pd.DataFrame, *,
         "pred_start_offset": offset,
         "aligner_variant": dtw_variant_label(offset),
         "changed_the_default": offset != int(DEFAULT_PRED_START_OFFSET),
-        "measured": {
-            "median_abs_error_ms": float(best["median_abs_error_ms"]),
-            "p90_abs_error_ms": float(best["p90_abs_error_ms"]),
+        "measured": ({
+            "median_absolute_splice_edge_offset_ms": float(best[median_column]),
+            "p90_absolute_splice_edge_offset_ms": float(best[p90_column]),
+            "median_zh_end_minus_splice_ms": float(
+                best["median_zh_end_minus_splice_ms"]),
+            "median_en_start_minus_splice_ms": float(
+                best["median_en_start_minus_splice_ms"]),
+            "within_100ms_of_splice": float(best["within_100ms_of_splice"]),
+            "n_boundaries": int(best["n_boundaries"]),
+        } if is_splice else {
+            "median_abs_error_ms": float(best[median_column]),
+            "p90_abs_error_ms": float(best[p90_column]),
             "median_signed_error_ms": float(best["median_signed_error_ms"]),
             "within_100ms": float(best["within_100ms"]),
             "n_boundaries": int(best["n_boundaries"]),
-        },
+        }),
     })
     return record
 

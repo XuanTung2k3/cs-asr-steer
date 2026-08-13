@@ -10,7 +10,6 @@ alignment:
   ctc:
     enabled: true
     model_id: /mnt/data/tungnx/models/mms-fa
-    frame_sec: 0.02
 
   qwen:
     model_id: Qwen/Qwen3-ForcedAligner-0.6B
@@ -39,7 +38,8 @@ alignment:
     # does not finish every chunk publishes nothing.
     production_chunk_size: 200
 
-  # Whisper-DTW places boundaries ~490 ms early against synthetic ground truth
+  # Whisper-DTW places boundaries ~490 ms early relative to the constructed
+  # audio seam (not lexical ground truth)
   # while agreeing with itself to 10 ms across configurations: the signature of
   # an indexing convention, not an acoustic failure. data/alignment.py:200 takes
   # the query that PREDICTS token k as token k's row, where OpenAI's reference
@@ -75,6 +75,14 @@ alignment:
     erosion_fraction: 0.25
     min_safe_interior_ms: 60
     union_padding_ms: null         # derived from the measured p90 human error
+
+    # Deterministic natural-evidence pairing.  Gate data may never choose the
+    # pair with the best error.  The first pair in this list whose two families
+    # qualify naturally and have enough paired target objects is used.
+    aligner_pair_priority:
+      - [existing_ctc, whisper_dtw]
+      - [existing_ctc, qwen_forced_aligner]
+      - [whisper_dtw, qwen_forced_aligner]
 
   diagnostics:
     sample_utterances: 300

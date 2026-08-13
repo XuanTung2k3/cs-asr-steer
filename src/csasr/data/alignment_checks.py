@@ -126,7 +126,7 @@ def silence_absorption(units: pd.DataFrame, manifest: pd.DataFrame, *,
 
 
 # ---------------------------------------------------------------------------
-# synthetic ground truth
+# synthetic audio-seam construction (not automatically lexical ground truth)
 # ---------------------------------------------------------------------------
 def build_synthetic_pairs(manifest: pd.DataFrame, *, n_pairs: int = 100,
                           seed: int = 42, gap_ms: float = 0.0,
@@ -134,8 +134,8 @@ def build_synthetic_pairs(manifest: pd.DataFrame, *, n_pairs: int = 100,
                           max_duration_sec: float = 28.0) -> list[dict]:
     """Concatenate a monolingual ZH utterance with a monolingual EN one.
 
-    The concatenation point is a *known* language boundary, which is what makes
-    this ground truth. Only utterances whose reference contains a single script
+    The concatenation sample is a known **audio seam**, not an annotated lexical
+    word boundary. Only utterances whose reference contains a single script
     are used, so the resulting item is genuinely ZH-then-EN.
 
     ``max_duration_sec`` keeps every constructed item inside Whisper's 30 s
@@ -265,14 +265,15 @@ def speech_bounds(audio: np.ndarray, sample_rate: int, *,
 
 def render_synthetic_pair(pair: dict, out_path, *, trim_silence: bool = True,
                           pad_ms: float = 20.0) -> dict:
-    """Write the concatenated waveform and return its known boundary time.
+    """Write the concatenated waveform and return its known audio-seam time.
 
     Both clips are stripped of their edge silence first. Without that the splice
     lands in the middle of the ~1.3 s of silence that the two clips contribute
     between them, and the "true" boundary is then over half a second away from
     the instant speech actually changes language -- which is what the aligner
     marks, and what E2/E4 care about. Trimming makes the constructed instant a
-    genuine speech transition, so the measured error is the aligner's own.
+    speech-transition seam, but RMS energy does not identify a lexical word
+    edge. Consumers must not call seam-relative offsets lexical absolute error.
     """
     import soundfile as sf
 
@@ -299,32 +300,65 @@ def render_synthetic_pair(pair: dict, out_path, *, trim_silence: bool = True,
         "en_start_sec": float(zh_end + float(pair["gap_sec"])),
         "duration_sec": float(len(audio) / sr),
         "transcript_raw": f"{pair['zh_text']} {pair['en_text']}",
+        "reference_kind": "audio_splice",
+        "reference_semantics": "known_audio_seam_not_lexical_boundary",
     }
 
 
 def summarize_boundary_error(predicted_sec: np.ndarray,
-                             true_sec: np.ndarray) -> dict:
-    """Error distribution of predicted boundaries against known truth."""
+                             true_sec: np.ndarray, *,
+                             reference_kind: str = "constructed_exact_lexical") -> dict:
+    """Summarize offsets under semantics licensed by ``reference_kind``.
+
+    Exact lexical references retain absolute-error names.  An ``audio_splice``
+    has a known sample coordinate but not a known lexical edge, so its output
+    uses seam-relative names and cannot be mistaken for lexical calibration.
+    """
     predicted_sec = np.asarray(predicted_sec, dtype=float)
     true_sec = np.asarray(true_sec, dtype=float)
     ok = np.isfinite(predicted_sec) & np.isfinite(true_sec)
+    if reference_kind not in {
+            "manual_lexical", "existing_gold_lexical",
+            "constructed_exact_lexical", "audio_splice"}:
+        raise ValueError(f"unsupported reference_kind={reference_kind!r}")
+    is_splice = reference_kind == "audio_splice"
     if not ok.any():
-        return {"num_boundaries": 0,
-                "note": "no synthetic boundary could be scored"}
+        return ({"num_audio_seams": 0, "reference_kind": reference_kind,
+                 "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+                 "note": "no synthetic audio seam could be scored"}
+                if is_splice else
+                {"num_boundaries": 0, "reference_kind": reference_kind,
+                 "metric_semantics": "absolute_lexical_boundary_accuracy",
+                 "note": "no lexical boundary could be scored"})
     signed_ms = (predicted_sec[ok] - true_sec[ok]) * 1000.0
     abs_ms = np.abs(signed_ms)
-    stats = {
-        "num_boundaries": int(ok.sum()),
-        "mean_signed_error_ms": float(signed_ms.mean()),
-        "median_signed_error_ms": float(np.median(signed_ms)),
-        "median_abs_error_ms": float(np.median(abs_ms)),
-        "p95_abs_error_ms": float(np.percentile(abs_ms, 95)),
-        "note": ("measured against known concatenation points; concatenated speech "
-                 "lacks cross-boundary coarticulation and natural switch prosody, "
-                 "so this is an optimistic bound on real alignment error"),
-    }
+    if is_splice:
+        stats = {
+            "num_audio_seams": int(ok.sum()),
+            "reference_kind": reference_kind,
+            "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+            "mean_signed_seam_offset_ms": float(signed_ms.mean()),
+            "median_signed_seam_offset_ms": float(np.median(signed_ms)),
+            "median_absolute_seam_offset_ms": float(np.median(abs_ms)),
+            "p95_absolute_seam_offset_ms": float(np.percentile(abs_ms, 95)),
+            "note": ("measured relative to known concatenation samples; this is "
+                     "an audio-seam coordinate diagnostic, not lexical absolute "
+                     "boundary accuracy"),
+        }
+    else:
+        stats = {
+            "num_boundaries": int(ok.sum()),
+            "reference_kind": reference_kind,
+            "metric_semantics": "absolute_lexical_boundary_accuracy",
+            "mean_signed_error_ms": float(signed_ms.mean()),
+            "median_signed_error_ms": float(np.median(signed_ms)),
+            "median_abs_error_ms": float(np.median(abs_ms)),
+            "p95_abs_error_ms": float(np.percentile(abs_ms, 95)),
+            "note": "measured against declared genuine lexical boundary references",
+        }
     # Reported across the whole range so the boundary-exclusion window can be
     # calibrated from the measured distribution rather than assumed.
     for tol in (50, 100, 150, 200, 250, 300, 500):
-        stats[f"pct_within_{tol}ms"] = float((abs_ms <= tol).mean())
+        suffix = "_of_seam" if is_splice else ""
+        stats[f"pct_within_{tol}ms{suffix}"] = float((abs_ms <= tol).mean())
     return stats

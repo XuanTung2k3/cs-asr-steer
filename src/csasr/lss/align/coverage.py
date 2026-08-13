@@ -108,6 +108,13 @@ def assert_partition(spans: pd.DataFrame, rejected: pd.DataFrame,
         "overlap": len(overlap),
         "missing": len(missing),
         "unexpected": len(extra),
+        # Overlap/extra rows are a corrupt partition. Missing rows are instead a
+        # scientifically meaningful coverage failure: an aligner may simply not
+        # produce evidence for an expected unit, and that must not be mislabeled
+        # as an implementation crash.
+        "partition_structurally_valid": bool(not overlap and not extra),
+        "accounted_rate": (float(len((accepted | refused) & expected) / len(expected))
+                           if expected else float("nan")),
         "partition_exact": bool(not overlap and not missing and not extra),
         "missing_examples": sorted(missing)[:5],
     }

@@ -135,6 +135,8 @@ def test_partition_must_cover_every_content_unit():
     incomplete = rejected.head(1)
     report = assert_partition(spans, incomplete, units)
     assert report["partition_exact"] is False and report["missing"] == 1
+    assert report["partition_structurally_valid"] is True
+    assert report["accounted_rate"] == pytest.approx(2 / 3)
 
 
 def test_unaligned_english_is_ignored_not_labelled_negative():

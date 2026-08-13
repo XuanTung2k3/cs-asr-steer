@@ -289,7 +289,10 @@ def run_existing_ctc(manifest: pd.DataFrame, cfg: dict, geometry: EncoderGeometr
                 model_id=cfg.get("alignment", {}).get("ctc", {}).get("model_id"),
                 metadata={
                     "ctc_model_id": cfg.get("alignment", {}).get("ctc", {}).get("model_id"),
-                    "ctc_frame_sec": getattr(aligner, "frame_sec", None),
+                    "ctc_sample_rate": sp.get("sample_rate"),
+                    "ctc_waveform_samples": sp.get("waveform_samples"),
+                    "ctc_emission_frames": sp.get("emission_frames"),
+                    "ctc_seconds_per_emission": sp.get("seconds_per_emission"),
                     "ctc_package": "transformers",
                 },
             ))

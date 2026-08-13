@@ -1,6 +1,6 @@
 # Gate-A Automatic Instrument Amendment — 2026-08-11
 
-Status: adopted prospectively for the next fresh automatic Gate-A generation.
+Status: superseded; not valid for the current RMS/VAD splice harness.
 
 Amendment ID: `gate-a-automatic-instrument-amendment-2026-08-11`
 
@@ -18,10 +18,29 @@ cannot support a new confirmatory conclusion. The exposure ledger must reserve
 their source recordings permanently. Only a newly allocated, unexposed gate
 generation may evaluate the amended automatic workflow.
 
-## Amended automatic rule
+## Scientific correction (2026-08-12)
 
-For automatic mode only, select the operating tolerance on the synthetic
-development set, whose splice boundaries are known by construction:
+Inspection of the actual renderer showed that the construction does not provide
+the estimand stated below. It uses RMS/VAD energy to trim two source clips and
+then concatenates them. The concatenation sample is exactly known as an audio
+seam, but neither source clip has an independently known lexical word boundary.
+The earlier text's claim that this was an interchangeable instrument for lexical
+absolute error was therefore incorrect.
+
+The code now records `reference_kind=audio_splice` and emits only signed
+seam-relative ZH-end and EN-start offsets. It cannot select an operating
+tolerance or satisfy automatic lexical calibration from those measurements.
+Automatic Gate A remains blocked until a `manual_lexical`,
+`existing_gold_lexical`, or genuinely `constructed_exact_lexical` reference is
+available. The 100/200 ms thresholds are unchanged.
+
+The following rule is retained as historical proposed text, but is not active
+for `audio_splice` evidence.
+
+## Superseded proposed automatic rule
+
+For automatic mode only, the proposal had selected the operating tolerance on
+the synthetic development set:
 
 1. Sweep the frozen candidate tolerances.
 2. Construct consensus spans independently at each tolerance.

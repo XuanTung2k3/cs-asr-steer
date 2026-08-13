@@ -110,8 +110,15 @@ def jitter_stability(spans: pd.DataFrame, cfg: dict, *,
                      offsets_ms: Sequence[float] | None = None,
                      independent_edges: bool = True
                      ) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Median IoU, contamination and safe-interior survival per jitter offset."""
+    """Geometric stability overall and by span duration.
+
+    The historical 90% safe-interior criterion is retained by callers, but this
+    table exposes its duration confounding.  Scientific conclusion stability is
+    a distinct future sub-gate and remains unavailable until downstream probe,
+    layer, intervention, correction, and corruption artifacts exist.
+    """
     jcfg = cfg.get("jitter") or {}
+    sample_rate = int((cfg.get("alignment") or {}).get("canonical_sample_rate", 16000))
     offsets = offsets_ms if offsets_ms is not None else jcfg.get("offsets_ms", [50, 100])
     seeds = seeds_for(cfg, "jitter")
     rows: list[dict[str, Any]] = []
@@ -119,7 +126,8 @@ def jitter_stability(spans: pd.DataFrame, cfg: dict, *,
     for offset in offsets:
         for seed in seeds:
             jittered = jitter_spans(spans, offset_ms=float(offset), seed=int(seed),
-                                    independent_edges=independent_edges)
+                                    independent_edges=independent_edges,
+                                    sample_rate=sample_rate)
             ious = [mask_iou((float(r["consensus_start_sample"]),
                               float(r["consensus_end_sample"])),
                              (float(r["jittered_start_sample"]),
@@ -127,28 +135,80 @@ def jitter_stability(spans: pd.DataFrame, cfg: dict, *,
                     for _, r in jittered.iterrows()]
             contamination = cross_language_contamination(jittered, spans)
             survives = safe_interior_survives(jittered)
-            rows.append({
-                "offset_ms": float(offset),
-                "seed": int(seed),
-                "n": int(len(jittered)),
-                "median_mask_iou": float(np.median(ious)) if ious else float("nan"),
-                "mean_contaminated_fraction": float(
-                    contamination["contaminated_fraction"].mean()) if len(contamination) else 0.0,
-                "contaminated_rate": float(
-                    (contamination["contaminated_fraction"] > 0.05).mean())
-                if len(contamination) else 0.0,
-                "safe_interior_survival": float(survives.mean()) if len(survives) else float("nan"),
-            })
+            detail = jittered[["utterance_id", "unit_id"]].copy()
+            detail["mask_iou"] = ious
+            detail["safe_interior_survives"] = survives.to_numpy()
+            detail["contaminated_fraction"] = (
+                contamination["contaminated_fraction"].to_numpy()
+                if len(contamination) else 0.0)
+            detail["duration_ms"] = (
+                (jittered["consensus_end_sample"].astype(float)
+                 - jittered["consensus_start_sample"].astype(float))
+                / float(sample_rate) * 1000.0)
+            detail["normalized_perturbation"] = (
+                float(offset) / detail["duration_ms"].clip(lower=1e-9))
+            detail["duration_bin"] = pd.cut(
+                detail["duration_ms"], bins=[0, 200, 500, 1000, np.inf],
+                labels=["lt_200ms", "200_499ms", "500_999ms", "ge_1000ms"],
+                right=False).astype(str)
+
+            def append(group: pd.DataFrame, duration_bin: str) -> None:
+                rows.append({
+                    "offset_ms": float(offset), "seed": int(seed),
+                    "duration_bin": duration_bin, "n": int(len(group)),
+                    "median_duration_ms": float(group["duration_ms"].median()),
+                    "median_normalized_perturbation": float(
+                        group["normalized_perturbation"].median()),
+                    "median_mask_iou": float(group["mask_iou"].median()),
+                    "mean_contaminated_fraction": float(
+                        group["contaminated_fraction"].mean()),
+                    "contaminated_rate": float(
+                        (group["contaminated_fraction"] > 0.05).mean()),
+                    "safe_interior_survival": float(
+                        group["safe_interior_survives"].mean()),
+                    "measurement": "geometric_window_survival",
+                })
+
+            append(detail, "all")
+            for duration_bin, subset in detail.groupby("duration_bin", sort=False):
+                if len(subset):
+                    append(subset, str(duration_bin))
 
     table = pd.DataFrame(rows)
     summary: dict[str, Any] = {}
     if len(table):
         for offset in sorted(table["offset_ms"].unique()):
-            subset = table[table["offset_ms"] == offset]
+            subset = table[(table["offset_ms"] == offset)
+                           & (table["duration_bin"] == "all")]
+            by_duration = {}
+            for duration_bin, duration_rows in table[
+                    table["offset_ms"] == offset].groupby("duration_bin"):
+                if duration_bin == "all":
+                    continue
+                by_duration[str(duration_bin)] = {
+                    "n_per_seed": int(duration_rows["n"].median()),
+                    "median_mask_iou": float(duration_rows["median_mask_iou"].mean()),
+                    "safe_interior_survival": float(
+                        duration_rows["safe_interior_survival"].mean()),
+                    "median_normalized_perturbation": float(
+                        duration_rows["median_normalized_perturbation"].mean()),
+                }
             summary[f"offset_{int(offset)}ms"] = {
                 "median_mask_iou": float(subset["median_mask_iou"].mean()),
                 "contaminated_rate": float(subset["contaminated_rate"].mean()),
                 "safe_interior_survival": float(subset["safe_interior_survival"].mean()),
                 "seeds": int(len(subset)),
+                "by_duration": by_duration,
+                "legacy_safe_interior_gate": {
+                    "preserved": True, "duration_confounded": True},
+                "scientific_conclusion_stability": {
+                    "available": False,
+                    "reason": "downstream representation/intervention artifacts do not exist",
+                    "required_future_metrics": [
+                        "direction_cosine_similarity", "probe_score_stability",
+                        "flip_failure_group_membership_stability",
+                        "selected_layer_stability", "site_e_intervention_effect_stability",
+                        "correction_rate_stability", "corruption_rate_stability"],
+                },
             }
     return table, summary

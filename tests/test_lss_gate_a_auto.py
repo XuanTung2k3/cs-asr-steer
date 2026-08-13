@@ -197,15 +197,11 @@ def test_two_aligners_sharing_a_bias_agree_perfectly_while_both_are_wrong():
 # 6: synthetic known boundaries produce true absolute error
 # --------------------------------------------------------------------------
 def test_missing_synthetic_calibration_is_explicit_and_never_substituted(tmp_path):
-    status = autoevidence.synthetic_calibration_status(tmp_path)
+    status = autoevidence.synthetic_calibration_status(
+        tmp_path, selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is False
     assert status["reason"] == autoevidence.BLOCKED_MISSING_SYNTHETIC
-    # it says what to check rather than gesturing at it, and names the pieces
-    # that produce the table so a reader can tell which one did not run
-    assert "run_families" in status["missing_implementation"]
-    assert "_score_synthetic_sets" in status["missing_implementation"]
-    assert autoevidence.SYNTHETIC_SCORES_FILE in status["missing_implementation"]
-    # and it never offers agreement as a stand-in
+    assert "lexical" in status["missing_implementation"]
     assert "not a substitute" in status["missing_implementation"]
 
 
@@ -214,6 +210,8 @@ def _synthetic_row(family, *, edge="combined", purpose="gate", n=120,
     return {"schema_version": autoevidence.SYNTHETIC_SCORES_SCHEMA,
             "family": family, "convention": "unit_edge_canonical",
             "edge": edge, "purpose": purpose, "num_boundaries": n,
+            "reference_kind": "constructed_exact_lexical",
+            "metric_semantics": "absolute_lexical_boundary_accuracy",
             "within_100ms": within, "median_abs_error_ms": 40.0,
             "p90_abs_error_ms": 90.0, "median_signed_error_ms": bias}
 
@@ -222,6 +220,27 @@ def _write_scores(tmp_path, rows):
     path = tmp_path / autoevidence.SYNTHETIC_SCORES_FILE
     path.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_parquet(path, index=False)
+    item_rows = []
+    by_family = {}
+    for row in rows:
+        by_family.setdefault((row.get("family"), row.get("purpose", "gate")), row)
+    for (family, purpose), row in by_family.items():
+        n_value = float(row.get("num_boundaries", 0) or 0)
+        for i in range(int(n_value) if np.isfinite(n_value) else 0):
+            signed = float(row.get("median_signed_error_ms", 20.0))
+            item_rows.append({
+                "schema_version": autoevidence.SYNTHETIC_ITEMS_SCHEMA,
+                "pair_id": f"{purpose}_{i:04d}", "family": family,
+                "variant": f"{family}/default", "purpose": purpose,
+                "reference_kind": "constructed_exact_lexical", "scorable": True,
+                "signed_start_error_ms": signed, "signed_end_error_ms": signed,
+                "absolute_start_error_ms": abs(signed),
+                "absolute_end_error_ms": abs(signed),
+                "absolute_boundary_error_ms": abs(signed),
+            })
+    items = tmp_path / autoevidence.SYNTHETIC_ITEMS_FILE
+    items.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(item_rows).to_parquet(items, index=False)
     return path
 
 
@@ -231,11 +250,12 @@ def test_scored_synthetic_boundaries_yield_absolute_error(tmp_path):
         _synthetic_row("whisper_dtw", within=0.91, bias=-44.0),
     ])
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, min_boundaries=100, require_authentication=False)
+        tmp_path, min_boundaries=100, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is True
     assert status["sufficient_boundaries"] is True
     # only here is the phrase "absolute error" permitted
-    assert status["absolute_boundary_error"]["within_100ms"] == pytest.approx(0.91)
+    assert status["absolute_boundary_error"]["within_100ms"] == pytest.approx(1.0)
     assert status["absolute_boundary_error"]["max_abs_bias_ms"] == pytest.approx(44.0)
     assert status["independence_classes_scored"] == [
         "ctc_forced_alignment", "whisper_cross_attention_dtw"]
@@ -250,7 +270,8 @@ def test_boundary_counts_are_not_double_counted_across_rows(tmp_path):
         _synthetic_row("whisper_dtw", edge=e, n=40) for e in ("start", "end", "combined")
     ])
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, min_boundaries=100, require_authentication=False)
+        tmp_path, min_boundaries=100, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["num_boundaries"] == 40           # not 240
     assert status["sufficient_boundaries"] is False
 
@@ -258,26 +279,26 @@ def test_boundary_counts_are_not_double_counted_across_rows(tmp_path):
 def test_only_the_gate_set_is_scored_never_the_development_set(tmp_path):
     _write_scores(tmp_path, [_synthetic_row("existing_ctc", purpose="dev")])
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, require_authentication=False)
+        tmp_path, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is False
     assert "purpose='gate'" in status["detail"]
 
 
 @pytest.mark.parametrize("mutate,expected", [
-    (lambda r: {k: v for k, v in r.items() if k != "p90_abs_error_ms"},
+    (lambda r: {k: v for k, v in r.items() if k != "metric_semantics"},
      autoevidence.BLOCKED_MISSING_SYNTHETIC),
     (lambda r: {**r, "schema_version": "something_else"},
      autoevidence.BLOCKED_UNAUTHENTICATED_SYNTHETIC),
-    (lambda r: {**r, "within_100ms": 1.7},
-     autoevidence.BLOCKED_UNAUTHENTICATED_SYNTHETIC),
-    (lambda r: {**r, "median_abs_error_ms": float("nan")},
+    (lambda r: {**r, "num_boundaries": float("nan")},
      autoevidence.BLOCKED_UNAUTHENTICATED_SYNTHETIC),
 ])
 def test_a_malformed_synthetic_score_file_does_not_count_as_calibration(
         tmp_path, mutate, expected):
     _write_scores(tmp_path, [mutate(_synthetic_row("existing_ctc"))])
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, require_authentication=False)
+        tmp_path, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is False
     assert status["reason"] == expected
 
@@ -286,7 +307,8 @@ def test_an_unauthenticated_synthetic_file_is_refused(tmp_path):
     """A five-column parquet dropped in by hand is not evidence."""
     _write_scores(tmp_path, [_synthetic_row("existing_ctc")])
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, require_authentication=True)      # no manifest was published
+        tmp_path, require_authentication=True,
+        selected_pair=["existing_ctc", "whisper_dtw"])  # no manifest
     assert status["available"] is False
     assert status["reason"] == autoevidence.BLOCKED_UNAUTHENTICATED_SYNTHETIC
 
@@ -319,9 +341,23 @@ def test_a_score_family_row_round_trips_through_gate_a(tmp_path):
     path = tmp_path / autoevidence.SYNTHETIC_SCORES_FILE
     path.parent.mkdir(parents=True, exist_ok=True)
     table.to_parquet(path, index=False)
+    item_rows = []
+    for family in ("existing_ctc", "whisper_dtw"):
+        for i in range(200):
+            item_rows.append({
+                "schema_version": autoevidence.SYNTHETIC_ITEMS_SCHEMA,
+                "pair_id": f"gate_{i:04d}", "family": family,
+                "variant": f"{family}/default", "purpose": "gate",
+                "reference_kind": "constructed_exact_lexical", "scorable": True,
+                "signed_start_error_ms": 20.0, "signed_end_error_ms": 20.0,
+                "absolute_start_error_ms": 20.0, "absolute_end_error_ms": 20.0,
+                "absolute_boundary_error_ms": 20.0})
+    pd.DataFrame(item_rows).to_parquet(
+        tmp_path / autoevidence.SYNTHETIC_ITEMS_FILE, index=False)
 
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, min_boundaries=100, require_authentication=False)
+        tmp_path, min_boundaries=100, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is True
     assert status["num_boundaries"] == 200
     assert status["absolute_boundary_error"]["within_100ms"] == pytest.approx(1.0)
@@ -764,10 +800,10 @@ def test_every_blocker_and_failing_criterion_gets_an_action():
         "blocked", "automatic",
         [autoevidence.BLOCKED_INSUFFICIENT_ALIGNERS,
          autoevidence.BLOCKED_TAINTED_INPUTS],
-        [check("invalid_rate_whisper_dtw", 0.17, 0.01, "<=", group="external"),
+        [check("target_invalid_rate_whisper_dtw", 0.17, 0.01, "<=", group="external"),
          check("jitter_median_mask_iou_100ms", 0.44, 0.60, ">=", group="jitter"),
          check("automatic_usable_item_rate", 0.28, 0.90, ">=", group="external"),
-         check("alignment_unit_coverage", 0.99, 0.95, ">=", group="coverage")],
+         check("alignment_target_object_coverage", 0.99, 0.95, ">=", group="coverage")],
     )
     kinds = [a["kind"] for a in actions]
     text = " | ".join(a["action"] for a in actions)
@@ -776,7 +812,7 @@ def test_every_blocker_and_failing_criterion_gets_an_action():
     # aligner because a tainted input cannot produce a production result at all
     assert kinds[0] == "provenance"
     assert "alignment" in kinds and "robustness" in kinds and "coverage" in kinds
-    assert "invalid spans" in text and "does not survive" in text
+    assert "unusable target boundaries" in text and "does not survive" in text
     # the criterion that passed contributes nothing
     assert "expected universe" not in text
     # annotation appears exactly once, last, and marked optional

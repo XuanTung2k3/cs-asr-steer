@@ -39,12 +39,12 @@ argued.
    *mean*; its own median was 370 ms.
 2. **The disagreement is a constant offset, not a scale error.** OLS slope swings 102 → 19 ms/s by
    time window while r = 0.14 and the intercept holds at **−499 ms**. Theil–Sen slope 4.1 ms/s.
-   The −499 ms intercept matches E1's synthetic ground-truth bias of **−490 ms**: Whisper-DTW is
-   systematically early by about half a second.
+   The −499 ms intercept matches E1's audio-seam-relative offset of **−490 ms**: Whisper-DTW is
+   systematically early relative to that seam by about half a second. This is not lexical error.
 3. **The suspect is one line.** `data/alignment.py:200` used the query that *predicts* token k;
    OpenAI's reference slices at the query *at* token k. One decoder step is 220–400 ms here.
    `align_batch` now takes `pred_start_offset` (default unchanged) and `lss/align/bias.py`
-   sweeps it against synthetic truth.
+   sweeps it against the development audio seam as a coordinate diagnostic.
 4. **All 93 DTW overlaps are same-language (ZH→ZH), median 320 ms, none benign.** The existing
    resolver only handles cross-language pairs, so it repairs **zero** of them. Whisper-DTW is
    100% valid on English and 80% on Mandarin — the invalid rate is entirely a Han-character
@@ -170,13 +170,14 @@ manual mode never invents one.
 |---|---|
 | two **independent** valid aligners | that a second opinion exists. Counted by estimator class, so two `pred_start` variants of DTW are one |
 | cross-aligner disagreement, natural speech | how far two estimators differ. **Not boundary error** |
-| synthetic splices | true absolute boundary error — the boundary is known by construction |
+| RMS/VAD synthetic splices | signed offset relative to a known audio seam; **not** lexical absolute error |
+| exact lexical fixtures (when available) | true absolute boundary error, only when construction genuinely supplies lexical edges |
 | manual annotation (optional mode) | true absolute boundary error — a person supplied the boundary |
 | jitter ±50 **and** ±100 ms | whether conclusions survive being wrong by that much (proposal §4.1; only ±100 was gated before) |
 | frozen high-confidence subset | whether there is enough material |
 
-Two aligners that share a bias agree perfectly and are both wrong — DTW's signed error against
-synthetic truth was −490 ms while it agreed *with itself* to 10 ms. So agreement is never
+Two aligners that share a bias agree perfectly and are both wrong — DTW's signed offset relative
+to the synthetic audio seam was −490 ms while it agreed *with itself* to 10 ms. So agreement is never
 substituted for accuracy, and the naming rule is enforced in code:
 `autoevidence.assert_no_absolute_error_claims` fails the run if a natural-speech criterion is
 ever named as an error.
@@ -207,13 +208,14 @@ aligner cannot corroborate itself, so automatic Gate A returns
 `blocked_insufficient_independent_aligners`. This is the same condition the earlier smoke run
 hit, and it remains a no-pass.
 
-**Synthetic exact-boundary calibration is not implemented.** `synthetic.build_set` renders the
-splices and `score_family`/`fit_offsets` can score against them, but nothing runs the aligners
-over the rendered audio, so no absolute error is ever measured. Gate A returns
-`blocked_missing_synthetic_calibration` and names the four missing pieces rather than
-substituting agreement. Implementing it needs: a manifest for the rendered pairs carrying the
-constructed boundary and per-unit text; a `candidates.run_families` call over it; edge mapping
-under both conventions; and `metrics/l1b_synthetic_scores.parquet`.
+**The current synthetic splice is not lexical truth.** The aligner execution,
+paired-item scoring, manifests, and exact-reference metric path are implemented.
+However, the current renderer trims source clips with RMS/VAD and knows only the
+audio concatenation seam. That seam cannot support lexical absolute-error claims
+or select a lexical operating tolerance. It now emits seam-relative diagnostics
+and automatic Gate A returns `blocked_missing_genuine_lexical_calibration` until
+manual, existing-gold, or genuinely exact constructed lexical edges are
+available. See `ALIGNMENT_GATE_A_PROTOCOL_2026-08-12.md`.
 
 **Measured jitter (smoke scale, 20 utterances):** median mask IoU **0.507** and safe-interior
 survival **0.738** at ±100 ms — the proposal §4.1 check plan v1 omitted. At 140–225 ms median
@@ -254,8 +256,13 @@ validation stage, deliberately not taken by a diagnostic.
 LD_LIBRARY_PATH=/home/tungnx/miniconda3/envs/acl1/lib \
 PYTHONPATH=src /home/tungnx/miniconda3/envs/acl1/bin/python -m pytest -q
 
-# the whole automatic path in one job: l0 -> l1a -> l1b prepare + evaluate
-sbatch cs_asr_lss.sh chain
+# future whole automatic path; DO NOT RUN while lexical calibration is blocked
+# sbatch cs_asr_lss.sh chain --overwrite
+
+# safe CPU-only cached development re-evaluation
+PYTHONPATH=src python -m csasr.experiments.lss_alignment_dev_diagnostic \
+  --config lss/l1b_valid.yaml \
+  --diagnostic-output /tmp/csasr_gate_a_dev_diagnostic
 
 # or one stage at a time
 python -m csasr.experiments.lss_l0_freeze --config configs/lss/l0_freeze.yaml --roles-only

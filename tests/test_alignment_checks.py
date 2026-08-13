@@ -53,6 +53,17 @@ def test_boundary_error_summary_survives_an_empty_sample():
     assert out["num_boundaries"] == 0
 
 
+def test_audio_seam_summary_never_uses_lexical_error_names():
+    out = summarize_boundary_error(
+        np.array([1.02, 2.03]), np.array([1.00, 2.00]),
+        reference_kind="audio_splice")
+    assert out["num_audio_seams"] == 2
+    assert out["metric_semantics"] == "audio_seam_relative_not_lexical_accuracy"
+    assert out["pct_within_50ms_of_seam"] == 1.0
+    assert "median_abs_error_ms" not in out
+    assert "mean_signed_error_ms" not in out
+
+
 # ---------------------------------------------------------------------------
 # ENC-RANDLOC-1L span relocation
 # ---------------------------------------------------------------------------

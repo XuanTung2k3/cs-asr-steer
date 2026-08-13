@@ -15,18 +15,16 @@ Three quantities are measured on natural speech:
 
 Cross-aligner disagreement is **not** boundary error. Two aligners that share a
 bias agree perfectly and are both wrong; on this data Whisper-DTW's own signed
-error against synthetic truth was -490 ms while it agreed with itself to 10 ms
+offset relative to the constructed audio seam was -490 ms while it agreed with itself to 10 ms
 across configurations. Every natural-speech metric here is therefore named
 `cross_aligner_*_disagreement_ms`, and `assert_no_absolute_error_claims` fails
 the build if a criterion derived from natural speech is ever named as an error.
 
-Absolute boundary error requires boundaries that are known rather than
-estimated. There are exactly two sources of those:
-
-* synthetic splices, whose boundaries are known by construction -- fitted and
-  scored by `csasr.lss.align.synthetic`, and reported by
-  `synthetic_calibration_status` below;
-* genuine manual annotation, which is the optional manual mode only.
+Absolute lexical-boundary error requires boundaries that are known rather than
+estimated. Supported reference kinds are manual lexical annotation, existing
+gold lexical boundaries, or an exact construction that truly preserves lexical
+edges. The current RMS/VAD splice is only a known audio seam and is not one of
+those sources.
 
 If neither is present the gate blocks with an explicit reason. It never
 substitutes agreement for accuracy.
@@ -52,6 +50,7 @@ INDEPENDENCE_CLASS: dict[str, str] = {
 
 #: machine-readable reasons a gate can block on, rather than guess
 BLOCKED_MISSING_SYNTHETIC = "blocked_missing_synthetic_calibration"
+BLOCKED_MISSING_LEXICAL_CALIBRATION = "blocked_missing_genuine_lexical_calibration"
 BLOCKED_INSUFFICIENT_ALIGNERS = "blocked_insufficient_independent_aligners"
 BLOCKED_NO_CANDIDATES = "blocked_no_candidate_alignments"
 BLOCKED_TAINTED_INPUTS = "blocked_tainted_inputs"
@@ -102,32 +101,47 @@ FORBIDDEN_NATURAL_NAME_PARTS = ("absolute_boundary_error", "abs_error",
 NATURAL_SPEECH_NOTE = (
     "Measured between two independent automatic aligners on natural speech. "
     "This is estimator disagreement, not boundary error: a shared bias would "
-    "make both aligners agree and both be wrong. Absolute error is only "
-    "measurable against constructed synthetic boundaries or manual annotation."
+    "make both aligners agree and both be wrong. Absolute error is "
+    "measurable only against genuine lexical references: manual annotation, "
+    "existing gold lexical edges, or a construction that truly supplies exact "
+    "lexical edges. An audio splice alone is not such a reference."
 )
 
 
 # --------------------------------------------------------------------------
 # validity and independence
 # --------------------------------------------------------------------------
-def _monotonic_flags(group: pd.DataFrame) -> pd.Series:
-    """Per-row: does this span start after the previous unit's span starts."""
+def _sequence_diagnostics(group: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
+    """Return duration validity and ordering failure as separate quantities.
+
+    Ordering is defined only among rows with finite positive durations.  A
+    zero-duration row is therefore an invalid-duration observation, not a second
+    nonmonotonic observation.  This distinction matters for Qwen, where an
+    internal character can be ``[t,t]`` without reversing the surrounding run.
+    """
     ordered = group.sort_values("reference_unit_index")
-    start = ordered["start_sample"].astype(float)
-    end = ordered["end_sample"].astype(float)
-    ok = (end > start) & (start >= 0)
-    ok &= start.diff().fillna(0.0) >= 0
-    return ok.reindex(group.index)
+    start = pd.to_numeric(ordered["start_sample"], errors="coerce")
+    end = pd.to_numeric(ordered["end_sample"], errors="coerce")
+    duration_valid = np.isfinite(start) & np.isfinite(end) & (end > start) & (start >= 0)
+    nonmonotonic = pd.Series(False, index=ordered.index)
+    eligible = ordered.loc[duration_valid]
+    if len(eligible):
+        eligible_start = pd.to_numeric(eligible["start_sample"], errors="coerce")
+        bad = eligible_start.diff().fillna(0.0) < 0.0
+        nonmonotonic.loc[eligible.index] = bad.to_numpy()
+    return duration_valid.reindex(group.index), nonmonotonic.reindex(group.index)
 
 
 def family_validity(candidates: pd.DataFrame) -> pd.DataFrame:
-    """Per-family coverage, invalid rate and nonmonotonic rate."""
+    """Per-family raw-unit validity with explicit, non-overlapping diagnostics."""
     if candidates is None or not len(candidates):
         return pd.DataFrame()
     rows: list[dict[str, Any]] = []
     for family, group in candidates.groupby("aligner_family"):
-        valid = group.get("is_valid", pd.Series(True, index=group.index)).astype(bool)
-        monotonic = pd.Series(True, index=group.index)
+        valid = group.get(
+            "is_valid", pd.Series(True, index=group.index)).fillna(False).astype(bool)
+        duration_valid = pd.Series(False, index=group.index)
+        nonmonotonic = pd.Series(False, index=group.index)
         # Monotonicity is a property of one aligner's output for one utterance.
         # Pooling two variants of the same family interleaves two independently
         # monotonic sequences and reports the result as nonmonotonic.
@@ -135,7 +149,10 @@ def family_validity(candidates: pd.DataFrame) -> pd.DataFrame:
         if "aligner_variant" in group.columns:
             variant_key.append("aligner_variant")
         for _, utt in group.groupby(variant_key):
-            monotonic.loc[utt.index] = _monotonic_flags(utt)
+            duration, ordering = _sequence_diagnostics(utt)
+            duration_valid.loc[utt.index] = duration
+            nonmonotonic.loc[utt.index] = ordering
+        order_denominator = int(duration_valid.sum())
         rows.append({
             "aligner_family": str(family),
             "independence_class": INDEPENDENCE_CLASS.get(str(family), str(family)),
@@ -143,7 +160,13 @@ def family_validity(candidates: pd.DataFrame) -> pd.DataFrame:
             "valid_units": int(valid.sum()),
             "valid_unit_coverage": float(valid.mean()),
             "invalid_rate": float(1.0 - valid.mean()),
-            "nonmonotonic_rate": float((~monotonic).mean()),
+            "invalid_duration_units": int((~duration_valid).sum()),
+            "invalid_duration_denominator": int(len(group)),
+            "invalid_duration_rate": float((~duration_valid).mean()),
+            "nonmonotonic_units": int(nonmonotonic.sum()),
+            "nonmonotonic_denominator": order_denominator,
+            "nonmonotonic_rate": (float(nonmonotonic.sum() / order_denominator)
+                                  if order_denominator else float("nan")),
             "variants": int(group["aligner_variant"].nunique())
             if "aligner_variant" in group else 1,
         })
@@ -412,67 +435,67 @@ def family_correspondence(qualifying: Sequence[str],
 # --------------------------------------------------------------------------
 #: written by whoever implements synthetic scoring; read here, never invented
 SYNTHETIC_SCORES_FILE = "metrics/l1b_synthetic_scores.parquet"
+SYNTHETIC_ITEMS_FILE = "metrics/l1b_synthetic_boundary_items.parquet"
 
 MISSING_SYNTHETIC_DESCRIPTION = (
-    "No authenticated synthetic exact-boundary scores were found, so the "
-    "automatic gate has no source of absolute boundary error. Scoring is "
-    "implemented -- `lss_l1b_valid._score_synthetic_sets` renders the splices "
-    "via `synthetic.build_set`, aligns them with `candidates.run_families`, maps "
-    "predicted unit edges onto the constructed boundary "
-    "(`synthetic.score_rendered_set`) and publishes "
-    f"{SYNTHETIC_SCORES_FILE} -- so an absent table means that step did not run "
-    "or its output was rejected. Check, in order: was the `synthetic` part "
-    "included (it is skipped by `--only` and by `--dry-run`); did the aligner "
-    "families produce candidates for the rendered audio "
-    "(`diagnostics/l1b_automatic_evidence.json` and the stage log); is the "
-    "table manifested and untainted. Cross-aligner disagreement is not a "
-    "substitute for accuracy and is never used as one."
+    "Automatic lexical calibration requires authenticated paired items whose "
+    "reference_kind is manual_lexical, existing_gold_lexical, or "
+    "constructed_exact_lexical. The current RMS/VAD concatenation harness "
+    "provides an audio_splice seam only; its offsets are useful diagnostics but "
+    "cannot satisfy lexical absolute-error criteria. Natural cross-aligner "
+    "disagreement is not a substitute."
 )
 
 
 #: schema every synthetic score table must declare, so an older or hand-made
 #: file cannot be read as if it meant the same thing
-SYNTHETIC_SCORES_SCHEMA = "lss_synthetic_scores_v1"
+SYNTHETIC_SCORES_SCHEMA = "lss_reference_scores_v2"
+SYNTHETIC_ITEMS_SCHEMA = "lss_reference_boundary_items_v2"
 
 #: the columns Gate A reads. `score_family` emits exactly these.
 SYNTHETIC_REQUIRED_COLUMNS = (
-    "schema_version", "family", "convention", "edge", "purpose",
-    "num_boundaries", "within_100ms", "median_abs_error_ms",
-    "p90_abs_error_ms", "median_signed_error_ms",
+    "schema_version", "family", "purpose", "reference_kind",
+    "metric_semantics", "num_boundaries",
 )
 
 
 def synthetic_calibration_status(artifacts_root: str | Path,
                                  *, min_boundaries: int = 100,
+                                 selected_pair: Sequence[str] | None = None,
                                  cfg: Mapping[str, Any] | None = None,
                                  require_authentication: bool = True,
                                  expected_gate_generation: int | None = None,
                                  expected_gate_request_sha256: str | None = None,
                                  expected_gate_item_sha256: str | None = None
                                  ) -> dict[str, Any]:
-    """Is there scored synthetic ground truth, and what does it say?
+    """Read paired lexical-reference calibration for one selected natural pair.
 
-    Returns ``available: False`` with an explicit reason when the scores do not
-    exist, are not authentic, or do not declare the schema this reader
-    understands. It never falls back to any other measurement.
-
-    The expected generation, aligner request, and full item-set fingerprint bind
-    the score table to both the model inputs and the construction truth it was
-    scored against. The generation number or aligner request alone is
-    insufficient: known boundaries could change while audio/transcript inputs
-    remain byte-for-byte identical.
+    Rejected families are filtered before aggregation.  Scorability is paired
+    by item, so a family cannot contribute its best 100 items while the other
+    contributes a different 100.  Audio-splice rows remain readable diagnostics
+    but return an unavailable lexical-calibration result.
     """
     from ..manifest import read_verified
+    from .synthetic import LEXICAL_REFERENCE_KINDS
 
     root = Path(artifacts_root)
     path = root / SYNTHETIC_SCORES_FILE
+    items_path = root / SYNTHETIC_ITEMS_FILE
 
     def unavailable(reason: str, detail: str) -> dict[str, Any]:
         return {"available": False, "reason": reason, "expected_path": str(path),
+                "expected_items_path": str(items_path),
                 "detail": detail, "missing_implementation": MISSING_SYNTHETIC_DESCRIPTION}
 
-    if not path.is_file():
-        return unavailable(BLOCKED_MISSING_SYNTHETIC, "the score table does not exist")
+    pair = [str(f) for f in (selected_pair or [])]
+    if len(pair) != 2:
+        return unavailable(BLOCKED_INSUFFICIENT_ALIGNERS,
+                           "lexical calibration cannot be selected before a "
+                           "natural qualifying pair exists")
+
+    if not path.is_file() or not items_path.is_file():
+        return unavailable(BLOCKED_MISSING_SYNTHETIC,
+                           "the score or paired-item table does not exist")
 
     manifest: Mapping[str, Any] = {}
     if require_authentication:
@@ -485,8 +508,20 @@ def synthetic_calibration_status(artifacts_root: str | Path,
         if manifest.get("diagnostic_only"):
             return unavailable(BLOCKED_TAINTED_INPUTS,
                                f"produced by {manifest.get('taint_reasons')}")
+        items, item_verdict = read_verified(
+            items_path, cfg=cfg, require_identity=cfg is not None)
+        if not item_verdict["ok"]:
+            return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                               f"paired items: {item_verdict['verdict']}: "
+                               f"{item_verdict.get('detail') or ''}")
+        if (item_verdict.get("manifest") or {}).get("diagnostic_only"):
+            return unavailable(BLOCKED_TAINTED_INPUTS,
+                               "paired lexical items are diagnostic-only")
+        item_manifest = item_verdict.get("manifest") or {}
     else:
         scored = pd.read_parquet(path)
+        items = pd.read_parquet(items_path)
+        item_manifest = {}
 
     if expected_gate_generation is not None:
         recorded = manifest.get("synthetic_gate_generation")
@@ -521,6 +556,19 @@ def synthetic_calibration_status(artifacts_root: str | Path,
                 f"the score table describes gate items {recorded_items!r}, but "
                 f"generation {expected_gate_generation!r} is bound to full "
                 f"item set {expected_gate_item_sha256!r}")
+        for label, authenticated in (("score", manifest),
+                                     ("paired-item", item_manifest)):
+            if authenticated.get("synthetic_gate_generation") != expected_gate_generation:
+                return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                                   f"{label} manifest has the wrong gate generation")
+            if authenticated.get("synthetic_gate_request_sha256") \
+                    != expected_gate_request_sha256:
+                return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                                   f"{label} manifest has the wrong gate request")
+            if authenticated.get("synthetic_gate_item_sha256") \
+                    != expected_gate_item_sha256:
+                return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                                   f"{label} manifest has the wrong gate item set")
 
     missing = sorted(set(SYNTHETIC_REQUIRED_COLUMNS) - set(scored.columns))
     if missing or not len(scored):
@@ -531,15 +579,16 @@ def synthetic_calibration_status(artifacts_root: str | Path,
     if versions != [SYNTHETIC_SCORES_SCHEMA]:
         return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
                            f"schema {versions}, expected {SYNTHETIC_SCORES_SCHEMA}")
+    item_versions = sorted(set(items.get(
+        "schema_version", pd.Series(dtype=str)).astype(str)))
+    if item_versions != [SYNTHETIC_ITEMS_SCHEMA]:
+        return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                           f"paired-item schema {item_versions}, expected "
+                           f"{SYNTHETIC_ITEMS_SCHEMA}")
 
-    numeric = ["num_boundaries", "within_100ms", "median_abs_error_ms",
-               "p90_abs_error_ms", "median_signed_error_ms"]
-    if not np.isfinite(scored[numeric].to_numpy(dtype=float)).all():
+    if not np.isfinite(scored[["num_boundaries"]].to_numpy(dtype=float)).all():
         return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
-                           "the table contains non-finite measurements")
-    if (scored["within_100ms"] < 0).any() or (scored["within_100ms"] > 1).any():
-        return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
-                           "within_100ms is not a fraction in [0, 1]")
+                           "the table contains non-finite boundary counts")
 
     # Gate A judges the gate set; the dev set exists to choose a configuration
     # and scoring it here would judge a choice on the data that made it.
@@ -549,37 +598,94 @@ def synthetic_calibration_status(artifacts_root: str | Path,
                            "no rows with purpose='gate'; only the development "
                            "set was scored, which cannot judge itself")
 
-    # `num_boundaries` repeats across (family, convention, edge) rows describing
-    # the SAME boundaries; summing it inflates the count several-fold.
-    per_family = (gate_rows.groupby("family")["num_boundaries"].max()
-                  if "family" in gate_rows else pd.Series(dtype=float))
-    boundaries = int(per_family.min()) if len(per_family) else 0
+    reference_kinds = sorted(set(gate_rows["reference_kind"].astype(str)))
+    lexical_rows = gate_rows[
+        gate_rows["reference_kind"].astype(str).isin(LEXICAL_REFERENCE_KINDS)]
+    if not len(lexical_rows):
+        return unavailable(
+            BLOCKED_MISSING_LEXICAL_CALIBRATION,
+            "available automatic reference kinds are "
+            f"{reference_kinds}; audio_splice is a seam diagnostic, not a "
+            "known lexical boundary")
 
-    families = sorted(set(gate_rows["family"].astype(str)))
-    classes = sorted({INDEPENDENCE_CLASS.get(f, f) for f in families})
-    edges = sorted(set(gate_rows["edge"].astype(str)))
+    lexical_rows = lexical_rows[lexical_rows["family"].astype(str).isin(pair)]
+    if set(lexical_rows["family"].astype(str)) != set(pair):
+        missing_pair = sorted(set(pair) - set(lexical_rows["family"].astype(str)))
+        return unavailable(BLOCKED_UNCALIBRATED_FAMILIES,
+                           f"selected natural pair lacks lexical scores for {missing_pair}")
+
+    required_items = {"pair_id", "family", "purpose", "reference_kind",
+                      "scorable", "signed_start_error_ms", "signed_end_error_ms",
+                      "absolute_start_error_ms", "absolute_end_error_ms",
+                      "absolute_boundary_error_ms"}
+    missing_items = sorted(required_items - set(items.columns))
+    if missing_items:
+        return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                           f"paired item table is missing {missing_items}")
+    item_gate = items[(items["purpose"].astype(str) == "gate")
+                      & items["family"].astype(str).isin(pair)
+                      & items["reference_kind"].astype(str).isin(LEXICAL_REFERENCE_KINDS)
+                      & items["scorable"].astype(bool)].copy()
+    item_sets = {family: set(group["pair_id"].astype(str))
+                 for family, group in item_gate.groupby("family")}
+    paired_ids = set.intersection(*(item_sets.get(f, set()) for f in pair))
+    paired = item_gate[item_gate["pair_id"].astype(str).isin(paired_ids)]
+    boundaries = int(len(paired_ids))
+
+    by_row: list[dict[str, Any]] = []
+    for family in pair:
+        family_items = paired[paired["family"].astype(str) == family]
+        for edge, signed_col, absolute_col in (
+                ("start", "signed_start_error_ms", "absolute_start_error_ms"),
+                ("end", "signed_end_error_ms", "absolute_end_error_ms")):
+            absolute = family_items[absolute_col].to_numpy(dtype=float)
+            signed = family_items[signed_col].to_numpy(dtype=float)
+            if not (np.isfinite(absolute).all() and np.isfinite(signed).all()):
+                return unavailable(BLOCKED_UNAUTHENTICATED_SYNTHETIC,
+                                   "paired lexical item errors contain non-finite values")
+            by_row.append({"family": family, "edge": edge, "n": len(absolute),
+                           "within_100ms": float((absolute <= 100.0).mean()),
+                           "median_abs_error_ms": float(np.median(absolute)),
+                           "p90_abs_error_ms": float(np.percentile(absolute, 90)),
+                           "median_signed_error_ms": float(np.median(signed))})
+        absolute = family_items["absolute_boundary_error_ms"].to_numpy(dtype=float)
+        take_end = (family_items["absolute_end_error_ms"]
+                    >= family_items["absolute_start_error_ms"])
+        signed = np.where(take_end, family_items["signed_end_error_ms"],
+                          family_items["signed_start_error_ms"])
+        by_row.append({"family": family, "edge": "combined", "n": len(absolute),
+                       "within_100ms": float((absolute <= 100.0).mean()),
+                       "median_abs_error_ms": float(np.median(absolute)),
+                       "p90_abs_error_ms": float(np.percentile(absolute, 90)),
+                       "median_signed_error_ms": float(np.median(signed))})
+    measurements = pd.DataFrame(by_row)
+    classes = sorted({INDEPENDENCE_CLASS.get(f, f) for f in pair})
 
     return {
         "available": True,
         "path": str(path),
         "schema_version": SYNTHETIC_SCORES_SCHEMA,
-        "families_scored": families,
+        "selected_pair": pair,
+        "families_scored": pair,
         "independence_classes_scored": classes,
-        "edges_scored": edges,
+        "edges_scored": ["start", "end", "combined"],
+        "reference_kinds_available": reference_kinds,
+        "reference_kind": sorted(set(paired["reference_kind"].astype(str))),
         "num_boundaries": boundaries,
-        "boundary_count_rule": "min over families of that family's boundary count",
+        "candidate_count": int(items[items["purpose"].astype(str) == "gate"]
+                               ["pair_id"].nunique()),
+        "paired_scorable_count": boundaries,
+        "boundary_count_rule": "intersection of scorable gate item IDs for selected pair",
         "sufficient_boundaries": bool(boundaries >= int(min_boundaries)),
-        # these ARE absolute errors: the boundaries are known by construction
         "absolute_boundary_error": {
-            "within_100ms": float(gate_rows["within_100ms"].min()),
-            "median_abs_error_ms": float(gate_rows["median_abs_error_ms"].max()),
-            "p90_abs_error_ms": float(gate_rows["p90_abs_error_ms"].max()),
-            "max_abs_bias_ms": float(gate_rows["median_signed_error_ms"].abs().max()),
-            "by_row": gate_rows.to_dict(orient="records"),
+            "within_100ms": float(measurements["within_100ms"].min()),
+            "median_abs_error_ms": float(measurements["median_abs_error_ms"].max()),
+            "p90_abs_error_ms": float(measurements["p90_abs_error_ms"].max()),
+            "max_abs_bias_ms": float(measurements["median_signed_error_ms"].abs().max()),
+            "by_row": by_row,
         },
-        "note": ("Absolute error against boundaries known by construction, "
-                 "worst case over families, conventions and edges. This is the "
-                 "only automatic source of accuracy evidence."),
+        "note": ("Absolute lexical-boundary error on paired eligible items for "
+                 "the deterministic naturally qualifying pair only."),
     }
 
 

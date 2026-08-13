@@ -1,4 +1,4 @@
-"""Synthetic splice ground truth, and the offsets it licenses.
+"""Reference-aware synthetic splice diagnostics.
 
 Reuses the E1 harness (`csasr.data.alignment_checks`) with three repairs:
 
@@ -9,10 +9,14 @@ Reuses the E1 harness (`csasr.data.alignment_checks`) with three repairs:
 * both the legacy switch-midpoint convention and the canonical unit-edge
   convention are reported, because unit edges are what steering masks consume.
 
+RMS/VAD concatenation yields a known audio seam, not an independently known
+lexical edge.  Its signed offsets are diagnostics only. Exact lexical fixtures
+remain supported through an explicit ``reference_kind``.
+
 The development and gate sets are drawn under **separate registered seeds**: a
 configuration chosen on one set cannot then be judged on the same items.
-Calibration offsets may be fitted here (external truth) and are validated
-against the human audit before anything uses them.
+Calibration offsets may be fitted only from genuine lexical references; audio
+seams remain coordinate diagnostics and cannot authorize a correction.
 """
 from __future__ import annotations
 
@@ -29,6 +33,15 @@ from ...data.alignment_checks import (
     summarize_boundary_error,
     synthetic_harness_fingerprint,
 )
+
+REFERENCE_KINDS = (
+    "manual_lexical", "existing_gold_lexical", "constructed_exact_lexical",
+    "audio_splice", "cross_aligner_consensus",
+)
+LEXICAL_REFERENCE_KINDS = frozenset({
+    "manual_lexical", "existing_gold_lexical", "constructed_exact_lexical",
+})
+AUDIO_SPLICE = "audio_splice"
 
 
 #: purposes, and the fraction of source utterances each may draw from. The
@@ -109,7 +122,7 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
               sources: pd.DataFrame | None = None,
               generation: int | None = None
               ) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Render `n_pairs` ZH+EN splices with known boundaries.
+    """Render `n_pairs` ZH+EN splices with known audio seams.
 
     ``sources`` is the pre-partitioned pool for this purpose; pass it (via
     `partition_sources`) whenever more than one purpose is built, or the two
@@ -149,6 +162,12 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
     frame = pd.DataFrame(rendered)
     frame["utterance_id"] = frame["pair_id"]
     frame["purpose"] = purpose
+    # RMS/VAD trimming determines where the waveforms are concatenated.  That
+    # sample is exactly known as an audio seam, but neither source clip carries
+    # an independently annotated lexical word edge.  Calling it lexical truth
+    # would turn silence trimming into an accuracy oracle.
+    frame["reference_kind"] = AUDIO_SPLICE
+    frame["reference_semantics"] = "known_audio_seam_not_lexical_boundary"
     frame["set_label"] = label
     frame["generation"] = 0 if generation is None else int(generation)
     return frame, {"purpose": purpose, "generation": generation,
@@ -161,7 +180,8 @@ def build_set(manifest: pd.DataFrame, cfg: Mapping[str, Any], *, n_pairs: int,
 #: schema declared by every row `score_family` emits. Gate A refuses a table
 #: that does not declare it, so an older or hand-made file cannot be read as if
 #: it meant the same thing.
-SCORES_SCHEMA_VERSION = "lss_synthetic_scores_v1"
+SCORES_SCHEMA_VERSION = "lss_reference_scores_v2"
+ITEMS_SCHEMA_VERSION = "lss_reference_boundary_items_v2"
 
 #: which boundary each row describes. `combined` is the worse of the two edges
 #: for a unit, and is what a steering mask actually depends on.
@@ -218,7 +238,7 @@ UNSCORABLE = {
 
 def boundary_predictions(rendered: pd.DataFrame, candidates: pd.DataFrame
                          ) -> pd.DataFrame:
-    """One row per (item, family, variant): the predicted seam and the truth.
+    """One row per (item, family, variant): predicted and typed reference edges.
 
     The prediction is read off the *reference units*, which is what a steering
     mask is built from:
@@ -262,8 +282,14 @@ def boundary_predictions(rendered: pd.DataFrame, candidates: pd.DataFrame
 
         for item_id in truth.index:
             item = truth.loc[item_id]
+            reference_kind = str(item.get("reference_kind", AUDIO_SPLICE))
+            if reference_kind not in REFERENCE_KINDS:
+                raise ValueError(f"unsupported reference_kind={reference_kind!r}")
             base = {"pair_id": str(item_id), "family": family,
                     "variant": variant,
+                    "reference_kind": reference_kind,
+                    "reference_semantics": str(item.get(
+                        "reference_semantics", reference_kind)),
                     "true_boundary_sec": float(item["true_boundary_sec"]),
                     "true_zh_end_sec": float(item["zh_end_sec"]),
                     "true_en_start_sec": float(item["en_start_sec"])}
@@ -332,34 +358,84 @@ def score_rendered_set(rendered: pd.DataFrame, candidates: pd.DataFrame, *,
     if not len(per_item):
         return pd.DataFrame(), per_item
     per_item = per_item.copy()
+    per_item["schema_version"] = ITEMS_SCHEMA_VERSION
     per_item["purpose"] = str(purpose)
 
-    scorable = per_item[per_item["scorable"].astype(bool)]
+    scorable = per_item[per_item["scorable"].astype(bool)].copy()
+    if not len(scorable):
+        return pd.DataFrame(), per_item
     rows: list[dict[str, Any]] = []
-    canonical_edges = [e for e in _SCORED_EDGES if e[0] == CANONICAL_CONVENTION]
-    for family, group in scorable.groupby("family", sort=True):
-        for convention, edge, pred_col, truth_col in canonical_edges:
-            rows.append(score_family(
-                group[pred_col].to_numpy(dtype=float),
-                group[truth_col].to_numpy(dtype=float),
-                family=str(family), convention=convention, edge=edge,
-                purpose=purpose))
-        # combined: the worse edge of each item, signed error preserved
-        end_err = (group["predicted_end_sec"] - group["true_zh_end_sec"]).abs()
-        start_err = (group["predicted_start_sec"] - group["true_en_start_sec"]).abs()
-        take_end = (end_err >= start_err).to_numpy()
-        predicted = np.where(take_end, group["predicted_end_sec"],
-                             group["predicted_start_sec"])
-        true = np.where(take_end, group["true_zh_end_sec"],
-                        group["true_en_start_sec"])
-        rows.append(score_family(predicted, true, family=str(family),
-                                 convention=CANONICAL_CONVENTION,
-                                 edge="combined", purpose=purpose))
+    scorable["zh_end_minus_splice_ms"] = (
+        scorable["predicted_end_sec"] - scorable["true_zh_end_sec"]) * 1000.0
+    scorable["en_start_minus_splice_ms"] = (
+        scorable["predicted_start_sec"] - scorable["true_en_start_sec"]) * 1000.0
+    scorable["gap_around_splice_ms"] = (
+        scorable["predicted_start_sec"] - scorable["predicted_end_sec"]) * 1000.0
+    scorable["absolute_splice_edge_offset_ms"] = scorable[
+        ["zh_end_minus_splice_ms", "en_start_minus_splice_ms"]].abs().max(axis=1)
+
+    exact = scorable[scorable["reference_kind"].isin(LEXICAL_REFERENCE_KINDS)].copy()
+    if len(exact):
+        exact["signed_end_error_ms"] = exact["zh_end_minus_splice_ms"]
+        exact["signed_start_error_ms"] = exact["en_start_minus_splice_ms"]
+        exact["absolute_end_error_ms"] = exact["signed_end_error_ms"].abs()
+        exact["absolute_start_error_ms"] = exact["signed_start_error_ms"].abs()
+        exact["absolute_boundary_error_ms"] = exact[
+            ["absolute_start_error_ms", "absolute_end_error_ms"]].max(axis=1)
+
+    for (family, reference_kind), group in scorable.groupby(
+            ["family", "reference_kind"], sort=True):
+        if str(reference_kind) in LEXICAL_REFERENCE_KINDS:
+            exact_group = exact[exact.index.isin(group.index)]
+            for edge, signed_col, absolute_col in (
+                    ("start", "signed_start_error_ms", "absolute_start_error_ms"),
+                    ("end", "signed_end_error_ms", "absolute_end_error_ms"),
+                    ("combined", None, "absolute_boundary_error_ms")):
+                absolute = exact_group[absolute_col].to_numpy(dtype=float)
+                if signed_col is None:
+                    take_end = (exact_group["absolute_end_error_ms"]
+                                >= exact_group["absolute_start_error_ms"])
+                    signed = np.where(take_end, exact_group["signed_end_error_ms"],
+                                      exact_group["signed_start_error_ms"])
+                else:
+                    signed = exact_group[signed_col].to_numpy(dtype=float)
+                rows.append(_absolute_score_row(
+                    absolute, np.asarray(signed, dtype=float), family=str(family),
+                    reference_kind=str(reference_kind), edge=edge, purpose=purpose))
+        else:
+            edge_offset = group["absolute_splice_edge_offset_ms"].to_numpy(dtype=float)
+            rows.append({
+                "schema_version": SCORES_SCHEMA_VERSION,
+                "family": str(family), "purpose": str(purpose),
+                "convention": "audio_splice", "edge": "seam",
+                "reference_kind": str(reference_kind),
+                "metric_semantics": "audio_seam_relative_not_lexical_accuracy",
+                "num_boundaries": int(len(group)),
+                "median_zh_end_minus_splice_ms": float(
+                    group["zh_end_minus_splice_ms"].median()),
+                "median_en_start_minus_splice_ms": float(
+                    group["en_start_minus_splice_ms"].median()),
+                "median_gap_around_splice_ms": float(
+                    group["gap_around_splice_ms"].median()),
+                "median_absolute_splice_edge_offset_ms": float(np.median(edge_offset)),
+                "p90_absolute_splice_edge_offset_ms": float(np.percentile(edge_offset, 90)),
+                "within_100ms_of_splice": float((edge_offset <= 100.0).mean()),
+            })
+    # Add derived columns only to exact-reference items.  Audio-splice outputs
+    # must not serialize lexical absolute-error fields at all.
+    if len(exact) and len(exact) == len(scorable):
+        for column in ("signed_start_error_ms", "signed_end_error_ms",
+                       "absolute_start_error_ms", "absolute_end_error_ms",
+                       "absolute_boundary_error_ms"):
+            per_item.loc[exact.index, column] = exact[column]
+    for column in ("zh_end_minus_splice_ms", "en_start_minus_splice_ms",
+                   "gap_around_splice_ms", "absolute_splice_edge_offset_ms"):
+        per_item.loc[scorable.index, column] = scorable[column]
     return scores_table(rows), per_item
 
 
 def convention_comparison(per_item: pd.DataFrame) -> pd.DataFrame:
-    """Canonical vs legacy absolute error on the same items, per family.
+    """Canonical vs legacy offsets on the same reference, per family.
 
     This is the diagnostic the "coordinate bug" hypothesis needs: a constant
     offset that appears under the midpoint convention and not under unit edges
@@ -371,17 +447,21 @@ def convention_comparison(per_item: pd.DataFrame) -> pd.DataFrame:
     if not len(scorable):
         return pd.DataFrame()
     rows: list[dict[str, Any]] = []
-    for (family, purpose), group in scorable.groupby(["family", "purpose"],
-                                                     sort=True):
+    for (family, purpose, reference_kind), group in scorable.groupby(
+            ["family", "purpose", "reference_kind"], sort=True):
         for convention, edge, pred_col, truth_col in _SCORED_EDGES:
             signed = (group[pred_col] - group[truth_col]) * 1000.0
             rows.append({
                 "family": str(family), "purpose": str(purpose),
+                "reference_kind": str(reference_kind),
+                "metric_semantics": ("absolute_lexical_boundary_accuracy"
+                                     if reference_kind in LEXICAL_REFERENCE_KINDS
+                                     else "audio_seam_relative_not_lexical_accuracy"),
                 "convention": convention, "edge": edge,
                 "n": int(len(group)),
-                "median_signed_error_ms": float(signed.median()),
-                "median_abs_error_ms": float(signed.abs().median()),
-                "p90_abs_error_ms": float(np.percentile(signed.abs(), 90)),
+                "median_signed_offset_ms": float(signed.median()),
+                "median_absolute_offset_ms": float(signed.abs().median()),
+                "p90_absolute_offset_ms": float(np.percentile(signed.abs(), 90)),
             })
     return pd.DataFrame(rows)
 
@@ -402,52 +482,55 @@ def unscorable_summary(per_item: pd.DataFrame) -> dict[str, Any]:
     return out
 
 
-def score_family(predicted_sec: Sequence[float], truth: Sequence[float], *,
-                 family: str, convention: str, edge: str = "combined",
-                 purpose: str = "gate") -> dict[str, Any]:
-    """Boundary-error statistics for one family, convention and edge.
-
-    Emits the exact column names Gate A reads. The underlying E1 helper reports
-    `pct_within_100ms` and p95; the proposal's thresholds are stated on
-    `within_100ms` and p90, so both are derived here rather than left for a
-    reader to guess at.
-    """
-    if edge not in EDGES:
-        raise ValueError(f"edge must be one of {EDGES}, got {edge!r}")
-    predicted = np.asarray(predicted_sec, dtype=float)
-    true = np.asarray(truth, dtype=float)
-    stats = summarize_boundary_error(predicted, true)
-
-    ok = np.isfinite(predicted) & np.isfinite(true)
-    abs_ms = np.abs((predicted[ok] - true[ok]) * 1000.0) if ok.any() else np.array([])
+def _absolute_score_row(absolute_ms: np.ndarray, signed_ms: np.ndarray, *,
+                        family: str, reference_kind: str, edge: str,
+                        purpose: str) -> dict[str, Any]:
+    if reference_kind not in LEXICAL_REFERENCE_KINDS:
+        raise ValueError(f"{reference_kind!r} cannot support lexical absolute error")
+    absolute_ms = np.asarray(absolute_ms, dtype=float)
+    signed_ms = np.asarray(signed_ms, dtype=float)
+    ok = np.isfinite(absolute_ms) & np.isfinite(signed_ms)
+    absolute_ms, signed_ms = absolute_ms[ok], signed_ms[ok]
     return {
         "schema_version": SCORES_SCHEMA_VERSION,
         "family": str(family),
-        "convention": str(convention),
+        "convention": CANONICAL_CONVENTION,
         "edge": str(edge),
         "purpose": str(purpose),
-        "num_boundaries": int(stats.get("num_boundaries", 0)),
-        # the two names the proposal's thresholds are stated on
-        "within_100ms": float(stats.get("pct_within_100ms", float("nan"))),
-        "p90_abs_error_ms": float(np.percentile(abs_ms, 90)) if len(abs_ms)
-        else float("nan"),
-        "median_abs_error_ms": float(stats.get("median_abs_error_ms", float("nan"))),
-        "median_signed_error_ms": float(stats.get("median_signed_error_ms",
-                                                  float("nan"))),
-        "p95_abs_error_ms": float(stats.get("p95_abs_error_ms", float("nan"))),
-        "mean_signed_error_ms": float(stats.get("mean_signed_error_ms", float("nan"))),
-        "note": stats.get("note", ""),
+        "reference_kind": str(reference_kind),
+        "metric_semantics": "absolute_lexical_boundary_accuracy",
+        "num_boundaries": int(len(absolute_ms)),
+        "within_50ms": float((absolute_ms <= 50.0).mean()) if len(absolute_ms) else float("nan"),
+        "within_100ms": float((absolute_ms <= 100.0).mean()) if len(absolute_ms) else float("nan"),
+        "p90_abs_error_ms": float(np.percentile(absolute_ms, 90)) if len(absolute_ms) else float("nan"),
+        "median_abs_error_ms": float(np.median(absolute_ms)) if len(absolute_ms) else float("nan"),
+        "median_signed_error_ms": float(np.median(signed_ms)) if len(signed_ms) else float("nan"),
     }
 
 
-def scores_table(rows: Sequence[Mapping[str, Any]]) -> pd.DataFrame:
-    """Assemble scored rows into the table Gate A reads."""
-    from .autoevidence import SYNTHETIC_REQUIRED_COLUMNS
+def score_family(predicted_sec: Sequence[float], truth: Sequence[float], *,
+                 family: str, convention: str = CANONICAL_CONVENTION,
+                 edge: str = "combined", purpose: str = "gate",
+                 reference_kind: str = "constructed_exact_lexical") -> dict[str, Any]:
+    """Score data that explicitly declares genuine lexical reference edges."""
+    if convention != CANONICAL_CONVENTION:
+        raise ValueError("only the canonical unit-edge convention is gate evidence")
+    predicted = np.asarray(predicted_sec, dtype=float)
+    truth = np.asarray(truth, dtype=float)
+    signed = (predicted - truth) * 1000.0
+    return _absolute_score_row(np.abs(signed), signed, family=family,
+                               reference_kind=reference_kind, edge=edge,
+                               purpose=purpose)
 
+
+def scores_table(rows: Sequence[Mapping[str, Any]]) -> pd.DataFrame:
+    """Assemble reference-aware score rows without coercing their semantics."""
     frame = pd.DataFrame(list(rows))
     if not len(frame):
         return frame
-    missing = [c for c in SYNTHETIC_REQUIRED_COLUMNS if c not in frame.columns]
+    required = ("schema_version", "family", "purpose", "reference_kind",
+                "metric_semantics", "num_boundaries")
+    missing = [c for c in required if c not in frame.columns]
     if missing:
         raise ValueError(f"synthetic score rows are missing {missing}; use "
                          "`score_family` to build them")
@@ -459,7 +542,12 @@ def synthetic_table(scored: Sequence[Mapping[str, Any]]) -> pd.DataFrame:
 
 
 def estimate_edge_offsets(scored: pd.DataFrame) -> pd.DataFrame:
-    """Per (family, convention) median signed error: the calibration estimand."""
+    """Per-family lexical signed error; seam-relative rows are never fitted."""
+    if not len(scored):
+        return pd.DataFrame()
+    if "reference_kind" not in scored or "median_signed_error_ms" not in scored:
+        return pd.DataFrame()
+    scored = scored[scored["reference_kind"].isin(LEXICAL_REFERENCE_KINDS)]
     if not len(scored):
         return pd.DataFrame()
     keep = [c for c in ("family", "convention") if c in scored.columns]
@@ -478,12 +566,15 @@ class EdgeOffsets:
 
 
 def fit_offsets(scored: pd.DataFrame, *, source: str = "synthetic") -> EdgeOffsets:
-    """Fit correction offsets to **external** truth only."""
-    table = estimate_edge_offsets(scored)
+    """Fit correction offsets to genuine external lexical truth only."""
+    lexical = (scored[scored["reference_kind"].isin(LEXICAL_REFERENCE_KINDS)]
+               if len(scored) and "reference_kind" in scored else pd.DataFrame())
+    table = estimate_edge_offsets(lexical)
     values = {f"{row['family']}": float(row["offset_ms"]) for _, row in table.iterrows()} \
         if len(table) else {}
     return EdgeOffsets(values=values, source=source,
-                       n=int(scored["num_boundaries"].sum()) if "num_boundaries" in scored else 0)
+                       n=int(lexical["num_boundaries"].sum())
+                       if "num_boundaries" in lexical else 0)
 
 
 def apply_offsets(candidates: pd.DataFrame, offsets: EdgeOffsets, *,

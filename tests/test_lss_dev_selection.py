@@ -44,6 +44,8 @@ def _items(n: int, purpose: str = "dev") -> pd.DataFrame:
         "zh_text": "我 用", "en_text": "machine learning",
         "duration_sec": 4.0, "purpose": purpose,
         "zh_end_sec": 2.0, "en_start_sec": 2.0, "true_boundary_sec": 2.0,
+        "reference_kind": "constructed_exact_lexical",
+        "reference_semantics": "test_fixture_exact_lexical_edges",
         "zh_utterance_id": f"{purpose}_zh_{i}", "en_utterance_id": f"{purpose}_en_{i}",
     } for i in range(n)])
 
@@ -218,6 +220,41 @@ def test_the_convention_with_the_smaller_development_error_is_selected():
     assert record["changed_the_default"] is True
     assert record["instrument"] == "synthetic_dev"
     assert record["measured"]["median_abs_error_ms"] == 120.0
+
+
+def test_audio_splice_sweep_selects_coordinates_without_lexical_error_names(
+        monkeypatch):
+    """The production RMS/VAD development set is a seam diagnostic.  The L1a
+    convention sweep must remain executable after reference typing, but it may
+    not relabel the seam offset as lexical absolute error."""
+    items = _items(60).copy()
+    items["reference_kind"] = "audio_splice"
+    items["reference_semantics"] = "known_audio_seam_not_lexical_boundary"
+
+    def fake_run(bundle, manifest, cfg, identity, *, pred_start_offset=None):
+        shift = -0.7 if int(pred_start_offset) == -1 else -0.1
+        return (_candidates(items, families=("whisper_dtw",),
+                            offsets={"whisper_dtw": shift}),
+                {"unit_coverage": 1.0})
+
+    monkeypatch.setattr("csasr.nat5h.aligners.run_whisper_dtw", fake_run)
+    sweep = devselect.whisper_variant_sweep(
+        _Bundle(), items, {"alignment": {}},
+        RunIdentity(model_id="fake", model_revision="0", code_commit="test",
+                    config_hash="test"),
+        offsets=(-1, 0))
+
+    assert set(sweep["metric_semantics"]) == {
+        "audio_seam_relative_not_lexical_accuracy"}
+    assert "median_abs_error_ms" not in sweep.columns
+    assert "median_absolute_splice_edge_offset_ms" in sweep.columns
+    selected = devselect.select_whisper_variant(sweep, min_boundaries=50)
+    assert selected["pred_start_offset"] == 0
+    assert selected["metric_semantics"] == \
+        "audio_seam_relative_not_lexical_accuracy"
+    assert "median_abs_error_ms" not in selected["measured"]
+    assert selected["measured"]["median_absolute_splice_edge_offset_ms"] \
+        == pytest.approx(100.0)
 
 
 def test_the_default_convention_keeps_its_historical_variant_name():

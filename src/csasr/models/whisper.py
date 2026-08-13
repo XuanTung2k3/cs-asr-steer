@@ -225,6 +225,17 @@ def _audio_pool():
 
 def batch_features(bundle: WhisperBundle, audio_paths: Sequence[str]) -> torch.Tensor:
     """Log-mel features for a batch, padded/truncated to the 30 s window."""
+    return batch_model_inputs(bundle, audio_paths)["input_features"]
+
+
+def batch_model_inputs(bundle: WhisperBundle,
+                       audio_paths: Sequence[str]) -> dict[str, torch.Tensor]:
+    """Whisper features plus the real padding mask produced by the processor.
+
+    Whisper uses the same id for padding and EOS, so generation cannot infer an
+    attention mask from ids.  The feature extractor knows the unpadded waveform
+    lengths and is the authoritative place to create it.
+    """
     paths = list(audio_paths)
     if len(paths) > 1:
         # executor.map preserves input order, so the batch order is unchanged
@@ -233,9 +244,15 @@ def batch_features(bundle: WhisperBundle, audio_paths: Sequence[str]) -> torch.T
     else:
         audios = [load_audio(p, bundle.sample_rate) for p in paths]
     feats = bundle.processor.feature_extractor(
-        audios, sampling_rate=bundle.sample_rate, return_tensors="pt"
+        audios, sampling_rate=bundle.sample_rate, return_tensors="pt",
+        return_attention_mask=True,
     )
-    return feats.input_features.to(bundle.device, bundle.dtype)
+    if not hasattr(feats, "attention_mask"):
+        raise RuntimeError("Whisper feature extractor returned no attention_mask")
+    return {
+        "input_features": feats.input_features.to(bundle.device, bundle.dtype),
+        "attention_mask": feats.attention_mask.to(bundle.device),
+    }
 
 
 def write_model_metadata(bundle: WhisperBundle, path: str | Path) -> None:

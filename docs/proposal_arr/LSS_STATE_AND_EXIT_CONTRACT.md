@@ -12,7 +12,7 @@ Defined in `csasr.utils.status.ALLOWED`, classified by `csasr.lss.gates.classify
 | `passed` | every gate criterion met; this is the only status that unlocks a downstream stage | 0 |
 | `completed` | an evidence-preparation run finished. It decided nothing | 0 |
 | `completed_no_go` | the experiment ran correctly and a pre-registered scientific threshold was not met. A result, not a crash | 0 |
-| `blocked` | evidence the gate requires does not exist (a missing second aligner, no synthetic calibration, a probe timeout). Nothing measured, nothing broken | 0 |
+| `blocked` | evidence the gate requires does not exist or is scientifically incompatible (a missing second aligner, no genuine lexical calibration, a probe timeout). Nothing measured, nothing broken | 0 |
 | `awaiting_manual_verdicts` | the *optional* manual audit pack is built and waiting on annotators. The only state that waits on a person | 0 |
 | `completed_roles_only` | a partial run (`--roles-only`, `--dry-run`) finished what it was asked to do | 0 |
 | `failed` | implementation defect, corrupt artifact, malformed result, or an unhandled exception | 2 |
@@ -121,41 +121,46 @@ it writes carry:
 |---|---|
 | two independent valid aligners | a second opinion exists at all. Counted by *independence class*, so two variants of one estimator are one |
 | cross-aligner disagreement on natural speech | how far two estimators differ. **Not boundary error** |
-| synthetic splices | true absolute boundary error — the boundary is known by construction |
+| RMS/VAD synthetic splices (`audio_splice`) | signed offset and gap relative to the known audio seam. **Not lexical absolute error** |
+| exact lexical construction (`constructed_exact_lexical`) | true lexical absolute error, only when construction genuinely supplies the lexical start/end edges |
 | manual annotation (optional mode) | true absolute boundary error — a person supplied the boundary |
 | boundary jitter ±50/±100 ms | whether conclusions survive being wrong by that much |
 | frozen high-confidence subset | whether there is enough material |
 
 Two aligners that share a bias agree perfectly and are both wrong; on this data
-Whisper-DTW's signed error against synthetic truth was −490 ms while it agreed
+Whisper-DTW's signed offset relative to the synthetic audio seam was −490 ms while it agreed
 with itself to 10 ms across configurations. Cross-aligner agreement is therefore
 never substituted for accuracy. The naming rule is enforced in code by
 `autoevidence.assert_no_absolute_error_claims`, which fails the run if a
 natural-speech criterion is ever named as an error.
 
-Synthetic exact-boundary scoring **is implemented** and ran in job 38573
-(`lss_l1b_valid._score_synthetic_sets`). An earlier revision of this document said
-it was not; that is out of date.
+Synthetic scoring **is implemented** (`lss_l1b_valid._score_synthetic_sets`), but
+job 38573's RMS/VAD-trimmed concatenations establish an audio seam rather than a
+lexical word boundary. Their old absolute-error labels were scientifically too
+strong. The repaired implementation emits `zh_end_minus_splice_ms`,
+`en_start_minus_splice_ms`, `gap_around_splice_ms`, and
+`absolute_splice_edge_offset_ms`, and refuses to use those quantities for the
+lexical 100/200-ms sub-gate. Exact lexical references remain supported by an
+explicit `reference_kind`.
 
 ## Configuration selection: development evidence only
 
-Automatic mode chooses its own configuration and never waits on a person. Two
-decisions, both made on synthetic **development** items whose boundaries are known
-by construction, both frozen with the instrument recorded:
+Automatic mode never waits on a person. It may choose a configuration only from
+**development** items carrying genuine lexical reference edges; the present
+`audio_splice` development set cannot make that choice:
 
 | decision | stage | artifact |
 |---|---|---|
 | Whisper decoder-query convention (`pred_start_offset`) | l1a | `freeze/l1a_alignment_selection.json` + `metrics/l1a_pred_start_sweep.parquet` |
-| operating tolerance, erosion, union padding | l1b | `freeze/l1b_operating_point.json` + `metrics/l1b_tolerance_selection.parquet` |
+| operating tolerance, erosion, union padding | l1b | requires `manual_lexical`, `existing_gold_lexical`, or genuinely `constructed_exact_lexical`; otherwise blocks before allocating a new held-out generation |
 
-`configs/lss/spec.yaml` states the tolerance rule on **human** median ≤ 100 ms and
-p90 ≤ 200 ms. The estimand is the absolute boundary error of the spans a tolerance
-accepts; "human" names the instrument, and the automatic path measures the same
-quantity against constructed boundaries, which the same freeze already registers
-as external truth. **The numbers are unchanged.** The instrument is recorded as
-`synthetic_dev` (automatic) or `human_audit` (manual mode), so no reader can
-confuse them. `devselect.assert_development_only` raises if a gate-set row ever
-reaches a selection.
+`configs/lss/spec.yaml` literally names a **human** instrument for median ≤ 100
+ms and p90 ≤ 200 ms. The proposed automatic substitution is recorded in
+`GATE_A_AUTOMATIC_INSTRUMENT_AMENDMENT_2026-08-11.md`; it is valid only for
+genuinely known lexical edges and is currently marked superseded/pending such a
+reference. **The numbers are unchanged.** `devselect.assert_development_only`
+raises if a gate-set row ever reaches selection, and an `audio_splice` row is
+ineligible even on development data.
 
 If no swept tolerance meets the rule, the outcome is
 `blocked_no_qualifying_operating_tolerance` — never a silent fallback to 200 ms,
@@ -178,6 +183,7 @@ the two pools disjoint.
 | code | response |
 |---|---|
 | `blocked_missing_synthetic_calibration` | re-run the `synthetic` part; the score table is absent |
+| `blocked_missing_genuine_lexical_calibration` | obtain manual, existing-gold, or genuinely exact constructed lexical edges; an RMS/VAD audio seam cannot satisfy lexical absolute error |
 | `blocked_unauthenticated_synthetic_evidence` | the score table is unsigned, stale or malformed |
 | `blocked_missing_development_set` | run l1a; every automatic configuration choice is made on it |
 | `blocked_unselected_operating_tolerance` | the selection never ran, or its frozen record is not authentic |
@@ -188,7 +194,7 @@ the two pools disjoint.
 | `blocked_no_candidate_alignments` | run the aligner sweep (`l1b --align`) |
 | `blocked_unauthenticated_candidate_evidence` | the candidate table has no valid manifest; re-run the sweep |
 | `blocked_exploratory_candidate_source` | only the recorded NAT5H table was available; run the sweep |
-| `blocked_no_paired_cross_aligner_evidence` | no unit was aligned by two independent families |
+| `blocked_no_paired_cross_aligner_evidence` | at least two families qualify naturally, but their eligible target-object overlap is below the recorded count/rate requirement; raw overlap is reported separately |
 | `blocked_empty_consensus` | no accepted span reaches the primary confidence bins |
 | `blocked_missing_jitter_evidence` | the ±50/±100 ms robustness checks did not run |
 | `blocked_missing_language_subset` | one of EN/ZH has no primary spans, so EN−ZH compares nothing |
@@ -209,9 +215,9 @@ omitted criterion is how a gate passes vacuously.
 | evidence | must hold |
 |---|---|
 | two independent valid aligners | counted by estimator class; a family must clear coverage ≥0.95 **and** invalid ≤0.01 **and** nonmonotonic ≤0.01 |
-| paired cross-aligner units | > 0, and ≥ `min_paired_units`, with both EN and ZH present |
+| paired cross-aligner target objects | ≥ `min_paired_units` and ≥ `min_paired_target_rate` for the deterministic configured pair; raw overlap is diagnostic and distinct |
 | alignment coverage | ≥0.95 against the **frozen expected-unit universe** of the roles being labelled, not against the candidate rows |
-| synthetic absolute error | scored on the **gate** set only, from the **unexposed** generation, ≥2 independent families, boundary count = min over families (never summed across rows) |
+| lexical absolute error | scored on paired eligible objects for the same naturally qualifying deterministic pair, using a genuine lexical reference from an unexposed gate generation; rejected families cannot contaminate the pair |
 | corresponding families | the families that qualify on natural speech and the families with synthetic calibration must be the **same** independence classes, and the disagreement is measured between those |
 | jitter | measured and gated at ±50 **and** ±100 ms, on the frozen high/medium subset |
 | automatic usable-item rate | ≥0.90 |
@@ -221,13 +227,13 @@ omitted criterion is how a gate passes vacuously.
 
 ## Commands
 
-Automatic path — no human annotation anywhere in it:
+Automatic production path — no human annotation is required when a genuine
+automatic lexical reference exists. It is currently blocked by the available
+`audio_splice` reference, so the Slurm commands below must not be run yet:
 
 ```
+# DO NOT RUN YET: first provide/validate genuine lexical calibration
 sbatch cs_asr_lss.sh chain          # l0 -> l1a -> l1b --align, prepare + evaluate
-sbatch cs_asr_lss.sh l1b --align    # --mode automatic is the default
-sbatch cs_asr_lss.sh l1b --prepare-audit    # evidence only, status `completed`
-sbatch cs_asr_lss.sh l1b --evaluate-gate    # decide Gate A
 ```
 
 `--evaluate-gate` on its own decides from what is on disk, which after a previous
@@ -259,3 +265,19 @@ sbatch cs_asr_lss.sh status
 python -m csasr.experiments.lss_status --config configs/lss/base.yaml --report
 python -m csasr.experiments.lss_status --stage-status l1b_valid   # one word
 ```
+
+Safe CPU-only development diagnostics from authenticated cached candidates:
+
+```bash
+PYTHONPATH=src python -m csasr.experiments.lss_alignment_dev_diagnostic \
+  --config lss/l1b_valid.yaml \
+  --diagnostic-output /tmp/csasr_gate_a_dev_diagnostic
+```
+
+The command writes diagnostic-tainted JSON/Markdown and manifest sidecars only.
+It does not write a stage status, allocate/expose a held-out generation, build or
+freeze production spans, or unlock L1c. Before another full chain, this report
+must show reachable full-role sufficiency and a credible deterministic natural
+pair; a compatible lexical calibration source must also be registered. Gate A
+is a task-specific reliability protocol for the span-local experiments in this
+project, not a universal forced-alignment standard.

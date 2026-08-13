@@ -140,12 +140,12 @@ def ctc_agreement_check(cfg, units: pd.DataFrame, manifest: pd.DataFrame,
 
 def synthetic_alignment_check(bundle, cfg, manifest: pd.DataFrame, log, *,
                               resume: bool, overwrite: bool) -> dict:
-    """Measure boundary error against *known* concatenation points.
+    """Measure aligner coordinate offsets relative to known audio seams.
 
-    This is the only component of the no-human protocol that produces real
-    ground truth. Monolingual ZH and EN utterances are concatenated at a known
-    instant, the ordinary aligner is run on the result, and the reported switch
-    boundary is compared against the instant we constructed.
+    Monolingual ZH and EN utterances are concatenated at an exactly known sample,
+    the ordinary aligner is run on the result, and the reported switch is
+    compared with that sample. RMS/VAD trimming does not supply a known lexical
+    word edge, so this diagnostic cannot support lexical absolute error.
     """
     from ..data.alignment_checks import (
         build_synthetic_pairs,
@@ -188,7 +188,7 @@ def synthetic_alignment_check(bundle, cfg, manifest: pd.DataFrame, log, *,
     # The rendered waveforms are a function of these settings. A cached alignment
     # made under different ones describes audio that no longer exists on disk, so
     # it must be discarded rather than resumed.
-    out_path = art(cfg, "alignments", "synthetic_groundtruth.parquet")
+    out_path = art(cfg, "alignments", "synthetic_audio_seam.parquet")
     harness_settings = {"n_pairs": n_pairs, "seed": seed, "trim": trim,
                         "pad_ms": pad_ms, "max_duration_sec": max_dur,
                         "gap_ms": float(scfg.get("gap_ms", 0.0)),
@@ -203,7 +203,7 @@ def synthetic_alignment_check(bundle, cfg, manifest: pd.DataFrame, log, *,
         bundle, cfg, truth, log, language=cfg["alignment"].get("language_token", "zh"),
         batch_size=int(cfg["alignment"].get("batch_size", 8)),
         median_width=int(cfg["alignment"].get("median_filter_width", 7)),
-        desc="align (synthetic ground truth)",
+        desc="align (synthetic audio seam diagnostic)",
         out_path=out_path,
         resume=resume and not stale, overwrite=overwrite or stale)
     fp_path.write_text(json.dumps(fingerprint, indent=2, default=str), encoding="utf-8")
@@ -226,14 +226,15 @@ def synthetic_alignment_check(bundle, cfg, manifest: pd.DataFrame, log, *,
     if not len(merged):
         return {"num_boundaries": 0,
                 "note": "every synthetic pair exceeded the encoder window"}
-    stats = summarize_boundary_error(merged["boundary_sec"].to_numpy(),
-                                     merged["true_boundary_sec"].to_numpy())
+    stats = summarize_boundary_error(
+        merged["boundary_sec"].to_numpy(),
+        merged["true_boundary_sec"].to_numpy(), reference_kind="audio_splice")
     stats["num_pairs_rendered"] = int(len(rendered))
     stats["num_pairs_scored"] = int(len(merged))
     stats["num_pairs_over_window"] = n_dropped
     stats["silence_trimmed"] = trim
     stats["harness_sha256"] = fingerprint["sha256"]
-    merged.to_parquet(art(cfg, "metrics", "e1_synthetic_boundary_error.parquet"),
+    merged.to_parquet(art(cfg, "metrics", "e1_synthetic_audio_seam.parquet"),
                       index=False)
     return stats
 
@@ -247,23 +248,26 @@ def _calibration_note(synthetic: dict, exclude_ms: float,
     most of the aligner's actual error, so the report says plainly whether it
     does and what it would take.
     """
-    if not synthetic.get("num_boundaries"):
+    if not synthetic.get("num_audio_seams"):
         return ("**Not measured.** " + str(synthetic.get("note", "")))
-    tolerances = sorted(int(k[len("pct_within_"):-2])
-                        for k in synthetic if k.startswith("pct_within_"))
-    covered = [t for t in tolerances if float(synthetic[f"pct_within_{t}ms"]) >= coverage]
-    current = synthetic.get(f"pct_within_{int(exclude_ms)}ms")
+    tolerances = sorted(int(k[len("pct_within_"):-len("ms_of_seam")])
+                        for k in synthetic
+                        if k.startswith("pct_within_") and k.endswith("ms_of_seam"))
+    covered = [t for t in tolerances
+               if float(synthetic[f"pct_within_{t}ms_of_seam"]) >= coverage]
+    current = synthetic.get(f"pct_within_{int(exclude_ms)}ms_of_seam")
     lines = [
-        f"Measured on {synthetic['num_boundaries']} constructed boundaries: median "
-        f"absolute error **{synthetic['median_abs_error_ms']:.0f} ms**, p95 "
-        f"**{synthetic['p95_abs_error_ms']:.0f} ms**, systematic bias "
-        f"**{synthetic['mean_signed_error_ms']:+.0f} ms**.",
+        f"Measured on {synthetic['num_audio_seams']} constructed audio seams: median "
+        f"absolute seam offset **{synthetic['median_absolute_seam_offset_ms']:.0f} ms**, "
+        f"p95 **{synthetic['p95_absolute_seam_offset_ms']:.0f} ms**, systematic "
+        f"seam offset **{synthetic['mean_signed_seam_offset_ms']:+.0f} ms**. "
+        "This is not lexical boundary error.",
     ]
     if current is not None:
         lines.append(f"The configured `exclude_boundary_ms` of {exclude_ms:.0f} ms "
-                     f"covers {float(current):.1%} of that error.")
+                     f"covers {float(current):.1%} of those seam offsets.")
     if covered:
-        lines.append(f"To cover {coverage:.0%} of measured boundary error, set "
+        lines.append(f"To cover {coverage:.0%} of measured seam offsets, set "
                      f"`alignment.exclude_boundary_ms` to **{covered[0]} ms**"
                      + (" — the current value already suffices."
                         if covered[0] <= exclude_ms else
@@ -753,14 +757,14 @@ def main(argv: list[str] | None = None) -> int:
         synthetic = synthetic_alignment_check(
             bundle, cfg, load_subset(cfg, audit_subset), log,
             resume=args.resume, overwrite=args.overwrite)
-        metrics["synthetic_ground_truth"] = synthetic
-        log.info("synthetic boundary error: %s", json.dumps(synthetic, default=str))
+        metrics["synthetic_audio_seam"] = synthetic
+        log.info("synthetic audio-seam offsets: %s", json.dumps(synthetic, default=str))
         # Advisory but decisive: this is what the exclusion window gets set from,
         # so it goes in the job log rather than only the report.
         for line in _calibration_note(
                 synthetic, float(acfg["exclude_boundary_ms"])).splitlines():
             if line.strip():
-                log.info("alignment calibration | %s", line.replace("**", ""))
+                log.info("alignment seam diagnostic | %s", line.replace("**", ""))
 
         ctc_stats = ctc_agreement_check(cfg, tables[audit_subset],
                                         load_subset(cfg, audit_subset), primary_b, log)
@@ -786,8 +790,8 @@ def main(argv: list[str] | None = None) -> int:
             and s["validation"]["non_monotonic_units"] == 0
             and s["validation"]["conflicting_language_overlaps"] == 0
             for s in metrics["subsets"].values())
-        syn_within_100 = finite_float(synthetic.get("pct_within_100ms"))
-        syn_bias = abs(finite_float(synthetic.get("mean_signed_error_ms")))
+        syn_within_100 = finite_float(synthetic.get("pct_within_100ms_of_seam"))
+        syn_bias = abs(finite_float(synthetic.get("mean_signed_seam_offset_ms")))
         agree_within_100 = finite_float(agree_stats.get("pct_within_100ms"))
         absorption = finite_float(silence.get("absorption_rate"))
         min_syn_100 = float(gcfg.get("min_synthetic_within_100ms", 0.90))
@@ -815,12 +819,12 @@ def main(argv: list[str] | None = None) -> int:
             criterion("silence_absorption_rate", absorption,
                       float(gcfg.get("max_absorption_rate", 0.20)),
                       absorption <= float(gcfg.get("max_absorption_rate", 0.20)), "<="),
-            criterion("synthetic_boundaries_scored",
-                      int(synthetic.get("num_boundaries", 0)), min_syn_boundaries,
-                      int(synthetic.get("num_boundaries", 0)) >= min_syn_boundaries),
-            criterion("synthetic_boundaries_within_100ms",
+            criterion("synthetic_audio_seams_scored",
+                      int(synthetic.get("num_audio_seams", 0)), min_syn_boundaries,
+                      int(synthetic.get("num_audio_seams", 0)) >= min_syn_boundaries),
+            criterion("synthetic_audio_seams_within_100ms",
                       syn_within_100, min_syn_100, syn_within_100 >= min_syn_100),
-            criterion("synthetic_abs_systematic_bias_ms", syn_bias, max_syn_bias,
+            criterion("synthetic_abs_systematic_seam_offset_ms", syn_bias, max_syn_bias,
                       syn_bias <= max_syn_bias, "<="),
         ]
         ctc_state = independent_audit_gate_state(
@@ -890,7 +894,7 @@ def main(argv: list[str] | None = None) -> int:
                     {k: v["durations"] for k, v in metrics["subsets"].items()},
                     indent=2, default=str) + "\n```"),
                 ("Boundary reliability", "```json\n" + json.dumps(agree_stats, indent=2) + "\n```"),
-                ("Boundary error vs synthetic ground truth",
+                ("Synthetic audio-seam coordinate diagnostic",
                  "```json\n" + json.dumps(synthetic, indent=2, default=str) + "\n```\n\n"
                  + _calibration_note(synthetic, float(acfg["exclude_boundary_ms"]))),
                 ("Silence absorption", "```json\n" + json.dumps(silence, indent=2) + "\n```"),

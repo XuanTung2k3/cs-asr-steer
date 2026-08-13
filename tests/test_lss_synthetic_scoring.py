@@ -20,7 +20,8 @@ from csasr.lss.align import synthetic as syn
 SR = 16000
 
 
-def _rendered(n=3, *, gap_sec=0.0, zh_end=2.0):
+def _rendered(n=3, *, gap_sec=0.0, zh_end=2.0,
+              reference_kind="constructed_exact_lexical"):
     """`n` rendered splices whose seam is at `zh_end`."""
     rows = []
     for i in range(n):
@@ -34,6 +35,8 @@ def _rendered(n=3, *, gap_sec=0.0, zh_end=2.0):
             "zh_end_sec": zh_end,
             "en_start_sec": zh_end + gap_sec,
             "true_boundary_sec": zh_end + gap_sec / 2.0,
+            "reference_kind": reference_kind,
+            "reference_semantics": reference_kind,
         })
     return pd.DataFrame(rows)
 
@@ -99,6 +102,30 @@ def test_a_known_offset_comes_back_as_that_offset_signed():
         assert row["median_signed_error_ms"] == pytest.approx(-150.0, abs=1e-3)
         assert row["median_abs_error_ms"] == pytest.approx(150.0, abs=1e-3)
         assert row["within_100ms"] == pytest.approx(0.0)
+
+
+def test_rms_vad_audio_splice_emits_seam_offsets_not_lexical_error():
+    rendered = _rendered(n=3, reference_kind="audio_splice")
+    scores, per_item = syn.score_rendered_set(
+        rendered, _predictions(rendered, offset_sec=-0.150), purpose="dev")
+    assert set(scores["metric_semantics"]) == {
+        "audio_seam_relative_not_lexical_accuracy"}
+    serialized = set(scores.columns) | set(per_item.columns)
+    assert "median_abs_error_ms" not in serialized
+    assert "absolute_boundary_error_ms" not in serialized
+    assert "zh_end_minus_splice_ms" in per_item
+    assert "en_start_minus_splice_ms" in per_item
+
+
+def test_audio_splice_offsets_cannot_be_fitted_as_lexical_corrections():
+    rendered = _rendered(n=3, reference_kind="audio_splice")
+    scores, _ = syn.score_rendered_set(rendered, _predictions(rendered),
+                                       purpose="dev")
+
+    fitted = syn.fit_offsets(scores, source="audio_splice")
+
+    assert fitted.values == {}
+    assert fitted.n == 0
 
 
 def test_the_seam_uses_the_last_zh_unit_and_the_first_en_unit():
@@ -186,14 +213,19 @@ def test_gate_a_reads_a_written_score_table_end_to_end(tmp_path):
     from csasr.lss.align import autoevidence
 
     rendered = _rendered(n=40)
-    scores, _ = syn.score_rendered_set(
-        rendered, _predictions(rendered, offset_sec=-0.020), purpose="gate")
+    candidates = pd.concat([
+        _predictions(rendered, offset_sec=-0.020, family="existing_ctc"),
+        _predictions(rendered, offset_sec=-0.020, family="whisper_dtw")],
+        ignore_index=True)
+    scores, per_item = syn.score_rendered_set(rendered, candidates, purpose="gate")
     path = tmp_path / autoevidence.SYNTHETIC_SCORES_FILE
     path.parent.mkdir(parents=True, exist_ok=True)
     scores.to_parquet(path, index=False)
+    per_item.to_parquet(tmp_path / autoevidence.SYNTHETIC_ITEMS_FILE, index=False)
 
     status = autoevidence.synthetic_calibration_status(
-        tmp_path, min_boundaries=40, require_authentication=False)
+        tmp_path, min_boundaries=40, require_authentication=False,
+        selected_pair=["existing_ctc", "whisper_dtw"])
     assert status["available"] is True, status.get("detail")
     assert status["num_boundaries"] == 40
     absolute = status["absolute_boundary_error"]

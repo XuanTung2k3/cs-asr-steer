@@ -4,7 +4,7 @@
     sbatch cs_asr_lss.sh l1a
 
 Whether the alignment is good enough is Gate A's decision, in l1b_valid, and it
-is answered against external ground truth. This stage exists to explain *why*
+requires compatible external lexical reference evidence. This stage exists to explain *why*
 the two aligners disagree, so that Gate A is faced with a repaired aligner
 rather than an unexplained one. Its gate therefore checks that every diagnostic
 ran and reproduces; coverage numbers are reported and never thresholded.
@@ -14,13 +14,13 @@ correction it computes is an explicit counterfactual, marked not-applied,
 because an offset fitted to inter-aligner agreement optimizes the statistic it
 would then be judged by.
 
-Two things it *does* decide, and both on external truth only:
+Two things it *does* decide, both on development-only coordinate evidence:
 
-* it renders the synthetic **development** set (boundaries known by
-  construction) and publishes it authenticated, so l1b reads the same 100 items
-  rather than rendering its own;
+* it renders the synthetic **development** set (with known audio seams, not
+  lexical boundaries) and publishes it authenticated, so l1b reads the same
+  configured pool rather than rendering its own;
 * it runs the configured `pred_start_offset` conventions over that set, scores
-  each against the constructed seam, and freezes the selected variant in
+each relative to the constructed seam, and freezes the selected variant in
   `freeze/l1a_alignment_selection.json`. This experiment was previously deferred
   to l1b, which requires l1a -- so it could never run at all.
 
@@ -91,10 +91,10 @@ def _select_aligner_configuration(cfg: dict, log, rdir, taint: dict, *,
     so it is built here, published with a manifest, and reused by l1b for the
     operating-tolerance selection.
 
-    Nothing in here judges anything. Both conventions are legitimate readings of
-    the same attention; the sweep says which one places boundaries where the
-    construction put them, and Gate A still has to clear the proposal's
-    thresholds on a fresh gate set afterwards.
+    Nothing in here judges lexical accuracy. Both conventions are legitimate
+    readings of the same attention; the sweep says which one places predicted
+    edges nearest the constructed audio seam. Gate A still requires genuine
+    lexical calibration and must clear the proposal's thresholds afterwards.
     """
     from ..lss.align import devselect
     from ..models.whisper import load_whisper
@@ -129,7 +129,7 @@ def _select_aligner_configuration(cfg: dict, log, rdir, taint: dict, *,
         out_dir=root / "synthetic" / "dev" / "alignments")
     sweep_path = art(cfg, "metrics", "l1a_pred_start_sweep.parquet")
     write_parquet(sweep, sweep_path)
-    log.info("pred_start sweep against known development boundaries:\n%s",
+    log.info("pred_start sweep against typed development references:\n%s",
              sweep.to_string(index=False) if len(sweep) else "(empty)")
 
     whisper = devselect.select_whisper_variant(
@@ -430,7 +430,8 @@ def _run(argv: list[str] | None = None) -> int:
             criteria, name=STAGE,
             note=("Diagnostics only. This stage explains the disagreement between "
                   "aligner families; whether the alignment is usable is decided by "
-                  "Gate A in l1b_valid against external ground truth."))
+                  "Gate A in l1b_valid against compatible external lexical "
+                  "reference evidence."))
 
         rows = criteria_frame(criteria)
         save_report(

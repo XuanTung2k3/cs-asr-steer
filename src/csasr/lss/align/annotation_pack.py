@@ -30,6 +30,9 @@ PROVISIONAL_FAMILY = "existing_ctc"
 #: Mandarin is the matrix language of CS-Dialogue; English spans are embedded.
 MATRIX_LANGUAGE = "ZH"
 EMBEDDED_LANGUAGE = "EN"
+#: The two code-switch directions this pack is defined over.
+SWITCH_DIRECTIONS = (f"{MATRIX_LANGUAGE}->{EMBEDDED_LANGUAGE}",
+                     f"{EMBEDDED_LANGUAGE}->{MATRIX_LANGUAGE}")
 
 TIER_NAMES = ("matrix_end", "embedded_start")
 CLIP_DURATION_SEC = 3.0
@@ -76,8 +79,12 @@ def _stream_key(label: str) -> int:
     return int.from_bytes(digest[:4], "big")
 
 
-def _language_runs(group: pd.DataFrame) -> list[dict[str, Any]]:
-    """Consecutive same-language unit runs, in reference order."""
+def language_runs(group: pd.DataFrame) -> list[dict[str, Any]]:
+    """Consecutive same-language unit runs, in reference order.
+
+    Shared with the boundary-convention diagnostic, which needs the same
+    reconstruction so that both enumerate one switch universe rather than two.
+    """
     ordered = group.sort_values("reference_unit_index")
     runs: list[dict[str, Any]] = []
     for _, row in ordered.iterrows():
@@ -87,6 +94,26 @@ def _language_runs(group: pd.DataFrame) -> list[dict[str, Any]]:
         else:
             runs.append({"language": language, "rows": [row]})
     return runs
+
+
+def adjacent_run_transitions(runs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Every transition between consecutive language runs, in reference order.
+
+    ``position`` indexes the run on the left, so the transition out of run *i*
+    is ``position == i`` and the transition into run *i* is ``position == i-1``.
+    The two units named are the only ones a boundary at this transition can come
+    from: the left run's last unit and the right run's first unit.
+    """
+    return [{
+        "position": position,
+        "direction": f"{left['language']}->{right['language']}",
+        "left_language": str(left["language"]),
+        "right_language": str(right["language"]),
+        "left_run": left,
+        "right_run": right,
+        "left_unit": left["rows"][-1],
+        "right_unit": right["rows"][0],
+    } for position, (left, right) in enumerate(zip(runs, runs[1:]))]
 
 
 def switch_universe(candidates: pd.DataFrame, *,
@@ -110,7 +137,8 @@ def switch_universe(candidates: pd.DataFrame, *,
                 "non_finite_boundary": 0, "non_positive_embedded_span": 0}
     items: list[dict[str, Any]] = []
     for utterance, group in rows.groupby("utterance_id", sort=True):
-        runs = _language_runs(group)
+        runs = language_runs(group)
+        outgoing = {t["position"]: t for t in adjacent_run_transitions(runs)}
         for position, run in enumerate(runs):
             if run["language"] != EMBEDDED_LANGUAGE:
                 continue
@@ -120,13 +148,14 @@ def switch_universe(candidates: pd.DataFrame, *,
             if not np.isfinite(span_duration) or span_duration <= 0:
                 excluded["non_positive_embedded_span"] += 1
                 continue
-            neighbours = []
-            if position > 0 and runs[position - 1]["language"] == MATRIX_LANGUAGE:
-                neighbours.append(("ZH->EN", runs[position - 1]["rows"][-1], run["rows"][0]))
-            if (position + 1 < len(runs)
-                    and runs[position + 1]["language"] == MATRIX_LANGUAGE):
-                neighbours.append(("EN->ZH", run["rows"][-1], runs[position + 1]["rows"][0]))
-            for direction, left, right in neighbours:
+            # This run's onset (the transition into it) and its offset (the
+            # transition out of it), in that order.  Each survives only if the
+            # other side is the matrix language.
+            neighbours = [t for t in (outgoing.get(position - 1), outgoing.get(position))
+                          if t is not None and t["direction"] in SWITCH_DIRECTIONS]
+            for transition in neighbours:
+                direction = transition["direction"]
+                left, right = transition["left_unit"], transition["right_unit"]
                 if int(right["reference_unit_index"]) - int(left["reference_unit_index"]) != 1:
                     excluded["non_contiguous_reference_unit_index"] += 1
                     continue

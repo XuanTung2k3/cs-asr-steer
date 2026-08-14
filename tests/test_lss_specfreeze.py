@@ -27,7 +27,7 @@ from csasr.lss.specfreeze import (
 
 CFG = {
     "experiment": {"spec_version": "v1", "normalization_version": "v1"},
-    "statistics": {"cluster_key": "conversation_id", "bootstrap_resamples": 10000,
+    "statistics": {"cluster_key": "dialogue_id", "bootstrap_resamples": 10000,
                    "bootstrap_seed": 342, "ci": 0.95},
     "decoding": {"num_beams": 1, "temperature": 0.0},
     "seeds": {p: (7 if p != "jitter" else [1, 2]) for p in REQUIRED_PURPOSES},
@@ -139,7 +139,7 @@ def test_freeze_records_the_decisions_the_review_demanded():
     assert "E_pre" in spec.get("steering_scale", "energy_pre")
     assert spec.get("steering_scale", "decoder_depth_rescale") is False
     assert spec.get("outcomes", "deprecates").endswith("outside_region_edits")
-    assert spec.get("statistics", "cluster_key") == "conversation_id"
+    assert spec.get("statistics", "cluster_key") == "dialogue_id"
     assert spec.get("selector_features", "allowlist_version")
 
 

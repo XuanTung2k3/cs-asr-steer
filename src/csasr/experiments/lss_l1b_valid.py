@@ -43,10 +43,12 @@ group that failed still selects the pre-registered response in
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from ..lss import manifest as manifest_mod
@@ -102,6 +104,171 @@ ROLE_SPAN_THRESHOLDS = {
     "D-dev-confirm": "min_dev_confirm_targets",
 }
 
+SAMPLING_REPORT_SCHEMA = "lss_dialogue_stratified_sample_v1"
+SAMPLING_CONFIG_FIELDS = (
+    "sample_dialogues", "utterances_per_dialogue",
+    "sample_stratify_field", "sample_seed",
+)
+
+
+def _positive_int(value, *, field: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"alignment.diagnostics.{field} must be a positive integer")
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"alignment.diagnostics.{field} must be a positive integer") from exc
+    if parsed <= 0 or (isinstance(value, float) and not value.is_integer()):
+        raise ValueError(f"alignment.diagnostics.{field} must be a positive integer")
+    return parsed
+
+
+def _sampling_config(cfg: dict) -> dict:
+    """Validate and normalize the dialogue-stratified sampling contract.
+
+    The legacy total-row cap is rejected even if new fields are also present.
+    Otherwise a partially migrated config could appear dialogue-stratified while
+    a caller continued to rely on the old, conversation-ordered cap.
+    """
+    dcfg = (cfg.get("alignment") or {}).get("diagnostics") or {}
+    if "sample_utterances" in dcfg:
+        raise ValueError(
+            "legacy alignment.diagnostics.sample_utterances is forbidden; "
+            "configure sample_dialogues, utterances_per_dialogue, "
+            "sample_stratify_field, and sample_seed explicitly")
+    missing = [field for field in SAMPLING_CONFIG_FIELDS if field not in dcfg]
+    if missing:
+        raise ValueError(
+            "incomplete dialogue-stratified sampling configuration; missing "
+            + ", ".join(f"alignment.diagnostics.{field}" for field in missing))
+
+    requested = dcfg["sample_dialogues"]
+    if isinstance(requested, str):
+        if requested.strip().lower() != "all":
+            raise ValueError(
+                "alignment.diagnostics.sample_dialogues must be a positive "
+                "integer or 'all'")
+        requested = "all"
+    else:
+        requested = _positive_int(requested, field="sample_dialogues")
+
+    field = str(dcfg["sample_stratify_field"]).strip()
+    if not field:
+        raise ValueError(
+            "alignment.diagnostics.sample_stratify_field must be non-empty")
+    seed = dcfg["sample_seed"]
+    if isinstance(seed, bool):
+        raise ValueError("alignment.diagnostics.sample_seed must be an integer")
+    try:
+        seed = int(seed)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            "alignment.diagnostics.sample_seed must be an integer") from exc
+    if isinstance(dcfg["sample_seed"], float) \
+            and not dcfg["sample_seed"].is_integer():
+        raise ValueError("alignment.diagnostics.sample_seed must be an integer")
+
+    return {
+        "sample_dialogues": requested,
+        "utterances_per_dialogue": _positive_int(
+            dcfg["utterances_per_dialogue"], field="utterances_per_dialogue"),
+        "sample_stratify_field": field,
+        "sample_seed": seed,
+    }
+
+
+def _derived_rng(seed: int, *labels: str) -> np.random.Generator:
+    """A stable independent RNG stream for one role/dialogue decision."""
+    payload = "\x1f".join([str(seed), *(str(label) for label in labels)])
+    derived = int.from_bytes(
+        hashlib.sha256(payload.encode("utf-8")).digest()[:8], "big")
+    return np.random.default_rng(derived)
+
+
+def dialogue_stratified_sample(manifest: pd.DataFrame, design: dict, *,
+                               role: str) -> tuple[pd.DataFrame, dict]:
+    """Sample up to K code-switched utterances from each selected dialogue.
+
+    Filtering precedes dialogue enumeration. Dialogue and utterance inputs are
+    sorted before seeded permutations, so results do not depend on set/dict or
+    input-row iteration order. Under-populated dialogues contribute what they
+    contain and are never compensated for by another dialogue.
+    """
+    field = str(design["sample_stratify_field"])
+    required = {"utterance_id", "contains_code_switch", field}
+    missing = sorted(required - set(manifest.columns))
+    if missing:
+        raise ValueError(
+            f"role {role} manifest cannot support dialogue-stratified sampling; "
+            f"missing column(s): {missing}")
+
+    eligible = manifest[manifest["contains_code_switch"].fillna(False).astype(bool)].copy()
+    labels = eligible[field]
+    absent = labels.isna() | labels.astype(str).str.strip().eq("")
+    if bool(absent.any()):
+        raise ValueError(
+            f"role {role} has {int(absent.sum())} eligible utterance(s) without "
+            f"{field}; refusing a non-stratified fallback")
+    eligible[field] = labels.astype(str)
+    eligible["utterance_id"] = eligible["utterance_id"].astype(str)
+
+    available = sorted(eligible[field].unique().tolist())
+    requested = design["sample_dialogues"]
+    if requested == "all":
+        selected_dialogues = available
+        requested_for_report = "all"
+        dialogue_shortfall = 0
+    else:
+        wanted = int(requested)
+        order = list(available)
+        _derived_rng(int(design["sample_seed"]), role, "dialogues").shuffle(order)
+        selected_dialogues = sorted(order[:wanted])
+        requested_for_report = wanted
+        dialogue_shortfall = max(0, wanted - len(available))
+
+    k = int(design["utterances_per_dialogue"])
+    frames: list[pd.DataFrame] = []
+    per_dialogue: list[dict] = []
+    for dialogue in selected_dialogues:
+        group = (eligible[eligible[field] == dialogue]
+                 .sort_values("utterance_id", kind="stable"))
+        take = min(k, len(group))
+        if take:
+            positions = _derived_rng(
+                int(design["sample_seed"]), role, dialogue, "utterances"
+            ).choice(len(group), size=take, replace=False)
+            chosen = group.iloc[sorted(int(i) for i in positions)].copy()
+            frames.append(chosen)
+        per_dialogue.append({
+            "dialogue_id": dialogue,
+            "eligible_utterances": int(len(group)),
+            "selected_utterances": int(take),
+            "utterance_shortfall": int(max(0, k - len(group))),
+        })
+
+    sample = (pd.concat(frames, ignore_index=True) if frames
+              else eligible.iloc[0:0].copy())
+    if len(sample):
+        sample = sample.sort_values([field, "utterance_id"], kind="stable").reset_index(drop=True)
+    report = {
+        "schema_version": SAMPLING_REPORT_SCHEMA,
+        "role": role,
+        "stratify_field": field,
+        "seed": int(design["sample_seed"]),
+        "requested_dialogues": requested_for_report,
+        "available_dialogues": int(len(available)),
+        "selected_dialogues": int(len(selected_dialogues)),
+        "dialogue_shortfall": int(dialogue_shortfall),
+        "utterances_per_dialogue": k,
+        "eligible_utterances": int(len(eligible)),
+        "selected_utterances": int(len(sample)),
+        "underpopulated_dialogues": int(sum(
+            row["utterance_shortfall"] > 0 for row in per_dialogue)),
+        "per_dialogue": per_dialogue,
+    }
+    return sample, report
+
 
 def _load_role_evidence(cfg: dict, role: str) -> pd.DataFrame:
     """Load a role and authenticate its immutable L0 artifact when on disk."""
@@ -149,13 +316,17 @@ def _full_role_data_sufficiency(cfg: dict, roles: list[str]) -> dict:
     audit from being compared with a 500-utterance role requirement.
     """
     gcfg = cfg.get("gate_a") or {}
+    sampling_design = _sampling_config(cfg)
     universe = str(gcfg.get("data_sufficiency_universe",
                             "full_l0_role_manifest"))
     if universe != "full_l0_role_manifest":
-        sample_cap = int(((cfg.get("alignment") or {}).get("diagnostics") or {})
-                         .get("sample_utterances", 0))
+        requested_dialogues = sampling_design["sample_dialogues"]
+        sample_cap = (None if requested_dialogues == "all" else
+                      int(requested_dialogues)
+                      * int(sampling_design["utterances_per_dialogue"]))
         requested = int(gcfg.get("min_construct_bilingual_utterances", 0))
-        if universe == "audit_sample" and requested > sample_cap:
+        if (universe == "audit_sample" and sample_cap is not None
+                and requested > sample_cap):
             raise ValueError(
                 "unreachable Gate-A configuration: "
                 f"min_construct_bilingual_utterances={requested} exceeds the "
@@ -164,8 +335,12 @@ def _full_role_data_sufficiency(cfg: dict, roles: list[str]) -> dict:
         raise ValueError(f"unsupported data_sufficiency_universe={universe!r}")
 
     per_role: dict[str, dict] = {}
+    audit_sampling: dict[str, dict] = {}
     for role in roles:
         manifest = _load_role_evidence(cfg, role)
+        _, sample_report = dialogue_stratified_sample(
+            manifest, sampling_design, role=role)
+        audit_sampling[role] = sample_report
         units = unit_table(manifest)
         if len(units):
             units = units.copy()
@@ -188,9 +363,14 @@ def _full_role_data_sufficiency(cfg: dict, roles: list[str]) -> dict:
     return {
         "data_sufficiency_universe": universe,
         "count_universe": "complete authenticated role manifests frozen by L0",
-        "audit_sample_size_per_role": int(
-            ((cfg.get("alignment") or {}).get("diagnostics") or {})
-            .get("sample_utterances", 0)),
+        "audit_sample_size_per_role": {
+            role: int(report["selected_utterances"])
+            for role, report in audit_sampling.items()},
+        "audit_sampling": {
+            "schema_version": SAMPLING_REPORT_SCHEMA,
+            "design": sampling_design,
+            "roles": audit_sampling,
+        },
         "per_role": per_role,
         "d_construct_bilingual_count": int(
             per_role.get("D-construct", {}).get("bilingual_utterances", 0)),
@@ -203,6 +383,7 @@ def _validate_gate_configuration(cfg: dict) -> None:
     """Reject mathematically unreachable evidence requirements before work."""
     gcfg = cfg.get("gate_a") or {}
     scfg = cfg.get("synthetic") or {}
+    sampling_design = _sampling_config(cfg)
     required = int(gcfg.get("min_synthetic_boundaries", 100))
     for purpose in ("dev", "gate"):
         candidates = int(scfg.get(f"num_pairs_{purpose}", 0))
@@ -215,10 +396,12 @@ def _validate_gate_configuration(cfg: dict) -> None:
     # without loading role data.
     universe = str(gcfg.get("data_sufficiency_universe", "full_l0_role_manifest"))
     if universe == "audit_sample":
-        cap = int(((cfg.get("alignment") or {}).get("diagnostics") or {})
-                  .get("sample_utterances", 0))
+        requested_dialogues = sampling_design["sample_dialogues"]
+        cap = (None if requested_dialogues == "all" else
+               int(requested_dialogues)
+               * int(sampling_design["utterances_per_dialogue"]))
         required_construct = int(gcfg.get("min_construct_bilingual_utterances", 0))
-        if required_construct > cap:
+        if cap is not None and required_construct > cap:
             raise ValueError(
                 "unreachable Gate-A configuration: audit sample cap "
                 f"{cap} < D-construct requirement {required_construct}")
@@ -297,22 +480,19 @@ def sweep_sample(cfg: dict, roles: list[str] | None = None,
                  *, missing_ok: bool = False) -> pd.DataFrame:
     """The utterances this stage sets out to align.
 
-    **Both** the aligner sweep and the coverage denominator must come from this
-    one function. They were written twice and drifted: the sweep aligned
-    `contains_code_switch].head(300)` per role, while coverage was measured
-    against every unit in the *whole* role. On D-construct that is 10,167 units
-    attempted against a denominator of 309,535 -- a coverage ceiling of 3.3%
-    under a 0.95 threshold, so `alignment_unit_coverage` could not pass however
-    good the aligners were, and Gate A would have reported `completed_no_go` on
-    the coverage group for a bookkeeping mismatch rather than a measurement.
+    **Both** the aligner sweep and the coverage denominator come from this one
+    function. Code-switched rows are stratified by the configured cluster field
+    before at most K utterances are drawn per dialogue. This replaces the former
+    conversation-ordered `.head(300)`, which concentrated a role sample in a
+    handful of clusters.
 
-    The selection is deterministic and independent of any aligner's output, so
-    it keeps the property the frozen denominator exists for: an aligner that
-    silently drops utterances still shows up as missing coverage.
+    The selection is deterministic, seed-recorded, and independent of aligner
+    output. Sparse dialogues are never backfilled, so their shortfall remains
+    visible instead of silently increasing another cluster's weight.
     """
-    dcfg = (cfg.get("alignment") or {}).get("diagnostics") or {}
-    per_role = int(dcfg.get("sample_utterances", 300))
+    design = _sampling_config(cfg)
     frames = []
+    reports: dict[str, dict] = {}
     for role in sweep_roles(cfg, roles):
         try:
             manifest = _load_role_evidence(cfg, role)
@@ -320,10 +500,18 @@ def sweep_sample(cfg: dict, roles: list[str] | None = None,
             if missing_ok:
                 continue
             raise
-        subset = manifest[manifest["contains_code_switch"]].head(per_role).copy()
+        subset, sample_report = dialogue_stratified_sample(
+            manifest, design, role=role)
         subset["role"] = role
         frames.append(subset)
-    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+        reports[role] = sample_report
+    out = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    out.attrs["sampling_report"] = {
+        "schema_version": SAMPLING_REPORT_SCHEMA,
+        "design": design,
+        "roles": reports,
+    }
+    return out
 
 
 def _expected_unit_universe(cfg: dict, roles: list[str]) -> pd.DataFrame:
@@ -383,8 +571,17 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
     # is also what defines the coverage denominator, so the two cannot disagree.
     roles = sweep_roles(cfg, roles)
     sample = sweep_sample(cfg, roles)
-    log.info("aligner sweep over %d bilingual utterances across %s",
-             len(sample), roles)
+    sampling_report = sample.attrs.get("sampling_report", {})
+    log.info("aligner sweep over %d bilingual utterances across %s; "
+             "dialogue-stratified sampling=%s", len(sample), roles,
+             sampling_report.get("design", {}))
+    for role, role_report in (sampling_report.get("roles") or {}).items():
+        if role_report.get("dialogue_shortfall"):
+            log.warning(
+                "role %s has %d fewer eligible dialogues than requested; "
+                "using all %d and not backfilling", role,
+                role_report["dialogue_shortfall"],
+                role_report["selected_dialogues"])
 
     selection = devselect.load_aligner_selection(root)
     offset = selection.get("pred_start_offset") if selection.get("available") else None
@@ -404,6 +601,7 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
     report["aligner_selection"] = selection
     report["pred_start_offset"] = offset
     report["roles"] = roles
+    report["sampling"] = sampling_report
     report["utterances"] = int(len(sample))
     report["utterances_per_role"] = {
         r: int((sample["role"] == r).sum()) for r in roles} if len(sample) else {}
@@ -422,7 +620,8 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
                         if m]),
             taint_reasons=(taint or {}).get("taint_reasons") or (),
             key_columns=CANDIDATE_KEYS, schema="nat5h_candidates_v2",
-            extra={"request_manifest": report.get("request_manifest")})
+            extra={"request_manifest": report.get("request_manifest"),
+                   "sampling": sampling_report})
     else:
         log.error("aligner sweep produced no candidates: %s", report)
     report_path = art(cfg, "diagnostics", "l1b_aligner_sweep.json")

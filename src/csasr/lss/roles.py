@@ -20,6 +20,16 @@ Two deviations from plan v1, both forced by the implementation review:
 
 `conversation_id` and `speaker_id` are 1:1 in this corpus (140/140 train,
 20/20, 10/10, 30/30), so conversation-disjoint roles are also speaker-disjoint.
+That is true and not sufficient: CS-Dialogue is 100 two-party sessions recorded
+by 200 speakers with one channel each, so both fields name one *side* of a
+dialogue. Under the v1 assignment built here, 62 of 85 dialogues have their two
+sides in different roles, including 8 of the 15 development dialogues, whose
+halves sit in `D-dev-select` and `D-dev-confirm`.
+
+A role partition is only genuinely disjoint when it is **dialogue-disjoint**:
+see `csasr.lss.dialogue_roles`, which allocates whole sessions and enforces that
+property. `dialogue_id` -- not `conversation_id` -- is the independence unit for
+a cluster bootstrap on this corpus.
 """
 from __future__ import annotations
 

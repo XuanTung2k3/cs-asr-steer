@@ -1,5 +1,19 @@
 # Gate-A lexical-boundary annotation pack: implementation and results
 
+> **SUPERSEDED — 2026-08-14 by `docs/proposal_arr/RUNBOOK.md` (Runbook v2).**
+>
+> Human lexical annotation was **dropped** by explicit decision on 2026-08-13/14.
+> The Gate-A criterion moved from absolute boundary accuracy against a human
+> reference to a provisional aligner configuration plus an invariance battery,
+> so this pack is superseded rather than failed and no annotation pass is
+> planned. **The unresolved EN→ZH tier ambiguity recorded below is therefore
+> moot** — it no longer blocks anything, and no protocol decision on it is
+> required. The pack's switch-universe enumeration is reused by the CTC
+> convention diagnostic.
+>
+> The body below is unaltered and retained as historical evidence of what was
+> built, exported, and mechanically verified on 2026-08-13.
+
 **Date:** 2026-08-13
 
 **Repository:** `/home/tungnx/cs-asr-steer`

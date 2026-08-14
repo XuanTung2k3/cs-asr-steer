@@ -49,6 +49,7 @@ def _manifest(n_utterances: int, role: str = "D-construct") -> pd.DataFrame:
         "utterance_id": f"{role}_u{i}",
         "conversation_id": f"c{i // 5}",
         "speaker_id": f"c{i // 5}",
+        "dialogue_id": f"d{i // 5}",
         "audio_path": f"/nonexistent/{role}_u{i}.wav",
         "duration_sec": 4.0,
         "transcript_raw": TRANSCRIPT,
@@ -101,6 +102,12 @@ def root(tmp_path, monkeypatch):
     """An artifacts root with L0 and L1a passed and their artifacts published."""
     artifacts = tmp_path / "artifacts_lss"
     (artifacts / "status").mkdir(parents=True, exist_ok=True)
+    # The production amendment is an immutable repository document, not test
+    # infrastructure. Keep these integration tests self-contained so an
+    # unrelated documentation move/deletion cannot make every Gate-A assertion
+    # abort before reaching the behavior it is meant to exercise.
+    (tmp_path / "scientific_amendment.md").write_text(
+        "# Test-only scientific amendment fixture\n", encoding="utf-8")
     cfg_stub = {"experiment": {"output_root": str(artifacts)}, "model": {"id": "fake"}}
 
     write_status(artifacts, "l0_freeze", "passed", complete=True, full_l0_pass=True)
@@ -129,6 +136,8 @@ def root(tmp_path, monkeypatch):
 def _OVERRIDES(root: Path) -> list[str]:
     """Config overrides shared by the runner and the identity of what it reads."""
     return [f"experiment.output_root={root}",
+            "gate_a.automatic_instrument_amendment.document="
+            f"{root.parent / 'scientific_amendment.md'}",
             f"roles_to_label={json.dumps(LABELLED_ROLES)}"]
 
 
@@ -490,11 +499,10 @@ def test_the_convention_comparison_is_written_for_a_reviewer(root, synthetic_stu
 def test_the_swept_sample_and_the_coverage_denominator_are_the_same_set(root):
     """The two were written twice and drifted.
 
-    The sweep aligned `contains_code_switch].head(sample_utterances)` per role
-    while coverage was measured against *every* unit in the whole role. On the
-    real D-construct that is 10,167 units attempted against 309,535 -- a ceiling
-    of 3.3% under a 0.95 floor, so `alignment_unit_coverage` could not pass
-    however good the aligners were. One function now defines both.
+    The sweep and denominator once used different universes: a sampled numerator
+    was compared with every unit in the full role. They must now share the exact
+    dialogue-stratified sample, or coverage can fail on bookkeeping rather than
+    an aligner's behavior.
     """
     from csasr.utils.config import load_config
 
@@ -871,6 +879,14 @@ def test_aligner_sweep_publishes_candidate_parents_and_transitive_taint(
 
     cfg = _resolved_cfg(root)
     sample = _manifest(3)
+    sample.attrs["sampling_report"] = {
+        "schema_version": lss_l1b_valid.SAMPLING_REPORT_SCHEMA,
+        "design": {"sample_dialogues": "all", "utterances_per_dialogue": 15,
+                   "sample_stratify_field": "dialogue_id", "sample_seed": 303},
+        "roles": {"D-construct": {"selected_dialogues": 1,
+                                    "selected_utterances": 3,
+                                    "dialogue_shortfall": 0}},
+    }
     table = _candidate_rows(sample, ["existing_ctc", "whisper_dtw"])
     prerequisite_parent = {
         "path": "freeze/spec_freeze_v1.json", "sha256": "freeze-sha",
@@ -919,6 +935,8 @@ def test_aligner_sweep_publishes_candidate_parents_and_transitive_taint(
     assert {p["path"] for p in published["parent_artifacts"]} == {
         prerequisite_parent["path"], cache_parent["path"]
     }
+    assert published["sampling"]["design"]["sample_seed"] == 303
+    assert report["sampling"] == sample.attrs["sampling_report"]
     verdict = manifest_mod.verify(
         root / "alignments" / "candidates_all.parquet", cfg=cfg,
         require_identity=True)

@@ -26,8 +26,12 @@ data:
 
 statistics:
   # conversation_id and speaker_id are 1:1 in CS-Dialogue (140/140, 20/20,
-  # 10/10, 30/30), so a conversation block bootstrap is also speaker-clustered
-  cluster_key: conversation_id
+  # 10/10, 30/30) -- but both name one *side* of a two-party session. The corpus
+  # is 100 dialogues recorded by 200 speakers, one channel each, so clustering on
+  # conversation_id would treat the two halves of one session as independent and
+  # narrow every interval. dialogue_id groups both halves; see
+  # csasr.lss.dialogue_roles and csasr.data.manifest.derive_dialogue_ids.
+  cluster_key: dialogue_id
   bootstrap_resamples: 10000
   bootstrap_seed: 342
   ci: 0.95

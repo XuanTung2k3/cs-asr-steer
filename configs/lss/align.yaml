@@ -85,7 +85,13 @@ alignment:
       - [whisper_dtw, qwen_forced_aligner]
 
   diagnostics:
-    sample_utterances: 300
+    # Dialogue-stratified audit universe. `all` means every dialogue represented
+    # after the contains_code_switch filter; each contributes at most K rows, so
+    # a sparse dialogue is reported and never backfilled from another cluster.
+    sample_dialogues: all
+    utterances_per_dialogue: 15
+    sample_stratify_field: dialogue_id
+    sample_seed: 303
     sample_role: D-construct
     reproduce_nat5h_smoke: true
     ladder: [legacy_e1, nat5h_unit_index, canonical_coordinates, unit_edge_comparison]

@@ -146,6 +146,9 @@ def test_no_natural_pair_cannot_unlock_lexical_calibration(tmp_path):
 
 def test_candidate_pool_must_exceed_usable_boundary_requirement():
     cfg = {"synthetic": {"num_pairs_dev": 100, "num_pairs_gate": 100},
+           "alignment": {"diagnostics": {
+               "sample_dialogues": "all", "utterances_per_dialogue": 15,
+               "sample_stratify_field": "dialogue_id", "sample_seed": 303}},
            "gate_a": {"min_synthetic_boundaries": 100,
                       "data_sufficiency_universe": "full_l0_role_manifest"}}
     with pytest.raises(ValueError, match="must exceed"):
@@ -154,7 +157,9 @@ def test_candidate_pool_must_exceed_usable_boundary_requirement():
 
 def test_unreachable_sampled_data_requirement_is_rejected():
     cfg = {"synthetic": {"num_pairs_dev": 150, "num_pairs_gate": 150},
-           "alignment": {"diagnostics": {"sample_utterances": 300}},
+           "alignment": {"diagnostics": {
+               "sample_dialogues": 20, "utterances_per_dialogue": 15,
+               "sample_stratify_field": "dialogue_id", "sample_seed": 303}},
            "gate_a": {"min_synthetic_boundaries": 100,
                       "data_sufficiency_universe": "audit_sample",
                       "min_construct_bilingual_utterances": 500}}
@@ -172,7 +177,13 @@ def test_authenticated_exactly_required_dev_pool_is_not_reused(monkeypatch, tmp_
         "synthetic": {"num_pairs_dev": 150, "num_pairs_gate": 150},
         "gate_a": {"min_synthetic_boundaries": 100,
                    "data_sufficiency_universe": "full_l0_role_manifest"},
-        "alignment": {"consensus": {}},
+        "alignment": {
+            "consensus": {},
+            "diagnostics": {
+                "sample_dialogues": "all", "utterances_per_dialogue": 15,
+                "sample_stratify_field": "dialogue_id", "sample_seed": 303,
+            },
+        },
     }
     old = pd.DataFrame({
         "pair_id": [f"dev_{i}" for i in range(100)],
@@ -200,6 +211,7 @@ def test_authenticated_exactly_required_dev_pool_is_not_reused(monkeypatch, tmp_
 def test_full_role_counts_cannot_be_confused_with_audit_sample(monkeypatch):
     manifest = pd.DataFrame({
         "utterance_id": [f"u{i}" for i in range(600)],
+        "dialogue_id": [f"d{i % 20}" for i in range(600)],
         "contains_code_switch": [True] * 550 + [False] * 50})
     units = pd.DataFrame([
         {"utterance_id": f"u{i}", "unit_id": j, "language": lang}
@@ -208,11 +220,13 @@ def test_full_role_counts_cannot_be_confused_with_audit_sample(monkeypatch):
     monkeypatch.setattr(lss_l1b_valid, "role_path",
                         lambda cfg, role: f"/frozen/{role}.parquet")
     monkeypatch.setattr(lss_l1b_valid, "unit_table", lambda frame: units)
-    cfg = {"alignment": {"diagnostics": {"sample_utterances": 300}},
+    cfg = {"alignment": {"diagnostics": {
+               "sample_dialogues": "all", "utterances_per_dialogue": 15,
+               "sample_stratify_field": "dialogue_id", "sample_seed": 303}},
            "gate_a": {"data_sufficiency_universe": "full_l0_role_manifest",
                       "min_construct_bilingual_utterances": 500}}
     result = lss_l1b_valid._full_role_data_sufficiency(cfg, ["D-construct"])
-    assert result["audit_sample_size_per_role"] == 300
+    assert result["audit_sample_size_per_role"] == {"D-construct": 300}
     assert result["d_construct_bilingual_count"] == 550
     assert result["per_role"]["D-construct"]["embedded_english_targets"] == 600
 

@@ -18,6 +18,36 @@ roles:
     D-dev-select: dev_select
     D-dev-confirm: dev_confirm
     D-test: test
+
+  # Dialogue-atomic allocation (csasr.lss.dialogue_roles).
+  #
+  # CS-Dialogue is 100 two-party sessions recorded by 200 speakers, one channel
+  # per participant, so the `train_conversation_targets` partition above splits
+  # 62 of 85 dialogues across two roles -- including 8 of the 15 development
+  # dialogues, whose halves sit in D-dev-select and D-dev-confirm. These targets
+  # allocate whole sessions instead, so a dialogue is the independence unit and
+  # the two halves can never inform each other.
+  #
+  # D-test is not listed: it is exactly the 15 official-test dialogues and is
+  # never redrawn, which keeps the locked batch comparable with published
+  # CS-Dialogue evaluation. The remaining 85 (70 official train + 15 official
+  # dev) are allocated here. Drawing D-dev-select from the official train pool is
+  # deliberate: the official dev split is a benchmarking convention, this work
+  # reports no CS-Dialogue dev number, and 15 dev dialogues cannot supply a
+  # usable development cluster count.
+  dialogue_roles:
+    version: dialogue-v1
+    targets:
+      D-dev-select: 20
+      D-construct: 20
+      loc-train: 15
+      util-train: 12
+      router-calib: 8
+      D-dev-confirm: 10
+    # router_calib_split is deliberately unset: the conversation-level 10/10
+    # above described 20 conversations, and how 8 dialogues should divide
+    # between probability calibration and threshold selection is a scientific
+    # decision, not a rescaling.
   balance:
     # Sorted-identifier slicing can preserve collection order, device, topic or
     # chronology; conversations are assigned by seeded rerandomization instead.

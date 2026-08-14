@@ -164,8 +164,14 @@ def build(cfg: Mapping[str, Any], *,
         },
 
         "statistics": {
-            "cluster_key": str(statistics.get("cluster_key", "conversation_id")),
-            "cluster_justification": "conversation_id and speaker_id are 1:1 in CS-Dialogue",
+            "cluster_key": str(statistics.get("cluster_key", "dialogue_id")),
+            "cluster_justification": (
+                "conversation_id and speaker_id are 1:1 in CS-Dialogue, but both "
+                "name one side of a two-party dialogue: the corpus is 100 "
+                "sessions recorded by 200 speakers, one channel per participant. "
+                "Two sides of one session share topic, room, time, and mutually "
+                "conditioned speech, so they are not exchangeable clusters. The "
+                "independence unit is dialogue_id, which groups both sides"),
             "bootstrap": {
                 "impl": "csasr.evaluation.bootstrap",
                 "n": int(statistics.get("bootstrap_resamples", 10000)),

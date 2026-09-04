@@ -25,3 +25,6 @@ environment.lock.txt
 
 # local agent state and worktrees
 .claude/
+
+# disposable smoke-test backup
+out/smoke/results_A.pre_42674_debug_residue.jsonl.bak

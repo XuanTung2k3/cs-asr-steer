@@ -1,0 +1,9 @@
+seed: 42
+model_id: openai/whisper-large-v3
+model_revision: main
+data_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+prefix_width: 4
+output_root: results/round1
+time_budget_minutes: 175
+device: cuda
+dtype: bfloat16

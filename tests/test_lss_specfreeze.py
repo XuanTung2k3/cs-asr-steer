@@ -13,7 +13,6 @@ from csasr.lss.features_contract import (
 from csasr.lss.seeds import REQUIRED_PURPOSES
 from csasr.lss.specfreeze import (
     SPEC_FREEZE_SCHEMA,
-    SpecFreeze,
     SpecFreezeError,
     assert_matches,
     build,
@@ -22,6 +21,7 @@ from csasr.lss.specfreeze import (
     load,
     seal,
     supersede,
+    supersede_at,
     verify,
 )
 
@@ -120,6 +120,38 @@ def test_supersede_records_what_it_replaced(tmp_path):
     assert payload["supersedes"]["reason"] == "decoder site re-decided"
     assert payload["spec_version"] == "v2"
     assert old.exists(), "the superseded freeze must remain readable"
+
+
+def test_cross_namespace_supersession_records_both_old_hashes(tmp_path):
+    old = tmp_path / "v1-root" / "freeze" / "spec_freeze_v1.json"
+    seal(_spec(), old)
+    old_bytes = old.read_bytes()
+    new = tmp_path / "v2-root" / "freeze" / "spec_freeze_v2.json"
+    supersede_at(old, _spec(), new, reason="cluster unit corrected")
+
+    from csasr.utils.hashing import sha256_file
+
+    payload = json.loads(new.read_text())
+    assert payload["supersedes"] == {
+        "path": str(old.resolve()),
+        "sha256": load(old).sha256,
+        "file_sha256": sha256_file(old),
+        "reason": "cluster unit corrected",
+        "superseded_at": payload["supersedes"]["superseded_at"],
+    }
+    assert payload["spec_version"] == "v2"
+    assert old.read_bytes() == old_bytes
+
+
+def test_cross_namespace_supersession_refuses_source_tree_and_bad_version(tmp_path):
+    old = tmp_path / "v1-root" / "freeze" / "spec_freeze_v1.json"
+    seal(_spec(), old)
+    with pytest.raises(SpecFreezeError, match="immutable source freeze directory"):
+        supersede_at(old, _spec(), old.parent / "nested" /
+                     "spec_freeze_v2.json", reason="unsafe")
+    with pytest.raises(SpecFreezeError, match="must be v2"):
+        supersede_at(old, _spec(), tmp_path / "v2-root" / "freeze" /
+                     "spec_freeze_v3.json", reason="skipped version")
 
 
 def test_assert_matches_catches_config_drift():

@@ -1,0 +1,26 @@
+{
+  "cell_id": "Confirm:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28",
+  "config": {
+    "stage": "Confirm",
+    "site": "decoder",
+    "coverage": "local",
+    "direction_kind": "v_nat+v_prompt",
+    "alpha": 1.0,
+    "encoder_layers": [],
+    "decoder_layers": [
+      28
+    ],
+    "scale_mode": "act_norm",
+    "matched_energy": true,
+    "num_beams": 1,
+    "language": "zh",
+    "combo_mode": "weighted",
+    "weight_nat": 2.0,
+    "weight_prompt": 0.5,
+    "note": "the ONE configuration proposed for D-dev-confirm; requires explicit human approval"
+  },
+  "config_hash": "0ddbd0909c77ea50",
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "population": "D-dev-confirm",
+  "statement": "Track A Confirm is NOT run automatically. D-dev-confirm has never been opened and has ten dialogues to spend. This is the single configuration the fixed selection rule chose; a human authorises the run."
+}

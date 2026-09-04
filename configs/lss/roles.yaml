@@ -36,7 +36,7 @@ roles:
   # reports no CS-Dialogue dev number, and 15 dev dialogues cannot supply a
   # usable development cluster count.
   dialogue_roles:
-    version: dialogue-v1
+    version: dialogue-v2
     targets:
       D-dev-select: 20
       D-construct: 20
@@ -44,6 +44,27 @@ roles:
       util-train: 12
       router-calib: 8
       D-dev-confirm: 10
+    # Versioned partition rule. Gated covariates are feasibility constraints;
+    # the unchanged objective ranks feasible draws only. The uniform proposal
+    # measures how rare feasible unconstrained draws are, while the stratified
+    # deal supplies random candidates near the attainable gender/device margins.
+    #
+    # v2 changed two things relative to v1, not one: the draw-acceptance rule
+    # above, and the proposal machinery -- the stratified deal was added and the
+    # RNG derivation became SeedSequence([seed, proposal_index, 0xC5A5]) so each
+    # mechanism draws from its own stream. The v2 allocation is consequently a
+    # fresh allocation, not v1's re-scored under a different threshold; the two
+    # are not comparable draw-for-draw. No threshold, scoring formula, or
+    # ungated weight changed. See csasr.lss.balance.RNG_DERIVATION.
+    partition:
+      version: dialogue-rerandomization-v2
+      ungated_weight: 0.3
+      proposals:
+        - mechanism: uniform_permutation
+          draws: 20000
+        - mechanism: stratified_deal
+          draws: 20000
+          stratify_by: [gender, device]
     # router_calib_split is deliberately unset: the conversation-level 10/10
     # above described 20 conversations, and how 8 dialogues should divide
     # between probability calibration and threshold selection is a scientific
@@ -54,9 +75,9 @@ roles:
     continuous: [hours, utterances, cs_utterances, cs_rate, embedded_en_units, mean_duration_sec]
     categorical: [gender, device, region]
     distributional: [topics]
-    # `region` has 28 levels across 140 conversations, so a 20-conversation role
-    # cannot represent it: the best of 4000 random draws still gives TV = 0.21.
-    # It is optimized and reported, but only the two-level covariates are gated.
+    # Region remains explicitly ungated under the frozen scientific protocol.
+    # It is optimized and reported for every accepted partition, but only the
+    # gender and device composition covariates are categorical gates.
     gated_categorical: [gender, device]
     max_abs_smd: 0.25
     max_categorical_tv: 0.15

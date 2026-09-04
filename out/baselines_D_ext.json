@@ -1,0 +1,60 @@
+{
+  "C00": {
+    "metrics": {
+      "scored_utterances": 300,
+      "PIER": 0.4731040564373898,
+      "num_poi": 2268,
+      "num_poi_errors": 1073,
+      "poi_per_category": {
+        "wrong_language_substitution": 339,
+        "phonetic_transliteration_or_script": 36,
+        "same_language_substitution": 131,
+        "deletion": 531,
+        "boundary_error": 29,
+        "insertion_near_poi": 0,
+        "other": 7
+      },
+      "MER": 0.25818333036297747,
+      "WER": 0.8554540569586244
+    },
+    "decode_health": {
+      "median_length_ratio": 0.9425824175824176,
+      "median_length_ratio_ok": true,
+      "empty_output_rate": 0.0,
+      "empty_output_rate_ok": true,
+      "max_new_tokens_hit_rate": 0.0,
+      "max_new_tokens_hit_rate_ok": true,
+      "healthy": true
+    },
+    "num_beams": 1
+  },
+  "C00_beam5": {
+    "metrics": {
+      "scored_utterances": 300,
+      "PIER": 0.4246031746031746,
+      "num_poi": 2268,
+      "num_poi_errors": 963,
+      "poi_per_category": {
+        "wrong_language_substitution": 280,
+        "phonetic_transliteration_or_script": 23,
+        "same_language_substitution": 141,
+        "deletion": 481,
+        "boundary_error": 32,
+        "insertion_near_poi": 0,
+        "other": 6
+      },
+      "MER": 0.20210301194083052,
+      "WER": 0.8417517463729178
+    },
+    "decode_health": {
+      "median_length_ratio": 0.9506097560975609,
+      "median_length_ratio_ok": true,
+      "empty_output_rate": 0.0,
+      "empty_output_rate_ok": true,
+      "max_new_tokens_hit_rate": 0.0,
+      "max_new_tokens_hit_rate_ok": true,
+      "healthy": true
+    },
+    "num_beams": 5
+  }
+}

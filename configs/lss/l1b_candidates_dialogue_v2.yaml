@@ -1,0 +1,40 @@
+# Candidate-generation-only execution for the dialogue-atomic v2 namespace.
+#
+# This is intentionally not an L1b entry point. It can generate the natural
+# candidate table and its provenance, but cannot evaluate Gate A, allocate a
+# synthetic gate generation, write status/freeze state, or unlock L1c.
+include: [lss/l1b_valid.yaml]
+
+stage: l1b_candidates_dialogue_v2
+
+experiment:
+  spec_version: v2
+  # A write-once generation root. An interrupted generation is retained as an
+  # incomplete attempt and a retry must use a new versioned generation path.
+  output_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/candidate_generations/generation_001
+  role_manifests_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/manifests/roles
+  spec_freeze_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/freeze/spec_freeze_v2.json
+
+runtime:
+  stop_file: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/candidate_generations/generation_001/REQUEST_STOP
+
+v2_namespace:
+  version: lss-dialogue-v2
+  root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2
+  protected_v1_root: /mnt/data/tungnx/cs-asr-steer/artifacts_lss
+  superseded_freeze: /mnt/data/tungnx/cs-asr-steer/artifacts_lss/freeze/spec_freeze_v1.json
+  role_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/manifests/roles
+  candidate_generation_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/candidate_generations/generation_001
+  candidate_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/candidate_generations/generation_001/alignments/candidates_all.parquet
+  freeze_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/freeze/spec_freeze_v2.json
+
+candidate_generation:
+  version: dialogue-candidates-v2-generation-001
+  # Explicitly frozen here; the candidate command never consults v1's mutable
+  # output tree for a fallback selection. Offset 0 is the already disclosed
+  # query-at-token convention selected on development-only diagnostics.
+  pred_start_offset: 0
+  pred_start_convention: query_at_token
+  decision_source: explicit_versioned_config_carried_forward_from_development_diagnostic
+  candidate_generation_only: true
+  require_all_configured_families: true

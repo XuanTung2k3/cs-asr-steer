@@ -34,7 +34,7 @@ a cluster bootstrap on this corpus.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 import pandas as pd
 
@@ -268,7 +268,12 @@ def write_roles(cfg: Mapping[str, Any], roles: Mapping[str, pd.DataFrame],
 
 
 def role_path(cfg: Mapping[str, Any], name: str) -> Path:
-    root = artifacts_root(cfg) / "manifests" / "roles"
+    # A versioned candidate generation may read immutable role manifests from
+    # its namespace anchor while writing candidates beneath a generation-
+    # specific output root.  The default remains exactly the v1 layout.
+    configured = (cfg.get("experiment") or {}).get("role_manifests_root")
+    root = Path(str(configured)) if configured else \
+        artifacts_root(cfg) / "manifests" / "roles"
     if name == TEST_ROLE:
         return root / "locked" / f"role_{name}.parquet"
     return root / f"role_{name}.parquet"

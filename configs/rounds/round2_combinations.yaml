@@ -1,0 +1,6 @@
+round: 2
+job: combinations
+inherits: configs/rounds/common.yaml
+requires_lock: true
+layer_sets: [[20, 22, 24, 26]]
+output_root: results/round2/combinations

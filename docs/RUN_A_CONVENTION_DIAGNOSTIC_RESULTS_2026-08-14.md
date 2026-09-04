@@ -1,5 +1,15 @@
 # Run A — CTC blank-run boundary convention diagnostic: results
 
+> **STALE POPULATION — 2026-08-14.**
+>
+> These numbers were computed on the v1 sample under the old role partition.
+> Session 8 regenerates the diagnostic on the v2r2 population. The conclusions
+> — `blank_to_preceding` best; EN−ZH asymmetry reduced from 440 ms to 140 ms;
+> utterance-final targets unaffected by every convention at 700 ms median; and
+> blank-run median 220 ms — are expected to hold, but they must be reconfirmed
+> before the eligibility rule depends on them. The body below is retained as
+> historical evidence of the v1 diagnostic.
+
 **Date:** 2026-08-14
 
 **Repository:** `/home/tungnx/cs-asr-steer`

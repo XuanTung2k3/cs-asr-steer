@@ -207,7 +207,7 @@ affected.
 ## Current state snapshot — 2026-08-14
 
 Verify this section before relying on it. The authority for the current
-alignment criterion is `docs/proposal_arr/RUNBOOK.md` (Runbook v2, 2026-08-14).
+alignment criterion is `docs/RUNBOOK_V2_2026-08-14.md`.
 
 ### Gate A as currently defined
 
@@ -234,10 +234,19 @@ alignment criterion is `docs/proposal_arr/RUNBOOK.md` (Runbook v2, 2026-08-14).
   blank-frame convention (characterised); Whisper DTW (reference for
   disagreement statistics); cross-attention pseudo-labels following Liu et al.,
   IEEE TASLP 2025 (arXiv 2403.05887) (to be built).
-- **Eligibility now excludes utterance-final targets** (added 2026-08-14),
-  alongside the duration tier floor (≥400 ms conservative; ≥300/≥200 ms
-  expansion tiers), the frozen confidence threshold, matrix-language preceding
-  context, and the non-contiguous reference-unit exclusion.
+- **Eligibility excludes utterance-final targets and has no alignment-confidence
+  condition.** It uses the duration tier floor (≥400 ms conservative;
+  ≥300/≥200 ms expansion tiers), matrix-language preceding context, and
+  contiguous reference-unit indices. `l1b_operating_point.json` froze no
+  qualifying tolerance, so the older high/medium/low confidence labels are not
+  a valid filter.
+- **The independent cluster is `dialogue_id`.** CS-Dialogue has 100 two-party
+  dialogues represented as 200 separate speaker sides. `conversation_id` and
+  `speaker_id` identify one side and must not be counted as independent
+  clusters. Roles are dialogue-atomic.
+- **Current work targets the isolated v2r2 namespace.** The v1 production
+  namespace and the superseded v2 namespace are immutable historical records;
+  no current workflow may fall back to their paths.
 
 Redefining Gate A relaxes no invariant in the sections above. Cross-aligner
 disagreement is still `cross_aligner_disagreement` and never error against
@@ -251,8 +260,9 @@ diagnostic result may be reported as an accuracy claim or as a production pass.
   passed, and L1b completed in a truthful blocked state. No production span
   freeze exists and L1c remains locked.
 - The Run-A *diagnostic reproduction* gate was re-baselined by explicit human
-  decision to the development-only population and passed. This was a QA check on
-  the diagnostic harness, not Gate A.
+  decision to the development-only population and passed. This was a QA check
+  on the diagnostic harness, not Gate A. Its measurements came from the v1
+  sample and are stale until Session 8 reconfirms them on v2r2.
 - Four CTC blank conventions were measured on one common set of 3,028
   CTC–Whisper target objects: excluded median/P90 440/1260 ms; to-preceding
   340/1220; to-following 680/1460; midpoint 480/1000. `blank_to_preceding` is
@@ -274,7 +284,7 @@ diagnostic result may be reported as an accuracy claim or as a production pass.
 - The latest verified CPU suite contained 559 tests. Recount and rerun rather
   than assuming this number remains current.
 
-Read `docs/proposal_arr/RUNBOOK.md` and the dated result documents named in the
+Read `docs/RUNBOOK_V2_2026-08-14.md` and the dated result documents named in the
 authority section for complete numbers, the day-by-day plan, and limitations.
 
 ## Repository map for LSS work

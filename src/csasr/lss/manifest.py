@@ -18,7 +18,11 @@ So every artifact that Gate A depends on is published with a sidecar manifest,
       "producing_run_id": "l1b_valid/2026-08-11T02:14:41Z",
       "producing_stage": "l1b_valid",
       "created_at": "...",
-      "identity": {"source": ..., "config": ..., "data": ..., "model": ...},
+      "identity": {
+        "code_config_sha256": ...,           # gated
+        "test_sha256": ...,                  # recorded, not gated
+        "config_sha256": ..., "data_sha256": ..., "model_id": ...
+      },
       "expected_keys_sha256": "...",       # what the producer promised to write
       "parent_artifacts": [{"path": ..., "sha256": ..., "run_id": ...}],
       "parent_run_ids": [...],
@@ -54,9 +58,11 @@ import pandas as pd
 from ..nat5h.statusing import atomic_output_path, atomic_write_json
 from ..utils.hashing import sha256_file, sha256_obj, sha256_strings
 from ..utils.provenance import (
+    code_config_snapshot_hash,
     dataset_manifest_hash,
     resolved_config_hash,
     source_snapshot_hash,
+    test_snapshot_hash,
 )
 
 MANIFEST_VERSION = "lss-artifact-manifest-v1"
@@ -88,21 +94,68 @@ def run_id(stage: str, run_dir: str | Path | None = None) -> str:
     return f"{stage}/{os.environ.get('SLURM_JOB_ID') or _now()}"
 
 
-def identity(cfg: Mapping[str, Any]) -> dict[str, Any]:
-    """What must match for a cached artifact to be reusable.
-
-    `nat5h.RunIdentity` defaults `code_commit` to "unknown", which makes its
-    cache check blind to source changes. The source snapshot hash is the
-    substitute: it covers `src`, `configs`, `tests` and the launchers.
-    """
+def _common_identity(cfg: Mapping[str, Any]) -> dict[str, Any]:
     model = dict(cfg.get("model") or {})
     return {
-        "source_sha256": source_snapshot_hash(),
         "config_sha256": resolved_config_hash(dict(cfg)),
         "data_sha256": dataset_manifest_hash(dict(cfg)),
         "model_id": model.get("hub_id") or model.get("id"),
         "model_revision": model.get("revision"),
     }
+
+
+def identity(cfg: Mapping[str, Any]) -> dict[str, Any]:
+    """What must match for a cached artifact to be reusable.
+
+    `nat5h.RunIdentity` defaults `code_commit` to "unknown", which makes its
+    cache check blind to source changes. Production code/configuration and the
+    test suite are both recorded, but only the former is gated. This prevents a
+    test-only change from invalidating scientific bytes while preserving the
+    full provenance record.
+    """
+    return {
+        "code_config_sha256": code_config_snapshot_hash(),
+        "test_sha256": test_snapshot_hash(),
+        **_common_identity(cfg),
+    }
+
+
+def _legacy_identity(cfg: Mapping[str, Any]) -> dict[str, Any]:
+    """Identity expected from an immutable pre-split artifact manifest."""
+    return {
+        "source_sha256": source_snapshot_hash(),
+        **_common_identity(cfg),
+    }
+
+
+def _is_sha256(value: Any) -> bool:
+    return (isinstance(value, str) and len(value) == 64
+            and all(c in "0123456789abcdef" for c in value))
+
+
+def _identity_format(have: Mapping[str, Any]) -> tuple[str | None, str]:
+    """Classify the mutually exclusive legacy and split identity schemas."""
+    legacy = "source_sha256" in have
+    code = "code_config_sha256" in have
+    tests = "test_sha256" in have
+    if legacy and not code and not tests:
+        if _is_sha256(have.get("source_sha256")):
+            return "legacy", ""
+        return None, "legacy source_sha256 is not a lowercase SHA-256 digest"
+    if not legacy and code and tests:
+        bad = [name for name in ("code_config_sha256", "test_sha256")
+               if not _is_sha256(have.get(name))]
+        if not bad:
+            return "split", ""
+        return None, f"split identity has invalid digest fields {bad}"
+    present = sorted(name for name, yes in (
+        ("source_sha256", legacy),
+        ("code_config_sha256", code),
+        ("test_sha256", tests),
+    ) if yes)
+    return None, ("expected exactly source_sha256 (legacy) or both "
+                  "code_config_sha256 and test_sha256 (split); found "
+                  f"{present}")
 
 
 def expected_keys_hash(frame: pd.DataFrame,
@@ -144,7 +197,8 @@ def publish(artifact: str | Path, frame: pd.DataFrame | None = None, *,
             taint_reasons: Iterable[str] = (),
             key_columns: Sequence[str] = (),
             schema: str | None = None,
-            extra: Mapping[str, Any] | None = None) -> dict[str, Any]:
+            extra: Mapping[str, Any] | None = None,
+            logical_path: str | Path | None = None) -> dict[str, Any]:
     """Write the manifest for an artifact that has just been written.
 
     Call this *after* the artifact exists; the manifest hashes it, so a manifest
@@ -156,7 +210,11 @@ def publish(artifact: str | Path, frame: pd.DataFrame | None = None, *,
     taint = merge_taint(parents, extra_reasons=taint_reasons)
     payload = {
         "manifest_version": MANIFEST_VERSION,
-        "path": str(path),
+        # Generation-atomic publishers write into an attempt-private directory
+        # and rename the whole directory only after its complete manifest is
+        # durable. In that case the bytes are hashed at `path`, while consumers
+        # must see the immutable final location recorded here.
+        "path": str(Path(logical_path)) if logical_path is not None else str(path),
         "sha256": sha256_file(path),
         "bytes": int(path.stat().st_size),
         "rows": None if frame is None else int(len(frame)),
@@ -234,8 +292,22 @@ def verify(artifact: str | Path, *, cfg: Mapping[str, Any] | None = None,
         out["detail"] = f"expected {payload.get('sha256')}, found {actual}"
         return out
     if require_identity and cfg is not None:
-        want, have = identity(cfg), dict(payload.get("identity") or {})
-        differing = sorted(k for k in want if want[k] != have.get(k))
+        raw_identity = payload.get("identity")
+        have = dict(raw_identity) if isinstance(raw_identity, Mapping) else {}
+        identity_format, format_problem = _identity_format(have)
+        if identity_format is None:
+            out["verdict"] = IDENTITY_MISMATCH
+            out["detail"] = f"malformed source identity: {format_problem}"
+            return out
+        if identity_format == "legacy":
+            want = _legacy_identity(cfg)
+            gated_keys = tuple(want)
+        else:
+            want = identity(cfg)
+            # test_sha256 remains recorded in the immutable manifest, but it is
+            # deliberately not an execution gate.
+            gated_keys = tuple(k for k in want if k != "test_sha256")
+        differing = sorted(k for k in gated_keys if want[k] != have.get(k))
         if differing:
             out["verdict"] = IDENTITY_MISMATCH
             out["detail"] = f"differs in {differing}"

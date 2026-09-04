@@ -1,0 +1,128 @@
+{
+  "track": "A",
+  "passed": true,
+  "smoke": false,
+  "checks": [
+    {
+      "check": "6.matched_energy_invariance",
+      "passed": true,
+      "observed": {
+        "1": 4.0,
+        "10": 4.0,
+        "100": 4.0,
+        "1000": 4.0
+      },
+      "expected": {
+        "1": 4.0,
+        "10": 4.0,
+        "100": 4.0,
+        "1000": 4.0
+      },
+      "detail": "E_total = alpha_eff^2 ||v||^2 |S| with alpha_eff = alpha / sqrt(|S|)"
+    },
+    {
+      "check": "4.encoder_padding.frame_count",
+      "passed": true,
+      "observed": "0 mismatches",
+      "expected": "0 mismatches",
+      "detail": "valid_frames == ceil(duration*50) clamped to 1500"
+    },
+    {
+      "check": "4.encoder_padding.short_utterances_masked",
+      "passed": true,
+      "observed": "273/300 utterances below 1500 frames",
+      "expected": ">0 utterances below 1500 frames",
+      "detail": "mean valid_frame_ratio 0.5456; without this mask roughly 45% of injected encoder energy would land in padding"
+    },
+    {
+      "check": "1.6.prompt_at_encoder_raises",
+      "passed": true,
+      "observed": "PromptDirectionAtEncoderError",
+      "expected": "PromptDirectionAtEncoderError",
+      "detail": "v_prompt requested at an encoder site (layer 15). Whisper's encoder never receives the language token; there is no such object. Refusing to produce a number."
+    },
+    {
+      "check": "1.alpha_zero[encoder/global]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "1.alpha_zero[encoder/local]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "1.alpha_zero[decoder/global]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "1.alpha_zero[decoder/local]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "1.alpha_zero[encoder+decoder/global]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "1.alpha_zero[encoder+decoder/local]",
+      "passed": true,
+      "observed": "0 utterances differ",
+      "expected": "0 utterances differ",
+      "detail": "bit-identical to the unhooked baseline"
+    },
+    {
+      "check": "3.hook_fires.encoder",
+      "passed": true,
+      "observed": 2,
+      "expected": 2,
+      "detail": "1 encoder forwards x 2 layers"
+    },
+    {
+      "check": "3.hook_fires.decoder",
+      "passed": true,
+      "observed": 123,
+      "expected": 123,
+      "detail": "41 decoder forwards x 3 layers"
+    },
+    {
+      "check": "5.beam_coverage",
+      "passed": true,
+      "observed": {
+        "steered_positions": 800,
+        "num_beams": 5,
+        "remainder": 0
+      },
+      "expected": "steered_positions > 0 and divisible by num_beams",
+      "detail": "with num_beams=k the decoder batch is B*k and the hook touches every row, so positions stay synchronised across beams"
+    },
+    {
+      "check": "2.reproduce_prior.rows",
+      "passed": true,
+      "observed": 489,
+      "expected": 489,
+      "detail": ""
+    },
+    {
+      "check": "2.reproduce_prior.corrections",
+      "passed": true,
+      "observed": 7,
+      "expected": 7,
+      "detail": "correcting dialogues ['CSD0014', 'CSD0502']; prior programme had ['CSD0014', 'CSD0502'] (207s)"
+    }
+  ],
+  "n_passed": 15,
+  "n_total": 15
+}

@@ -7,6 +7,8 @@ import pytest
 
 from csasr.lss.balance import (
     BalanceSpec,
+    NoFeasibleAssignment,
+    ProposalSpec,
     assignment_hash,
     balanced_assignment,
     imbalance,
@@ -88,6 +90,51 @@ def test_balanced_assignment_beats_sorted_slicing():
     assignment, _ = balanced_assignment(f, targets, SPEC, seed=3)
     balanced_max = imbalance(f, assignment, SPEC)["smd"].abs().max()
     assert balanced_max < sliced_max
+
+
+def test_infeasible_draws_are_never_returned_as_a_fallback():
+    spec = BalanceSpec(continuous=("hours",), categorical=(), distributional=(),
+                       max_abs_smd=-0.01, max_categorical_tv=0.15, draws=25)
+    with pytest.raises(NoFeasibleAssignment) as caught:
+        balanced_assignment(_features(), _targets(), spec, seed=3)
+    report = caught.value.report
+    assert report["feasible_draws"] == 0
+    assert report["feasibility_rate"] == 0.0
+    assert report["accepted_proposal_mechanism"] is None
+    assert "accepted_score" not in report
+
+
+def test_every_returned_assignment_satisfies_every_gate():
+    assignment, report = balanced_assignment(_features(), _targets(), SPEC, seed=9)
+    table = imbalance(_features(), assignment, SPEC)
+    assert bool(table[table["gated"]]["passed"].all())
+    assert report["accepted_max_abs_smd"] <= SPEC.max_abs_smd
+    assert report["accepted_max_categorical_tv"] <= SPEC.max_categorical_tv
+
+
+def test_scoring_formula_and_predeclared_weight_are_unchanged():
+    spec = BalanceSpec(continuous=("hours", "cs_rate", "embedded_en_units"),
+                       categorical=("device",), distributional=("topics",),
+                       draws=400, ungated_weight=0.3)
+    _, report = balanced_assignment(_features(), _targets(), spec, seed=7)
+    expected = max(report["accepted_max_abs_smd"],
+                   report["accepted_max_categorical_tv"]) + \
+        0.3 * report["accepted_max_ungated_tv"]
+    assert report["accepted_score"] == pytest.approx(expected)
+    assert report["ungated_weight"] == 0.3
+
+
+def test_stratified_proposal_is_random_and_seeded():
+    f = _features()
+    proposal = [ProposalSpec("stratified_deal", 200, ("device",))]
+    first, first_report = balanced_assignment(
+        f, _targets(), SPEC, seed=11, proposals=proposal)
+    again, _ = balanced_assignment(f, _targets(), SPEC, seed=11, proposals=proposal)
+    other, _ = balanced_assignment(f, _targets(), SPEC, seed=12, proposals=proposal)
+    assert first == again
+    assert first != other
+    assert first_report["proposal_reports"][0]["mechanism"] == "stratified_deal"
+    assert first_report["proposal_reports"][0]["feasible_draws"] > 0
 
 
 def test_imbalance_is_zero_on_a_perfectly_balanced_corpus():

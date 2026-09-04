@@ -1,0 +1,6 @@
+round: 2
+job: transfer
+inherits: configs/rounds/common.yaml
+requires_lock: true
+datasets: [D-test-lock, seame/dev_man, seame/dev_sge]
+output_root: results/round2/transfer

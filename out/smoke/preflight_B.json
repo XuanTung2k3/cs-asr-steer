@@ -1,0 +1,57 @@
+{
+  "track": "B",
+  "passed": true,
+  "checks": [
+    {
+      "check": "B.params.intervention[loreft]",
+      "passed": true,
+      "observed": 10244,
+      "expected": 10244,
+      "detail": "n_layers * (2*r*d + r)"
+    },
+    {
+      "check": "B.params.intervention[additive]",
+      "passed": true,
+      "observed": 10240,
+      "expected": 10240,
+      "detail": "n_layers * 2*r*d"
+    },
+    {
+      "check": "B.params.lid_head",
+      "passed": true,
+      "observed": 2562,
+      "expected": 2562,
+      "detail": "d_model*2 + 2"
+    },
+    {
+      "check": "B.params.aga_adapters",
+      "passed": true,
+      "observed": 105390080,
+      "expected": 105390080,
+      "detail": "2 adapters per block x (enc + dec) blocks, bottleneck d/4"
+    },
+    {
+      "check": "B.params.aga_fraction_within_factor_2",
+      "passed": true,
+      "observed": "6.83%",
+      "expected": "5.6% within a factor of 2.0",
+      "detail": "105,390,080 adapter parameters = 6.83% of 1,543,490,560; the paper reports ~5.6%"
+    },
+    {
+      "check": "B.grad.backbone_is_zero",
+      "passed": true,
+      "observed": 0.0,
+      "expected": 0.0,
+      "detail": "frozen-backbone gradient norm after a real CE + lambda*LID backward"
+    },
+    {
+      "check": "B.grad.intervention_receives_gradient",
+      "passed": true,
+      "observed": 0.3957306289180922,
+      "expected": "> 0.0",
+      "detail": "the intervention and the LID head must actually be trained"
+    }
+  ],
+  "n_passed": 7,
+  "n_total": 7
+}

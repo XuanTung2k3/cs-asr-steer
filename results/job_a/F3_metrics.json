@@ -1,0 +1,31 @@
+{
+  "scored_utterances": 150,
+  "MER": 0.18090381073806489,
+  "PIER": 0.4398563734290844,
+  "en_wer": 0.44165170556552963,
+  "zh_cer": 0.12734970364098222,
+  "num_en_ref": 1114,
+  "num_zh_ref": 5905,
+  "corrections": 11,
+  "corruptions": 0,
+  "outside_region_edits": 1082,
+  "correction_harm": {
+    "num_baseline_incorrect": 138,
+    "num_baseline_correct": 0,
+    "num_corrected": 11,
+    "num_corrupted": 0,
+    "raw_corrected_count": 11,
+    "raw_corrupted_count": 0,
+    "correction_rate": 0.07971014492753623,
+    "corruption_rate": NaN,
+    "correction_to_corruption_ratio": NaN,
+    "zero_corruption": true,
+    "correction_to_corruption_ratio_note": "undefined because corrupted count is zero; evaluate raw corrected/corrupted counts and net error reduction instead",
+    "net_corrected_pois": 11,
+    "net_corrected_count": 11,
+    "correction_rate_minus_corruption_rate": NaN,
+    "outside_edit_rate": 0.06743898078117615,
+    "pct_any_transcript_change": 0.2608695652173913
+  },
+  "inference_time_sec": 38.98379733040929
+}

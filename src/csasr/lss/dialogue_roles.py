@@ -12,9 +12,17 @@ two independent clusters.
 This module allocates at the dialogue level instead.  `D-test` is exactly the
 official test split, so the locked evaluation batch stays comparable with
 published CS-Dialogue numbers; every other role is drawn from the remaining
-dialogues by the same seeded rerandomization `csasr.lss.balance` already
-implements, stratified on topic and on the gender and device composition of the
-pair.
+dialogues by seeded rerandomization. The declared stratified proposal deals the
+gender-by-device composition across roles; topic and other ungated covariates
+remain terms in the unchanged objective and are reported separately.
+
+The v2 partition differs from v1 in two ways, not one: the draw-acceptance rule
+was corrected so gated criteria constrain feasibility rather than being reported
+after the fact, *and* the proposal machinery was rebuilt, including the RNG
+derivation (`csasr.lss.balance.RNG_DERIVATION`). v2 is therefore a fresh
+allocation rather than v1's re-judged under a different threshold, and the two
+are not comparable draw-for-draw. The derivation is recorded in the partition
+fingerprint so a future stream change cannot inherit this partition's identity.
 
 The four structural requirements are enforced here rather than reported: a
 dialogue belongs to exactly one role, role dialogue sets are pairwise disjoint,
@@ -27,9 +35,10 @@ from typing import Any, Mapping, Sequence
 
 import pandas as pd
 
-from ..utils.hashing import manifest_hash
+from ..utils.hashing import manifest_hash, sha256_obj
 from ..utils.logging import get_logger
-from .balance import BalanceSpec, assignment_hash, balanced_assignment, imbalance
+from .balance import (RNG_DERIVATION, BalanceSpec, ProposalSpec, assignment_hash,
+                      balanced_assignment, imbalance)
 from .eligibility import conversation_unit_counts, unit_table
 from .roles import ROLE_EXTRA_COLUMNS, RoleError, TEST_ROLE
 from .seeds import seed_for
@@ -43,6 +52,18 @@ ALLOCATED_ROLES = ("D-construct", "loc-train", "util-train", "router-calib",
 DIALOGUE_ROLES = ALLOCATED_ROLES + (TEST_ROLE,)
 
 OFFICIAL_TEST = "test"
+
+
+class RoleBalanceError(RoleError):
+    """A purported accepted allocation still violates a gated criterion."""
+
+    def __init__(self, report: Mapping[str, Any], diagnostics: pd.DataFrame):
+        self.report = dict(report)
+        self.diagnostics = diagnostics.copy()
+        failed = diagnostics[~diagnostics["passed"]]
+        super().__init__(
+            f"dialogue-role balance gate failed for {len(failed)} role/covariate "
+            "rows; no role artifacts may be published")
 
 
 def dialogue_features(manifest: pd.DataFrame) -> pd.DataFrame:
@@ -124,8 +145,76 @@ def allocation_targets(cfg: Mapping[str, Any]) -> dict[str, int]:
     return {r: int(targets[r]) for r in ALLOCATED_ROLES}
 
 
+def partition_parameters(cfg: Mapping[str, Any]) -> tuple[str, BalanceSpec,
+                                                          tuple[ProposalSpec, ...]]:
+    """Load the explicit, versioned dialogue-partition parameters.
+
+    The ungated weight is load-bearing and was previously a corpus-tuned module
+    constant.  A dialogue allocation must now predeclare it alongside the
+    proposal mechanisms, so an old config cannot silently reproduce the old
+    selection rule.
+    """
+    roles_cfg = dict(cfg.get("roles") or {})
+    dialogue = dict(roles_cfg.get("dialogue_roles") or {})
+    partition = dict(dialogue.get("partition") or {})
+    version = str(partition.get("version", "")).strip()
+    if not version:
+        raise RoleError("roles.dialogue_roles.partition.version is required")
+    if "ungated_weight" not in partition:
+        raise RoleError(
+            "roles.dialogue_roles.partition.ungated_weight is required; the "
+            "load-bearing corpus-tuned value may not be implicit")
+    proposal_cfg = partition.get("proposals")
+    if not isinstance(proposal_cfg, list) or not proposal_cfg:
+        raise RoleError("roles.dialogue_roles.partition.proposals must be a nonempty list")
+
+    balance_cfg = dict(roles_cfg.get("balance") or {})
+    balance_cfg["ungated_weight"] = float(partition["ungated_weight"])
+    spec = BalanceSpec.from_cfg(balance_cfg)
+    try:
+        proposals = tuple(ProposalSpec.from_cfg(p, default_draws=spec.draws)
+                          for p in proposal_cfg)
+    except (TypeError, ValueError) as exc:
+        raise RoleError(f"invalid dialogue partition proposal: {exc}") from exc
+    return version, spec, proposals
+
+
+def role_partition_fingerprint(*, version: str, targets: Mapping[str, int],
+                               seed: int, spec: BalanceSpec,
+                               proposals: Sequence[ProposalSpec],
+                               source_manifest_sha256: str) -> tuple[str, dict[str, Any]]:
+    """Focused identity for the exact allocation rule and exact source bytes."""
+    payload = {
+        # v2 adds `rng_derivation`: the draw stream determines which candidates
+        # exist, so leaving it out let two allocations with different streams
+        # share one identity. Adding it necessarily changes the fingerprint value
+        # for an otherwise identical rule -- that is the point.
+        "fingerprint_version": "dialogue-role-partition-fingerprint-v2",
+        "partition_version": str(version),
+        "allocation_unit": "dialogue",
+        "targets": {str(k): int(v) for k, v in targets.items()},
+        "seed": int(seed),
+        "balance": {
+            "continuous": list(spec.continuous),
+            "categorical": list(spec.categorical),
+            "distributional": list(spec.distributional),
+            "gated_categorical": list(spec.gated_categorical),
+            "max_abs_smd": float(spec.max_abs_smd),
+            "max_categorical_tv": float(spec.max_categorical_tv),
+            "ungated_weight": float(spec.ungated_weight),
+            "scoring_formula": "max(max_SMD, max_gated_TV) + ungated_weight*ungated_TV",
+        },
+        "proposals": [{"mechanism": p.mechanism, "draws": int(p.draws),
+                       "stratify_by": list(p.stratify_by)} for p in proposals],
+        "rng_derivation": dict(RNG_DERIVATION),
+        "source_manifest_sha256": str(source_manifest_sha256),
+    }
+    return sha256_obj(payload), payload
+
+
 def allocate_dialogues(features: pd.DataFrame, targets: Mapping[str, int],
-                       spec: BalanceSpec, *, seed: int
+                       spec: BalanceSpec, *, seed: int,
+                       proposals: Sequence[ProposalSpec] | None = None
                        ) -> tuple[dict[str, str], dict[str, Any], pd.DataFrame]:
     """Assign non-test dialogues to roles by seeded rerandomization.
 
@@ -141,8 +230,15 @@ def allocate_dialogues(features: pd.DataFrame, targets: Mapping[str, int],
             f"pool holds {len(pool)} dialogues")
 
     as_balance = pool.rename(columns={"dialogue_id": "conversation_id"})
-    assignment, report = balanced_assignment(as_balance, targets, spec, seed=seed)
+    assignment, report = balanced_assignment(
+        as_balance, targets, spec, seed=seed, proposals=proposals)
     diagnostics = imbalance(as_balance, assignment, spec)
+    failures = diagnostics[~diagnostics["passed"]]
+    if len(failures):
+        # This is an independent postcondition over the returned assignment. It
+        # prevents a future proposal or scoring refactor from bypassing the draw
+        # acceptance constraint and publishing an over-threshold artifact.
+        raise RoleBalanceError(report, diagnostics)
     report["unit"] = "dialogue"
     report["pool"] = "official train + dev, test excluded"
     return assignment, report, diagnostics
@@ -220,13 +316,14 @@ def assert_dialogue_partition(assignment: Mapping[str, str],
     }
 
 
-def build_dialogue_roles(cfg: Mapping[str, Any], manifest: pd.DataFrame
+def build_dialogue_roles(cfg: Mapping[str, Any], manifest: pd.DataFrame, *,
+                         source_manifest_sha256: str | None = None
                          ) -> tuple[dict[str, pd.DataFrame], dict[str, Any], pd.DataFrame]:
     """One manifest per role, allocated whole dialogues at a time."""
     roles_cfg = cfg.get("roles") or {}
     block = dict(roles_cfg.get("dialogue_roles") or {})
     version = str(block.get("version", "dialogue-v1"))
-    spec = BalanceSpec.from_cfg(roles_cfg.get("balance") or {})
+    partition_version, spec, proposals = partition_parameters(cfg)
 
     features = dialogue_features(manifest)
     targets = allocation_targets(cfg)
@@ -235,7 +332,7 @@ def build_dialogue_roles(cfg: Mapping[str, Any], manifest: pd.DataFrame
     # seed purpose and stays inside the frozen seed map
     seed = seed_for(cfg, "role_assignment")
     assignment, balance_report, diagnostics = allocate_dialogues(
-        features, targets, spec, seed=seed)
+        features, targets, spec, seed=seed, proposals=proposals)
 
     structure = assert_dialogue_partition(assignment, features)
 
@@ -244,6 +341,11 @@ def build_dialogue_roles(cfg: Mapping[str, Any], manifest: pd.DataFrame
                                  "dialogue_id"]:
         full[dialogue] = TEST_ROLE
     a_hash = assignment_hash(full)
+    source_sha = str(source_manifest_sha256 or manifest_hash(
+        manifest, columns=("utterance_id", "dialogue_id")))
+    partition_sha, partition_payload = role_partition_fingerprint(
+        version=partition_version, targets=targets, seed=seed, spec=spec,
+        proposals=proposals, source_manifest_sha256=source_sha)
 
     sub_split = dict(block.get("router_calib_split") or {})
     sub_assignment: dict[str, str] = {}
@@ -267,11 +369,16 @@ def build_dialogue_roles(cfg: Mapping[str, Any], manifest: pd.DataFrame
         frame["sub_role"] = frame["dialogue_id"].map(sub_assignment).fillna("")
         frame["role_version"] = version
         frame["role_assignment_hash"] = a_hash
+        frame["role_partition_fingerprint"] = partition_sha
         roles[role] = frame.reset_index(drop=True)
 
     report = dialogue_role_report(roles, features, full, balance_report,
                                   diagnostics, structure,
                                   version=version, assignment_sha=a_hash, seed=seed)
+    report["partition_version"] = partition_version
+    report["partition_fingerprint"] = partition_sha
+    report["partition_fingerprint_payload"] = partition_payload
+    report["source_manifest_sha256"] = source_sha
     return roles, report, diagnostics
 
 

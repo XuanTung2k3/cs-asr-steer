@@ -1,0 +1,14 @@
+{
+  "MER": 0.27261925978732254,
+  "PIER": 0.4497354497354497,
+  "en_wer": 0.49603174603174605,
+  "zh_cer": 0.2345151055317975,
+  "WER": 0.8745298226759807,
+  "corrections": 57,
+  "corruptions": 607,
+  "outside_edits": 3797,
+  "zh_retention": 0.9501727115716753,
+  "scored_utterances": 300,
+  "wall_clock_sec": 45.0112326387316,
+  "mode": "forced_global"
+}

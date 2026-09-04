@@ -1,0 +1,14 @@
+{
+  "method": "T1",
+  "n_params": 2563,
+  "lr": 0.0005,
+  "best_epoch": 1,
+  "best_mer": 0.25438127487673023,
+  "epochs_completed": 3,
+  "wall_clock_sec": 187.64887667819858,
+  "peak_cuda_memory_allocated_bytes": 9042946048,
+  "peak_cuda_memory_reserved_bytes": 12949913600,
+  "micro_batch": 8,
+  "gradient_accumulation": 2,
+  "checkpoint": "/home/tungnx/cs-asr-steer/results/round1/job_b/T1/best_checkpoint.pt"
+}

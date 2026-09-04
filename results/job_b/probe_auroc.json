@@ -1,0 +1,30 @@
+{
+  "auroc": 0.9559206773824405,
+  "auprc": 0.7773970907472427,
+  "recall_at_10pct": 0.35827115818577326,
+  "recall_at_20pct": 0.7256297139604383,
+  "recall_at_50pct": 0.9910345809022343,
+  "n_en": 49189,
+  "n_zh": 159908,
+  "n_total": 209097,
+  "score_distributions": {
+    "s_nat_en_mean": 0.7187806354762659,
+    "s_nat_en_std": 0.6166231617273603,
+    "s_nat_zh_mean": -0.7712920976763662,
+    "s_nat_zh_std": 0.8412687183009033,
+    "s_prompt_en_mean": -0.4961316024914459,
+    "s_prompt_en_std": 0.19266710335850892,
+    "s_prompt_zh_mean": -0.4217631456902492,
+    "s_prompt_zh_std": 0.16298609278621043
+  },
+  "logistic_coef": [
+    [
+      2.72614318636331,
+      -7.017323490260672
+    ]
+  ],
+  "logistic_intercept": [
+    -4.3092763657921305
+  ],
+  "decision": "PROCEED: two-projection gate is well-supported"
+}

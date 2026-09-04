@@ -547,7 +547,10 @@ def _expected_unit_universe(cfg: dict, roles: list[str]) -> pd.DataFrame:
 def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
                        run_dir=None, roles: list[str] | None = None,
                        qwen_runner=None, parents: list | None = None,
-                       taint: dict | None = None) -> dict:
+                       taint: dict | None = None,
+                       alignment_selection: dict | None = None,
+                       producing_stage: str = STAGE,
+                       require_all_configured_families: bool = False) -> dict:
     """Align the sampled role with every configured family.
 
     This is what turns Gate A from a toy into a measurement. The exploratory
@@ -583,18 +586,20 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
                 role_report["dialogue_shortfall"],
                 role_report["selected_dialogues"])
 
-    selection = devselect.load_aligner_selection(root)
+    selection = (dict(alignment_selection) if alignment_selection is not None
+                 else devselect.load_aligner_selection(root))
     offset = selection.get("pred_start_offset") if selection.get("available") else None
     if not selection.get("available"):
         log.warning("no authenticated aligner selection from l1a (%s: %s); "
                     "aligning with the default decoder-query convention",
                     selection.get("reason"), selection.get("detail", ""))
     bundle = load_whisper(cfg)
+    requested_families = list((cfg.get("alignment") or {}).get("families", []))
     table, report = cand.run_families(
         sample, cfg, EncoderGeometry.from_bundle(bundle), RunIdentity.from_cfg(cfg),
-        list((cfg.get("alignment") or {}).get("families", [])),
+        requested_families,
         bundle=bundle, out_dir=root / "alignments", overwrite=overwrite,
-        pred_start_offset=offset, qwen_runner=qwen_runner, stage=STAGE,
+        pred_start_offset=offset, qwen_runner=qwen_runner, stage=producing_stage,
         run_dir=run_dir, parents=[m for m in (parents or []) if m],
         taint_reasons=(taint or {}).get("taint_reasons") or (),
         purpose="natural")
@@ -606,7 +611,14 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
     report["utterances_per_role"] = {
         r: int((sample["role"] == r).sum()) for r in roles} if len(sample) else {}
     report["rows"] = int(len(table))
-    if len(table):
+    unavailable = [family for family in requested_families
+                   if (report.get("families", {}).get(family) or {}).get("state")
+                   != "ok"]
+    report["unavailable_configured_families"] = unavailable
+    publish_merged = bool(len(table)) and not (
+        require_all_configured_families and unavailable)
+    report["merged_candidate_published"] = publish_merged
+    if publish_merged:
         if "role" not in table.columns and len(sample):
             table = table.merge(sample[["utterance_id", "role"]].drop_duplicates(),
                                 on="utterance_id", how="left")
@@ -614,7 +626,7 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
         # from a leftover of another configuration or a partial write
         report["manifest"] = manifest_mod.publish_frame(
             root / "alignments" / "candidates_all.parquet", table,
-            stage=STAGE, cfg=cfg, run_dir=run_dir,
+            stage=producing_stage, cfg=cfg, run_dir=run_dir,
             parents=([m for m in (parents or []) if m]
                      + [m for m in (report.get("cache_manifests") or {}).values()
                         if m]),
@@ -622,12 +634,17 @@ def _run_aligner_sweep(cfg: dict, log, *, overwrite: bool = False,
             key_columns=CANDIDATE_KEYS, schema="nat5h_candidates_v2",
             extra={"request_manifest": report.get("request_manifest"),
                    "sampling": sampling_report})
-    else:
+    elif not len(table):
         log.error("aligner sweep produced no candidates: %s", report)
+    else:
+        log.error(
+            "candidate generation requires every configured family; refusing "
+            "to publish a partial merged table because these families did not "
+            "complete: %s", unavailable)
     report_path = art(cfg, "diagnostics", "l1b_aligner_sweep.json")
     write_json(report, report_path)
     manifest_mod.publish(
-        report_path, None, stage=STAGE, cfg=cfg, run_dir=run_dir,
+        report_path, None, stage=producing_stage, cfg=cfg, run_dir=run_dir,
         parents=([m for m in (parents or []) if m]
                  + [m for m in (report.get("cache_manifests") or {}).values() if m]
                  + ([report["manifest"]] if report.get("manifest") else [])),
@@ -795,7 +812,8 @@ def _score_synthetic_sets(cfg: dict, log, sets: dict, *, run_dir=None,
     return report
 
 
-def _qwen_runner(cfg: dict, log, rdir, taint: dict, parents: list):
+def _qwen_runner(cfg: dict, log, rdir, taint: dict, parents: list, *,
+                 producing_stage: str = STAGE):
     """The production Qwen path, bound to this run's provenance.
 
     A callable rather than a flag so `run_families` stays a pure dispatcher and a
@@ -806,7 +824,7 @@ def _qwen_runner(cfg: dict, log, rdir, taint: dict, parents: list):
 
     def run(manifest, *, out_dir, purpose="natural"):
         result = qwen_prod.run_qwen_production(
-            cfg, manifest, out_dir=out_dir, purpose=purpose, stage=STAGE,
+            cfg, manifest, out_dir=out_dir, purpose=purpose, stage=producing_stage,
             run_dir=rdir, parents=[m for m in parents if m],
             taint_reasons=taint.get("taint_reasons") or ())
         log.info("qwen production (%s): state=%s reason=%s rows=%d covered=%d/%d "

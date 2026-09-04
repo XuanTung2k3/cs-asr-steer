@@ -1,0 +1,9 @@
+round: 1
+job: frozen
+inherits: configs/rounds/common.yaml
+data_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+selection_split: D-dev-select
+confirm_split: D-dev-confirm
+layers: [8, 12, 16, 20, 22, 24, 26]
+direction_artifact: directions/generation_001/directions.npz
+output_root: results/round1/job_a

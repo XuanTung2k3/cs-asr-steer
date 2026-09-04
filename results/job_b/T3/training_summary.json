@@ -1,0 +1,10 @@
+{
+  "method": "T3",
+  "n_params": 5120,
+  "lr": 0.0001,
+  "best_epoch": 3,
+  "best_mer": 0.2586585872987584,
+  "epochs_completed": 3,
+  "wall_clock_sec": 193.13124626129866,
+  "checkpoint": "/home/tungnx/cs-asr-steer/results/job_b/T3/best_checkpoint.pt"
+}

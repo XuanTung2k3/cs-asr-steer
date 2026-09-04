@@ -1,6 +1,6 @@
 # Gate-A lexical-boundary annotation pack: implementation and results
 
-> **SUPERSEDED — 2026-08-14 by `docs/proposal_arr/RUNBOOK.md` (Runbook v2).**
+> **SUPERSEDED — 2026-08-14 by `docs/RUNBOOK_V2_2026-08-14.md`.**
 >
 > Human lexical annotation was **dropped** by explicit decision on 2026-08-13/14.
 > The Gate-A criterion moved from absolute boundary accuracy against a human

@@ -1,0 +1,1861 @@
+{
+  "track": "B",
+  "site": "decoder",
+  "layers": [
+    8
+  ],
+  "site_reason": "Track A Stage D selected D:decoder:global:v_prompt:a0.25:D8",
+  "preflight": {
+    "track": "B",
+    "passed": true,
+    "checks": [
+      {
+        "check": "B.params.intervention[loreft]",
+        "passed": true,
+        "observed": 10244,
+        "expected": 10244,
+        "detail": "n_layers * (2*r*d + r)"
+      },
+      {
+        "check": "B.params.intervention[additive]",
+        "passed": true,
+        "observed": 10240,
+        "expected": 10240,
+        "detail": "n_layers * 2*r*d"
+      },
+      {
+        "check": "B.params.lid_head",
+        "passed": true,
+        "observed": 2562,
+        "expected": 2562,
+        "detail": "d_model*2 + 2"
+      },
+      {
+        "check": "B.params.aga_adapters",
+        "passed": true,
+        "observed": 105390080,
+        "expected": 105390080,
+        "detail": "2 adapters per block x (enc + dec) blocks, bottleneck d/4"
+      },
+      {
+        "check": "B.params.aga_fraction_within_factor_2",
+        "passed": true,
+        "observed": "6.83%",
+        "expected": "5.6% within a factor of 2.0",
+        "detail": "105,390,080 adapter parameters = 6.83% of 1,543,490,560; the paper reports ~5.6%"
+      },
+      {
+        "check": "B.grad.backbone_is_zero",
+        "passed": true,
+        "observed": 0.0,
+        "expected": 0.0,
+        "detail": "frozen-backbone gradient norm after a real CE + lambda*LID backward"
+      },
+      {
+        "check": "B.grad.intervention_receives_gradient",
+        "passed": true,
+        "observed": 0.38041032435449856,
+        "expected": "> 0.0",
+        "detail": "the intervention and the LID head must actually be trained"
+      }
+    ],
+    "n_passed": 7,
+    "n_total": 7
+  },
+  "intervention_variant": {
+    "variant": "additive",
+    "timings_sec": {
+      "loreft": 0.0008089259266853332,
+      "additive": 0.00031695812940597535
+    },
+    "reason": "measured forward+backward time; the cheaper variant runs",
+    "loreft_form": "h + R^T (W h + b - R h)",
+    "additive_form": "h + B A h"
+  },
+  "dev_role": "router-calib",
+  "dev_role_note": "router-calib is a training-side role, dialogue-disjoint from loc-train, util-train and D-dev-select. It is used here as the training dev set for early stopping and for the single lambda_lid and lr selections, so that D-dev-select stays a pure reporting set. D-dev-confirm and D-test are never opened by Track B.",
+  "dev_eval_utterances": 150,
+  "train_utterances": 10768,
+  "backbone_parameters": 1543490560,
+  "budget": {
+    "max_steps": 2000,
+    "max_epochs": 3,
+    "batch_size": 8,
+    "grad_accum": 2,
+    "eval_every": 250,
+    "early_stop_patience": 3,
+    "early_stop_metric": "dev_mer",
+    "lr_grid": [
+      0.0001,
+      0.0005,
+      0.001
+    ],
+    "lr_selection": "best dev MER, same protocol every arm",
+    "warmup_fraction": 0.1,
+    "precision": "bfloat16 autocast, fp32 master weights",
+    "grad_clip": 1.0,
+    "weight_decay": 0.01,
+    "optimizer": "adamw",
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "eps": 1e-06
+  },
+  "arms": {
+    "B0": [
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787083226.2976177,
+        "config_hash": "f06243abfc3b85da",
+        "arm": "B0",
+        "tag": "main",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.0,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 10240,
+        "trainable_fraction_of_backbone": 6.634313331984356e-06,
+        "steps_run": 2000,
+        "epochs_run": 2.971768202080238,
+        "stage_steps": [
+          2000
+        ],
+        "best_dev_mer": 0.12481520591341078,
+        "best_step": 1500,
+        "early_stopped": false,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.2705221250653267,
+            "total": 0.2705221250653267,
+            "MER": 0.15163674762407603,
+            "PIER": 0.21923937360178972,
+            "WER": 0.6180327868852459,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.35463033616542816,
+            "total": 0.35463033616542816,
+            "MER": 0.15480464625131996,
+            "PIER": 0.1644295302013423,
+            "WER": 0.7401639344262295,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 1.0804736018180847,
+            "total": 1.0804736018180847,
+            "MER": 0.1313621964097149,
+            "PIER": 0.1644295302013423,
+            "WER": 0.7418032786885246,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.24061264842748642,
+            "total": 0.24061264842748642,
+            "MER": 0.13093980992608237,
+            "PIER": 0.1644295302013423,
+            "WER": 0.739344262295082,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 1250,
+            "ce": 0.587436705827713,
+            "total": 0.587436705827713,
+            "MER": 0.12967265047518478,
+            "PIER": 0.16331096196868009,
+            "WER": 0.740983606557377,
+            "n": 150,
+            "lr": 3.705904774487396e-05
+          },
+          {
+            "step": 1500,
+            "ce": 0.6379349380731583,
+            "total": 0.6379349380731583,
+            "MER": 0.12481520591341078,
+            "PIER": 0.1621923937360179,
+            "WER": 0.7368852459016394,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1750,
+            "ce": 0.696832075715065,
+            "total": 0.696832075715065,
+            "MER": 0.12481520591341078,
+            "PIER": 0.1621923937360179,
+            "WER": 0.7319672131147541,
+            "n": 150,
+            "lr": 4.684610648167503e-06
+          },
+          {
+            "step": 2000,
+            "ce": 0.22621744871139526,
+            "total": 0.22621744871139526,
+            "MER": 0.12481520591341078,
+            "PIER": 0.1621923937360179,
+            "WER": 0.7344262295081967,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1159.0823252126575,
+        "peak_memory_bytes": 9636759552,
+        "diagnostics": {
+          "modules": {
+            "variant": "additive",
+            "rank": 4,
+            "site": "decoder",
+            "layers": [
+              8
+            ],
+            "init": {
+              "8": {
+                "init": "random",
+                "basis_shape": [
+                  4,
+                  1280
+                ]
+              }
+            },
+            "intervention_parameters": 10240,
+            "analytic_parameter_count": 10240,
+            "lid_head_parameters": 0
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.12389770723104056,
+          "num_poi": 2268,
+          "num_poi_errors": 281,
+          "poi_per_category": {
+            "wrong_language_substitution": 14,
+            "phonetic_transliteration_or_script": 8,
+            "same_language_substitution": 114,
+            "deletion": 129,
+            "boundary_error": 9,
+            "insertion_near_poi": 0,
+            "other": 7
+          },
+          "MER": 0.13057684310580409,
+          "WER": 0.7522837184309511
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9897236614853195,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 131,
+          "delta_en_units": 325,
+          "corrections": 325,
+          "corruptions": 0,
+          "spillover_units": 11319
+        },
+        "init_diagnostics": {
+          "cos_theta_final_v_nat": 0.051582936721459305,
+          "cos_theta_final_v_prompt": 0.025731568547984363,
+          "cos_v_nat_v_prompt": 0.01876038913126493,
+          "theta_drift_l2": 2.3697023391723633,
+          "theta_init_norm": 2.8474950790405273,
+          "theta_final_norm": 3.6406683921813965,
+          "principal_angles_deg": [
+            81.47283283056603,
+            87.16807370050138
+          ],
+          "min_principal_angle_deg": 81.47283283056603,
+          "mean_principal_angle_deg": 84.3204532655337,
+          "subspace_rank": 4,
+          "interpretation_key": {
+            "small principal angles": "the learned subspace converged TOWARD span{v_nat, v_prompt}",
+            "angles near 90 deg": "the learned subspace is orthogonal to the constructed one -- it diverged"
+          }
+        },
+        "development_only_diagnostic": true
+      }
+    ],
+    "B1": [
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787084390.8594487,
+        "config_hash": "1fa6ff3d443b256a",
+        "arm": "B1",
+        "tag": "seed_20260818",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 12802,
+        "trainable_fraction_of_backbone": 8.294187429303098e-06,
+        "steps_run": 2000,
+        "epochs_run": 2.971768202080238,
+        "stage_steps": [
+          2000
+        ],
+        "best_dev_mer": 0.1246040126715945,
+        "best_step": 1500,
+        "early_stopped": false,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.2705221250653267,
+            "total": 0.4407893419265747,
+            "lid": 0.34053443372249603,
+            "MER": 0.15163674762407603,
+            "PIER": 0.21923937360178972,
+            "WER": 0.6180327868852459,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.35463033616542816,
+            "total": 0.43207137286663055,
+            "lid": 0.15488208830356598,
+            "MER": 0.15480464625131996,
+            "PIER": 0.1644295302013423,
+            "WER": 0.7401639344262295,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 1.080410659313202,
+            "total": 1.119680494070053,
+            "lid": 0.07853971421718597,
+            "MER": 0.15163674762407603,
+            "PIER": 0.16331096196868009,
+            "WER": 0.7385245901639345,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.24169789254665375,
+            "total": 0.25935986638069153,
+            "lid": 0.035323942080140114,
+            "MER": 0.1303062302006336,
+            "PIER": 0.16331096196868009,
+            "WER": 0.7360655737704918,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 1250,
+            "ce": 0.5857790559530258,
+            "total": 0.6011682003736496,
+            "lid": 0.0307782469317317,
+            "MER": 0.12608236536430834,
+            "PIER": 0.16331096196868009,
+            "WER": 0.7426229508196721,
+            "n": 150,
+            "lr": 3.705904774487396e-05
+          },
+          {
+            "step": 1500,
+            "ce": 0.6385330855846405,
+            "total": 0.6528034061193466,
+            "lid": 0.028540675528347492,
+            "MER": 0.1246040126715945,
+            "PIER": 0.1610738255033557,
+            "WER": 0.7344262295081967,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1750,
+            "ce": 0.6959087327122688,
+            "total": 0.7058298960328102,
+            "lid": 0.019842340610921383,
+            "MER": 0.12502639915522704,
+            "PIER": 0.1621923937360179,
+            "WER": 0.7327868852459016,
+            "n": 150,
+            "lr": 4.684610648167503e-06
+          },
+          {
+            "step": 2000,
+            "ce": 0.2262822687625885,
+            "total": 0.23728712648153305,
+            "lid": 0.02200970519334078,
+            "MER": 0.1246040126715945,
+            "PIER": 0.1610738255033557,
+            "WER": 0.7311475409836066,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1164.5368937868625,
+        "peak_memory_bytes": 9635269120,
+        "diagnostics": {
+          "modules": {
+            "variant": "additive",
+            "rank": 4,
+            "site": "decoder",
+            "layers": [
+              8
+            ],
+            "init": {
+              "8": {
+                "init": "random",
+                "basis_shape": [
+                  4,
+                  1280
+                ]
+              }
+            },
+            "intervention_parameters": 10240,
+            "analytic_parameter_count": 10240,
+            "lid_head_parameters": 2562
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.12742504409171077,
+          "num_poi": 2268,
+          "num_poi_errors": 289,
+          "poi_per_category": {
+            "wrong_language_substitution": 21,
+            "phonetic_transliteration_or_script": 9,
+            "same_language_substitution": 114,
+            "deletion": 129,
+            "boundary_error": 9,
+            "insertion_near_poi": 0,
+            "other": 7
+          },
+          "MER": 0.13544822669755838,
+          "WER": 0.7659860290166577
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9858376511226252,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 178,
+          "delta_en_units": 321,
+          "corrections": 321,
+          "corruptions": 0,
+          "spillover_units": 11493
+        },
+        "init_diagnostics": {
+          "cos_theta_final_v_nat": 0.051449538917187475,
+          "cos_theta_final_v_prompt": 0.025768441114478798,
+          "cos_v_nat_v_prompt": 0.01876038913126493,
+          "theta_drift_l2": 2.369489908218384,
+          "theta_init_norm": 2.8474950790405273,
+          "theta_final_norm": 3.640568733215332,
+          "principal_angles_deg": [
+            81.48383175456551,
+            87.16721214748414
+          ],
+          "min_principal_angle_deg": 81.48383175456551,
+          "mean_principal_angle_deg": 84.32552195102483,
+          "subspace_rank": 4,
+          "interpretation_key": {
+            "small principal angles": "the learned subspace converged TOWARD span{v_nat, v_prompt}",
+            "angles near 90 deg": "the learned subspace is orthogonal to the constructed one -- it diverged"
+          }
+        },
+        "development_only_diagnostic": true
+      },
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787085537.2837903,
+        "config_hash": "0270f6257dcdd69b",
+        "arm": "B1",
+        "tag": "seed_20260819",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260819,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 12802,
+        "trainable_fraction_of_backbone": 8.294187429303098e-06,
+        "steps_run": 2000,
+        "epochs_run": 2.971768202080238,
+        "stage_steps": [
+          2000
+        ],
+        "best_dev_mer": 0.12967265047518478,
+        "best_step": 1250,
+        "early_stopped": true,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.3676718473434448,
+            "total": 0.5429149866104126,
+            "lid": 0.35048626363277435,
+            "MER": 0.13980992608236537,
+            "PIER": 0.18568232662192394,
+            "WER": 0.6008196721311475,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.3669498935341835,
+            "total": 0.45018839836120605,
+            "lid": 0.1664769947528839,
+            "MER": 0.15501583949313621,
+            "PIER": 0.17002237136465326,
+            "WER": 0.7442622950819672,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 0.8719867467880249,
+            "total": 0.9086998254060745,
+            "lid": 0.07342617213726044,
+            "MER": 0.13600844772967266,
+            "PIER": 0.16890380313199105,
+            "WER": 0.740983606557377,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.28699832409620285,
+            "total": 0.3045773208141327,
+            "lid": 0.03515798598527908,
+            "MER": 0.1317845828933474,
+            "PIER": 0.16554809843400448,
+            "WER": 0.7352459016393442,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 1250,
+            "ce": 0.6894181966781616,
+            "total": 0.702846109867096,
+            "lid": 0.026855837553739548,
+            "MER": 0.12967265047518478,
+            "PIER": 0.16778523489932887,
+            "WER": 0.7377049180327869,
+            "n": 150,
+            "lr": 3.705904774487396e-05
+          },
+          {
+            "step": 1500,
+            "ce": 0.5354579389095306,
+            "total": 0.5454438924789429,
+            "lid": 0.019971919246017933,
+            "MER": 0.14318901795142555,
+            "PIER": 0.16554809843400448,
+            "WER": 0.7475409836065574,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1750,
+            "ce": 0.2769072651863098,
+            "total": 0.28479739278554916,
+            "lid": 0.015780264046043158,
+            "MER": 0.14318901795142555,
+            "PIER": 0.16331096196868009,
+            "WER": 0.7557377049180328,
+            "n": 150,
+            "lr": 4.684610648167503e-06
+          },
+          {
+            "step": 2000,
+            "ce": 0.40955284237861633,
+            "total": 0.41954410821199417,
+            "lid": 0.019982551224529743,
+            "MER": 0.1429778247096093,
+            "PIER": 0.16331096196868009,
+            "WER": 0.7459016393442623,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1146.392812743783,
+        "peak_memory_bytes": 9634344448,
+        "diagnostics": {
+          "modules": {
+            "variant": "additive",
+            "rank": 4,
+            "site": "decoder",
+            "layers": [
+              8
+            ],
+            "init": {
+              "8": {
+                "init": "random",
+                "basis_shape": [
+                  4,
+                  1280
+                ]
+              }
+            },
+            "intervention_parameters": 10240,
+            "analytic_parameter_count": 10240,
+            "lid_head_parameters": 2562
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.12566137566137567,
+          "num_poi": 2268,
+          "num_poi_errors": 285,
+          "poi_per_category": {
+            "wrong_language_substitution": 20,
+            "phonetic_transliteration_or_script": 10,
+            "same_language_substitution": 110,
+            "deletion": 128,
+            "boundary_error": 10,
+            "insertion_near_poi": 0,
+            "other": 7
+          },
+          "MER": 0.1337254203053526,
+          "WER": 0.7659860290166577
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9875647668393782,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 158,
+          "delta_en_units": 316,
+          "corrections": 316,
+          "corruptions": 0,
+          "spillover_units": 11569
+        },
+        "init_diagnostics": {
+          "cos_theta_final_v_nat": 0.01685419265072243,
+          "cos_theta_final_v_prompt": -0.03948848562722953,
+          "cos_v_nat_v_prompt": 0.01876038913126493,
+          "theta_drift_l2": 2.282712936401367,
+          "theta_init_norm": 2.8305211067199707,
+          "theta_final_norm": 3.628007173538208,
+          "principal_angles_deg": [
+            85.38252262331054,
+            87.28933561231834
+          ],
+          "min_principal_angle_deg": 85.38252262331054,
+          "mean_principal_angle_deg": 86.33592911781443,
+          "subspace_rank": 4,
+          "interpretation_key": {
+            "small principal angles": "the learned subspace converged TOWARD span{v_nat, v_prompt}",
+            "angles near 90 deg": "the learned subspace is orthogonal to the constructed one -- it diverged"
+          }
+        },
+        "development_only_diagnostic": true
+      },
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787086250.503143,
+        "config_hash": "ede8650d82f91dd8",
+        "arm": "B1",
+        "tag": "seed_20260820",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260820,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 12802,
+        "trainable_fraction_of_backbone": 8.294187429303098e-06,
+        "steps_run": 1250,
+        "epochs_run": 1.8573551263001487,
+        "stage_steps": [
+          1250
+        ],
+        "best_dev_mer": 0.13220696937697993,
+        "best_step": 500,
+        "early_stopped": true,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.49188439548015594,
+            "total": 0.6580133140087128,
+            "lid": 0.33225782215595245,
+            "MER": 0.13896515311510033,
+            "PIER": 0.18568232662192394,
+            "WER": 0.6040983606557377,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.43344874680042267,
+            "total": 0.5146237909793854,
+            "lid": 0.1623501032590866,
+            "MER": 0.13220696937697993,
+            "PIER": 0.17114093959731544,
+            "WER": 0.7344262295081967,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 0.29079946875572205,
+            "total": 0.3239481896162033,
+            "lid": 0.06629743427038193,
+            "MER": 0.14699049630411826,
+            "PIER": 0.16554809843400448,
+            "WER": 0.7524590163934426,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.36290792375802994,
+            "total": 0.38041405379772186,
+            "lid": 0.03501224331557751,
+            "MER": 0.14656810982048574,
+            "PIER": 0.16666666666666666,
+            "WER": 0.7491803278688525,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 1250,
+            "ce": 0.21749526262283325,
+            "total": 0.22802238911390305,
+            "lid": 0.021054258570075035,
+            "MER": 0.1457233368532207,
+            "PIER": 0.16666666666666666,
+            "WER": 0.75,
+            "n": 150,
+            "lr": 3.705904774487396e-05
+          }
+        ],
+        "wall_clock_sec": 713.1951646823436,
+        "peak_memory_bytes": 9634885632,
+        "diagnostics": {
+          "modules": {
+            "variant": "additive",
+            "rank": 4,
+            "site": "decoder",
+            "layers": [
+              8
+            ],
+            "init": {
+              "8": {
+                "init": "random",
+                "basis_shape": [
+                  4,
+                  1280
+                ]
+              }
+            },
+            "intervention_parameters": 10240,
+            "analytic_parameter_count": 10240,
+            "lid_head_parameters": 2562
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.14506172839506173,
+          "num_poi": 2268,
+          "num_poi_errors": 329,
+          "poi_per_category": {
+            "wrong_language_substitution": 14,
+            "phonetic_transliteration_or_script": 8,
+            "same_language_substitution": 116,
+            "deletion": 177,
+            "boundary_error": 11,
+            "insertion_near_poi": 0,
+            "other": 3
+          },
+          "MER": 0.13592348363333928,
+          "WER": 0.7649113379903277
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9878238341968912,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 152,
+          "delta_en_units": 321,
+          "corrections": 321,
+          "corruptions": 0,
+          "spillover_units": 11423
+        },
+        "init_diagnostics": {
+          "cos_theta_final_v_nat": -0.06783234445618581,
+          "cos_theta_final_v_prompt": 0.011313670829023206,
+          "cos_v_nat_v_prompt": 0.01876038913126493,
+          "theta_drift_l2": 2.1450226306915283,
+          "theta_init_norm": 2.8352668285369873,
+          "theta_final_norm": 3.533921480178833,
+          "principal_angles_deg": [
+            84.5963186558406,
+            88.8535339822326
+          ],
+          "min_principal_angle_deg": 84.5963186558406,
+          "mean_principal_angle_deg": 86.7249263190366,
+          "subspace_rank": 4,
+          "interpretation_key": {
+            "small principal angles": "the learned subspace converged TOWARD span{v_nat, v_prompt}",
+            "angles near 90 deg": "the learned subspace is orthogonal to the constructed one -- it diverged"
+          }
+        },
+        "development_only_diagnostic": true
+      }
+    ],
+    "B2": [
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787087367.8548818,
+        "config_hash": "b95cc99e839273a9",
+        "arm": "B2",
+        "tag": "main",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 12802,
+        "trainable_fraction_of_backbone": 8.294187429303098e-06,
+        "steps_run": 2000,
+        "epochs_run": 2.971768202080238,
+        "stage_steps": [
+          2000
+        ],
+        "best_dev_mer": 0.12439281942977824,
+        "best_step": 2000,
+        "early_stopped": false,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.2526722773909569,
+            "total": 0.4228955954313278,
+            "lid": 0.3404466509819031,
+            "MER": 0.14973600844772966,
+            "PIER": 0.18680089485458612,
+            "WER": 0.6172131147540983,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.34043845534324646,
+            "total": 0.41785645484924316,
+            "lid": 0.154836006462574,
+            "MER": 0.12882787750791974,
+            "PIER": 0.16554809843400448,
+            "WER": 0.7319672131147541,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 1.0746088027954102,
+            "total": 1.1137475669384003,
+            "lid": 0.0782775729894638,
+            "MER": 0.14424498416050685,
+            "PIER": 0.1610738255033557,
+            "WER": 0.7401639344262295,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.24273549020290375,
+            "total": 0.2604607194662094,
+            "lid": 0.035450467839837074,
+            "MER": 0.12777191129883844,
+            "PIER": 0.1610738255033557,
+            "WER": 0.7270491803278688,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 1250,
+            "ce": 0.5810759514570236,
+            "total": 0.5962530225515366,
+            "lid": 0.030354133807122707,
+            "MER": 0.12650475184794086,
+            "PIER": 0.1599552572706935,
+            "WER": 0.7278688524590164,
+            "n": 150,
+            "lr": 3.705904774487396e-05
+          },
+          {
+            "step": 1500,
+            "ce": 0.6337758600711823,
+            "total": 0.6478751003742218,
+            "lid": 0.028198465704917908,
+            "MER": 0.12481520591341078,
+            "PIER": 0.1599552572706935,
+            "WER": 0.7344262295081967,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1750,
+            "ce": 0.6999152302742004,
+            "total": 0.7096834480762482,
+            "lid": 0.019536498002707958,
+            "MER": 0.12481520591341078,
+            "PIER": 0.1610738255033557,
+            "WER": 0.7360655737704918,
+            "n": 150,
+            "lr": 4.684610648167503e-06
+          },
+          {
+            "step": 2000,
+            "ce": 0.21937674283981323,
+            "total": 0.23024685680866241,
+            "lid": 0.02174022514373064,
+            "MER": 0.12439281942977824,
+            "PIER": 0.1599552572706935,
+            "WER": 0.730327868852459,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1117.327509040013,
+        "peak_memory_bytes": 9635269120,
+        "diagnostics": {
+          "modules": {
+            "variant": "additive",
+            "rank": 4,
+            "site": "decoder",
+            "layers": [
+              8
+            ],
+            "init": {
+              "8": {
+                "init": "informed",
+                "basis_shape": [
+                  4,
+                  1280
+                ]
+              }
+            },
+            "intervention_parameters": 10240,
+            "analytic_parameter_count": 10240,
+            "lid_head_parameters": 2562
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.12742504409171077,
+          "num_poi": 2268,
+          "num_poi_errors": 289,
+          "poi_per_category": {
+            "wrong_language_substitution": 22,
+            "phonetic_transliteration_or_script": 8,
+            "same_language_substitution": 114,
+            "deletion": 128,
+            "boundary_error": 9,
+            "insertion_near_poi": 0,
+            "other": 8
+          },
+          "MER": 0.13176498544525633,
+          "WER": 0.7678667383127351
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9905008635578584,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 122,
+          "delta_en_units": 314,
+          "corrections": 314,
+          "corruptions": 0,
+          "spillover_units": 11261
+        },
+        "init_diagnostics": {
+          "cos_theta_final_v_nat": 0.7492755657323101,
+          "cos_theta_final_v_prompt": -0.0032625446201416737,
+          "cos_v_nat_v_prompt": 0.01876038913126493,
+          "theta_drift_l2": 2.258486747741699,
+          "theta_init_norm": 2.8474950790405273,
+          "theta_final_norm": 3.6306393146514893,
+          "principal_angles_deg": [
+            18.45277885293549,
+            38.42879801573537
+          ],
+          "min_principal_angle_deg": 18.45277885293549,
+          "mean_principal_angle_deg": 28.44078843433543,
+          "subspace_rank": 4,
+          "interpretation_key": {
+            "small principal angles": "the learned subspace converged TOWARD span{v_nat, v_prompt}",
+            "angles near 90 deg": "the learned subspace is orthogonal to the constructed one -- it diverged"
+          }
+        },
+        "development_only_diagnostic": true
+      }
+    ],
+    "B4": [
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787088578.4939644,
+        "config_hash": "70200af0212df9dc",
+        "arm": "B4",
+        "tag": "main",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 1968642,
+        "trainable_fraction_of_backbone": 0.0012754480338383152,
+        "steps_run": 1000,
+        "epochs_run": 1.485884101040119,
+        "stage_steps": [
+          1000
+        ],
+        "best_dev_mer": 0.13326293558606125,
+        "best_step": 250,
+        "early_stopped": true,
+        "history": [
+          {
+            "step": 250,
+            "ce": 0.15719807147979736,
+            "total": 0.32234376668930054,
+            "lid": 0.33029139041900635,
+            "MER": 0.13326293558606125,
+            "PIER": 0.15548098434004473,
+            "WER": 0.7565573770491804,
+            "n": 150,
+            "lr": 9.980973490458728e-05
+          },
+          {
+            "step": 500,
+            "ce": 0.2750721424818039,
+            "total": 0.35570085048675537,
+            "lid": 0.16125741600990295,
+            "MER": 0.14762407602956706,
+            "PIER": 0.14541387024608501,
+            "WER": 0.8204918032786885,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 750,
+            "ce": 0.9609119892120361,
+            "total": 0.9988439679145813,
+            "lid": 0.07586392760276794,
+            "MER": 0.14361140443505807,
+            "PIER": 0.14093959731543623,
+            "WER": 0.819672131147541,
+            "n": 150,
+            "lr": 7.86788218175523e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.19223986566066742,
+            "total": 0.21051914989948273,
+            "lid": 0.03655858337879181,
+            "MER": 0.14614572333685322,
+            "PIER": 0.13646532438478748,
+            "WER": 0.8491803278688524,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          }
+        ],
+        "wall_clock_sec": 1208.849303625524,
+        "peak_memory_bytes": 50552497152,
+        "diagnostics": {
+          "modules": {
+            "method": "LoRA",
+            "rank": 4,
+            "alpha": 8,
+            "target_modules": [
+              "q_proj",
+              "v_proj"
+            ],
+            "lora_modules": 384,
+            "lora_parameters": 1966080,
+            "lid_head_parameters": 2562
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 2000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.10802469135802469,
+          "num_poi": 2268,
+          "num_poi_errors": 245,
+          "poi_per_category": {
+            "wrong_language_substitution": 42,
+            "phonetic_transliteration_or_script": 11,
+            "same_language_substitution": 116,
+            "deletion": 69,
+            "boundary_error": 2,
+            "insertion_near_poi": 0,
+            "other": 5
+          },
+          "MER": 0.18083526406463493,
+          "WER": 0.8406770553465879
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": false,
+        "decode_health": {
+          "median_length_ratio": 1.0,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.9912780656303972,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 115,
+          "delta_en_units": 336,
+          "corrections": 336,
+          "corruptions": 0,
+          "spillover_units": 12232
+        },
+        "development_only_diagnostic": true
+      }
+    ],
+    "B3-reimpl": [
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787089854.760325,
+        "config_hash": "8e383bf488c94db9",
+        "arm": "B3-reimpl",
+        "tag": "stage1",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 52697602,
+        "trainable_fraction_of_backbone": 0.034141836280488815,
+        "steps_run": 1000,
+        "epochs_run": 1.485884101040119,
+        "stage_steps": [
+          1000
+        ],
+        "best_dev_mer": 0.4903907074973601,
+        "best_step": 750,
+        "early_stopped": false,
+        "history": [
+          {
+            "step": 250,
+            "ce": 1.8675149083137512,
+            "total": 2.0450265407562256,
+            "lid": 0.3550232797861099,
+            "MER": 1.2542766631467792,
+            "PIER": 0.8612975391498882,
+            "WER": 1.5237704918032786,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 500,
+            "ce": 1.0447322130203247,
+            "total": 1.1702334582805634,
+            "lid": 0.2510024979710579,
+            "MER": 0.6791974656810982,
+            "PIER": 0.558165548098434,
+            "WER": 1.410655737704918,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 750,
+            "ce": 1.722972571849823,
+            "total": 1.797604501247406,
+            "lid": 0.1492639258503914,
+            "MER": 0.4903907074973601,
+            "PIER": 0.4507829977628635,
+            "WER": 1.116393442622951,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1000,
+            "ce": 0.8127352893352509,
+            "total": 0.8788008689880371,
+            "lid": 0.13213109970092773,
+            "MER": 0.5144667370644139,
+            "PIER": 0.49328859060402686,
+            "WER": 1.2139344262295082,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1269.5421480610967,
+        "peak_memory_bytes": 53533843456,
+        "diagnostics": {
+          "modules": {
+            "method": "AGA (reimplemented)",
+            "stage": 1,
+            "encoder_adapters": true,
+            "decoder_adapters": false,
+            "cs_weight": 0.0,
+            "c_val_attention": 0.6,
+            "adapter_parameters": 52695040,
+            "lid_head_parameters": 2562,
+            "stage1_tensors_carried": 0,
+            "parameter_fraction_check": {
+              "trainable_parameters": 52695040,
+              "backbone_parameters": 1543490560,
+              "trainable_fraction": 0.0341401764063915,
+              "paper_fraction": 0.056,
+              "within_factor": 2.0,
+              "passed": true,
+              "detail": "52,695,040 adapter parameters = 3.41% of 1,543,490,560; the paper reports ~5.6%"
+            },
+            "head_selection": null
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 1000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.5674603174603174,
+          "num_poi": 2268,
+          "num_poi_errors": 1287,
+          "poi_per_category": {
+            "wrong_language_substitution": 693,
+            "phonetic_transliteration_or_script": 172,
+            "same_language_substitution": 329,
+            "deletion": 81,
+            "boundary_error": 5,
+            "insertion_near_poi": 0,
+            "other": 7
+          },
+          "MER": 0.5318125111388344,
+          "WER": 1.2407307898979043
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": true,
+        "decode_health": {
+          "median_length_ratio": 1.0259784075573548,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.7198618307426597,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 3887,
+          "delta_en_units": 137,
+          "corrections": 143,
+          "corruptions": 6,
+          "spillover_units": 15536
+        },
+        "development_only_diagnostic": true
+      },
+      {
+        "track": "B",
+        "taint": "development_only_diagnostic",
+        "git_commit": "fdd441a75b0d66f56d8e5efec62f01649f7b9ae9",
+        "git_dirty": true,
+        "environment": {
+          "host": "worker-0",
+          "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+          "python": "3.11.9",
+          "torch": "2.10.0+cu128",
+          "cuda_visible_devices": "0",
+          "gpu_name": "NVIDIA H100 80GB HBM3",
+          "slurm_job_id": "42675"
+        },
+        "seeds": {
+          "global": 20260818,
+          "bootstrap": 20260818,
+          "direction_random_init": 20260821,
+          "data_subsample": 20260822,
+          "dev_eval_subsample": 20260823
+        },
+        "written_at": 1787091231.0581796,
+        "config_hash": "73ca841e2c8c775b",
+        "arm": "B3-reimpl",
+        "tag": "stage2",
+        "tuning": false,
+        "lr": 0.0001,
+        "lambda_lid": 0.5,
+        "seed": 20260818,
+        "site": "decoder",
+        "layers": [
+          8
+        ],
+        "trainable_parameters": 105392642,
+        "trainable_fraction_of_backbone": 0.06828201268688032,
+        "steps_run": 1000,
+        "epochs_run": 1.485884101040119,
+        "stage_steps": [
+          1000
+        ],
+        "best_dev_mer": 0.46335797254487854,
+        "best_step": 1000,
+        "early_stopped": false,
+        "history": [
+          {
+            "step": 250,
+            "ce": 2.2101670503616333,
+            "total": 2.2860995531082153,
+            "lid": 0.057073453441262245,
+            "extra": 0.04739583656191826,
+            "MER": 1.0939809926082364,
+            "PIER": 0.6644295302013423,
+            "WER": 1.2745901639344261,
+            "n": 150,
+            "lr": 9.330127018922194e-05
+          },
+          {
+            "step": 500,
+            "ce": 1.5944490432739258,
+            "total": 1.6580503582954407,
+            "lid": 0.02082420513033867,
+            "extra": 0.05318919010460377,
+            "MER": 0.721013727560718,
+            "PIER": 0.5313199105145414,
+            "WER": 1.0663934426229509,
+            "n": 150,
+            "lr": 5.868240888334653e-05
+          },
+          {
+            "step": 750,
+            "ce": 2.2171542048454285,
+            "total": 2.285028874874115,
+            "lid": 0.018133883830159903,
+            "extra": 0.058807674795389175,
+            "MER": 0.5286166842661035,
+            "PIER": 0.4004474272930649,
+            "WER": 0.9401639344262295,
+            "n": 150,
+            "lr": 1.7860619515673033e-05
+          },
+          {
+            "step": 1000,
+            "ce": 1.2816640138626099,
+            "total": 1.3319401741027832,
+            "lid": 0.008153861854225397,
+            "extra": 0.046199191361665726,
+            "MER": 0.46335797254487854,
+            "PIER": 0.4015659955257271,
+            "WER": 1.0754098360655737,
+            "n": 150,
+            "lr": 0.0
+          }
+        ],
+        "wall_clock_sec": 1375.523516440764,
+        "peak_memory_bytes": 56532494848,
+        "diagnostics": {
+          "modules": {
+            "method": "AGA (reimplemented)",
+            "stage": 2,
+            "encoder_adapters": true,
+            "decoder_adapters": true,
+            "cs_weight": 0.01,
+            "c_val_attention": 0.6,
+            "adapter_parameters": 105390080,
+            "lid_head_parameters": 2562,
+            "stage1_tensors_carried": 0,
+            "parameter_fraction_check": {
+              "trainable_parameters": 105390080,
+              "backbone_parameters": 1543490560,
+              "trainable_fraction": 0.068280352812783,
+              "paper_fraction": 0.056,
+              "within_factor": 2.0,
+              "passed": true,
+              "detail": "105,390,080 adapter parameters = 6.83% of 1,543,490,560; the paper reports ~5.6%"
+            },
+            "head_selection": {
+              "n_selected": 331,
+              "n_total": 640,
+              "fraction": 0.7638888888888888,
+              "utterances_scanned": 200,
+              "selected_per_layer": [
+                1,
+                2,
+                0,
+                2,
+                4,
+                0,
+                4,
+                1,
+                7,
+                6,
+                8,
+                6,
+                6,
+                8,
+                9,
+                14,
+                12,
+                16,
+                15,
+                17,
+                15,
+                14,
+                15,
+                17,
+                16,
+                15,
+                15,
+                14,
+                16,
+                19,
+                18,
+                19
+              ],
+              "top_layers": [
+                29,
+                30,
+                31,
+                28,
+                23
+              ],
+              "criterion": "per decoder self-attention head, per utterance: sum of attention mass on prompt key positions 1:3 versus mass on position 0 plus positions 3:; the head is counted when the former exceeds the latter",
+              "computed_on": "CS-Dialogue loc-train (NOT SEAME)",
+              "reference_pickle_not_used": "attention_count_whispernoft_new.pkl",
+              "heads_with_zero_count_excluded": 158
+            }
+          },
+          "steps_per_epoch": 673,
+          "max_steps_effective": 1000,
+          "backbone_grad_norm_final": 0.0
+        },
+        "notes": [],
+        "eval_metrics": {
+          "scored_utterances": 300,
+          "PIER": 0.5035273368606702,
+          "num_poi": 2268,
+          "num_poi_errors": 1142,
+          "poi_per_category": {
+            "wrong_language_substitution": 363,
+            "phonetic_transliteration_or_script": 103,
+            "same_language_substitution": 461,
+            "deletion": 173,
+            "boundary_error": 17,
+            "insertion_near_poi": 0,
+            "other": 25
+          },
+          "MER": 0.531871918255807,
+          "WER": 1.2821063944116067
+        },
+        "eval_split": "D-dev-select",
+        "eval_scorer": "ours only",
+        "eval_prompt": "four-token forced <|zh|> (identical across every arm)",
+        "trained_under_cs_prompt": true,
+        "decode_health": {
+          "median_length_ratio": 0.9850212385423653,
+          "median_length_ratio_ok": true,
+          "empty_output_rate": 0.0,
+          "empty_output_rate_ok": true,
+          "max_new_tokens_hit_rate": 0.0,
+          "max_new_tokens_hit_rate_ok": true,
+          "healthy": true
+        },
+        "selectivity": {
+          "zh_retention": 0.7031088082901554,
+          "zh_baseline_correct": 11580,
+          "units_at_risk": 12775,
+          "units_corrupted": 3982,
+          "delta_en_units": 161,
+          "corrections": 165,
+          "corruptions": 4,
+          "spillover_units": 16404
+        },
+        "development_only_diagnostic": true
+      }
+    ]
+  },
+  "notes": [
+    "the selected lr 0.0001 is at an edge of the grid [0.0001, 0.0005, 0.001]. The rule is to extend the grid SYMMETRICALLY FOR EVERY ARM and rerun -- never for one arm alone. Not done inside this allocation; recorded as a required follow-up."
+  ],
+  "lambda_lid": 0.5,
+  "lambda_tuned_on": "B1",
+  "lr": 0.0001,
+  "lr_tuned_on": "B1",
+  "lr_at_grid_edge": true,
+  "b3_status": {
+    "attempted": true,
+    "time_box_days": 3,
+    "head_selection": {
+      "n_selected": 331,
+      "n_total": 640,
+      "fraction": 0.7638888888888888,
+      "utterances_scanned": 200,
+      "selected_per_layer": [
+        1,
+        2,
+        0,
+        2,
+        4,
+        0,
+        4,
+        1,
+        7,
+        6,
+        8,
+        6,
+        6,
+        8,
+        9,
+        14,
+        12,
+        16,
+        15,
+        17,
+        15,
+        14,
+        15,
+        17,
+        16,
+        15,
+        15,
+        14,
+        16,
+        19,
+        18,
+        19
+      ],
+      "top_layers": [
+        29,
+        30,
+        31,
+        28,
+        23
+      ],
+      "criterion": "per decoder self-attention head, per utterance: sum of attention mass on prompt key positions 1:3 versus mass on position 0 plus positions 3:; the head is counted when the former exceeds the latter",
+      "computed_on": "CS-Dialogue loc-train (NOT SEAME)",
+      "reference_pickle_not_used": "attention_count_whispernoft_new.pkl",
+      "heads_with_zero_count_excluded": 158
+    },
+    "two_stage_split": {
+      "stage1": 1000,
+      "stage2": 1000,
+      "single_stage_total": 2000,
+      "rule": "total optimiser steps matched to the single-stage arms"
+    },
+    "stage1_tensors_available": 384,
+    "status": "COMPLETED"
+  },
+  "fidelity_note": [
+    {
+      "item": "framework",
+      "status": "deliberate deviation",
+      "detail": "reimplemented in our PyTorch/HuggingFace stack on whisper-large-v3. The reference is ESPnet 202301 on whisper-small with a vendored OpenAI-Whisper. Running the reference would confound B3-vs-B1/B2 with framework."
+    },
+    {
+      "item": "adapter placement",
+      "status": "inferred",
+      "detail": "the reference places two adapters INSIDE each residual block (after self-attention and after the MLP). A forward hook sees only the block output, so both adapters are applied in sequence there. Parameter count is preserved exactly; the position of the first adapter differs by one sublayer."
+    },
+    {
+      "item": "head-selection criterion",
+      "status": "mirrored from code_util/head_selection.md and the source",
+      "detail": "per decoder self-attention head and utterance, the head is counted when attention mass on prompt key positions 1:3 exceeds mass on position 0 plus positions 3:. Ranked by count descending over the training split."
+    },
+    {
+      "item": "head-selection data",
+      "status": "deliberate deviation",
+      "detail": "computed on CS-Dialogue loc-train, not on SEAME, as required."
+    },
+    {
+      "item": "released head mask is disabled upstream",
+      "status": "defect in the reference, not reproduced",
+      "detail": "in the released code `self.selected_heads` is commented out and replaced by a hard-coded 50% `random_onezero` 12x12 mask, so the shipped model does not use its own head selection. The documented procedure is implemented here instead."
+    },
+    {
+      "item": "layer/head key order in the reference",
+      "status": "defect in the reference, corrected here",
+      "detail": "`for head, layer_dict in attention_count.items()` iterates a dict built as `attention_count[layer][head]`, then unpacks the tuple as `layer, head, num`. The transposition is invisible only because the matrix is square for whisper-small."
+    },
+    {
+      "item": "number of selected heads",
+      "status": "inferred",
+      "detail": "the reference hard-codes int(110 * pct / 100) against 144 heads. The fraction 0.7639 is carried over to this geometry rather than the literal 110."
+    },
+    {
+      "item": "CS prompt",
+      "status": "deliberate deviation, TRAINING ONLY",
+      "detail": "the guidance loss needs a ZH slot and an EN slot, so B3-reimpl TRAINS under the reference's `whisper_cs` five-token prompt ['<|startoftranscript|>', '<|zh|>', '<|en|>', '<|transcribe|>', '<|notimestamps|>']. Evaluation on D-dev-select uses the SAME four-token forced-<|zh|> prefix as every other arm, because 'same decode config' is one of the study's explicit invariants and mixing in a second prompt at eval time would confound the MER comparison by prompt as well as by method. The training/eval prompt mismatch is therefore B3-reimpl's own trade-off, stated here rather than silently introduced as an extra variable in the comparison."
+    },
+    {
+      "item": "optimiser hyperparameters",
+      "status": "deliberate deviation",
+      "detail": "the reference uses AdamW lr 1e-3, wd 0.01, betas (0.9, 0.99), warmup 500, accum 4, 10 then 15 epochs. Track B applies the SHARED budget to every arm instead; tuning B3 on its own schedule would break matched training conditions."
+    },
+    {
+      "item": "specaug",
+      "status": "not reproduced",
+      "detail": "the reference enables SpecAugment in the encoder. It is off here because no other arm uses it and it is not part of the attention-guidance mechanism."
+    },
+    {
+      "item": "accent population",
+      "status": "stated mismatch",
+      "detail": "the reference repository is titled for Taiwan-accented Mandarin-English; CS-Dialogue is a different accent population."
+    },
+    {
+      "item": "published MER",
+      "status": "stated mismatch",
+      "detail": "the paper's ~14.2% MER is on SEAME. We evaluate on CS-Dialogue. It is external context, not a reproduction target."
+    },
+    {
+      "item": "license",
+      "status": "recorded",
+      "detail": "the reference repository has NO LICENSE file (checked 2026-08-18). We reimplement rather than vendor, so the obligation is citation of arXiv:2312.08856."
+    },
+    {
+      "item": "LID head parity",
+      "status": "deliberate addition, flagged",
+      "detail": "the shared LID head is added to B3-reimpl for parity with every other arm even though the attention-guidance loss already contains language-aware structure. The two terms may double-count the same signal; this is flagged rather than silently omitted or silently stacked."
+    }
+  ],
+  "convergence": {
+    "verdict": "INTERMEDIATE",
+    "mean_principal_angle_deg": 74.029523817549,
+    "n_runs": 5,
+    "random_subspace_reference_deg": 90.0,
+    "note": "a random rank-2 subspace of a 1280-dimensional space sits at essentially 90 degrees, so 90 is the null, not zero"
+  }
+}

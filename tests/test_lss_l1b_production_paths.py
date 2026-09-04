@@ -943,6 +943,66 @@ def test_aligner_sweep_publishes_candidate_parents_and_transitive_taint(
     assert verdict["ok"] and verdict["manifest"] == published
 
 
+def test_strict_versioned_sweep_never_publishes_a_partial_family_universe(
+        root, monkeypatch):
+    """A merged table with one unavailable configured family can look complete
+    to any reader that authenticates only the table sidecar."""
+    import logging
+
+    from csasr.lss.align import candidates as cand
+    from csasr.nat5h.coordinates import EncoderGeometry
+
+    cfg = _resolved_cfg(root)
+    sample = _manifest(3)
+    sample.attrs["sampling_report"] = {
+        "schema_version": lss_l1b_valid.SAMPLING_REPORT_SCHEMA,
+        "design": {"sample_dialogues": "all", "utterances_per_dialogue": 15,
+                   "sample_stratify_field": "dialogue_id", "sample_seed": 303},
+        "roles": {},
+    }
+    table = _candidate_rows(sample, ["existing_ctc"])
+    calls = []
+
+    def fake_run_families(manifest, cfg, geometry, identity, families, **kwargs):
+        calls.append(kwargs)
+        return table, {
+            "families": {
+                family: {"state": "unavailable" if family == "whisper_dtw"
+                         else "ok"}
+                for family in families
+            },
+            "cache_manifests": {},
+            "request_manifest": cand.request_manifest_record(manifest),
+        }
+
+    monkeypatch.setattr(lss_l1b_valid, "sweep_sample",
+                        lambda cfg, roles, missing_ok=False: sample)
+    monkeypatch.setattr(
+        "csasr.lss.align.devselect.load_aligner_selection",
+        lambda root: (_ for _ in ()).throw(
+            AssertionError("explicit v2 selection must not read v1 selection")))
+    monkeypatch.setattr("csasr.models.whisper.load_whisper", lambda cfg: object())
+    monkeypatch.setattr(EncoderGeometry, "from_bundle",
+                        classmethod(lambda cls, bundle: cls.from_values()))
+    monkeypatch.setattr("csasr.lss.align.candidates.run_families",
+                        fake_run_families)
+
+    report = lss_l1b_valid._run_aligner_sweep(
+        cfg, logging.getLogger("strict-v2-candidate-test"),
+        roles=LABELLED_ROLES,
+        alignment_selection={"available": True, "pred_start_offset": 0,
+                             "source": "versioned-test-config"},
+        producing_stage="l1b_candidates_dialogue_v2",
+        require_all_configured_families=True)
+
+    assert calls[0]["pred_start_offset"] == 0
+    assert calls[0]["stage"] == "l1b_candidates_dialogue_v2"
+    assert report["merged_candidate_published"] is False
+    assert report["unavailable_configured_families"] == ["whisper_dtw"]
+    assert "manifest" not in report
+    assert not (root / "alignments/candidates_all.parquet").exists()
+
+
 def test_the_disagreement_is_measured_between_the_corresponding_families(
         root, synthetic_stubs):
     """Naming one pair and measuring another is how an accuracy claim ends up

@@ -1,0 +1,35 @@
+{
+  "layer": 16,
+  "alpha": 1.0,
+  "checks": [
+    {
+      "num_beams": 1,
+      "attempt": 1,
+      "passed": true,
+      "n_utterances": 300,
+      "hash_run1_inprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+      "hash_run2_inprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+      "hash_run3_subprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+      "n_diff_inprocess_pair": 0,
+      "n_diff_subprocess_pair": 0,
+      "sample_diffs": [],
+      "elapsed_sec": 133.55656526051462,
+      "deterministic_settings_applied": false
+    },
+    {
+      "num_beams": 5,
+      "attempt": 1,
+      "passed": true,
+      "n_utterances": 300,
+      "hash_run1_inprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+      "hash_run2_inprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+      "hash_run3_subprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+      "n_diff_inprocess_pair": 0,
+      "n_diff_subprocess_pair": 0,
+      "sample_diffs": [],
+      "elapsed_sec": 258.3369400482625,
+      "deterministic_settings_applied": false
+    }
+  ],
+  "passed": true
+}

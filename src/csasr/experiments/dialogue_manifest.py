@@ -28,8 +28,9 @@ from ..data.manifest import (DialoguePairingError, MANIFEST_COLUMNS,
                              _read_information_index, derive_dialogue_ids,
                              dialogue_pairing_evidence)
 from ..lss import manifest as manifest_mod
+from ..nat5h.statusing import atomic_write_json
 from ..utils.config import load_config
-from ..utils.hashing import sha256_file
+from ..utils.hashing import sha256_file, sha256_obj
 
 STAGE = "dialogue_manifest"
 MANIFEST_NAME = "cs_dialogue_with_dialogue_id.parquet"
@@ -54,9 +55,30 @@ def resolve_output(output: str | Path, source: Path) -> Path:
     if target == source.resolve():
         raise SystemExit("refusing to overwrite the source manifest; "
                          "existing artifacts are immutable")
-    if target.exists():
-        raise SystemExit(f"refusing to overwrite an existing artifact: {target}")
+    if target.exists() or manifest_mod.manifest_path(target).exists():
+        raise SystemExit(
+            f"refusing to overwrite an existing artifact or sidecar: {target}")
     return target
+
+
+def dialogue_derivation_fingerprint(*, source_manifest_sha256: str,
+                                    information_index_sha256: str
+                                    ) -> tuple[str, dict[str, Any]]:
+    """Focused identity for the inferred dialogue grouping, independent of cfg."""
+    payload = {
+        "fingerprint_version": "dialogue-derivation-fingerprint-v1",
+        "algorithm": "csasr.data.manifest.derive_dialogue_ids",
+        "speaker_id_source": "Information_Index.txt integer Speaker ID column",
+        "pairing_rule": "consecutive integer IDs (2k-1, 2k)",
+        "required_validation": [
+            "exactly_two_conversations_per_dialogue",
+            "identical_topic_sets_within_dialogue",
+            "single_official_split_within_dialogue",
+        ],
+        "source_manifest_sha256": str(source_manifest_sha256),
+        "information_index_sha256": str(information_index_sha256),
+    }
+    return sha256_obj(payload), payload
 
 
 def attach_dialogue_ids(manifest: pd.DataFrame, info: pd.DataFrame) -> pd.DataFrame:
@@ -123,22 +145,42 @@ def main(argv: list[str] | None = None) -> int:
     # the source manifest predates artifact sidecars, so hash it here rather than
     # record a parent with a null sha256: the derivation must be pinned to the
     # exact bytes it read
+    source_sha = sha256_file(source)
     source_manifest = manifest_mod.load(source) or {
-        "path": str(source), "sha256": sha256_file(source)}
+        "path": str(source), "sha256": source_sha}
+    if source_manifest.get("sha256") != source_sha:
+        raise SystemExit(
+            f"source manifest sidecar does not authenticate current bytes: {source}")
+    index_sha = sha256_file(index)
+    information_parent = {
+        "path": str(index),
+        "sha256": index_sha,
+        "schema": "cs_dialogue_information_index",
+        "complete": True,
+    }
+    derivation_sha, derivation_payload = dialogue_derivation_fingerprint(
+        source_manifest_sha256=source_sha,
+        information_index_sha256=index_sha)
+    evidence["dialogue_derivation_fingerprint"] = derivation_sha
+    evidence["dialogue_derivation_fingerprint_payload"] = derivation_payload
     published = manifest_mod.publish_frame(
         target, frame, stage=STAGE, cfg=cfg,
-        parents=[source_manifest],
+        parents=[source_manifest, information_parent],
         key_columns=["utterance_id"],
         schema="cs_dialogue_manifest_with_dialogue_id_v1",
         extra={"dialogue_pairing_evidence": evidence,
                "source_manifest": str(source),
                "information_index": str(index),
+               "information_index_sha256": index_sha,
+               "dialogue_derivation_fingerprint": derivation_sha,
+               "dialogue_derivation_fingerprint_payload": derivation_payload,
                "derivation": "csasr.data.manifest.derive_dialogue_ids",
                "inferred_columns": ["dialogue_id", "corpus_speaker_id"]})
-    evidence_path.write_text(json.dumps(evidence, indent=2, default=str),
-                             encoding="utf-8")
+    atomic_write_json(evidence_path, evidence)
     manifest_mod.publish(evidence_path, stage=STAGE, cfg=cfg,
-                         parents=[published], schema="dialogue_pairing_evidence_v1")
+                         parents=[published, information_parent],
+                         schema="dialogue_pairing_evidence_v1",
+                         extra={"dialogue_derivation_fingerprint": derivation_sha})
 
     summary: dict[str, Any] = {
         "rows": int(len(frame)),
@@ -147,6 +189,7 @@ def main(argv: list[str] | None = None) -> int:
         "manifest": str(target),
         "evidence": str(evidence_path),
         "sha256": published["sha256"],
+        "dialogue_derivation_fingerprint": derivation_sha,
         "checks_pass": evidence["all_checks_pass"],
     }
     print(json.dumps(summary, indent=2))

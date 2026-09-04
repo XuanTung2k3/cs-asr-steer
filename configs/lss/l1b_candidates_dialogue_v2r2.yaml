@@ -1,0 +1,40 @@
+# Replacement v2 namespace: identical allocation, corrected partition identity.
+#
+# The published v2 artifacts predate the `rng_derivation` record, so they carry
+# the pre-record partition fingerprint 87d24cb8... Those artifacts are
+# write-once and stay exactly where they are; this namespace republishes the
+# same allocation with the corrected fingerprint
+# b6c1af90894ec64c3dacc0b110bfe2da4e8bef3a9881863dc6751d2b61786ecf and the
+# derivation record, and points back at what it replaces.
+#
+# `v2_namespace` pins role_root to <root>/manifests/roles and freeze_path to
+# <root>/freeze/spec_freeze_v2.json, so a replacement generation cannot sit
+# beside the old one -- the namespace root is the version unit. Hence a new root.
+#
+# The spec version is still v2: the science did not change. Only the recorded
+# identity of the partition rule did.
+include: [lss/l1b_candidates_dialogue_v2.yaml]
+
+stage: l1b_candidates_dialogue_v2r2
+
+experiment:
+  spec_version: v2
+  output_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/candidate_generations/generation_001
+  role_manifests_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/manifests/roles
+  spec_freeze_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/freeze/spec_freeze_v2.json
+
+runtime:
+  stop_file: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/candidate_generations/generation_001/REQUEST_STOP
+
+v2_namespace:
+  version: lss-dialogue-v2
+  root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2
+  protected_v1_root: /mnt/data/tungnx/cs-asr-steer/artifacts_lss
+  superseded_freeze: /mnt/data/tungnx/cs-asr-steer/artifacts_lss/freeze/spec_freeze_v1.json
+  role_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/manifests/roles
+  candidate_generation_root: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/candidate_generations/generation_001
+  candidate_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/candidate_generations/generation_001/alignments/candidates_all.parquet
+  freeze_path: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r2/freeze/spec_freeze_v2.json
+  # The v2 freeze this one replaces. Read for its hash and never written.
+  superseded_v2_freeze: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/freeze/spec_freeze_v2.json
+  superseded_v2_role_generation: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2/manifests/roles/generation_complete.manifest.json

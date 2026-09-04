@@ -8,6 +8,11 @@ from typing import Any
 from .config import REPO_ROOT
 from .hashing import sha256_file, sha256_obj, sha256_strings
 
+CODE_CONFIG_ROOTS = ("src", "configs")
+TEST_ROOTS = ("tests",)
+# Kept in its historical order so ``source_snapshot_hash`` reproduces every
+# legacy ``identity.source_sha256`` exactly.  New artifact identities use the
+# two focused hashes below instead.
 SOURCE_ROOTS = ("src", "tests", "configs")
 # Launchers set the environment a run executed in (library paths, offline flags,
 # thread counts), so they define the run as much as the code does. The
@@ -18,22 +23,42 @@ SOURCE_FILES = ("cs_asr_e1_e5.sh", "cs_asr_nat5h.sh", "cs_asr_lss.sh",
 PROVENANCE_VERSION = "artifact-provenance-v1"
 
 
-def source_snapshot_hash(repo_root: str | Path = REPO_ROOT) -> str:
-    """Hash source/config/launcher files that define a scientific run."""
+def _snapshot_hash(repo_root: str | Path, roots: tuple[str, ...],
+                   files: tuple[str, ...] = ()) -> str:
     root = Path(repo_root)
     entries: list[str] = []
-    for rel in SOURCE_ROOTS:
+    for rel in roots:
         base = root / rel
         if not base.exists():
             continue
         for p in sorted(base.rglob("*")):
             if p.is_file() and "__pycache__" not in p.parts:
                 entries.append(f"{p.relative_to(root)}={sha256_file(p)}")
-    for rel in SOURCE_FILES:
+    for rel in files:
         p = root / rel
         if p.exists():
             entries.append(f"{p.relative_to(root)}={sha256_file(p)}")
     return sha256_strings(entries)
+
+
+def source_snapshot_hash(repo_root: str | Path = REPO_ROOT) -> str:
+    """Legacy combined hash, retained verbatim for old artifact manifests.
+
+    This function must continue to cover ``src/``, ``tests/``, ``configs/`` and
+    the root execution files in the original order.  Existing artifacts carry
+    only this digest and are verified against it without migration or rewrite.
+    """
+    return _snapshot_hash(repo_root, SOURCE_ROOTS, SOURCE_FILES)
+
+
+def code_config_snapshot_hash(repo_root: str | Path = REPO_ROOT) -> str:
+    """Gated identity of production code, configuration and launch context."""
+    return _snapshot_hash(repo_root, CODE_CONFIG_ROOTS, SOURCE_FILES)
+
+
+def test_snapshot_hash(repo_root: str | Path = REPO_ROOT) -> str:
+    """Recorded, ungated identity of the complete regression-test tree."""
+    return _snapshot_hash(repo_root, TEST_ROOTS)
 
 
 def resolved_config_hash(cfg: dict[str, Any]) -> str:

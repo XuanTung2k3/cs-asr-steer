@@ -1,0 +1,32 @@
+{
+  "site_d_layer24": {
+    "kind": "v_nat",
+    "site": "decoder",
+    "layer": 24,
+    "source": "loaded",
+    "store": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/directions/generation_001/directions.npz",
+    "stored_norm": 3.871718541066646
+  },
+  "site_d_layer24_v_prompt": {
+    "kind": "v_prompt",
+    "site": "decoder",
+    "layer": 24,
+    "source": "derived",
+    "construction": "difference in means of the decoder state at the language-token prefix position (index 1) between an <|en|> and a <|zh|> prefix, identical audio and continuation; dialogue-balanced aggregation",
+    "pairs": 125,
+    "dialogues": 20,
+    "direction_norm": 1.457616985520575,
+    "bootstrap_cosine": {
+      "G": 20,
+      "draws": 2000,
+      "seed": 20260815,
+      "cosine_mean": 0.9998828885658029,
+      "cosine_p05": 0.9996534978931306,
+      "cosine_p50": 0.9999172376971748,
+      "cosine_p95": 0.9999819864620411,
+      "cosine_min": 0.998843756175402
+    },
+    "split": "D-construct",
+    "note": "not present in the frozen store: the store's rank-1 prompt subspace was projected OUT of every v_nat"
+  }
+}

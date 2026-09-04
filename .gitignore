@@ -22,3 +22,6 @@ environment.lock.txt
 .DS_Store
 .idea/
 .vscode/
+
+# local agent state and worktrees
+.claude/

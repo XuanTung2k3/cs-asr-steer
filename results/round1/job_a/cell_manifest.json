@@ -1,0 +1,1178 @@
+[
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "ebb1ce253b99e646b3ff2b041c4ae1aa403b588f0b9885bcd9f60f1986663b8f"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "dba3a49425743ff6cc42552c808e92689f47c552ee682afac1b93bc67e9b088b"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N1_P0_global_b1_beam1_steering",
+    "config_hash": "45912d80d4ae740754a595cb2402a81d31202e753f0daedb2b9aae14e74e99da"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N1_P0_global_b2_beam1_steering",
+    "config_hash": "84c314a04c2a9e537fb4786816084323d20021b93e0b030e60b49fc876f4ea71"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "150fbcf21b1befa9cb94444ba4f42dd40a9a569747c7334d4caa664047187ee3"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "3db873cc60d06945d2679b8c1bf7a27fd9c57bd956065ab01e95aec0e6c03189"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N4_P1_global_b1_beam1_steering",
+    "config_hash": "b6fb9d0fc334a8a5004cf9f5f553d1fa1a7b1068d30f31d0ce002e2b41b57e10"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N4_P1_global_b2_beam1_steering",
+    "config_hash": "e447b5fb8859bfd5e34ca87c3a5e27a382a573f5da589fbbd7341a1f08249d5d"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "25c2d12c3a95f7c2caebc5d47d96be4e52b0a422760ea8c2498647b15346ae75"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "7af871dc2f9efee55b12bafda27b4ee7cedb1c3153a218ed4a1e09a095a986d8"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N0_P1_global_b1_beam1_steering",
+    "config_hash": "1c24d29fe3b0f6ed37a86850d1ab14b63deb38593b0460c69304340fd09a8207"
+  },
+  {
+    "stage": "coarse",
+    "layer": 8,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L8_N0_P1_global_b2_beam1_steering",
+    "config_hash": "13b254449bd9d059ab6b08e230f6fe328f8fecabf421533a36d65b2232e15042"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "45ad32a46839236e3b4eaa464cbf0c07a83ee8f88eafca8a04d35077be7d2a2a"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "64250dd48b1a43aca024119f0bde6045f7119853658d99fa7c9d28cbf5d81a10"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N1_P0_global_b1_beam1_steering",
+    "config_hash": "97543c7ef8d2eb3fec83f2daa3f4e9f288c8d28fcfb20d078a40bfb1c4f96575"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N1_P0_global_b2_beam1_steering",
+    "config_hash": "56b490ecd5546f44f2eee50a3833d7e05ed42f750501a978e7a75f303cbf1036"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "cf30478be9b708bf174d2c8edc915aca1de5ef70b0dca13a29d6959b01b6b39a"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "8baaf098535943305b3329bccd5ac32e5b6ae2340c02bf612fb52ceccfd3ce07"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N4_P1_global_b1_beam1_steering",
+    "config_hash": "bfc750b6d471bceb1cad72bcf6b0bfef7bc22588c55323702954a5a467d45321"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N4_P1_global_b2_beam1_steering",
+    "config_hash": "9d8f84021d89d2c5ee011e75915a9d23373aec6f0d8db4f2b3d2b6eb97d4364d"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "1e9f2786486c48e9e7d84525fc5ad034996315896f67eb53d43b6a32ab8c8a00"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "bd53b15c2dea2146423cd17efff5218b49048e9950a281c7b197a44509e0e7e9"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N0_P1_global_b1_beam1_steering",
+    "config_hash": "881933ac39ef13543813fbee259c06bdc4b9ccfeb1e3d451cc852a079b24c72c"
+  },
+  {
+    "stage": "coarse",
+    "layer": 12,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L12_N0_P1_global_b2_beam1_steering",
+    "config_hash": "9e65c3b93b970f7c633724658adb4f9f282f12807c345c9fa6102dd6db737cab"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "16a0ae26bce6855d05fa0b53d3671e124081b6326e7632f1b4b5a09301c5946f"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "523c50731a923396f6a67ccf9e005eb98d3c9d9f7503745f2332dfaff61ada30"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N1_P0_global_b1_beam1_steering",
+    "config_hash": "872a932e23e94edf3cb213e096129aaa87910c18ee6c5ade789151cdbf36c882"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N1_P0_global_b2_beam1_steering",
+    "config_hash": "859a1bc1bffff7abdd02e34027b9ff5f861aa85a833127955ae5eab967e1eb51"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "e16693be073abc54314077cb60fdfde1e0828c725cbd11c2029c0bd5bca47d13"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "68e47cebd6540a18368e7f294d87ed69be9ff11630ee859cf8edf20e17e23200"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N4_P1_global_b1_beam1_steering",
+    "config_hash": "9e6a49bf7f6869f209008afea4d68cc63726e17443ced6f0538db080ae8a0779"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N4_P1_global_b2_beam1_steering",
+    "config_hash": "3a162ef432bb6679b8a7443e881a09a6985e21251924ea3402a834ff92d8697e"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "2d49e6b32b6e103a1a9df8305f7a35f7dce46ee5a43fffdf7c6273e028472895"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "5e5ad97031d2c6be3571602ad12770b76f4d4ef95699f74e856f6a72d70b4b29"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N0_P1_global_b1_beam1_steering",
+    "config_hash": "2b3274dac7d11ba24552f5179cceb607795799689f0fd487fd724fee5bb8f685"
+  },
+  {
+    "stage": "coarse",
+    "layer": 16,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L16_N0_P1_global_b2_beam1_steering",
+    "config_hash": "5bd5cdd9076f6e8bd09b2275e2150a3a5f5c707a1ad33be49853ca00522fb0fc"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "e2641819addd745b363036d92e9a863e7c8e4a935d97b10c7062d4b60f37341f"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "a1e780cae0bfa6a44ad91ca49a12728afa8e60bacbf394c1090f3797db9fc9b5"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N1_P0_global_b1_beam1_steering",
+    "config_hash": "4bf62c4e6aa6ad939c9015ed7d7b70a87dbb945c0fd45cc881dcbad4580f5957"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N1_P0_global_b2_beam1_steering",
+    "config_hash": "d391dbdf6094f21509ce6a8c720003834d11f9994ec49deaa5c4e81c1679d618"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "33c733bc6c06230b2006e26ef9be22b4d3d0de525ac61052899603b77b39279d"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "d906f6f49d0eb778ecf1542ce34d4426d25bf3ae0db2305ee22910c4e33aff86"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N4_P1_global_b1_beam1_steering",
+    "config_hash": "44ff211e2830adc322160535ab4111a23d5407ca7332b549a7027fa447ff5e09"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N4_P1_global_b2_beam1_steering",
+    "config_hash": "9fb24937a0246520949c1b431591487328984a5ffc7c4a6e72959c6a929711ef"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "91a58eb80fa5379583876d36c43279011d99cc0cf751e9a38bfea005e93ebbd2"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "78e10268bd4e0f34aa694e292a12442f2f65d1ad7c35253778445207c02e5a73"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N0_P1_global_b1_beam1_steering",
+    "config_hash": "078274f8da8c3c5e9542b5bca3f9b56efb4bdbba1b9b3df60760fbc0cd1097be"
+  },
+  {
+    "stage": "coarse",
+    "layer": 20,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L20_N0_P1_global_b2_beam1_steering",
+    "config_hash": "b5d76a8971c40df2165df64a4f5a68ffcb86708f755a49858232b1e9e9037951"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "cfdec359c843e66d7b98caf73bdd8441c6cc2d337b114a35d80321ce6b605047"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "d41806f38ef382442dfd821140771533bcfae3d77ba35e5d2502570ad3a69829"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N1_P0_global_b1_beam1_steering",
+    "config_hash": "5884d7ca139e7c563c8a444eb105c1bd3927dc2599c37ee6da5f1b24629df065"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N1_P0_global_b2_beam1_steering",
+    "config_hash": "df123076a1d7880e0037d47c041084525e21695b0bae1c2c526dbc042904bb18"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "42e303e33c2212b742fb24f370af17e8137f221ea427e55621e2f475631b4315"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "3f6db41cdb447e6a52b2eb4f353caf850aaed47acc21711f3fdae020125e3dd1"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N4_P1_global_b1_beam1_steering",
+    "config_hash": "1226dacaeec9962d4bb5dca8ba5ad5096d8fb9da308aacc1aaed2ad65e82833a"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N4_P1_global_b2_beam1_steering",
+    "config_hash": "260ae77e902f7ef95275959bacf29e631b7ee09caee9fa513c049c85ec145186"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "272acc8b7d3cbe1a1fdd634288ac7230f0672af624e522134c9e54dae6db2e15"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "a3002c8323a51472aa91246d9cf523fa5428884b4447291dbb5f4f627318a083"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N0_P1_global_b1_beam1_steering",
+    "config_hash": "a2e79e08e0b945cf15de33ea2a5f116cd848cc59e73c22d97c2ebb955ce713bb"
+  },
+  {
+    "stage": "coarse",
+    "layer": 22,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L22_N0_P1_global_b2_beam1_steering",
+    "config_hash": "0e0cc861f44f6dbe29ebee00d228d1a3d8fb98722999214c55d26de75a764736"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "94503706befd639f5d86ae4553aff22e133d18e11f6022178595d099eb75cd7e"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "4ded3217a81f56ad3d0768b24a57fee750468b070e295fa0fa0c9c0d2a8f897c"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N1_P0_global_b1_beam1_steering",
+    "config_hash": "d9a8b443677da004840fd44c664d4fa96a356f8d0d9ace5ec603d5d49c0e8dc8"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N1_P0_global_b2_beam1_steering",
+    "config_hash": "3f646a925d0bfb740b13fad39ed3f778f3486daa66b59627f7fb5d4776a3b8b3"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "9f0df36ea8a477a9c71243f2afdf8ec486e5074b1bc1a12bfe7ab5054cb0d875"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "f3f0dcdaab7f71ac1b5175feb6f990abfb86a3c0d19d9e3188e56002d2f3ca7a"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N4_P1_global_b1_beam1_steering",
+    "config_hash": "3534ffb3db46d5af5b0ae984751e413ac503688ea703a326784af8908c0a1188"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N4_P1_global_b2_beam1_steering",
+    "config_hash": "2360033f8d166b6fa6346a2ba8d3ca131c01f499745ea2e11761bc74b86f34de"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "4fa57ce30324d879c5bf9fdf89ee8f36f120df54ceda6a79b3a66ca4d395849f"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "53a8902f731582749268b7b565d3d67b7a7c01bb238fcc84c4e1ba773455681a"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N0_P1_global_b1_beam1_steering",
+    "config_hash": "d70b1838860eb0f3eb994240642ad0a120efaa501b7818452bb8d5b8fd7dec8b"
+  },
+  {
+    "stage": "coarse",
+    "layer": 24,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L24_N0_P1_global_b2_beam1_steering",
+    "config_hash": "e51b717af37c59bba8657bc3ae131234f1a318f4820ff01c64641b86edbe6805"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N1_P0_oracle_local_b1_beam1_steering",
+    "config_hash": "4f4ae39365e77fc129da7520c30b5a2f407ab5f665a5e6f1d185ec335d7ef354"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N1_P0_oracle_local_b2_beam1_steering",
+    "config_hash": "5b05e93f0268a324a8513d6c41148363f12ac88bc45bb5b1f477e02cbeec86a2"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N1_P0_global_b1_beam1_steering",
+    "config_hash": "0f497f9aa1452188418a2d5899b27b09769e043e7a64758dff69596cbb01c0fc"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      1.0,
+      0.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N1_P0_global_b2_beam1_steering",
+    "config_hash": "16487920988fb0e39eb6d10c006bb38b3d7b4f5d69965b694480576c181d5dac"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N4_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "cb456a66e68fa099f2ced5d6b58a3788debfe3393203cd56ac2a19fcc0bca1b0"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N4_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "70df45c4fbc8cbe001a08f944ba9453dbcb5af1124db972d47637ce332cf4221"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N4_P1_global_b1_beam1_steering",
+    "config_hash": "be6f96198787b865174ab548e86473434ca38397bdd9f02e9fdacfad0ae0c638"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      4.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N4_P1_global_b2_beam1_steering",
+    "config_hash": "cdc08fd4e6be5fd20985140a3968c7c4b64abc59e2879bc9f082f4ea60660d83"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N0_P1_oracle_local_b1_beam1_steering",
+    "config_hash": "6e6e3c39842678f2bf5c10978038d8707ddc39009dc85fcba3e93b8ca15b1ca5"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "oracle_local",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N0_P1_oracle_local_b2_beam1_steering",
+    "config_hash": "a3ce6e0b1c9e4d813de8c8e1a990f3fed56e192034a0d4759a62cd039d39b062"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 1.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N0_P1_global_b1_beam1_steering",
+    "config_hash": "a6399b1d5f4f61347bd6fdb344416d5b1518e78906fed36824193b2a67ea1562"
+  },
+  {
+    "stage": "coarse",
+    "layer": 26,
+    "mixture": [
+      0.0,
+      1.0
+    ],
+    "scope": "global",
+    "beta": 2.0,
+    "beam": 1,
+    "condition": "steering",
+    "cell_id": "coarse_L26_N0_P1_global_b2_beam1_steering",
+    "config_hash": "d95dfc0d247e484fad9102b55cad19717d9394b2680e8566436b8e699bfbf802"
+  }
+]

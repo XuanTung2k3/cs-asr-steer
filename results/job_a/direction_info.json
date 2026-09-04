@@ -1,0 +1,18 @@
+{
+  "decoder_layer": 24,
+  "v_nat_source": "loaded",
+  "v_nat_norm_before_unit": 3.871718541066646,
+  "v_prompt_source": "derived",
+  "v_prompt_norm_before_unit": 1.457616985520575,
+  "combination": {
+    "mode": "weighted",
+    "weight_nat": 2.0,
+    "weight_prompt": 0.5,
+    "cos_v_nat_v_prompt": 0.03801929268433357,
+    "norm_before_unit": 2.0799131232567407
+  },
+  "weight_nat": 2.0,
+  "weight_prompt": 0.5,
+  "alpha": 2.0,
+  "beam_size": 5
+}

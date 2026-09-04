@@ -1,0 +1,2115 @@
+{
+  "stage": "D_ext",
+  "population": {
+    "split": "D-dev-select",
+    "utterances": 300,
+    "dialogues": 20,
+    "spans": 482,
+    "floor_ms": 400.0,
+    "targets": 489,
+    "utterances_with_targets": 116
+  },
+  "started_at": 1787102863.7253113,
+  "preflight": {
+    "track": "A",
+    "passed": true,
+    "smoke": false,
+    "checks": [
+      {
+        "check": "6.matched_energy_invariance",
+        "passed": true,
+        "observed": {
+          "1": 4.0,
+          "10": 4.0,
+          "100": 4.0,
+          "1000": 4.0
+        },
+        "expected": {
+          "1": 4.0,
+          "10": 4.0,
+          "100": 4.0,
+          "1000": 4.0
+        },
+        "detail": "E_total = alpha_eff^2 ||v||^2 |S| with alpha_eff = alpha / sqrt(|S|)"
+      },
+      {
+        "check": "4.encoder_padding.frame_count",
+        "passed": true,
+        "observed": "0 mismatches",
+        "expected": "0 mismatches",
+        "detail": "valid_frames == ceil(duration*50) clamped to 1500"
+      },
+      {
+        "check": "4.encoder_padding.short_utterances_masked",
+        "passed": true,
+        "observed": "273/300 utterances below 1500 frames",
+        "expected": ">0 utterances below 1500 frames",
+        "detail": "mean valid_frame_ratio 0.5456; without this mask roughly 45% of injected encoder energy would land in padding"
+      },
+      {
+        "check": "1.6.prompt_at_encoder_raises",
+        "passed": true,
+        "observed": "PromptDirectionAtEncoderError",
+        "expected": "PromptDirectionAtEncoderError",
+        "detail": "v_prompt requested at an encoder site (layer 15). Whisper's encoder never receives the language token; there is no such object. Refusing to produce a number."
+      },
+      {
+        "check": "1.alpha_zero[encoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[decoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[decoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder+decoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder+decoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "3.hook_fires.encoder",
+        "passed": true,
+        "observed": 2,
+        "expected": 2,
+        "detail": "1 encoder forwards x 2 layers"
+      },
+      {
+        "check": "3.hook_fires.decoder",
+        "passed": true,
+        "observed": 123,
+        "expected": 123,
+        "detail": "41 decoder forwards x 3 layers"
+      },
+      {
+        "check": "5.beam_coverage",
+        "passed": true,
+        "observed": {
+          "steered_positions": 800,
+          "num_beams": 5,
+          "remainder": 0
+        },
+        "expected": "steered_positions > 0 and divisible by num_beams",
+        "detail": "with num_beams=k the decoder batch is B*k and the hook touches every row, so positions stay synchronised across beams"
+      },
+      {
+        "check": "2.reproduce_prior.rows",
+        "passed": true,
+        "observed": 489,
+        "expected": 489,
+        "detail": ""
+      },
+      {
+        "check": "2.reproduce_prior.corrections",
+        "passed": true,
+        "observed": 7,
+        "expected": 7,
+        "detail": "correcting dialogues ['CSD0014', 'CSD0502']; prior programme had ['CSD0014', 'CSD0502'] (177s)"
+      }
+    ],
+    "n_passed": 15,
+    "n_total": 15
+  },
+  "determinism": {
+    "layer": 16,
+    "alpha": 1.0,
+    "checks": [
+      {
+        "num_beams": 1,
+        "attempt": 1,
+        "passed": true,
+        "n_utterances": 300,
+        "hash_run1_inprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+        "hash_run2_inprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+        "hash_run3_subprocess": "ac4bb22f2a85767e6df7b417b3fd7cf0b6aae77b12219f6164e9b23dc5d15454",
+        "n_diff_inprocess_pair": 0,
+        "n_diff_subprocess_pair": 0,
+        "sample_diffs": [],
+        "elapsed_sec": 133.55656526051462,
+        "deterministic_settings_applied": false
+      },
+      {
+        "num_beams": 5,
+        "attempt": 1,
+        "passed": true,
+        "n_utterances": 300,
+        "hash_run1_inprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+        "hash_run2_inprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+        "hash_run3_subprocess": "275fbfb9e5c44b00f82b9b84a4ac3cc5e1268e55f9a1b8b8e0a30547caa76f31",
+        "n_diff_inprocess_pair": 0,
+        "n_diff_subprocess_pair": 0,
+        "sample_diffs": [],
+        "elapsed_sec": 258.3369400482625,
+        "deterministic_settings_applied": false
+      }
+    ],
+    "passed": true
+  },
+  "baselines": {
+    "C00": {
+      "scored_utterances": 300,
+      "PIER": 0.4731040564373898,
+      "num_poi": 2268,
+      "num_poi_errors": 1073,
+      "poi_per_category": {
+        "wrong_language_substitution": 339,
+        "phonetic_transliteration_or_script": 36,
+        "same_language_substitution": 131,
+        "deletion": 531,
+        "boundary_error": 29,
+        "insertion_near_poi": 0,
+        "other": 7
+      },
+      "MER": 0.25818333036297747,
+      "WER": 0.8554540569586244
+    },
+    "C00_beam5": {
+      "scored_utterances": 300,
+      "PIER": 0.4246031746031746,
+      "num_poi": 2268,
+      "num_poi_errors": 963,
+      "poi_per_category": {
+        "wrong_language_substitution": 280,
+        "phonetic_transliteration_or_script": 23,
+        "same_language_substitution": 141,
+        "deletion": 481,
+        "boundary_error": 32,
+        "insertion_near_poi": 0,
+        "other": 6
+      },
+      "MER": 0.20210301194083052,
+      "WER": 0.8417517463729178
+    }
+  },
+  "phase1_n_rows": 70,
+  "small_alpha_sanity": {
+    "threshold": 0.05,
+    "entries": [
+      {
+        "layer": 4,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 4.75,
+        "ok": true
+      },
+      {
+        "layer": 4,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 4.9375,
+        "ok": true
+      },
+      {
+        "layer": 8,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 6.96875,
+        "ok": true
+      },
+      {
+        "layer": 8,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 6.3125,
+        "ok": true
+      },
+      {
+        "layer": 12,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 6.71875,
+        "ok": true
+      },
+      {
+        "layer": 12,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 6.5,
+        "ok": true
+      },
+      {
+        "layer": 16,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 8.125,
+        "ok": true
+      },
+      {
+        "layer": 16,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 7.5625,
+        "ok": true
+      },
+      {
+        "layer": 20,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 8.25,
+        "ok": true
+      },
+      {
+        "layer": 20,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 7.8125,
+        "ok": true
+      },
+      {
+        "layer": 24,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 9.4375,
+        "ok": true
+      },
+      {
+        "layer": 24,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 9.125,
+        "ok": true
+      },
+      {
+        "layer": 28,
+        "num_beams": 1,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 13.4375,
+        "ok": true
+      },
+      {
+        "layer": 28,
+        "num_beams": 5,
+        "delta_l2_over_activation_norm": 0.023211917272131483,
+        "act_norm_mean": 14.875,
+        "ok": true
+      }
+    ],
+    "passed": true,
+    "failing": []
+  },
+  "s_audit": {
+    "per_beam_utterance_hits": {
+      "1": 114,
+      "5": 113
+    },
+    "planned_per_layer": 116,
+    "n_cells": 112,
+    "n_deviations": 1,
+    "deviations": [
+      {
+        "cell_id": "D_ext_p2b:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.707107:D4-8",
+        "S_planned": 232,
+        "S_observed": 232,
+        "num_beams": 1,
+        "expected_observed": 228
+      }
+    ],
+    "passed": false
+  },
+  "analysis": {
+    "heatmaps": {
+      "delta_mer_beams1": {
+        "num_beams": 1,
+        "field": "delta_mer",
+        "layers": [
+          4,
+          8,
+          12,
+          16,
+          20,
+          24,
+          28
+        ],
+        "alphas": [
+          0.25,
+          0.5,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "values": [
+          [
+            -0.006772411334877937,
+            -0.0065347828669874986,
+            -0.0051090120596447575,
+            -0.005049604942672148,
+            -0.004990197825699538
+          ],
+          [
+            -0.006713004217905327,
+            -0.0032673914334937493,
+            -0.006594189983960108,
+            -0.0065347828669874986,
+            -0.0011287352224796932
+          ],
+          [
+            -0.0068318184518505465,
+            0.0004158498188082671,
+            -0.003029762965603311,
+            -0.0028515416146854267,
+            -0.0029109487316580918
+          ],
+          [
+            -0.006713004217905327,
+            -0.00469316224083649,
+            0.0005346640527534863,
+            -0.0026139131467949883,
+            -0.0019010277431236178
+          ],
+          [
+            -0.004930790708726929,
+            -0.004930790708726929,
+            -0.006237747282124395,
+            0.003089170082575865,
+            0.0032673914334936938
+          ],
+          [
+            0.0004158498188082671,
+            0.0004752569357808767,
+            -0.001069328105507028,
+            -0.004158498188082949,
+            0.001069328105507028
+          ],
+          [
+            0.00017822135091782876,
+            0.0004158498188082671,
+            0.002970355848630646,
+            0.0016039921582605698,
+            -0.005465454761480415
+          ]
+        ]
+      },
+      "delta_mer_beams5": {
+        "num_beams": 5,
+        "field": "delta_mer",
+        "layers": [
+          4,
+          8,
+          12,
+          16,
+          20,
+          24,
+          28
+        ],
+        "alphas": [
+          0.25,
+          0.5,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "values": [
+          [
+            -5.9407116972609586e-05,
+            0.0002970355848630757,
+            0.00011881423394524693,
+            0.0002970355848630757,
+            -0.000534664052753514
+          ],
+          [
+            -5.9407116972609586e-05,
+            -0.00029703558486304793,
+            0.0002970355848630757,
+            -5.9407116972609586e-05,
+            0.00041584981880829486
+          ],
+          [
+            -0.00023762846789043834,
+            0.0002970355848630757,
+            -0.001069328105507028,
+            -0.0007722925206439524,
+            -0.0005940711697261236
+          ],
+          [
+            -0.000534664052753514,
+            0.0,
+            0.0,
+            0.0010099209885344462,
+            0.0005346640527535418
+          ],
+          [
+            -0.00041584981880829486,
+            -0.00047525693578090444,
+            0.0008316996376165897,
+            0.0005346640527535418,
+            0.0005346640527535418
+          ],
+          [
+            0.00011881423394524693,
+            -0.00023762846789043834,
+            0.0008911067545891993,
+            0.002910948731658064,
+            0.001841620626151036
+          ],
+          [
+            0.0,
+            0.0002376284678904661,
+            0.0005346640527535418,
+            0.002910948731658064,
+            0.0020792490940414743
+          ]
+        ]
+      },
+      "gain_b5_minus_gain_b1": {
+        "field": "gain_b5_minus_gain_b1",
+        "layers": [
+          4,
+          8,
+          12,
+          16,
+          20,
+          24,
+          28
+        ],
+        "alphas": [
+          0.25,
+          0.5,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "values": [
+          [
+            0.006172839506172811,
+            0.0044091710758377145,
+            0.0,
+            0.0017636684303350414,
+            -0.002645502645502673
+          ],
+          [
+            0.003086419753086378,
+            -0.0008818342151675762,
+            0.005291005291005235,
+            -0.00044091710758381586,
+            0.003086419753086378
+          ],
+          [
+            0.0022045855379188573,
+            0.0017636684303350414,
+            -0.0022045855379188573,
+            -0.006172839506172867,
+            -0.005291005291005346
+          ],
+          [
+            0.0008818342151675207,
+            0.0017636684303350414,
+            -0.0030864197530864335,
+            -0.0008818342151675762,
+            0.001763668430335097
+          ],
+          [
+            0.005291005291005235,
+            -0.001763668430335097,
+            0.0057319223985889955,
+            0.0008818342151675207,
+            0.0022045855379188017
+          ],
+          [
+            -0.00044091710758381586,
+            -0.0013227513227513366,
+            0.003968253968253954,
+            0.011022927689594342,
+            0.009700176366843005
+          ],
+          [
+            0.001322751322751281,
+            -5.551115123125783e-17,
+            -0.002645502645502673,
+            0.004850088183421475,
+            0.006172839506172811
+          ]
+        ]
+      }
+    },
+    "plateau_scores": {
+      "1": [
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D28",
+          "layer": 28,
+          "alpha": 0.5,
+          "delta_mer": 0.0004158498188082671,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 0.25,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D20",
+          "layer": 20,
+          "alpha": 3.0,
+          "delta_mer": 0.0032673914334936938,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 16,
+              "alpha": 3.0,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D24",
+          "layer": 24,
+          "alpha": 0.25,
+          "delta_mer": 0.0004158498188082671,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 0.25,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D24",
+          "layer": 24,
+          "alpha": 0.5,
+          "delta_mer": 0.0004752569357808767,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 0.25,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "positive": false
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D28",
+          "layer": 28,
+          "alpha": 0.25,
+          "delta_mer": 0.00017822135091782876,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 0.25,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28",
+          "layer": 28,
+          "alpha": 1.0,
+          "delta_mer": 0.002970355848630646,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20",
+          "layer": 20,
+          "alpha": 2.0,
+          "delta_mer": 0.003089170082575865,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 16,
+              "alpha": 2.0,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24",
+          "layer": 24,
+          "alpha": 3.0,
+          "delta_mer": 0.001069328105507028,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 3.0,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": false
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D28",
+          "layer": 28,
+          "alpha": 2.0,
+          "delta_mer": 0.0016039921582605698,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 3.0,
+              "positive": false
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D12",
+          "layer": 12,
+          "alpha": 0.5,
+          "delta_mer": 0.0004158498188082671,
+          "plateau_score": 0,
+          "neighbours": [
+            {
+              "layer": 8,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 16,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 12,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 12,
+              "alpha": 1.0,
+              "positive": false
+            }
+          ],
+          "isolated": true
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16",
+          "layer": 16,
+          "alpha": 1.0,
+          "delta_mer": 0.0005346640527534863,
+          "plateau_score": 0,
+          "neighbours": [
+            {
+              "layer": 12,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 16,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 16,
+              "alpha": 2.0,
+              "positive": false
+            }
+          ],
+          "isolated": true
+        }
+      ],
+      "5": [
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20_b5",
+          "layer": 20,
+          "alpha": 2.0,
+          "delta_mer": 0.0005346640527535418,
+          "plateau_score": 4,
+          "neighbours": [
+            {
+              "layer": 16,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 20,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D24_b5",
+          "layer": 24,
+          "alpha": 2.0,
+          "delta_mer": 0.002910948731658064,
+          "plateau_score": 4,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D4_b5",
+          "layer": 4,
+          "alpha": 1.0,
+          "delta_mer": 0.00011881423394524693,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 8,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 4,
+              "alpha": 0.5,
+              "positive": true
+            },
+            {
+              "layer": 4,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D20_b5",
+          "layer": 20,
+          "alpha": 3.0,
+          "delta_mer": 0.0005346640527535418,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 16,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D24_b5",
+          "layer": 24,
+          "alpha": 1.0,
+          "delta_mer": 0.0008911067545891993,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24_b5",
+          "layer": 24,
+          "alpha": 3.0,
+          "delta_mer": 0.001841620626151036,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28_b5",
+          "layer": 28,
+          "alpha": 1.0,
+          "delta_mer": 0.0005346640527535418,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D28_b5",
+          "layer": 28,
+          "alpha": 2.0,
+          "delta_mer": 0.002910948731658064,
+          "plateau_score": 3,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 3.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D16_b5",
+          "layer": 16,
+          "alpha": 2.0,
+          "delta_mer": 0.0010099209885344462,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 12,
+              "alpha": 2.0,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "positive": true
+            },
+            {
+              "layer": 16,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 16,
+              "alpha": 3.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D16_b5",
+          "layer": 16,
+          "alpha": 3.0,
+          "delta_mer": 0.0005346640527535418,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 12,
+              "alpha": 3.0,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 16,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D20_b5",
+          "layer": 20,
+          "alpha": 1.0,
+          "delta_mer": 0.0008316996376165897,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 16,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 20,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D28_b5",
+          "layer": 28,
+          "alpha": 3.0,
+          "delta_mer": 0.0020792490940414743,
+          "plateau_score": 2,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "positive": true
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D4_b5",
+          "layer": 4,
+          "alpha": 0.5,
+          "delta_mer": 0.0002970355848630757,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 8,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 4,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 4,
+              "alpha": 1.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D4_b5",
+          "layer": 4,
+          "alpha": 2.0,
+          "delta_mer": 0.0002970355848630757,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 8,
+              "alpha": 2.0,
+              "positive": false
+            },
+            {
+              "layer": 4,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 4,
+              "alpha": 3.0,
+              "positive": false
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D8_b5",
+          "layer": 8,
+          "alpha": 1.0,
+          "delta_mer": 0.0002970355848630757,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 4,
+              "alpha": 1.0,
+              "positive": true
+            },
+            {
+              "layer": 12,
+              "alpha": 1.0,
+              "positive": false
+            },
+            {
+              "layer": 8,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 8,
+              "alpha": 2.0,
+              "positive": false
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D28_b5",
+          "layer": 28,
+          "alpha": 0.5,
+          "delta_mer": 0.0002376284678904661,
+          "plateau_score": 1,
+          "neighbours": [
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "positive": true
+            }
+          ],
+          "isolated": false
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D8_b5",
+          "layer": 8,
+          "alpha": 3.0,
+          "delta_mer": 0.00041584981880829486,
+          "plateau_score": 0,
+          "neighbours": [
+            {
+              "layer": 4,
+              "alpha": 3.0,
+              "positive": false
+            },
+            {
+              "layer": 12,
+              "alpha": 3.0,
+              "positive": false
+            },
+            {
+              "layer": 8,
+              "alpha": 2.0,
+              "positive": false
+            }
+          ],
+          "isolated": true
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D12_b5",
+          "layer": 12,
+          "alpha": 0.5,
+          "delta_mer": 0.0002970355848630757,
+          "plateau_score": 0,
+          "neighbours": [
+            {
+              "layer": 8,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 16,
+              "alpha": 0.5,
+              "positive": false
+            },
+            {
+              "layer": 12,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 12,
+              "alpha": 1.0,
+              "positive": false
+            }
+          ],
+          "isolated": true
+        },
+        {
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D24_b5",
+          "layer": 24,
+          "alpha": 0.25,
+          "delta_mer": 0.00011881423394524693,
+          "plateau_score": 0,
+          "neighbours": [
+            {
+              "layer": 20,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 28,
+              "alpha": 0.25,
+              "positive": false
+            },
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "positive": false
+            }
+          ],
+          "isolated": true
+        }
+      ]
+    },
+    "connected_components": {
+      "1": [
+        {
+          "num_beams": 1,
+          "size": 6,
+          "layer_range": [
+            24,
+            28
+          ],
+          "layers": [
+            24,
+            28
+          ],
+          "alpha_range": [
+            0.25,
+            2.0
+          ],
+          "alphas": [
+            0.25,
+            0.5,
+            1.0,
+            2.0
+          ],
+          "mean_delta_mer": 0.0010099209885344091,
+          "members": [
+            {
+              "layer": 24,
+              "alpha": 0.25,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D24",
+              "delta_mer": 0.0004158498188082671
+            },
+            {
+              "layer": 24,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D24",
+              "delta_mer": 0.0004752569357808767
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D28",
+              "delta_mer": 0.0004158498188082671
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28",
+              "delta_mer": 0.002970355848630646
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D28",
+              "delta_mer": 0.0016039921582605698
+            },
+            {
+              "layer": 28,
+              "alpha": 0.25,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D28",
+              "delta_mer": 0.00017822135091782876
+            }
+          ]
+        },
+        {
+          "num_beams": 1,
+          "size": 3,
+          "layer_range": [
+            20,
+            24
+          ],
+          "layers": [
+            20,
+            24
+          ],
+          "alpha_range": [
+            2.0,
+            3.0
+          ],
+          "alphas": [
+            2.0,
+            3.0
+          ],
+          "mean_delta_mer": 0.002475296540525529,
+          "members": [
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20",
+              "delta_mer": 0.003089170082575865
+            },
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D20",
+              "delta_mer": 0.0032673914334936938
+            },
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24",
+              "delta_mer": 0.001069328105507028
+            }
+          ]
+        },
+        {
+          "num_beams": 1,
+          "size": 1,
+          "layer_range": [
+            12,
+            12
+          ],
+          "layers": [
+            12
+          ],
+          "alpha_range": [
+            0.5,
+            0.5
+          ],
+          "alphas": [
+            0.5
+          ],
+          "mean_delta_mer": 0.0004158498188082671,
+          "members": [
+            {
+              "layer": 12,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D12",
+              "delta_mer": 0.0004158498188082671
+            }
+          ]
+        },
+        {
+          "num_beams": 1,
+          "size": 1,
+          "layer_range": [
+            16,
+            16
+          ],
+          "layers": [
+            16
+          ],
+          "alpha_range": [
+            1.0,
+            1.0
+          ],
+          "alphas": [
+            1.0
+          ],
+          "mean_delta_mer": 0.0005346640527534863,
+          "members": [
+            {
+              "layer": 16,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16",
+              "delta_mer": 0.0005346640527534863
+            }
+          ]
+        }
+      ],
+      "5": [
+        {
+          "num_beams": 5,
+          "size": 12,
+          "layer_range": [
+            16,
+            28
+          ],
+          "layers": [
+            16,
+            20,
+            24,
+            28
+          ],
+          "alpha_range": [
+            0.5,
+            3.0
+          ],
+          "alphas": [
+            0.5,
+            1.0,
+            2.0,
+            3.0
+          ],
+          "mean_delta_mer": 0.0012376482702627922,
+          "members": [
+            {
+              "layer": 16,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D16_b5",
+              "delta_mer": 0.0010099209885344462
+            },
+            {
+              "layer": 16,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D16_b5",
+              "delta_mer": 0.0005346640527535418
+            },
+            {
+              "layer": 20,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D20_b5",
+              "delta_mer": 0.0005346640527535418
+            },
+            {
+              "layer": 24,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24_b5",
+              "delta_mer": 0.001841620626151036
+            },
+            {
+              "layer": 24,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D24_b5",
+              "delta_mer": 0.002910948731658064
+            },
+            {
+              "layer": 24,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D24_b5",
+              "delta_mer": 0.0008911067545891993
+            },
+            {
+              "layer": 28,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28_b5",
+              "delta_mer": 0.0005346640527535418
+            },
+            {
+              "layer": 28,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D28_b5",
+              "delta_mer": 0.0002376284678904661
+            },
+            {
+              "layer": 20,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D20_b5",
+              "delta_mer": 0.0008316996376165897
+            },
+            {
+              "layer": 28,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D28_b5",
+              "delta_mer": 0.002910948731658064
+            },
+            {
+              "layer": 28,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D28_b5",
+              "delta_mer": 0.0020792490940414743
+            },
+            {
+              "layer": 20,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20_b5",
+              "delta_mer": 0.0005346640527535418
+            }
+          ]
+        },
+        {
+          "num_beams": 5,
+          "size": 4,
+          "layer_range": [
+            4,
+            8
+          ],
+          "layers": [
+            4,
+            8
+          ],
+          "alpha_range": [
+            0.5,
+            2.0
+          ],
+          "alphas": [
+            0.5,
+            1.0,
+            2.0
+          ],
+          "mean_delta_mer": 0.0002524802471336185,
+          "members": [
+            {
+              "layer": 4,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D4_b5",
+              "delta_mer": 0.0002970355848630757
+            },
+            {
+              "layer": 4,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D4_b5",
+              "delta_mer": 0.00011881423394524693
+            },
+            {
+              "layer": 4,
+              "alpha": 2.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D4_b5",
+              "delta_mer": 0.0002970355848630757
+            },
+            {
+              "layer": 8,
+              "alpha": 1.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D8_b5",
+              "delta_mer": 0.0002970355848630757
+            }
+          ]
+        },
+        {
+          "num_beams": 5,
+          "size": 1,
+          "layer_range": [
+            8,
+            8
+          ],
+          "layers": [
+            8
+          ],
+          "alpha_range": [
+            3.0,
+            3.0
+          ],
+          "alphas": [
+            3.0
+          ],
+          "mean_delta_mer": 0.00041584981880829486,
+          "members": [
+            {
+              "layer": 8,
+              "alpha": 3.0,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D8_b5",
+              "delta_mer": 0.00041584981880829486
+            }
+          ]
+        },
+        {
+          "num_beams": 5,
+          "size": 1,
+          "layer_range": [
+            12,
+            12
+          ],
+          "layers": [
+            12
+          ],
+          "alpha_range": [
+            0.5,
+            0.5
+          ],
+          "alphas": [
+            0.5
+          ],
+          "mean_delta_mer": 0.0002970355848630757,
+          "members": [
+            {
+              "layer": 12,
+              "alpha": 0.5,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D12_b5",
+              "delta_mer": 0.0002970355848630757
+            }
+          ]
+        },
+        {
+          "num_beams": 5,
+          "size": 1,
+          "layer_range": [
+            24,
+            24
+          ],
+          "layers": [
+            24
+          ],
+          "alpha_range": [
+            0.25,
+            0.25
+          ],
+          "alphas": [
+            0.25
+          ],
+          "mean_delta_mer": 0.00011881423394524693,
+          "members": [
+            {
+              "layer": 24,
+              "alpha": 0.25,
+              "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D24_b5",
+              "delta_mer": 0.00011881423394524693
+            }
+          ]
+        }
+      ]
+    },
+    "largest_component": {
+      "num_beams": 5,
+      "size": 12,
+      "layer_range": [
+        16,
+        28
+      ],
+      "layers": [
+        16,
+        20,
+        24,
+        28
+      ],
+      "alpha_range": [
+        0.5,
+        3.0
+      ],
+      "alphas": [
+        0.5,
+        1.0,
+        2.0,
+        3.0
+      ],
+      "mean_delta_mer": 0.0012376482702627922,
+      "members": [
+        {
+          "layer": 16,
+          "alpha": 2.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D16_b5",
+          "delta_mer": 0.0010099209885344462
+        },
+        {
+          "layer": 16,
+          "alpha": 3.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D16_b5",
+          "delta_mer": 0.0005346640527535418
+        },
+        {
+          "layer": 20,
+          "alpha": 3.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D20_b5",
+          "delta_mer": 0.0005346640527535418
+        },
+        {
+          "layer": 24,
+          "alpha": 3.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24_b5",
+          "delta_mer": 0.001841620626151036
+        },
+        {
+          "layer": 24,
+          "alpha": 2.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D24_b5",
+          "delta_mer": 0.002910948731658064
+        },
+        {
+          "layer": 24,
+          "alpha": 1.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D24_b5",
+          "delta_mer": 0.0008911067545891993
+        },
+        {
+          "layer": 28,
+          "alpha": 1.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28_b5",
+          "delta_mer": 0.0005346640527535418
+        },
+        {
+          "layer": 28,
+          "alpha": 0.5,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D28_b5",
+          "delta_mer": 0.0002376284678904661
+        },
+        {
+          "layer": 20,
+          "alpha": 1.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D20_b5",
+          "delta_mer": 0.0008316996376165897
+        },
+        {
+          "layer": 28,
+          "alpha": 2.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D28_b5",
+          "delta_mer": 0.002910948731658064
+        },
+        {
+          "layer": 28,
+          "alpha": 3.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D28_b5",
+          "delta_mer": 0.0020792490940414743
+        },
+        {
+          "layer": 20,
+          "alpha": 2.0,
+          "cell_id": "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20_b5",
+          "delta_mer": 0.0005346640527535418
+        }
+      ],
+      "beam_setting": 5
+    },
+    "q2_paired_analysis": {
+      "pairs": [
+        {
+          "layer": 4,
+          "alpha": 0.25,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": 0.003527336860670194,
+          "difference": 0.006172839506172811
+        },
+        {
+          "layer": 4,
+          "alpha": 0.5,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": 0.001763668430335097,
+          "difference": 0.0044091710758377145
+        },
+        {
+          "layer": 4,
+          "alpha": 1.0,
+          "gain_b1": 0.0,
+          "gain_b5": 0.0,
+          "difference": 0.0
+        },
+        {
+          "layer": 4,
+          "alpha": 2.0,
+          "gain_b1": 0.00044091710758381586,
+          "gain_b5": 0.0022045855379188573,
+          "difference": 0.0017636684303350414
+        },
+        {
+          "layer": 4,
+          "alpha": 3.0,
+          "gain_b1": 0.00044091710758381586,
+          "gain_b5": -0.0022045855379188573,
+          "difference": -0.002645502645502673
+        },
+        {
+          "layer": 8,
+          "alpha": 0.25,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": 0.00044091710758376035,
+          "difference": 0.003086419753086378
+        },
+        {
+          "layer": 8,
+          "alpha": 0.5,
+          "gain_b1": 0.0,
+          "gain_b5": -0.0008818342151675762,
+          "difference": -0.0008818342151675762
+        },
+        {
+          "layer": 8,
+          "alpha": 1.0,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": 0.0026455026455026176,
+          "difference": 0.005291005291005235
+        },
+        {
+          "layer": 8,
+          "alpha": 2.0,
+          "gain_b1": -0.00044091710758376035,
+          "gain_b5": -0.0008818342151675762,
+          "difference": -0.00044091710758381586
+        },
+        {
+          "layer": 8,
+          "alpha": 3.0,
+          "gain_b1": -0.00044091710758376035,
+          "gain_b5": 0.0026455026455026176,
+          "difference": 0.003086419753086378
+        },
+        {
+          "layer": 12,
+          "alpha": 0.25,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": -0.00044091710758376035,
+          "difference": 0.0022045855379188573
+        },
+        {
+          "layer": 12,
+          "alpha": 0.5,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": -0.0008818342151675762,
+          "difference": 0.0017636684303350414
+        },
+        {
+          "layer": 12,
+          "alpha": 1.0,
+          "gain_b1": 0.0,
+          "gain_b5": -0.0022045855379188573,
+          "difference": -0.0022045855379188573
+        },
+        {
+          "layer": 12,
+          "alpha": 2.0,
+          "gain_b1": 0.0022045855379189128,
+          "gain_b5": -0.003968253968253954,
+          "difference": -0.006172839506172867
+        },
+        {
+          "layer": 12,
+          "alpha": 3.0,
+          "gain_b1": 0.0022045855379189128,
+          "gain_b5": -0.0030864197530864335,
+          "difference": -0.005291005291005346
+        },
+        {
+          "layer": 16,
+          "alpha": 0.25,
+          "gain_b1": -0.0026455026455026176,
+          "gain_b5": -0.001763668430335097,
+          "difference": 0.0008818342151675207
+        },
+        {
+          "layer": 16,
+          "alpha": 0.5,
+          "gain_b1": -0.0008818342151675207,
+          "gain_b5": 0.0008818342151675207,
+          "difference": 0.0017636684303350414
+        },
+        {
+          "layer": 16,
+          "alpha": 1.0,
+          "gain_b1": 0.0030864197530864335,
+          "gain_b5": 0.0,
+          "difference": -0.0030864197530864335
+        },
+        {
+          "layer": 16,
+          "alpha": 2.0,
+          "gain_b1": 0.003527336860670194,
+          "gain_b5": 0.0026455026455026176,
+          "difference": -0.0008818342151675762
+        },
+        {
+          "layer": 16,
+          "alpha": 3.0,
+          "gain_b1": 0.0030864197530864335,
+          "gain_b5": 0.00485008818342153,
+          "difference": 0.001763668430335097
+        },
+        {
+          "layer": 20,
+          "alpha": 0.25,
+          "gain_b1": -0.003086419753086378,
+          "gain_b5": 0.0022045855379188573,
+          "difference": 0.005291005291005235
+        },
+        {
+          "layer": 20,
+          "alpha": 0.5,
+          "gain_b1": 0.001763668430335097,
+          "gain_b5": 0.0,
+          "difference": -0.001763668430335097
+        },
+        {
+          "layer": 20,
+          "alpha": 1.0,
+          "gain_b1": 0.00044091710758381586,
+          "gain_b5": 0.006172839506172811,
+          "difference": 0.0057319223985889955
+        },
+        {
+          "layer": 20,
+          "alpha": 2.0,
+          "gain_b1": 0.00485008818342153,
+          "gain_b5": 0.005731922398589051,
+          "difference": 0.0008818342151675207
+        },
+        {
+          "layer": 20,
+          "alpha": 3.0,
+          "gain_b1": 0.005731922398589107,
+          "gain_b5": 0.007936507936507908,
+          "difference": 0.0022045855379188017
+        },
+        {
+          "layer": 24,
+          "alpha": 0.25,
+          "gain_b1": 0.002645502645502673,
+          "gain_b5": 0.0022045855379188573,
+          "difference": -0.00044091710758381586
+        },
+        {
+          "layer": 24,
+          "alpha": 0.5,
+          "gain_b1": 0.002645502645502673,
+          "gain_b5": 0.0013227513227513366,
+          "difference": -0.0013227513227513366
+        },
+        {
+          "layer": 24,
+          "alpha": 1.0,
+          "gain_b1": 0.0008818342151675762,
+          "gain_b5": 0.00485008818342153,
+          "difference": 0.003968253968253954
+        },
+        {
+          "layer": 24,
+          "alpha": 2.0,
+          "gain_b1": 0.00440917107583777,
+          "gain_b5": 0.015432098765432112,
+          "difference": 0.011022927689594342
+        },
+        {
+          "layer": 24,
+          "alpha": 3.0,
+          "gain_b1": 0.005291005291005291,
+          "gain_b5": 0.014991181657848296,
+          "difference": 0.009700176366843005
+        },
+        {
+          "layer": 28,
+          "alpha": 0.25,
+          "gain_b1": 0.0008818342151675762,
+          "gain_b5": 0.0022045855379188573,
+          "difference": 0.001322751322751281
+        },
+        {
+          "layer": 28,
+          "alpha": 0.5,
+          "gain_b1": 0.002645502645502673,
+          "gain_b5": 0.0026455026455026176,
+          "difference": -5.551115123125783e-17
+        },
+        {
+          "layer": 28,
+          "alpha": 1.0,
+          "gain_b1": 0.00485008818342153,
+          "gain_b5": 0.0022045855379188573,
+          "difference": -0.002645502645502673
+        },
+        {
+          "layer": 28,
+          "alpha": 2.0,
+          "gain_b1": 0.006613756613756627,
+          "gain_b5": 0.011463844797178102,
+          "difference": 0.004850088183421475
+        },
+        {
+          "layer": 28,
+          "alpha": 3.0,
+          "gain_b1": 0.00396825396825401,
+          "gain_b5": 0.010141093474426821,
+          "difference": 0.006172839506172811
+        }
+      ],
+      "mean_difference": 0.0015873015873015548,
+      "ci_low": 0.00010046611237084142,
+      "ci_high": 0.0028848576467623795,
+      "n_groups": 7,
+      "n_resamples": 10000,
+      "composition": "COMPLEMENTS"
+    },
+    "q3_chance_count": {
+      "n_cells": 70,
+      "nominal_alpha": 0.05,
+      "expected_false_positives": 3.5,
+      "observed_go": 4,
+      "observed_go_cells": [
+        "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D20",
+        "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D24_b5",
+        "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D24",
+        "D_ext_p1:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28"
+      ],
+      "excess": 0.5
+    }
+  },
+  "phase2_triggered": true,
+  "phase2_n_rows": 42,
+  "finished_at": 1787111734.0798008
+}

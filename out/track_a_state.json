@@ -1,0 +1,615 @@
+{
+  "track": "A",
+  "trace": [
+    {
+      "stage": "A",
+      "selected": [
+        "A:decoder:local:v_nat:a1:D16",
+        "A:encoder:local:v_nat:a1:E15"
+      ],
+      "n_input": 6,
+      "dropped_unhealthy_decode": [],
+      "dropped_zh_retention_below_0.99": [],
+      "n_eligible": 6,
+      "ranking": [
+        [
+          "A:decoder:local:v_nat:a1:D16",
+          [
+            4,
+            0.35,
+            0.003527336860670194
+          ]
+        ],
+        [
+          "A:encoder:local:v_nat:a1:E15",
+          [
+            1,
+            0.11764705882352941,
+            -Infinity
+          ]
+        ],
+        [
+          "A:encoder+decoder:global:v_nat:a1:E15+D16",
+          [
+            1,
+            0.09523809523809523,
+            -0.0026455026455026176
+          ]
+        ],
+        [
+          "A:decoder:global:v_nat:a1:D16",
+          [
+            1,
+            0.024390243902439025,
+            -0.0008818342151675207
+          ]
+        ],
+        [
+          "A:encoder+decoder:local:v_nat:a1:E15+D16",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ],
+        [
+          "A:encoder:global:v_nat:a1:E15",
+          [
+            0,
+            0.0,
+            -0.006613756613756572
+          ]
+        ]
+      ],
+      "rule": {
+        "step_1": "drop runs with unhealthy decode (INVALID)",
+        "step_2": "drop runs with zh_retention < 0.99",
+        "step_3": "sort by dialogues_with_correction DESC, then corrections_to_corruptions DESC, then delta_pier DESC",
+        "primary_key": "dialogues_with_correction"
+      }
+    },
+    {
+      "stage": "B",
+      "selected": [
+        "B:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16"
+      ],
+      "n_input": 8,
+      "dropped_unhealthy_decode": [],
+      "dropped_zh_retention_below_0.99": [],
+      "n_eligible": 8,
+      "ranking": [
+        [
+          "B:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16",
+          [
+            4,
+            7.0,
+            0.0030864197530864335
+          ]
+        ],
+        [
+          "A:decoder:local:v_nat:a1:D16",
+          [
+            4,
+            0.35,
+            0.003527336860670194
+          ]
+        ],
+        [
+          "B:decoder:local:v_nat+v_prompt_weighted_n1p1:a1:D16",
+          [
+            2,
+            0.11627906976744186,
+            -0.00044091710758376035
+          ]
+        ],
+        [
+          "A:encoder:local:v_nat:a1:E15",
+          [
+            1,
+            0.11764705882352941,
+            -Infinity
+          ]
+        ],
+        [
+          "B:decoder:local:v_prompt:a1:D16",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ],
+        [
+          "B:decoder:local:v_nat+v_prompt_weighted_n0.5p2:a1:D16",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ],
+        [
+          "B:decoder:local:v_nat+v_prompt_rank2:a1:D16",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ],
+        [
+          "B:decoder:global:v_prompt:a1:D16",
+          [
+            0,
+            0.0,
+            -Infinity
+          ]
+        ]
+      ],
+      "rule": {
+        "step_1": "drop runs with unhealthy decode (INVALID)",
+        "step_2": "drop runs with zh_retention < 0.99",
+        "step_3": "sort by dialogues_with_correction DESC, then corrections_to_corruptions DESC, then delta_pier DESC",
+        "primary_key": "dialogues_with_correction"
+      }
+    },
+    {
+      "stage": "C",
+      "selected": [
+        "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16"
+      ],
+      "n_input": 5,
+      "dropped_unhealthy_decode": [],
+      "dropped_zh_retention_below_0.99": [],
+      "n_eligible": 5,
+      "ranking": [
+        [
+          "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16",
+          [
+            4,
+            7.0,
+            0.0030864197530864335
+          ]
+        ],
+        [
+          "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a3:D16",
+          [
+            4,
+            0.5,
+            0.0030864197530864335
+          ]
+        ],
+        [
+          "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a2:D16",
+          [
+            4,
+            0.35,
+            0.003527336860670194
+          ]
+        ],
+        [
+          "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.5:D16",
+          [
+            1,
+            0.08,
+            -0.0008818342151675207
+          ]
+        ],
+        [
+          "C:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a0.25:D16",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ]
+      ],
+      "rule": {
+        "step_1": "drop runs with unhealthy decode (INVALID)",
+        "step_2": "drop runs with zh_retention < 0.99",
+        "step_3": "sort by dialogues_with_correction DESC, then corrections_to_corruptions DESC, then delta_pier DESC",
+        "primary_key": "dialogues_with_correction"
+      }
+    },
+    {
+      "stage": "D",
+      "selected": [
+        "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28"
+      ],
+      "n_input": 6,
+      "dropped_unhealthy_decode": [],
+      "dropped_zh_retention_below_0.99": [],
+      "n_eligible": 6,
+      "ranking": [
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28",
+          [
+            5,
+            2.6666666666666665,
+            0.00485008818342153
+          ]
+        ],
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16",
+          [
+            4,
+            7.0,
+            0.0030864197530864335
+          ]
+        ],
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D24",
+          [
+            4,
+            0.23333333333333334,
+            0.0008818342151675762
+          ]
+        ],
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D16-20",
+          [
+            3,
+            0.3,
+            0.0030864197530864335
+          ]
+        ],
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D8-16-24-28",
+          [
+            2,
+            0.10638297872340426,
+            -Infinity
+          ]
+        ],
+        [
+          "D:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D8",
+          [
+            0,
+            0.0,
+            -0.0026455026455026176
+          ]
+        ]
+      ],
+      "rule": {
+        "step_1": "drop runs with unhealthy decode (INVALID)",
+        "step_2": "drop runs with zh_retention < 0.99",
+        "step_3": "sort by dialogues_with_correction DESC, then corrections_to_corruptions DESC, then delta_pier DESC",
+        "primary_key": "dialogues_with_correction"
+      }
+    }
+  ],
+  "baselines": [
+    "C00",
+    "C00_beam5",
+    "force_en",
+    "force_zh"
+  ],
+  "preflight": {
+    "track": "A",
+    "passed": true,
+    "smoke": false,
+    "checks": [
+      {
+        "check": "6.matched_energy_invariance",
+        "passed": true,
+        "observed": {
+          "1": 4.0,
+          "10": 4.0,
+          "100": 4.0,
+          "1000": 4.0
+        },
+        "expected": {
+          "1": 4.0,
+          "10": 4.0,
+          "100": 4.0,
+          "1000": 4.0
+        },
+        "detail": "E_total = alpha_eff^2 ||v||^2 |S| with alpha_eff = alpha / sqrt(|S|)"
+      },
+      {
+        "check": "4.encoder_padding.frame_count",
+        "passed": true,
+        "observed": "0 mismatches",
+        "expected": "0 mismatches",
+        "detail": "valid_frames == ceil(duration*50) clamped to 1500"
+      },
+      {
+        "check": "4.encoder_padding.short_utterances_masked",
+        "passed": true,
+        "observed": "273/300 utterances below 1500 frames",
+        "expected": ">0 utterances below 1500 frames",
+        "detail": "mean valid_frame_ratio 0.5456; without this mask roughly 45% of injected encoder energy would land in padding"
+      },
+      {
+        "check": "1.6.prompt_at_encoder_raises",
+        "passed": true,
+        "observed": "PromptDirectionAtEncoderError",
+        "expected": "PromptDirectionAtEncoderError",
+        "detail": "v_prompt requested at an encoder site (layer 15). Whisper's encoder never receives the language token; there is no such object. Refusing to produce a number."
+      },
+      {
+        "check": "1.alpha_zero[encoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[decoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[decoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder+decoder/global]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "1.alpha_zero[encoder+decoder/local]",
+        "passed": true,
+        "observed": "0 utterances differ",
+        "expected": "0 utterances differ",
+        "detail": "bit-identical to the unhooked baseline"
+      },
+      {
+        "check": "3.hook_fires.encoder",
+        "passed": true,
+        "observed": 2,
+        "expected": 2,
+        "detail": "1 encoder forwards x 2 layers"
+      },
+      {
+        "check": "3.hook_fires.decoder",
+        "passed": true,
+        "observed": 123,
+        "expected": 123,
+        "detail": "41 decoder forwards x 3 layers"
+      },
+      {
+        "check": "5.beam_coverage",
+        "passed": true,
+        "observed": {
+          "steered_positions": 800,
+          "num_beams": 5,
+          "remainder": 0
+        },
+        "expected": "steered_positions > 0 and divisible by num_beams",
+        "detail": "with num_beams=k the decoder batch is B*k and the hook touches every row, so positions stay synchronised across beams"
+      },
+      {
+        "check": "2.reproduce_prior.rows",
+        "passed": true,
+        "observed": 489,
+        "expected": 489,
+        "detail": ""
+      },
+      {
+        "check": "2.reproduce_prior.corrections",
+        "passed": true,
+        "observed": 7,
+        "expected": 7,
+        "detail": "correcting dialogues ['CSD0014', 'CSD0502']; prior programme had ['CSD0014', 'CSD0502'] (207s)"
+      }
+    ],
+    "n_passed": 15,
+    "n_total": 15
+  },
+  "population": {
+    "split": "D-dev-select",
+    "utterances": 300,
+    "dialogues": 20,
+    "spans": 482,
+    "floor_ms": 400.0,
+    "targets": 489,
+    "utterances_with_targets": 116
+  },
+  "confirm_candidate": {
+    "cell_id": "Confirm:decoder:local:v_nat+v_prompt_weighted_n2p0.5:a1:D28",
+    "config": {
+      "stage": "Confirm",
+      "site": "decoder",
+      "coverage": "local",
+      "direction_kind": "v_nat+v_prompt",
+      "alpha": 1.0,
+      "encoder_layers": [],
+      "decoder_layers": [
+        28
+      ],
+      "scale_mode": "act_norm",
+      "matched_energy": true,
+      "num_beams": 1,
+      "language": "zh",
+      "combo_mode": "weighted",
+      "weight_nat": 2.0,
+      "weight_prompt": 0.5,
+      "note": "the ONE configuration proposed for D-dev-confirm; requires explicit human approval"
+    },
+    "config_hash": "0ddbd0909c77ea50",
+    "status": "AWAITING_HUMAN_APPROVAL",
+    "population": "D-dev-confirm",
+    "statement": "Track A Confirm is NOT run automatically. D-dev-confirm has never been opened and has ten dialogues to spend. This is the single configuration the fixed selection rule chose; a human authorises the run."
+  },
+  "stopped_early_reason": null,
+  "direction_provenance": {
+    "site_e_layer15_hann": {
+      "kind": "v_nat",
+      "site": "encoder",
+      "layer": 15,
+      "source": "loaded",
+      "store": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/directions/generation_001/directions.npz",
+      "stored_norm": 0.8153799127095199
+    },
+    "site_d_layer16": {
+      "kind": "v_nat",
+      "site": "decoder",
+      "layer": 16,
+      "source": "loaded",
+      "store": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/directions/generation_001/directions.npz",
+      "stored_norm": 2.414639416389413
+    },
+    "site_e_layer8_hann": {
+      "kind": "v_nat",
+      "site": "encoder",
+      "layer": 8,
+      "source": "reconstructed",
+      "recipe": "frozen v2r3 Day-3 pipeline, identical except the layer",
+      "floor_ms": 400.0,
+      "pooling": "hann",
+      "pairs": 233,
+      "dialogues": 20,
+      "direction_norm": 0.7523977196583225,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.909856916547583,
+        "cosine_p05": 0.8383116855746744,
+        "cosine_p50": 0.9161108155031247,
+        "cosine_p95": 0.962500504418881,
+        "cosine_min": 0.6234989812097305
+      }
+    },
+    "site_d_layer8": {
+      "kind": "v_nat",
+      "site": "decoder",
+      "layer": 8,
+      "source": "loaded",
+      "store": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/directions/generation_001/directions.npz",
+      "stored_norm": 1.5398303812057856
+    },
+    "site_d_layer16_v_prompt": {
+      "kind": "v_prompt",
+      "site": "decoder",
+      "layer": 16,
+      "source": "derived",
+      "construction": "difference in means of the decoder state at the language-token prefix position (index 1) between an <|en|> and a <|zh|> prefix, identical audio and continuation; dialogue-balanced aggregation",
+      "pairs": 125,
+      "dialogues": 20,
+      "direction_norm": 1.9065257619849387,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.9998418511726679,
+        "cosine_p05": 0.9996164737931071,
+        "cosine_p50": 0.99987707184692,
+        "cosine_p95": 0.9999598974135829,
+        "cosine_min": 0.9990678907572891
+      },
+      "split": "D-construct",
+      "note": "not present in the frozen store: the store's rank-1 prompt subspace was projected OUT of every v_nat"
+    },
+    "site_d_layer8_v_prompt": {
+      "kind": "v_prompt",
+      "site": "decoder",
+      "layer": 8,
+      "source": "derived",
+      "construction": "difference in means of the decoder state at the language-token prefix position (index 1) between an <|en|> and a <|zh|> prefix, identical audio and continuation; dialogue-balanced aggregation",
+      "pairs": 125,
+      "dialogues": 20,
+      "direction_norm": 1.9531483151032996,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.999605573197257,
+        "cosine_p05": 0.9989550886579464,
+        "cosine_p50": 0.9997050544416917,
+        "cosine_p95": 0.9998967533187705,
+        "cosine_min": 0.9971582963361884
+      },
+      "split": "D-construct",
+      "note": "not present in the frozen store: the store's rank-1 prompt subspace was projected OUT of every v_nat"
+    },
+    "site_d_layer24_v_prompt": {
+      "kind": "v_prompt",
+      "site": "decoder",
+      "layer": 24,
+      "source": "derived",
+      "construction": "difference in means of the decoder state at the language-token prefix position (index 1) between an <|en|> and a <|zh|> prefix, identical audio and continuation; dialogue-balanced aggregation",
+      "pairs": 125,
+      "dialogues": 20,
+      "direction_norm": 1.457616985520575,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.9998828885658029,
+        "cosine_p05": 0.9996534978931306,
+        "cosine_p50": 0.9999172376971748,
+        "cosine_p95": 0.9999819864620411,
+        "cosine_min": 0.998843756175402
+      },
+      "split": "D-construct",
+      "note": "not present in the frozen store: the store's rank-1 prompt subspace was projected OUT of every v_nat"
+    },
+    "site_d_layer28_v_prompt": {
+      "kind": "v_prompt",
+      "site": "decoder",
+      "layer": 28,
+      "source": "derived",
+      "construction": "difference in means of the decoder state at the language-token prefix position (index 1) between an <|en|> and a <|zh|> prefix, identical audio and continuation; dialogue-balanced aggregation",
+      "pairs": 125,
+      "dialogues": 20,
+      "direction_norm": 1.268346182662759,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.9998615306116635,
+        "cosine_p05": 0.9996041254958762,
+        "cosine_p50": 0.9999047767196603,
+        "cosine_p95": 0.999972740383122,
+        "cosine_min": 0.9986730657730103
+      },
+      "split": "D-construct",
+      "note": "not present in the frozen store: the store's rank-1 prompt subspace was projected OUT of every v_nat"
+    },
+    "site_d_layer24": {
+      "kind": "v_nat",
+      "site": "decoder",
+      "layer": 24,
+      "source": "loaded",
+      "store": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/directions/generation_001/directions.npz",
+      "stored_norm": 3.871718541066646
+    },
+    "site_d_layer28": {
+      "kind": "v_nat",
+      "site": "decoder",
+      "layer": 28,
+      "source": "reconstructed",
+      "recipe": "frozen v2r3 Day-3 pipeline, identical except the layer",
+      "floor_ms": 400.0,
+      "pooling": null,
+      "pairs": 233,
+      "dialogues": 20,
+      "direction_norm": 4.058715918554249,
+      "bootstrap_cosine": {
+        "G": 20,
+        "draws": 2000,
+        "seed": 20260815,
+        "cosine_mean": 0.9647462397929648,
+        "cosine_p05": 0.9359704891944793,
+        "cosine_p50": 0.9676386997301994,
+        "cosine_p95": 0.9852090765975221,
+        "cosine_min": 0.8376646271985441
+      }
+    }
+  },
+  "n_rows": 38
+}

@@ -318,18 +318,53 @@ def assert_matches(spec: SpecFreeze, cfg: Mapping[str, Any]) -> None:
 def supersede(old_path: str | Path, new_spec: SpecFreeze, reason: str) -> Path:
     """Write the next version of a freeze, recording what it replaces and why."""
     old_path = Path(old_path)
-    old = load(old_path)
     match = VERSION_RE.search(old_path.name)
     if not match:
         raise SpecFreezeError(f"cannot derive a version from {old_path.name!r}")
     next_version = int(match.group(1)) + 1
     new_path = old_path.with_name(VERSION_RE.sub(f"_v{next_version}.json", old_path.name))
+    return supersede_at(
+        old_path, new_spec, new_path, reason, require_cross_namespace=False)
+
+
+def supersede_at(old_path: str | Path, new_spec: SpecFreeze,
+                 new_path: str | Path, reason: str, *,
+                 require_cross_namespace: bool = True) -> Path:
+    """Supersede an immutable freeze into a distinct versioned namespace.
+
+    `supersede` intentionally writes beside the old freeze. A namespace
+    migration must not do that: the old root is immutable and the new root must
+    remain independently writable. This variant preserves the same version and
+    lineage checks while requiring an explicit, nonexisting destination.
+    """
+    old_path = Path(old_path).resolve()
+    new_path = Path(new_path).resolve()
+    old = load(old_path)
+    old_match = VERSION_RE.search(old_path.name)
+    new_match = VERSION_RE.search(new_path.name)
+    if not old_match or not new_match:
+        raise SpecFreezeError(
+            "both superseded and successor freeze names must end in _vN.json")
+    expected = int(old_match.group(1)) + 1
+    actual = int(new_match.group(1))
+    if actual != expected:
+        raise SpecFreezeError(
+            f"successor version must be v{expected}, found v{actual}")
+    if new_path == old_path or (require_cross_namespace and
+                                old_path.parent in new_path.parents):
+        raise SpecFreezeError(
+            "cross-namespace supersession must not write inside the immutable "
+            f"source freeze directory: {old_path.parent}")
+    if new_path.exists():
+        raise SpecFreezeError(f"successor freeze already exists: {new_path}")
+
     payload = copy.deepcopy(new_spec.payload)
     payload["supersedes"] = {
         "path": str(old_path),
         "sha256": old.sha256,
+        "file_sha256": sha256_file(old_path),
         "reason": str(reason),
         "superseded_at": dt.datetime.now(dt.timezone.utc).isoformat(),
     }
-    payload["spec_version"] = f"v{next_version}"
+    payload["spec_version"] = f"v{actual}"
     return seal(SpecFreeze(payload=payload), new_path)

@@ -1,0 +1,12 @@
+round: 1
+job: training
+inherits: configs/rounds/common.yaml
+data_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+train_split: train
+selection_split: D-dev-select
+train_utterances: 500
+epochs: 3
+micro_batch: 8
+gradient_accumulation: 2
+learning_rate: 0.0005
+output_root: results/round1/job_b

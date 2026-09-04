@@ -277,6 +277,7 @@ def test_attach_dialogue_ids_changes_nothing_but_the_new_columns(tmp_path):
 
 def test_output_guard_refuses_protected_trees_and_overwrites(tmp_path):
     from csasr.experiments.dialogue_manifest import resolve_output
+    from csasr.lss.manifest import manifest_path
 
     source = tmp_path / "cs_dialogue.parquet"
     source.write_bytes(b"")
@@ -288,4 +289,55 @@ def test_output_guard_refuses_protected_trees_and_overwrites(tmp_path):
     existing.write_bytes(b"")
     with pytest.raises(SystemExit, match="existing artifact"):
         resolve_output(existing, source)
+    sidecar_only = tmp_path / "sidecar-only.parquet"
+    manifest_path(sidecar_only).write_text("{}", encoding="utf-8")
+    with pytest.raises(SystemExit, match="sidecar"):
+        resolve_output(sidecar_only, source)
     assert resolve_output(tmp_path / "fresh.parquet", source) == tmp_path / "fresh.parquet"
+
+
+def test_dialogue_derivation_fingerprint_binds_both_input_hashes():
+    from csasr.experiments.dialogue_manifest import dialogue_derivation_fingerprint
+
+    first, payload = dialogue_derivation_fingerprint(
+        source_manifest_sha256="source-a", information_index_sha256="index-a")
+    same, _ = dialogue_derivation_fingerprint(
+        source_manifest_sha256="source-a", information_index_sha256="index-a")
+    source_changed, _ = dialogue_derivation_fingerprint(
+        source_manifest_sha256="source-b", information_index_sha256="index-a")
+    index_changed, _ = dialogue_derivation_fingerprint(
+        source_manifest_sha256="source-a", information_index_sha256="index-b")
+    assert first == same
+    assert first not in {source_changed, index_changed}
+    assert payload["information_index_sha256"] == "index-a"
+    assert payload["source_manifest_sha256"] == "source-a"
+
+
+def test_dialogue_manifest_records_information_index_as_hashed_parent(
+        tmp_path, monkeypatch, capsys):
+    from csasr.experiments import dialogue_manifest as command
+    from csasr.lss import manifest as artifact_manifest
+    from csasr.utils.hashing import sha256_file
+
+    cfg = _corpus(tmp_path, n_pairs=3)
+    built = build_manifest(cfg, hash_audio=False, probe_audio=False)
+    source = tmp_path / "source.parquet"
+    built.drop(columns=["dialogue_id", "corpus_speaker_id"]).to_parquet(
+        source, index=False)
+    monkeypatch.setattr(command, "load_config", lambda _: cfg)
+    output = tmp_path / "dialogue-v2"
+    assert command.main([
+        "--config", "ignored.yaml", "--source-manifest", str(source),
+        "--information-index", cfg["data"]["information_index"],
+        "--output-dir", str(output),
+    ]) == 0
+    capsys.readouterr()
+
+    target = output / command.MANIFEST_NAME
+    sidecar = artifact_manifest.load(target)
+    assert sidecar is not None
+    parents = {p["path"]: p["sha256"] for p in sidecar["parent_artifacts"]}
+    assert parents[str(source)] == sha256_file(source)
+    assert parents[cfg["data"]["information_index"]] == \
+        sha256_file(cfg["data"]["information_index"])
+    assert len(sidecar["dialogue_derivation_fingerprint"]) == 64

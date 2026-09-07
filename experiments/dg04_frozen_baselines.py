@@ -18,8 +18,10 @@ Modes:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -34,6 +36,8 @@ GEN = dict(task="transcribe", language="zh", do_sample=False, num_beams=1,
 GRID = (0.5, 1.0, 2.0)
 LAYER = 24
 BASIS = "results/dg03/basis/steering_basis_v1_L24.json"
+FROZEN_V_LOCAL_HASH = "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93"
+FROZEN_V_COND_HASH = "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991"
 
 
 def _git_commit():
@@ -42,6 +46,34 @@ def _git_commit():
         return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO).decode().strip()
     except Exception:
         return None
+
+
+def _dg04_config_hash() -> str:
+    """Hash the resolved, pre-registered DG-04 runner configuration."""
+    files = {}
+    for rel in ("configs/model/whisper_large_v3.yaml",
+                "configs/lss/l1b_candidates_dialogue_v2r3.yaml"):
+        path = REPO / rel
+        files[rel] = hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+    payload = {
+        "runner": "dg04_frozen_baselines_v1",
+        "layer": LAYER, "basis": BASIS, "grid_rho": list(GRID),
+        "generation": GEN, "b3_calibration": "router-calib/300-shortest/median-std",
+        "files": files,
+    }
+    blob = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    return "sha256:" + hashlib.sha256(blob).hexdigest()
+
+
+def _slurm_metadata(job_ids: list[str] | None = None) -> dict:
+    """Record launcher metadata; CPU/offline runs are explicitly non-Slurm."""
+    return {
+        "job_ids": list(job_ids or ([os.environ["SLURM_JOB_ID"]]
+                                    if os.environ.get("SLURM_JOB_ID") else [])),
+        "job_name": os.environ.get("SLURM_JOB_NAME"),
+        "partition": os.environ.get("SLURM_JOB_PARTITION"),
+        "node": os.environ.get("SLURMD_NODENAME"),
+    }
 
 
 def _data_root(dcfg) -> Path:
@@ -226,6 +258,10 @@ def run_systems(args):
 
     rec = json.loads((REPO / BASIS).read_text())
     assert int(rec["scientific_layer"]) == LAYER
+    if rec["tensor_hashes"].get("conditioning_residualized_local") != FROZEN_V_LOCAL_HASH:
+        raise RuntimeError("DG-04 refuses a non-frozen v_local artifact")
+    if rec["tensor_hashes"].get("language_conditioning") != FROZEN_V_COND_HASH:
+        raise RuntimeError("DG-04 refuses a non-frozen v_cond artifact")
     d_local = np.load(REPO / "results/dg03/basis" / rec["tensor_files"]["conditioning_residualized_local"])
     d_cond = np.load(REPO / "results/dg03/basis" / rec["tensor_files"]["language_conditioning"])
     s_l = float(rec["provenance"]["mean_site_norm_s_l"])
@@ -250,8 +286,11 @@ def run_systems(args):
         "git_commit": _git_commit(), "model_id": bundle.model_id, "model_revision": bundle.revision,
         "layer": LAYER, "basis_artifact_hashes": rec["tensor_hashes"],
         "basis_dataset_fingerprint": rec["provenance"]["dataset_fingerprint"],
+        "dataset_fingerprint": rec["provenance"]["dataset_fingerprint"],
         "basis_construction_config_hash": rec["provenance"]["construction_config_hash"],
-        "scale_s_l": s_l, "grid_rho": list(GRID)}
+        "config_hash": _dg04_config_hash(),
+        "scale_s_l": s_l, "grid_rho": list(GRID),
+        "slurm": _slurm_metadata()}
 
     # baseline (needed to score every system)
     base, base_audit = _decode(bundle, pop, layer=LAYER, direction=None, gate_fn=None,
@@ -336,7 +375,21 @@ def build_frontier(args):
         elig.sort(key=lambda p: (-p["net_corrections"],
                                  -(p["pier_gain"] or -1e9), p["total_energy"]))
         reference = elig[0]
+    source_jobs = []
+    for p in points:
+        # The per-point result provenance is authoritative for execution jobs.
+        result_name = "B0.json" if p["system"] == "B0" else \
+            f"{p['system']}_rho{p['rho']}.json"
+        payload = json.loads((res_dir / result_name).read_text())
+        for job in payload["result_v1"].get("provenance", {}).get("slurm", {}).get("job_ids", []):
+            if str(job) not in source_jobs:
+                source_jobs.append(str(job))
+    bprov = b0.get("provenance", {})
     front = {"git_commit": _git_commit(), "layer": LAYER, "baseline_zh_cer": zh_cer_b0,
+             "config_hash": _dg04_config_hash(),
+             "dataset_fingerprint": bprov.get("dataset_fingerprint"),
+             "basis_artifact_hashes": bprov.get("basis_artifact_hashes"),
+             "source_jobs": source_jobs,
              "eligibility_rule": "U>0 & corr>corrupt & outside_harm present & zh_cer<=1.5*zh_cer_B0",
              "selection_rule": "max net_corrections; tie PIER gain; then lower total_energy",
              "points": sorted(points, key=lambda p: (p["system"], p["rho"])),
@@ -345,6 +398,9 @@ def build_frontier(args):
     ref_payload = ({"result": "NO POSITIVE FROZEN OPERATING POINT"} if reference is None
                    else {"result": f"SELECT {reference['system']} rho={reference['rho']}",
                          "reference": reference})
+    ref_payload["provenance"] = {"frontier": "results/dg04/frontier.json",
+                                  "config_hash": _dg04_config_hash(),
+                                  "source_jobs": source_jobs}
     _write(out_dir / "reference.json", ref_payload)
     print(json.dumps(ref_payload, indent=2, default=str))
     return 0

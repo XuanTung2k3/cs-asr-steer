@@ -32,6 +32,25 @@ The configured and published role tree is
 The locked test artifact exists as `locked/role_D-test.parquet` with its sidecar. A file named
 `role_D-test-lock.parquet` is not part of this artifact layout.
 
+## Role use under the updated method (DG-03R, 2026-09-07)
+
+The dialogue-v2 partition is **unchanged** — DG-03R does **not** repartition data and does **not**
+rename any physical role artifact. Logical use of each role under the contrastive-basis / adaptive
+-controller / damage-aware-training method (MC §4–§8):
+
+| Role | Logical use (updated method) |
+|---|---|
+| `D-construct` | steering-**basis construction** (`v_raw`, `v_cond`, `v_local`, `V^0`) |
+| `loc-train`, `util-train` | **controller-training pool** (`loc-train ∪ util-train`); historical names + row assignments preserved |
+| `router-calib` | calibration / hyperparameter support **only if** a calibration step is introduced |
+| `D-dev-select` | layer (L16 vs L24), steering-strength, model/checkpoint **selection**; incl. DG-03 causal screen and DG-04 frontier |
+| `D-dev-confirm` | **confirmation only**, never new selection |
+| `D-test` | locked final intervened evaluation **after the entire Whisper pipeline is frozen** |
+
+All prior exposure records below are **preserved and still binding**; no exposed split is described
+as untouched. The legacy training exposure (Job-B post-FFN gate/direction training) remains legacy —
+the controller / basis builder / damage-aware losses are not yet implemented or trained.
+
 ## Per-role exposure
 
 ### `D-construct`
@@ -42,15 +61,18 @@ The locked test artifact exists as `locked/role_D-test.parquet` with its sidecar
 
 ### `loc-train`, `util-train`, `router-calib`
 
-- **Roles:** proposed localizer training, utility-selector training, and calibration.
-- **Observed use:** the legacy Job-B trainer samples 500 rows from `loc-train ∪ util-train` to train
-  its own post-FFN monolithic gate/direction systems. That is not the contract localizer or
-  outcome-supervised utility selector.
-- **Implementation state:** the contract temporal localizer and selector are not implemented or
-  trained. Dialogue-v2 `router-calib` exists, but its role report/config has no
+- **Roles (updated method, v6):** `loc-train ∪ util-train` is the **controller-training pool** (row
+  assignments and physical names preserved); `router-calib` is calibration/hyperparameter support
+  **only if** a calibration step is introduced. The former "localizer training / utility-selector
+  training" role labels are `LEGACY DESIGN` — the localizer / utility-selector / disagreement-gate
+  design is superseded (v6 §Appendix A; MC §5–§6).
+- **Observed use:** the legacy Job-B trainer sampled 500 rows from `loc-train ∪ util-train` to train
+  its own post-FFN monolithic gate/direction systems — legacy, not the v6 controller.
+- **Implementation state:** the v6 adaptive controller and damage-aware losses are **not implemented
+  or trained**. Dialogue-v2 `router-calib` exists, but its role report/config has no
   `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a 10/10 calibration split.
-- **Status:** the training roles have legacy exposure; calibration for the finalized gate remains
-  proposed.
+- **Status:** the training roles have legacy exposure; whether the v6 controller needs a `router-calib`
+  subdivision is deferred (only if a calibration step is added).
 
 ### `D-dev-select`
 

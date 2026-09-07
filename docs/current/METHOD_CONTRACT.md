@@ -1,22 +1,41 @@
 # METHOD CONTRACT — CS-ASR Selective Test-Time Steering
 
-**Status:** Stage 1 contract; repository-consistency audit completed 2026-09-07. This file is the scientific authority for
-implementation. Where it conflicts with existing code, **the code is wrong until this
-file is revised by a human**, not the reverse.
+**Status:** Stage-1 contract, **reconciled 2026-09-07 (DG-03R)** to the updated research proposal.
+This file is the scientific authority for implementation. Where it conflicts with existing code,
+**the code is wrong until this file is revised by a human**, not the reverse.
 
-**Scientific source of record:** `docs/proposal_arr/CS_ASR_ARR_October_2026_Method_First_Proposal_v5.md`
-(the method-first proposal, v5, 10 Aug 2026), refined by the finalized-contract vocabulary
-frozen below. Planning detail:
-`docs/proposal_arr/CS_ASR_ARR_October_2026_Implementation_Plan_v2.md`; latest execution framing:
-`docs/proposal_arr/ROUND_1_3_EXEC_PLAN.md` and
-`docs/proposal_arr/ROUND_1_3_IMPLEMENTATION_STATUS.md`.
+**Scientific source of record (post-DG-02):**
+`docs/proposal_arr/CS_ASR_ARR_October_2026_Method_First_Proposal_v6.md` — the updated method-first
+proposal (**contrastive steering basis → adaptive controller → damage-aware optimization**). **v6 is
+the scientific authority; this file is its implementation/operationalization** and must not silently
+contradict it. v6 supersedes, for the core paper, the disagreement/temporal-localizer/outcome-selector/
+factorized-gate roadmap of `CS_ASR_ARR_October_2026_Method_First_Proposal_v5.md`, which — with
+`Implementation_Plan_v1/v2.md`, `ROUND_1_3_*`, and `GATE_A_*` — is **SUPERSEDED / HISTORICAL** and
+must not override v6.
 
 Legend:
 - **`OPEN DECISION`** — a choice this contract does not yet fix; needs human judgment.
 - **`IMPLEMENTATION GAP`** — the desired method here differs from what the code currently does.
+- **`LEGACY DESIGN`** — superseded for the core paper; preserved, off the critical path.
+- **`OPTIONAL SUPPORTING ANALYSIS`** / **`NOT IN CURRENT CORE SCOPE`** — may inform, does not block.
 
 The proposal is **not reproduced** here. This file locks only the invariants downstream
 code must not silently break.
+
+## DG-03R reconciliation summary (what changed 2026-09-07)
+
+The core method after the frozen DG-02 site is now a **three-stage pipeline**:
+
+1. a **contrastive steering basis** `V_ℓ^0 = [v_ℓ^{local}, v_ℓ^{cond}]` at each candidate layer (§4);
+2. an **adaptive controller** `f_θ(LN(r_{ℓ,t})) → (g_t, π_t)` predicting per-token strength and a
+   mixture over the basis, with **no oracle CS location at inference** (§6);
+3. **damage-aware optimization** — correction CE plus KL retention on baseline-correct
+   embedded/matrix positions, optional basis-refinement anchor (§8).
+
+**Superseded for the core paper** (now `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE`): the
+separately-engineered source/decoder/disagreement scores, the encoder–decoder **disagreement
+decision gate**, the temporal localizer, the outcome-supervised utility selector, the abstention
+selector, and the factorized gate (§5, §6). DG-01 metrics and the DG-02 site are **unchanged**.
 
 ---
 
@@ -53,18 +72,24 @@ site = residual + hidden_states                   # <-- THE SITE (pre-FFN)
   that makes `ρ=1` mean different things at different depths. `IMPLEMENTATION GAP`: any pipeline
   still calling `DecoderSteeringHook` is on the rejected site with the rejected scaling.
 
-`IMPLEMENTATION GAP`: the exact-site recorder and hook exist, but no current free-decoding
-Round-1 runner uses them. `experiments/round1_frozen.py` imports
-`experiments.job_a_frozen.NormPreserveDecoderHook`, and Job B uses `T1Hook` / `T2Hook`; all attach
-to the output of a whole decoder layer (post-FFN). `steer_sweep.hooks.DecoderSteering` does the
-same. Their cache, beam, and forced-prefix handling therefore does **not** establish those
-properties for `DecoderPostCrossAttnSteeringHook`.
+**DG-02 FROZEN.** The exact-site hook `csasr.lss.sites.DecoderPostCrossAttnInterventionHook` is
+implemented, tested (CPU/synthetic matrix), and passed **real-model acceptance at L16 and L24** on
+Whisper-large-v3 (Slurm job 50369; `results/dg02_real_acceptance.json`; `DG02_INTERVENTION_SITE_SPEC.md`
+§18). The site, `r = q + u_source`, NormPreserve, forced-prefix exclusion, cache-position tracking,
+and the per-row/per-token intervention interface are **frozen and must not be reopened**.
 
-Required free-decoding semantics for the future exact-site integration: derive the absolute decode
-position from the KV-cache length; assign zero gain to all forced-prefix positions; apply each
-source item's gate to every expanded beam; and keep the same layer index/direction/scale across
-prefill, cached steps, and beam branches. The existing post-FFN runners implement versions of this
-bookkeeping, but it has not been implemented or tested at the exact site.
+`IMPLEMENTATION GAP`: the legacy free-decoding runners (`experiments/round1_frozen.py` →
+`job_a_frozen.NormPreserveDecoderHook`; Job B `T1Hook`/`T2Hook`; `steer_sweep.hooks.DecoderSteering`)
+still attach post-FFN and are `LEGACY DESIGN`. No **scientific** exact-site free-decoding runner
+exists yet for DG-03+; building one on the frozen hook is a DG-03+ implementation gap (CODE_MAP).
+
+Required free-decoding semantics for the exact-site scientific runner: derive the absolute decode
+position from `cache_position` (primary) / KV-cache length (fallback); assign zero effective edit to
+all forced-prefix positions; and keep the same layer index and basis across prefill, cached steps,
+and beam branches. The controller (§6) computes `(g_t, π_t)` **per row from that row's own
+`r_{ℓ,t}`** — no oracle CS location and no source-item→beam gate transport are required at
+inference (that transport is `NOT IN CURRENT CORE SCOPE`). The DG-02 hook already validates this
+row-local interface synthetically and on the real model.
 
 **Encoder site scope.** The proposal also defines an encoder-frame steering path (`Δ^E`,
 `src/csasr/models/hooks.py:EncoderSteeringHook`, re-exported by
@@ -80,21 +105,32 @@ development evidence, not by which code exists.
 
 At decoder layer `ℓ` and decode step `t`, on the site of §1:
 
+**Naming note.** The DG-02 spec calls the pre-intervention site `r_{ℓ,t}` (`= q + u_source`, line
+528); the controller (§6) and NormPreserve read exactly that tensor. Below, `r_{ℓ,t}` is that
+**pre-intervention site** and `r̃_{ℓ,t}` is the **repaired steered site**, matching the updated
+proposal. (The older §2 used `q` for the pre-intervention site and `r` for the repaired one; the
+tensors are identical, only the letters changed. `DG02_INTERVENTION_SITE_SPEC.md` §2 records both
+conventions.)
+
 | Symbol | Meaning |
 |---|---|
-| `q_{ℓ,t}` | the **pre-intervention** site residual (`residual_in + attn_out`), the query/state the FFN would otherwise consume |
-| `\widetilde u^S_{ℓ,t}` | the **nominal rank-one update** before repair: `\widetilde u^S_{ℓ,t} = α · s_ℓ · g_{ℓ,t} · d_ℓ` (see §4–§6) |
-| `r_{ℓ,t}` | the **steered residual after repair**: `r_{ℓ,t} = Repair(q_{ℓ,t}, q_{ℓ,t} + \widetilde u^S_{ℓ,t})` (§7) |
-| `u^S_{ℓ,t}` | the **effective update after repair**, `u^S_{ℓ,t} = r_{ℓ,t} - q_{ℓ,t}`, so the identity `r_{ℓ,t} = q_{ℓ,t} + u^S_{ℓ,t}` remains exact |
+| `r_{ℓ,t}` | the **pre-intervention site** (`q + u_source`, DG-02), the state the FFN would otherwise consume; the controller input is `LN(r_{ℓ,t})` |
+| `d_{ℓ,t}` | the **position-dependent unit direction** `d_{ℓ,t} = normalize(V_ℓ^0 π_t)`, a mixture of the frozen basis columns (§4, §6) — rank-one per position |
+| `\widetilde r_{ℓ,t}` (pre-repair) | the **nominal update** `r_{ℓ,t} + β·g_t·d_{ℓ,t}` before repair (§6) |
+| `r̃_{ℓ,t}` | the **repaired steered site** `r̃_{ℓ,t} = NormPreserve(r_{ℓ,t}, r_{ℓ,t} + β·g_t·d_{ℓ,t})` (§7) |
+| `u^S_{ℓ,t}` | the **effective update after repair**, `u^S_{ℓ,t} = r̃_{ℓ,t} - r_{ℓ,t}` |
 
-`s_ℓ` is the per-layer activation scale (from the accumulated site statistics), `α` the
-strength, `g_{ℓ,t}` the gate, `d_ℓ` the unit-norm direction at layer `ℓ`.
+`β` is the (optionally trainable) global strength, `g_t ∈ [0,1]` the controller gate, `π_t` the
+controller mixture over the basis columns, `V_ℓ^0` the frozen basis (§4). The older per-layer
+scalar scale `s_ℓ` and single direction `d_ℓ` are subsumed: `β` carries the strength and `d_{ℓ,t}`
+the (position-dependent) direction. `apply_steering` remains the frozen update kernel; the caller
+supplies `β·g_t` as the gain and `d_{ℓ,t}` as the direction.
 
-Invariants:
-- Zero-gain positions must return **bit-identical** `q_{ℓ,t}` (verified: `apply_steering` returns
-  the input tensor where `gain == 0`).
-- `α = 0` is a hard no-op (returns the input object).
-- The direction is added in the **same space it was constructed in** (§1).
+Invariants (unchanged, DG-02):
+- Zero-gain positions (`g_t = 0`) return **bit-identical** `r_{ℓ,t}` (`apply_steering` returns the
+  input tensor where `gain == 0`).
+- `β = 0` is a hard no-op (returns the input object) — verified on the real model (β=0 identity).
+- The direction is added in the **same space it was constructed in** (§1), i.e. the exact site.
 
 ---
 
@@ -115,138 +151,152 @@ fixed at layer 24 rather than enumerating `{16, 24}`.
 
 ---
 
-## 4. Directions (LOCKED definitions)
+## 4. Canonical steering basis (LOCKED definitions — updated proposal)
 
-All directions live at the site of §1, at a candidate layer of §3, are **rank one**, and are
-frozen before any confirmatory run. Construction data is `D-construct` only (§ DATA_EXPOSURE).
+All basis vectors live at the exact site of §1, at a candidate layer of §3, are constructed on
+`D-construct` only, and are **versioned/hashed and frozen** before any confirmatory run. They are
+read from `r_{ℓ,t}` (the pre-intervention site). Each vector is finite and unit-norm.
 
-| Name | Definition | Notes |
-|---|---|---|
-| **Raw direction** `Δ^raw_ℓ` | paired mean of within-utterance contrasts `d_i = z^{postCA}(first EN BPE after ZH prefix) − z^{postCA}(matched ZH continuation)`, under the same normal prompt `p₀`, over baseline-correct English construction units | v5 §2.3 `d^{D,nat}` / `Δ`; nuisance-residualized, conversation-balanced, before conditioning removal |
-| **Conditioning direction / subspace** `U^cond_ℓ` | the low-rank **language-prompt-induced** subspace estimated from forced-English vs forced-Mandarin runs | ≡ v5's prompt subspace `U^{prompt}`; "conditioning" = the utterance-level language prompt's effect |
-| **Conditioning-residualized direction** `Δ^⊥_ℓ` | `Δ^⊥_ℓ = (I − U^cond_ℓ U^{cond⊤}_ℓ) Δ^raw_ℓ`, then unit-normalized | v5 §2.3 `Δ^{D⊥}`; the **primary** steering direction. Prevents a local decoder effect from being explained as another global language-prompt shift |
-| **Conditioning-only direction** `U^cond_ℓ[:,1]` | the leading conditioning/prompt-subspace component itself, not residualized | Ablation baseline for §B-E2; measures the prompt-shift effect in isolation |
-| **Legacy direction** `Δ^legacy` (codebase: `v_nat`) | any direction constructed for / added at the **rejected post-FFN site** (`decoder_block_output`) or via the depth-rescaled `DecoderSteeringHook`, and the pre-narrowing encoder `Δ^E` | Preserved, not deleted; **not** on this contract's critical path. The legacy `v_nat` must not be silently relabeled as the conditioning-residualized local direction `Δ^⊥`; they differ in site, conditioning treatment, and construction details |
+For each candidate layer `ℓ`:
 
-Repository mapping: exact-site decoder contrasts are implemented by
-`src/csasr/experiments/v2r3_directions.py:site_d_contrasts` using
-`DecoderPostCrossAttnRecorder`. `src/csasr/directions/decoder.py` instead records whole decoder
-block outputs and is legacy for this contract. The v2r3 implementation also provides
-`orthonormal_basis`, `project_out`, and `assemble`; there is no dedicated canonical
-conditioning-residualization module.
+**Raw language contrast** — difference of mean site states at baseline-correct positions:
+```
+v_ℓ^{raw} = μ_{ℓ,E}^{correct} − μ_{ℓ,M}^{correct}
+```
+`μ_{ℓ,E}^{correct}` = mean `r_{ℓ,t}` over baseline-correct **embedded-language** positions;
+`μ_{ℓ,M}^{correct}` = mean over baseline-correct **matrix-language** positions (per the updated
+proposal's position definitions).
 
-`IMPLEMENTATION GAP`: the v2r3 assembly projects the conditioning basis out of each contrast
-**before** nuisance residualization, clipping, and dialogue-balanced averaging. The frozen
-definition above residualizes/aggregates `Δ^raw` and then projects that direction. These orders
-must not be treated as equivalent without an explicit scientific decision.
+**Language-conditioning direction** — same audio/reference prefix decoded under embedded- vs
+matrix-language conditioning `c_E` / `c_M`:
+```
+v_ℓ^{cond} = normalize( E[ r_{ℓ,t}(c_E) − r_{ℓ,t}(c_M) ] )
+```
 
-Report at freeze time: `cos(Δ^raw, Δ^⊥)`, energy fraction removed by conditioning
-residualization, and speaker/dialogue-bootstrap cosine stability
-(observed historically ≈0.99 cosine, 2–5% energy removed — `docs/RESULTS_RUN_7DAYS.md`).
+**Conditioning-residualized local-language direction** — remove the conditioning component from
+the raw contrast:
+```
+v_ℓ^{local} = normalize( v_ℓ^{raw} − ⟨v_ℓ^{raw}, v_ℓ^{cond}⟩ v_ℓ^{cond} )
+```
 
-`OPEN DECISION`: rank of `U^cond` (prompt-subspace dimension) and the estimator for it.
-`OPEN DECISION`: whether the primary trained direction (Job B, T1) is rank-1 or rank-2 — the
-proposal fixes rank-one; Job B currently trains **rank-2 local steering** (`IMPLEMENTATION GAP`
-vs v5 §2.3 "rank one only"). Resolve explicitly.
+**Initial basis** (frozen; the controller of §6 mixes its columns):
+```
+V_ℓ^0 = [ v_ℓ^{local}, v_ℓ^{cond} ]
+```
+
+### Terminology (conservative — LOCKED claim boundary)
+
+- Call `v_ℓ^{local}` the **conditioning-residualized local-language direction**.
+- Call `v_ℓ^{cond}` the **language-conditioning direction**.
+- Do **not** call either vector a *pure acoustic direction*, a *universal language axis*, or a
+  *causal language representation* (§11).
+- **Do not silently relabel legacy `v_nat` as `v_local`.** Legacy `v_nat` was constructed at the
+  **rejected post-FFN site** under legacy procedures; it differs in site, conditioning treatment,
+  and construction. Legacy direction artifacts stay explicitly labeled `LEGACY DESIGN`.
+
+### Repository mapping (reuse vs gap)
+
+- Reusable exact-site primitives exist: `src/csasr/experiments/v2r3_directions.py`
+  (`site_d_contrasts`, `orthonormal_basis`, `project_out`, `assemble`) over
+  `DecoderPostCrossAttnRecorder`; `src/csasr/directions/controls.py` (`random_direction`,
+  `wrong_sign`). `src/csasr/directions/decoder.py` records whole post-FFN block outputs and is
+  `LEGACY DESIGN`.
+- `IMPLEMENTATION GAP`: no canonical builder yet emits `v_raw`/`v_cond`/`v_local`/`V^0` in the
+  **exact order above** (raw difference-of-means at baseline-correct positions → residualize
+  against `v_cond` → assemble `V^0`). The v2r3 `assemble` projects before aggregating and must not
+  be treated as equivalent. Building this canonical basis builder is DG-03.
+
+Report at freeze time (DG-03): `cos(v_raw, v_local)`, energy fraction removed by conditioning
+residualization, and dialogue-bootstrap cosine stability of each vector.
+
+`OPEN DECISION`: the exact baseline-correct embedded/matrix position sets and any
+nuisance/dialogue-balancing applied to the means (fix in DG-03 against the updated proposal).
+`NOT IN CURRENT CORE SCOPE`: a wider conditioning **subspace** (rank >1) — the core basis is the
+two named directions; the *per-position* steering direction `d_{ℓ,t}` is rank-one (§6).
 
 ---
 
-## 5. Candidate scores and disagreement hypothesis (LOCKED roles; exact algebra partly open)
+## 5. Scores and disagreement — `NOT IN CURRENT CORE SCOPE` (reclassified DG-03R)
 
-Three scores describe a candidate region/position. They are computed from
-**inference-available** signals only — the frozen allowlist is
-`csasr.lss.features_contract.FEATURE_ALLOWLIST` (`ALLOWLIST_VERSION = "lss_features_v1"`),
-guarded by `assert_inference_safe`, which rejects reference/alignment-derived columns.
+The separately-engineered **source score**, **decoder score**, and **encoder–decoder disagreement
+score**, and the **disagreement repairability hypothesis**, are **removed from the core-paper
+critical path**. The updated method replaces hand-designed positional scores with the learned
+controller (§6), which reads only `LN(r_{ℓ,t})`.
 
-| Score | What it measures | Backing features (allowlist) |
-|---|---|---|
-| **Source score** | acoustic/**encoder-source** evidence that this region is embedded English | `localizer_score_max`, `localizer_score_mean`, `encoder_en_margin` (projection of pooled span states on the frozen direction — defined even for deletions), `cross_attention_concentration` |
-| **Decoder score** | the **decoder's own** (un)certainty about the first-pass token here | `token_confidence_min`, `token_entropy_max`, `token_top2_margin_min`, `first_pass_token_is_latin` (all missing for deletions → `NaN` + `_missing` flag) |
-| **Disagreement score** | whether the source and the decoder **disagree** about the language | `encoder_decoder_disagreement` (encoder margin sign vs decoded token language) |
+- Encoder–decoder disagreement may still be reported as **`OPTIONAL SUPPORTING ANALYSIS`** (a
+  mechanistic observation). It is **no longer a decision gate** before controller training, and no
+  disagreement result blocks DG-03+.
+- The temporal localizer, outcome-supervised utility selector, abstention selector, and factorized
+  gate are **`LEGACY DESIGN`** (see §6). They are not prerequisites for the core method.
 
-`IMPLEMENTATION GAP`: the code exposes these as **individual selector features**, not as three
-named aggregate scores. The named source/decoder/disagreement scores are the contract's grouping;
-the aggregation function of features → each score is `OPEN DECISION`.
-
-### Disagreement hypothesis (conditional)
-
-The **encoder–decoder disagreement** is a conditional mechanistic hypothesis, not an established
-fact. Define:
-
-- `s_t^S = logit P(E | u_t^S)` — source-side English evidence from encoder/acoustic features,
-- `s_t^Q = logit P(E | q_t)` — decoder-side English evidence from decoder state,
-- `δ_t = s_t^S − s_t^Q` — signed disagreement.
-
-The hypothesis is that `δ_t > 0` (encoder says English, decoder does not) identifies positions
-where steering has corrective leverage beyond what decoder uncertainty alone predicts.
-
-**Decision rule.** If disagreement provides held-out incremental repairability-prediction value
-beyond decoder-uncertainty features alone (measured on `router-calib` as AUROC/calibration lift
-in the utility selector), retain it as a gating input. Otherwise, report the mechanistic
-negative result and fall back to a retention-aware gate that uses only source and decoder scores
-without the disagreement factor (§6 fallback).
+Preserved infrastructure (still valid, reusable): the inference-safe feature allowlist
+`csasr.lss.features_contract.FEATURE_ALLOWLIST` (`ALLOWLIST_VERSION = "lss_features_v1"`) and its
+`assert_inference_safe` guard remain the leakage guard for **any** inference-time signal. The core
+controller trivially satisfies it — its only input is `LN(r_{ℓ,t})`, an inference-available site
+state with no reference/alignment/oracle-location dependence.
 
 ---
 
-## 6. Factorized gate (LOCKED structure; exact form open)
+## 6. Adaptive controller (LOCKED structure — updated proposal)
 
-The gate `g_{ℓ,t} ∈ [0,1]` is **factorized** — a product of independent factors, not one
-monolithic score — so each factor can be ablated and audited separately. The proposal's operating
-form (v5 §2.6) is:
+The core method replaces the factorized gate with a small **adaptive controller** that reads the
+exact-site state and predicts both intervention strength and a mixture over the frozen basis:
 
 ```
-g_t = 1[t ∈ S_{k*}] · m_t · 1[ p̂_{k*} ≥ τ ]
+(g_t, π_t) = f_θ( LN(r_{ℓ,t}) )
 ```
 
-- `1[t ∈ S_{k*}]` — the selected candidate span (localization),
-- `m_t` — the soft localizer score inside the span (§5 source side),
-- `1[p̂ ≥ τ]` — the **utility-selector acceptance** at abstention threshold `τ`, where
-  `p̂ = f_util(source, decoder, disagreement scores …) ≈ P(net utility > 0)`.
+- `g_t ∈ [0,1]` — per-token intervention **strength gate** (e.g. sigmoid output);
+- `π_t` — per-token **mixture** over the columns of `V_ℓ^0` (e.g. softmax / bounded weights);
+- position-dependent direction: `d_{ℓ,t} = normalize(V_ℓ^0 π_t)` (rank-one per position);
+- intervention: `r̃_{ℓ,t} = NormPreserve( r_{ℓ,t} + β g_t d_{ℓ,t} )` (§7).
 
-Contract: the gate is the product of a **localization factor**, a **source factor**, and a
-**utility/acceptance factor** built from the §5 scores; steering fires only when all factors are
-nonzero; abstention keeps the first-pass transcript.
+Contract:
+- `f_θ` is a small **bottleneck controller**; `LN` is a layer-norm on the site state.
+- **No oracle CS location at inference.** The controller's only input is the inference-available
+  site state `LN(r_{ℓ,t})`; it does not consume reference, alignment, or oracle-span signals.
+- The controller runs **per row, per token** on the frozen DG-02 interface; a row's `(g_t, π_t)`
+  come from that row's own `r_{ℓ,t}` (beam-safe by construction).
+- `β` (global strength) may be a fixed hyperparameter or a single trainable scalar (§8).
+- Invariants of §2 hold: `g_t = 0` ⇒ bit-identical `r_{ℓ,t}`; `β = 0` ⇒ no-op.
 
-`OPEN DECISION`: the exact functional form of the factorized gate — whether the decoder and
-disagreement scores enter multiplicatively as their own factors or only through `p̂`, and how the
-acoustic→decoder transport `r_q = Σ_t Ā_{q,t} g_t` (v5 §2.7) composes with the factors for the
-decoder site. `OPEN DECISION`: `τ` is set on `router-calib` only, then swept for the frontier.
+`OPEN DECISION` (fix in DG-05): controller architecture/width/bottleneck size, the exact
+parameterization of `π_t` (simplex vs bounded), and whether `β` is fixed or trained.
 
-`IMPLEMENTATION GAP`: no current runner implements this factorized gate or the outcome-supervised
-utility selector. The prior Job-A F5 gate is one sigmoid of a post-FFN `v_nat` projection, with
-its median/scale estimated from teacher-forced reference language labels on `D-dev-select`.
-Job-B's logistic regression is a diagnostic EN/ZH probe, not `f_util`; its T1 gate is likewise a
-monolithic two-projection sigmoid. A trained temporal localizer is also absent.
+`IMPLEMENTATION GAP`: no controller exists. Legacy Job-A F5 (single post-FFN `v_nat`-projection
+sigmoid) and Job-B T1 (monolithic two-projection sigmoid) are **`LEGACY DESIGN`** and **must not**
+be described as this controller.
 
-**Legacy `v_nat` identity.** The codebase name `v_nat` (`steer_sweep/trackb/`,
-`experiments/job_b_training.py`, `experiments/round1_frozen.py`) refers to the "natural"
-within-utterance decoder direction constructed at the **rejected post-FFN site** under legacy
-procedures. It is **not** the same as the conditioning-residualized direction `Δ^⊥` defined in
-§4, which lives at the exact post-cross-attention site and has had conditioning projected out.
-Code that reads `v_nat` from the direction store is legacy.
+### Reclassified as `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE`
 
-**Fallback.** If the disagreement hypothesis (§5) fails on held-out data, the gate falls back
-to a retention-aware design using only source and decoder scores — a product of the localization
-factor and a simplified acceptance factor `1[p̂_{no-disagree} ≥ τ]` that omits the disagreement
-input. This fallback preserves the factorized structure and the ablation requirement.
+The following are **not prerequisites** for the core method and are off the critical path:
+factorized gate; temporal localizer; source/decoder/disagreement score modules; outcome-supervised
+utility selector; abstention selector; the disagreement repairability study (§5); and the
+acoustic→decoder gate-transport `r_q = Σ_t Ā_{q,t} g_t`. They are preserved as history and may
+reappear only as optional supporting analysis, never as a gate before controller training.
+
+**Legacy `v_nat` identity (unchanged).** Codebase `v_nat` (`steer_sweep/trackb/`,
+`experiments/job_b_training.py`, `experiments/round1_frozen.py`) is the post-FFN legacy direction;
+it is **not** `v_ℓ^{local}` (§4). Code reading `v_nat` from the direction store is `LEGACY DESIGN`.
 
 ---
 
 ## 7. Norm-preserving repair (LOCKED)
 
-After adding the update, the steered residual is renormalized to the pre-intervention norm:
+After adding the update, the steered residual is renormalized to the pre-intervention norm. In the
+updated-proposal notation (§2, `r` = pre-intervention site, `r̃` = repaired site):
 
 ```
-\bar r_{ℓ,t} = q_{ℓ,t} + \widetilde u^S_{ℓ,t}
-if norm_preserve:  r_{ℓ,t} = \bar r_{ℓ,t} · ( ‖q_{ℓ,t}‖ / (‖\bar r_{ℓ,t}‖ + EPS) )
-else:              r_{ℓ,t} = \bar r_{ℓ,t}
-u^S_{ℓ,t} = r_{ℓ,t} - q_{ℓ,t}
+\bar r_{ℓ,t} = r_{ℓ,t} + β g_t d_{ℓ,t}
+if norm_preserve:  r̃_{ℓ,t} = \bar r_{ℓ,t} · ( ‖r_{ℓ,t}‖ / (‖\bar r_{ℓ,t}‖ + EPS) )
+else:              r̃_{ℓ,t} = \bar r_{ℓ,t}
+u^S_{ℓ,t} = r̃_{ℓ,t} - r_{ℓ,t}
 ```
 
-- Canonical implementation: `csasr.models.hooks.apply_steering(..., norm_preserve=True)`
-  (`hooks.py:72`), used by both `sites.DecoderPostCrossAttnSteeringHook` and
-  `steering.EncoderSteeringHook`.
-- Invariants (§2): zero-gain positions bit-identical; `α=0` no-op.
+- **FROZEN (DG-02).** Canonical implementation: `csasr.models.hooks.apply_steering(..., norm_preserve=True)`
+  (`hooks.py:72`), used by `sites.DecoderPostCrossAttnInterventionHook` (and the legacy hooks /
+  `steering.EncoderSteeringHook`). Real-model acceptance verified norm preservation at L16/L24.
+- Invariants (§2): zero-gain positions bit-identical; `β=0` no-op.
 - The frozen decoder-site hook (`sites.py`) applies norm preservation **without** any
   `sqrt(num_layers)` rescale (§1). `NormPreserve` must be applied identically across the proposed
   system and every steering control (matched-energy, random, sign-flip) so comparisons change the
@@ -257,44 +307,52 @@ u^S_{ℓ,t} = r_{ℓ,t} - q_{ℓ,t}
 
 ---
 
-## 8. Training sets and losses (LOCKED roles; loss algebra partly open)
+## 8. Damage-aware training contract (LOCKED — updated proposal)
 
-Applies to the trained decoder-site direction (Job B / T1, `experiments/job_b_training.py`).
+Trains **only** the controller `f_θ` (§6) and optionally the global scalar `β`; the backbone stays
+frozen and the basis `V_ℓ^0` stays fixed (except the basis-refinement ablation below).
 
-- **Correction set:** baseline-**incorrect** embedded-English lexical units on training data —
-  the units steering must repair. `E_EN = { u : Ŷ_u ≠ Y*_u }` (v5 §3.4).
-- **Retention set:** baseline-**correct** content that must be preserved — correct embedded-English
-  units `C_EN = { u : Ŷ_u = Y*_u }`, neighbouring Mandarin, and monolingual material.
-- **Correction loss (contract):** token cross-entropy toward the reference on the correction set.
-  `IMPLEMENTATION GAP`: `experiments/job_b_training.py:1016` applies `F.cross_entropy` to every
-  non-prefix reference token in its selected utterances. `cs_ce_val` is diagnostic only; neither
-  is the contract's correction-set-only objective.
-- **Retention populations.** Three retention groups are distinguished:
-  - **English retention:** baseline-correct embedded-English units `C_EN` — corruption here is
-    the primary harm measure.
-  - **Mandarin retention:** matrix-language (Mandarin) material near the intervention site —
-    degradation measured as new Mandarin errors.
-  - **Monolingual retention:** monolingual Mandarin and English utterances outside any CS region.
-- **Retention enforcement:** currently enforced by (a) **norm-preserving repair** (§7) and (b)
-  measurement via `steer_sweep.metrics.corruption_and_retention` (`zh_retention`, corruption
-  counts), **not** by an explicit retention loss term.
-- `OPEN DECISION`: **staged training order.** The proposal does not prescribe a fixed training
-  curriculum. A staged order (1. correction only → 2. correction + Mandarin retention →
-  3. correction + Mandarin + English retention → 4. gate-budget penalty if coverage exceeds a
-  ceiling) is one candidate schedule. An alternative is joint correction+retention from the start
-  with loss weighting. This choice is deferred to the training ticket; it does not block DG-01
-  metric canonicalization.
-- `IMPLEMENTATION GAP` / `OPEN DECISION`: whether an explicit retention/anchor loss (e.g.
-  KL-to-baseline on the retention set) is part of the contract, and its weight relative to the
-  correction loss.
-- **Data matching:** trained directions and any LoRA baseline are trained on **exactly**
-  `loc-train ∪ util-train` (`lora-router-matched` view in `configs/lss/roles.yaml`), never on
-  `D-dev-confirm` or `D-test` (v5 §6-Exp4).
+**Position sets** (on training data; baseline = frozen backbone, no intervention):
+- **Correction set** `𝒞_E` = baseline-**wrong** embedded-language positions (what steering must repair).
+- **Embedded retention set** `ℛ_E` = baseline-**correct** embedded-language positions.
+- **Matrix retention set** `ℛ_M` = baseline-**correct** matrix-language positions.
 
-`IMPLEMENTATION GAP`: the submitted Job-B wrapper delegates the **prior fixed layer-24 trainer**;
-the full seven-layer / T1 / GlobalDecoder / SALSA-E / LoRA enumeration is not yet wired
-(`docs/proposal_arr/ROUND_1_3_IMPLEMENTATION_STATUS.md`). Under §3 only layers 16 and 24 are
-candidates regardless.
+**Objectives:**
+```
+𝓛_corr  = (1/|𝒞_E|) Σ_{t∈𝒞_E}  − log p_θ(y_t | x, y_{<t})
+𝓛_ret,E = (1/|ℛ_E|) Σ_{t∈ℛ_E}  D_KL( p_{0,t} ‖ p_{θ,t} )
+𝓛_ret,M = (1/|ℛ_M|) Σ_{t∈ℛ_M}  D_KL( p_{0,t} ‖ p_{θ,t} )
+𝓛       = 𝓛_corr + λ_E 𝓛_ret,E + λ_M 𝓛_ret,M + λ_A 𝓛_anchor
+```
+- `p_{0,t}` = frozen-baseline next-token distribution; `p_{θ,t}` = distribution with the controller
+  active. Retention is now an **explicit KL-to-baseline loss**, not only norm-preserve + measurement.
+- `𝓛_corr` is **correction-set-only** cross-entropy (`IMPLEMENTATION GAP` vs Job-B's all-token CE at
+  `experiments/job_b_training.py:1016`, which is `LEGACY DESIGN`).
+- `𝓛_anchor = ‖ΔV_ℓ‖_F²` is active **only** for the basis-refinement ablation (below); for the main
+  method `λ_A` is inactive.
+
+**Controller variants:**
+- **Main method:** `V_ℓ^0` fixed; train the bottleneck controller (gate + mixture outputs), optionally `β`.
+- **Constrained-refinement ablation:** `V_ℓ = V_ℓ^0 + ΔV_ℓ` with anchor `𝓛_anchor = ‖ΔV_ℓ‖_F²`.
+  This is an **ablation/variant, not the default**.
+- **SALSA-style learned global vector:** an unconstrained learned global direction is a **baseline**,
+  not the proposed method (§10 / EXPERIMENT_MATRIX).
+
+**Optimization vs claims:**
+- **Teacher forcing** is used for **optimization** (the losses above).
+- **Free decoding** is used for **checkpoint selection and practical ASR claims** (MC §9).
+
+**Staged training order** (DG-06): (1) correction-only → (2) + matrix retention → (3) + embedded
+retention → (4) optional gate-coverage penalty *only if* measured controller coverage is
+excessively broad → (5) optional constrained basis refinement. Do **not** claim sparsity unless
+measured coverage is genuinely sparse.
+
+**Data matching:** the controller (and any LoRA/SALSA baseline) is trained on the existing
+controller-training pool `loc-train ∪ util-train` (physical role names preserved), never on
+`D-dev-confirm` or `D-test` (DATA_EXPOSURE).
+
+`OPEN DECISION` (DG-06): the weights `λ_E`, `λ_M` (and `λ_A` for refinement); whether a gate-coverage
+penalty is added; staged vs joint schedule.
 
 ---
 
@@ -319,20 +377,25 @@ Rules:
 
 ## 10. Scientific decision gates (LOCKED)
 
-From the proposal (v5 §8.1). A gate that fails is a **result**, not a licence to relax the
-threshold. Code status semantics: `passed` / `completed_no_go` (ran, answer is no) / `blocked`
-(evidence unavailable) / `failed` (implementation defect) — `csasr.lss.gates`,
-`csasr.utils.status`. Only `passed` satisfies a downstream prerequisite.
+A gate that fails is a **result**, not a licence to relax the threshold. Code status semantics:
+`passed` / `completed_no_go` (ran, answer is no) / `blocked` (evidence unavailable) / `failed`
+(implementation defect) — `csasr.lss.gates`, `csasr.utils.status`. Only `passed` satisfies a
+downstream prerequisite. The gate set is reconciled to the post-DG-02 sequence (DG-03…DG-08;
+EXPERIMENT_MATRIX §A). The **main scientific comparison is the correction–retention–efficiency
+trade-off**, visualized as the **correction–damage frontier** over steering strength / controller
+operating points.
 
-| Gate | Question | Pass condition |
-|---|---|---|
-| **A — Alignment** | Are local frame labels trustworthy? | coverage ≥0.95, invalid/nonmonotonic ≤0.01, ≥90% units usable, median boundary err ≤100 ms, p90 ≤200 ms, class-asymmetry & ±50/±100 ms jitter stable |
-| **B — Oracle headroom** | Does a fixed local action repair errors? | **free-decoding** net utility >0 with conversation-block bootstrap 95% CI excluding 0; corrections > corruptions; correct direction beats label-permuted, matched-random, sign-flip, wrong-location nulls in paired bootstrap |
-| **T — Decoder transport** | Can the acoustic gate reach decoder steps? | ≥60% practical coverage with useful target-step concentration; else use E-only |
-| **C — Localizer recall** | Do candidates include repairable spans? | ≥70% recall of oracle-correctable spans at manageable candidate load |
-| **D — Utility value** | Does outcome supervision beat steer-all / uncertainty? | better net utility at nontrivial coverage on development data |
-| **E — Automatic method** | Does predicted steering retain oracle gain at low harm? | positive development PIER gain; corrections > corruptions |
-| **F — Method comparison** | Competitive with LoRA / global steering? | non-dominated on correction-vs-harm or preservation |
+| Gate | Stage | Question | Pass condition |
+|---|---|---|---|
+| **A — Alignment** | supporting | Are local frame labels trustworthy? | coverage ≥0.95, invalid/nonmonotonic ≤0.01, ≥90% units usable, median boundary err ≤100 ms, p90 ≤200 ms, jitter stable |
+| **B — Basis causal screen** | DG-03 | Does the frozen basis steer at the exact site? | intended-direction effect present at L16 and/or L24, and it **beats** sign-reversed, matched-norm random, and wrong-location controls; used to select L16 vs L24 and to confirm headroom |
+| **RQ1 — Frozen-steering frontier** | DG-04 | Does any fixed local/mixture steering repair errors at acceptable damage? | a favorable point on the free-decoding correction–damage frontier; corrections > corruptions with dialogue-block bootstrap CI |
+| **RQ2 — Adaptive controller** | DG-05/06 | Does the learned controller beat fixed steering on the frontier? | dominates or matches the best fixed operating point at equal/higher correction with lower damage; free-decoding |
+| **RQ3 — Method comparison** | DG-07/08 | Competitive with SALSA-global / matched LoRA? | non-dominated on the correction–retention–efficiency trade-off |
+
+`LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE` (removed as core gates): **T — decoder transport**,
+**C — localizer recall**, **D — utility-selector value**, and the disagreement decision gate.
+They may run only as optional supporting analysis and never block controller training.
 
 Utility (v5 §2.5): `U_k(a*) = N_corrected − η·N_local_harm − κ·N_outside_harm`, primary
 `η = κ = 1`; 0.5 and 2 reported as sensitivity only, never retuned after seeing outcomes.
@@ -361,8 +424,11 @@ outside harm.
 ## 11. Safe-claim boundaries (LOCKED)
 
 The paper / results must **not** claim:
-- that the system is training-free (backbone frozen, but localizer & selector are trained);
+- that the system is training-free (backbone frozen, but the **controller** is trained);
 - that the direction is a pure or unique "language variable";
+- that `v_local` / `v_cond` (§4) is a **pure acoustic direction**, a **universal language axis**, or
+  a **causal language representation** — use "conditioning-residualized local-language direction" and
+  "language-conditioning direction" only;
 - that every embedded-English span needs steering;
 - that a frame-level LID gain is ASR correction;
 - that a teacher-forced gold-token improvement is a transcript improvement (§9);
@@ -376,38 +442,39 @@ Positive framing that is safe:
 
 ---
 
-## 12. Open decisions requiring human judgment (index)
+## 12. Open decisions requiring human judgment (index — reconciled DG-03R)
 
-1. Practical deployable site: E-only vs decoder-site vs E+D (§1).
-2. Rank of the conditioning subspace `U^cond` and its estimator (§4).
-3. Rank of the primary trained direction: rank-1 (proposal) vs rank-2 (current Job B) (§4, §8).
-4. Feature→score aggregation for source/decoder/disagreement (§5).
-5. Exact factorized-gate algebra and transport composition for the decoder site (§6).
-6. Whether an explicit retention loss term exists and its weight (§8).
-7. Staged training order: correction-only first vs joint correction+retention (§8).
-8. How dialogue-v2 `router-calib` is divided into disjoint probability-calibration and
-   threshold-selection roles; the current dialogue-v2 config does not define that subdivision.
+1. **Layer selection L16 vs L24** — resolved by the DG-03 basis causal screen (§10 Gate B), not
+   pre-decided.
+2. **Basis construction detail (§4):** the exact baseline-correct embedded/matrix position sets and
+   any nuisance/dialogue-balancing of the means; resolve in DG-03 against the updated proposal.
+3. **Controller (§6):** architecture/bottleneck width, `π_t` parameterization (simplex vs bounded),
+   and whether `β` is fixed or trained; resolve in DG-05.
+4. **Training weights (§8):** `λ_E`, `λ_M`, `λ_A`; whether a gate-coverage penalty is added; staged
+   vs joint schedule; resolve in DG-06.
+5. **Calibration split:** whether the controller needs a `router-calib` subdivision; only if a
+   calibration/threshold step is introduced (DATA_EXPOSURE).
 
-None of these open decisions blocks DG-01 metric canonicalization. Items 4–8 are deferred to the
-training and gate tickets (DG-03+). Items 1–3 are resolved on development evidence before
-confirmation.
+Resolved / superseded (no longer open for the core paper): practical deployable site (decoder exact
+site is FROZEN, DG-02); conditioning-subspace rank (core basis is the two named directions, §4);
+rank-1 vs rank-2 primary direction (per-position `d_{ℓ,t}` is rank-one; the basis is 2-column, §4);
+feature→score aggregation and factorized-gate algebra (`LEGACY DESIGN`, §5–§6).
 
-## 13. Implementation gaps (index)
+## 13. Implementation gaps (index — reconciled DG-03R)
 
-1. Candidate-layer configurations and Round-1 enumeration disagree with `{16,24}` (§3).
-2. Current free-decoding runners steer post-FFN block outputs; no exact-site runner yet carries
-   absolute cache position, forced-prefix exclusion, and beam expansion (§1).
-3. Round-1 runners do not use the contract's `projection_std` scale (§2, §7).
-4. Conditioning residualization exists only in reusable v2r3 code and its operation order differs
-   from the frozen definition (§4).
-5. The factorized gate, trained temporal localizer, and outcome-supervised utility selector are
-   not implemented (§5–§6).
-6. Job-B delegates a fixed layer-24, rank-2, post-FFN trainer and uses all-token CE rather than
-   correction-set-only CE; the full method/baseline enumeration is not wired (§4, §8).
-7. Retention is measured and norm-repaired but has no explicit loss (§8).
-8. Metric surfaces use different denominators/accounting and opposite delta signs (this section;
-   CODE_MAP §3) — canonicalization is the next ticket.
-9. Current Round-1 result directories contain cell/protocol records but not the full
-   config/environment/git/model/hash manifest required by AGENTS.md.
-10. Dialogue-v2 `router-calib` exists, but no `calib-prob`/`calib-thresh` sub-roles are configured
-    for the finalized gate (§6; DATA_EXPOSURE).
+1. `configs/lss/spec.yaml` still lists decoder layers `[8,16,24,31]`; contract permits `{16,24}` (§3).
+2. No **canonical steering-basis builder** emits `v_raw`/`v_cond`/`v_local`/`V^0` in the frozen §4
+   order at the exact site (v2r3 `assemble` projects before aggregating — not equivalent). [DG-03]
+3. No **adaptive controller** `f_θ(LN(r)) → (g_t, π_t)` exists; legacy F5/T1 gates are `LEGACY DESIGN`
+   and must not be relabeled as it (§6). [DG-05]
+4. No **damage-aware training**: correction-set-only CE, explicit KL retention (`𝓛_ret,E`/`𝓛_ret,M`),
+   and optional basis-refinement anchor are unimplemented; Job-B all-token CE is legacy (§8). [DG-06]
+5. No **scientific exact-site free-decoding runner** for DG-03+ built on the frozen DG-02 hook; the
+   legacy runners steer post-FFN (§1). [DG-03+]
+6. Gate-coverage denominator remains deferred until legitimately defined by the controller (§12 of
+   DG-01 spec / this §6); do not compute it before then.
+7. Round-1 result directories lack the full config/environment/git/model/hash manifest (AGENTS.md);
+   new DG-03+ runs must write one.
+
+**Done / not gaps:** DG-01 canonical metrics/result schema/sign convention (§10) and the DG-02 exact
+site + NormPreserve + hook are COMPLETE/FROZEN.

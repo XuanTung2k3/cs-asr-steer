@@ -1,5 +1,29 @@
 # STATUS
 
+## Stage roll-up (2026-09-07)
+
+- **DG-00 — COMPLETE.** Scientific contract & guardrails.
+- **DG-01 — COMPLETE.** Canonical metrics (`metrics_v1`) + result schema (`result_v1`) + adapter.
+- **DG-02 — COMPLETE / FROZEN.** Exact post-cross-attention/pre-FFN site; real-model acceptance PASS
+  at L16 & L24 (Slurm job 50369). Committed `db365d8`.
+- **DG-03R — READY FOR FINAL AUDIT.** The reconciled documents define **contrastive basis → adaptive
+  controller → damage-aware optimization** and the older disagreement / temporal-localizer /
+  utility-selector / factorized-gate roadmap is **superseded for the core paper** (`LEGACY DESIGN`).
+  **Prior blocker (now resolved):** the updated method existed only in the contract docs / the DG-03R
+  ticket, with no versioned proposal artifact, while `AGENTS.md`/`CLAUDE.md` still pointed to v5.
+  **Resolution:** added the versioned proposal
+  `docs/proposal_arr/CS_ASR_ARR_October_2026_Method_First_Proposal_v6.md` as the scientific source of
+  record; repointed `AGENTS.md`, `CLAUDE.md`, and `METHOD_CONTRACT.md` to v6; marked v5 (and
+  Implementation_Plan/ROUND_1_3/GATE_A) **SUPERSEDED / HISTORICAL**; and confirmed no active
+  experiment gate requires the localizer / utility selector / disagreement / factorized gate. No
+  code/tests/configs changed; no experiment run. Not yet `COMPLETE` — awaiting the independent final
+  audit. See v6, `METHOD_CONTRACT.md` §4–§8/§10, `EXPERIMENT_MATRIX.md`, `CODE_MAP.md`.
+
+**Next ticket:** `DG-03 — steering basis construction and causal validation at L16/L24 on
+Whisper-large-v3 × CS-Dialogue.` (Not started.)
+
+---
+
 **Stage 2 / DG-01 — COMPLETE (canonical metrics + result artifacts; freeze commit pending).**
 `metrics_v1` + `result_v1` are frozen. Canonical modules: `src/csasr/evaluation/canonical.py`,
 `retention.py`, `result_schema.py`, `legacy_adapter.py`, and the emission path `result_emit.py`.
@@ -31,23 +55,29 @@ finalized method unless CODE_MAP classifies the relevant path as canonical.
 1. Intervention site = decoder post-cross-attention residual, pre-FFN
    (`csasr.lss.sites.DECODER_TENSOR`); whole decoder-block output is rejected.
 2. No depth rescale at the frozen site; norm-preserving repair is required.
-3. `q`, nominal update, repaired `r`, and effective `u^S = r-q` are defined in MC §2 and §7;
-   zero-gain positions must be bit-identical and `alpha=0` is a no-op.
+3. `q`, `u_source`, pre-intervention `r`, repaired `r̃`, and effective `u^S = r̃-r` are defined in
+   MC §1–§2 and §7; zero-gain positions must be bit-identical and `β=0` is a no-op.
 4. Decoder candidate layers are `{16, 24}`.
-5. Conditioning-residualized `Δ^⊥` is primary; legacy directions (including codebase `v_nat`)
+5. The frozen basis is `V^0 = [v_local, v_cond]`; legacy directions (including codebase `v_nat`)
    remain labeled legacy and must not be silently relabeled.
-6. The inference-safe feature groups and factorized gate are contract components, not claims about
-   current implementation.
+6. The inference-safe feature allowlist is canonical; the factorized gate is superseded `LEGACY
+   DESIGN`, not a current contract component.
 7. Headline evidence requires free decoding; teacher-forced results are screening only.
 8. `D-test` has permitted reference/C00 exposure but no steered exposure found.
-9. Encoder–decoder disagreement is a **conditional** mechanistic hypothesis (MC §5); the contract
-   preserves the decision rule and fallback gate (MC §6).
+9. Encoder–decoder disagreement is **optional supporting analysis** only (MC §5), not a decision
+   rule or fallback gate.
 10. Correction, English retention, Mandarin retention, and monolingual retention populations are
     distinguished (MC §8).
 11. Metric sign convention: `PIER_gain = PIER_baseline − PIER_method` (positive = improvement).
     Legacy artifacts with opposite signs must be converted before comparison.
 
 ## Implementation gaps
+
+> **DG-03R note:** this list predates the DG-03R reconciliation and is retained as historical
+> context. **G1 is resolved** (exact-site hook FROZEN, DG-02). **G5 is superseded** — the temporal
+> localizer / utility selector / abstention / factorized gate are `LEGACY DESIGN`, replaced by the
+> adaptive controller. The authoritative post-DG-02 gaps are `METHOD_CONTRACT.md` §13 and
+> `CODE_MAP.md` §2 (basis builder, controller, damage-aware losses, scientific exact-site runner).
 
 - **G1 — exact-site integration:** the reusable exact-site recorder/hook exists, but no current
   free-decoding runner wires it through cache position, forced prefix, and beam expansion. Current
@@ -74,7 +104,12 @@ finalized method unless CODE_MAP classifies the relevant path as canonical.
 - **G9 — provenance:** current Round-1 result directories do not contain the complete resolved
   config/environment/git/model/hash manifest required by `AGENTS.md`.
 
-## Open scientific decisions (non-blocking for DG-01)
+## Historical open scientific decisions (pre-DG-03R; retained for provenance only)
+
+> **DG-03R note:** superseded by `METHOD_CONTRACT.md` §12 (reconciled). Items about the
+> disagreement gate, factorized-gate algebra, and conditioning-subspace rank are no longer open for
+> the core paper; the live open decisions are layer selection (DG-03 screen), controller
+> architecture (DG-05), and training weights/schedule (DG-06).
 
 1. Practical deployable site: E-only, decoder, or E+D (MC §1).
 2. Conditioning subspace rank/estimator (MC §4).
@@ -210,6 +245,6 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 
-**DG-03 — version steering directions and validate layers 16/24 with causal controls.**
+**DG-03 — steering basis construction and causal validation at L16/L24 on Whisper-large-v3 × CS-Dialogue.**
 Direction construction, gate implementation, and training work follow as separate tickets (DG-03+).
 DG-03 is **not** started in this session.

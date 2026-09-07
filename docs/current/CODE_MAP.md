@@ -55,15 +55,20 @@ are `sbatch/study_track_a.sh`, `sbatch/study_track_b.sh`, `sbatch/study_stage_d_
 | Encoder steering | `src/csasr/models/hooks.py` — `EncoderSteeringHook`; builders in `src/csasr/steering/encoder_hook.py` and masks in `src/csasr/steering/masks.py`; direction in `src/csasr/directions/encoder.py` | reusable / legacy for the decoder-site contract |
 | Exact-site decoder contrasts | `src/csasr/experiments/v2r3_directions.py` — `site_d_contrasts`, `assemble` | reusable exact-site construction from a legacy pipeline |
 | Post-FFN decoder direction construction | `src/csasr/directions/decoder.py`, with generic accumulation in `src/csasr/directions/accumulators.py` | **legacy for this contract** |
-| Conditioning projection | `src/csasr/experiments/v2r3_directions.py` — `orthonormal_basis`, `project_out`, `assemble` | reusable but operation order differs from MC §4; dedicated canonical component absent |
-| Random/sign controls | `src/csasr/directions/controls.py` — `random_direction`, `wrong_sign`, `orthogonalized_random` | reusable; no contract-complete paired control runner |
-| Inference-safe feature contract | `src/csasr/lss/features_contract.py` — `FEATURE_ALLOWLIST`, `assert_inference_safe` | canonical allowlist/guard; named aggregate scores absent |
-| Temporal localizer | Absent | proposed, not implemented |
-| Outcome-supervised utility selector and abstention | Absent | proposed, not implemented; Job-B logistic regression is only an EN/ZH diagnostic probe |
-| Factorized gate | Absent | proposed, not implemented; Job-A F5 and Job-B T1 are monolithic projection gates |
+| Conditioning projection | `src/csasr/experiments/v2r3_directions.py` — `orthonormal_basis`, `project_out`, `assemble` | reusable for `v_local`/`v_cond`, but operation order differs from MC §4; dedicated canonical component absent |
+| **Canonical steering-basis builder** (`v_raw`, `v_cond`, `v_local`, `V^0`; MC §4) | **Absent** | **DG-03 gap.** Reuses `v2r3_directions` primitives + `DecoderPostCrossAttnRecorder`, but no builder emits the four artifacts in the frozen §4 order (raw diff-of-means at baseline-correct positions → residualize vs `v_cond` → assemble `V^0`), versioned/hashed |
+| **Adaptive controller** `f_θ(LN(r_t)) → (g_t, π_t)` (MC §6) | **Absent** | **DG-05 gap.** Consumes the frozen DG-02 hook's per-row site state; `d_{ℓ,t}=normalize(V^0 π_t)`. Legacy F5/T1 gates are **not** this controller |
+| **Damage-aware training** (correction-set-only CE + KL retention `𝓛_ret,E`/`𝓛_ret,M` + optional anchor; MC §8) | **Absent** | **DG-06 gap.** Job-B all-token CE is `LEGACY DESIGN` |
+| **Exact-site scientific free-decoding runner** (DG-03+) | **Absent** | **gap.** Must be built on `sites.DecoderPostCrossAttnInterventionHook` (FROZEN) and write a full provenance manifest; legacy runners steer post-FFN |
+| Random/sign controls | `src/csasr/directions/controls.py` — `random_direction`, `wrong_sign`, `orthogonalized_random` | reusable; no contract-complete paired control runner (DG-03 controls) |
+| Inference-safe feature contract | `src/csasr/lss/features_contract.py` — `FEATURE_ALLOWLIST`, `assert_inference_safe` | canonical leakage guard; the controller's only input `LN(r_t)` trivially passes it |
+| Temporal localizer | Absent | `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE` (superseded by the controller, MC §5–§6) |
+| Outcome-supervised utility selector and abstention | Absent | `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE`; Job-B logistic regression was only an EN/ZH diagnostic probe |
+| Factorized gate | Absent | `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE`; Job-A F5 / Job-B T1 are monolithic projection gates, not the controller |
+| Encoder–decoder disagreement score | Absent | `OPTIONAL SUPPORTING ANALYSIS` only; no longer a decision gate (MC §5) |
 | Candidate correction/harm/utility | `src/csasr/lss/outcomes.py` — `candidate_unit_sets`, `newly_introduced_errors`, `utility` | **canonical primitive** correctness-flip accounting |
 | Legacy target/outside accounting | `src/csasr/evaluation/correction_harm.py`; `steer_sweep/metrics.py` — `target_outcomes`, `corruption_and_retention` | reusable/legacy; `outside_region_edits` is transcript difference, not harm |
-| Contract correction loss | Absent | Job B's `F.cross_entropy` at `experiments/job_b_training.py:1016` is all-token CE, not correction-set-only CE |
+| Contract correction + retention losses | Absent | **DG-06 gap.** Need correction-set-only CE on `𝒞_E` + explicit KL-to-baseline retention on `ℛ_E`/`ℛ_M` (MC §8); Job B's `F.cross_entropy` at `experiments/job_b_training.py:1016` is all-token CE (legacy) |
 | Gate status machinery | `src/csasr/lss/gates.py`, `src/csasr/utils/status.py` | canonical |
 | Speaker-role partition | `configs/lss/roles.yaml`, `src/csasr/lss/roles.py` | legacy v1; conversation-disjoint but not dialogue-disjoint |
 | Dialogue-atomic partition | `configs/lss/roles.yaml`, `src/csasr/lss/dialogue_roles.py`, `src/csasr/lss/balance.py`, `src/csasr/lss/seeds.py`, `src/csasr/experiments/dialogue_roles_build.py` | canonical partition implementation; dialogue-v2 `router-calib` has no configured sub-split |

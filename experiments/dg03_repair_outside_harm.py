@@ -177,6 +177,10 @@ def repair(screen_path: Path, data_root: Path) -> dict[str, Any]:
         result["metrics"]["outside_harm"] = int(summary["outside_harm"])
         result["metrics"]["outside_harm_accounting"] = summary
         result["metrics"]["candidate_utility"] = float(summary["utility"])
+        result["provenance"]["outside_harm_note"] = (
+            "canonical n_corrupted_outside reconstructed offline from the frozen "
+            "D-dev-select existing_ctc candidate population; correctness-flip harm, "
+            "not transcript edit count")
         result["provenance"]["outside_harm_accounting"] = provenance
         validate(result)
         # Exercise the canonical result round-trip before writing.

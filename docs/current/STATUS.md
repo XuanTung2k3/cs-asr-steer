@@ -38,8 +38,17 @@
   corrections − corruptions. Pre-run commit `749759b`; GPU jobs 50470–50472 completed; focused
   DG-03/DG-01 validation: **34 passed**.
 
-**Next ticket:** `DG-04 — frozen steering baselines and correction–damage frontier on the selected
-Whisper layer (L24).` (Not started.)
+- **DG-04 — COMPLETE / FROZEN.** Frozen exact-site baselines B0/B1/B2/B3 ran on the same 300-utterance
+  D-dev-select population at L24 with the pre-registered `ρ={0.5,1.0,2.0}` grid. Jobs **50483** and
+  **50484** completed on `mig`; all 10 frontier points validate as `result_v1` with canonical outside
+  harm and realized-energy accounting. B3 calibration used 300 shortest `router-calib` utterances
+  (τ=1.2037518, T=1.9582404) and no runtime reference information. The frozen POI rule selects
+  **B1 ρ=0.5** (`U=38`, 135 corrections / 97 corruptions, PIER gain +0.01675); B3 ρ=0.5 is the
+  other positive point (`U=33`). No adaptive/controller/training work was run. Freeze artifacts:
+  `results/dg04/frontier.json`, `results/dg04/reference.json`; runner commit `33799da`, audit
+  hardening commit `a4f14be`; focused DG-04 tests: **7 passed**.
+
+**Next ticket:** `DG-05 — adaptive direction-and-strength controller with fixed steering basis.`
 
 ---
 

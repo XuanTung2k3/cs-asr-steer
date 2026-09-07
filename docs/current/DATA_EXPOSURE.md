@@ -42,7 +42,7 @@ rename any physical role artifact. Logical use of each role under the contrastiv
 |---|---|
 | `D-construct` | steering-**basis construction** (`v_raw`, `v_cond`, `v_local`, `V^0`) |
 | `loc-train`, `util-train` | **controller-training pool** (`loc-train ∪ util-train`); historical names + row assignments preserved |
-| `router-calib` | calibration / hyperparameter support **only if** a calibration step is introduced |
+| `router-calib` | calibration / hyperparameter support; DG-04 B3 projection-gate calibration only |
 | `D-dev-select` | layer (L16 vs L24), steering-strength, model/checkpoint **selection**; incl. DG-03 causal screen and DG-04 frontier |
 | `D-dev-confirm` | **confirmation only**, never new selection |
 | `D-test` | locked final intervened evaluation **after the entire Whisper pipeline is frozen** |
@@ -72,6 +72,9 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   design is superseded (v6 §Appendix A; MC §5–§6).
 - **Observed use:** the legacy Job-B trainer sampled 500 rows from `loc-train ∪ util-train` to train
   its own post-FFN monolithic gate/direction systems — legacy, not the v6 controller.
+- **DG-04 calibration exposure (2026-09-07):** the 300 shortest `router-calib` utterances were used
+  for the frozen B3 projection-gate calibration only (teacher-forced exact-site states; Slurm job
+  50484). No D-dev-confirm or D-test data was read.
 - **Implementation state:** the v6 adaptive controller and damage-aware losses are **not implemented
   or trained**. Dialogue-v2 `router-calib` exists, but its role report/config has no
   `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a 10/10 calibration split.
@@ -99,6 +102,10 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   same frozen candidate alignments; this added no data exposure and no new subset. This is **intervened**
   development exposure on the selection split (its designated purpose: layer/strength/checkpoint
   selection); no confirmatory or test claim may be read from it.
+- **DG-04 frontier exposure (2026-09-07):** the same 300-utterance candidate population was used
+  for B0/B1/B2/B3 free-decoding baselines across the frozen `ρ={0.5,1.0,2.0}` grid (Slurm jobs
+  50483/50484). This is development frontier/operating-point selection exposure only; no new subset
+  was created and no D-dev-confirm or D-test intervention occurred.
 - **Status:** heavily touched for selection (now including DG-03 intervened layer selection); no
   confirmatory claim may be read from it.
 

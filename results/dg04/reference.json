@@ -1,0 +1,39 @@
+{
+  "provenance": {
+    "config_hash": "sha256:e0993e984b0bb5556dfdb995d6945f4f6f337e3e6438621bbf21d70596bd6dcd",
+    "frontier": "results/dg04/frontier.json",
+    "source_jobs": [
+      "50483",
+      "50484"
+    ]
+  },
+  "reference": {
+    "beta_nominal": 4.465628877080159,
+    "candidate_utility": -1248.0,
+    "correction_rate": 0.12664165103189493,
+    "corrections": 135,
+    "corruption_rate": 0.08069883527454243,
+    "corruptions": 97,
+    "en_wer_gain": -0.06216931216931215,
+    "gate_strength": {
+      "mean": 1.0,
+      "median": 1.0,
+      "n_gt_0.5": 20128,
+      "q10": 1.0,
+      "q90": 1.0
+    },
+    "matrix_retention_ok": true,
+    "mean_energy": 4.074278428072676,
+    "mer_gain": -0.04004039683954136,
+    "n_steered": 20128,
+    "net_corrections": 38,
+    "non_dominated": true,
+    "outside_harm": 1306,
+    "pier_gain": 0.01675485008818345,
+    "rho": 0.5,
+    "system": "B1",
+    "total_energy": 82007.07620024681,
+    "zh_cer": 0.26300179335080703
+  },
+  "result": "SELECT B1 rho=0.5"
+}

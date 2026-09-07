@@ -11,7 +11,9 @@ import pytest
 import torch
 
 from experiments.dg04_frozen_baselines import (
-    BASIS, GRID, LAYER, _b3_gate, _result_v1, build_frontier, main,
+    BASIS, FROZEN_V_COND_HASH, FROZEN_V_LOCAL_HASH, GRID, LAYER, _b3_gate,
+    _dg04_config_hash, _result_v1,
+    build_frontier, main,
 )
 
 REPO = Path(__file__).resolve().parents[1]
@@ -23,6 +25,7 @@ def test_constants_frozen():
     assert LAYER == 24
     assert GRID == (0.5, 1.0, 2.0)
     assert BASIS.endswith("steering_basis_v1_L24.json")
+    assert _dg04_config_hash().startswith("sha256:")
 
 
 # 2. frozen basis hash/loader guard
@@ -33,6 +36,8 @@ def test_basis_hash_loader_guard():
         arr = np.load(BASIS_DIR / rec["tensor_files"][name])
         h = "sha256:" + hashlib.sha256(np.ascontiguousarray(arr, dtype=np.float64).tobytes()).hexdigest()
         assert h == rec["tensor_hashes"][name], name
+    assert rec["tensor_hashes"]["conditioning_residualized_local"] == FROZEN_V_LOCAL_HASH
+    assert rec["tensor_hashes"]["language_conditioning"] == FROZEN_V_COND_HASH
 
 
 def _basis_vectors():

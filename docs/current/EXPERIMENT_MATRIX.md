@@ -27,7 +27,7 @@ Main scientific comparison: the **correction–retention–efficiency trade-off*
 | Ticket | Purpose | Data role | Decode |
 |---|---|---|---|
 | **DG-03 ✅ COMPLETE** | Basis built & versioned at L16/L24 (`steering_basis_v1`, provenance complete); causal screen selected **L24** (U=+33 vs L16 U=−6; direction-specific vs sign −43, not-any-vector vs random −7, location-specific vs count-matched wrong-loc +10; matrix preserved). Complete `result_v1`+retention per condition; edit-count/energy audited. Spec `DG03_BASIS_CAUSAL_SPEC.md`. | construct `D-construct`; screen `D-dev-select` | FD |
-| **DG-04** | Frozen-steering baselines + small strength grid → **RQ1** correction–damage frontier before any learning | `D-dev-select` | FD (TF screen only) |
+| **DG-04 ✅ COMPLETE** | Frozen-steering baselines + small strength grid → **RQ1** correction–damage frontier before any learning; reference B1 `ρ=0.5` | `D-dev-select`; B3 calibration `router-calib` | FD (TF calibration only) |
 | **DG-05** | Adaptive controller `f_θ(LN(r_t)) → (g_t, π_t)`, `V^0` fixed; no oracle location | train on `loc-train ∪ util-train`; select on `D-dev-select` | FD |
 | **DG-06** | Damage-aware training, staged (MC §8); optional gate penalty; optional basis refinement | train pool; select `D-dev-select` | TF optimize / FD select |
 | **DG-07** | Baselines & key ablations (SALSA-global, matched LoRA, local-only, cond-only, fixed vs learned mixture, global vs adaptive, fixed vs refined basis, correction-only vs correction+retention) | train pool; `D-dev-select` | FD |

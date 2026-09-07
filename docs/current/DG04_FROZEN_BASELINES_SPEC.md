@@ -98,5 +98,17 @@ OPERATING POINT** (flagged as a DG-05 risk; stage still valid if the frontier is
 - Partition **`mig`** (never `main`); record job id, resource, terminal state, runtime, log, artifact.
 - CPU merge (`--build-frontier`) assembles the frontier + reference after both jobs complete.
 
-## 14. Results (filled after terminal completion — pre-run leaves blank)
-- Job A / Job B: _pending_. B0/B1/B2/B3 results: _pending_. Frontier + reference: _pending_.
+## 14. Results (filled after terminal completion)
+- **Job A:** 50483, `mig`, COMPLETED, 00:09:16 — B0 + B1/B2 full grid.
+- **Job B:** 50484, `mig`, COMPLETED, 00:05:03 — router-calib + B3 full grid.
+- All 10 operating points are present and validate as `result_v1`; no point was discarded.
+- Positive frozen points under §12 are B1 `ρ=0.5` (`U=38`) and B3 `ρ=0.5` (`U=33`).
+- **Reference:** `B1 ρ=0.5`, `β_nominal=4.465628877080159`, selected by maximum frozen POI
+  utility. It has 135 corrections, 97 corruptions, outside harm 1306, PIER gain +0.01675,
+  matrix CER 0.2630, and realized energy 82007.08 total / 4.0743 mean.
+- B3 calibration is fixed from `router-calib` (300 shortest, τ=1.2037518, T=1.9582404).
+- No non-zero point is discarded despite the high-dose negative results. The candidate-level
+  utility remains diagnostic; §12 selection uses the frozen POI `U = corrections − corruptions`.
+- Frontier: `results/dg04/frontier.json`; reference: `results/dg04/reference.json`.
+- The scientific runner was committed as `33799da`; audit hardening and frontier provenance were
+  committed as `a4f14be`. Focused DG-04 tests: **7 passed**.

@@ -1,6 +1,8 @@
 """Focused DG-05A controller, exact-site, and correction-only tests."""
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import pytest
 import torch
 
@@ -17,7 +19,11 @@ from csasr.steering.dg05_training import (
     correction_target_mask,
     correction_set_payload,
 )
-from experiments.dg05_adaptive_controller import checkpoint_payload, select_checkpoint
+from experiments.dg05_adaptive_controller import (
+    _build_training_correction_set,
+    checkpoint_payload,
+    select_checkpoint,
+)
 
 
 def _controller(d_model: int = 12) -> FixedBasisAdaptiveController:
@@ -140,6 +146,31 @@ def test_checkpoint_selection_rule_is_utility_then_pier_then_energy():
         {"utility": 4, "valid_outside_harm": True, "pier_gain": 0.2, "total_energy": 10},
     ]
     assert select_checkpoint(records) == records[2]
+
+
+def test_training_correction_builder_uses_free_baseline_and_embedded_positions(tmp_path):
+    class Tokenizer:
+        eos_token_id = 99
+
+        def convert_tokens_to_ids(self, names):
+            return [1, 2, 3, 4]
+
+        def decode(self, ids, skip_special_tokens=True):
+            return {(): "", (10,): "hello", (10, 11): "hello world"}.get(
+                tuple(ids), "")
+
+    bundle = SimpleNamespace(
+        processor=SimpleNamespace(tokenizer=Tokenizer()),
+        metadata=lambda: {"model_id": "unit-test"},
+    )
+    example = SimpleNamespace(
+        utterance_id="u1", reference="hello world", token_ids=[1, 2, 3, 4, 10, 11, 99])
+    payload = _build_training_correction_set(
+        bundle, [example], {"u1": "hello"}, output_path=tmp_path / "ce.json",
+        source_config={"stage": "unit-test"})
+    assert payload["roles"] == ["loc-train", "util-train"]
+    assert payload["baseline_wrong_embedded_positions"] == {"u1": [5]}
+    assert payload["n_baseline_wrong_embedded_units"] == 1
 
 
 def test_dynamic_action_uses_the_exact_site_and_removes_hooks(tiny_bundle):

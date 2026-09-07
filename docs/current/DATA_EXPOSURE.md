@@ -75,10 +75,12 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
 - **DG-04 calibration exposure (2026-09-07):** the 300 shortest `router-calib` utterances were used
   for the frozen B3 projection-gate calibration only (teacher-forced exact-site states; Slurm job
   50484). No D-dev-confirm or D-test data was read.
-- **Implementation state:** the v6 adaptive controller and damage-aware losses are **not implemented
-  or trained**. Dialogue-v2 `router-calib` exists, but its role report/config has no
+- **DG-05A implementation state (2026-09-07):** the fixed-basis adaptive controller and
+  correction-only `C_E` path are implemented and **not trained**. No new data were opened by this
+  implementation-only stage. Dialogue-v2 `router-calib` exists, but its role report/config has no
   `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a 10/10 calibration split.
-- **Status:** the training roles have legacy exposure; whether the v6 controller needs a `router-calib`
+- **Status:** the training roles have legacy exposure; DG-05A preserves their physical assignments
+  and reserves them for the controller-training pool. Whether the v6 controller needs a `router-calib`
   subdivision is deferred (only if a calibration step is added).
 
 ### `D-dev-select`

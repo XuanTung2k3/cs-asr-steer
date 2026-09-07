@@ -48,7 +48,15 @@
   `results/dg04/frontier.json`, `results/dg04/reference.json`; runner commit `33799da`, audit
   hardening commit `a4f14be`; final freeze commit `2ed6cf1`; focused DG-04 tests: **7 passed**.
 
-**Next ticket:** `DG-05 — adaptive direction-and-strength controller with fixed steering basis.`
+- **DG-05A — IMPLEMENTED / READY FOR TRAINING.** Frozen design and implementation for the
+  Whisper-large-v3 × CS-Dialogue adaptive controller at selected L24 are in
+  `DG05_ADAPTIVE_CONTROLLER_SPEC.md`. The 32-wide `f_θ(LN(r))` emits sigmoid `g_t` and softmax
+  rank-2 `π_t` over the frozen DG-03 basis; beta is fixed to the DG-04 reference `4.465628877080159`.
+  The exact-site train-mode hook, frozen-basis guards, correction-only `C_E` mask/loss, checkpoint
+  provenance, config, and `mig` launcher are prepared. No GPU training was run; no KL retention,
+  basis refinement, SALSA, LoRA, or other dataset/model work was added.
+
+**Next ticket:** `DG-05B — controller training and free-decoding checkpoint selection on D-dev-select.`
 
 ---
 

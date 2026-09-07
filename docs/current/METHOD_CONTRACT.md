@@ -260,12 +260,18 @@ Contract:
 - `β` (global strength) may be a fixed hyperparameter or a single trainable scalar (§8).
 - Invariants of §2 hold: `g_t = 0` ⇒ bit-identical `r_{ℓ,t}`; `β = 0` ⇒ no-op.
 
-`OPEN DECISION` (fix in DG-05): controller architecture/width/bottleneck size, the exact
-parameterization of `π_t` (simplex vs bounded), and whether `β` is fixed or trained.
+`DG-05A RESOLUTION:` the development controller is fixed as
+`LayerNorm(1280) → Linear(1280,32) → GELU → Linear(32,3)`, with sigmoid `g_t`, softmax rank-2
+`π_t`, and fixed `β` equal to the DG-04 reference operating point. The complete pre-training
+specification is `docs/current/DG05_ADAPTIVE_CONTROLLER_SPEC.md`; no architecture/beta sweep is
+permitted. This resolves the prior architecture/mixture/beta open decision for DG-05A only;
+DG-06 may not silently change these inputs.
 
-`IMPLEMENTATION GAP`: no controller exists. Legacy Job-A F5 (single post-FFN `v_nat`-projection
-sigmoid) and Job-B T1 (monolithic two-projection sigmoid) are **`LEGACY DESIGN`** and **must not**
-be described as this controller.
+The DG-05A controller implementation is now present in `src/csasr/steering/controller.py` and
+uses the exact-site dynamic action path. Legacy Job-A F5 (single post-FFN `v_nat`-projection
+sigmoid) and Job-B T1 (monolithic two-projection sigmoid) remain **`LEGACY DESIGN`** and **must not**
+be described as this controller. The end-to-end trained/free-decoding evidence remains pending
+DG-05B.
 
 ### Reclassified as `LEGACY DESIGN` / `NOT IN CURRENT CORE SCOPE`
 

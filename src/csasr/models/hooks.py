@@ -75,13 +75,23 @@ def apply_steering(hidden: torch.Tensor, direction: torch.Tensor, alpha: float,
     """h_t <- h_t + alpha * s * g_t * d, optionally renormalised to ||h_t||.
 
     ``hidden``    (B, T, D)
-    ``direction`` (D,) unit norm
+    ``direction`` (D,) unit norm, or (B, T, D) unit directions for the
+    adaptive-controller path
     ``gain``      (B, T) in [0, 1], or None for "all positions"
     Positions with zero gain are returned bit-identical.
     """
     if alpha == 0.0:
         return hidden
-    d = direction.to(hidden.device, hidden.dtype).view(1, 1, -1)
+    d = direction.to(hidden.device, hidden.dtype)
+    if d.ndim == 1:
+        if d.shape[0] != hidden.shape[-1]:
+            raise ValueError(f"direction dim {d.shape[0]} != hidden dim {hidden.shape[-1]}")
+        d = d.view(1, 1, -1)
+    elif d.ndim == 3:
+        if d.shape != hidden.shape:
+            raise ValueError(f"direction shape {tuple(d.shape)} != hidden shape {tuple(hidden.shape)}")
+    else:
+        raise ValueError(f"direction must have shape (D,) or (B,T,D), got {tuple(d.shape)}")
     if gain is None:
         g = torch.ones(hidden.shape[:2], device=hidden.device, dtype=hidden.dtype)
     else:

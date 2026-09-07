@@ -6,7 +6,7 @@
 - **DG-01 — COMPLETE.** Canonical metrics (`metrics_v1`) + result schema (`result_v1`) + adapter.
 - **DG-02 — COMPLETE / FROZEN.** Exact post-cross-attention/pre-FFN site; real-model acceptance PASS
   at L16 & L24 (Slurm job 50369). Committed `db365d8`.
-- **DG-03R — READY FOR FINAL AUDIT.** The reconciled documents define **contrastive basis → adaptive
+- **DG-03R — COMPLETE / FROZEN.** The reconciled documents define **contrastive basis → adaptive
   controller → damage-aware optimization** and the older disagreement / temporal-localizer /
   utility-selector / factorized-gate roadmap is **superseded for the core paper** (`LEGACY DESIGN`).
   **Prior blocker (now resolved):** the updated method existed only in the contract docs / the DG-03R

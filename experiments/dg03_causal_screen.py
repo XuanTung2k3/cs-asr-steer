@@ -6,8 +6,9 @@ C3 matched-norm random (seeds 0,1,2), C4 v_local @ count-matched matrix-continua
 steps. Oracle steps are an oracle diagnostic / non-deployable gate (NOT the final
 method). Every condition is scored against C0 with the DG-01 canonical surface and
 emitted as a complete result_v1 (MER/PIER/embedded-WER/matrix-CER + gains + POI
-transitions + the three retention populations + reserved gate_coverage). Net
-correction-damage utility U = net_corrections drives selection (spec §8).
+transitions + the three retention populations + canonical outside-harm accounting
+and reserved gate_coverage). Net correction-damage utility U = net_corrections drives
+selection (spec §8).
 
 Edit audit (spec §5): per condition the number of steered edits, total and mean
 realized edit energy, and the intended edit count are recorded; C4 is count-matched
@@ -204,10 +205,10 @@ def main(argv=None):
         "basis_dataset_fingerprint": rec["provenance"].get("dataset_fingerprint"),
         "basis_construction_config_hash": rec["provenance"].get("construction_config_hash"),
         "diagnostic_dose": dose, "oracle_diagnostic": True, "non_deployable": True,
-        "outside_harm_note": ("candidate-free canonical surface: POI-level corruption + "
-                              "matrix retention capture harm outside the embedded region; "
-                              "candidate-level n_corrupted_outside needs acoustic candidate "
-                              "span sets and is the object of the DG-04 candidate frontier."),
+        "outside_harm_note": ("canonical n_corrupted_outside is reconstructed from the "
+                              "frozen D-dev-select existing_ctc candidate population by "
+                              "the CPU-only dg03_repair_outside_harm post-emission step; "
+                              "it is correctness-flip harm, not transcript edit count."),
     }
 
     base, _ = _decode(bundle, pop, layer=layer, direction=None, sets=None, nfp=nfp,
@@ -267,6 +268,11 @@ def main(argv=None):
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    # Candidate accounting is deterministic CPU post-processing over the stored
+    # hypotheses; it does not change any decoded output or selection input.
+    from experiments.dg03_repair_outside_harm import repair as repair_outside_harm
+    data_root = Path(dcfg["experiment"]["output_root"]).parents[1]
+    repair_outside_harm(out_path, data_root)
     log(f"wrote {out_path}")
     return 0
 

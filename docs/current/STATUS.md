@@ -30,8 +30,11 @@
   carries a real `dataset_fingerprint`/`construction_config_hash`; every screen condition is a
   complete validated `result_v1` (metrics+gains+POI transitions+3 retention populations+reserved
   gate_coverage) with per-utterance texts; per-condition edit-count/total-energy recorded and C4
-  count-matched to C1. Candidate-level `n_corrupted_outside` is documented as a DG-04 candidate-scored
-  object (language-level outside harm = matrix retention). Pre-run commit `749759b`.
+  count-matched to C1. Canonical `outside_harm = n_corrupted_outside` is now populated in every
+  C0–C4 result from the stored hypotheses and frozen D-dev-select candidate spans by CPU-only
+  post-processing; it is correctness-flip harm, not outside transcript edits. No GPU rerun was
+  needed. The added candidate utility is diagnostic only; the frozen selection U remains POI
+  corrections − corruptions. Pre-run commit `749759b`; GPU jobs 50470–50472 completed.
 
 **Next ticket:** `DG-04 — frozen steering baselines and correction–damage frontier on the selected
 Whisper layer (L24).` (Not started.)

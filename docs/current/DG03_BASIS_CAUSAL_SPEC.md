@@ -114,10 +114,13 @@ or the selection: (1) basis artifacts carry a real `dataset_fingerprint`
 `result_v1` — MER/PIER/embedded-WER/matrix-CER + gains + POI transitions + the three retention
 populations + reserved gate_coverage — with per-utterance texts persisted; (3) per-condition
 edit-count/total-energy are recorded and **C4 is count-matched to C1** (489 intended edits each).
-Candidate-level `n_corrupted_outside` is a candidate-scored quantity (needs acoustic candidate span
-sets) deferred to the DG-04 frontier; language-level harm outside the embedded region = matrix
-retention (in each `result_v1`). Construction is deterministic → basis metrics/hashes reproduced
-identically on the re-run.
+The remaining canonical field, `outside_harm = n_corrupted_outside`, was then reconstructed
+offline from the stored hypotheses and the frozen D-dev-select `existing_ctc` candidate spans
+under `blank_to_preceding`. It counts only baseline-correct → method-wrong trusted reference
+units outside the union of eligible embedded-English target candidates; unknown units and
+insertions are excluded exactly as in `csasr.lss.outcomes`. No GPU rerun or transcript change was
+needed. Construction is deterministic → basis metrics/hashes reproduced identically on the
+re-run.
 
 **Construction** — Slurm jobs **50452** then **50470** (mig H100 3g.40gb; 50470 adds provenance),
 COMPLETED exit 0, ~50 s. Commits `749759b` / `eac2e37`. D-construct: **233 baseline-correct
@@ -162,5 +165,13 @@ matrix-CER 0.2287 ≤ 1.5×0.2261 (=0.3392). Direction-specific (sign flip −43
 (random −7), location-specific (count-matched wrong-loc +10 ≪ +33), matrix language preserved.
 
 **Layer decision: SELECT L24** (only eligible layer). **DG-03 PASS / FROZEN** — the three audit
-blockers (provenance, complete `result_v1`+retention, C4 edit-count/energy) are resolved (see *Audit
-resolution* above). No β/ρ tuning; dose fixed at ρ=1×s_ℓ pre-run.
+blockers (provenance, complete `result_v1`+retention, C4 edit-count/energy) and the canonical
+outside-harm accounting are resolved (see *Audit resolution* above). The added candidate-level
+utility is diagnostic only; the pre-registered layer rule remains the POI utility
+`U = corrections − corruptions`, so its L24 values remain C1 `+33` and C4 `+10`. No β/ρ tuning;
+dose fixed at ρ=1×s_ℓ pre-run.
+
+Offline outside-harm repair values (`outside_harm`; C0, C1, C2, C3 seeds 0/1/2, C4) are:
+L16: `0, 140, 152, 33/111/136, 127`; L24: `0, 225, 116, 135/136/150, 265`.
+These values are correctness-flip harm, not outside transcript-edit counts, and do not alter the
+stored transitions, retention, realized energy, or the pre-registered layer decision.

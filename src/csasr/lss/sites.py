@@ -31,8 +31,8 @@ the ~2.9 GB that `output_attentions=True` materialises for every layer.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Iterable, Sequence
+from dataclasses import dataclass, field
+from typing import Any, Callable, Iterable, Sequence
 
 import torch
 
@@ -44,6 +44,46 @@ log = get_logger(__name__)
 ENCODER_TENSOR = "encoder_block_output"
 DECODER_TENSOR = "decoder_post_cross_attn_residual"
 DECODER_REJECTED_TENSOR = "decoder_block_output"
+
+# The only decoder layers this contract permits at the site (MC §3). Layer
+# *selection* between the two is DG-03; DG-02 refuses anything else on the
+# contract path so a stray index cannot slip through as a plumbing default.
+CONTRACT_DECODER_LAYERS = (16, 24)
+
+
+def _cache_length(past_key_values: Any) -> int:
+    """Absolute number of decoder positions already cached (prefill => 0).
+
+    Mirrors the reusable ``steer_sweep.hooks.cache_length`` (spec §5) without a
+    cross-package import from a core library module. Only used as the secondary
+    cross-check for the absolute position; the primary source is the layer's own
+    ``cache_position`` kwarg, which this transformers version always supplies.
+    """
+    if past_key_values is None:
+        return 0
+    getter = getattr(past_key_values, "get_seq_length", None)
+    if callable(getter):
+        try:
+            return int(getter())
+        except Exception:                                        # pragma: no cover
+            pass
+    try:                                                         # legacy tuple cache
+        return int(past_key_values[0][0].shape[2])
+    except Exception:                                            # pragma: no cover
+        return 0
+
+
+def num_forced_prefix_from(processor, language: str = "zh",
+                           task: str = "transcribe") -> int:
+    """The single source of truth for the forced-prefix width (spec §7).
+
+    Derived dynamically from ``len(build_prefix(...))`` rather than a hard-coded
+    4, so a config change to the forced prompt cannot silently desynchronise the
+    steering-eligibility boundary from the tokens Whisper is actually forced to
+    emit.
+    """
+    from ..data.alignment import build_prefix
+    return len(build_prefix(processor, language=language, task=task))
 
 
 @dataclass(frozen=True)
@@ -80,7 +120,24 @@ def assert_dropout_disabled(bundle, layers: Iterable[int]) -> None:
 
 
 class DecoderPostCrossAttnRecorder:
-    """Capture the post-cross-attention residual (and optionally its weights)."""
+    """Capture the post-cross-attention residual (and optionally its weights).
+
+    The forward decomposition of the site (spec §2) is exposed separately:
+
+    * ``q_states[k]``        -- ``q``, the ``encoder_attn_layer_norm`` pre-hook
+      ``args[0]``: the post-self-attention decoder-side state *before* the
+      cross-attention residual add (line 517 ``residual``).
+    * ``u_source_states[k]`` -- ``u_source``, the ``encoder_attn`` ``output[0]``:
+      the source-conditioned cross-attention contribution (line 519).
+    * ``states[k]``          -- ``r = q + u_source``, the site the FFN consumes
+      (line 528). Kept under the historical name so existing callers still read
+      the site here.
+
+    This is a detached analysis mode: every stored tensor is ``.detach()``-ed and
+    upcast, so no autograd graph is retained (spec §9). ``u_source`` is taken
+    directly from the cross-attention module output -- never approximated from an
+    unrelated hidden state -- so ``r == q + u_source`` holds to dtype rounding.
+    """
 
     def __init__(self, bundle, layers: Iterable[int], *,
                  to_dtype: torch.dtype = torch.float32,
@@ -91,6 +148,8 @@ class DecoderPostCrossAttnRecorder:
         self.keep_attention = keep_attention
         self.keep_last_only = keep_last_only
         self.states: dict[int, torch.Tensor] = {}
+        self.q_states: dict[int, torch.Tensor] = {}
+        self.u_source_states: dict[int, torch.Tensor] = {}
         self.attentions: dict[int, torch.Tensor] = {}
         self._residual: dict[int, torch.Tensor] = {}
         self._handles: list = []
@@ -103,15 +162,19 @@ class DecoderPostCrossAttnRecorder:
 
     def _post_hook(self, layer: int):
         def hook(_mod, _inp, output):
-            residual = self._residual.get(layer)
-            if residual is None:
+            q = self._residual.get(layer)
+            if q is None:
                 raise RuntimeError(
                     f"decoder layer {layer}: cross-attention ran without its "
                     "layer-norm pre-hook; the site cannot be reconstructed")
-            attn_out = _first(output).detach()
-            site = residual + attn_out
+            u_source = _first(output).detach()
+            site = q + u_source
             if self.keep_last_only:
+                q = q[:, -1:, :]
+                u_source = u_source[:, -1:, :]
                 site = site[:, -1:, :]
+            self.q_states[layer] = q.to(self.to_dtype)
+            self.u_source_states[layer] = u_source.to(self.to_dtype)
             self.states[layer] = site.to(self.to_dtype)
             if self.keep_attention and isinstance(output, tuple) and len(output) > 1:
                 weights = output[1]
@@ -139,6 +202,8 @@ class DecoderPostCrossAttnRecorder:
 
     def clear(self) -> None:
         self.states.clear()
+        self.q_states.clear()
+        self.u_source_states.clear()
         self.attentions.clear()
 
 
@@ -207,12 +272,249 @@ class DecoderPostCrossAttnSteeringHook:
         return False
 
 
+@dataclass
+class AuditRecord:
+    """One compact, JSON-serialisable steering record (spec §10).
+
+    Records raw eligibility quantities only. It deliberately does **not** compute
+    a ``gate_coverage`` ratio: that denominator is deferred to the gate ticket
+    (DG-01 spec §4 / MC §6).
+    """
+
+    layer: int
+    abs_pos: int
+    row: int
+    is_forced_prefix: bool
+    gate: float
+    alpha: float
+    pre_norm: float
+    post_norm: float
+    edit_norm: float
+    steered: bool
+    beam_index: int | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "layer": int(self.layer),
+            "abs_pos": int(self.abs_pos),
+            "row": int(self.row),
+            "is_forced_prefix": bool(self.is_forced_prefix),
+            "gate": float(self.gate),
+            "alpha": float(self.alpha),
+            "pre_norm": float(self.pre_norm),
+            "post_norm": float(self.post_norm),
+            "edit_norm": float(self.edit_norm),
+            "steered": bool(self.steered),
+            "beam_index": None if self.beam_index is None else int(self.beam_index),
+        }
+
+
+# gate_fn signature: sees each row's OWN (q, u_source, r) and the absolute
+# positions, so a beam's gate is intrinsically its own -- never fabricated from a
+# beam index (spec §6). Returns a gain of shape (B,), (B, T), or a scalar.
+GateFn = Callable[..., torch.Tensor]
+
+
+class DecoderPostCrossAttnInterventionHook:
+    """Canonical DG-02 exact-site intervention (post-cross-attn, pre-FFN).
+
+    Repairs the site ``r = q + u_source`` (line 528 of ``WhisperDecoderLayer``)
+    and hands the repaired ``r̃`` to the FFN, by returning
+    ``u_source + (r̃ - r)`` from the ``encoder_attn`` hook so the layer's own
+    ``residual + attn_out`` recomputes to ``r̃`` (no downstream assumption). The
+    final block output (line 537) is never the intervention target.
+
+    This is infrastructure only. The steering *direction*/edit tensor and the
+    *gate* are supplied externally -- nothing here hard-codes ``v_nat``, the
+    conditioning-residualized direction, the disagreement score, the factorized
+    gate, the layer choice, or ``β``. Those are DG-03+ decisions.
+
+    Effective edit per row/position (MC §2): ``ũ^S = α · scale · g · d``, then
+    ``r̃ = NormPreserve(r + ũ^S)`` via the contract-approved
+    ``models.hooks.apply_steering`` (no ``sqrt(num_layers)`` rescale).
+
+    * ``num_forced_prefix`` -- forced-prefix width (spec §7); every position with
+      ``abs_pos < num_forced_prefix`` gets a zero effective edit. Pass
+      ``num_forced_prefix_from(processor, ...)``; there is no hard-coded 4.
+    * ``gate_fn`` / ``gain`` -- per-token, per-row gate (spec §6). ``gate_fn`` is
+      called with the row's own ``(q, u_source, r, abs_pos)``.
+    * ``mode`` -- ``"steer"`` (inference) or ``"train"`` (gradient-enabled: the
+      steering path is not detached, so gradients reach trainable
+      direction/gain/alpha while the frozen backbone stays frozen, spec §9).
+    * ``record`` -- emit the §10 audit schema into ``self.records`` (detached,
+      no autograd graph retained).
+
+    Absolute decode position comes from the layer's own ``cache_position`` kwarg
+    (primary), falling back to the KV-cache length (spec §5); it is never reset
+    to zero on cached calls.
+    """
+
+    def __init__(self, bundle, layer: int, direction: torch.Tensor, *,
+                 alpha: float, num_forced_prefix: int, scale: float = 1.0,
+                 gate_fn: GateFn | None = None, gain: torch.Tensor | None = None,
+                 norm_preserve: bool = True, mode: str = "steer",
+                 record: bool = False, record_last_only: bool = True,
+                 enforce_contract_layer: bool = False):
+        if mode not in ("steer", "train"):
+            raise ValueError(f"mode must be 'steer' or 'train', got {mode!r}")
+        layer = int(layer)
+        if not (0 <= layer < int(bundle.num_decoder_layers)):
+            raise ValueError(
+                f"decoder layer {layer} out of range [0, {bundle.num_decoder_layers})")
+        if enforce_contract_layer and layer not in CONTRACT_DECODER_LAYERS:
+            raise ValueError(
+                f"layer {layer} is not a contract candidate {CONTRACT_DECODER_LAYERS}; "
+                "layer selection is DG-03")
+        if gate_fn is not None and gain is not None:
+            raise ValueError("pass gate_fn or gain, not both")
+        if int(num_forced_prefix) < 0:
+            raise ValueError("num_forced_prefix must be >= 0")
+        self.bundle = bundle
+        self.layer = layer
+        self.direction = direction
+        self.alpha = float(alpha)
+        self.scale = float(scale)
+        self.gate_fn = gate_fn
+        self.gain = gain
+        self.num_forced_prefix = int(num_forced_prefix)
+        self.norm_preserve = norm_preserve
+        self.mode = mode
+        self.record = record
+        self.record_last_only = record_last_only
+        self.calls = 0
+        self.steered_calls = 0
+        self.records: list[AuditRecord] = []
+        self._q: torch.Tensor | None = None
+        self._cache_position: torch.Tensor | None = None
+        self._past_key_values: Any = None
+        self._handles: list = []
+        self._installed = False
+
+    # -- position bookkeeping ------------------------------------------------
+    def _layer_pre_hook(self, _mod, args, kwargs):
+        # Runs at the start of the target layer's forward, before q is formed.
+        self._cache_position = kwargs.get("cache_position", None)
+        self._past_key_values = kwargs.get("past_key_values", None)
+        return None
+
+    def _abs_positions(self, T: int, device) -> torch.Tensor:
+        cp = self._cache_position
+        if cp is not None:
+            pos = cp.detach().to(device=device).long().reshape(-1)
+            if pos.numel() >= T:
+                return pos[:T]
+        start = _cache_length(self._past_key_values)
+        return torch.arange(start, start + T, device=device, dtype=torch.long)
+
+    # -- q capture -----------------------------------------------------------
+    def _pre_hook(self, _mod, args):
+        # Not detached: in train mode the graph from q must stay intact so a
+        # state-dependent gate can receive gradient (spec §9).
+        self._q = args[0]
+        return None
+
+    # -- gate assembly -------------------------------------------------------
+    def _resolve_gain(self, q, u_source, site, abs_pos, eligible):
+        B, T = site.shape[0], site.shape[1]
+        if self.gate_fn is not None:
+            g = self.gate_fn(q=q, u_source=u_source, r=site, abs_pos=abs_pos)
+            # Preserve autograd when the gate is a trainable tensor (spec §9);
+            # only wrap plain scalars/sequences.
+            g = g.to(site.device, site.dtype) if torch.is_tensor(g) \
+                else torch.as_tensor(g, device=site.device, dtype=site.dtype)
+        elif self.gain is not None:
+            g = self.gain.to(site.device, site.dtype)
+        else:
+            g = torch.ones(B, T, device=site.device, dtype=site.dtype)
+        if g.ndim == 0:
+            g = g.reshape(1, 1).expand(B, T)
+        elif g.ndim == 1:                      # per-row (B,) -> (B, T)
+            if g.shape[0] != B:
+                raise ValueError(f"gain rows {g.shape[0]} != decoder rows {B}")
+            g = g.unsqueeze(1).expand(B, T)
+        elif g.ndim == 2:
+            g = g[:, :T]
+            if g.shape[0] != B:
+                raise ValueError(f"gain rows {g.shape[0]} != decoder rows {B}")
+        else:
+            raise ValueError(f"gate must be scalar/(B,)/(B,T); got shape {tuple(g.shape)}")
+        # Forced-prefix positions always receive a zero effective edit (spec §7).
+        return g * eligible.to(site.dtype).view(1, T)
+
+    def _emit_records(self, abs_pos, eligible, gain, site, steered):
+        B, T = site.shape[0], site.shape[1]
+        cols = [T - 1] if self.record_last_only else range(T)
+        pre = site.detach().float().norm(dim=-1)          # (B, T)
+        post = steered.detach().float().norm(dim=-1)
+        edit = (steered - site).detach().float().norm(dim=-1)
+        elig = eligible.detach().cpu()
+        gain_d = gain.detach().float().cpu()
+        pos = abs_pos.detach().cpu()
+        for t in cols:
+            for b in range(B):
+                g_bt = float(gain_d[b, t])
+                self.records.append(AuditRecord(
+                    layer=self.layer, abs_pos=int(pos[t]), row=b,
+                    is_forced_prefix=not bool(elig[t]), gate=g_bt,
+                    alpha=self.alpha, pre_norm=float(pre[b, t]),
+                    post_norm=float(post[b, t]), edit_norm=float(edit[b, t]),
+                    steered=bool(g_bt != 0.0 and self.alpha != 0.0),
+                    beam_index=b))
+
+    # -- the site intervention ----------------------------------------------
+    def _hook(self, _mod, _inp, output):
+        if self._q is None:
+            raise RuntimeError("cross-attention ran without its layer-norm pre-hook")
+        u_source = _first(output)
+        q = self._q
+        site = q + u_source                          # r = q + u_source (line 528)
+        self.calls += 1
+        T = site.shape[1]
+        abs_pos = self._abs_positions(T, site.device)
+        eligible = abs_pos >= self.num_forced_prefix            # (T,)
+        gain = self._resolve_gain(q, u_source, site, abs_pos, eligible)
+        steered = apply_steering(site, self.direction, self.alpha, self.scale,
+                                 gain, self.norm_preserve)
+        if self.record:
+            self._emit_records(abs_pos, eligible, gain, site, steered)
+        if steered is site:                          # α=0 or no eligible/positive gain
+            return output
+        self.steered_calls += 1
+        return _rebuild(output, u_source + (steered - site))
+
+    # -- lifecycle -----------------------------------------------------------
+    def __enter__(self) -> "DecoderPostCrossAttnInterventionHook":
+        if self._installed:
+            raise RuntimeError("intervention hook already installed; refusing to "
+                               "double-install on the same site")
+        assert_dropout_disabled(self.bundle, [self.layer])
+        layer = self.bundle.decoder_layer(self.layer)
+        self._handles.append(
+            layer.register_forward_pre_hook(self._layer_pre_hook, with_kwargs=True))
+        self._handles.append(
+            layer.encoder_attn_layer_norm.register_forward_pre_hook(self._pre_hook))
+        self._handles.append(layer.encoder_attn.register_forward_hook(self._hook))
+        self._installed = True
+        return self
+
+    def __exit__(self, *exc):
+        for h in self._handles:
+            h.remove()
+        self._handles.clear()
+        self._q = None
+        self._cache_position = None
+        self._past_key_values = None
+        self._installed = False
+        return False
+
+
 def assert_no_site_hooks(bundle) -> None:
-    """Fail loudly if a previous run leaked cross-attention hooks."""
+    """Fail loudly if a previous run leaked cross-attention / site hooks."""
     leaked = []
     for i, layer in enumerate(bundle.model.model.decoder.layers):
         n = len(layer.encoder_attn._forward_hooks) + \
-            len(layer.encoder_attn_layer_norm._forward_pre_hooks)
+            len(layer.encoder_attn_layer_norm._forward_pre_hooks) + \
+            len(layer._forward_pre_hooks)
         if n:
             leaked.append(f"decoder[{i}]:{n}")
     if leaked:

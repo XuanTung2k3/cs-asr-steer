@@ -55,7 +55,7 @@
   The exact-site train-mode hook, frozen-basis guards, correction-only `C_E` mask/loss, checkpoint
   provenance, config, and `mig` launcher are prepared. No GPU training was run; no KL retention,
   basis refinement, SALSA, LoRA, or other dataset/model work was added. Implementation commit:
-  `f282d3b`.
+  `f282d3b` plus parameter-provenance follow-up `165e12b`.
 
 **Next ticket:** `DG-05B — controller training and free-decoding checkpoint selection on D-dev-select.`
 

@@ -11,7 +11,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import math
 import os
 import random
 import subprocess
@@ -469,17 +468,28 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
     # artifact.  Generate it once with frozen Whisper, then freeze/hash C_E
     # before any controller gradient is computed.
     baseline_path = output_dir / "training_baseline_hypotheses.json"
-    baseline_texts = _decode_baseline_training_pool(bundle, examples)
-    _atomic_json(baseline_path, {
-        "schema_version": "dg05_training_baseline_v1",
-        "roles": ["loc-train", "util-train"],
-        "decode": GEN,
-        "hypotheses": dict(sorted(baseline_texts.items())),
-        "sha256": "sha256:" + hashlib.sha256(
-            json.dumps(dict(sorted(baseline_texts.items())), sort_keys=True,
-                       ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-        ).hexdigest(),
-    })
+    baseline_texts: dict[str, str] | None = None
+    if baseline_path.exists():
+        cached = json.loads(baseline_path.read_text(encoding="utf-8"))
+        if (cached.get("schema_version") == "dg05_training_baseline_v1"
+                and cached.get("roles") == ["loc-train", "util-train"]
+                and cached.get("decode") == GEN
+                and isinstance(cached.get("hypotheses"), dict)
+                and len(cached["hypotheses"]) == len(examples)):
+            baseline_texts = {str(k): str(v)
+                              for k, v in cached["hypotheses"].items()}
+    if baseline_texts is None:
+        baseline_texts = _decode_baseline_training_pool(bundle, examples)
+        _atomic_json(baseline_path, {
+            "schema_version": "dg05_training_baseline_v1",
+            "roles": ["loc-train", "util-train"],
+            "decode": GEN,
+            "hypotheses": dict(sorted(baseline_texts.items())),
+            "sha256": "sha256:" + hashlib.sha256(
+                json.dumps(dict(sorted(baseline_texts.items())), sort_keys=True,
+                           ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+            ).hexdigest(),
+        })
     c_payload = _build_training_correction_set(
         bundle, examples, baseline_texts, output_path=correction_path,
         source_config=cfg)
@@ -562,7 +572,6 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
     # The exact free-decoding selection population is fixed by DG-04.  A0 and
     # A1 are reused only after an ID/role check; no confirm/test rows are read.
     from steer_sweep import data as D
-    from csasr.lss.sites import num_forced_prefix_from
     dcfg = load_config(cfg["data"]["candidate_config"])
     pop = D.build_population(bundle, dcfg, "D-dev-select", assert_anchors=True)
     refs = D.reference_of(pop)

@@ -256,6 +256,6 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 
-**DG-03 — steering basis construction and causal validation at L16/L24 on Whisper-large-v3 × CS-Dialogue.**
-Direction construction, gate implementation, and training work follow as separate tickets (DG-03+).
-DG-03 is **not** started in this session.
+**DG-03 — steering basis construction and causal validation: AUDIT BLOCKED.** Basis construction
+and both free-decoding causal screens completed; provenance, canonical-result, and wrong-location
+energy-accounting gaps block freeze. Controller and training work remain separate DG-03+ tickets.

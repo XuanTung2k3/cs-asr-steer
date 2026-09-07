@@ -57,6 +57,9 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
 
 - **Role:** direction and conditioning-subspace construction.
 - **Exposure:** used by exact-site v2r3 direction construction and prior direction diagnostics.
+  **DG-03 (2026-09-07):** used to build the v6 `steering_basis_v1` at L16/L24 — 233 baseline-correct
+  embedded spans / 125 utterances / 20 dialogues; 125 conditioning pairs (en vs zh prefix). Slurm
+  job 50452; artifacts `results/dg03/basis/`. Construction only; not a selection or claim split.
 - **Status:** touched for construction; not a selection or claim split.
 
 ### `loc-train`, `util-train`, `router-calib`
@@ -88,7 +91,13 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   **`ZH-CN_U0091_S0_68`** (duration 2.525 s), recorded in `results/dg02_real_acceptance.json`
   (verdict PASS). This is debug/integration exposure on an already heavily-touched selection split
   — it does not add a new claim surface and is not confirmation/test data.
-- **Status:** heavily touched for selection; no confirmatory claim may be read from it.
+- **DG-03 intervention exposure (2026-09-07):** used for the free-decoding causal/specificity screen
+  that **selected L24** — 300 candidate utterances, conditions C0–C4 with the frozen DG-02 hook at an
+  oracle diagnostic gate (Slurm jobs 50453/50454; `results/dg03/screen/`). This is **intervened**
+  development exposure on the selection split (its designated purpose: layer/strength/checkpoint
+  selection); no confirmatory or test claim may be read from it.
+- **Status:** heavily touched for selection (now including DG-03 intervened layer selection); no
+  confirmatory claim may be read from it.
 
 ### `D-dev-confirm`
 

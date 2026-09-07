@@ -1,0 +1,65 @@
+{
+  "dim": 1280,
+  "direction_names": [
+    "raw_language_contrast",
+    "language_conditioning",
+    "conditioning_residualized_local"
+  ],
+  "metrics": {
+    "conditioning_fraction_removed": 2.3149733689332224e-05,
+    "cos_local_cond": -1.734723475976807e-18,
+    "cos_raw_cond": -0.004811417014697119,
+    "n_cond_contrasts": 1,
+    "n_raw_contrasts": 1,
+    "v_cond_norm": 1.0,
+    "v_local_norm": 1.0,
+    "v_raw_norm": 2.3962613473299825
+  },
+  "provenance": {
+    "aggregation": "dialogue_balanced_mean",
+    "conditioning_prompts": {
+      "c_E": "build_prefix(language='en')",
+      "c_M": "build_prefix(language='zh')"
+    },
+    "construction_config_hash": null,
+    "dataset_fingerprint": null,
+    "dataset_role": "D-construct",
+    "diagnostic_dose": {
+      "alpha": 1.0,
+      "nominal_update_norm": 7.478737245511598,
+      "rho": 1.0,
+      "scale": 7.478737245511598
+    },
+    "git_commit": "749759ba74974c727eca4d4252304dee893f0602",
+    "mean_site_norm_s_l": 7.478737245511598,
+    "model_id": "openai/whisper-large-v3",
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "n_conditioning_pairs": 125,
+    "n_embedded_positions": 233,
+    "n_matrix_positions": 233,
+    "reused_cached_activations": false,
+    "seeds": {
+      "random_controls": [
+        0,
+        1,
+        2
+      ]
+    },
+    "site": "decoder_post_cross_attn_residual"
+  },
+  "python_layer_index": 16,
+  "schema_version": "steering_basis_v1",
+  "scientific_layer": 16,
+  "site": "decoder_post_cross_attn_residual",
+  "tensor_dtype": "float64",
+  "tensor_files": {
+    "conditioning_residualized_local": "conditioning_residualized_local_L16.npy",
+    "language_conditioning": "language_conditioning_L16.npy",
+    "raw_language_contrast": "raw_language_contrast_L16.npy"
+  },
+  "tensor_hashes": {
+    "conditioning_residualized_local": "sha256:c5c01ed312d3b35ca561c8e1c999f8c73bcdab8b2c0dd1dacb820a9612e6c068",
+    "language_conditioning": "sha256:35af43a464f50517854c57cee1205c2eb2561a747abf9a7c07b69546b6fcd5b1",
+    "raw_language_contrast": "sha256:4f789ea5f1c6048dcacf37f918a7fb5cda13bc89d46d39c95e97814d92b4b89c"
+  }
+}

@@ -46,7 +46,7 @@
   **B1 ρ=0.5** (`U=38`, 135 corrections / 97 corruptions, PIER gain +0.01675); B3 ρ=0.5 is the
   other positive point (`U=33`). No adaptive/controller/training work was run. Freeze artifacts:
   `results/dg04/frontier.json`, `results/dg04/reference.json`; runner commit `33799da`, audit
-  hardening commit `a4f14be`; focused DG-04 tests: **7 passed**.
+  hardening commit `a4f14be`; final freeze commit `2ed6cf1`; focused DG-04 tests: **7 passed**.
 
 **Next ticket:** `DG-05 — adaptive direction-and-strength controller with fixed steering basis.`
 

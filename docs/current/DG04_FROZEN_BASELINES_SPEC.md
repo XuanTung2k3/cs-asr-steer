@@ -111,4 +111,4 @@ OPERATING POINT** (flagged as a DG-05 risk; stage still valid if the frontier is
   utility remains diagnostic; §12 selection uses the frozen POI `U = corrections − corruptions`.
 - Frontier: `results/dg04/frontier.json`; reference: `results/dg04/reference.json`.
 - The scientific runner was committed as `33799da`; audit hardening and frontier provenance were
-  committed as `a4f14be`. Focused DG-04 tests: **7 passed**.
+  committed as `a4f14be`; final freeze commit is `2ed6cf1`. Focused DG-04 tests: **7 passed**.

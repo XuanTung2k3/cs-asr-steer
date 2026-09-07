@@ -532,8 +532,13 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
         total_loss = 0.0
         total_targets = 0
         grad_norms: list[float] = []
+        # Some training-role utterances have no baseline-wrong embedded token.
+        # They are deliberately absent from C_E and must not trigger an
+        # all-token fallback or an empty-loss failure.
         batches = [examples[i:i + BATCH_SIZE]
-                   for i in range(0, len(examples), BATCH_SIZE)]
+                   for i in range(0, len(examples), BATCH_SIZE)
+                   if any(correction_set.positions.get(str(e.utterance_id), ())
+                          for e in examples[i:i + BATCH_SIZE])]
         for index, batch_examples in enumerate(batches):
             loss, n_targets = train_batch(
                 bundle, controller, optimizer, batch_examples, correction_set,

@@ -1,7 +1,8 @@
-# DG-05A — Adaptive Controller: Frozen Pre-Training Specification
+# DG-05A / DG-05B — Adaptive Controller Specification and Development Run
 
-**Status:** `DG-05A — IMPLEMENTED / READY FOR TRAINING` (2026-09-07). This specification freezes
-the implementation choices before any DG-05 scientific GPU training. It is subordinate to v6,
+**Status:** `DG-05 — READY FOR AUDIT` (2026-09-07). DG-05A freezes the implementation choices
+below; DG-05B has completed one development-seed training/free-decoding run. The stage is **not
+frozen**. It is subordinate to v6,
 `METHOD_CONTRACT.md`, and the frozen DG-03/DG-04 artifacts.
 
 ## 1. Scope and prerequisite
@@ -97,7 +98,9 @@ The canonical action path must verify:
 - Launcher: `sbatch/cs_asr_dg05_adaptive_controller.sh`.
 - Partition: **`mig` only**, never `main`.
 - Maximum concurrent GPU jobs from DG-05: 2.
-- No GPU job was submitted or run during DG-05A implementation.
+- DG-05B jobs: 50489 (`FAILED`, runner prefix-scope bug), 50505 (`FAILED`, empty per-batch C_E
+  guard), 50506 (`FAILED`, invalid token-position artifact guard), and 50507 (`COMPLETED`). All
+  jobs used `partition=mig` and the prepared H100 3g/40GB resource; no `main` job was submitted.
 
 ## 8. Artifacts
 
@@ -106,5 +109,35 @@ The canonical action path must verify:
 - Exact-site training runner: `experiments/dg05_adaptive_controller.py`.
 - Frozen config: `configs/dg05_adaptive_controller.yaml`.
 - Prepared launcher: `sbatch/cs_asr_dg05_adaptive_controller.sh`.
-- Future run output root: `results/dg05/controller/` (not created by this implementation-only stage).
+- Development run output root: `results/dg05/controller/`.
 - Core implementation commit: `f282d3b`; parameter-provenance follow-up: `165e12b`.
+
+## 9. DG-05B development result (seed 42; not frozen)
+
+Job 50507 trained on `loc-train ∪ util-train` with the fixed correction-only objective. The
+training-role frozen-baseline decode produced `results/dg05/correction_set_v1.json` (4,064
+utterances, 51,227 token positions; artifact hash
+`sha256:813604876dfb68eb7fc2e8f1864c46f7c57ef25ed4f3c700798c0f88d199a430`). Three epochs were
+evaluated by greedy/temperature-0/beam-1 free decoding on the same 300-utterance D-dev-select
+population as DG-04. The frozen rule selected epoch 3; selected checkpoint hash is
+`sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
+
+The complete audit bundle is under `results/dg05/controller/`: manifest, training history,
+epoch checkpoints, per-checkpoint `result_v1` evaluations, `selection.json`, `summary.json`, and
+the copied `selected_checkpoint.pt`. The manifest records Whisper/basis freezing, exact-site
+use, job/partition metadata, hashes, and the absence of retention/anchor/gate losses.
+
+Selected epoch-3 A2 diagnostics are: utility +91 (135 corrections, 44 corruptions), PIER gain
++0.04012, MER gain −0.01919, embedded WER gain +0.03219, matrix CER gain −0.02745, canonical
+outside harm 1,142, embedded retention 0.9634, matrix retention 0.9040, total edit energy
+63,926.3 (mean 3.398), and 18,812 realized edits. Gate mean/median are 0.8233/0.9698 (q01
+0.0063, q10 0.2775, q25 0.8158, q75 0.9914, q90 0.9960, q99 0.9985; near-0 4.93%, near-1
+57.59%). Mean mixture weights are [0.9397, 0.0603], mixture variance [0.0379, 0.0379], and
+sampled mean pairwise direction cosine is 0.9119. These are descriptive diagnostics; no
+sparsity or new coverage definition is claimed.
+
+The epoch-3 point improves the frozen DG-04 B1 `rho=0.5` frontier point (38 net corrections,
+97 corruptions, PIER gain +0.01675, total energy 82,007.1, matrix retention 0.8930). The
+nonzero collateral damage is a `PRESENT` damage signal and motivates DG-06 retention losses; it
+is not a DG-05 software failure. DG-05B did not read D-dev-confirm or D-test and did not run
+SALSA/LoRA.

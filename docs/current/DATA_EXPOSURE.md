@@ -75,13 +75,19 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
 - **DG-04 calibration exposure (2026-09-07):** the 300 shortest `router-calib` utterances were used
   for the frozen B3 projection-gate calibration only (teacher-forced exact-site states; Slurm job
   50484). No D-dev-confirm or D-test data was read.
-- **DG-05A implementation state (2026-09-07):** the fixed-basis adaptive controller and
-  correction-only `C_E` path are implemented and **not trained**. No new data were opened by this
-  implementation-only stage. Dialogue-v2 `router-calib` exists, but its role report/config has no
-  `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a 10/10 calibration split.
-- **Status:** the training roles have legacy exposure; DG-05A preserves their physical assignments
-  and reserves them for the controller-training pool. Whether the v6 controller needs a `router-calib`
-  subdivision is deferred (only if a calibration step is added).
+- **DG-05A/B state (2026-09-07):** the fixed-basis adaptive controller was trained once with seed
+  42 in Slurm job **50507** (partition `mig`). A frozen Whisper free-decoding baseline over the
+  `loc-train ∪ util-train` pool produced and validated `results/dg05/correction_set_v1.json`
+  (4,064 utterances / 51,227 token positions); controller gradients used only these `C_E`
+  positions. Checkpoint selection used only `D-dev-select` (300 utterances, greedy, temperature
+  0, beam 1), selecting epoch 3 by the predeclared utility → PIER gain → energy rule. Jobs
+  50489/50505/50506 are failed recovery attempts and opened no additional roles. No
+  D-dev-confirm or D-test rows were read. Dialogue-v2 `router-calib` exists, but its role
+  report/config has no `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a
+  10/10 calibration split.
+- **Status:** the training roles now have DG-05B baseline/training exposure in addition to their
+  legacy exposure; physical assignments are unchanged. Whether the v6 controller needs a
+  `router-calib` subdivision remains deferred (only if a calibration step is added).
 
 ### `D-dev-select`
 

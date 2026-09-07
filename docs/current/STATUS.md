@@ -48,16 +48,21 @@
   `results/dg04/frontier.json`, `results/dg04/reference.json`; runner commit `33799da`, audit
   hardening commit `a4f14be`; final freeze commit `2ed6cf1`; focused DG-04 tests: **7 passed**.
 
-- **DG-05A — IMPLEMENTED / READY FOR TRAINING.** Frozen design and implementation for the
-  Whisper-large-v3 × CS-Dialogue adaptive controller at selected L24 are in
-  `DG05_ADAPTIVE_CONTROLLER_SPEC.md`. The 32-wide `f_θ(LN(r))` emits sigmoid `g_t` and softmax
-  rank-2 `π_t` over the frozen DG-03 basis; beta is fixed to the DG-04 reference `4.465628877080159`.
-  The exact-site train-mode hook, frozen-basis guards, correction-only `C_E` mask/loss, checkpoint
-  provenance, config, and `mig` launcher are prepared. No GPU training was run; no KL retention,
-  basis refinement, SALSA, LoRA, or other dataset/model work was added. Implementation commit:
-  `f282d3b` plus parameter-provenance follow-up `165e12b`.
+- **DG-05 — READY FOR AUDIT (not frozen).** DG-05B trained the fixed L24 controller once with
+  seed 42 in job **50507** (`mig`, H100 3g/40GB) after three failed execution attempts
+  (50489/50505/50506). Training used only `loc-train ∪ util-train`, correction-only CE on a
+  validated 51,227-position `C_E`, and no retention/anchor/gate losses. All three checkpoints
+  were free-decoded on the same 300-utterance D-dev-select population as DG-04; epoch 3 was
+  selected by the frozen utility → PIER gain → energy rule. A2 epoch 3 has utility +91 (135
+  corrections / 44 corruptions), PIER gain +0.04012, embedded WER gain +0.03219, matrix CER
+  gain −0.02745, outside harm 1,142, embedded retention 0.9634, matrix retention 0.9040, and
+  total energy 63,926.3 (18,812 realized edits; mean energy 3.398). It improves the DG-04 B1 rho=0.5 point (utility +38; 135/97;
+  PIER gain +0.01675; energy 82,007.1; matrix retention 0.8930) while showing a present damage
+  signal that motivates DG-06. Complete artifacts/provenance are in `results/dg05/controller/`;
+  selected checkpoint hash is `sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
 
-**Next ticket:** `DG-05B — controller training and free-decoding checkpoint selection on D-dev-select.`
+**Next ticket:** `DG-06 — damage-aware retention training (matrix then embedded KL), with DG-05
+  held as a development result pending audit.**
 
 ---
 
@@ -279,6 +284,9 @@ default via position-based exclusion). DG-02 is **not** marked complete until th
 acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 ## Next tickets
+
+Current post-DG-05 ticket: **DG-06 — damage-aware retention training**, with DG-05 held as a
+development result pending audit. The historical roll-up below is retained for provenance.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 

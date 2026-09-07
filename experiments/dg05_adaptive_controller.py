@@ -162,7 +162,7 @@ def _build_training_correction_set(bundle: Any, examples: Sequence[Any],
     from csasr.data.language_tags import EN, tag_unit
     from csasr.data.normalize import normalize_and_segment
     from csasr.evaluation.pier import unit_status
-    from csasr.steering.dg05_training import correction_set_payload
+    from csasr.steering.dg05_training import LID_EN, correction_set_payload
 
     positions: dict[str, list[int]] = {}
     exclusions: list[str] = []
@@ -184,7 +184,9 @@ def _build_training_correction_set(bundle: Any, examples: Sequence[Any],
                 continue
             n_wrong_units += 1
             hits = [prefix_width + tok_idx for tok_idx, (lo, hi) in enumerate(offsets)
-                    if lo < unit.char_end and hi > unit.char_start]
+                    if lo < unit.char_end and hi > unit.char_start
+                    and (prefix_width + tok_idx) < len(example.lid_token_labels)
+                    and int(example.lid_token_labels[prefix_width + tok_idx]) == LID_EN]
             if not hits:
                 exclusions.append(f"{uid}:{unit_idx}:no_token_overlap")
                 continue

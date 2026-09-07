@@ -164,7 +164,8 @@ def test_training_correction_builder_uses_free_baseline_and_embedded_positions(t
         metadata=lambda: {"model_id": "unit-test"},
     )
     example = SimpleNamespace(
-        utterance_id="u1", reference="hello world", token_ids=[1, 2, 3, 4, 10, 11, 99])
+        utterance_id="u1", reference="hello world", token_ids=[1, 2, 3, 4, 10, 11, 99],
+        lid_token_labels=[-100, -100, -100, -100, 1, 1, -100])
     payload = _build_training_correction_set(
         bundle, [example], {"u1": "hello"}, output_path=tmp_path / "ce.json",
         source_config={"stage": "unit-test"})

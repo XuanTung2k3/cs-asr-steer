@@ -616,6 +616,11 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
             steering_strength=DG04_REFERENCE_BETA,
             basis_id=EXPECTED_LOCAL_HASH, out_sets=out_sets,
             out_langs=out_langs, audit=audit)
+        # _result_v1 is shared with DG-04; correct its namespace/config label
+        # for this DG-05 adaptive-controller artifact without changing metrics.
+        result["run_id"] = result["run_id"].replace("dg04/", "dg05/", 1)
+        result["system_name"] = result["system_name"].replace("dg04_", "dg05_", 1)
+        result["method"]["gate_type"] = "adaptive_controller"
         transitions = result["metrics"]["transitions"]
         evaluation = {
             "epoch": epoch, "checkpoint": str(output_dir / f"checkpoint_epoch{epoch}.pt"),

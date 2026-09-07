@@ -48,7 +48,7 @@
   `results/dg04/frontier.json`, `results/dg04/reference.json`; runner commit `33799da`, audit
   hardening commit `a4f14be`; final freeze commit `2ed6cf1`; focused DG-04 tests: **7 passed**.
 
-- **DG-05 — READY FOR AUDIT (not frozen).** DG-05B trained the fixed L24 controller once with
+- **DG-05 — COMPLETE / FROZEN.** DG-05B trained the fixed L24 controller once with
   seed 42 in job **50507** (`mig`, H100 3g/40GB) after three failed execution attempts
   (50489/50505/50506). Training used only `loc-train ∪ util-train`, correction-only CE on a
   validated 51,227-position `C_E`, and no retention/anchor/gate losses. All three checkpoints
@@ -58,11 +58,13 @@
   gain −0.02745, outside harm 1,142, embedded retention 0.9634, matrix retention 0.9040, and
   total energy 63,926.3 (18,812 realized edits; mean energy 3.398). It improves the DG-04 B1 rho=0.5 point (utility +38; 135/97;
   PIER gain +0.01675; energy 82,007.1; matrix retention 0.8930) while showing a present damage
-  signal that motivates DG-06. Complete artifacts/provenance are in `results/dg05/controller/`;
-  selected checkpoint hash is `sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
+  signal that motivates DG-06. Classification: **VALID ADAPTIVE SIGNAL WITH DAMAGE**. The
+  accepted run executed at source commit `6f9c7506d2c39b0723070537c9403f5be9cd935a`, an
+  ancestor of audit HEAD `bd533039733971be1860fd75d967cfd26cbd09e4`. Complete
+  artifacts/provenance are in `results/dg05/controller/`; selected checkpoint hash is
+  `sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
 
-**Next ticket:** `DG-06 — damage-aware retention training (matrix then embedded KL), with DG-05
-  held as a development result pending audit.**
+**Next ticket:** `DG-06 — damage-aware correction + retention optimization.**
 
 ---
 
@@ -285,8 +287,8 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 ## Next tickets
 
-Current post-DG-05 ticket: **DG-06 — damage-aware retention training**, with DG-05 held as a
-development result pending audit. The historical roll-up below is retained for provenance.
+Current post-DG-05 ticket: **DG-06 — damage-aware correction + retention optimization.** The
+historical roll-up below is retained for provenance.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 

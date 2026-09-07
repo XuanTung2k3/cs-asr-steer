@@ -51,7 +51,7 @@
       "direction_artifact_id": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93",
       "direction_type": "adaptive_controller_correction_only",
       "gate_params": null,
-      "gate_type": "frozen",
+      "gate_type": "adaptive_controller",
       "layer": 24,
       "steering_strength": 4.465628877080159
     },
@@ -210,11 +210,11 @@
         "util-train"
       ]
     },
-    "run_id": "dg04/A2_epoch3/50507",
+    "run_id": "dg05/A2_epoch3/50507",
     "schema_version": "result_v1",
     "seed": null,
     "split": null,
-    "system_name": "dg04_A2_epoch3"
+    "system_name": "dg05_A2_epoch3"
   },
   "texts": {
     "ZH-CN_U0011_S0_103": "就是那个period时间我觉得还是挺幸运的,因为high school在国外比较简单。",

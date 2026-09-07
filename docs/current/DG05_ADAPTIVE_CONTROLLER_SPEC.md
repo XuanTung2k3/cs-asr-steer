@@ -1,8 +1,8 @@
 # DG-05A / DG-05B — Adaptive Controller Specification and Development Run
 
-**Status:** `DG-05 — READY FOR AUDIT` (2026-09-07). DG-05A freezes the implementation choices
-below; DG-05B has completed one development-seed training/free-decoding run. The stage is **not
-frozen**. It is subordinate to v6,
+**Status:** `DG-05 — COMPLETE / FROZEN` (2026-09-07). DG-05A freezes the implementation choices
+below; DG-05B has one accepted development-seed training/free-decoding run. The stage is frozen
+as **VALID ADAPTIVE SIGNAL WITH DAMAGE** and remains subordinate to v6,
 `METHOD_CONTRACT.md`, and the frozen DG-03/DG-04 artifacts.
 
 ## 1. Scope and prerequisite

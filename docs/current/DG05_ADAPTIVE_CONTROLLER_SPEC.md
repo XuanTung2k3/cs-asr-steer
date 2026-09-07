@@ -107,3 +107,4 @@ The canonical action path must verify:
 - Frozen config: `configs/dg05_adaptive_controller.yaml`.
 - Prepared launcher: `sbatch/cs_asr_dg05_adaptive_controller.sh`.
 - Future run output root: `results/dg05/controller/` (not created by this implementation-only stage).
+- Implementation commit: `f282d3b`.

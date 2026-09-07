@@ -54,7 +54,8 @@
   rank-2 `π_t` over the frozen DG-03 basis; beta is fixed to the DG-04 reference `4.465628877080159`.
   The exact-site train-mode hook, frozen-basis guards, correction-only `C_E` mask/loss, checkpoint
   provenance, config, and `mig` launcher are prepared. No GPU training was run; no KL retention,
-  basis refinement, SALSA, LoRA, or other dataset/model work was added.
+  basis refinement, SALSA, LoRA, or other dataset/model work was added. Implementation commit:
+  `f282d3b`.
 
 **Next ticket:** `DG-05B — controller training and free-decoding checkpoint selection on D-dev-select.`
 

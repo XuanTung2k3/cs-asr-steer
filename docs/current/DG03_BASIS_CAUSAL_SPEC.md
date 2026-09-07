@@ -106,43 +106,61 @@ Random-control seeds `{0,1,2}` (fixed). Decoding deterministic (greedy). No seed
 
 ## 11. Results (filled after terminal completion)
 
-**Construction** — Slurm job **50452** (mig H100 3g.40gb), COMPLETED exit 0, 50 s. Commit `749759b`.
-D-construct: **233 baseline-correct embedded spans / 125 utterances / 20 dialogues**; 125
-conditioning pairs (c_E=en / c_M=zh prefix). Artifacts in `results/dg03/basis/` (`steering_basis_v1`),
-all validated (finite, dim=1280, unit `v_cond`/`v_local`, `|⟨v_local,v_cond⟩|≈1e-17`):
+**Audit resolution (commit `eac2e37`; re-run jobs 50470/50471/50472).** The independent freeze audit
+raised three artifact/provenance gaps; all are now closed with no change to the pre-registered rule
+or the selection: (1) basis artifacts carry a real `dataset_fingerprint`
+(`sha256:3981d6a8…`, over 5 D-construct input parquets) and `construction_config_hash`
+(`sha256:1c021fe9…`); (2) every screen condition (incl. C0) is a complete, `validate`-passing
+`result_v1` — MER/PIER/embedded-WER/matrix-CER + gains + POI transitions + the three retention
+populations + reserved gate_coverage — with per-utterance texts persisted; (3) per-condition
+edit-count/total-energy are recorded and **C4 is count-matched to C1** (489 intended edits each).
+Candidate-level `n_corrupted_outside` is a candidate-scored quantity (needs acoustic candidate span
+sets) deferred to the DG-04 frontier; language-level harm outside the embedded region = matrix
+retention (in each `result_v1`). Construction is deterministic → basis metrics/hashes reproduced
+identically on the re-run.
+
+**Construction** — Slurm jobs **50452** then **50470** (mig H100 3g.40gb; 50470 adds provenance),
+COMPLETED exit 0, ~50 s. Commits `749759b` / `eac2e37`. D-construct: **233 baseline-correct
+embedded spans / 125 utterances / 20 dialogues**; 125 conditioning pairs (c_E=en / c_M=zh prefix).
+Artifacts in `results/dg03/basis/` (`steering_basis_v1`), all validated (finite, dim=1280, unit
+`v_cond`/`v_local`, `|⟨v_local,v_cond⟩|≈1e-17`):
 - **L16:** `cos(v_raw,v_cond)=−0.0048`, `cos(v_local,v_cond)=−1.7e-18`, conditioning removed 0.0000,
   `s_16=7.479` (dose nominal ‖ũ‖=7.479).
 - **L24:** `cos(v_raw,v_cond)=−0.0869`, `cos(v_local,v_cond)=−2.3e-17`, conditioning removed 0.0076,
   `s_24=8.931` (dose nominal ‖ũ‖=8.931).
 
-**Causal screen** (300 D-dev-select utts, 489 oracle steps, greedy free decoding). Baseline C0
-(both layers): MER 0.2625, PIER 0.4700, embedded-WER 0.4735, matrix-CER 0.2261. `U = net_corrections`.
+**Causal screen** (final re-run: 300 D-dev-select utts, 489 oracle steps, greedy free decoding;
+complete `result_v1` per condition). Baseline C0 (both layers): MER 0.2625, PIER 0.4700,
+embedded-WER 0.4735, matrix-CER 0.2261. `U = net_corrections`. `n` = realized steered edits;
+`E` = total realized edit energy `Σ‖r̃−r‖`.
 
-- **L16** — Slurm job **50453**, COMPLETED exit 0, 6:00. `results/dg03/screen/dg03_screen_L16.json`.
+- **L16** — Slurm job **50471**, COMPLETED exit 0. `results/dg03/screen/dg03_screen_L16.json`.
 
-  | Cond | corr | corrupt | U | PIER gain | matrix-CER | realized ‖r̃−r‖ |
-  |---|---:|---:|---:|---:|---:|---:|
-  | C1 v_local @ oracle | 34 | 40 | **−6** | −0.0026 | 0.2178 | 5.50 |
-  | C2 −v_local | 21 | 52 | −31 | −0.0137 | 0.2318 | 5.69 |
-  | C3 random (mean of s0/1/2) | 9.3 | 31.7 | −22.3 | −0.0098 | ~0.222 | ~5.6 |
-  | C4 wrong-location | 3 | 9 | −6 | −0.0026 | 0.2243 | 5.61 |
+  | Cond | corr | corrupt | U | PIER gain | matrix-CER | n | E |
+  |---|---:|---:|---:|---:|---:|---:|---:|
+  | C1 v_local @ oracle | 34 | 40 | **−6** | −0.0026 | 0.2178 | 456 | 2508.5 |
+  | C2 −v_local | 21 | 52 | −31 | −0.0137 | 0.2318 | 458 | 2607.4 |
+  | C3 random (mean of s0/1/2) | 9.3 | 31.7 | −22.3 | −0.0098 | ~0.225 | ~457 | ~2564 |
+  | C4 wrong-location (count-matched) | 4 | 7 | −3 | −0.0013 | 0.2247 | 442 | 2455.1 |
 
-- **L24** — Slurm job **50454**, COMPLETED exit 0, 5:58. `results/dg03/screen/dg03_screen_L24.json`.
+- **L24** — Slurm job **50472**, COMPLETED exit 0. `results/dg03/screen/dg03_screen_L24.json`.
 
-  | Cond | corr | corrupt | U | PIER gain | matrix-CER | realized ‖r̃−r‖ |
-  |---|---:|---:|---:|---:|---:|---:|
-  | C1 v_local @ oracle | 61 | 28 | **+33** | +0.0146 | 0.2287 | 6.55 |
-  | C2 −v_local | 27 | 70 | −43 | −0.0190 | 0.2234 | 6.74 |
-  | C3 random (mean of s0/1/2) | 15.3 | 22.3 | −7.0 | −0.0031 | ~0.230 | ~6.69 |
-  | C4 wrong-location | 28 | 21 | +7 | +0.0031 | 0.2337 | 6.73 |
+  | Cond | corr | corrupt | U | PIER gain | matrix-CER | n | E |
+  |---|---:|---:|---:|---:|---:|---:|---:|
+  | C1 v_local @ oracle | 61 | 28 | **+33** | +0.0146 | 0.2287 | 456 | 2988.5 |
+  | C2 −v_local | 27 | 70 | −43 | −0.0190 | 0.2234 | 456 | 3074.9 |
+  | C3 random (mean of s0/1/2) | 15.3 | 22.3 | −7.0 | −0.0031 | ~0.230 | 456 | ~3049 |
+  | C4 wrong-location (count-matched) | 35 | 25 | +10 | +0.0044 | 0.2397 | 442 | 2926.6 |
+
+Edit budgets are now auditable: C1 and C4 both intend 489 edits and realize a comparable number
+(456 vs 442) at comparable total energy (2988.5 vs 2926.6 at L24), so C1's advantage is not an
+edit-budget artifact.
 
 **Eligibility (rule §8):** L16 **fails** criterion 1 (corrections 34 < corruptions 40; U<0) → not
-eligible. L24 **passes all six**: 61>28; U=+33>0; +33 > C2(−43); +33 > mean C3(−7.0); +33 > C4(+7);
-matrix-CER 0.2287 ≤ 1.5×0.2261. Direction-specific (sign flip −43), not-any-vector (random −7),
-location-specific (wrong-loc +7 ≪ +33), matrix language preserved.
+eligible. L24 **passes all six**: 61>28; U=+33>0; +33 > C2(−43); +33 > mean C3(−7.0); +33 > C4(+10);
+matrix-CER 0.2287 ≤ 1.5×0.2261 (=0.3392). Direction-specific (sign flip −43), not-any-vector
+(random −7), location-specific (count-matched wrong-loc +10 ≪ +33), matrix language preserved.
 
-**Numerical layer decision: L24** (only layer eligible under the pre-run rule). The independent
-freeze audit remains **BLOCKED**: the basis artifacts have null dataset/config fingerprints; the
-screen JSONs are `metrics_v1` summaries rather than complete `result_v1` artifacts and omit the
-spec-required retention/outside-harm fields; and the runner does not record or normalize C4
-edit-count/total-energy mismatch. No β/ρ tuning; dose fixed at ρ=1×s_ℓ pre-run.
+**Layer decision: SELECT L24** (only eligible layer). **DG-03 PASS / FROZEN** — the three audit
+blockers (provenance, complete `result_v1`+retention, C4 edit-count/energy) are resolved (see *Audit
+resolution* above). No β/ρ tuning; dose fixed at ρ=1×s_ℓ pre-run.

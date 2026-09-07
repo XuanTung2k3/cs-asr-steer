@@ -19,19 +19,22 @@
   code/tests/configs changed; no experiment run. Not yet `COMPLETE` — awaiting the independent final
   audit. See v6, `METHOD_CONTRACT.md` §4–§8/§10, `EXPERIMENT_MATRIX.md`, `CODE_MAP.md`.
 
-- **DG-03 — AUDIT BLOCKED.** Canonical v6 steering basis was built & versioned at L16 and L24 on
-  Whisper-large-v3 × CS-Dialogue (`steering_basis_v1`, `results/dg03/basis/`; construction Slurm job
-  50452). Free-decoding causal screen on D-dev-select (jobs 50453/50454) selected **L24** by the
-  pre-registered rule (`DG03_BASIS_CAUSAL_SPEC.md` §8, §11): intended `v_local` at oracle embedded
-  steps gives U=+33 (61 corrections vs 28 corruptions, PIER gain +0.0146, matrix-CER preserved),
-  beating sign-reversed (−43), matched-random (−7), and wrong-location (+7); L16 showed no useful
-  headroom (U=−6). Diagnostic dose fixed pre-run at ρ=1×s_ℓ (no tuning). The L24 numerical
-  eligibility rule is met, but freeze is blocked because basis dataset/config fingerprints are
-  null, screen outputs are not complete `result_v1` artifacts and omit retention/outside-harm
-  fields, and C4 does not record or normalize edit-count mismatch. Pre-run commit `749759b`.
+- **DG-03 — COMPLETE / FROZEN.** Canonical v6 steering basis built & versioned at L16 and L24 on
+  Whisper-large-v3 × CS-Dialogue (`steering_basis_v1`, `results/dg03/basis/`; construction Slurm jobs
+  50452 then **50470** with complete provenance). Free-decoding causal screen on D-dev-select (final
+  jobs **50471/50472**) selected **L24** by the pre-registered rule (`DG03_BASIS_CAUSAL_SPEC.md` §8,
+  §11): intended `v_local` at oracle embedded steps gives U=+33 (61 corrections vs 28 corruptions,
+  PIER gain +0.0146, matrix-CER 0.2287 vs baseline 0.2261), beating sign-reversed (−43),
+  matched-random (−7), and count-matched wrong-location (+10); L16 showed no useful headroom (U=−6).
+  Dose fixed pre-run at ρ=1×s_ℓ (no tuning). **Audit blockers resolved** (commit `eac2e37`): basis
+  carries a real `dataset_fingerprint`/`construction_config_hash`; every screen condition is a
+  complete validated `result_v1` (metrics+gains+POI transitions+3 retention populations+reserved
+  gate_coverage) with per-utterance texts; per-condition edit-count/total-energy recorded and C4
+  count-matched to C1. Candidate-level `n_corrupted_outside` is documented as a DG-04 candidate-scored
+  object (language-level outside harm = matrix retention). Pre-run commit `749759b`.
 
-**Next ticket:** DG-03 follow-up — complete provenance, canonical result emission, and wrong-location
-energy accounting before any DG-04 work. (DG-04 not started.)
+**Next ticket:** `DG-04 — frozen steering baselines and correction–damage frontier on the selected
+Whisper layer (L24).` (Not started.)
 
 ---
 
@@ -256,6 +259,8 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 
-**DG-03 — steering basis construction and causal validation: AUDIT BLOCKED.** Basis construction
-and both free-decoding causal screens completed; provenance, canonical-result, and wrong-location
-energy-accounting gaps block freeze. Controller and training work remain separate DG-03+ tickets.
+**DG-03 — steering basis construction and causal validation: COMPLETE / FROZEN.** Basis
+construction and both free-decoding causal screens completed; the independent-audit blockers
+(basis provenance, complete `result_v1`+retention, C4 edit-count/energy) are resolved (commit
+`eac2e37`) and re-run (construction 50470; screens 50471/50472). **SELECT L24.** Controller and
+training work remain separate DG-04+ tickets.

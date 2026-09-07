@@ -61,10 +61,11 @@ The locked test artifact exists as `locked/role_D-test.parquet` with its sidecar
 - **DG-02 acceptance (integration/debug, no claim):** `experiments/dg02_real_acceptance.py` reads
   **one** `D-dev-select` utterance (the shortest in the candidate manifest) purely to verify
   exact-site plumbing (β=0 token identity, `r=q+u`, prefix/cache/norm) at L16 & L24. It makes no
-  ASR-quality judgement, no layer/direction/β selection, and no confirmatory measurement. The
-  concrete `utterance_id` is recorded in `results/dg02_real_acceptance.json` when the run executes
-  (on a GPU node; not yet run in the CPU dev environment). This is debug/integration exposure on an
-  already heavily-touched selection split — it does not add a new claim surface.
+  ASR-quality judgement, no layer/direction/β selection, and no confirmatory measurement. The run
+  executed on a GPU node (Slurm job **50369**) on exactly **one** utterance,
+  **`ZH-CN_U0091_S0_68`** (duration 2.525 s), recorded in `results/dg02_real_acceptance.json`
+  (verdict PASS). This is debug/integration exposure on an already heavily-touched selection split
+  — it does not add a new claim surface and is not confirmation/test data.
 - **Status:** heavily touched for selection; no confirmatory claim may be read from it.
 
 ### `D-dev-confirm`

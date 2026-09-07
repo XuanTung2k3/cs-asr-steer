@@ -147,9 +147,18 @@ facade (`src/csasr/evaluation/canonical.py`) — not by reimplementing scoring.
 
 ## Current ticket (Stage 3)
 
-**DG-02 — exact post-cross-attention/pre-FFN intervention site: implementation + CPU/synthetic
-validation COMPLETE; real-model acceptance PENDING on a GPU node; NOT yet frozen.** Spec at
-`docs/current/DG02_INTERVENTION_SITE_SPEC.md` (§17 = delivered implementation).
+**DG-02 — exact post-cross-attention/pre-FFN intervention site: COMPLETE / FROZEN.** Implementation
++ CPU/synthetic validation green, and the real-model acceptance passed at **both L16 and L24** on
+whisper-large-v3 (Slurm job **50369**, `mig` H100 3g.40gb, COMPLETED exit 0; artifact
+`results/dg02_real_acceptance.json`, verdict PASS). Spec at
+`docs/current/DG02_INTERVENTION_SITE_SPEC.md` (§17 delivered implementation, §18 acceptance
+evidence). Implementation commit `4e10399`.
+
+Real-model acceptance summary (utterance `ZH-CN_U0091_S0_68`, `D-dev-select`, 2.525 s, bf16):
+β=0 token+transcript identity (steered_calls=0), `r=q+u` at bf16 rounding scale (L16 ≤3.1e-3, L24
+≤7.8e-3, both ≪ tol), exact-site `err_vs_block_gap ≈ 0.008 ≪ 1` (site not block output),
+forced-prefix zero-edit + eligible edit, cache positions `[0..8]` monotonic/no-reset/boundary-aligned,
+norm preservation rel dev ≤ 4.6e-4. No layer/direction/β selection (DG-03).
 
 Delivered (implementation pass, working tree, uncommitted):
 - `src/csasr/lss/sites.py` — new canonical `DecoderPostCrossAttnInterventionHook` (exact site
@@ -164,9 +173,10 @@ Delivered (implementation pass, working tree, uncommitted):
   one-utterance real-Whisper acceptance (β=0 identity, `r=q+u`, exact site, prefix/cache/norm at
   L16 & L24). **Must run on a GPU/compute node to close the real-model gates before freeze.**
 
-Blocking-to-freeze item (environmental, not a code defect): the CPU dev box has 2 GB RAM / no swap
-/ no GPU and cannot load whisper-large-v3 (~3 GB), so §14 rung 1 was not executed here. Freeze
-DG-02 only after `dg02_real_acceptance.py` reports `PASS` at both layers.
+Freeze evidence: the real-model acceptance was executed on a GPU node (Slurm job 50369, `mig`
+partition) after the CPU dev box proved too small to load the model; it reported `PASS` at both
+layers, so DG-02 is frozen. No DG-02 bug surfaced on the real model — no code changed between the
+CPU-green state and acceptance.
 
 Confirmed architecture facts (installed source + repository, verified this pass):
 
@@ -198,10 +208,8 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 ## Next tickets
 
-Immediate next step (to close DG-02): run `experiments/dg02_real_acceptance.py` on a GPU/compute
-node (`sbatch/cs_asr_dg02_real_acceptance.sh`); on `PASS` at L16 & L24, mark DG-02 COMPLETE and
-freeze. The CPU/synthetic matrix (spec §13) already passes.
+DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:
 
-Then: **DG-03 — version steering directions and validate layers 16/24 with causal controls.**
+**DG-03 — version steering directions and validate layers 16/24 with causal controls.**
 Direction construction, gate implementation, and training work follow as separate tickets (DG-03+).
-No new scientific run is GO until DG-02 is frozen.
+DG-03 is **not** started in this session.

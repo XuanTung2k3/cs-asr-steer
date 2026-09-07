@@ -49,7 +49,7 @@ are `sbatch/study_track_a.sh`, `sbatch/study_track_b.sh`, `sbatch/study_stage_d_
 
 | Contract component | Location | Classification / evidence |
 |---|---|---|
-| Exact decoder post-cross-attention site, recorder, hook | `src/csasr/lss/sites.py` — `DecoderPostCrossAttnInterventionHook` (canonical DG-02 hook), `DecoderPostCrossAttnRecorder` (now stores `q`/`u_source`/`r`), `AuditRecord`, `num_forced_prefix_from`, `CONTRACT_DECODER_LAYERS=(16,24)`, `DecoderPostCrossAttnSteeringHook` (legacy reconstruction), `assert_dropout_disabled`, `assert_site_reconstruction`, `assert_no_site_hooks` | **canonical primitive** (DG-02). Exact site, `r=q+u_source`, cache-position via layer `cache_position` pre-hook, dynamic forced-prefix exclusion, per-row `gate_fn`/`gain`, `steer`/`train` modes, detached audit records. CPU/synthetic matrix green; real-model acceptance pending (see §1) |
+| Exact decoder post-cross-attention site, recorder, hook | `src/csasr/lss/sites.py` — `DecoderPostCrossAttnInterventionHook` (canonical DG-02 hook), `DecoderPostCrossAttnRecorder` (now stores `q`/`u_source`/`r`), `AuditRecord`, `num_forced_prefix_from`, `CONTRACT_DECODER_LAYERS=(16,24)`, `DecoderPostCrossAttnSteeringHook` (legacy reconstruction), `assert_dropout_disabled`, `assert_site_reconstruction`, `assert_no_site_hooks` | **canonical primitive** (DG-02). Exact site, `r=q+u_source`, cache-position via layer `cache_position` pre-hook, dynamic forced-prefix exclusion, per-row `gate_fn`/`gain`, `steer`/`train` modes, detached audit records. **FROZEN** — CPU/synthetic matrix green + real-model acceptance PASS at L16 & L24 (Slurm job 50369; `results/dg02_real_acceptance.json`) |
 | Whole-decoder-block steering | `src/csasr/models/hooks.py` — `DecoderSteeringHook`; `steer_sweep/hooks.py` — `DecoderSteering`; `experiments/job_a_frozen.py` — `NormPreserveDecoderHook`; `experiments/job_b_training.py` — `T1Hook`, `T2Hook` | **legacy/rejected site**; only the first also applies `sqrt(num_layers)` depth rescaling |
 | Nominal update and norm repair | `src/csasr/models/hooks.py` — `apply_steering` | **canonical primitive** used by the exact-site hook and encoder hook; Round-1 runners reimplement it with different scaling |
 | Encoder steering | `src/csasr/models/hooks.py` — `EncoderSteeringHook`; builders in `src/csasr/steering/encoder_hook.py` and masks in `src/csasr/steering/masks.py`; direction in `src/csasr/directions/encoder.py` | reusable / legacy for the decoder-site contract |
@@ -145,8 +145,8 @@ No result above may be relabeled as evidence for the finalized exact-site method
 - `tests/test_round1_3_infrastructure.py`: cell determinism, split-disjoint helper, teacher-forced
   prefix masking, and Round-1 PIER transition identity.
 
-Exact-site free-decoding cache position, forced-prefix exclusion, and per-row gating are now tested
-synthetically (`tests/test_dg02_site.py`). Real-model confirmation is pending
-(`experiments/dg02_real_acceptance.py`, GPU node). Actual beam decoding is validated only
-synthetically here (state-dependent row-local gate); a real beam run is deferred to when beam
-decoding is scientifically evaluated.
+Exact-site free-decoding cache position, forced-prefix exclusion, and per-row gating are tested
+synthetically (`tests/test_dg02_site.py`) and confirmed on the real model (Slurm job 50369,
+`experiments/dg02_real_acceptance.py`, artifact `results/dg02_real_acceptance.json`, PASS at L16 &
+L24). Actual beam decoding is validated only synthetically here (state-dependent row-local gate); a
+real beam run is deferred to when beam decoding is scientifically evaluated.

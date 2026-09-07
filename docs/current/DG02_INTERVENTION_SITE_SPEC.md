@@ -1,8 +1,9 @@
 # DG-02 — Exact Post-Cross-Attention / Pre-FFN Intervention Site: Implementation Spec
 
-**Status:** Stage 3 / DG-02 — implementation + CPU/synthetic validation **COMPLETE**; real-model
-acceptance (§14 rung 1) **PENDING on a GPU/compute node** (the 2 GB CPU dev box cannot load
-whisper-large-v3, ~3 GB). **DG-02 is NOT yet frozen.** Companion to `METHOD_CONTRACT.md` (MC),
+**Status:** Stage 3 / DG-02 — **COMPLETE / FROZEN**. Implementation + CPU/synthetic validation
+green, and the real-model acceptance (§14 rung 1) passed at **both L16 and L24** on
+whisper-large-v3 (Slurm job **50369**, `mig` H100 3g.40gb; artifact
+`results/dg02_real_acceptance.json`; see §18). Companion to `METHOD_CONTRACT.md` (MC),
 `CODE_MAP.md`, `DG01_METRICS_RESULTS_SPEC.md`. Scientific definitions are MC's and are not
 reinterpreted to fit code. Layer selection (L16 vs L24) and directions belong to DG-03 and are
 **not** decided here.
@@ -389,10 +390,42 @@ real-`WhisperDecoderLayer` reconstruction), plus the 11 pre-existing `tests/test
 `test_result_schema.py`, `test_legacy_adapter.py`, `test_dg01_regression.py`): **31 passed** —
 unchanged.
 
-**Real-model acceptance (PENDING).** `experiments/dg02_real_acceptance.py` (launcher
+**Real-model acceptance (PASSED — see §18).** `experiments/dg02_real_acceptance.py` (launcher
 `sbatch/cs_asr_dg02_real_acceptance.sh`) runs the §14 rung-1 one-utterance check at L16 and L24:
 D5 β=0 token+transcript identity, D6 `r=q+u` on real states (full-sequence and a cached step), D7
 `assert_site_reconstruction`, D8 forced-prefix zero-edit + one eligible edit, D9 cache-position
 advance/alignment, D10 norm preservation under a tiny fixed probe edit. It writes a JSON report and
-exits non-zero unless all gates pass. **It must be run on a GPU/compute node before DG-02 is
-frozen.** It makes no ASR-quality judgement, no layer/direction/β selection.
+exits non-zero unless all gates pass. It makes no ASR-quality judgement, no layer/direction/β
+selection.
+
+---
+
+## 18. Real-model acceptance result (freeze evidence)
+
+Executed on a GPU node via Slurm — the CPU dev box (2 GB RAM) cannot load whisper-large-v3.
+
+- **Slurm job:** `50369`, partition `mig`, 1× `nvidia_h100_80gb_hbm3_3g.40gb` (40 GB slice),
+  node `worker-mig-3g40gb-0`, State `COMPLETED` (exit 0), elapsed 34 s. Logs
+  `logs/cs_asr_dg02_real_acceptance_50369.{log,err}`.
+- **Model:** `openai/whisper-large-v3`, `torch.bfloat16`, 32 decoder layers, device `cuda`.
+- **Utterance:** `ZH-CN_U0091_S0_68`, role `D-dev-select` (integration/debug), duration 2.525 s,
+  `num_forced_prefix = 4`.
+- **Implementation commit under test:** `4e10399` (`sites.py` = HEAD at submission).
+- **Artifact:** `results/dg02_real_acceptance.json`. Verdict **PASS**.
+
+Per-layer gates (all PASS at both layers):
+
+| Check | L16 | L24 |
+|---|---|---|
+| β=0 token identity | PASS (steered_calls=0) | PASS (steered_calls=0) |
+| β=0 transcript identity | PASS | PASS |
+| `r=q+u` max abs err (full-seq / cached) vs tol | 0.00305 / 0.00195 ≤ 0.1216 | 0.00781 / 0.00635 ≤ 0.1729 |
+| exact site: reconstruction_ok / differs_from_block / err_vs_block_gap | ✓ / ✓ / 0.0078 | ✓ / ✓ / 0.0084 |
+| forced-prefix zero-edit | PASS | PASS |
+| eligible position edited | PASS | PASS |
+| cache positions (advance, no reset, boundary aligned) | `[0..8]` ✓ | `[0..8]` ✓ |
+| norm preservation max rel dev (≤ 1e-2) | 4.59e-4 | 1.86e-4 |
+
+Tolerances are dtype-justified (bf16), not weakened to pass: `err_vs_block_gap ≈ 0.008 ≪ 1` shows
+the hook acts on the site tensor, not the block output; `r−(q+u)` sits at the bf16 rounding scale.
+No layer/direction/β/rank/gate selection was made (that is DG-03).

@@ -174,6 +174,17 @@ def controller_hook(bundle: Any, controller: FixedBasisAdaptiveController,
     )
 
 
+def parameter_report(controller: FixedBasisAdaptiveController, backbone: Any) -> dict[str, Any]:
+    """Report exact controller size and its fraction of the frozen backbone."""
+    controller_n = int(sum(p.numel() for p in controller.trainable_parameters))
+    backbone_n = int(sum(p.numel() for p in backbone.parameters()))
+    return {
+        "controller_trainable": controller_n,
+        "whisper_total": backbone_n,
+        "controller_percent_of_whisper": 100.0 * controller_n / max(1, backbone_n),
+    }
+
+
 def train_batch(bundle: Any, controller: FixedBasisAdaptiveController,
                 optimizer: torch.optim.Optimizer, examples: Sequence[Any],
                 correction_set: CorrectionSetIndex, *, beta: float,
@@ -248,6 +259,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
     for parameter in bundle.model.parameters():
         parameter.requires_grad_(False)
     controller = FixedBasisAdaptiveController(bundle.d_model, basis, BOTTLENECK).to(bundle.device)
+    params = parameter_report(controller, bundle.model)
     data_cfg = load_config(cfg["data"]["candidate_config"])
     from steer_sweep.trackb.data import build_examples
     examples = build_examples(bundle, data_cfg, ("loc-train", "util-train"))
@@ -266,6 +278,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
                             "n_utterances": len(correction_set.positions),
                             "n_positions": correction_set.n_positions},
         "objective": "correction-only CE on C_E",
+        "parameter_report": params,
         "gpu_run": True,
     })
     _atomic_json(output_dir / "manifest.json", manifest)
@@ -296,7 +309,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path) -> dict[str, Any]:
                                           train_targets=total_targets))
     _atomic_json(output_dir / "training_history.json", {"records": history})
     return {"manifest": manifest, "history": history,
-            "trainable_parameters": sum(p.numel() for p in controller.trainable_parameters)}
+            "trainable_parameters": params["controller_trainable"]}
 
 
 def main(argv: Sequence[str] | None = None) -> int:

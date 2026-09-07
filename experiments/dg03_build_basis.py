@@ -15,6 +15,7 @@ docs/current/DG03_BASIS_CAUSAL_SPEC.md.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -27,6 +28,47 @@ import pandas as pd
 import torch
 
 LAYERS = (16, 24)
+
+
+def _file_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(8 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _dataset_fingerprint(cfg) -> dict:
+    """sha256 of every D-construct input file actually consumed (candidates + roles + POI)."""
+    from csasr.lss.align import conventions as conv
+    root = Path(cfg["experiment"]["output_root"])
+    role_root = Path(cfg["v2_namespace"]["role_root"])
+    poi_root = root.parent.parent / "baselines" / "generation_001"
+    files = {"candidates_all.parquet": root / "alignments" / "candidates_all.parquet"}
+    for role in conv.DEVELOPMENT_ROLES:
+        files[f"role_{role}.parquet"] = role_root / f"role_{role}.parquet"
+        files[f"poi_{role}.parquet"] = poi_root / f"poi_{role}.parquet"
+    per_file = {name: f"sha256:{_file_sha256(p)}" for name, p in sorted(files.items()) if p.is_file()}
+    composite = hashlib.sha256(
+        json.dumps(per_file, sort_keys=True).encode()).hexdigest()
+    return {"composite": f"sha256:{composite}", "files": per_file}
+
+
+def _construction_config_hash(layers) -> str:
+    """sha256 over the frozen construction configuration (FROZEN_CONFIG + DG-03 params)."""
+    from csasr.experiments.v2r3_directions import FROZEN_CONFIG
+    payload = {
+        "frozen_config": FROZEN_CONFIG,
+        "layers": [int(l) for l in layers],
+        "control_offset": 0,
+        "conditioning_prompts": {"c_E": "en", "c_M": "zh"},
+        "aggregation": "dialogue_balanced_mean",
+        "order": "aggregate_then_residualize",
+        "rho": 1.0,
+        "schema_version": "steering_basis_v1",
+    }
+    return "sha256:" + hashlib.sha256(
+        json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()
 
 
 def _git_commit() -> str | None:
@@ -164,9 +206,12 @@ def main(argv=None):
         bundle, manifest, construct, LAYERS, limit=args.limit, log=log)
 
     commit = _git_commit()
+    dataset_fp = _dataset_fingerprint(cfg)
+    config_hash = _construction_config_hash(LAYERS)
     out_dir = Path(args.output_dir)
     summary = {"layers": {}, "git_commit": commit,
-               "model": bundle.metadata(), "dataset_role": "D-construct"}
+               "model": bundle.metadata(), "dataset_role": "D-construct",
+               "dataset_fingerprint": dataset_fp, "construction_config_hash": config_hash}
     for l in LAYERS:
         l = int(l)
         contrasts_EM = np.stack([np.asarray(v, dtype=np.float64) for v in extra["vectors"][l]])
@@ -190,8 +235,8 @@ def main(argv=None):
             "model_id": bundle.model_id, "model_revision": bundle.revision,
             "git_commit": commit, "site": "decoder_post_cross_attn_residual",
             "dataset_role": "D-construct",
-            "dataset_fingerprint": None,
-            "construction_config_hash": None,
+            "dataset_fingerprint": dataset_fp,
+            "construction_config_hash": config_hash,
             "n_embedded_positions": int(len(meta)),
             "n_matrix_positions": int(len(meta)),
             "n_conditioning_pairs": int(len(cond_groups)),

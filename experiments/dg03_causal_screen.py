@@ -2,10 +2,16 @@
 """DG-03 causal/specificity screen at one layer (free decoding, D-dev-select).
 
 Conditions (spec §6): C0 baseline, C1 v_local @ oracle embedded steps, C2 -v_local,
-C3 matched-norm random (seeds 0,1,2), C4 v_local @ matrix-continuation steps.
-Oracle steps are an oracle diagnostic / non-deployable gate (NOT the final method).
-Scores every condition against C0 with DG-01 canonical metrics (paired_corpus_report)
-and reports net correction-damage utility U = net_corrections. See
+C3 matched-norm random (seeds 0,1,2), C4 v_local @ count-matched matrix-continuation
+steps. Oracle steps are an oracle diagnostic / non-deployable gate (NOT the final
+method). Every condition is scored against C0 with the DG-01 canonical surface and
+emitted as a complete result_v1 (MER/PIER/embedded-WER/matrix-CER + gains + POI
+transitions + the three retention populations + reserved gate_coverage). Net
+correction-damage utility U = net_corrections drives selection (spec §8).
+
+Edit audit (spec §5): per condition the number of steered edits, total and mean
+realized edit energy, and the intended edit count are recorded; C4 is count-matched
+to C1 so the location control has a matched edit budget. See
 docs/current/DG03_BASIS_CAUSAL_SPEC.md.
 """
 from __future__ import annotations
@@ -35,18 +41,34 @@ def _git_commit():
         return None
 
 
-def _matrix_sets(oracle: dict[str, list[int]]) -> dict[str, set[int]]:
-    """Matrix-continuation steps: s+1 for each oracle embedded step s (spec §6 C4)."""
+def _matched_matrix_sets(oracle: dict[str, list[int]]) -> dict[str, set[int]]:
+    """Count-matched matrix-continuation steps (spec §6 C4).
+
+    For each oracle embedded step s take the first matrix continuation step
+    (s+1, s+2, ...) that is not itself an oracle step, so |matrix set| == |oracle|
+    per utterance (matched edit budget). Records nothing here; the runner reports
+    intended vs realized counts.
+    """
     out = {}
     for uid, steps in oracle.items():
-        s = set(steps)
-        out[uid] = {j + 1 for j in steps if (j + 1) not in s}
+        oset = set(steps)
+        used: set[int] = set()
+        for s in steps:
+            cand = s + 1
+            while cand in oset or cand in used:
+                cand += 1
+            used.add(cand)
+        out[uid] = used
     return out
 
 
 def _decode(bundle, pop, *, layer, direction, sets, nfp, alpha, scale,
             batch_size=8, record_energy=False):
-    """Batched free decoding; steer `direction` where gen_step in sets[uid]. direction=None -> C0."""
+    """Batched free decoding; steer `direction` where gen_step in sets[uid]. direction=None -> C0.
+
+    Returns (texts, energy_stats) where energy_stats has n_steered, total_energy,
+    mean_energy (realized ‖r̃−r‖ over steered positions).
+    """
     from csasr.models.whisper import batch_model_inputs
     from csasr.lss.sites import DecoderPostCrossAttnInterventionHook
 
@@ -89,17 +111,42 @@ def _decode(bundle, pop, *, layer, direction, sets, nfp, alpha, scale,
         seq = out if isinstance(out, torch.Tensor) else out.sequences
         for u, t in zip(uids, bundle.processor.batch_decode(seq, skip_special_tokens=True)):
             texts[u] = t.strip()
-    mean_energy = float(np.mean(energies)) if energies else 0.0
-    return texts, mean_energy
+    stats = {"n_steered": len(energies),
+             "total_energy": float(np.sum(energies)) if energies else 0.0,
+             "mean_energy": float(np.mean(energies)) if energies else 0.0}
+    return texts, stats
 
 
-def _score(refs, base_texts, method_texts, ids):
-    from csasr.evaluation.canonical import paired_corpus_report
+def _result_v1(refs, base, method_texts, ids, *, layer, cond, provenance,
+               direction_type, steering_strength, basis_id):
+    """Build a complete, validated result_v1 record for one condition vs C0."""
+    from csasr.evaluation import canonical
+    from csasr.evaluation import retention as ret
+    from csasr.evaluation.result_schema import CanonicalResult, MethodConfig, validate
+    from csasr.lss.manifest import run_id as make_run_id
+
     r = [refs[i] for i in ids]
-    b = [base_texts[i] for i in ids]
+    b = [base[i] for i in ids]
     m = [method_texts[i] for i in ids]
-    rep = paired_corpus_report(r, b, m)
-    return rep
+    bm = canonical.corpus_metrics(r, b)
+    mm = canonical.corpus_metrics(r, m)
+    metrics = dict(mm)
+    metrics.update(canonical.error_metric_gains(bm, mm))
+    metrics["transitions"] = canonical.correction_corruption(r, b, m)
+    metrics["retention"] = ret.retention_report(r, b, m)
+    res = CanonicalResult(
+        run_id=make_run_id(f"dg03_screen/{cond}/L{layer}"),
+        system_name=f"dg03_{cond}_L{layer}",
+        model_id=provenance.get("model_id"),
+        model_revision=provenance.get("model_revision"),
+        data_role="D-dev-select", decode_regime="greedy", beam=1,
+        method=MethodConfig(layer=layer, direction_artifact_id=basis_id,
+                            direction_type=direction_type, gate_type="oracle_diagnostic",
+                            steering_strength=steering_strength),
+        metrics=metrics, provenance=provenance)
+    d = res.to_dict()
+    validate(d)
+    return d
 
 
 def main(argv=None):
@@ -111,7 +158,7 @@ def main(argv=None):
     ap.add_argument("--limit", type=int, default=None)
     args = ap.parse_args(argv)
     layer = int(args.layer)
-    out_path = Path(args.output or f"results/dg03/screen/dg03_screen_L{layer}.json")
+    out_path = Path(args.output or str(REPO / f"results/dg03/screen/dg03_screen_L{layer}.json"))
 
     def log(m): print(m, flush=True)
 
@@ -122,67 +169,100 @@ def main(argv=None):
     from steer_sweep import data as D
     from experiments.job_a_frozen import oracle_steps_for
 
-    # basis artifact for this layer
     rec = json.loads((Path(args.basis_dir) / f"steering_basis_v1_L{layer}.json").read_text())
     v_local_np = np.load(Path(args.basis_dir) / rec["tensor_files"]["conditioning_residualized_local"])
     s_l = float(rec["provenance"]["mean_site_norm_s_l"])
     dose = rec["provenance"]["diagnostic_dose"]
     alpha = float(dose["alpha"])
+    basis_id = rec["tensor_hashes"]["conditioning_residualized_local"]
     log(f"L{layer}: s_l={s_l:.3f} alpha={alpha} nominal_update={dose['nominal_update_norm']:.3f}")
 
-    cfg = load_config("model/whisper_large_v3.yaml") if Path(
-        "configs/model/whisper_large_v3.yaml").exists() else load_config("lss/l1b_candidates_dialogue_v2r3.yaml")
-    bundle = load_whisper(cfg if "model" in cfg else load_config("lss/l1b_candidates_dialogue_v2r3.yaml"))
+    mcfg_path = "configs/model/whisper_large_v3.yaml"
+    mcfg = load_config("model/whisper_large_v3.yaml") if Path(mcfg_path).exists() else None
+    dcfg = load_config("lss/l1b_candidates_dialogue_v2r3.yaml")
+    bundle = load_whisper(mcfg if mcfg and "model" in mcfg else dcfg)
     bundle.model.eval()
     v_local = torch.tensor(v_local_np, dtype=torch.float32)
 
-    dcfg = load_config("lss/l1b_candidates_dialogue_v2r3.yaml")
     pop = D.build_population(bundle, dcfg, "D-dev-select", assert_anchors=True)
     if args.limit:
         pop = pop.subsample(args.limit)
     refs = D.reference_of(pop)
     ids = list(pop.utterance_ids)
     oracle = oracle_steps_for(pop)
-    matrix = _matrix_sets(oracle)
+    matrix = _matched_matrix_sets(oracle)
     nfp = num_forced_prefix_from(bundle.processor, language="zh", task="transcribe")
-    log(f"D-dev-select screen: {len(ids)} utts, {sum(len(v) for v in oracle.values())} oracle steps, nfp={nfp}")
+    intended_oracle = sum(len(v) for v in oracle.values())
+    intended_matrix = sum(len(v) for v in matrix.values())
+    log(f"D-dev-select screen: {len(ids)} utts, intended oracle edits={intended_oracle}, "
+        f"matched matrix edits={intended_matrix}, nfp={nfp}")
 
-    # C0 baseline
+    provenance = {
+        "git_commit": _git_commit(), "model_id": bundle.model_id,
+        "model_revision": bundle.revision, "dataset_role": "D-dev-select",
+        "basis_artifact_hashes": rec["tensor_hashes"],
+        "basis_dataset_fingerprint": rec["provenance"].get("dataset_fingerprint"),
+        "basis_construction_config_hash": rec["provenance"].get("construction_config_hash"),
+        "diagnostic_dose": dose, "oracle_diagnostic": True, "non_deployable": True,
+        "outside_harm_note": ("candidate-free canonical surface: POI-level corruption + "
+                              "matrix retention capture harm outside the embedded region; "
+                              "candidate-level n_corrupted_outside needs acoustic candidate "
+                              "span sets and is the object of the DG-04 candidate frontier."),
+    }
+
     base, _ = _decode(bundle, pop, layer=layer, direction=None, sets=None, nfp=nfp,
                       alpha=alpha, scale=s_l, batch_size=args.batch_size)
-    conditions = {}
+    base_r1 = _result_v1(refs, base, base, ids, layer=layer, cond="C0_baseline",
+                         provenance=provenance, direction_type=None,
+                         steering_strength=0.0, basis_id=basis_id)
 
-    def run(name, direction, sets):
-        texts, energy = _decode(bundle, pop, layer=layer, direction=direction, sets=sets,
+    conditions = {}
+    texts_store = {"C0_baseline": {i: base[i] for i in ids}}
+
+    def run(name, direction, sets, direction_type, intended):
+        texts, estats = _decode(bundle, pop, layer=layer, direction=direction, sets=sets,
                                 nfp=nfp, alpha=alpha, scale=s_l,
                                 batch_size=args.batch_size, record_energy=True)
-        rep = _score(refs, base, texts, ids)
-        rep["realized_edit_energy_mean"] = energy
-        t = rep["transitions"]
-        conditions[name] = rep
+        r1 = _result_v1(refs, base, texts, ids, layer=layer, cond=name,
+                        provenance=provenance, direction_type=direction_type,
+                        steering_strength=alpha, basis_id=basis_id)
+        t = r1["metrics"]["transitions"]
+        estats["intended_edits"] = int(intended)
+        conditions[name] = {"result_v1": r1, "edit_audit": estats}
+        texts_store[name] = {i: texts[i] for i in ids}
         log(f"  {name}: U={t['net_corrections']} corr={t['corrections']} corrupt={t['corruptions']} "
-            f"pier_gain={rep['pier_gain']} zh_cer={rep['method']['zh_cer']} energy={energy:.3f}")
-        return rep
+            f"pier_gain={r1['metrics'].get('pier_gain')} zh_cer={r1['metrics']['zh_cer']:.4f} "
+            f"n_steered={estats['n_steered']} total_energy={estats['total_energy']:.1f}")
+        return r1
 
-    run("C1_local", v_local, oracle)
-    run("C2_sign", wrong_sign(v_local), oracle)
-    c3 = []
-    for sd in RANDOM_SEEDS:
-        c3.append(run(f"C3_random_seed{sd}", random_direction(v_local.numel(), sd), oracle))
-    run("C4_wrongloc", v_local, matrix)
+    run("C1_local", v_local, oracle, "conditioning_residualized_local", intended_oracle)
+    run("C2_sign", wrong_sign(v_local), oracle, "conditioning_residualized_local_sign_reversed", intended_oracle)
+    c3 = [run(f"C3_random_seed{sd}", random_direction(v_local.numel(), sd), oracle,
+              "matched_norm_random", intended_oracle) for sd in RANDOM_SEEDS]
+    run("C4_wrongloc", v_local, matrix, "conditioning_residualized_local_wrong_location", intended_matrix)
 
-    # aggregate C3
-    c3_U = [r["transitions"]["net_corrections"] for r in c3]
-    c3_pier = [r["pier_gain"] for r in c3 if r["pier_gain"] is not None]
+    def _U(r1): return r1["metrics"]["transitions"]["net_corrections"]
+    def _pg(r1): return r1["metrics"].get("pier_gain")
+    c3_U = [_U(r) for r in c3]
+    c3_pg = [_pg(r) for r in c3 if _pg(r) is not None]
     result = {
-        "layer": layer, "git_commit": _git_commit(), "dataset_role": "D-dev-select",
-        "n_utterances": len(ids), "num_forced_prefix": nfp,
-        "diagnostic_dose": dose, "basis_artifact": rec["tensor_hashes"],
-        "baseline_metrics": conditions["C1_local"]["baseline"],
+        "layer": layer, "git_commit": provenance["git_commit"], "dataset_role": "D-dev-select",
+        "n_utterances": len(ids), "num_forced_prefix": nfp, "diagnostic_dose": dose,
+        "basis_artifact": rec["tensor_hashes"],
+        "basis_dataset_fingerprint": rec["provenance"].get("dataset_fingerprint"),
+        "baseline_result_v1": base_r1,
         "conditions": conditions,
-        "C3_random_aggregate": {"U_mean": float(np.mean(c3_U)),
-                                "U_per_seed": c3_U,
-                                "pier_gain_mean": float(np.mean(c3_pier)) if c3_pier else None},
+        "C3_random_aggregate": {"U_mean": float(np.mean(c3_U)), "U_per_seed": c3_U,
+                                "pier_gain_mean": float(np.mean(c3_pg)) if c3_pg else None},
+        "selection_inputs": {
+            "U_C1": _U(conditions["C1_local"]["result_v1"]),
+            "U_C2": _U(conditions["C2_sign"]["result_v1"]),
+            "U_C3_mean": float(np.mean(c3_U)),
+            "U_C4": _U(conditions["C4_wrongloc"]["result_v1"]),
+            "zh_cer_C0": base_r1["metrics"]["zh_cer"],
+            "zh_cer_C1": conditions["C1_local"]["result_v1"]["metrics"]["zh_cer"],
+        },
+        "texts": texts_store,
         "model": bundle.metadata(),
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)

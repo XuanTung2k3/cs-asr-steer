@@ -26,7 +26,7 @@ Main scientific comparison: the **correction–retention–efficiency trade-off*
 
 | Ticket | Purpose | Data role | Decode |
 |---|---|---|---|
-| **DG-03 ✅ COMPLETE** | Built & versioned `v_raw`/`v_cond`/`v_local`/`V^0` at L16 & L24 (`steering_basis_v1`); causal screen vs sign/random/wrong-loc controls → **selected L24** (U=+33 vs L16 U=−6; direction- and location-specific; matrix preserved). Spec `DG03_BASIS_CAUSAL_SPEC.md`. | construct `D-construct`; screen `D-dev-select` | FD |
+| **DG-03 — AUDIT BLOCKED** | Basis and causal screen executed; L24 is numerically eligible (U=+33 vs L16 U=−6), but freeze awaits complete provenance/result emission and C4 energy accounting. Spec `DG03_BASIS_CAUSAL_SPEC.md`. | construct `D-construct`; screen `D-dev-select` | FD |
 | **DG-04** | Frozen-steering baselines + small strength grid → **RQ1** correction–damage frontier before any learning | `D-dev-select` | FD (TF screen only) |
 | **DG-05** | Adaptive controller `f_θ(LN(r_t)) → (g_t, π_t)`, `V^0` fixed; no oracle location | train on `loc-train ∪ util-train`; select on `D-dev-select` | FD |
 | **DG-06** | Damage-aware training, staged (MC §8); optional gate penalty; optional basis refinement | train pool; select `D-dev-select` | TF optimize / FD select |

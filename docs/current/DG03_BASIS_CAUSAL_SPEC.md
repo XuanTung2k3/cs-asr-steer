@@ -141,5 +141,8 @@ eligible. L24 **passes all six**: 61>28; U=+33>0; +33 > C2(−43); +33 > mean C3
 matrix-CER 0.2287 ≤ 1.5×0.2261. Direction-specific (sign flip −43), not-any-vector (random −7),
 location-specific (wrong-loc +7 ≪ +33), matrix language preserved.
 
-**Layer decision: SELECT L24** (only eligible layer). DG-03 PASS. No β/ρ tuning; dose fixed at
-ρ=1×s_ℓ pre-run.
+**Numerical layer decision: L24** (only layer eligible under the pre-run rule). The independent
+freeze audit remains **BLOCKED**: the basis artifacts have null dataset/config fingerprints; the
+screen JSONs are `metrics_v1` summaries rather than complete `result_v1` artifacts and omit the
+spec-required retention/outside-harm fields; and the runner does not record or normalize C4
+edit-count/total-energy mismatch. No β/ρ tuning; dose fixed at ρ=1×s_ℓ pre-run.

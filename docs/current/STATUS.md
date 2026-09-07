@@ -19,16 +19,19 @@
   code/tests/configs changed; no experiment run. Not yet `COMPLETE` — awaiting the independent final
   audit. See v6, `METHOD_CONTRACT.md` §4–§8/§10, `EXPERIMENT_MATRIX.md`, `CODE_MAP.md`.
 
-- **DG-03 — COMPLETE / FROZEN.** Canonical v6 steering basis built & versioned at L16 and L24 on
+- **DG-03 — AUDIT BLOCKED.** Canonical v6 steering basis was built & versioned at L16 and L24 on
   Whisper-large-v3 × CS-Dialogue (`steering_basis_v1`, `results/dg03/basis/`; construction Slurm job
   50452). Free-decoding causal screen on D-dev-select (jobs 50453/50454) selected **L24** by the
   pre-registered rule (`DG03_BASIS_CAUSAL_SPEC.md` §8, §11): intended `v_local` at oracle embedded
   steps gives U=+33 (61 corrections vs 28 corruptions, PIER gain +0.0146, matrix-CER preserved),
   beating sign-reversed (−43), matched-random (−7), and wrong-location (+7); L16 showed no useful
-  headroom (U=−6). Diagnostic dose fixed pre-run at ρ=1×s_ℓ (no tuning). Pre-run commit `749759b`.
+  headroom (U=−6). Diagnostic dose fixed pre-run at ρ=1×s_ℓ (no tuning). The L24 numerical
+  eligibility rule is met, but freeze is blocked because basis dataset/config fingerprints are
+  null, screen outputs are not complete `result_v1` artifacts and omit retention/outside-harm
+  fields, and C4 does not record or normalize edit-count mismatch. Pre-run commit `749759b`.
 
-**Next ticket:** `DG-04 — frozen steering baselines and correction–damage frontier on the selected
-Whisper layer (L24).` (Not started.)
+**Next ticket:** DG-03 follow-up — complete provenance, canonical result emission, and wrong-location
+energy accounting before any DG-04 work. (DG-04 not started.)
 
 ---
 

@@ -26,7 +26,8 @@
   §11): intended `v_local` at oracle embedded steps gives U=+33 (61 corrections vs 28 corruptions,
   PIER gain +0.0146, matrix-CER 0.2287 vs baseline 0.2261), beating sign-reversed (−43),
   matched-random (−7), and count-matched wrong-location (+10); L16 showed no useful headroom (U=−6).
-  Dose fixed pre-run at ρ=1×s_ℓ (no tuning). **Audit blockers resolved** (commit `eac2e37`): basis
+  Dose fixed pre-run at ρ=1×s_ℓ (no tuning). **Audit blockers resolved** (repair commits
+  `5465e04`/`12f0cac`; final artifact freeze `212a06f`): basis
   carries a real `dataset_fingerprint`/`construction_config_hash`; every screen condition is a
   complete validated `result_v1` (metrics+gains+POI transitions+3 retention populations+reserved
   gate_coverage) with per-utterance texts; per-condition edit-count/total-energy recorded and C4
@@ -34,7 +35,8 @@
   C0–C4 result from the stored hypotheses and frozen D-dev-select candidate spans by CPU-only
   post-processing; it is correctness-flip harm, not outside transcript edits. No GPU rerun was
   needed. The added candidate utility is diagnostic only; the frozen selection U remains POI
-  corrections − corruptions. Pre-run commit `749759b`; GPU jobs 50470–50472 completed.
+  corrections − corruptions. Pre-run commit `749759b`; GPU jobs 50470–50472 completed; focused
+  DG-03/DG-01 validation: **34 passed**.
 
 **Next ticket:** `DG-04 — frozen steering baselines and correction–damage frontier on the selected
 Whisper layer (L24).` (Not started.)

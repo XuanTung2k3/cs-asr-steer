@@ -106,7 +106,8 @@ Random-control seeds `{0,1,2}` (fixed). Decoding deterministic (greedy). No seed
 
 ## 11. Results (filled after terminal completion)
 
-**Audit resolution (commit `eac2e37`; re-run jobs 50470/50471/50472).** The independent freeze audit
+**Audit resolution (implementation `eac2e37`; repair commits `5465e04`/`12f0cac`; final artifact
+freeze `212a06f`; re-run jobs 50470/50471/50472).** The independent freeze audit
 raised three artifact/provenance gaps; all are now closed with no change to the pre-registered rule
 or the selection: (1) basis artifacts carry a real `dataset_fingerprint`
 (`sha256:3981d6a8…`, over 5 D-construct input parquets) and `construction_config_hash`

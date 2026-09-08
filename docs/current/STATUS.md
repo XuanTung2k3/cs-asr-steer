@@ -64,7 +64,7 @@
   artifacts/provenance are in `results/dg05/controller/`; selected checkpoint hash is
   `sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
 
-- **DG-06 — READY FOR INDEPENDENT AUDIT (not COMPLETE/FROZEN).** Damage-aware training added on
+- **DG-06 — COMPLETE / FROZEN.** Damage-aware training added on
   top of the frozen DG-05 controller (`src/csasr/steering/dg06_losses.py`,
   `experiments/dg06_damage_aware.py`; spec `DG06_DAMAGE_AWARE_SPEC.md`). Two `mig` GPU jobs from
   pre-run commit `16f4578` trained the fixed L24 controller from the **identical** reconstructed
@@ -85,12 +85,14 @@
   harm ~72–74% and corruptions, and roughly halve gate strength/energy. D2's embedded-retention
   objective further raises embedded retention (0.9742→0.9875) and lowers corruption/outside harm but
   sacrifices corrections (116→83), lowering net utility below D1. Frozen selection (highest utility)
-  ⇒ **`SELECT D1`**; outcome **`MATRIX-RETENTION SUCCESS; EMBEDDED-RETENTION NOT SUPPORTED`**. Gate
-  penalty and basis refinement remain deferred (DG-06 core forbids them). Focused tests: **27
-  passed** (15 DG-06 + 12 DG-05, CPU). No D-dev-confirm / D-test read; no post-hoc λ/β/LR tuning.
+  ⇒ **`SELECT D1`** under the predeclared utility → matrix-retention → embedded-retention → energy
+  rule. D2 adds measurable embedded and matrix retention benefit while retaining positive utility;
+  outcome **`FULL DAMAGE-AWARE SUCCESS`**. Gate penalty and basis refinement remain deferred
+  (DG-06 core forbids them). Focused tests: **27 passed** (15 DG-06 + 12 DG-05, CPU), plus the
+  exact-site/site-infrastructure checks passed in the audit environment. No D-dev-confirm / D-test
+  read; no post-hoc λ/β/LR tuning.
 
-**Next ticket:** DG-06 independent audit, then `DG-07 — baselines & key ablations` (do not begin
-DG-07 before the DG-06 audit).
+**Next ticket:** `DG-07 — learned baselines and core ablations` (do not begin DG-07 in this audit).
 
 ---
 
@@ -313,7 +315,7 @@ acceptance passes. Layer selection (L16 vs L24) and directions are DG-03.
 
 ## Next tickets
 
-Current post-DG-05 ticket: **DG-06 — damage-aware correction + retention optimization.** The
+Current post-DG-06 ticket: **DG-07 — learned baselines and core ablations.** The
 historical roll-up below is retained for provenance.
 
 DG-02 is frozen (real-model acceptance PASS, job 50369). Next ticket:

@@ -208,6 +208,8 @@ Outcome ∈ {`FULL DAMAGE-AWARE SUCCESS`, `MATRIX-RETENTION SUCCESS; EMBEDDED-RE
   `sha256:bf49dddfa570b2e887c6d6704ed271598ba0856fd363d427c7a698589fb14612`.
   Result root `results/dg06/d2/`.
 - **Selected variant: `SELECT D1`** (highest canonical utility among eligible).
-- **Outcome: `MATRIX-RETENTION SUCCESS; EMBEDDED-RETENTION NOT SUPPORTED`.**
+- **Outcome: `FULL DAMAGE-AWARE SUCCESS`.** D1 is selected by highest canonical utility; D2 is
+  retained as the full damage-aware variant because it adds measurable embedded and matrix
+  retention benefit while preserving positive utility.
 - Focused tests: `tests/test_dg06_damage_aware.py` 15 + `tests/test_dg05_adaptive_controller.py` 12
   = 27 passed (CPU).

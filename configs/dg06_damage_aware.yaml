@@ -1,0 +1,64 @@
+# DG-06 damage-aware training frozen design.  Prepares the D1/D2 runs; must not
+# be changed after training outcomes are observed.  Variant (d1|d2) is a CLI arg.
+stage: dg06_damage_aware
+
+model:
+  id: /mnt/data/tungnx/whisper-large-v3
+  hub_id: openai/whisper-large-v3
+  revision: null
+  dtype: bfloat16
+  device: cuda
+  freeze_backbone: true
+  attn_implementation: eager
+  local_files_only: true
+
+experiment:
+  output_root: results/dg06
+  seed: 42
+
+data:
+  candidate_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+  training_roles: [loc-train, util-train]
+  selection_role: D-dev-select
+  correction_set_artifact: results/dg05/correction_set_v1.json
+  retention_set_artifact: results/dg06/retention_set_v1.json
+  training_baseline: results/dg05/controller/training_baseline_hypotheses.json
+
+basis:
+  path: results/dg03/basis/steering_basis_v1_L24.json
+  layer: 24
+  local_hash: sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93
+  cond_hash: sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991
+
+controller:
+  architecture: LayerNorm-Linear-GELU-Linear
+  bottleneck: 32
+  output_dim: 3
+  gate: sigmoid
+  mixture: softmax_rank2
+  direction: normalize_V0_pi
+
+training:
+  seed: 42
+  optimizer: AdamW
+  learning_rate: 0.0005
+  weight_decay: 0.0
+  epochs: 3
+  batch_size: 8
+  gradient_accumulation: 2
+  gradient_clip_norm: 1.0
+  beta: 4.465628877080159
+  lambda_m: 1.0
+  lambda_e: 1.0
+  kl_direction: p0_kl_ptheta
+  basis_refinement: false
+  gate_penalty: false
+
+selection:
+  decode_split: D-dev-select
+  decode: greedy_temperature_0_beam_1
+  rule: positive_utility_then_pier_gain_then_matrix_retention_then_lower_energy
+
+slurm:
+  partition: mig
+  max_concurrent_gpu_jobs: 2

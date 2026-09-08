@@ -1,0 +1,22 @@
+{
+  "eligible_epochs": [
+    1,
+    2,
+    3
+  ],
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive canonical utility then PIER gain then higher matrix retention then lower energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg08/train/MSTAR/seed73/checkpoint_epoch2.pt",
+  "selected_checkpoint_sha256": "sha256:2e4c43aec429622f372215e61b862b4d749a91db7b2ae6d018b3bd05c31335e7",
+  "selected_epoch": 2,
+  "variant": "d1"
+}

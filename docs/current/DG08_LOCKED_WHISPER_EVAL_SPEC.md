@@ -149,10 +149,20 @@ Scientific results (including weak seeds) are kept; no seed is rescued or droppe
   `timing/`, `stats/`).
 - Config: `configs/dg08_locked_eval.yaml`. Tests: `tests/test_dg08_locked_eval.py`.
 
-## Provenance (filled during execution)
+## D-TEST CONFIGURATION LOCKED — NO FURTHER SCIENTIFIC SELECTION
+
+The hard lock `results/dg08/DG08_TEST_LOCK.json` is committed (§Provenance). After this commit no
+finalist, checkpoint, seed, β, λ, LR, basis, layer, LoRA rank, decoder setting, normalization, or
+metric definition may change; D-test is evaluation-only.
+
+## Provenance (execution record)
 
 - Starting HEAD (DG-07 frozen): `7aff0ee326e0a83dd772149101b6b31a67a00506`.
-- Pre-training commit: _recorded after PHASE D commit_.
-- Test-lock commit: _recorded after PHASE F_.
+- Pre-training commit: `f1dc4a8d9e55856b531c441f892d50a04f5deff8`.
+- New training runs (`partition=mig`, H100 3g.40gb, all COMPLETED, seed → selected epoch):
+  SALSA 13 `50704`→ep3, SALSA 73 `50705`→ep3; LoRA 13 `50713`→ep3, LoRA 73 `50714`→ep2;
+  M* 13 `50718`→ep1, M* 73 `50719`→ep2. Seed 42 reused from DG-06/DG-07 (hash-verified in the lock).
+- Selected checkpoint SHA-256 (per finalist × seed) recorded in `DG08_TEST_LOCK.json`.
+- D-test manifest fingerprint recorded in the lock; D-test = 6,257 utts / 15 dialogues.
+- Test-lock commit: _recorded at the PHASE F commit below_.
 - Final result commit: _recorded after PHASE Q_.
-- New training jobs / test-lock / eval jobs: _recorded during execution_.

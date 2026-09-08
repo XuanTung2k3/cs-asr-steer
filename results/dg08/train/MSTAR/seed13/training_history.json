@@ -1,0 +1,73 @@
+{
+  "records": [
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.08816135674715042,
+        "hidden.weight": 4.237888813018799,
+        "norm.bias": 0.3598015308380127,
+        "norm.weight": 35.890995025634766,
+        "output.bias": 0.0981137827038765,
+        "output.weight": 1.1127023696899414
+      },
+      "epoch": 1,
+      "gradient_norm": 0.3613482495523535,
+      "mean_total_loss": 1.481766087700182,
+      "n_C_E": 51227,
+      "n_R_M": 151556,
+      "n_batches": 1346,
+      "n_optimizer_steps": 673,
+      "peak_gpu_memory_bytes": 7132139520,
+      "raw_l_corr": 1.1525222274953868,
+      "raw_l_ret_m": 0.005339734092554545,
+      "runtime_sec": 837.4461741447449,
+      "variant": "d1",
+      "weighted_l_ret_m": 0.005339734092554545
+    },
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.09285946190357208,
+        "hidden.weight": 5.09046745300293,
+        "norm.bias": 0.5372346639633179,
+        "norm.weight": 35.96575164794922,
+        "output.bias": 0.09356468915939331,
+        "output.weight": 1.1943975687026978
+      },
+      "epoch": 2,
+      "gradient_norm": 0.29602513011658416,
+      "mean_total_loss": 1.4555934919309683,
+      "n_C_E": 51227,
+      "n_R_M": 151556,
+      "n_batches": 1346,
+      "n_optimizer_steps": 673,
+      "peak_gpu_memory_bytes": 7132139520,
+      "raw_l_corr": 1.143284724921632,
+      "raw_l_ret_m": 0.004120440195162264,
+      "runtime_sec": 837.7230622768402,
+      "variant": "d1",
+      "weighted_l_ret_m": 0.004120440195162264
+    },
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.09576311707496643,
+        "hidden.weight": 5.832222938537598,
+        "norm.bias": 0.6917070746421814,
+        "norm.weight": 36.0558967590332,
+        "output.bias": 0.08990822732448578,
+        "output.weight": 1.2837800979614258
+      },
+      "epoch": 3,
+      "gradient_norm": 0.24165501246518728,
+      "mean_total_loss": 1.441275672797269,
+      "n_C_E": 51227,
+      "n_R_M": 151556,
+      "n_batches": 1346,
+      "n_optimizer_steps": 673,
+      "peak_gpu_memory_bytes": 7132139520,
+      "raw_l_corr": 1.1400324609055354,
+      "raw_l_ret_m": 0.0035365024891073882,
+      "runtime_sec": 838.5202264785767,
+      "variant": "d1",
+      "weighted_l_ret_m": 0.0035365024891073882
+    }
+  ]
+}

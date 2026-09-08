@@ -100,7 +100,17 @@
   predeclared. Implementations, CPU focused tests, and `mig`-only launch batches are committed;
   no DG-07 GPU job has been submitted.
 
-**Next ticket:** `DG-07 — learned baselines and core ablations` (do not begin DG-07 in this audit).
+- **DG-07B — READY FOR INDEPENDENT AUDIT.** The frozen five-run matrix completed on `mig` with
+  one development seed and greedy D-dev-select decoding. Accepted jobs are **50592** (LB1),
+  **50604** (LB2 exact-config rerun after a mechanical N/A-energy tie-break fix), **50612** (A1),
+  **50613** (A2), and **50642** (A3); failed job **50593** was the pre-fix LB2 software attempt.
+  All runs used `loc-train ∪ util-train`, seed 42, 2,019 optimizer updates, and the frozen DG-06
+  D1 objective. A3 produced valid per-epoch `result_v1` records but no selected checkpoint because
+  all three utilities were non-positive under the predeclared positive-utility rule. The compact
+  canonical summary is `results/dg07/summary_v1.json`; attempts and full per-method artifacts are
+  in `results/dg07/`. Focused DG-07 tests: **17 passed**. No D-dev-confirm or D-test data was read.
+
+**Current ticket:** `DG-07 — READY FOR INDEPENDENT AUDIT` (do not begin DG-08 or DG-07C).
 
 ---
 

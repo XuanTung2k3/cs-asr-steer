@@ -93,6 +93,13 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   `sha256:ad2d38a9…585d`) — no new decode of the training pool. KL-to-baseline `p_0` was recomputed
   per batch from the frozen backbone under teacher forcing (no new data). Checkpoint selection used
   only `D-dev-select` (300 utts, greedy/temp-0/beam-1). No D-dev-confirm or D-test rows were read.
+- **DG-07B state (2026-09-08):** LB1 SALSA, matched-budget LB2 LoRA, A1 local-only, A2
+  conditioning-only, and A3 fixed-mixture gate trained on the unchanged `loc-train ∪ util-train`
+  pool with seed 42 and the selected DG-06 D1 objective. Accepted Slurm jobs were **50592**,
+  **50604**, **50612**, **50613**, and **50642**; job **50593** was a failed LB2 software attempt
+  before a mechanical N/A-energy selection fix. Checkpoint selection used only `D-dev-select`
+  (greedy, temperature 0, beam 1). No D-dev-confirm or D-test rows were read; no additional
+  dataset or repartition was introduced. Full provenance is in `results/dg07/summary_v1.json`.
 - **Status:** the training roles now have DG-05B and DG-06 baseline/training exposure in addition to
   their legacy exposure; physical assignments are unchanged. Whether the v6 controller needs a
   `router-calib` subdivision remains deferred (only if a calibration step is added).
@@ -126,6 +133,11 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   free-decode the D1/D2 damage-aware checkpoints for the frozen utility→PIER→matrix-retention→energy
   selection rule (jobs 50558/50559). Development checkpoint-selection exposure only; no new subset;
   no D-dev-confirm or D-test intervention.
+- **DG-07 selection exposure (2026-09-08):** the same 300-utterance candidate population was used
+  to free-decode all five learned/ablation methods for the frozen checkpoint rule (jobs 50592,
+  50604, 50612, 50613, 50642). A3 had no eligible checkpoint because all recorded utilities were
+  non-positive; its per-epoch `result_v1` records remain preserved. No new subset was created and
+  no D-dev-confirm or D-test intervention occurred.
 - **Status:** heavily touched for selection (now including DG-03 intervened layer selection and
   DG-05/DG-06 controller checkpoint selection); no confirmatory claim may be read from it.
 

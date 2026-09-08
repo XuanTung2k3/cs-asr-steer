@@ -1,0 +1,66 @@
+{
+  "schema_version": "dg07_job_attempts_v1",
+  "partition_required": "mig",
+  "max_pending_or_running": 2,
+  "resource": "H100 MIG 3g/40GB x1, 8 CPUs, 64G",
+  "attempts": [
+    {
+      "job_id": "50592",
+      "variant": "LB1_SALSA_EXACT_GLOBAL",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "elapsed": "00:45:57",
+      "exit_code": "0:0",
+      "accepted_artifact": "results/dg07/LB1_SALSA_EXACT_GLOBAL/summary.json"
+    },
+    {
+      "job_id": "50593",
+      "variant": "LB2_LORA_MATCHED_BUDGET",
+      "partition": "mig",
+      "state": "FAILED",
+      "elapsed": "00:50:56",
+      "exit_code": "1:0",
+      "classification": "software defect: checkpoint selection attempted float(None) for LoRA N/A energy",
+      "scientific_configuration_changed": false,
+      "accepted_artifact": null
+    },
+    {
+      "job_id": "50604",
+      "variant": "LB2_LORA_MATCHED_BUDGET",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "elapsed": "00:50:48",
+      "exit_code": "0:0",
+      "classification": "exact-config rerun after narrow mechanical selection fix",
+      "accepted_artifact": "results/dg07/LB2_LORA_MATCHED_BUDGET/summary.json"
+    },
+    {
+      "job_id": "50612",
+      "variant": "A1_LOCAL_ONLY",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "elapsed": "00:46:49",
+      "exit_code": "0:0",
+      "accepted_artifact": "results/dg07/A1_LOCAL_ONLY/summary.json"
+    },
+    {
+      "job_id": "50613",
+      "variant": "A2_CONDITIONING_ONLY",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "elapsed": "00:45:38",
+      "exit_code": "0:0",
+      "accepted_artifact": "results/dg07/A2_CONDITIONING_ONLY/summary.json"
+    },
+    {
+      "job_id": "50642",
+      "variant": "A3_FIXED_MIXTURE_GATE",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "elapsed": "00:46:30",
+      "exit_code": "0:0",
+      "accepted_artifact": "results/dg07/A3_FIXED_MIXTURE_GATE/summary.json",
+      "selection_outcome": "no checkpoint eligible: all utilities were non-positive"
+    }
+  ]
+}

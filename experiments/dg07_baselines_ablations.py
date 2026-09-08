@@ -307,10 +307,16 @@ def _select(records: Sequence[Mapping[str, Any]]) -> Mapping[str, Any] | None:
                 and bool(r.get("valid_outside_harm", False))]
     if not eligible:
         return None
+    def energy_key(record: Mapping[str, Any]) -> float:
+        # LoRA has no exact-site intervention energy; its canonical field is
+        # explicitly not applicable and therefore sorts last on this tie-break.
+        value = record.get("total_energy")
+        return float(value) if value is not None else float("inf")
+
     return sorted(eligible, key=lambda r: (
         -float(r["utility"]), -float(r.get("pier_gain", -1e30)),
         -float(r.get("matrix_retention", -1.0)),
-        float(r.get("total_energy", float("inf"))),
+        energy_key(r),
     ))[0]
 
 

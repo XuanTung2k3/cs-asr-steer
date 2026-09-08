@@ -25,6 +25,7 @@ from experiments.dg07_baselines_ablations import (
     LR,
     VARIANTS,
     _batch_loss,
+    _select,
     validate_config,
 )
 from csasr.utils.config import load_config
@@ -185,3 +186,13 @@ def test_no_beam5_or_gpu_submission_in_dg07a():
     assert cfg["selection"]["decode"] == "greedy_temperature_0_beam_1"
     # The launcher is a prepared command, not a submission side effect in this stage.
     assert "sbatch " not in (REPO / "experiments/dg07_baselines_ablations.py").read_text()
+
+
+def test_lora_none_energy_is_a_valid_selection_tie_break():
+    selected = _select([
+        {"utility": 3, "pier_gain": 0.1, "matrix_retention": 0.9,
+         "valid_outside_harm": True, "total_energy": None},
+        {"utility": 2, "pier_gain": 0.9, "matrix_retention": 0.9,
+         "valid_outside_harm": True, "total_energy": None},
+    ])
+    assert selected["utility"] == 3

@@ -172,8 +172,8 @@
     }
   },
   "interpretation": {
-    "salient_comparison": "M* preserves ASR quality and damage better than learned global SALSA, while SALSA has higher raw net transition utility.",
-    "lora_comparison": "M* has the stronger overall accuracy/damage/efficiency balance; LoRA has high transition utility but substantially worse MER and embedded WER.",
+    "salient_comparison": "M* is competitive with learned global SALSA: it has better overall MER, retention, outside-harm, and realized-energy outcomes, while SALSA has higher raw net transition utility and far fewer parameters.",
+    "lora_comparison": "M* is competitive with LoRA: it has substantially better MER, embedded WER, retention, and outside harm, while LoRA has higher raw corrections/PIER and a near-matched parameter count.",
     "local_direction": "COMPONENT SUPPORTED",
     "conditioning_direction": "NO CLEAR CONTRIBUTION",
     "adaptive_mixture": "COMPONENT SUPPORTED",

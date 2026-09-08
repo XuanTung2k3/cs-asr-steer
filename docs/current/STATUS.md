@@ -1,6 +1,6 @@
 # STATUS
 
-## Stage roll-up (2026-09-07)
+## Stage roll-up (2026-09-08)
 
 - **DG-00 — COMPLETE.** Scientific contract & guardrails.
 - **DG-01 — COMPLETE.** Canonical metrics (`metrics_v1`) + result schema (`result_v1`) + adapter.
@@ -100,7 +100,7 @@
   predeclared. Implementations, CPU focused tests, and `mig`-only launch batches are committed;
   no DG-07 GPU job has been submitted.
 
-- **DG-07B — READY FOR INDEPENDENT AUDIT.** The frozen five-run matrix completed on `mig` with
+- **DG-07B — COMPLETE / FROZEN.** The frozen five-run matrix completed on `mig` with
   one development seed and greedy D-dev-select decoding. Accepted jobs are **50592** (LB1),
   **50604** (LB2 exact-config rerun after a mechanical N/A-energy tie-break fix), **50612** (A1),
   **50613** (A2), and **50642** (A3); failed job **50593** was the pre-fix LB2 software attempt.
@@ -108,9 +108,12 @@
   D1 objective. A3 produced valid per-epoch `result_v1` records but no selected checkpoint because
   all three utilities were non-positive under the predeclared positive-utility rule. The compact
   canonical summary is `results/dg07/summary_v1.json`; attempts and full per-method artifacts are
-  in `results/dg07/`. Focused DG-07 tests: **17 passed**. No D-dev-confirm or D-test data was read.
+  in `results/dg07/`. Independent audit: required matrix, exact-site/baseline fairness, canonical
+  metrics, efficiency accounting, provenance, Slurm partition, and data-role separation **PASS**.
+  Focused DG-07 tests: **17 passed**. No D-dev-confirm or D-test data was read.
 
-**Current ticket:** `DG-07 — READY FOR INDEPENDENT AUDIT` (do not begin DG-08 or DG-07C).
+**Current ticket:** `DG-08 — locked Whisper core evaluation: 3 seeds, finalist decoding, efficiency,
+and statistical reporting.` Do not begin DG-08 in this audit.
 
 ---
 

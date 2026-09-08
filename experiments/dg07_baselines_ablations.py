@@ -137,7 +137,7 @@ def set_seed(seed: int = SEED) -> None:
         torch.cuda.manual_seed_all(seed)
 
 
-def validate_config(cfg: Mapping[str, Any], variant: str) -> None:
+def validate_config(cfg: Mapping[str, Any], variant: str, expected_seed: int = SEED) -> None:
     if variant not in VARIANTS:
         raise ValueError(f"unknown DG-07 variant: {variant}")
     basis = cfg.get("basis", {})
@@ -155,7 +155,9 @@ def validate_config(cfg: Mapping[str, Any], variant: str) -> None:
     used_roles.append(str(data.get("selection_role", "")).lower())
     if any(term in used_roles for term in ("d-dev-confirm", "d-test")):
         raise ValueError("DG-07 may not use D-dev-confirm or D-test")
-    for key, expected in (("seed", SEED), ("epochs", EPOCHS),
+    if int(train.get("seed", -1)) != int(expected_seed):
+        raise ValueError(f"DG-07 seed must be the expected {expected_seed}")
+    for key, expected in (("epochs", EPOCHS),
                           ("batch_size", BATCH_SIZE), ("gradient_accumulation", GRAD_ACCUM)):
         if int(train.get(key, -1)) != expected:
             raise ValueError(f"DG-07 {key} is frozen at {expected}")
@@ -328,10 +330,11 @@ def _controller_init_hash(module: torch.nn.Module) -> str:
     return "sha256:" + h.hexdigest()
 
 
-def run_training(cfg: Mapping[str, Any], output_dir: Path, variant: str) -> dict[str, Any]:
+def run_training(cfg: Mapping[str, Any], output_dir: Path, variant: str,
+                 seed: int = SEED) -> dict[str, Any]:
     started = time.time()
-    validate_config(cfg, variant)
-    set_seed(SEED)
+    validate_config(cfg, variant, expected_seed=seed)
+    set_seed(int(seed))
     basis, basis_record = load_frozen_basis(
         BASIS_PATH, expected_layer=LAYER, expected_local_hash=LOCAL_HASH,
         expected_cond_hash=COND_HASH)
@@ -359,7 +362,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path, variant: str) -> dict
         "beta": steering_strength, "objective": "L_corr + lambda_M L_ret,M",
         "lambda_m": LAMBDA_M, "lambda_e": None,
         "training_roles": ["loc-train", "util-train"], "selection_role": "D-dev-select",
-        "seed": SEED, "trainable_parameter_count": n_params,
+        "seed": int(seed), "trainable_parameter_count": n_params,
         "backbone_frozen": True, "basis_frozen": not is_lora,
         "exact_site": ("decoder post-cross-attention residual, pre-FFN"
                        if not is_lora else "decoder layer 24 self-attention Q/V PEFT target"),
@@ -473,7 +476,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path, variant: str) -> dict
         result["run_id"] = result["run_id"].replace("dg04/", "dg07/", 1)
         result["system_name"] = result["system_name"].replace("dg04_", "dg07_", 1)
         result["method"]["gate_type"] = gate_type
-        result["seed"] = SEED
+        result["seed"] = int(seed)
         transitions = result["metrics"]["transitions"]
         energy = audit.get("total_energy")
         record = {"epoch": epoch, "variant": variant,
@@ -498,7 +501,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path, variant: str) -> dict
         shutil.copy2(selected["checkpoint"], output_dir / "selected_checkpoint.pt")
         selection["selected_checkpoint_sha256"] = _sha256_file(output_dir / "selected_checkpoint.pt")
     _atomic_json(output_dir / "selection.json", selection)
-    summary = {"schema_version": "dg07_run_v1", "variant": variant, "seed": SEED,
+    summary = {"schema_version": "dg07_run_v1", "variant": variant, "seed": int(seed),
                "trainable_parameter_count": n_params, "manifest": manifest,
                "history": history, "evaluations": eval_records, "selection": selection,
                "runtime_sec": time.time() - started,
@@ -519,10 +522,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--config", default="configs/dg07_baselines_ablations.yaml")
     parser.add_argument("--variant", choices=VARIANTS, required=True)
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--seed", type=int, default=None,
+                        help="override training seed (DG-08 multi-seed); default keeps the frozen 42")
     parser.add_argument("--run", action="store_true", help="execute one GPU variant")
     args = parser.parse_args(argv)
     cfg = load_config(args.config)
-    validate_config(cfg, args.variant)
+    seed = SEED if args.seed is None else int(args.seed)
+    if seed != SEED:
+        # DG-08 varies only the training seed; align the config's seed field.
+        cfg = dict(cfg)
+        cfg["training"] = {**cfg.get("training", {}), "seed": seed}
+    validate_config(cfg, args.variant, expected_seed=seed)
     if not args.run:
         lora_count = int(cfg["lora"]["trainable_parameters"])
         print(json.dumps({"ready": True, "variant": args.variant, "layer": LAYER,
@@ -531,7 +541,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                           "gpu_run": False}, indent=2))
         return 0
     output = Path(args.output_dir) if args.output_dir else REPO / "results/dg07" / args.variant
-    run_training(cfg, output, args.variant)
+    run_training(cfg, output, args.variant, seed=seed)
     return 0
 
 

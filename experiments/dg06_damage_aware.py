@@ -585,10 +585,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--config", default="configs/dg06_damage_aware.yaml")
     parser.add_argument("--variant", choices=["d1", "d2"], required=True)
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--seed", type=int, default=None,
+                        help="override training.seed (DG-08 multi-seed); default keeps the config seed")
     parser.add_argument("--run", action="store_true",
                         help="run damage-aware optimization; never implied by import")
     args = parser.parse_args(argv)
     cfg = load_config(args.config)
+    if args.seed is not None:
+        # DG-08 varies only the training seed; all other frozen config is untouched.
+        cfg = dict(cfg)
+        cfg["training"] = {**cfg.get("training", {}), "seed": int(args.seed)}
     validate_frozen_config(cfg, args.variant)
     output_dir = Path(args.output_dir) if args.output_dir else REPO / "results/dg06" / args.variant
     if not args.run:

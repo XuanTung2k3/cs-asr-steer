@@ -189,10 +189,25 @@ Outcome ∈ {`FULL DAMAGE-AWARE SUCCESS`, `MATRIX-RETENTION SUCCESS; EMBEDDED-RE
 - Output roots: `results/dg06/d1/`, `results/dg06/d2/`; retention set `results/dg06/retention_set_v1.json`.
 - Focused tests: `tests/test_dg06_damage_aware.py`.
 
-## Provenance (filled at freeze / after run)
+## Provenance (executed run)
 
 - Starting HEAD (DG-05 frozen): `0798355` (`0798355514fd7cb17a8dba0115287500a798067b3`).
-- Pre-run commit: _recorded in STATUS.md after the pre-run commit_.
-- Controller-init hash: _reconstructed at runtime via the DG-05 procedure; recorded in each job
-  manifest; D1==D2 verified_.
-- Slurm job IDs / resources / runtimes / result_v1 paths: _recorded after the runs_.
+- Pre-run commit: `16f4578760eab630098764c954ddd3509dea1f2b`.
+- Controller-init hash (D1 == D2, reconstructed DG-05/D0 procedure):
+  `sha256:25ebe8e43583bdaed53ab3ab40c3b69b3ff82d0685eaf840bd71e0819ede156f`.
+- Config hash: `855c791e691a785bc683dc6c209282fbb0d9ec10e488be6411aed6ac23585fef`.
+- Retention-set artifact hash: `sha256:ad2d38a9b83755b078855c8c16ba03594c759a69cd6b697f9d5e76d22337585d`
+  (R_E 2,111 utts / 11,748 positions; R_M 7,023 utts / 151,556 positions).
+- Trainable parameters: 43,651 (0.0028% of frozen Whisper; identical to DG-05).
+- **Job A (D1)** — Slurm `50558`, `partition=mig`, H100 3g.40gb (`worker-mig-3g40gb-0`),
+  COMPLETED, 48:57 wall / 2,934 s runtime, peak GPU 5.51 GB. Selected **epoch 1**, checkpoint
+  `sha256:b9c45a1e279a5b5acf84c45adff6f48a2eae67f0e1062294b9211c7b77fef241`.
+  Result root `results/dg06/d1/`.
+- **Job B (D2)** — Slurm `50559`, `partition=mig`, H100 3g.40gb (`worker-mig-3g40gb-0`),
+  COMPLETED, 45:41 wall / 2,738 s runtime, peak GPU 5.51 GB. Selected **epoch 1**, checkpoint
+  `sha256:bf49dddfa570b2e887c6d6704ed271598ba0856fd363d427c7a698589fb14612`.
+  Result root `results/dg06/d2/`.
+- **Selected variant: `SELECT D1`** (highest canonical utility among eligible).
+- **Outcome: `MATRIX-RETENTION SUCCESS; EMBEDDED-RETENTION NOT SUPPORTED`.**
+- Focused tests: `tests/test_dg06_damage_aware.py` 15 + `tests/test_dg05_adaptive_controller.py` 12
+  = 27 passed (CPU).

@@ -64,7 +64,33 @@
   artifacts/provenance are in `results/dg05/controller/`; selected checkpoint hash is
   `sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc`.
 
-**Next ticket:** `DG-06 — damage-aware correction + retention optimization.**
+- **DG-06 — READY FOR INDEPENDENT AUDIT (not COMPLETE/FROZEN).** Damage-aware training added on
+  top of the frozen DG-05 controller (`src/csasr/steering/dg06_losses.py`,
+  `experiments/dg06_damage_aware.py`; spec `DG06_DAMAGE_AWARE_SPEC.md`). Two `mig` GPU jobs from
+  pre-run commit `16f4578` trained the fixed L24 controller from the **identical** reconstructed
+  DG-05/D0 init (`sha256:25ebe8e4…156f`, D1==D2), seed 42, β fixed, `λ_M=λ_E=1.0`, C_E reused
+  verbatim from DG-05, retention populations `R_E` (11,748 pos) / `R_M` (151,556 pos) built from the
+  reused frozen baseline. Checkpoints selected by free decoding on the same 300-utt D-dev-select
+  population; both selected epoch 1.
+  - **D0** (reused DG-05 epoch 3): net 91 (135 corr / 44 corrupt), PIER gain +0.04012, **MER gain
+    −0.01919**, **matrix-CER gain −0.02745**, outside harm 1,142, embed ret 0.9634, matrix ret
+    0.9040, energy 63,926 (gate mean 0.823).
+  - **D1** correction+matrix retention (job **50558**): net **85** (116/31), PIER gain +0.0375,
+    **MER gain +0.0254**, **matrix-CER gain +0.0239**, outside harm **316**, embed ret 0.9742,
+    matrix ret **0.9745**, energy 35,575 (gate mean 0.446).
+  - **D2** full damage-aware (job **50559**): net 68 (83/15), PIER gain +0.0300, MER gain +0.0250,
+    matrix-CER gain +0.0243, outside harm **295**, embed ret **0.9875**, matrix ret 0.9756, energy
+    35,920 (gate mean 0.451).
+  Both retention variants **flip MER and matrix-CER from degrading (D0) to improving**, cut outside
+  harm ~72–74% and corruptions, and roughly halve gate strength/energy. D2's embedded-retention
+  objective further raises embedded retention (0.9742→0.9875) and lowers corruption/outside harm but
+  sacrifices corrections (116→83), lowering net utility below D1. Frozen selection (highest utility)
+  ⇒ **`SELECT D1`**; outcome **`MATRIX-RETENTION SUCCESS; EMBEDDED-RETENTION NOT SUPPORTED`**. Gate
+  penalty and basis refinement remain deferred (DG-06 core forbids them). Focused tests: **27
+  passed** (15 DG-06 + 12 DG-05, CPU). No D-dev-confirm / D-test read; no post-hoc λ/β/LR tuning.
+
+**Next ticket:** DG-06 independent audit, then `DG-07 — baselines & key ablations` (do not begin
+DG-07 before the DG-06 audit).
 
 ---
 

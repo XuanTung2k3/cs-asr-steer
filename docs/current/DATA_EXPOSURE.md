@@ -85,8 +85,16 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   D-dev-confirm or D-test rows were read. Dialogue-v2 `router-calib` exists, but its role
   report/config has no `calib-prob`/`calib-thresh` sub-roles. Only legacy v1 config defines a
   10/10 calibration split.
-- **Status:** the training roles now have DG-05B baseline/training exposure in addition to their
-  legacy exposure; physical assignments are unchanged. Whether the v6 controller needs a
+- **DG-06 state (2026-09-08):** damage-aware controllers D1 (job **50558**) and D2 (job **50559**)
+  were trained on the same `loc-train ∪ util-train` pool (`mig`). C_E was **reused verbatim** from the
+  frozen DG-05 artifact (hash-checked). The baseline-**correct** retention populations `R_E`
+  (2,111 utts / 11,748 positions) and `R_M` (7,023 utts / 151,556 positions) were built once from the
+  **reused frozen DG-05 free-decoding baseline** (`results/dg06/retention_set_v1.json`,
+  `sha256:ad2d38a9…585d`) — no new decode of the training pool. KL-to-baseline `p_0` was recomputed
+  per batch from the frozen backbone under teacher forcing (no new data). Checkpoint selection used
+  only `D-dev-select` (300 utts, greedy/temp-0/beam-1). No D-dev-confirm or D-test rows were read.
+- **Status:** the training roles now have DG-05B and DG-06 baseline/training exposure in addition to
+  their legacy exposure; physical assignments are unchanged. Whether the v6 controller needs a
   `router-calib` subdivision remains deferred (only if a calibration step is added).
 
 ### `D-dev-select`
@@ -114,8 +122,12 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   for B0/B1/B2/B3 free-decoding baselines across the frozen `ρ={0.5,1.0,2.0}` grid (Slurm jobs
   50483/50484). This is development frontier/operating-point selection exposure only; no new subset
   was created and no D-dev-confirm or D-test intervention occurred.
-- **Status:** heavily touched for selection (now including DG-03 intervened layer selection); no
-  confirmatory claim may be read from it.
+- **DG-06 selection exposure (2026-09-08):** the same 300-utterance candidate population was used to
+  free-decode the D1/D2 damage-aware checkpoints for the frozen utility→PIER→matrix-retention→energy
+  selection rule (jobs 50558/50559). Development checkpoint-selection exposure only; no new subset;
+  no D-dev-confirm or D-test intervention.
+- **Status:** heavily touched for selection (now including DG-03 intervened layer selection and
+  DG-05/DG-06 controller checkpoint selection); no confirmatory claim may be read from it.
 
 ### `D-dev-confirm`
 

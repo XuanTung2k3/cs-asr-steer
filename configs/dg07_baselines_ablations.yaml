@@ -1,0 +1,93 @@
+# DG-07A frozen pre-run matrix.  This file is a launch configuration only;
+# no variant is executed unless the launcher supplies --run under Slurm.
+stage: dg07a_baselines_ablations
+
+model:
+  id: /mnt/data/tungnx/whisper-large-v3
+  hub_id: openai/whisper-large-v3
+  revision: null
+  dtype: bfloat16
+  device: cuda
+  freeze_backbone: true
+  attn_implementation: eager
+  local_files_only: true
+
+experiment:
+  output_root: results/dg07
+  seed: 42
+
+data:
+  candidate_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+  training_roles: [loc-train, util-train]
+  selection_role: D-dev-select
+  correction_set_artifact: results/dg05/correction_set_v1.json
+  retention_set_artifact: results/dg06/retention_set_v1.json
+  forbidden_roles: [D-dev-confirm, D-test]
+
+basis:
+  path: results/dg03/basis/steering_basis_v1_L24.json
+  layer: 24
+  local_hash: sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93
+  cond_hash: sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991
+
+reference:
+  selected_variant: D1
+  selected_checkpoint: results/dg06/d1/selected_checkpoint.pt
+  selected_checkpoint_sha256: sha256:b9c45a1e279a5b5acf84c45adff6f48a2eae67f0e1062294b9211c7b77fef241
+  objective: L_corr + lambda_M L_ret,M
+  lambda_m: 1.0
+  beta: 4.465628877080159
+  controller_trainable_parameters: 43651
+  dg05_correction_only: results/dg05/controller/selected_checkpoint.pt
+  dg04_reference: results/dg04/reference.json
+
+training:
+  seed: 42
+  optimizer: AdamW
+  learning_rate: 0.0005
+  weight_decay: 0.0
+  epochs: 3
+  batch_size: 8
+  gradient_accumulation: 2
+  gradient_clip_norm: 1.0
+  expected_batches_per_epoch: 1346
+  expected_optimizer_steps_per_epoch: 673
+  beta: 4.465628877080159
+  objective: L_corr + lambda_M L_ret,M
+  lambda_m: 1.0
+  lambda_e: null
+  kl_direction: p0_kl_ptheta
+  basis_refinement: false
+  gate_penalty: false
+
+lora:
+  target_modules:
+    - model.model.decoder.layers.24.self_attn.q_proj
+    - model.model.decoder.layers.24.self_attn.v_proj
+  target_count: 43651
+  in_features: 1280
+  out_features: 1280
+  rank: 9
+  alpha: 9.0
+  dropout: 0.0
+  trainable_parameters: 46080
+  rank_rule: nearest_integer_rank_to_controller_count_before_results
+
+variants:
+  required:
+    - LB1_SALSA_EXACT_GLOBAL
+    - LB2_LORA_MATCHED_BUDGET
+    - A1_LOCAL_ONLY
+    - A2_CONDITIONING_ONLY
+    - A3_FIXED_MIXTURE_GATE
+  optional:
+    A5_REFINED_BASIS: DEFERRED_NON_BLOCKING_NO_PREDECLARED_LAMBDA_A
+
+selection:
+  decode_split: D-dev-select
+  decode: greedy_temperature_0_beam_1
+  rule: positive_canonical_utility_then_pier_gain_then_matrix_retention_then_lower_energy
+
+slurm:
+  partition: mig
+  max_concurrent_gpu_jobs: 2

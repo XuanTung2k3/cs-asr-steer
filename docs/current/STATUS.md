@@ -92,6 +92,14 @@
   exact-site/site-infrastructure checks passed in the audit environment. No D-dev-confirm / D-test
   read; no post-hoc λ/β/LR tuning.
 
+- **DG-07A — COMPLETE / FROZEN PRE-RUN.** The required comparison matrix is frozen in
+  `docs/current/DG07_BASELINES_ABLATIONS_SPEC.md`: LB1 exact-site SALSA global, LB2 matched-budget
+  Q/V LoRA, A1 local-only, A2 conditioning-only, and A3 fixed-mixture gate. All new methods share
+  the selected DG-06 D1 objective (`L_corr(C_E) + λ_M L_ret,M`, λM=1), seed 42, three-epoch budget,
+  and greedy `D-dev-select` checkpoint selection. A5 refined basis is deferred because no λA was
+  predeclared. Implementations, CPU focused tests, and `mig`-only launch batches are committed;
+  no DG-07 GPU job has been submitted.
+
 **Next ticket:** `DG-07 — learned baselines and core ablations` (do not begin DG-07 in this audit).
 
 ---

@@ -47,8 +47,8 @@ architecture/dataset scope before the Whisper core study is established.
 | B1 | Global fixed **local** steering | baseline | 16 or 24 | `v_local` | fixed `β`, all positions | none | 1 | FD |
 | B2 | Fixed **local+conditioning** mixture | baseline | 16 or 24 | `V^0` fixed mix | fixed `β`, fixed `π` | none | 1 | FD |
 | B3 | Exact-site F5-style / projection-gated steering (where scientifically comparable) | baseline | 16 or 24 | `v_local` | projection gate | none | 1 | FD |
-| B4 | **SALSA-style learned global vector** | baseline | 16 or 24 | trained-global | learned global | learned-steering loss | seed 42 | FD |
-| B5 | **Matched-data LoRA** | baseline | n/a | n/a | n/a | LoRA CE on train pool only | seed 42 | FD |
+| B4 | **SALSA-style learned global vector** (`LB1_SALSA_EXACT_GLOBAL`) | baseline | 24 | trained-global at exact site | global all-position vector | selected DG-06 D1 objective | seed 42 | FD |
+| B5 | **Matched-budget LoRA** (`LB2_LORA_MATCHED_BUDGET`) | baseline | decoder L24 Q/V | n/a | Q/V PEFT update | selected DG-06 D1 objective | seed 42 | FD |
 | **M**  | **Adaptive controller** `f_θ(LN r)→(g_t,π_t)`, `V^0` fixed (proposed) | method | 16 or 24 | `V^0` + controller mix | learned `g_t`, `π_t`, opt. `β` | damage-aware (MC §8) | ≥3 | FD |
 | M-ref | Constrained basis refinement `V=V^0+ΔV`, anchor `‖ΔV‖_F²` | ablation | 16 or 24 | refined | controller | + `λ_A` anchor | ≥3 | FD |
 | U | Oracle-location upper bound | reference | 16 or 24 | `V^0` | oracle span | none | 1 | FD |
@@ -72,6 +72,14 @@ scope. **Do not add new mechanistic analyses** in DG-03R.
 local-only vs conditioning-only vs `V^0`; fixed mixture vs learned token mixture; global vs adaptive
 strength; fixed vs refined basis; correction-only vs correction+matrix vs correction+matrix+embedded
 retention (staged, MC §8). All primary outcomes on **free decoding**.
+
+DG-07A freezes the required new systems and fairness contract in
+`docs/current/DG07_BASELINES_ABLATIONS_SPEC.md`: the selected D1 objective
+`L_corr(C_E) + λ_M L_ret,M(R_M)` with `λ_M=1`, shared by SALSA, LoRA, and the
+structural gate ablations wherever applicable. The development matrix uses one
+seed (42), greedy decoding, and `D-dev-select`; three seeds and beam-5 remain
+DG-08 scope. `A5_REFINED_BASIS` is deferred because no anchor coefficient was
+predeclared.
 
 ---
 

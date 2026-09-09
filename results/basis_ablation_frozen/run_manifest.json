@@ -1,0 +1,89 @@
+{
+  "schema_version": "basis_ablation_frozen_manifest_v1",
+  "status": "PLANNED_PRE_RUN",
+  "experiment": "BASIS-A",
+  "scientific_scope": "frozen/no-training direction-construction ablation",
+  "git_commit": "1fb2c3729cd2a51128edbd80e0d99754ce63d526",
+  "git_commit_note": "code/spec freeze parent; manifest is committed before GPU evaluation",
+  "model": {
+    "id": "openai/whisper-large-v3",
+    "local_path": "/mnt/data/tungnx/whisper-large-v3",
+    "revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "dtype": "bfloat16",
+    "freeze_backbone": true
+  },
+  "site": {
+    "tensor": "decoder_post_cross_attn_residual",
+    "layer": 24,
+    "python_layer_index": 24,
+    "hook": "csasr.lss.sites.DecoderPostCrossAttnInterventionHook",
+    "norm_preserve": true,
+    "depth_rescale": false,
+    "eligible_positions": "all non-prefix positions; forced-prefix positions receive zero gain"
+  },
+  "basis": {
+    "artifact": "results/dg03/basis/steering_basis_v1_L24.json",
+    "raw_hash": "sha256:b637493362f2ba319aef3d24f74f382334508cdc28f79fc7a062cd528cf3b2c8",
+    "raw_normalized_hash": "sha256:1bcb2a7a15f665715703b3717e4ef50d23432e4df72d037739d646e689fdc542",
+    "local_hash": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93",
+    "conditioning_hash": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+    "rc_hash": "sha256:2142a7d4d69a7b54a5596bcca953d1966ce0244f3a6ed5feb1d8b459068be4c9",
+    "lc_hash": "sha256:b3aa31d521d79c93fae1c22599b42136d8b6cfbd191846f84cbde487e635a930",
+    "mixture_coefficients": {"a_local": 0.5, "a_cond": 0.5},
+    "nominal_scale_s_l": 8.931257754160319,
+    "rho_grid": [0.5, 1.0, 2.0]
+  },
+  "data": {
+    "dataset": "CS-Dialogue",
+    "role": "D-dev-select",
+    "utterances": 300,
+    "dialogues": 20,
+    "subset_fingerprint": "sha256:4a4ce18e7a368e60108fe1506ee6a70611d532d0821b376dc1ac8d483e2b4440",
+    "full_input_composite_fingerprint": "sha256:3981d6a8134e8f73b49e1fc66451980a59d0f460759aab279a142ecb2f7310ab",
+    "forbidden_roles": ["D-dev-confirm", "D-test"],
+    "calibration_role": null
+  },
+  "decoder": {
+    "regime": "free_decoding",
+    "task": "transcribe",
+    "language": "zh",
+    "do_sample": false,
+    "temperature": 0.0,
+    "num_beams": 1,
+    "max_new_tokens": 200,
+    "condition_on_prev_tokens": false
+  },
+  "metric_schema": "result_v1 via csasr.evaluation.canonical; overall WER=n/a (no frozen canonical overall WER)",
+  "planned_conditions": [
+    {"direction": "B0 Frozen", "rho": 0.0, "source": "REUSED DG-04"},
+    {"direction": "R Raw", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "L Local", "rho": [0.5, 1.0, 2.0], "source": "REUSED DG-04"},
+    {"direction": "C Conditioning", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "RC Raw+Conditioning", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "LC Local+Conditioning", "rho": [0.5, 1.0, 2.0], "source": "REUSED DG-04"}
+  ],
+  "representation_pca": {
+    "source": "baseline free-decoding exact-site L24 final rows",
+    "sampling_seed": 2408,
+    "max_vectors": 10000,
+    "population": "same D-dev-select 300; one deterministic final row per utterance",
+    "fit_rows_not_directions": true,
+    "projection_categories": "deferred unless existing unambiguous metadata is available"
+  },
+  "geometry": {
+    "implementation": "csasr.experiments.basis_ablation.basis_geometry",
+    "version": "basis-ablation-geometry-v1",
+    "principal_angle_tolerance": 1e-10,
+    "effective_rank_tolerance": "machine epsilon * max(matrix shape) * largest singular value"
+  },
+  "batch_policy": {
+    "partition": "main",
+    "gpus": 1,
+    "gpu_request": "gpu:1",
+    "batch_size": 32,
+    "preflight": {"batch_1": 1, "proposed": 32, "utterances": 8, "conditions": ["Frozen", "Local"]},
+    "fallback": "If the submitted run OOMs, operational fallback is 16 then 8; no scientific parameter changes."
+  },
+  "planned_output": "results/basis_ablation_frozen/",
+  "data_exposure": {"D-dev-select_only": true, "D-dev-confirm": false, "D-test": false}
+}

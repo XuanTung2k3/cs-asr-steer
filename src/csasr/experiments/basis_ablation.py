@@ -165,12 +165,18 @@ def fit_pca_rows(rows: np.ndarray, n_components: int = 3) -> dict:
         raise ValueError("representation rows contain non-finite values")
     mean = x.mean(axis=0)
     centered = x - mean
-    _u, singular, vt = np.linalg.svd(centered, full_matrices=False)
-    variance = singular * singular / max(1, x.shape[0] - 1)
+    # The covariance eigendecomposition is equivalent to the right singular
+    # vectors of centered X, but avoids materialising the large U factor for
+    # the bounded 10k x 1280 representation sample.
+    covariance = (centered.T @ centered) / max(1, x.shape[0] - 1)
+    variance, components = np.linalg.eigh(covariance)
+    order = np.argsort(variance)[::-1]
+    variance = np.maximum(variance[order], 0.0)
+    components = components[:, order].T
     total = float(variance.sum())
     ratios = variance / total if total else np.zeros_like(variance)
-    k = min(int(n_components), vt.shape[0])
-    return {"mean": mean, "components": vt[:k],
+    k = min(int(n_components), components.shape[0])
+    return {"mean": mean, "components": components[:k],
             "explained_variance": variance[:k],
             "explained_variance_ratio": ratios[:k],
             "n_rows": int(x.shape[0]), "n_features": int(x.shape[1])}

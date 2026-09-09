@@ -358,7 +358,7 @@ def _tf_one(bundle, plan, *, layer, direction=None, rho=0.0, scale=1.0, nfp=0):
         hook = DecoderPostCrossAttnInterventionHook(
             bundle, int(layer), torch.tensor(direction, dtype=torch.float32),
             alpha=float(rho), scale=float(scale), num_forced_prefix=int(nfp),
-            norm_preserve=True, mode="steer", record=False, steer_prefill=True,
+            norm_preserve=True, mode="steer", record=False,
             enforce_contract_layer=False)
         hook.__enter__()
     try:

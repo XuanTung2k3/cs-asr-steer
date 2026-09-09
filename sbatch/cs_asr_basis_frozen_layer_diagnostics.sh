@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
-#SBATCH --time=08:00:00
+#SBATCH --time=02:00:00
 #SBATCH --output=/mnt/data/tungnx/cs-asr-steer/logs/cs_basis_a2_tf_%j.out
 #SBATCH --error=/mnt/data/tungnx/cs-asr-steer/logs/cs_basis_a2_tf_%j.err
 set -euo pipefail

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import math
+import csv
 from pathlib import Path
 
 import numpy as np
@@ -77,6 +78,7 @@ def free_rows():
         rho = float(x["rho"]); layer = int(x["layer"])
         r = {"source": "NEW", "layer": layer, "direction": d, "rho": rho,
              "direction_hash": x.get("direction_hash"), "scale_s_l": x.get("scale_s_l"),
+             "effective_dose": rho * float(x.get("scale_s_l", 1.0)),
              "wer": "n/a — no frozen canonical overall WER"}
         for k in ("mer", "pier", "en_wer", "matrix_cer", "corrections", "corruptions",
                   "utility", "outside_harm", "embed_retention", "matrix_retention",
@@ -165,6 +167,32 @@ def tf_rows():
         x = load_json(p); g = x.get("groups", {}).get("all", {})
         if g: out.append({"layer": int(x["layer"]), "direction": x["direction"], "rho": float(x["rho"]), **g})
     return out
+
+
+def projection_stats():
+    out = {}
+    for p in sorted(ATLAS.joinpath("teacher_forced").glob("L[0-9][0-9]/*.json")):
+        x = load_json(p)
+        if abs(float(x.get("rho", -1)) - .5) > 1e-9 or not x.get("rows"):
+            continue
+        groups = {}
+        for label, pred in (("baseline_wrong_embedded", lambda r:r["language"]=="EN" and r["baseline_correct"] is False),
+                            ("baseline_correct_embedded", lambda r:r["language"]=="EN" and r["baseline_correct"] is True),
+                            ("matrix", lambda r:r["language"]=="ZH")):
+            selected = [r for r in x["rows"] if pred(r)]
+            groups[label] = {"n": len(selected)}
+            for field in ("baseline_projection", "steered_projection", "delta_projection"):
+                a = np.asarray([r[field] for r in selected], dtype=float)
+                groups[label][field] = {"mean": float(np.mean(a)) if len(a) else None,
+                    "std": float(np.std(a)) if len(a) else None,
+                    "median": float(np.median(a)) if len(a) else None,
+                    "q25": float(np.quantile(a, .25)) if len(a) else None,
+                    "q75": float(np.quantile(a, .75)) if len(a) else None}
+        out[f"L{int(x['layer']):02d}/{x['direction']}"] = groups
+    result = {"schema_version":"basis_a2_projection_stats_v1", "rho":.5,
+              "descriptive_only":True, "conditions":out}
+    write(ATLAS/"projection_stats.json", result)
+    return result
 
 
 def mean_at(rows, layer, direction, rho, field, default=np.nan):
@@ -261,6 +289,23 @@ def figures(rows, geom, tf):
     if (ATLAS/"probe.json").exists():
         p=load_json(ATLAS/"probe.json")["layers"]; fig,ax=plt.subplots(figsize=(8,4)); ax.plot(LAYERS,[p[str(l)]["auroc"] for l in LAYERS],marker="o"); ax.set(xlabel="Decoder layer",ylabel="AUROC",title="Language probe AUROC by layer"); ax.grid(alpha=.25); fig.tight_layout(); fig.savefig(FIG/"probe_auroc_vs_layer.png",dpi=180); plt.close(fig)
         fig,ax=plt.subplots(figsize=(6,5)); au=np.array([p[str(l)]["auroc"] for l in LAYERS]); u=np.array([mean_at(rows,l,"Raw",.5,"utility") for l in LAYERS]); ax.scatter(au,u); ax.set(xlabel="Probe AUROC",ylabel="Raw utility",title="Probe AUROC vs causal steering utility"); fig.tight_layout(); fig.savefig(FIG/"probe_auroc_vs_steering_utility.png",dpi=180); plt.close(fig)
+    # Descriptive aligned-token projection distributions at the L24 anchor.
+    l24 = []
+    for p in sorted(ATLAS.joinpath("teacher_forced/L24").glob("*.json")):
+        if "_rho0.5" not in p.name: continue
+        x = load_json(p)
+        for label, pred in (("wrong EN", lambda r:r["language"]=="EN" and r["baseline_correct"] is False),
+                            ("correct EN", lambda r:r["language"]=="EN" and r["baseline_correct"] is True),
+                            ("matrix ZH", lambda r:r["language"]=="ZH")):
+            vals = [r["baseline_projection"] for r in x["rows"] if pred(r)]
+            if vals: l24.append((label, x["direction"], vals))
+    if l24:
+        fig, ax = plt.subplots(figsize=(12, 5)); data=[]; labels=[]
+        for label, direction, vals in l24:
+            data.append(vals); labels.append(f"{direction}\n{label}")
+        ax.boxplot(data, labels=labels, showfliers=False); ax.set_title("Descriptive L24 baseline projection distributions, rho=0.5")
+        ax.set_ylabel("Projection onto direction"); ax.tick_params(axis="x", labelrotation=70); ax.grid(axis="y", alpha=.2)
+        fig.tight_layout(); fig.savefig(FIG/"projection_distributions_L24_rho0.5.png", dpi=180); plt.close(fig)
 
 
 def qualitative(rows):
@@ -281,6 +326,27 @@ def qualitative(rows):
     (ATLAS/"qualitative_traces.md").write_text("\n".join(lines),encoding="utf-8")
 
 
+def table_outputs(rows):
+    fields = ["direction", "layer", "rho", "wer", "mer", "pier", "en_wer", "matrix_cer",
+              "corrections", "corruptions", "utility", "outside_harm", "embed_retention",
+              "matrix_retention", "energy", "utility_per_energy", "edits", "effective_dose",
+              "direction_hash", "source"]
+    with (ATLAS / "main_performance_table.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields); w.writeheader(); w.writerows({k:r.get(k) for k in fields} for r in rows)
+    lines = ["# BASIS-A2 full free-decoding performance table", "", "WER is `n/a — no frozen canonical overall WER`; `en_wer` is the frozen embedded-language metric. All rows are NEW exploratory panel results.", "", "| Direction | Layer | rho | WER | MER | PIER | Embedded WER | Matrix CER | Corr | Corrupt | Utility | Outside harm | Embed ret. | Matrix ret. | Energy | Utility/Energy |", "|---|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for r in sorted(rows, key=lambda x:(DIRECTIONS.index(x["direction"]),x["layer"],x["rho"])):
+        vals=[r["direction"],r["layer"],r["rho"],r["wer"],r["mer"],r["pier"],r["en_wer"],r["matrix_cer"],r["corrections"],r["corruptions"],r["utility"],r["outside_harm"],r["embed_retention"],r["matrix_retention"],r["energy"],r["utility_per_energy"]]
+        lines.append("| " + " | ".join(str(v) for v in vals) + " |")
+    (ATLAS / "main_performance_table.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    write(ATLAS / "frontier.json", {d:[r for r in rows if r["direction"]==d] for d in DIRECTIONS})
+    candidates={}
+    for d in DIRECTIONS:
+        z=sorted([r for r in rows if r["direction"]==d and r["rho"]==.5], key=lambda x:(x["utility"],x["corrections_per_energy"] if x["corrections_per_energy"] is not None else -1), reverse=True)
+        candidates[d]={"candidate_layers_top_utility":[int(r["layer"]) for r in z[:3]],"rows":[{"layer":r["layer"],"utility":r["utility"],"corrections":r["corrections"],"corruptions":r["corruptions"],"pier_gain":r["pier_gain"],"matrix_retention":r["matrix_retention"]} for r in z[:3]]}
+    candidates["negative_control"]={"layer":min(rows,key=lambda r:r["utility"] if r["rho"]==.5 else 1e9)["layer"],"note":"weak exploratory negative control; chosen descriptively from panel utility"}
+    write(ATLAS / "candidate_layers_exploratory.json", {"status":"EXPLORATORY — NOT YET FULL-DEV VALIDATED","candidates":candidates})
+
+
 def main():
     rows=free_rows(); tf=tf_rows(); geom=geometry()
     write(ATLAS/"free_decode_summary.json", {"schema_version":"basis_a2_free_summary_v1","rows":rows})
@@ -290,9 +356,9 @@ def main():
         y=[float(np.nanmean([r["utility"] for r in rows if r["direction"]==d and r["rho"]==rho])) for rho in RHO]
         dose[d]={"rho":list(RHO),"mean_utility":y,"classification":dose_class(y)}
     write(ATLAS/"dose_response.json",dose)
-    corr=probe_correlations(rows); figures(rows,geom,tf); qualitative(rows)
+    corr=probe_correlations(rows); pstats=projection_stats(); figures(rows,geom,tf); qualitative(rows); table_outputs(rows)
     # Compact manuscript-facing summary, preserving the full row artifacts.
-    write(ATLAS/"summary.json", {"schema_version":"basis_a2_summary_v1","n_free_rows":len(rows),"n_teacher_forced_rows":len(tf),"geometry":geom["subspace_equivalence"],"dose_response":dose,"probe_correlations":corr,"pca":{"status":"deferred","reason":"no larger compatible cached representation sample was available; no extra GPU sweep launched"},"interpretation":"exploratory all-layer atlas; candidate bands are not final layer validation"})
+    write(ATLAS/"summary.json", {"schema_version":"basis_a2_summary_v1","n_free_rows":len(rows),"n_teacher_forced_rows":len(tf),"geometry":geom["subspace_equivalence"],"dose_response":dose,"probe_correlations":corr,"projection_stats":{"path":"projection_stats.json","conditions":len(pstats["conditions"])},"pca":{"status":"deferred","reason":"no larger compatible cached representation sample was available; no extra GPU sweep launched"},"interpretation":"exploratory all-layer atlas; candidate bands are not final layer validation"})
     (ATLAS/"comparison.md").write_text("# BASIS-A2 comparison\n\nSee `summary.json`, `free_decode_summary.json`, `teacher_forced_summary.json`, and `geometry/`. All free-decoding results are panel-only exploratory evidence; WER is n/a where no frozen canonical overall WER exists.\n",encoding="utf-8")
     print(f"aggregated {len(rows)} free rows and {len(tf)} teacher-forced rows")
 

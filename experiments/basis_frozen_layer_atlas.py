@@ -384,6 +384,7 @@ def _diagnostic_condition(bundle, plans, base, layer, direction, direction_name,
             bm = base["metrics"][layer][key]; sm = _token_metrics(logits[q], gold, base["logits"][key])
             before = base["states"][layer][key]; after = states[q]; delta = after - before
             d = np.asarray(direction, dtype=np.float64)
+            z_before = _ln_np(before); z_after = _ln_np(after)
             rows.append({"utterance_id": keybase, "dialogue_id": plan["dialogue_id"],
                          "reference_unit_index": int(p["reference_unit_index"]),
                          "language": p["language"], "baseline_correct": p["baseline_correct"],
@@ -396,7 +397,10 @@ def _diagnostic_condition(bundle, plans, base, layer, direction, direction_name,
                          "delta_entropy": sm["entropy"] - bm["entropy"],
                          "representation_displacement": float(np.linalg.norm(delta)),
                          "relative_displacement": float(np.linalg.norm(delta) / max(np.linalg.norm(before), 1e-12)),
-                         "delta_direction_cosine": float(delta @ d / max(np.linalg.norm(delta),1e-12))})
+                         "delta_direction_cosine": float(delta @ d / max(np.linalg.norm(delta),1e-12)),
+                         "baseline_projection": float(z_before @ d),
+                         "steered_projection": float(z_after @ d),
+                         "delta_projection": float((z_after-z_before) @ d)})
     def mean(field, subset=None):
         z = [x[field] for x in rows if subset is None or subset(x)]
         return float(np.mean(z)) if z else None
@@ -413,7 +417,10 @@ def _diagnostic_condition(bundle, plans, base, layer, direction, direction_name,
                          "kl_p0_psteer": None,
                          "representation_displacement": mean("representation_displacement", pred),
                          "relative_displacement": mean("relative_displacement", pred),
-                         "delta_direction_cosine": mean("delta_direction_cosine", pred)}
+                         "delta_direction_cosine": mean("delta_direction_cosine", pred),
+                         "baseline_projection": mean("baseline_projection", pred),
+                         "steered_projection": mean("steered_projection", pred),
+                         "delta_projection": mean("delta_projection", pred)}
         # Replace the nested KL placeholder with the actual scalar mean.
         vals = [x["steered"].get("kl_p0_psteer") for x in rows if pred(x)]
         groups[label]["kl_p0_psteer"] = float(np.mean(vals)) if vals else None
@@ -500,7 +507,8 @@ def diagnostics(args) -> int:
                          ("Raw+Cond","raw_cond"),("Local+Cond","local_cond")):
             for rho in RHO_GRID:
                 out=ATLAS/"teacher_forced"/f"L{l:02d}"/f"{key}_rho{rho}.json"
-                if not out.exists(): _write(out,_diagnostic_condition(bundle,plans,base_cache,l,dirs[key],name,rho,scale,nfp))
+                if not out.exists() or not json.loads(out.read_text())["rows"] or "baseline_projection" not in json.loads(out.read_text())["rows"][0]:
+                    _write(out,_diagnostic_condition(bundle,plans,base_cache,l,dirs[key],name,rho,scale,nfp))
     # Fixed exploratory lambda panel response, rho=.5, all layers.
     for l in LAYERS:
         dirs, meta = _direction_arrays(l); scale=float(meta["scale_s_l"])
@@ -508,7 +516,8 @@ def diagnostics(args) -> int:
             for lam in LAMBDAS:
                 d=dirs[primary]+float(lam)*dirs["conditioning"]; d=d/max(np.linalg.norm(d),1e-12)
                 out=ATLAS/"mixture"/f"L{l:02d}"/f"{primary}_lambda{lam}.json"
-                if not out.exists(): _write(out,_diagnostic_condition(bundle,plans,base_cache,l,d,f"{primary}+lambda_cond",.5,scale,nfp))
+                if not out.exists() or not json.loads(out.read_text())["rows"] or "baseline_projection" not in json.loads(out.read_text())["rows"][0]:
+                    _write(out,_diagnostic_condition(bundle,plans,base_cache,l,d,f"{primary}+lambda_cond",.5,scale,nfp))
     cfg=_cfg(); _, train_manifest, _ = __import__("experiments.dg03_build_basis",fromlist=["_load_construct"])._load_construct()
     train_manifest = train_manifest[train_manifest["role"].astype(str) == CONSTRUCT_ROLE].reset_index(drop=True)
     # Use dialogue-disjoint D-construct and full D-dev-select role manifests for the probe.

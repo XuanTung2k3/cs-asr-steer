@@ -61,10 +61,10 @@ basis hashes, and canonical `result_v1`. Their paths and byte hashes are copied 
 `results/basis_ablation_frozen/reused/` as pointers; the DG-04 files are never overwritten.
 
 The one new GPU process evaluates `R × 3`, `C × 3`, and `RC × 3` after one model/basis/data load.
-It also records one deterministic final free-decoding exact-site L24 row per utterance for the
-bounded supporting PCA (maximum 10,000 rows). This baseline recording must reproduce the reused
-B0 transcripts exactly. There is no projection-distribution analysis unless compatible labels
-and states are already available; no new alignment or probe is introduced.
+The supporting PCA is attempted only if compatible baseline exact-site states are naturally
+available in this process; it is deferred if no such cache exists or a recorder replay does not
+reproduce reused B0 transcripts. There is no separate GPU sweep, projection-distribution analysis,
+new alignment, or probe merely for visualization.
 
 ## 4. Metrics and artifacts
 

@@ -63,12 +63,13 @@
     {"direction": "LC Local+Conditioning", "rho": [0.5, 1.0, 2.0], "source": "REUSED DG-04"}
   ],
   "representation_pca": {
-    "source": "baseline free-decoding exact-site L24 final rows",
+    "source": "baseline free-decoding exact-site L24 final rows if naturally available",
     "sampling_seed": 2408,
     "max_vectors": 10000,
     "population": "same D-dev-select 300; one deterministic final row per utterance",
     "fit_rows_not_directions": true,
-    "projection_categories": "deferred unless existing unambiguous metadata is available"
+    "projection_categories": "deferred unless existing unambiguous metadata is available",
+    "defer_without_compatible_cache": true
   },
   "geometry": {
     "implementation": "csasr.experiments.basis_ablation.basis_geometry",

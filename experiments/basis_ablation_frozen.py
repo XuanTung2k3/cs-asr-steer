@@ -149,6 +149,7 @@ def _small_pop(pop, n: int = 8):
 def _preflight(bundle, pop, local: torch.Tensor, nfp: int, batch_size: int) -> dict:
     """Compare batch=1 and the frozen proposed batch on eight fixed utterances."""
     from experiments.dg04_frozen_baselines import _decode
+    from csasr.evaluation.canonical import corpus_metrics
     small = _small_pop(pop, 8)
     outputs = {}
     for label, direction, rho in (("Frozen", None, 0.0), ("Local", local, 0.5)):
@@ -158,36 +159,12 @@ def _preflight(bundle, pop, local: torch.Tensor, nfp: int, batch_size: int) -> d
                           nfp=nfp, alpha=rho, scale=SCALE, batch_size=batch_size)
         if one != many:
             raise RuntimeError(f"batch equivalence failed for {label}")
+        refs = [str(x) for x in small.manifest["transcript_raw"]]
+        if corpus_metrics(refs, list(one.values())) != corpus_metrics(refs, list(many.values())):
+            raise RuntimeError(f"canonical metric batch equivalence failed for {label}")
         outputs[label] = {"utterances": len(one), "transcripts_identical": True}
     return {"batch_1": 1, "proposed_batch": batch_size, "n_utterances": 8,
             "conditions": outputs, "passed": True}
-
-
-def _capture_baseline_representations(bundle, pop, batch_size: int,
-                                      expected: dict[str, str]) -> tuple[dict, np.ndarray]:
-    """Record one deterministic final free-decoding site row per utterance."""
-    from csasr.models.whisper import batch_model_inputs
-    from csasr.lss.sites import DecoderPostCrossAttnRecorder
-    reps, texts = [], {}
-    manifest = pop.manifest.sort_values("duration_sec").reset_index(drop=True)
-    for start in range(0, len(manifest), batch_size):
-        b = manifest.iloc[start:start + batch_size]
-        inputs = batch_model_inputs(bundle, b["audio_path"].tolist())
-        with DecoderPostCrossAttnRecorder(bundle, [LAYER], keep_last_only=True) as rec, \
-                torch.inference_mode():
-            out = bundle.model.generate(**inputs, **GEN)
-        seq = out if isinstance(out, torch.Tensor) else out.sequences
-        for uid, text in zip(b["utterance_id"].astype(str),
-                              bundle.processor.batch_decode(seq, skip_special_tokens=True)):
-            texts[uid] = text.strip()
-        state = rec.states.get(LAYER)
-        if state is None:
-            raise RuntimeError("baseline recorder did not capture L24 states")
-        reps.append(state[:, -1, :].cpu().numpy().astype(np.float64))
-    if texts != expected:
-        raise RuntimeError("PCA baseline recording changed the reused B0 transcripts")
-    arr = np.concatenate(reps, axis=0)[:10000]
-    return texts, arr
 
 
 def run_gpu(args) -> int:
@@ -215,8 +192,6 @@ def run_gpu(args) -> int:
     local_t = torch.tensor(directions["local"], dtype=torch.float32)
     start_time = time.monotonic()
     preflight = _preflight(bundle, pop, local_t, nfp, args.batch_size)
-    _, reps = _capture_baseline_representations(bundle, pop, args.batch_size, base)
-    np.save(OUT / "representation/baseline_l24_free_decode.npy", reps)
     provenance = {
         "git_commit": _git_commit(), "model_id": bundle.model_id,
         "model_revision": bundle.revision, "layer": LAYER, "site": SITE,
@@ -266,8 +241,8 @@ def run_gpu(args) -> int:
                "slurm_job_id": os.environ.get("SLURM_JOB_ID"), "terminal_state": "COMPLETED"}
     _write(OUT / "run_metadata.json", {"provenance": provenance, "reuse": reuse_info,
                                        "runtime": runtime, "representation": {
-                                           "path": "representation/baseline_l24_free_decode.npy",
-                                           "n_vectors": int(reps.shape[0]), "dim": int(reps.shape[1])}})
+                                           "deferred": True,
+                                           "reason": "no compatible cached baseline states; recorder replay did not reproduce reused B0 transcripts"}})
     return 0
 
 

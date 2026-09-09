@@ -165,7 +165,7 @@ def _encoder_gain(bundle, dataset: str, row: dict, *, scope: str, cs_spans: dict
 
 
 def _load_cs_construct_for_encoder():
-    from csasr.experiments.dg03_build_basis import _load_construct
+    from experiments.dg03_build_basis import _load_construct
     from csasr.experiments.v2r3_directions import build_spans, matrix_runs
     from csasr.lss.align import conventions as conv
     cfg, manifest, construct = _load_construct()
@@ -455,7 +455,19 @@ def main(argv=None):
     if args.mode == "select-r2":
         from csasr.experiments.basis_a3_protocol import select_r2_layers
         select_r2_layers(); return 0
-    return run_grid(args)
+    try:
+        return run_grid(args)
+    except Exception as exc:
+        # Keep an interrupted/failed scientific shard auditable rather than
+        # leaving a manifest falsely marked RUNNING.
+        job_id = os.environ.get("SLURM_JOB_ID", "local")
+        path = RESULTS / "manifests" / f"job_{job_id}.json"
+        if path.is_file():
+            failed = _load_json(path)
+            failed.update({"status": "FAILED", "finished_at": time.time(),
+                           "error_type": type(exc).__name__, "error": str(exc)})
+            write_json(path, failed)
+        raise
 
 
 if __name__ == "__main__": raise SystemExit(main())

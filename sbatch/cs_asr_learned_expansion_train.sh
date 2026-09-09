@@ -17,6 +17,8 @@ mkdir -p "$REPO/logs"
 export PYTHONPATH="$REPO/src:$REPO"
 export LD_LIBRARY_PATH="/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+echo "node=$(hostname) CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}" >&2
+nvidia-smi -L >&2 2>&1 || echo "nvidia-smi -L unavailable" >&2
 exec /home/tungnx/miniconda3/envs/acl1/bin/python \
   "$REPO/experiments/learned_expansion.py" \
   --config "$REPO/configs/expansion/learned_expansion_run.yaml" \

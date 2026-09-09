@@ -136,6 +136,8 @@ def _emit(refs, base, method_texts, ids, *, layer, direction_name, rho, scale,
 def run_screen(cfg: Mapping[str, Any], layers: Sequence[int], batch_size: int = 8) -> dict[str, Any]:
     started = time.time()
     bundle = load_whisper({"model": dict(cfg["model"])})
+    from experiments.learned_expansion import require_cuda
+    require_cuda(bundle, cfg)
     bundle.model.eval()
     for p in bundle.model.parameters():
         p.requires_grad_(False)

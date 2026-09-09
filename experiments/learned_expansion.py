@@ -70,6 +70,22 @@ ATLAS_DIRECTIONS = REPO / "results/basis_frozen_layer_atlas/directions.json"
 MODES = ("raw_only", "local_only", "cond_only", "raw_cond", "local_cond")
 
 
+def require_cuda(bundle: Any, cfg: Mapping[str, Any]) -> None:
+    """Fail fast if a cuda-configured run silently fell back to CPU.
+
+    ``load_whisper`` downgrades to CPU/float32 on a GPU-less node with only a
+    warning. A CPU/float32 run is both far too slow and scientifically
+    non-comparable to the frozen bf16 results, so refuse it rather than waste
+    hours or emit invalid numbers (operational guard, ticket §16).
+    """
+    requested = str(cfg.get("model", {}).get("device", "cuda"))
+    if requested.startswith("cuda") and not str(getattr(bundle, "device", "")).startswith("cuda"):
+        raise RuntimeError(
+            "config requested device=cuda but the bundle is on "
+            f"{getattr(bundle, 'device', '?')!r}: GPU not visible to this job. "
+            "Refusing a silent CPU/float32 fallback (non-comparable to frozen bf16).")
+
+
 def _controller_state_hash(module: torch.nn.Module) -> str:
     h = hashlib.sha256()
     for key, value in sorted(module.state_dict().items()):
@@ -201,6 +217,7 @@ def run_training(cfg: Mapping[str, Any], output_dir: Path, *, layer: int, mode: 
 
     basis = load_basis_for(int(layer), mode)
     bundle = load_whisper({"model": dict(cfg["model"])})
+    require_cuda(bundle, cfg)
     bundle.model.eval()
     for p in bundle.model.parameters():
         p.requires_grad_(False)

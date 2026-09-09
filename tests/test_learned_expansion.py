@@ -149,6 +149,22 @@ def test_decode_module_handles_rank1_and_rank2(tiny_bundle):
 
 # --- data-role guards + provenance ------------------------------------------ #
 
+def test_require_cuda_rejects_cpu_fallback():
+    from experiments.learned_expansion import require_cuda
+
+    class _B:
+        device = "cpu"
+    # cuda requested but bundle on cpu -> must refuse (no silent CPU fallback)
+    with pytest.raises(RuntimeError):
+        require_cuda(_B(), {"model": {"device": "cuda"}})
+    # explicit cpu request is allowed (e.g. a deliberate CPU smoke)
+    require_cuda(_B(), {"model": {"device": "cpu"}})
+
+    class _G:
+        device = "cuda:0"
+    require_cuda(_G(), {"model": {"device": "cuda"}})
+
+
 def test_allowed_layers_and_modes_frozen():
     assert ALLOWED_LAYERS == (16, 24, 26, 27, 31)
     assert set(MODES) == {"raw_only", "local_only", "cond_only", "raw_cond", "local_cond"}

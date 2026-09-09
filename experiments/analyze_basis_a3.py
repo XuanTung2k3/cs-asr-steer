@@ -72,6 +72,15 @@ def _corr(x, y):
     return float(np.corrcoef(a, b)[0, 1])
 
 
+def _spearman(x, y):
+    pairs = [(float(a), float(b)) for a, b in zip(x, y)
+             if _num(a) is not None and _num(b) is not None]
+    if len(pairs) < 3:
+        return None
+    a, b = np.asarray(pairs).T
+    return _corr(_rank(a.tolist()), _rank(b.tolist()))
+
+
 def _geometry_links(root, raw, cond):
     geom = _read(root / "geometry/raw_cond_decoder_geometry.json")["layers"]
     base = {int(g["layer"]): g for g in geom}
@@ -105,7 +114,7 @@ def _write_geometry_correlations(root, links):
                 for metric in metrics:
                     out.append({"Dataset": dataset, "Scope": scope, "geometry": g, "outcome": metric,
                                 "pearson": _corr([r[g] for r in z], [r[metric] for r in z]),
-                                "spearman": _corr(_rank([r[g] for r in z]), _rank([r[metric] for r in z])),
+                                "spearman": _spearman([r[g] for r in z], [r[metric] for r in z]),
                                 "n": len([(r[g], r[metric]) for r in z if _num(r[metric]) is not None])})
     _write_csv(root / "geometry/steering_geometry_correlations.csv", out,
                ["Dataset", "Scope", "geometry", "outcome", "pearson", "spearman", "n"])

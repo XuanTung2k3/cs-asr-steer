@@ -1,0 +1,23 @@
+{
+  "PCA": {
+    "deferred": true,
+    "reason": "no baseline representation cache"
+  },
+  "angle(RC,LC)": 2.492676675972297,
+  "angle(local,cond)": 90.0,
+  "angle(raw,cond)": 94.98535335194448,
+  "angle(raw,local)": 4.985353351944459,
+  "cond([local,cond])": 1.0000000000000002,
+  "cond([raw,cond])": 1.0910285008611769,
+  "cos(RC,LC)": 0.9990537886818334,
+  "cos(local,cond)": -2.2551405187698492e-17,
+  "cos(raw,cond)": -0.08690108042758633,
+  "cos(raw,local)": 0.9962169453590509,
+  "principal angle between rank-2 spans": [
+    0.0,
+    0.0
+  ],
+  "projection-matrix Frobenius distance": 6.119351641089615e-16,
+  "removed raw energy fraction": 0.007551797779481829,
+  "residual norm before renorm": 0.9962169453590509
+}

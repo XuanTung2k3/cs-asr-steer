@@ -141,6 +141,15 @@
 **Current ticket (historical):** `DG-08 — locked Whisper core evaluation` — implementation/evaluation
 complete; awaiting independent DG-08 audit/freeze.
 
+**BASIS-A — frozen direction-construction ablation COMPLETE.** Additive D-dev-select-only
+comparison at exact L24 post-cross-attention/pre-FFN used one completed `main` job (`51107`) for
+new R/C/RC conditions; DG-04 B0/B1/B2 were reused after strict compatibility checks. The required
+batch-32 preflight changed Local transcripts, so the correctness-preserving batch-1 path was
+frozen before the successful rerun. PCA and projection distributions were deferred because no
+compatible cached representation states were available. Results and geometry are under
+`results/basis_ablation_frozen/`; no D-dev-confirm or D-test output was read or produced. This
+addendum does not reopen DG-07 or DG-08 and does not begin learned/adaptive basis construction.
+
 ---
 
 **Stage 2 / DG-01 — COMPLETE (canonical metrics + result artifacts; freeze commit pending).**

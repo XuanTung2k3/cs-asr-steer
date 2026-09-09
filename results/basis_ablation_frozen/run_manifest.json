@@ -3,8 +3,16 @@
   "status": "PLANNED_PRE_RUN",
   "experiment": "BASIS-A",
   "scientific_scope": "frozen/no-training direction-construction ablation",
-  "git_commit": "1fb2c3729cd2a51128edbd80e0d99754ce63d526",
-  "git_commit_note": "code/spec freeze parent; manifest is committed before GPU evaluation",
+  "git_commit": "6c0fa30e50c23c5ddbdb9e534fde17fc7f997d77",
+  "git_commit_note": "pre-run code/spec freeze commit; manifest was committed before GPU evaluation",
+  "provenance": {
+    "implementation": "csasr.utils.provenance.stage_provenance plus csasr.lss.specfreeze-compatible frozen spec",
+    "provenance_version": "artifact-provenance-v1",
+    "resolved_config_hash": "3602b7a864316f4d3ff7721a9be480e2dbdddb44744302dbec5d83d06a99b3cb",
+    "code_config_snapshot_hash": "4f9927c77ef451d6a9bc2b80eaae9440883e6a7e915af0e9c9103d64b06a216b",
+    "test_snapshot_hash": "0c5b0d7f710f52c55560a73c1c22c5cd3d95ec410a10376c98733e799e4fcae7",
+    "source_snapshot_hash": "bab42882d3b03da60f53992be51746e7472674177a14a6fcc5269b5f881c3b5e"
+  },
   "model": {
     "id": "openai/whisper-large-v3",
     "local_path": "/mnt/data/tungnx/whisper-large-v3",

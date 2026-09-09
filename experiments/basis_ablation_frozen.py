@@ -247,19 +247,25 @@ def run_gpu(args) -> int:
 
 
 def _load_result_rows() -> list[dict]:
+    from csasr.evaluation.result_schema import validate
     rows = []
     reused, _ = _load_reused()
     mapping = {"B0": "Frozen", "Local": "Local", "Local+Conditioning": "Local+Conditioning"}
     b0 = reused["B0"]["payload"]
+    validate(b0["result_v1"])
     rows.append({"direction": "Frozen", "rho": 0.0, "source": "REUSED DG-04", "payload": b0})
     for name in ("Local", "Local+Conditioning"):
         for rho in GRID:
+            payload = reused[f"{name}|{rho}"]["payload"]
+            validate(payload["result_v1"])
             rows.append({"direction": mapping[name], "rho": rho, "source": "REUSED DG-04",
-                         "payload": reused[f"{name}|{rho}"]["payload"]})
+                         "payload": payload})
     for key, direction in (("raw", "Raw"), ("conditioning", "Conditioning"), ("raw_cond", "Raw+Conditioning")):
         for rho in GRID:
+            payload = json.loads((OUT / key / f"result_rho{rho}.json").read_text())
+            validate(payload["result_v1"])
             rows.append({"direction": direction, "rho": rho, "source": "NEW",
-                         "payload": json.loads((OUT / key / f"result_rho{rho}.json").read_text())})
+                         "payload": payload})
     return rows
 
 
@@ -299,9 +305,24 @@ def _dose_class(rows: list[dict]) -> str:
 
 
 def analyze(_args) -> int:
+    (OUT / "figures").mkdir(parents=True, exist_ok=True)
+    (OUT / "geometry").mkdir(parents=True, exist_ok=True)
+    (OUT / "representation").mkdir(parents=True, exist_ok=True)
     rec, directions = _basis()
+    _, reuse_info = _load_reused()
+    _write(OUT / "reused/reuse_manifest.json", reuse_info)
     rows = [_metric_row(x) for x in _load_result_rows()]
     geom = basis_geometry(directions, a_local=MIX[0], a_cond=MIX[1])
+    # Full 1280x1280 projection matrices are machine-readable NumPy artifacts;
+    # keep JSON/Markdown summaries compact and reference those files by hash.
+    for key, filename in (("raw_projection_matrix", "projection_raw.npy"),
+                          ("local_projection_matrix", "projection_local.npy")):
+        matrix = np.asarray(geom["subspace"].pop(key), dtype=np.float64)
+        path = OUT / "geometry" / filename
+        np.save(path, matrix)
+        geom["subspace"][key] = {"path": str(path.relative_to(REPO)),
+                                  "sha256": _sha256_file(path),
+                                  "shape": list(matrix.shape)}
     _write(OUT / "geometry/vector_geometry.json", geom)
     _write(OUT / "geometry/cosine_matrix.json", {
         "direction_order": geom["direction_order"], "matrix": geom["cosine_matrix"]})
@@ -334,6 +355,14 @@ def analyze(_args) -> int:
     dose_response = {d: {"trajectory": sorted(v, key=lambda x: x["rho"]),
                          "classification": _dose_class(v) if d != "Frozen" else "NO INTERVENTION"}
                      for d, v in grouped.items()}
+    nonzero = [r for r in rows if r["Direction"] != "Frozen"]
+    for row in nonzero:
+        row["non_dominated"] = not any(
+            other is not row and other["Corr"] >= row["Corr"] and other["Corrupt"] <= row["Corrupt"]
+            and (other["Corr"] > row["Corr"] or other["Corrupt"] < row["Corrupt"])
+            for other in nonzero)
+    for row in rows:
+        row.setdefault("non_dominated", False)
     frontier = {"schema_version": "basis_ablation_frontier_v1", "layer": LAYER,
                 "site": SITE, "rho_grid": list(GRID), "points": rows,
                 "dose_response": dose_response,
@@ -398,7 +427,21 @@ def _write_comparison(rows, geom, pca, dose):
     lines += ["", "## Geometry", "", "```json", json.dumps(geom, indent=2), "```", "",
               "## PCA limitations", "", f"{json.dumps(pca, indent=2)}", "",
               "## Dose response", "", "```json", json.dumps(dose, indent=2), "```", "",
-              "## Interpretation", "", "All performance conclusions use the full rho trajectories. PCA is descriptive only; it does not establish causal superiority or semantic purity."]
+              "## Explicit questions", "",
+              f"A. Normalized raw/local similarity is cos={geom['pairwise']['cos_raw_local']:.9f}, angle={geom['pairwise']['angle_raw_local_degrees']:.6f} degrees.",
+              f"B. Residualization removes {geom['residualization']['removed_energy_fraction']:.9f} of raw-direction energy; the pre-renormalization residual norm is {geom['residualization']['residual_norm_before_renorm']:.9f}.",
+              f"C. Conditioning improves numerical basis conditioning: {geom['svd']['raw']['condition_number']:.9f} to {geom['svd']['local']['condition_number']:.9f}.",
+              f"D. The rank-2 spans are numerically equivalent: principal angles={geom['subspace']['principal_angles_degrees']} degrees and projection Frobenius distance={geom['subspace']['projection_frobenius_distance']:.3e}.",
+              "E. Therefore residualization changes coordinate geometry/conditioning, not the available rank-2 representational subspace.",
+              f"F. The identical fixed coefficients produce RC/LC cosine={geom['pairwise']['cos_raw_cond_mixture_local_cond_mixture']:.9f}, angle={geom['pairwise']['angle_raw_cond_mixture_local_cond_mixture_degrees']:.6f} degrees.",
+              "G. Raw beats Local in utility at rho=.5 and 1.0, while Local beats Raw at rho=2.0; the performance difference is not stable, but the preregistered two-of-three rule labels Raw better.",
+              "H. Conditioning alone is not useful on this population: it has negative utility at all doses and more corruptions than corrections.",
+              "I. Adding conditioning improves the single-direction utility only at higher doses and loses at rho=.5; the mixture effect is not stable.",
+              "J. The correction-damage frontier and non-dominated flags are in frontier.json; the best positive useful-correction/energy point is Raw rho=.5.",
+              "K. Raw rho=.5 has the highest positive utility per realized energy; this is not a positive-utility finding at every rho.",
+              "L. PCA is deferred, so it neither supports nor contradicts the geometry.",
+              "M. Frozen D-dev-select evidence supports retaining the two-vector rationale under the preregistered utility rule, but does not establish learned-controller or held-out generalization evidence.",
+              "", "## Interpretation", "", "All performance conclusions use the full rho trajectories. PCA is descriptive only; it does not establish causal superiority or semantic purity."]
     (OUT / "comparison.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

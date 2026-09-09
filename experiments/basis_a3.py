@@ -47,6 +47,29 @@ def _panel_frame(dataset: str) -> pd.DataFrame:
     return pd.DataFrame(_panel(dataset)["rows"])
 
 
+@torch.inference_mode()
+def _decoder_cached_inputs(bundle, uid: str, audio_path: str) -> dict[str, torch.Tensor]:
+    """Cache processor features and the unchanged encoder output per utterance."""
+    cache = getattr(bundle, "_basis_a3_decoder_cache", None)
+    if cache is None:
+        cache = {}
+        bundle._basis_a3_decoder_cache = cache
+    if uid not in cache:
+        from csasr.models.whisper import batch_model_inputs
+        inputs = batch_model_inputs(bundle, [audio_path])
+        encoder_outputs = bundle.model.model.encoder(
+            input_features=inputs["input_features"],
+            attention_mask=inputs["attention_mask"],
+            return_dict=True,
+        )
+        cache[uid] = {
+            "input_features": inputs["input_features"],
+            "attention_mask": inputs["attention_mask"],
+            "encoder_outputs": encoder_outputs,
+        }
+    return cache[uid]
+
+
 def _direction_meta(layer: int, key: str) -> tuple[np.ndarray, float, str]:
     meta = _load_json(A2 / "directions.json")["layers"][str(int(layer))]
     path = REPO / meta["files"][key]
@@ -271,7 +294,9 @@ def _decode_condition(bundle, dataset: str, side: str, layer: int, direction_key
         direction = np.load(REPO / meta["path"]); scale = float(meta["scale"]); dhash = meta["sha256"]
     texts = {}; edit_norms = []; edited = 0; start = time.monotonic()
     for row in frame.sort_values("duration_sec").to_dict(orient="records"):
-        uid = str(row["utterance_id"]); inp = batch_model_inputs(bundle, [row["audio_path"]])
+        uid = str(row["utterance_id"])
+        inp = (_decoder_cached_inputs(bundle, uid, row["audio_path"])
+               if side == "decoder" else batch_model_inputs(bundle, [row["audio_path"]]))
         if side == "decoder":
             allowed = set(_decoder_positions(bundle, row["reference"])) if scope == "oracle_local" else None
             gate = _decoder_gate(allowed) if allowed is not None else None

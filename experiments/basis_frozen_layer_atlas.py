@@ -182,12 +182,12 @@ def build_directions(args) -> int:
                             enforce_contract_layer=False)
         ddir = ATLAS / "directions"; ddir.mkdir(parents=True, exist_ok=True)
         files = {}; hashes = {}
-        for name, arr in (("raw", basis["v_raw"]), ("local", basis["v_local"]),
+        raw_hat = basis["v_raw"] / np.linalg.norm(basis["v_raw"])
+        for name, arr in (("raw", raw_hat), ("local", basis["v_local"]),
                           ("conditioning", basis["v_cond"])):
             path = ddir / f"{name}_L{layer}.npy"; np.save(path, arr)
             files[name] = str(path.relative_to(REPO)); hashes[name] = _array_hash(arr)
-        rc = (MIX[0] * basis["v_raw"] / np.linalg.norm(basis["v_raw"])
-              + MIX[1] * basis["v_cond"])
+        rc = MIX[0] * raw_hat + MIX[1] * basis["v_cond"]
         lc = MIX[0] * basis["v_local"] + MIX[1] * basis["v_cond"]
         for name, arr in (("raw_cond", rc / np.linalg.norm(rc)), ("local_cond", lc / np.linalg.norm(lc))):
             path = ddir / f"{name}_L{layer}.npy"; np.save(path, arr)

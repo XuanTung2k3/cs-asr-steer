@@ -34,3 +34,12 @@ def test_direction_mix_is_unit_and_uses_same_coefficients():
     rc = (.5 * raw + .5 * cond); lc = (.5 * raw + .5 * cond)
     assert np.isclose(np.linalg.norm(rc / np.linalg.norm(rc)), 1.0)
     assert np.allclose(rc, lc)
+
+
+def test_frozen_direction_artifacts_are_unit_normalized():
+    directions = json.loads((ROOT / "results/basis_frozen_layer_atlas/directions.json").read_text())
+    for layer in LAYERS:
+        files = directions["layers"][str(layer)]["files"]
+        for key in ("raw", "local", "conditioning", "raw_cond", "local_cond"):
+            vector = np.load(ROOT / files[key])
+            assert np.isclose(np.linalg.norm(vector), 1.0, atol=1e-6), (layer, key)

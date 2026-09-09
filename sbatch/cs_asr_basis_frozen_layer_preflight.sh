@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # BASIS-A2 fixed worker/resource preflight only.
 #SBATCH --job-name=cs-basis-a2-pf
-#SBATCH --partition=main
-#SBATCH --gres=gpu:1
+#SBATCH --partition=mig
+#SBATCH --gres=gpu:nvidia_h100_80gb_hbm3_3g.40gb:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --time=02:00:00

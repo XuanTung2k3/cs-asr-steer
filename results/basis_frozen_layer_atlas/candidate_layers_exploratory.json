@@ -1,0 +1,174 @@
+{
+  "status": "EXPLORATORY — NOT YET FULL-DEV VALIDATED",
+  "candidates": {
+    "Raw": {
+      "candidate_layers_top_utility": [
+        0,
+        1,
+        6
+      ],
+      "rows": [
+        {
+          "layer": 0,
+          "utility": 2.0,
+          "corrections": 2,
+          "corruptions": 0,
+          "pier_gain": 0.02941176470588236,
+          "matrix_retention": 1.0
+        },
+        {
+          "layer": 1,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        },
+        {
+          "layer": 6,
+          "utility": -3.0,
+          "corrections": 2,
+          "corruptions": 2,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9831460674157303
+        }
+      ]
+    },
+    "Local": {
+      "candidate_layers_top_utility": [
+        0,
+        1,
+        6
+      ],
+      "rows": [
+        {
+          "layer": 0,
+          "utility": 2.0,
+          "corrections": 2,
+          "corruptions": 0,
+          "pier_gain": 0.02941176470588236,
+          "matrix_retention": 1.0
+        },
+        {
+          "layer": 1,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        },
+        {
+          "layer": 6,
+          "utility": -3.0,
+          "corrections": 2,
+          "corruptions": 2,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9831460674157303
+        }
+      ]
+    },
+    "Conditioning": {
+      "candidate_layers_top_utility": [
+        27,
+        26,
+        0
+      ],
+      "rows": [
+        {
+          "layer": 27,
+          "utility": 4.0,
+          "corrections": 20,
+          "corruptions": 0,
+          "pier_gain": 0.29411764705882354,
+          "matrix_retention": 0.9550561797752809
+        },
+        {
+          "layer": 26,
+          "utility": 3.0,
+          "corrections": 22,
+          "corruptions": 0,
+          "pier_gain": 0.3235294117647059,
+          "matrix_retention": 0.9382022471910112
+        },
+        {
+          "layer": 0,
+          "utility": 0.0,
+          "corrections": 2,
+          "corruptions": 0,
+          "pier_gain": 0.02941176470588236,
+          "matrix_retention": 0.9887640449438202
+        }
+      ]
+    },
+    "Raw+Cond": {
+      "candidate_layers_top_utility": [
+        0,
+        1,
+        2
+      ],
+      "rows": [
+        {
+          "layer": 0,
+          "utility": 2.0,
+          "corrections": 2,
+          "corruptions": 0,
+          "pier_gain": 0.02941176470588236,
+          "matrix_retention": 1.0
+        },
+        {
+          "layer": 1,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        },
+        {
+          "layer": 2,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        }
+      ]
+    },
+    "Local+Cond": {
+      "candidate_layers_top_utility": [
+        0,
+        1,
+        2
+      ],
+      "rows": [
+        {
+          "layer": 0,
+          "utility": 1.0,
+          "corrections": 2,
+          "corruptions": 0,
+          "pier_gain": 0.02941176470588236,
+          "matrix_retention": 0.9943820224719101
+        },
+        {
+          "layer": 1,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        },
+        {
+          "layer": 2,
+          "utility": -1.0,
+          "corrections": 0,
+          "corruptions": 0,
+          "pier_gain": 0.0,
+          "matrix_retention": 0.9943820224719101
+        }
+      ]
+    },
+    "negative_control": {
+      "layer": 31,
+      "note": "weak exploratory negative control; chosen descriptively from panel utility"
+    }
+  }
+}

@@ -407,3 +407,10 @@ construction and both free-decoding causal screens completed; the independent-au
 (basis provenance, complete `result_v1`+retention, C4 edit-count/energy) are resolved (commit
 `eac2e37`) and re-run (construction 50470; screens 50471/50472). **SELECT L24.** Controller and
 training work remain separate DG-04+ tickets.
+
+**BASIS-A2 — frozen all-layer steering response atlas: COMPLETE (exploratory/additive).** The
+32-layer, five-direction, four-dose D-dev-select micro-panel atlas, teacher-forced token/
+representation diagnostics, fixed lambda response, dialogue-disjoint linear probe, geometry,
+projection summaries, and figures are recorded under `results/basis_frozen_layer_atlas/`. This
+does not reopen DG-00…DG-08, does not validate a final layer, and does not authorize D-dev-confirm,
+D-test, or learned/adaptive basis work.

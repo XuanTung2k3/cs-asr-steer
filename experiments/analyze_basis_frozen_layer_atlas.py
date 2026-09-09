@@ -303,7 +303,7 @@ def figures(rows, geom, tf):
         fig, ax = plt.subplots(figsize=(12, 5)); data=[]; labels=[]
         for label, direction, vals in l24:
             data.append(vals); labels.append(f"{direction}\n{label}")
-        ax.boxplot(data, labels=labels, showfliers=False); ax.set_title("Descriptive L24 baseline projection distributions, rho=0.5")
+        ax.boxplot(data, tick_labels=labels, showfliers=False); ax.set_title("Descriptive L24 baseline projection distributions, rho=0.5")
         ax.set_ylabel("Projection onto direction"); ax.tick_params(axis="x", labelrotation=70); ax.grid(axis="y", alpha=.2)
         fig.tight_layout(); fig.savefig(FIG/"projection_distributions_L24_rho0.5.png", dpi=180); plt.close(fig)
 
@@ -359,7 +359,16 @@ def main():
     corr=probe_correlations(rows); pstats=projection_stats(); figures(rows,geom,tf); qualitative(rows); table_outputs(rows)
     # Compact manuscript-facing summary, preserving the full row artifacts.
     write(ATLAS/"summary.json", {"schema_version":"basis_a2_summary_v1","n_free_rows":len(rows),"n_teacher_forced_rows":len(tf),"geometry":geom["subspace_equivalence"],"dose_response":dose,"probe_correlations":corr,"projection_stats":{"path":"projection_stats.json","conditions":len(pstats["conditions"])},"pca":{"status":"deferred","reason":"no larger compatible cached representation sample was available; no extra GPU sweep launched"},"interpretation":"exploratory all-layer atlas; candidate bands are not final layer validation"})
-    (ATLAS/"comparison.md").write_text("# BASIS-A2 comparison\n\nSee `summary.json`, `free_decode_summary.json`, `teacher_forced_summary.json`, and `geometry/`. All free-decoding results are panel-only exploratory evidence; WER is n/a where no frozen canonical overall WER exists.\n",encoding="utf-8")
+    (ATLAS/"comparison.md").write_text("""# BASIS-A2 — Frozen all-layer steering response atlas
+
+All 32 decoder layers, five frozen direction families, and four doses were evaluated on the ten-utterance D-dev-select micro-panel. The complete table is in `main_performance_table.md`/`.csv`; machine-readable summaries are in `summary.json`, `free_decode_summary.json`, `teacher_forced_summary.json`, `projection_stats.json`, and `geometry/`.
+
+At rho=0.5 averaged over layers, Raw/Local produced 29/6 and 26/7 corrections/corruptions, while Conditioning produced 170/65 and the largest PIER gain. At higher rho, damage grew faster than correction for every family. Conditioning had its strongest exploratory panel signal at L26–L27; this is not a validated layer selection.
+
+Raw and Local were near-identical in the panel. Residualization removed at most 2.17% of normalized Raw energy across layers and reduced the Raw/Cond basis condition number to 1 for the Local/Cond basis. The rank-2 spaces were numerically identical (maximum principal angle 3.08e-6 degrees; projection distance 1.08e-15), so residualization changes coordinate conditioning rather than available representational information. The fixed coefficients still produced a small RC–LC physical angle that varied by layer.
+
+PCA is deferred because no larger compatible cached representation sample was available and no extra GPU sweep was authorized. Projection distributions and teacher-forced token/representation diagnostics are descriptive; causal claims use free-decoding outputs only. Overall WER is n/a because no frozen canonical overall WER implementation exists.
+""",encoding="utf-8")
     print(f"aggregated {len(rows)} free rows and {len(tf)} teacher-forced rows")
 
 

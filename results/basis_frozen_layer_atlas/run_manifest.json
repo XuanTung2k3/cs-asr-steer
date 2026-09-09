@@ -1,7 +1,9 @@
 {
   "schema_version": "basis_a2_run_manifest_v1",
-  "status": "PLANNED_PRE_RUN",
-  "git_commit": "d526209",
+  "status": "COMPLETE",
+  "git_commit": "ca15a34",
+  "pre_run_manifest_commit": "b618401",
+  "scientific_gpu_code_commits": {"direction_rebuild": "1543e0f", "projection_diagnostics": "ca15a34"},
   "model": "openai/whisper-large-v3",
   "site": "decoder_post_cross_attn_residual",
   "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],

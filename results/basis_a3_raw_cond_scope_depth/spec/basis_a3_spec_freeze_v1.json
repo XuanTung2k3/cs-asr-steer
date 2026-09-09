@@ -148,7 +148,7 @@
     "use_cache": true
   },
   "provenance": {
-    "created_at": "2026-09-09T17:58:21.837402+00:00",
+    "created_at": "2026-09-09T18:04:04.850655+00:00",
     "dataset_manifest_hash": null,
     "model_id": "/mnt/data/tungnx/whisper-large-v3",
     "model_revision": null,
@@ -163,7 +163,7 @@
     "upstream_artifacts": []
   },
   "schema_version": "lss_spec_freeze_v1",
-  "sha256": "ec8cd82c7e652110663d90f972af9fb805af962b9cdbae64b588652b30bff6ed",
+  "sha256": "e7081065e3760b40b7f85d9eee939ebe0cbdd8169870218fe3573fc4006ad15d",
   "sites": {
     "decoder": "decoder_post_cross_attn_residual",
     "encoder": "encoder_post_self_attn_residual_pre_ffn"

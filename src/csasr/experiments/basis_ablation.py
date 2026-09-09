@@ -20,6 +20,12 @@ def normalize(vector: np.ndarray) -> np.ndarray:
     norm = float(np.linalg.norm(x))
     if not np.isfinite(norm) or norm == 0.0:
         raise ValueError("direction must have a finite non-zero norm")
+    # Preserve an already-frozen unit artifact byte-for-byte when its norm is
+    # only one floating-point ulp from one.  DG-03's v_cond is 1+2e-16; a
+    # second normalization would alter its provenance hash without changing
+    # the scientific direction.
+    if abs(norm - 1.0) <= 1e-12:
+        return x.copy()
     return x / norm
 
 

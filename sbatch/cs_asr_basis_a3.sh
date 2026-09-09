@@ -20,4 +20,14 @@ fi
 if [[ "${1:-}" == "select-r2" || "${1:-}" == "freeze" || "${1:-}" == "geometry" ]]; then
   exec "$PY" experiments/basis_a3.py "$@"
 fi
-exec "$PY" experiments/basis_a3.py grid "$@"
+workers="${BASIS_A3_WORKERS:-2}"
+pids=()
+for ((worker=0; worker<workers; worker++)); do
+  "$PY" experiments/basis_a3.py grid "$@" --worker-index "$worker" --num-workers "$workers" &
+  pids+=("$!")
+done
+status=0
+for pid in "${pids[@]}"; do
+  wait "$pid" || status=1
+done
+exit "$status"

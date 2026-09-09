@@ -247,6 +247,16 @@ def build_encoder_directions(bundle) -> dict:
     return out
 
 
+def _ensure_encoder_directions(bundle) -> None:
+    """Build the shared encoder artifacts once when two workers start together."""
+    lock_path = RESULTS / "directions/raw_encoder/.build.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if not (RESULTS / "directions/raw_encoder/manifest.json").is_file():
+            build_encoder_directions(bundle)
+
+
 def _decode_condition(bundle, dataset: str, side: str, layer: int, direction_key: str,
                       scope: str, rho: float, *, cs_spans: dict | None = None) -> dict:
     from csasr.models.whisper import batch_model_inputs
@@ -367,18 +377,23 @@ def run_grid(args) -> int:
     from csasr.utils.provenance import code_config_snapshot_hash, test_snapshot_hash
     from csasr.utils.logging import git_state
     job_id = os.environ.get("SLURM_JOB_ID", "local")
-    job_manifest_path = RESULTS / "manifests" / f"job_{job_id}.json"
+    worker_index, num_workers = int(args.worker_index), int(args.num_workers)
+    if not 0 <= worker_index < num_workers:
+        raise ValueError("worker_index must be in [0, num_workers)")
+    worker_tag = f"_worker{worker_index}" if num_workers > 1 else ""
+    job_manifest_path = RESULTS / "manifests" / f"job_{job_id}{worker_tag}.json"
     job_manifest = {"schema_version": "basis_a3_job_manifest_v1", "status": "RUNNING",
         "slurm_job_id": job_id, "hostname": os.uname().nodename,
         "argv": list(sys.argv), "dataset": args.dataset, "side": args.side,
         "direction": args.direction, "stage": args.stage,
+        "worker_index": worker_index, "num_workers": num_workers,
         "panel_fingerprint": _panel(args.dataset)["fingerprint"],
         "code_config_sha256": code_config_snapshot_hash(), "tests_sha256": test_snapshot_hash(),
         "git": git_state(str(REPO)), "started_at": time.time()}
     write_json(job_manifest_path, job_manifest)
     bundle = load_whisper(load_config(MODEL_CFG)); bundle.model.eval()
-    if args.side == "encoder" and not (RESULTS / "directions/raw_encoder/manifest.json").is_file():
-        build_encoder_directions(bundle)
+    if args.side == "encoder":
+        _ensure_encoder_directions(bundle)
     cs_spans = _cs_eval_spans() if args.side == "encoder" and args.dataset == "cs_dialogue" else {}
     stages = ("r2", "conditioning") if args.stage == "combined" else (args.stage,)
     result_roots = []
@@ -396,17 +411,19 @@ def run_grid(args) -> int:
         out_root = RESULTS / ("raw_r1" if stage == "r1" else
                               ("conditioning" if stage == "conditioning" else "raw_r2")) / args.dataset
         result_roots.append(str(out_root.relative_to(REPO)))
-        for layer in layers:
-            for scope in SCOPES:
-                for rho in rhos:
-                    key = f"{direction_name}_{args.side}_L{layer}_{scope}_rho{rho:g}.json"
-                    path = out_root / f"L{layer:02d}" / key
-                    if path.is_file(): continue
-                    dkey = "conditioning" if direction_name == "conditioning" else "raw"
-                    result = _decode_condition(bundle, args.dataset, args.side, layer, dkey, scope, rho, cs_spans=cs_spans)
-                    result["run_manifest"] = str(job_manifest_path.relative_to(REPO))
-                    write_json(path, result)
-                    print(f"completed {path.relative_to(REPO)}", flush=True)
+        conditions = [(layer, scope, rho) for layer in layers
+                      for scope in SCOPES for rho in rhos]
+        for condition_index, (layer, scope, rho) in enumerate(conditions):
+            if condition_index % num_workers != worker_index:
+                continue
+            key = f"{direction_name}_{args.side}_L{layer}_{scope}_rho{rho:g}.json"
+            path = out_root / f"L{layer:02d}" / key
+            if path.is_file(): continue
+            dkey = "conditioning" if direction_name == "conditioning" else "raw"
+            result = _decode_condition(bundle, args.dataset, args.side, layer, dkey, scope, rho, cs_spans=cs_spans)
+            result["run_manifest"] = str(job_manifest_path.relative_to(REPO))
+            write_json(path, result)
+            print(f"completed {path.relative_to(REPO)}", flush=True)
     job_manifest.update({"status": "COMPLETED", "finished_at": time.time(),
                          "result_roots": result_roots})
     write_json(job_manifest_path, job_manifest)
@@ -453,6 +470,8 @@ def main(argv=None):
     g.add_argument("--side", choices=("encoder", "decoder"), required=True)
     g.add_argument("--direction", choices=("Raw", "conditioning"), default="Raw")
     g.add_argument("--stage", choices=("r1", "r2", "conditioning", "combined"), default="r1")
+    g.add_argument("--worker-index", type=int, default=0)
+    g.add_argument("--num-workers", type=int, default=1)
     x = sub.add_parser("geometry")
     sub.add_parser("select-r2")
     args = ap.parse_args(argv)
@@ -469,7 +488,10 @@ def main(argv=None):
         # Keep an interrupted/failed scientific shard auditable rather than
         # leaving a manifest falsely marked RUNNING.
         job_id = os.environ.get("SLURM_JOB_ID", "local")
-        path = RESULTS / "manifests" / f"job_{job_id}.json"
+        worker_index = int(getattr(args, "worker_index", 0))
+        num_workers = int(getattr(args, "num_workers", 1))
+        worker_tag = f"_worker{worker_index}" if num_workers > 1 else ""
+        path = RESULTS / "manifests" / f"job_{job_id}{worker_tag}.json"
         if path.is_file():
             failed = _load_json(path)
             failed.update({"status": "FAILED", "finished_at": time.time(),

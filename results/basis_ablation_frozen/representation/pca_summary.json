@@ -1,4 +1,43 @@
 {
-  "deferred": true,
-  "reason": "no baseline representation cache"
+  "deferred": false,
+  "dimension": 1280,
+  "direction_projections": {
+    "conditioning": [
+      0.11773367907828378,
+      -0.0844897347064849,
+      -0.046593013807471564
+    ],
+    "local": [
+      -0.5103810473160963,
+      0.44862549078876035,
+      -0.13846833288524563
+    ],
+    "local_cond": [
+      -0.27764361669600834,
+      0.2574828623982676,
+      -0.1308581331819351
+    ],
+    "raw": [
+      -0.5186814318410119,
+      0.45427056527481735,
+      -0.1338955163756528
+    ],
+    "raw_cond": [
+      -0.29669748939015084,
+      0.2736342660564922,
+      -0.13355978029571713
+    ]
+  },
+  "n_vectors": 10000,
+  "pc1_explained_variance": 0.05244616837474587,
+  "pc1_pc2_cumulative": 0.0965646460558099,
+  "pc2_explained_variance": 0.044118477681064035,
+  "pc3_explained_variance": 0.03669119973910262,
+  "sampling_policy": "baseline-correct EN/ZH unit query states; max 10000",
+  "sampling_seed": 2408,
+  "site": "decoder_post_cross_attn_residual",
+  "source": "baseline exact-site L24 teacher-forced states",
+  "split": "D-dev-select",
+  "visual_arrow_scale": 4.0,
+  "visual_note": "arrow lengths are multiplied by 4 for readability and are not steering doses"
 }

@@ -168,8 +168,125 @@ WER is `n/a — no frozen canonical overall WER`; MER is retained as the canonic
 ## PCA limitations
 
 {
-  "deferred": true,
-  "reason": "no baseline representation cache"
+  "deferred": false,
+  "source": "baseline exact-site L24 teacher-forced states",
+  "site": "decoder_post_cross_attn_residual",
+  "split": "D-dev-select",
+  "sampling_seed": 2408,
+  "sampling_policy": "baseline-correct EN/ZH unit query states; max 10000",
+  "n_vectors": 10000,
+  "dimension": 1280,
+  "pc1_explained_variance": 0.05244616837474587,
+  "pc2_explained_variance": 0.044118477681064035,
+  "pc1_pc2_cumulative": 0.0965646460558099,
+  "pc3_explained_variance": 0.03669119973910262,
+  "direction_projections": {
+    "raw": [
+      -0.5186814318410119,
+      0.45427056527481735,
+      -0.1338955163756528
+    ],
+    "local": [
+      -0.5103810473160963,
+      0.44862549078876035,
+      -0.13846833288524563
+    ],
+    "conditioning": [
+      0.11773367907828378,
+      -0.0844897347064849,
+      -0.046593013807471564
+    ],
+    "raw_cond": [
+      -0.29669748939015084,
+      0.2736342660564922,
+      -0.13355978029571713
+    ],
+    "local_cond": [
+      -0.27764361669600834,
+      0.2574828623982676,
+      -0.1308581331819351
+    ]
+  },
+  "visual_arrow_scale": 4.0,
+  "visual_note": "arrow lengths are multiplied by 4 for readability and are not steering doses"
+}
+
+## Projection distributions
+
+{
+  "deferred": false,
+  "normalization": "featurewise LayerNorm without affine parameters; eps=1e-5",
+  "source": "baseline-correct content-unit query states",
+  "directions": {
+    "raw": {
+      "groups": {
+        "embedded": {
+          "n": 940,
+          "mean": 11.561265144361132,
+          "std": 4.881531663294397,
+          "median": 10.866409111188442,
+          "q25": 7.868050290463659,
+          "q75": 15.834836408967396
+        },
+        "matrix": {
+          "n": 9060,
+          "mean": -2.98762219116386,
+          "std": 3.215240723373824,
+          "median": -3.4470716087918554,
+          "q25": -5.413816298195467,
+          "q75": -1.0603313589237933
+        }
+      },
+      "standardized_mean_difference_en_minus_zh": 3.519982990541486
+    },
+    "local": {
+      "groups": {
+        "embedded": {
+          "n": 940,
+          "mean": 11.312783131653985,
+          "std": 4.901173813781225,
+          "median": 10.554339874851998,
+          "q25": 7.551081178220261,
+          "q75": 15.646397537754224
+        },
+        "matrix": {
+          "n": 9060,
+          "mean": -3.1129525408939056,
+          "std": 3.192301481188294,
+          "median": -3.565127485977689,
+          "q25": -5.514395337902156,
+          "q75": -1.2283914029874705
+        }
+      },
+      "standardized_mean_difference_en_minus_zh": 3.4878827210760037
+    },
+    "conditioning": {
+      "groups": {
+        "embedded": {
+          "n": 940,
+          "mean": -3.351844280901888,
+          "std": 1.5928804411413942,
+          "median": -3.5151533034700675,
+          "q25": -4.4669049092228565,
+          "q75": -2.364566360362093
+        },
+        "matrix": {
+          "n": 9060,
+          "mean": -1.3067027431009457,
+          "std": 1.4372275388434583,
+          "median": -1.324464312055029,
+          "q25": -2.2403476574253682,
+          "q75": -0.45301425741279167
+        }
+      },
+      "standardized_mean_difference_en_minus_zh": -1.3481028208553356
+    }
+  },
+  "n_vectors": 10000,
+  "language_counts": {
+    "EN": 940,
+    "ZH": 9060
+  }
 }
 
 ## Dose response
@@ -590,7 +707,7 @@ H. Conditioning alone is not useful on this population: it has negative utility 
 I. Adding conditioning improves the single-direction utility only at higher doses and loses at rho=.5; the mixture effect is not stable.
 J. The correction-damage frontier and non-dominated flags are in frontier.json; the best positive useful-correction/energy point is Raw rho=.5.
 K. Raw rho=.5 has the highest positive utility per realized energy; this is not a positive-utility finding at every rho.
-L. PCA is deferred, so it neither supports nor contradicts the geometry.
+L. PCA is supporting only: it uses actual teacher-forced L24 representation rows; projected arrows are descriptive and do not establish causal superiority.
 M. Frozen D-dev-select evidence supports retaining the two-vector rationale under the preregistered utility rule, but does not establish learned-controller or held-out generalization evidence.
 
 ## Interpretation

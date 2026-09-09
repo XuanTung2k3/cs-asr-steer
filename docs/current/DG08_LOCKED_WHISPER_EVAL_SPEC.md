@@ -174,7 +174,9 @@ metric definition may change; D-test is evaluation-only.
   correction; LoRA is non-viable — MER 1.29 greedy / 1.91 beam). Beam robustness: PERSISTS.**
   Full tables/bootstrap: `results/dg08/DG08_RESULTS_SUMMARY.md`, `results/dg08/tables/`,
   `results/dg08/stats/`.
-- Final result commit: _recorded at the PHASE Q commit_.
+- Final result commit: `e94339dc0dbbce5d7661d85608665617e6d9b76f`.
+- Status: **DG-08 — READY FOR INDEPENDENT AUDIT** (not FROZEN). Do not begin SEAME/ViMedCSS/Qwen
+  cross-dataset/model expansion.
 - Implementation note (mechanical, throughput-only): the frozen DG-06/DG-07 runners gained a
   backward-compatible `--seed` (default 42 → identical behavior) for the multi-seed runs; the D-test
   evaluator gained a `--batch-size` flag (decode throughput only; not a locked decoder parameter) —

@@ -465,7 +465,9 @@ def analyze(_args) -> int:
                        "pc1_explained_variance": float(ratios[0]), "pc2_explained_variance": float(ratios[1]),
                        "pc1_pc2_cumulative": float(ratios[:2].sum()),
                        "pc3_explained_variance": float(ratios[2]) if len(ratios)>2 else None,
-                       "direction_projections": projections}
+                       "direction_projections": projections,
+                       "visual_arrow_scale": 4.0,
+                       "visual_note": "arrow lengths are multiplied by 4 for readability and are not steering doses"}
         _write(OUT / "representation/pca_summary.json", pca_summary)
         projection_stats = _projection_stats(reps, metadata, directions)
         _write(OUT / "representation/projection_stats.json", projection_stats)
@@ -646,9 +648,15 @@ def _plot_pca(reps, pca, directions, summary, metadata):
         mask = labels == label
         ax.scatter(xy[mask, 0], xy[mask, 1], s=8, alpha=.22, color=color,
                    label=name, rasterized=True)
+    offsets = {"raw": (0.08, 0.12), "local": (0.08, -0.22),
+               "conditioning": (0.10, -0.10), "raw_cond": (0.08, 0.12),
+               "local_cond": (0.08, -0.22)}
+    arrow_scale = float(summary.get("visual_arrow_scale", 1.0))
     for name, coords in summary["direction_projections"].items():
-        x, y = coords[:2]; ax.arrow(0, 0, x, y, width=0.002, head_width=.04, length_includes_head=True)
-        ax.text(x, y, " " + name, fontsize=9)
+        x, y = (arrow_scale * float(v) for v in coords[:2])
+        ax.arrow(0, 0, x, y, width=0.012, head_width=.12, length_includes_head=True)
+        dx, dy = offsets.get(name, (0.08, 0.08))
+        ax.text(x + dx, y + dy, name, fontsize=9)
     ax.set(xlabel=f"PC1 ({summary['pc1_explained_variance']:.1%})", ylabel=f"PC2 ({summary['pc2_explained_variance']:.1%})",
            title="BASIS-A baseline L24 representations; arrows are projection-only")
     ax.legend(fontsize=8)

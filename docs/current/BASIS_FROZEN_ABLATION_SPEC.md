@@ -109,12 +109,13 @@ semantic purity, generalization, confirmation, or test-set performance.
 ## 6. Batch, preflight, and Slurm
 
 The single launcher uses `#SBATCH --partition=main`, one GPU, 8 CPUs, 96 GB host memory, and a
-four-hour wall-time limit. Batch size is fixed at 32 (the successful DG-04 path used batch 8 on a
-40 GB MIG slice; 32 is the predeclared safe main-partition choice). Before the nine new cells, a
-bounded eight-utterance batch-equivalence preflight compares batch 1 and batch 32 for Frozen and
-nonzero Local decoding. Normalized transcripts and canonical metrics must match exactly. Any
-failure stops the job; no semantic fast path is accepted. Runtime metadata records GPU name,
-peak allocated/reserved VRAM, throughput, batch size, runtime, job ID, and terminal state.
+four-hour wall-time limit. A bounded eight-utterance preflight compares batch 1 and the proposed
+batch for Frozen and nonzero Local decoding. Normalized transcripts and canonical metrics must
+match exactly; no semantic fast path is accepted. The initial batch-32 preflight (job 51105)
+changed Local transcripts, so the correctness-preserving operational value is frozen at batch 1.
+This is an execution-path resolution, not scientific tuning; the failed batch-32 preflight is
+retained in provenance. Runtime metadata records GPU name, peak allocated/reserved VRAM,
+throughput, batch size, runtime, job ID, and terminal state.
 
 ## 7. Provenance and data guard
 

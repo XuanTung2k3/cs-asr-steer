@@ -24,4 +24,7 @@ mkdir -p /mnt/data/tungnx/cs-asr-steer/logs
 echo "job ${SLURM_JOB_ID:-none} on $(hostname)"
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
 nvidia-smi --query-gpu=index,name,memory.total --format=csv || true
-exec "${PY}" experiments/basis_ablation_frozen.py --mode gpu --batch-size 32
+# Batch-32 changed Local free-decoding transcripts in the mandatory
+# batch-equivalence preflight (job 51105).  Batch 1 is the exact reference
+# path and is therefore frozen as the correctness-preserving operational value.
+exec "${PY}" experiments/basis_ablation_frozen.py --mode gpu --batch-size 1

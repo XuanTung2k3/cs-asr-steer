@@ -80,9 +80,9 @@
     "partition": "main",
     "gpus": 1,
     "gpu_request": "gpu:1",
-    "batch_size": 32,
-    "preflight": {"batch_1": 1, "proposed": 32, "utterances": 8, "conditions": ["Frozen", "Local"]},
-    "fallback": "If the submitted run OOMs, operational fallback is 16 then 8; no scientific parameter changes."
+    "batch_size": 1,
+    "preflight": {"batch_1": 1, "failed_proposed_batch": 32, "failed_job_id": "51105", "failure": "Local transcripts differed; no scientific outputs accepted", "final_resolution": "batch 1 exact reference path", "utterances": 8, "conditions": ["Frozen", "Local"]},
+    "fallback": "Batch 1 is frozen after the batch-32 semantic mismatch; no scientific parameter changes."
   },
   "planned_output": "results/basis_ablation_frozen/",
   "data_exposure": {"D-dev-select_only": true, "D-dev-confirm": false, "D-test": false}

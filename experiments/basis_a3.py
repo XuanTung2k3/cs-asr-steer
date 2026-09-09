@@ -344,6 +344,18 @@ def preflight(args) -> int:
 def run_grid(args) -> int:
     from csasr.models.whisper import load_whisper
     from csasr.utils.config import load_config
+    from csasr.utils.provenance import code_config_snapshot_hash, test_snapshot_hash
+    from csasr.utils.logging import git_state
+    job_id = os.environ.get("SLURM_JOB_ID", "local")
+    job_manifest_path = RESULTS / "manifests" / f"job_{job_id}.json"
+    job_manifest = {"schema_version": "basis_a3_job_manifest_v1", "status": "RUNNING",
+        "slurm_job_id": job_id, "hostname": os.uname().nodename,
+        "argv": list(sys.argv), "dataset": args.dataset, "side": args.side,
+        "direction": args.direction, "stage": args.stage,
+        "panel_fingerprint": _panel(args.dataset)["fingerprint"],
+        "code_config_sha256": code_config_snapshot_hash(), "tests_sha256": test_snapshot_hash(),
+        "git": git_state(str(REPO)), "started_at": time.time()}
+    write_json(job_manifest_path, job_manifest)
     bundle = load_whisper(load_config(MODEL_CFG)); bundle.model.eval()
     if args.side == "encoder" and not (RESULTS / "directions/raw_encoder/manifest.json").is_file():
         build_encoder_directions(bundle)
@@ -364,8 +376,12 @@ def run_grid(args) -> int:
                 if path.is_file(): continue
                 dkey = "conditioning" if args.direction == "conditioning" else "raw"
                 result = _decode_condition(bundle, args.dataset, args.side, layer, dkey, scope, rho, cs_spans=cs_spans)
+                result["run_manifest"] = str(job_manifest_path.relative_to(REPO))
                 write_json(path, result)
                 print(f"completed {path.relative_to(REPO)}", flush=True)
+    job_manifest.update({"status": "COMPLETED", "finished_at": time.time(),
+                         "result_root": str(out_root.relative_to(REPO))})
+    write_json(job_manifest_path, job_manifest)
     return 0
 
 

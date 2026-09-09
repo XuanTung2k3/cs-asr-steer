@@ -13,4 +13,11 @@ cd "${SLURM_SUBMIT_DIR}"
 export PYTHONPATH="${PWD}/src:${PYTHONPATH:-}"
 export LD_LIBRARY_PATH="/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
 PY=/home/tungnx/miniconda3/envs/acl1/bin/python
+if [[ "${1:-}" == "preflight" ]]; then
+  shift
+  exec "$PY" experiments/basis_a3.py preflight "$@"
+fi
+if [[ "${1:-}" == "select-r2" || "${1:-}" == "freeze" || "${1:-}" == "geometry" ]]; then
+  exec "$PY" experiments/basis_a3.py "$@"
+fi
 exec "$PY" experiments/basis_a3.py grid "$@"

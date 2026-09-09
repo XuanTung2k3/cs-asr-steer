@@ -497,6 +497,7 @@ def diagnostics(args) -> int:
                 out=ATLAS/"mixture"/f"L{l:02d}"/f"{primary}_lambda{lam}.json"
                 if not out.exists(): _write(out,_diagnostic_condition(bundle,plans,base_cache,l,d,f"{primary}+lambda_cond",.5,scale,nfp))
     cfg=_cfg(); _, train_manifest, _ = __import__("experiments.dg03_build_basis",fromlist=["_load_construct"])._load_construct()
+    train_manifest = train_manifest[train_manifest["role"].astype(str) == CONSTRUCT_ROLE].reset_index(drop=True)
     # Use dialogue-disjoint D-construct and full D-dev-select role manifests for the probe.
     eval_manifest = D._build_population(cfg,EVAL_ROLE,confirm_authorized=False).manifest
     _write(ATLAS/"probe.json",_run_probe(bundle,train_manifest,eval_manifest))

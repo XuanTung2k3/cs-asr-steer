@@ -21,7 +21,7 @@
   "norm_preserve": true,
   "depth_rescale": false,
   "teacher_forced": {"diagnostics": ["gold_nll", "gold_probability", "gold_rank", "top1", "entropy", "kl_p0_psteer", "representation_displacement", "relative_displacement", "delta_direction_cosine"], "lambda_grid": [-1.0, -0.5, 0.0, 0.25, 0.5, 1.0, 2.0], "rho": 0.5},
-  "probe": {"model": "fixed logistic regression", "train_role": "D-construct", "eval_role": "D-dev-select", "dialogue_disjoint": true, "labels": ["embedded_EN", "matrix_ZH"], "no_sweep": true},
+  "probe": {"model": "fixed logistic regression", "train_role": "D-construct", "eval_role": "D-dev-select", "dialogue_disjoint": true, "labels": ["embedded_EN", "matrix_ZH"], "no_sweep": true, "teacher_forced_batch_size": 8},
   "gpu_workloads": {"preflight": "fixed conditions, worker-count equivalence/throughput", "job_a": "all-layer batch-1 free decoding", "job_b": "per-layer directions + teacher-forced diagnostics + lambda atlas + probe"},
   "resource_policy": {"partition": "mig", "gpu_request": "nvidia_h100_80gb_hbm3_3g.40gb:1", "max_simultaneous_gpu_jobs": 2, "generation_batch_size": 1, "worker_counts_predeclared": [1, 2, 4], "selected_workers": 2, "no_post_result_worker_change": true},
   "preflight": {"job_id": 51457, "artifact": "results/basis_frozen_layer_atlas/worker_preflight.json", "output_equivalence": "all repeated fixed conditions identical"},

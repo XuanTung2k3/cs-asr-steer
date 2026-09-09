@@ -452,7 +452,12 @@ def _run_probe(bundle, train_manifest, eval_manifest):
             for bi, plan in enumerate(chunk):
                 for p in plan["positions"]:
                     labels[split].append(1 if p["language"] == "EN" else 0)
-                    for l in LAYERS: collected[split][l].append(states[l][bi, p["query_position"]])
+                    # Copy the individual row: retaining a NumPy view here
+                    # would keep the complete GPU-batch transfer alive for
+                    # every position and exhaust host memory over 7k plans.
+                    for l in LAYERS:
+                        collected[split][l].append(
+                            np.array(states[l][bi, p["query_position"]], copy=True))
             if start % (PROBE_BATCH_SIZE * 50) == 0: print(f"probe {split} {start}/{len(plans)}", flush=True)
     result = {"schema_version":"basis_a2_linear_probe_v1", "train_role":CONSTRUCT_ROLE,
               "eval_role":EVAL_ROLE, "dialogue_disjoint":True, "layers":{}}

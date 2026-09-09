@@ -209,11 +209,16 @@ def dose_class(values):
 
 def figures(rows, geom, tf):
     import matplotlib.pyplot as plt
-    import seaborn as sns
     FIG.mkdir(parents=True, exist_ok=True)
     def heat(name, vals, title, cmap="viridis", center=None):
-        fig, ax = plt.subplots(figsize=(8.5, 7)); sns.heatmap(vals, ax=ax, xticklabels=DIRECTIONS, yticklabels=LAYERS,
-            cmap=cmap, center=center, annot=False); ax.set(xlabel="Direction", ylabel="Decoder layer", title=title)
+        fig, ax = plt.subplots(figsize=(8.5, 7));
+        im = ax.imshow(vals, aspect="auto", cmap=cmap)
+        if center is not None:
+            finite = np.asarray(vals)[np.isfinite(vals)]
+            if finite.size: im.set_clim(float(min(finite.min(), center)), float(max(finite.max(), center)))
+        ax.set_xticks(range(len(DIRECTIONS)), DIRECTIONS, rotation=30, ha="right")
+        ax.set_yticks(range(len(LAYERS)), LAYERS); ax.set(xlabel="Direction", ylabel="Decoder layer", title=title)
+        fig.colorbar(im, ax=ax, shrink=.8)
         fig.tight_layout(); fig.savefig(FIG/name, dpi=180); plt.close(fig)
     def arr(field, rho=.5): return np.array([[mean_at(rows,l,d,rho,field) for d in DIRECTIONS] for l in LAYERS])
     heat("utility_heatmap_rho0.5.png", arr("utility"), "Free-decoding utility, rho=0.5", "RdYlGn", 0)
@@ -229,9 +234,9 @@ def figures(rows, geom, tf):
         fig, ax=plt.subplots(figsize=(8,4)); ax.plot(LAYERS,[x[key] for x in g],marker="o"); ax.set(xlabel="Decoder layer",ylabel=ylabel,title=title); ax.grid(alpha=.25); fig.tight_layout(); fig.savefig(FIG/fn,dpi=180); plt.close(fig)
     fig, axes=plt.subplots(1,2,figsize=(12,4),sharey=True)
     for d in DIRECTIONS:
-        y=[np.nanmean([r["utility"] for r in rows if r["layer"]==l and r["direction"]==d and r["rho"]==rho]) for rho in RHO]
+        y=[np.nanmean([r["utility"] for r in rows if r["direction"]==d and r["rho"]==rho]) for rho in RHO]
         axes[0].plot(RHO,y,marker="o",label=d)
-        y2=[np.nanmean([r["corruptions"] for r in rows if r["layer"]==l and r["direction"]==d and r["rho"]==rho]) for rho in RHO]
+        y2=[np.nanmean([r["corruptions"] for r in rows if r["direction"]==d and r["rho"]==rho]) for rho in RHO]
         axes[1].plot(RHO,y2,marker="o",label=d)
     axes[0].set_title("Utility dose response (mean over layers)"); axes[1].set_title("Corruptions dose response (mean over layers)")
     for ax in axes: ax.set_xlabel("rho"); ax.grid(alpha=.25)
@@ -248,8 +253,10 @@ def figures(rows, geom, tf):
             vals=np.full((32,len(lambdas)),np.nan)
             for p in lam_files:
                 if not p.stem.startswith(primary+"_lambda"): continue
-                x=load_json(p); lam=float(x["direction"].split("lambda_cond")[1]); vals[int(x["layer"]),lambdas.index(lam)]=x["groups"]["all"]["delta_gold_nll"]
-            sns.heatmap(vals,ax=ax,xticklabels=lambdas,yticklabels=LAYERS,cmap="RdBu_r",center=0); ax.set_title(primary.title()+"+lambda Cond: Δ gold NLL"); ax.set_xlabel("lambda")
+                x=load_json(p); lam=float(p.stem.split("lambda")[1]); vals[int(x["layer"]),lambdas.index(lam)]=x["groups"]["all"]["delta_gold_nll"]
+            im=ax.imshow(vals,aspect="auto",cmap="RdBu_r"); im.set_clim(float(np.nanmin(vals)),float(np.nanmax(vals)))
+            ax.set_xticks(range(len(lambdas)), lambdas, rotation=30); ax.set_yticks(range(len(LAYERS)), LAYERS)
+            ax.set_title(primary.title()+"+lambda Cond: Δ gold NLL"); ax.set_xlabel("lambda"); fig.colorbar(im, ax=ax, shrink=.8)
         axes[0].set_ylabel("Decoder layer"); fig.tight_layout(); fig.savefig(FIG/"mixture_lambda_layer_response.png",dpi=180); plt.close(fig)
     if (ATLAS/"probe.json").exists():
         p=load_json(ATLAS/"probe.json")["layers"]; fig,ax=plt.subplots(figsize=(8,4)); ax.plot(LAYERS,[p[str(l)]["auroc"] for l in LAYERS],marker="o"); ax.set(xlabel="Decoder layer",ylabel="AUROC",title="Language probe AUROC by layer"); ax.grid(alpha=.25); fig.tight_layout(); fig.savefig(FIG/"probe_auroc_vs_layer.png",dpi=180); plt.close(fig)

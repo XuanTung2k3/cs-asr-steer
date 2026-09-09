@@ -513,7 +513,9 @@ def diagnostics(args) -> int:
     train_manifest = train_manifest[train_manifest["role"].astype(str) == CONSTRUCT_ROLE].reset_index(drop=True)
     # Use dialogue-disjoint D-construct and full D-dev-select role manifests for the probe.
     eval_manifest = D._build_population(cfg,EVAL_ROLE,confirm_authorized=False).manifest
-    _write(ATLAS/"probe.json",_run_probe(bundle,train_manifest,eval_manifest))
+    probe_path = ATLAS / "probe.json"
+    if not probe_path.exists():
+        _write(probe_path, _run_probe(bundle, train_manifest, eval_manifest))
     return 0
 
 

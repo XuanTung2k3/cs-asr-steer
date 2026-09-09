@@ -45,6 +45,8 @@ RAW_NORM_HASH = "sha256:1bcb2a7a15f665715703b3717e4ef50d23432e4df72d037739d646e6
 RC_HASH = "sha256:2142a7d4d69a7b54a5596bcca953d1966ce0244f3a6ed5feb1d8b459068be4c9"
 LC_HASH = "sha256:b3aa31d521d79c93fae1c22599b42136d8b6cfbd191846f84cbde487e635a930"
 SITE = "decoder_post_cross_attn_residual"
+REPRESENTATION_SEED = 2408
+REPRESENTATION_MAX = 10000
 GEN = dict(task="transcribe", language="zh", do_sample=False, num_beams=1,
            temperature=0.0, max_new_tokens=200, condition_on_prev_tokens=False)
 
@@ -246,6 +248,125 @@ def run_gpu(args) -> int:
     return 0
 
 
+def _representation_plans(bundle, pop, baseline: dict[str, str]):
+    """Exact-site query positions for baseline-correct EN/ZH units."""
+    from csasr.data.alignment import build_prefix, token_char_offsets
+    from csasr.data.language_tags import EN, ZH, tag_unit
+    from csasr.data.normalize import normalize_and_segment
+    from csasr.evaluation.pier import unit_status
+    from csasr.experiments.v2r3_directions import first_token_for_unit, unit_char_spans
+
+    tokenizer = bundle.processor.tokenizer
+    prefix = build_prefix(bundle.processor, language="zh")
+    plans = []
+    for _, row in pop.manifest.sort_values("duration_sec").reset_index(drop=True).iterrows():
+        uid = str(row["utterance_id"])
+        norm, units = normalize_and_segment(row["transcript_raw"])
+        text_ids = tokenizer.encode(norm, add_special_tokens=False)[:220]
+        offsets = token_char_offsets(tokenizer, text_ids)
+        char_spans = unit_char_spans(norm, units)
+        status = unit_status(str(row["transcript_raw"]), baseline[uid])
+        positions = []
+        for index, unit in enumerate(units):
+            tag = tag_unit(unit)
+            if tag not in (EN, ZH) or not status.get(index, (False, ""))[0]:
+                continue
+            if index >= len(char_spans):
+                continue
+            token_index = first_token_for_unit(offsets, char_spans[index][0])
+            if token_index is None or token_index >= len(text_ids):
+                continue
+            query_position = len(prefix) + int(token_index) - 1
+            if 0 <= query_position < len(prefix) + len(text_ids):
+                positions.append({
+                    "reference_unit_index": int(index), "language": tag,
+                    "token_index": int(token_index),
+                    "query_position": int(query_position),
+                })
+        if positions:
+            plans.append({"utterance_id": uid, "dialogue_id": str(row["dialogue_id"]),
+                          "audio_path": str(row["audio_path"]),
+                          "sequence": list(prefix) + list(text_ids) + [tokenizer.eos_token_id],
+                          "positions": positions})
+    return plans
+
+
+@torch.inference_mode()
+def extract_representations(args) -> int:
+    """Capture a bounded, deterministic teacher-forced exact-site sample."""
+    from csasr.utils.config import load_config
+    from csasr.models.whisper import load_whisper
+    from csasr.lss.sites import DecoderPostCrossAttnRecorder, assert_no_site_hooks
+    from steer_sweep import data as D
+    from csasr.models.generation import teacher_forced_forward
+
+    cfg = load_config("lss/l1b_candidates_dialogue_v2r3.yaml")
+    mcfg = load_config("model/whisper_large_v3.yaml")
+    bundle = load_whisper(mcfg)
+    bundle.model.eval()
+    if any(p.requires_grad for p in bundle.model.parameters()):
+        raise RuntimeError("representation extraction requires a frozen backbone")
+    pop = D.build_population(bundle, cfg, "D-dev-select", assert_anchors=True)
+    ids = list(pop.utterance_ids)
+    if _dataset_fingerprint_from_ids(ids) != DATA_FINGERPRINT:
+        raise RuntimeError("representation extraction population fingerprint mismatch")
+    reused, _ = _load_reused()
+    baseline = reused["B0"]["payload"]["texts"]
+    plans = _representation_plans(bundle, pop, baseline)
+    if not plans:
+        raise RuntimeError("no baseline-correct content positions available")
+
+    vectors, metadata = [], []
+    start_time = time.monotonic()
+    bs = max(1, int(args.batch_size))
+    for start in range(0, len(plans), bs):
+        batch = plans[start:start + bs]
+        with DecoderPostCrossAttnRecorder(bundle, [LAYER]) as recorder:
+            teacher_forced_forward(bundle, [x["audio_path"] for x in batch],
+                                   [x["sequence"] for x in batch])
+            states = recorder.states[LAYER].float().cpu().numpy()
+        for b, plan in enumerate(batch):
+            for position in plan["positions"]:
+                vectors.append(states[b, position["query_position"]].copy())
+                metadata.append({"utterance_id": plan["utterance_id"],
+                                 "dialogue_id": plan["dialogue_id"], **position,
+                                 "baseline_status": "correct"})
+        if (start // bs) % 20 == 0:
+            print(f"  representations {min(start + bs, len(plans))}/{len(plans)}", flush=True)
+        del states
+    assert_no_site_hooks(bundle)
+
+    reps = np.asarray(vectors, dtype=np.float32)
+    if len(reps) > REPRESENTATION_MAX:
+        rng = np.random.default_rng(REPRESENTATION_SEED)
+        keep = np.sort(rng.choice(len(reps), size=REPRESENTATION_MAX, replace=False))
+        reps = reps[keep]
+        metadata = [metadata[int(i)] for i in keep]
+        sampling = "uniform without replacement over extracted baseline-correct content positions"
+    else:
+        sampling = "all extracted baseline-correct content positions"
+    rep_dir = OUT / "representation"
+    rep_dir.mkdir(parents=True, exist_ok=True)
+    np.save(rep_dir / "baseline_l24_teacher_forced.npy", reps)
+    _write(rep_dir / "position_metadata.json", metadata)
+    elapsed = time.monotonic() - start_time
+    _write(rep_dir / "extraction_metadata.json", {
+        "status": "COMPLETE", "source": "baseline exact-site L24 teacher-forced states",
+        "site": SITE, "layer": LAYER, "split": "D-dev-select",
+        "population_fingerprint": DATA_FINGERPRINT, "utterances": len(ids),
+        "utterances_with_positions": len(plans), "n_vectors_extracted": len(vectors),
+        "n_vectors_saved": int(len(reps)), "dimension": int(reps.shape[1]),
+        "sampling_seed": REPRESENTATION_SEED, "sampling_policy": sampling,
+        "position_definition": "query position immediately before first BPE token of a baseline-correct EN/ZH reference unit",
+        "decoder": GEN, "frozen_backbone": True, "no_gradients": True,
+        "elapsed_seconds": elapsed, "batch_size": bs,
+        "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+        "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
+    })
+    print(f"saved {len(reps)} representation rows in {elapsed / 60:.2f} min", flush=True)
+    return 0
+
+
 def _load_result_rows() -> list[dict]:
     from csasr.evaluation.result_schema import validate
     rows = []
@@ -328,25 +449,30 @@ def analyze(_args) -> int:
         "direction_order": geom["direction_order"], "matrix": geom["cosine_matrix"]})
     _write(OUT / "geometry/subspace_geometry.json", geom["subspace"] | {
         "gram_matrices": geom["gram_matrices"], "svd": geom["svd"]})
-    rep_path = OUT / "representation/baseline_l24_free_decode.npy"
+    rep_path = OUT / "representation/baseline_l24_teacher_forced.npy"
     pca_summary = {"deferred": True, "reason": "no baseline representation cache"}
+    projection_stats = {"deferred": True, "reason": "no baseline representation cache"}
     if rep_path.exists():
         reps = np.load(rep_path)
         pca = fit_pca_rows(reps, n_components=3)
         projections = project_pca_directions(pca, directions)
         ratios = pca["explained_variance_ratio"]
-        pca_summary = {"deferred": False, "source": "baseline free-decoding exact-site L24 final rows",
+        metadata = json.loads((OUT / "representation/position_metadata.json").read_text())
+        pca_summary = {"deferred": False, "source": "baseline exact-site L24 teacher-forced states",
                        "site": SITE, "split": "D-dev-select", "sampling_seed": 2408,
-                       "sampling_policy": "duration-sorted population; one final captured row per utterance; max 10000",
+                       "sampling_policy": "baseline-correct EN/ZH unit query states; max 10000",
                        "n_vectors": int(reps.shape[0]), "dimension": int(reps.shape[1]),
                        "pc1_explained_variance": float(ratios[0]), "pc2_explained_variance": float(ratios[1]),
                        "pc1_pc2_cumulative": float(ratios[:2].sum()),
                        "pc3_explained_variance": float(ratios[2]) if len(ratios)>2 else None,
                        "direction_projections": projections}
         _write(OUT / "representation/pca_summary.json", pca_summary)
-        _plot_pca(reps, pca, directions, pca_summary)
+        projection_stats = _projection_stats(reps, metadata, directions)
+        _write(OUT / "representation/projection_stats.json", projection_stats)
+        _plot_pca(reps, pca, directions, pca_summary, metadata)
     else:
         _write(OUT / "representation/pca_summary.json", pca_summary)
+        _write(OUT / "representation/projection_stats.json", projection_stats)
     for d in ("Raw", "Local", "Conditioning", "Raw+Conditioning", "Local+Conditioning"):
         _write(OUT / "dose_response_" + d.replace("+", "_") + ".json", {}) if False else None
     grouped = {}
@@ -388,7 +514,7 @@ def analyze(_args) -> int:
         "cos(RC,LC)": geom["pairwise"]["cos_raw_cond_mixture_local_cond_mixture"],
         "angle(RC,LC)": geom["pairwise"]["angle_raw_cond_mixture_local_cond_mixture_degrees"],
         "PCA": pca_summary})
-    _write_comparison(rows, geom, pca_summary, dose_response)
+    _write_comparison(rows, geom, pca_summary, dose_response, projection_stats)
     _plot_frontier(rows); _plot_heatmap(geom["cosine_matrix"], geom["direction_order"]); _plot_dose(rows)
     return 0
 
@@ -418,7 +544,7 @@ def _fmt(value):
     return str(value)
 
 
-def _write_comparison(rows, geom, pca, dose):
+def _write_comparison(rows, geom, pca, dose, projection_stats):
     cols = ["Direction", "rho", "source", "WER", "MER", "PIER", "Embedded WER", "Matrix CER",
             "Corr", "Corrupt", "Utility", "Outside harm", "Embed ret.", "Matrix ret.", "Energy", "Utility/Energy"]
     lines = ["# BASIS-A frozen direction comparison", "", "WER is `n/a — no frozen canonical overall WER`; MER is retained as the canonical mixed error metric.", "",
@@ -426,6 +552,7 @@ def _write_comparison(rows, geom, pca, dose):
     lines += ["| " + " | ".join(_fmt(r[c]) for c in cols) + " |" for r in rows]
     lines += ["", "## Geometry", "", "```json", json.dumps(geom, indent=2), "```", "",
               "## PCA limitations", "", f"{json.dumps(pca, indent=2)}", "",
+              "## Projection distributions", "", f"{json.dumps(projection_stats, indent=2)}", "",
               "## Dose response", "", "```json", json.dumps(dose, indent=2), "```", "",
               "## Explicit questions", "",
               f"A. Normalized raw/local similarity is cos={geom['pairwise']['cos_raw_local']:.9f}, angle={geom['pairwise']['angle_raw_local_degrees']:.6f} degrees.",
@@ -439,7 +566,9 @@ def _write_comparison(rows, geom, pca, dose):
               "I. Adding conditioning improves the single-direction utility only at higher doses and loses at rho=.5; the mixture effect is not stable.",
               "J. The correction-damage frontier and non-dominated flags are in frontier.json; the best positive useful-correction/energy point is Raw rho=.5.",
               "K. Raw rho=.5 has the highest positive utility per realized energy; this is not a positive-utility finding at every rho.",
-              "L. PCA is deferred, so it neither supports nor contradicts the geometry.",
+              ("L. PCA is deferred, so it neither supports nor contradicts the geometry."
+               if pca.get("deferred") else
+               "L. PCA is supporting only: it uses actual teacher-forced L24 representation rows; projected arrows are descriptive and do not establish causal superiority."),
               "M. Frozen D-dev-select evidence supports retaining the two-vector rationale under the preregistered utility rule, but does not establish learned-controller or held-out generalization evidence.",
               "", "## Interpretation", "", "All performance conclusions use the full rho trajectories. PCA is descriptive only; it does not establish causal superiority or semantic purity."]
     (OUT / "comparison.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -476,25 +605,67 @@ def _plot_dose(rows):
     ax.legend(fontsize=8); fig.tight_layout(); fig.savefig(OUT / "figures/dose_response.png", dpi=220); plt.close(fig)
 
 
-def _plot_pca(reps, pca, directions, summary):
+def _projection_stats(reps, metadata, directions):
+    """Descriptive EN-vs-ZH projections using baseline-correct rows."""
+    labels = np.asarray([x["language"] for x in metadata])
+    mu = reps.mean(axis=1, keepdims=True)
+    var = ((reps - mu) ** 2).mean(axis=1, keepdims=True)
+    ln = (reps - mu) / np.sqrt(var + 1e-5)
+    out = {"deferred": False,
+           "normalization": "featurewise LayerNorm without affine parameters; eps=1e-5",
+           "source": "baseline-correct content-unit query states", "directions": {}}
+    for name in ("raw", "local", "conditioning"):
+        scores = ln @ directions[name]
+        groups = {}
+        for tag, label in (("EN", "embedded"), ("ZH", "matrix")):
+            x = scores[labels == tag]
+            if len(x) == 0:
+                groups[label] = {"n": 0}
+                continue
+            groups[label] = {"n": int(len(x)), "mean": float(np.mean(x)),
+                             "std": float(np.std(x)), "median": float(np.median(x)),
+                             "q25": float(np.quantile(x, .25)), "q75": float(np.quantile(x, .75))}
+        en, zh = scores[labels == "EN"], scores[labels == "ZH"]
+        pooled = math.sqrt((float(np.var(en)) + float(np.var(zh))) / 2) if len(en) and len(zh) else 0.0
+        out["directions"][name] = {
+            "groups": groups,
+            "standardized_mean_difference_en_minus_zh":
+            float((np.mean(en) - np.mean(zh)) / pooled) if pooled > 0 else None,
+        }
+    out["n_vectors"] = int(len(reps))
+    out["language_counts"] = {str(k): int(v) for k, v in zip(*np.unique(labels, return_counts=True))}
+    return out
+
+
+def _plot_pca(reps, pca, directions, summary, metadata):
     import matplotlib.pyplot as plt
     xy = (reps - pca["mean"]) @ pca["components"][:2].T
-    fig, ax = plt.subplots(figsize=(6.6, 5.2)); ax.scatter(xy[:, 0], xy[:, 1], s=8, alpha=.22, color="0.35", rasterized=True)
+    labels = np.asarray([x["language"] for x in metadata])
+    fig, ax = plt.subplots(figsize=(6.6, 5.2))
+    for label, color, name in (("EN", "tab:blue", "embedded EN"), ("ZH", "tab:orange", "matrix ZH")):
+        mask = labels == label
+        ax.scatter(xy[mask, 0], xy[mask, 1], s=8, alpha=.22, color=color,
+                   label=name, rasterized=True)
     for name, coords in summary["direction_projections"].items():
         x, y = coords[:2]; ax.arrow(0, 0, x, y, width=0.002, head_width=.04, length_includes_head=True)
         ax.text(x, y, " " + name, fontsize=9)
     ax.set(xlabel=f"PC1 ({summary['pc1_explained_variance']:.1%})", ylabel=f"PC2 ({summary['pc2_explained_variance']:.1%})",
            title="BASIS-A baseline L24 representations; arrows are projection-only")
+    ax.legend(fontsize=8)
     fig.tight_layout(); fig.savefig(OUT / "figures/representation_pca.png", dpi=220); plt.close(fig)
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=("gpu", "analyze"), required=True)
+    ap.add_argument("--mode", choices=("gpu", "extract-representations", "analyze"), required=True)
     ap.add_argument("--batch-size", type=int, default=32)
     args = ap.parse_args(argv)
     OUT.mkdir(parents=True, exist_ok=True)
-    return run_gpu(args) if args.mode == "gpu" else analyze(args)
+    if args.mode == "gpu":
+        return run_gpu(args)
+    if args.mode == "extract-representations":
+        return extract_representations(args)
+    return analyze(args)
 
 
 if __name__ == "__main__":

@@ -33,6 +33,7 @@ DIRECTIONS = ("Raw", "Local", "Conditioning", "Raw+Cond", "Local+Cond")
 RHO_GRID = (0.25, 0.5, 1.0, 2.0)
 LAMBDAS = (-1.0, -0.5, 0.0, 0.25, 0.5, 1.0, 2.0)
 MIX = (0.5, 0.5)
+PROBE_BATCH_SIZE = 8
 SITE = "decoder_post_cross_attn_residual"
 DATA_FP = "sha256:4a4ce18e7a368e60108fe1506ee6a70611d532d0821b376dc1ac8d483e2b4440"
 CONSTRUCT_ROLE = "D-construct"
@@ -437,15 +438,22 @@ def _run_probe(bundle, train_manifest, eval_manifest):
     collected = {"train": {l: [] for l in LAYERS}, "eval": {l: [] for l in LAYERS}
                  }
     labels = {"train": [], "eval": []}
+    # The probe population is intentionally much larger than the ten-case
+    # atlas panel.  Batch only this teacher-forced extraction: positions before
+    # each row's sequence end are unchanged by right-padding, while free
+    # decoding remains batch=1 by protocol.
     for split, plans in (("train", train_plans), ("eval", eval_plans)):
-        for n, plan in enumerate(plans):
+        for start in range(0, len(plans), PROBE_BATCH_SIZE):
+            chunk = plans[start:start + PROBE_BATCH_SIZE]
             with DecoderPostCrossAttnRecorder(bundle, list(LAYERS)) as rec, torch.inference_mode():
-                teacher_forced_forward(bundle, [plan["audio_path"]], [plan["sequence"]])
-                states = {l: rec.states[l][0].float().cpu().numpy() for l in LAYERS}
-            for p in plan["positions"]:
-                labels[split].append(1 if p["language"] == "EN" else 0)
-                for l in LAYERS: collected[split][l].append(states[l][p["query_position"]])
-            if n % 50 == 0: print(f"probe {split} {n}/{len(plans)}", flush=True)
+                teacher_forced_forward(bundle, [p["audio_path"] for p in chunk],
+                                       [p["sequence"] for p in chunk])
+                states = {l: rec.states[l].float().cpu().numpy() for l in LAYERS}
+            for bi, plan in enumerate(chunk):
+                for p in plan["positions"]:
+                    labels[split].append(1 if p["language"] == "EN" else 0)
+                    for l in LAYERS: collected[split][l].append(states[l][bi, p["query_position"]])
+            if start % (PROBE_BATCH_SIZE * 50) == 0: print(f"probe {split} {start}/{len(plans)}", flush=True)
     result = {"schema_version":"basis_a2_linear_probe_v1", "train_role":CONSTRUCT_ROLE,
               "eval_role":EVAL_ROLE, "dialogue_disjoint":True, "layers":{}}
     for l in LAYERS:

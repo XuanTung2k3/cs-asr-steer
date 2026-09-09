@@ -1,0 +1,96 @@
+{
+ "baseline": "reuse frozen DG-04 B0 (results/dg04/results/B0.json), identical population",
+ "decode": {
+  "do_sample": false,
+  "language": "zh",
+  "num_beams": 1,
+  "task": "transcribe",
+  "temperature": 0.0
+ },
+ "direction_hashes": {
+  "24": {
+   "conditioning": "sha256:7c343b6094ea9c64467ef44227c4f5b6507b8e7179ef193a67af3c33e90f2a61",
+   "local": "sha256:15418c7275c39c9b14edd9f9408c51599393730a389a1580a0525304aff5d3b0",
+   "local_cond": "sha256:b8285099cb4dc1e51bf3972006ec48fc9b61829674978bf12574cbf2da9b760b",
+   "raw": "sha256:365c729f0f577ae90276fb6caf812cfb13f35ebf821fa7a77897292109768703",
+   "raw_cond": "sha256:3062ee4ebe69f58ca1ce6fe0473e7485f5049fe0cff94e9bd9aff31c53706a8e"
+  },
+  "26": {
+   "conditioning": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+   "local": "sha256:1170509e7f555c791bcd9a9a533c3313762c4d4939a357c78791f87bc6aadd3a",
+   "local_cond": "sha256:a30507b071b0866ca2146993cfcf66bd497ddce8a68ebd815ea39a69f13d0ea4",
+   "raw": "sha256:eedba39919a5cc985f6ff530bd76c5a320749386675c24e5ef71873641d4c2be",
+   "raw_cond": "sha256:510033712736e52e8fada751baa15808aa8497f6f84d044ca6832d14409bf240"
+  },
+  "27": {
+   "conditioning": "sha256:370ddf5447a17f4bb4c0f4f3e9da9962728c40b63d3a99f56517f0af17cf5e49",
+   "local": "sha256:c8193a6c5d4b410fbb2895ff40cca2dbf4987a25ca3f45696ad350acd0c946bc",
+   "local_cond": "sha256:e163b67db8dfe237d5d853fa2e192aa15221ff7a26ba248658967a9f4e92a6ff",
+   "raw": "sha256:637685bcdf3ac5b749031da301b32492da697fa5776b77dbcf719a2de3a30f55",
+   "raw_cond": "sha256:ea64f75c5ffaf294e9a1182605e9a4c0336da1609d674833c2f61e6ad66f9c72"
+  },
+  "31": {
+   "conditioning": "sha256:f6952647a4611f26860873235b8e79f2b270d7c6a85c00ab40157d74ab566adb",
+   "local": "sha256:92ad6a505cfb0253c07e8a41b622980dc7eee935608673ac51bb4c8ef5c9db2b",
+   "local_cond": "sha256:532b87648507c922927ef7a74727abc547f8ddd26c61144be87c9be7e90e636a",
+   "raw": "sha256:43fe614ef871389b3619456aab10959f0c92234a53506c626d3148c487ec0b74",
+   "raw_cond": "sha256:1be59c9840fe114492d38516330ef9bc87ab6734b1065cee0394a25b8280c735"
+  }
+ },
+ "direction_source": "results/basis_frozen_layer_atlas/directions.json (canonical D-construct construction, hash-checked)",
+ "directions": [
+  "raw",
+  "local",
+  "conditioning",
+  "raw_cond",
+  "local_cond"
+ ],
+ "forbidden_roles": [
+  "D-dev-confirm",
+  "D-test"
+ ],
+ "gate_rule": "causal correction headroom with bounded damage (NOT positive frozen net utility); thresholds frozen in SPEC \u00a7Gate",
+ "gpu_policy": {
+  "generation_batch_size": 8,
+  "max_simultaneous_gpu_jobs": 2,
+  "partition": "mig"
+ },
+ "layers": [
+  24,
+  26,
+  27,
+  31
+ ],
+ "metric_schema": "result_v1 / metrics_v1 (canonical)",
+ "model": {
+  "dtype": "bfloat16",
+  "freeze_backbone": true,
+  "id": "openai/whisper-large-v3",
+  "local_path": "/mnt/data/tungnx/whisper-large-v3"
+ },
+ "per_layer_scale_s_l": {
+  "24": 8.931257754160319,
+  "26": 10.525815203418851,
+  "27": 12.316876523610437,
+  "31": 18.026260295912955
+ },
+ "population": {
+  "builder": "steer_sweep.data.build_population(assert_anchors=True)",
+  "dataset_composite": "sha256:3981d6a8134e8f73b49e1fc66451980a59d0f460759aab279a142ecb2f7310ab",
+  "ids_fingerprint": "sha256:1e826e04d41510513f361b95757a3ac6980b811107d07d79772425af3743f67b",
+  "n_utterances": 300,
+  "role": "D-dev-select"
+ },
+ "pre_run_git_commit": "3e38605",
+ "purpose": "frozen full-dev (300-utt) screen: does L26/L27 Conditioning survive? bounded-damage causal-correction-headroom gate",
+ "rho": 0.5,
+ "runner": "experiments/learned_expansion_prereq.py",
+ "schema_version": "learned_expansion_prereq_manifest_v1",
+ "site": {
+  "depth_rescale": false,
+  "norm_preserve": true,
+  "tensor": "decoder_post_cross_attn_residual"
+ },
+ "spec": "docs/current/LEARNED_EXPANSION_PREREQ_VALIDATION_SPEC.md",
+ "status": "PLANNED_PRE_RUN"
+}

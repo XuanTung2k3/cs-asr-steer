@@ -112,7 +112,7 @@
   metrics, efficiency accounting, provenance, Slurm partition, and data-role separation **PASS**.
   Focused DG-07 tests: **17 passed**. No D-dev-confirm or D-test data was read.
 
-- **DG-08 — READY FOR INDEPENDENT AUDIT (not FROZEN).** Locked Whisper core evaluation on
+- **DG-08 — COMPLETE / FROZEN.** Locked Whisper core evaluation on
   Whisper-large-v3 × CS-Dialogue only. Protocol frozen + committed (`f1dc4a8`); hard D-test lock
   committed BEFORE any D-test decode (`1fb2c3`, `results/dg08/DG08_TEST_LOCK.json`). Finalists F0
   frozen Whisper, F1 DG-04 frozen steering (B1 ρ=0.5), F2 SALSA global (1,280 params), F3 matched
@@ -122,24 +122,50 @@
   seed varied via a backward-compatible `--seed`). D-test (6,257 utts / 15 dialogues) decoded greedy
   (jobs `50725`/`50733`/`50734`) and beam-5 (`50760`/`50767`/`50768`/`51100`/`51101`/`51102`), all
   `mig`, never `main`; 2000-rep dialogue-block bootstrap (seed 42) offline.
-  - **Greedy (mean/3 seeds):** MER — F0 0.361, F1 0.407, SALSA 0.299, LoRA **1.289**, M* 0.347;
-    PIER — F0 0.831, SALSA 0.518, LoRA 0.145, M* 0.790; matrix-ret — M* **0.977** (best).
-  - **Beam-5:** M* has the **lowest MER (0.320) and en-WER (0.689) of any system** and best matrix
-    retention (0.988); LoRA MER catastrophe worsens (1.91, en-WER 8.2).
+  - **Greedy (mean/3 seeds):** MER — F0 0.361, F1 0.407, SALSA **0.299** (best), LoRA 1.289, M* 0.347;
+    PIER — F0 0.831, SALSA 0.518, LoRA 0.145, M* 0.790; matrix-ret — M* **0.977** (best among
+    interventions; F0=1.000 is the trivial no-op).
+  - **Beam-5:** M* has the **lowest MER (0.320) of any system** (marginally below SALSA 0.321) and the
+    best matrix retention (0.988); M* en-WER 0.689 is second to F1's 0.677, and M* is not the lowest-
+    en-WER system in either regime (SALSA 0.609 lowest greedy). LoRA MER catastrophe worsens (1.91,
+    en-WER 8.2).
   - **Bootstrap:** M* significantly beats frozen Whisper on PIER, MER, and utility in **both**
     regimes (all 95% CIs exclude zero); SALSA beats M* on PIER/utility (MER tied under beam); M*
     significantly beats LoRA on MER. **Beam robustness: PERSISTS** (M* edge over F0 grows under beam).
   - **Efficiency:** M* 43,651 params (0.0028% backbone), train 46.2±1.9 min, peak 5.51 GB, inference
     ≈ parity with F0; LoRA inference 2.63× overhead; SALSA smallest (1,280 params).
   - **Verdict:** RQ1 adaptive gives a better correction–**damage** trade-off than fixed steering;
-    RQ2 M* **COMPETITIVE** (best ASR quality + retention + inference parity; does not dominate SALSA
-    on raw correction; LoRA non-viable). Outside-harm not computable on D-test (no candidate/POI
+    RQ2 M* **COMPETITIVE** (best matrix retention among interventions + lowest beam-5 MER + inference
+    parity; does not dominate SALSA on raw correction or en-WER; LoRA non-viable). Outside-harm not computable on D-test (no candidate/POI
     alignments) — documented, text metrics complete. No SOTA claim; no post-test tuning. Focused
     tests: 13 DG-08 (+ DG-06/07 regression) pass. Full report `results/dg08/DG08_RESULTS_SUMMARY.md`.
     **Do not begin SEAME/ViMedCSS/Qwen cross-dataset/model expansion.**
+  - **Independent audit & freeze (2026-09-09, CPU-only).** All blocking gates PASS: chronology
+    protocol(`f1dc4a8`)→lock(`1fb2c37`, checkpoints + lock JSON, no D-test decode)→result(`e94339d`,
+    D-test decodes) verified; D-test manifest fingerprint recomputed == lock
+    (`sha256:dfbf53bc…e1a42`); all 9 selected-checkpoint SHAs recomputed == lock; seed-42 finalists
+    hash-match DG-06/DG-07; basis hashes == frozen DG-03 L24 (`local 2459a6…`, `cond 319951b…`);
+    three seeds [13,42,73] complete for F2/F3/F4 (none dropped/replaced); F0–F4 identities correct;
+    M* keeps `v_cond` (not redesigned after DG-07); training config identical across seeds (seed is
+    sole variation); all mean/std recomputed == tables; utility == corr−corrupt; bootstrap 2000
+    reps / dialogue unit / seed 42 / 9 arms / CIs reproduced; param counts verified analytically
+    (SALSA 1,280 / LoRA 46,080 / M* 43,651); LoRA over-generation confirmed (insertions ~26× F0
+    across all 3 seeds); 13 focused DG-08 tests pass; post-lock commits are throughput/mechanical/doc
+    only (batch-size flag, stats path, basis-ablation workstream) — no scientific config changed.
+    **Audit corrections (CPU-only, wording):** removed an overclaim — M* is NOT lowest en-WER in
+    either regime (SALSA 0.609 greedy, F1 0.677 beam) and is lowest MER only under beam-5; corrected
+    in `DG08_RESULTS_SUMMARY.md` and this file. Non-blocking notes: M* training manifests record
+    `seed=42` (the shared D0-init reconstruction seed); the effective training seed 13/73 is in each
+    `summary.json` top-level `seed` and is confirmed by divergent checkpoints/metrics — not edited to
+    avoid mutating locked artifacts. `table_C_efficiency.json` F4 `checkpoint_size_bytes=null` while
+    the summary shows 189 KB (cosmetic). Freeze artifacts: lock `results/dg08/DG08_TEST_LOCK.json`;
+    greedy `results/dg08/dtest/greedy/`; beam-5 `results/dg08/dtest/beam5/`; bootstrap
+    `results/dg08/stats/bootstrap_{greedy,beam5}.json`; efficiency `results/dg08/tables/table_C_efficiency.json`.
+    Verdict: **PASS — DG-08 locked Whisper core evaluation COMPLETE / FROZEN.**
 
-**Current ticket (historical):** `DG-08 — locked Whisper core evaluation` — implementation/evaluation
-complete; awaiting independent DG-08 audit/freeze.
+**Current ticket (historical):** `DG-08 — locked Whisper core evaluation` — implementation,
+evaluation, and independent audit/freeze complete (2026-09-09). DG-00–DG-08 method selection is
+closed; proceed only to supporting generalization/reporting work.
 
 **BASIS-A — frozen direction-construction ablation COMPLETE.** Additive D-dev-select-only
 comparison at exact L24 post-cross-attention/pre-FFN used one completed `main` job (`51107`) for

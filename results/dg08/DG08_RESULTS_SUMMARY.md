@@ -29,7 +29,7 @@ Outside-harm remains reported on the DG-04/05/06/07 D-dev-select development fro
 | F1 DG-04 frozen steering | 0.3444 | 0.6281 | 0.6767 | 0.2211 | 4000 | 1045 | 2955 | 0.947 | 0.896 |
 | F2 SALSA (×3) | 0.3210 | 0.3387 | 0.7317 | 0.1730 | 13704 | 354 | 13350 | 0.958 | 0.959 |
 | F3 LoRA (×3) | **1.9146** | 0.1411 | **8.1972** | 0.1884 | 20748 | 299 | 20448 | 0.964 | 0.968 |
-| F4 M* (×3) | **0.3198** | 0.6341 | **0.6888** | 0.1828 | 3170 | 430 | 2741 | **0.988** | 0.967 |
+| F4 M* (×3) | **0.3198** | 0.6341 | 0.6888 | 0.1828 | 3170 | 430 | 2741 | **0.988** | 0.967 |
 
 ## Table C — Efficiency
 
@@ -72,14 +72,18 @@ greedy; 0.988 vs 0.947 beam), lower MER, and lower corruption per correction. Ag
 global vector (SALSA), M* is better on ASR quality/retention but SALSA achieves more raw embedded
 correction (lower PIER, higher utility). So adaptivity buys damage-control, not raw correction count.
 
-**RQ2 — M\* vs SALSA and matched-budget LoRA.** M* has the **best overall ASR quality** — lowest MER
-and lowest en-WER of any system in both regimes — and the **best matrix retention**, at inference
-parity with frozen Whisper. SALSA is the strongest *balanced* baseline (large PIER reduction, MER
+**RQ2 — M\* vs SALSA and matched-budget LoRA.** M* has the **best matrix retention** of any
+intervention system in both regimes (0.977 greedy / 0.988 beam; F0=1.000 is the trivial no-op) and
+the **lowest MER under beam-5** (0.320, marginally below SALSA's 0.321), at inference parity with
+frozen Whisper. It does **not** post the lowest MER under greedy (SALSA 0.299 vs M* 0.347), and it is
+**not** the lowest-en-WER system in either regime (SALSA 0.609 lowest under greedy; F1 0.677 lowest
+under beam; M* is second in both). SALSA is the strongest *balanced* baseline (large PIER reduction, MER
 below F0, tiny parameter count). **LoRA posts the lowest PIER but a catastrophic MER (1.29 greedy /
 1.91 beam) and en-WER (5.5 / 8.2)** from hallucinated English over-generation — not a usable
-transcriber despite its "utility". M* does **not** dominate SALSA on embedded correction, but is the
-only method that improves PIER, MER, and retention simultaneously without an MER blow-up. This
-confirms DG-07's **M\* COMPETITIVE** verdict on locked D-test. No SOTA claim.
+transcriber despite its "utility". M* does **not** dominate SALSA on embedded correction, but among
+the systems that improve both PIER and MER over frozen Whisper it best preserves matrix/embedded
+retention (and, unlike LoRA, does so with no MER blow-up). This confirms DG-07's **M\* COMPETITIVE**
+verdict on locked D-test. No SOTA claim.
 
 **Robustness (beam-5): PERSISTS.** System ordering is identical to greedy; M*'s advantage over frozen
 Whisper *grows* under beam (PIER −0.077 vs −0.041; MER −0.029 vs −0.014), M*−SALSA MER becomes

@@ -175,8 +175,10 @@ metric definition may change; D-test is evaluation-only.
   Full tables/bootstrap: `results/dg08/DG08_RESULTS_SUMMARY.md`, `results/dg08/tables/`,
   `results/dg08/stats/`.
 - Final result commit: `e94339dc0dbbce5d7661d85608665617e6d9b76f`.
-- Status: **DG-08 — READY FOR INDEPENDENT AUDIT** (not FROZEN). Do not begin SEAME/ViMedCSS/Qwen
-  cross-dataset/model expansion.
+- Status: **DG-08 — COMPLETE / FROZEN** (independent CPU-only audit/freeze 2026-09-09; all blocking
+  gates PASS; result commit `e94339d`). Audit wording correction: M* is not the lowest-en-WER system
+  in either regime (SALSA lowest greedy, F1 lowest beam) and is lowest MER only under beam-5; the
+  COMPETITIVE verdict is unchanged. Do not begin SEAME/ViMedCSS/Qwen cross-dataset/model expansion.
 - Implementation note (mechanical, throughput-only): the frozen DG-06/DG-07 runners gained a
   backward-compatible `--seed` (default 42 → identical behavior) for the multi-seed runs; the D-test
   evaluator gained a `--batch-size` flag (decode throughput only; not a locked decoder parameter) —

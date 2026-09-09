@@ -438,38 +438,40 @@ def run_grid(args) -> int:
         "git": git_state(str(REPO)), "started_at": time.time()}
     write_json(job_manifest_path, job_manifest)
     bundle = load_whisper(load_config(MODEL_CFG)); bundle.model.eval()
-    if args.side == "encoder":
+    sides = ("encoder", "decoder") if args.side == "both" else (args.side,)
+    if "encoder" in sides:
         _ensure_encoder_directions(bundle)
-    cs_spans = _cs_eval_spans() if args.side == "encoder" and args.dataset == "cs_dialogue" else {}
+    cs_spans = _cs_eval_spans() if "encoder" in sides and args.dataset == "cs_dialogue" else {}
     stages = ("r2", "conditioning") if args.stage == "combined" else (args.stage,)
     result_roots = []
-    for stage in stages:
-        direction_name = "conditioning" if stage == "conditioning" else args.direction
-        layers = ENCODER_LAYERS if args.side == "encoder" else DECODER_LAYERS
-        if direction_name == "conditioning":
-            if args.side != "decoder":
-                raise ValueError("Conditioning is decoder-only")
-            layers = COND_LAYERS
-        if stage == "r2":
-            selection = _load_json(RESULTS / "selection/r2_layers.json")["selected"]
-            layers = tuple(selection[args.side]["layers"])
-        rhos = R1_RHO if stage == "r1" else (ALL_RHO if stage == "conditioning" else R2_RHO)
-        out_root = RESULTS / ("raw_r1" if stage == "r1" else
-                              ("conditioning" if stage == "conditioning" else "raw_r2")) / args.dataset
-        result_roots.append(str(out_root.relative_to(REPO)))
-        conditions = [(layer, scope, rho) for layer in layers
-                      for scope in SCOPES for rho in rhos]
-        for condition_index, (layer, scope, rho) in enumerate(conditions):
-            if condition_index % num_workers != worker_index:
-                continue
-            key = f"{direction_name}_{args.side}_L{layer}_{scope}_rho{rho:g}.json"
-            path = out_root / f"L{layer:02d}" / key
-            if path.is_file(): continue
-            dkey = "conditioning" if direction_name == "conditioning" else "raw"
-            result = _decode_condition(bundle, args.dataset, args.side, layer, dkey, scope, rho, cs_spans=cs_spans)
-            result["run_manifest"] = str(job_manifest_path.relative_to(REPO))
-            write_json(path, result)
-            print(f"completed {path.relative_to(REPO)}", flush=True)
+    for side in sides:
+        for stage in stages:
+            direction_name = "conditioning" if stage == "conditioning" else args.direction
+            layers = ENCODER_LAYERS if side == "encoder" else DECODER_LAYERS
+            if direction_name == "conditioning":
+                if side != "decoder":
+                    continue
+                layers = COND_LAYERS
+            if stage == "r2":
+                selection = _load_json(RESULTS / "selection/r2_layers.json")["selected"]
+                layers = tuple(selection[side]["layers"])
+            rhos = R1_RHO if stage == "r1" else (ALL_RHO if stage == "conditioning" else R2_RHO)
+            out_root = RESULTS / ("raw_r1" if stage == "r1" else
+                                  ("conditioning" if stage == "conditioning" else "raw_r2")) / args.dataset
+            result_roots.append(str(out_root.relative_to(REPO)))
+            conditions = [(layer, scope, rho) for layer in layers
+                          for scope in SCOPES for rho in rhos]
+            for condition_index, (layer, scope, rho) in enumerate(conditions):
+                if condition_index % num_workers != worker_index:
+                    continue
+                key = f"{direction_name}_{side}_L{layer}_{scope}_rho{rho:g}.json"
+                path = out_root / f"L{layer:02d}" / key
+                if path.is_file(): continue
+                dkey = "conditioning" if direction_name == "conditioning" else "raw"
+                result = _decode_condition(bundle, args.dataset, side, layer, dkey, scope, rho, cs_spans=cs_spans)
+                result["run_manifest"] = str(job_manifest_path.relative_to(REPO))
+                write_json(path, result)
+                print(f"completed {path.relative_to(REPO)}", flush=True)
     job_manifest.update({"status": "COMPLETED", "finished_at": time.time(),
                          "result_roots": result_roots})
     write_json(job_manifest_path, job_manifest)
@@ -513,7 +515,7 @@ def main(argv=None):
     sub.add_parser("preflight")
     g = sub.add_parser("grid")
     g.add_argument("--dataset", choices=DATASETS, required=True)
-    g.add_argument("--side", choices=("encoder", "decoder"), required=True)
+    g.add_argument("--side", choices=("encoder", "decoder", "both"), required=True)
     g.add_argument("--direction", choices=("Raw", "conditioning"), default="Raw")
     g.add_argument("--stage", choices=("r1", "r2", "conditioning", "combined"), default="r1")
     g.add_argument("--worker-index", type=int, default=0)

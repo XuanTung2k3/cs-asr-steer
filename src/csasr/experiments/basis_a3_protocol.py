@@ -156,7 +156,9 @@ def write_geometry(out_dir: Path = RESULTS / "geometry") -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     with (out_dir / "raw_cond_decoder_geometry.csv").open("w", newline="", encoding="utf-8") as f:
         fields = ["layer", "cos_raw_cond", "angle_deg", "raw_l2", "unit_l2", "raw_norm", "cond_norm"]
-        w = _csv.DictWriter(f, fieldnames=fields); w.writeheader(); w.writerows({k:r[k] for k in fields} for r in rows)
+        w = _csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
+        w.writeheader()
+        w.writerows({k: r[k] for k in fields} for r in rows)
     return payload
 
 

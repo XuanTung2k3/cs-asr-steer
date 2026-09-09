@@ -58,13 +58,29 @@ def _baseline_path(dataset: str) -> Path:
 
 
 def _ensure_baseline(bundle, dataset: str, frame: pd.DataFrame) -> dict[str, str]:
-    """Decode one baseline per panel, using an inter-process file lock."""
+    """Load or decode one baseline per panel, using an inter-process lock."""
     path = _baseline_path(dataset); lock_path = path.with_suffix(".lock")
     path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         if path.is_file():
             return _load_json(path)["texts"]
+        # The CS-Dialogue panel is exactly the canonical DG-04/BASIS-A2
+        # D-dev-select panel.  Its frozen free-decoding baseline is already
+        # cached in B0; reusing it avoids a second baseline decode and keeps
+        # the baseline transcript byte-for-byte identical to the established
+        # panel cache.
+        if dataset == "cs_dialogue":
+            prior = _load_json(REPO / "results/dg04/results/B0.json")["texts"]
+            expected = {str(x) for x in frame["utterance_id"]}
+            if set(prior) != expected:
+                raise RuntimeError("canonical CS baseline IDs do not match BASIS-A3 panel")
+            texts = {str(k): str(v) for k, v in prior.items()}
+            write_json(path, {"schema_version": "basis_a3_baseline_v1", "dataset": dataset,
+                              "count": len(texts), "texts": texts,
+                              "panel_fingerprint": _panel(dataset)["fingerprint"],
+                              "source": "results/dg04/results/B0.json"})
+            return texts
         from csasr.models.whisper import batch_model_inputs
         texts = {}
         for row in frame.sort_values("duration_sec").to_dict(orient="records"):
@@ -105,9 +121,13 @@ def _decoder_positions(bundle, reference: str) -> list[int]:
 
 
 def _decoder_gate(allowed: set[int]):
-    def gate_fn(*, abs_pos, **_kwargs):
-        return torch.as_tensor([1.0 if int(x) in allowed else 0.0 for x in abs_pos],
-                               dtype=torch.float32)
+    def gate_fn(*, abs_pos, r, **_kwargs):
+        vals = torch.as_tensor([1.0 if int(x) in allowed else 0.0 for x in abs_pos],
+                               dtype=torch.float32, device=r.device)
+        # The canonical hook accepts (B,T); generation here is batch=1, but
+        # preserve the row dimension explicitly so a prefill sequence is not
+        # mistaken for a per-row (B,) gate.
+        return vals.view(1, -1).expand(r.shape[0], -1)
     return gate_fn
 
 

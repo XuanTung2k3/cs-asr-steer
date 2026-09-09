@@ -4,6 +4,16 @@ from __future__ import annotations
 import torch
 
 
+def test_decoder_oracle_gate_has_explicit_batch_and_token_axes():
+    from experiments.basis_a3 import _decoder_gate
+
+    gate = _decoder_gate({5, 7})
+    r = torch.zeros((1, 4, 8))
+    out = gate(abs_pos=torch.tensor([4, 5, 6, 7]), r=r)
+    assert out.shape == (1, 4)
+    assert torch.equal(out, torch.tensor([[0.0, 1.0, 0.0, 1.0]]))
+
+
 def test_encoder_site_reconstructs_post_self_attention_before_ffn(tiny_bundle, tiny_features):
     from csasr.lss.encoder_sites import EncoderPostSelfAttnInterventionHook, EncoderPostSelfAttnRecorder
     from csasr.models.hooks import ActivationRecorder

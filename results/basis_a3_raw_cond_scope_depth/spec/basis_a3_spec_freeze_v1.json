@@ -1,5 +1,5 @@
 {
-  "code_config_sha256": "f19b6d02c1d9219ff6a7ac22a7235efe2e9798670069a207174bc647cbc50bbe",
+  "code_config_sha256": "4b7e536c79946a189b465dc4156b97d3da5cdea90ae3abf0836ec34f56b02767",
   "datasets": {
     "cs_dialogue": {
       "count": 300,
@@ -148,7 +148,7 @@
     "use_cache": true
   },
   "provenance": {
-    "created_at": "2026-09-09T17:54:43.050377+00:00",
+    "created_at": "2026-09-09T17:57:17.078811+00:00",
     "dataset_manifest_hash": null,
     "model_id": "/mnt/data/tungnx/whisper-large-v3",
     "model_revision": null,
@@ -158,12 +158,12 @@
     "provenance_version": "artifact-provenance-v1",
     "resolved_config_hash": "643fd6b606c49424e8fac164d459408e3224cf48f5565c14c3b7ed2229e9faf1",
     "seed": 42,
-    "source_snapshot_hash": "14b3e5d016768396a6bad78ac16928589733aed78470b0b066b6f3be1ae9d5f8",
+    "source_snapshot_hash": "4045907a7da0c246c2fe38b50abb266b201ad204a08823682d6871ac1291581b",
     "stage": "basis_a3",
     "upstream_artifacts": []
   },
   "schema_version": "lss_spec_freeze_v1",
-  "sha256": "3281be18a2cd896257f58fa761c4a92a69dd02ad22ee664e04fdbbd276627201",
+  "sha256": "cdd5af8d5ac202a07b8ceb2526dc089e9a7a8db0e02288ec1eafb8962b9406a2",
   "sites": {
     "decoder": "decoder_post_cross_attn_residual",
     "encoder": "encoder_post_self_attn_residual_pre_ffn"
@@ -171,5 +171,5 @@
   "spec": "docs/current/BASIS_A3_RAW_COND_SCOPE_DEPTH_SPEC.md",
   "status": "PLANNED_PRE_RUN",
   "study": "BASIS-A3",
-  "tests_sha256": "e72f88875687af1f8033eea3ad1252461a02cfc751b5a5eba53ed67268dc45bf"
+  "tests_sha256": "ada5ebdc388439a887dd93ae38577a55b78ebb8616eee8eec8f572eb5443358a"
 }

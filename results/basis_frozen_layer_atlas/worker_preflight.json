@@ -1,0 +1,29 @@
+{
+  "observations": [
+    {
+      "conditions": 2,
+      "elapsed_seconds": 35.049206487834454,
+      "model_replicas": 1,
+      "transcripts_identical_within_condition": true,
+      "workers_requested": 1
+    },
+    {
+      "conditions": 2,
+      "elapsed_seconds": 30.318222105503082,
+      "model_replicas": 2,
+      "transcripts_identical_within_condition": true,
+      "workers_requested": 2
+    },
+    {
+      "conditions": 4,
+      "elapsed_seconds": 44.19023117236793,
+      "model_replicas": 4,
+      "transcripts_identical_within_condition": true,
+      "workers_requested": 4
+    }
+  ],
+  "output_equivalence": "all repeated fixed conditions identical",
+  "selected_workers": 2,
+  "selection_reason": "two replicas tested; 4 reserved for headroom and not used for scientific shards",
+  "status": "COMPLETE"
+}

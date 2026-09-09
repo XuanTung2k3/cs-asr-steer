@@ -1,7 +1,7 @@
 {
   "schema_version": "basis_a2_run_manifest_v1",
   "status": "PLANNED_PRE_RUN",
-  "git_commit": "73bfc29371df5eec273a57513734eeaaecd22a55",
+  "git_commit": "d526209",
   "model": "openai/whisper-large-v3",
   "site": "decoder_post_cross_attn_residual",
   "layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
@@ -23,7 +23,8 @@
   "teacher_forced": {"diagnostics": ["gold_nll", "gold_probability", "gold_rank", "top1", "entropy", "kl_p0_psteer", "representation_displacement", "relative_displacement", "delta_direction_cosine"], "lambda_grid": [-1.0, -0.5, 0.0, 0.25, 0.5, 1.0, 2.0], "rho": 0.5},
   "probe": {"model": "fixed logistic regression", "train_role": "D-construct", "eval_role": "D-dev-select", "dialogue_disjoint": true, "labels": ["embedded_EN", "matrix_ZH"], "no_sweep": true},
   "gpu_workloads": {"preflight": "fixed conditions, worker-count equivalence/throughput", "job_a": "all-layer batch-1 free decoding", "job_b": "per-layer directions + teacher-forced diagnostics + lambda atlas + probe"},
-  "resource_policy": {"partition": "main", "max_simultaneous_gpu_jobs": 2, "generation_batch_size": 1, "worker_counts_predeclared": [1, 2, 4], "no_post_result_worker_change": true},
+  "resource_policy": {"partition": "mig", "gpu_request": "nvidia_h100_80gb_hbm3_3g.40gb:1", "max_simultaneous_gpu_jobs": 2, "generation_batch_size": 1, "worker_counts_predeclared": [1, 2, 4], "selected_workers": 2, "no_post_result_worker_change": true},
+  "preflight": {"job_id": 51457, "artifact": "results/basis_frozen_layer_atlas/worker_preflight.json", "output_equivalence": "all repeated fixed conditions identical"},
   "forbidden_splits": ["D-dev-confirm", "D-test"],
   "interpretation": "exploratory candidate layers/bands only; no final best-layer selection from the 10-utterance panel"
 }

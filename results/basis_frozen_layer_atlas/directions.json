@@ -1,0 +1,1098 @@
+{
+  "construction": {
+    "batch_size": 1,
+    "conditioning": "canonical per-utterance prefix contrast",
+    "local": "aggregate raw then residualize conditioning",
+    "raw": "canonical site_d_contrasts; dialogue-balanced"
+  },
+  "git_commit": "6f3fd03c46b0b815a5381c09756f2c0e27dc6ad0",
+  "layers": {
+    "0": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0021228859000897364,
+        "cos_local_cond": 6.938893903907228e-18,
+        "cos_raw_cond": -0.04607478594732343,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 0.4196843590304283
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L0.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L0.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L0.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L0.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L0.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:a5c7d9e4a6c72926c95972311d3c232886d664fa17a81dac7abcff6809753a99",
+        "local": "sha256:cec75177aa9b65ab4296fffc86bdb45bbe771a01425643ba4cda3b3e3a23ecb1",
+        "local_cond": "sha256:ac505724329bfee8b201d43d3e8116396a8dc261aa725667d7ffb76957c372b2",
+        "raw": "sha256:eb63bef36ab0640f1a958e5a89246fdccfa9bd0b8e6c2c8008f94428e9e50631",
+        "raw_cond": "sha256:15a10fd7f330711d77ccb77bbfd50f959db1e609f83dc373f7380ad1e98acdfb"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 2.242494699611311
+    },
+    "1": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.002249102389702234,
+        "cos_local_cond": 0.0,
+        "cos_raw_cond": -0.04742470231535773,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 0.7285602571323867
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L1.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L1.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L1.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L1.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L1.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:16799ec0156067f315524495437f5a348b9bb9cdb39d80367b712ad38fca319b",
+        "local": "sha256:dcf358eba772c95c522eaa71bc93a626314eb1032aeac0aed56d1e7f3005569a",
+        "local_cond": "sha256:1c1973260156ae4948644c5bf11c4394a8b15f1dea5ad74d5a160391da70423e",
+        "raw": "sha256:f1c7582f28af97e704d17ae0577caba9ed26d7adabd365681fc293744b1c1046",
+        "raw_cond": "sha256:5554cbfac087ab6e5432cd89be03e9558688ae1f96f5de746d69c7b6e1bfa1bc"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 3.6125376386799526
+    },
+    "10": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.006465281780152363,
+        "cos_local_cond": -2.0816681711721685e-17,
+        "cos_raw_cond": 0.08040697594205853,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 1.585999323288793
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L10.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L10.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L10.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L10.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L10.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:1fa7360b0e42b7e5c301b15ea4cd7e7bedb119cfca10496a556b22aff07949d5",
+        "local": "sha256:d982715a3dcb480fb1814ff7b6d65f744d9ef4ce6a71968bc67d14edf1dd321e",
+        "local_cond": "sha256:037431cd6f8f815b428914fa1a3dcf7858bb12dcff148fb186a0c8a622f446c8",
+        "raw": "sha256:2c78ca9b0224621a8039b737cc14c9eea1aa25a5acf33efba3c14d32a1c93ca6",
+        "raw_cond": "sha256:a14e5898a86ccc87b7136239e4a1ff44e76b5517f56459441dafb80616ce95fc"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 6.451378981758877
+    },
+    "11": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0032107950709997237,
+        "cos_local_cond": 1.3877787807814457e-17,
+        "cos_raw_cond": 0.05666387800880654,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 1.541743332732518
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L11.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L11.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L11.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L11.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L11.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:f19754cb1430610f27f7c06ca9be424617077af7d5bdd827c867c4262ccf4d5c",
+        "local": "sha256:003843b2cbc586ef66b9b0a1d282b338c640c9fcc3b343831aa2314583e58849",
+        "local_cond": "sha256:647bcdf7a825d7780a9d75cb0491178e69901a5a7c16e9042d85d8c2143b7f71",
+        "raw": "sha256:eb9073489c5bf8fc1d880d78e6d4ec8da07b1ef4493ce8e47030b3d5622f2366",
+        "raw_cond": "sha256:7719d1eafa01cfde01489cc1fa5887446c74ea2a4ff793b231eff010f8c8a0ca"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 6.539908077327282
+    },
+    "12": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.003156563208198566,
+        "cos_local_cond": -2.42861286636753e-17,
+        "cos_raw_cond": 0.05618330008281774,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.7032187490599646
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L12.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L12.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L12.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L12.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L12.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:e13668d96a0c7e399498bdb972edbd4e01d728f62ad8486443e23858e2ee3435",
+        "local": "sha256:5735d4473216b4c08e735cf32fc66486faf1be44948c948bfdb6cf675c4e74fc",
+        "local_cond": "sha256:9f96e735ece4171d05b8fabf806d0af595027f55984c6adf3e2277d6b8495c33",
+        "raw": "sha256:e8b4adb6b10ce3ba6e481516c490b2054d64dee22214b8041391c8c3410ca52d",
+        "raw_cond": "sha256:4273d03b3ee8680f4ca7a1ace27c1d577e668c5a45742191635f986137a9e618"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 6.774618662823187
+    },
+    "13": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0005631534182077503,
+        "cos_local_cond": 1.0408340855860843e-17,
+        "cos_raw_cond": 0.023730853718467962,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 1.9776004153585145
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L13.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L13.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L13.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L13.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L13.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:b2b91ff8e4f9d95a01d06c9c7f4a77f41c75f01930db603f9341deaa5e0f86a7",
+        "local": "sha256:5bf635e5cf87430b16bc95719efe6ad56a776277ccebdbb02185c3aab1c1adea",
+        "local_cond": "sha256:67f2bebd54501f1f9a7e63b19dc2bf1fd5c890dda1a8420cb56b2c1c97fd9107",
+        "raw": "sha256:22da6eee68becdf356d29f474a5d8444dbe4030ae0b610ce266f948a5a9a5078",
+        "raw_cond": "sha256:e75b5d3b2fa0ceddf918183790f1b1a05fe3c33eb55bfa9fa209bce7b281cc8d"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.081694919467754
+    },
+    "14": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0001672119701983085,
+        "cos_local_cond": 5.204170427930421e-18,
+        "cos_raw_cond": -0.012931046755703189,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.973324769405793
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L14.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L14.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L14.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L14.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L14.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:4bf8a012d44e9184fa0db69f68b1e9d2b198c253aeae4703cc5220d7d0433cad",
+        "local": "sha256:7c77c73bb52afd21faee8ca662e04231f8f8cc9dfd176f64f3c79d0ada72d1c0",
+        "local_cond": "sha256:bf7c2696c08b6c9279359e2135ffb0d36f86bb9ba61c86d20997aa8b2d43f7a1",
+        "raw": "sha256:99700b70bfcc3675cda5426c0c4e1d5505e3954cf9e78e101148a79018e2df2b",
+        "raw_cond": "sha256:525c6de6f49e1939cc44e0e6abdbe9ec3b9a4efd80de94c6d535ee6cc0405cf7"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.2440011619809175
+    },
+    "15": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 8.122378980659036e-06,
+        "cos_local_cond": 3.469446951953614e-18,
+        "cos_raw_cond": -0.002849978768456499,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.9411680206751118
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L15.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L15.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L15.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L15.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L15.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:bf1e0aafb8d45bd6188b6f8080d28c4e4321f15789005042469431a69c15e2be",
+        "local": "sha256:7b23c0b11626dd0152b78a127b60bf079260741d9cd2d86725d2b72638ea916a",
+        "local_cond": "sha256:8fc4c01bbe89f4a05137cc5099d705d833b274208d06012f911064d086fb1e99",
+        "raw": "sha256:86ff31a7a68695643e13381c4554d4f06f2fd7cc3a5bad571fbc5bacb5be1cb5",
+        "raw_cond": "sha256:ecefd21350e3be6bfdfe652d3f7b19919b6fba09359028450a0e4137cc714e89"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.109538179638608
+    },
+    "16": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 2.4540536826351518e-05,
+        "cos_local_cond": -1.3877787807814457e-17,
+        "cos_raw_cond": -0.004953840613739537,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 2.396367643617688
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L16.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L16.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L16.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L16.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L16.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:35af43a464f50517854c57cee1205c2eb2561a747abf9a7c07b69546b6fcd5b1",
+        "local": "sha256:39d622a7875affa89e7a4c3a04e9511fc3f15d65c6efea800c6c9c033843629c",
+        "local_cond": "sha256:ff2f1be1b554f6f71307d5b9a5fd5e949d6bdb12d7f03cd156d98612f0219049",
+        "raw": "sha256:3cf318740931dfe35982c8eea0948d8b934bb5cc77dce00d1748b126de643a93",
+        "raw_cond": "sha256:2194f44fa6e405a046cb54c45e19e86c04734e332a94b7bf563d207048a39464"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.478737245511598
+    },
+    "17": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0001525814482912999,
+        "cos_local_cond": -1.5612511283791264e-17,
+        "cos_raw_cond": -0.012352386339942845,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 2.654406921721539
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L17.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L17.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L17.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L17.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L17.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:10eb51521b1ea80b2c9e6f2e948655d6155c6669e1b0bdd2541aee3f3cbb3c9e",
+        "local": "sha256:77a7d6e3faf2dbc9dc9ee74b69e28dc00818112f5990a18b45996a769a85805a",
+        "local_cond": "sha256:8b1c440431b5f0af3d1c0ad5058c1a54a6a779c632a9c97084d1b5dcd8ed292b",
+        "raw": "sha256:20adba8ff389425cd3395e2b388b9a9260400770ab78f323c9aa7c8158442e67",
+        "raw_cond": "sha256:b55491e302562eae8b1be68debc5136e044cd1f1fb5863ce7680c3958b011948"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.5649772614019115
+    },
+    "18": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.007460352830792982,
+        "cos_local_cond": 1.9081958235744878e-17,
+        "cos_raw_cond": -0.08637333402612994,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 3.6050547766433145
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L18.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L18.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L18.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L18.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L18.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:73d0ad18ce159709de8674bf75695a1c43908aa10070e3c95c8be6e3915ac086",
+        "local": "sha256:64d4ad07fc967916b8708ce8e76f4c3a5dc5d66eb846e1821776c49300e11d59",
+        "local_cond": "sha256:c5f6dfe2a3535f03f4c19e55cf0b08e86eae2ad4a5faaf398edd143f952b0201",
+        "raw": "sha256:e72c8804b0eb8c3402f9b8274a85cb0ba741dcf660e26d1499917e1a3f46c438",
+        "raw_cond": "sha256:d637db1def8d3578cc7ef4056fdbc2099dd725c9582a22afc925ef10f88a1b67"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.554750571218251
+    },
+    "19": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0038487435176943847,
+        "cos_local_cond": -2.2551405187698492e-17,
+        "cos_raw_cond": -0.06203824238074807,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 3.3842954833681245
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L19.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L19.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L19.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L19.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L19.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:ca64bd4faf7f7fa84e83861d6d5bbc4a960b4ad32073c57aae908acf287d550e",
+        "local": "sha256:c51744d5d4ff5207caf7fdaa2b4fc5fc5a48ea0688e5f58a6a230e05825b8ae1",
+        "local_cond": "sha256:72ebaa11b84547e292792dd6e44b801c1af044bb51369ddba6e0e04296bf84e2",
+        "raw": "sha256:4e893012cfab6f16501ac3060552778648912f12ec93783208205f4ae00fb559",
+        "raw_cond": "sha256:b3c4e1d7c30d24e0e7fe9fcb0c67694a647672997a90c4028b7c2c6fb780bc72"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.7557418894409835
+    },
+    "2": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.00023184350532379103,
+        "cos_local_cond": -6.938893903907228e-18,
+        "cos_raw_cond": 0.015226408155686894,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 0.8338528699130244
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L2.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L2.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L2.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L2.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L2.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:c82eff37b48fe6a95eb8aba29816cdee4c1fe84b56f50972faf94c853869aea7",
+        "local": "sha256:50eb5de69c9c25f8a99c1170393bc373f7dd05668dc97c76bc100a08a3202da5",
+        "local_cond": "sha256:fc057f26392303fa881c3bd680f5eeffe1d33fb702e312afe1bc6fef72effee0",
+        "raw": "sha256:f86c9472501ee7550d3f71925dd575e4600e87d7d6e9a51ef8cc071c29cb0ad3",
+        "raw_cond": "sha256:548a6637df10898bfed64e41e49926c4ffdcc2209ad29acaeb46445f2dc2b6ba"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 4.2143618137908385
+    },
+    "20": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.002023522327614251,
+        "cos_local_cond": -5.204170427930421e-18,
+        "cos_raw_cond": -0.04498357842161023,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.103794965243074
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L20.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L20.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L20.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L20.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L20.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:98d9f278c19068db5e912b4bb9d913825fca1dca1f3d839cf33d0daa9bd8e768",
+        "local": "sha256:fc2a7685a7ad095b99492b80d8ad0819fa8af7036f188de4076c37cac3ee8910",
+        "local_cond": "sha256:502e7de0d9cea68d9d795940c08ac489264e3a3e41fe90d58a55d57ef26cbc86",
+        "raw": "sha256:5191968339fc33480d354db2154c8e9df922715ac1417e814ebd5ff5004a5ce2",
+        "raw_cond": "sha256:954a430d88c6daf1d29faaa1ceffc80be3cb775ae18b8078eb4e5914f6cca953"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 7.813742324746814
+    },
+    "21": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0003847624684226802,
+        "cos_local_cond": -1.734723475976807e-18,
+        "cos_raw_cond": -0.0196153630713905,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.0693871546921043
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L21.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L21.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L21.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L21.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L21.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:4cb5e7db675a69501dbb03668f6da998086eb61bdf927f80854d8951de23af23",
+        "local": "sha256:ad2e3c19973461279c7c1ad65c66185b8cff787a8f3be5ab8040dd26ca25ef9e",
+        "local_cond": "sha256:b3bf0fe6e08b5550efae0c4ed919d34c0922db9f3d1b052b037cf1a9af791c23",
+        "raw": "sha256:888e7611d590abe9e9677957128f691c6cfb68f260749e3c6a8c1b42581f9363",
+        "raw_cond": "sha256:794a8fcfe8630ab155c31c6ae4b77c66aad98fa12cdc6dbf6e0c208695e633f6"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 8.163464066794967
+    },
+    "22": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0008228828415542068,
+        "cos_local_cond": -3.469446951953614e-18,
+        "cos_raw_cond": -0.0286859345595321,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.072230743521573
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L22.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L22.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L22.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L22.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L22.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:930bc2a2bff3ae928db4b53710f3beb8fa356a0e7ee43996d23bc0279111b17b",
+        "local": "sha256:8eaa34fb70adec8765b0ebb5f703ddb26d53c34dd4395b05daea21eab333e5d7",
+        "local_cond": "sha256:a91f1eda132ba53961ceb815ce2199a34bc3ee31903a66add3414e7e584789b9",
+        "raw": "sha256:e21231dd7865e97855566c03cfe6e2938dcf57e3726b1fa470b5e98c7d69bb37",
+        "raw_cond": "sha256:bc2885dfff437e3c5d08b6c515b5199e44e11bb75def514dfada09dbfc9e925f"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 8.289032902041358
+    },
+    "23": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 8.492608095768499e-05,
+        "cos_local_cond": -8.673617379884035e-19,
+        "cos_raw_cond": -0.00921553476243469,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.3821398840851904
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L23.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L23.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L23.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L23.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L23.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:61d1d929be0c91cef12a48542c81af83dca796ba4ae6b64ccd246a1d9e675334",
+        "local": "sha256:435416d21422e66ac628dd469c48094a736b6b537d35f1583698bc558a2b5e89",
+        "local_cond": "sha256:69dc6cab074891847310968b855ad39a3c857146892b33a87221db2d5d3c05f6",
+        "raw": "sha256:94f8f63f4ef4951cf51cbabe3a2b7ca5f9718cb647d31c8cdcdfe0eaed96b9d9",
+        "raw_cond": "sha256:0d97b1a69721fb29ff2e4ab929d45dd1baf11d1e4bbfbc5045a871c616c0a4fb"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 8.530103291215607
+    },
+    "24": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.00755027217312258,
+        "cos_local_cond": 6.938893903907228e-18,
+        "cos_raw_cond": -0.08689230215110622,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.8113374111779437
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L24.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L24.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L24.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L24.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L24.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:7c343b6094ea9c64467ef44227c4f5b6507b8e7179ef193a67af3c33e90f2a61",
+        "local": "sha256:15418c7275c39c9b14edd9f9408c51599393730a389a1580a0525304aff5d3b0",
+        "local_cond": "sha256:b8285099cb4dc1e51bf3972006ec48fc9b61829674978bf12574cbf2da9b760b",
+        "raw": "sha256:3d7cbcd5014df7f5b7eb14d541f28a17f09f08e87897ebac000d8ee97f62d084",
+        "raw_cond": "sha256:3062ee4ebe69f58ca1ce6fe0473e7485f5049fe0cff94e9bd9aff31c53706a8e"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 8.931257754160319
+    },
+    "25": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.001293054130664645,
+        "cos_local_cond": 1.0408340855860843e-17,
+        "cos_raw_cond": -0.03595906187130063,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 3.6045942354576312
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L25.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L25.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L25.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L25.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L25.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:301ba459e4a76f29b7bdad944663a3298d8cea8cdb35c67a20c7c2f884dd8e5a",
+        "local": "sha256:76f9b815df16382b9cc699b4103c2c478686a9355218e674176463b649f85f20",
+        "local_cond": "sha256:a75305131344fe32e39c323b49c4a61533044f46a584e6c3619bd7f3caf08b22",
+        "raw": "sha256:96ff4274e4c546b9366afb4370b157e736912dc48ddcf6f46366f830835cd03c",
+        "raw_cond": "sha256:9a2a8f0059121855dfbad151b332370d0971f4d1839cdf02fd97197f91c70a02"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 9.633279581074117
+    },
+    "26": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.001545474142251586,
+        "cos_local_cond": 2.6020852139652106e-18,
+        "cos_raw_cond": 0.039312518899847305,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0000000000000002,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.6294750870230383
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L26.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L26.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L26.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L26.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L26.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+        "local": "sha256:1170509e7f555c791bcd9a9a533c3313762c4d4939a357c78791f87bc6aadd3a",
+        "local_cond": "sha256:a30507b071b0866ca2146993cfcf66bd497ddce8a68ebd815ea39a69f13d0ea4",
+        "raw": "sha256:9284b8675a27b6235a67a938b55b49d5f2b1958ad34eb845af1873986953b15d",
+        "raw_cond": "sha256:510033712736e52e8fada751baa15808aa8497f6f84d044ca6832d14409bf240"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 10.525815203418851
+    },
+    "27": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 7.443147145260778e-05,
+        "cos_local_cond": -5.204170427930421e-18,
+        "cos_raw_cond": 0.008627367585339902,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 3.7865992397829102
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L27.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L27.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L27.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L27.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L27.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:370ddf5447a17f4bb4c0f4f3e9da9962728c40b63d3a99f56517f0af17cf5e49",
+        "local": "sha256:c8193a6c5d4b410fbb2895ff40cca2dbf4987a25ca3f45696ad350acd0c946bc",
+        "local_cond": "sha256:e163b67db8dfe237d5d853fa2e192aa15221ff7a26ba248658967a9f4e92a6ff",
+        "raw": "sha256:66d132ad4f0940d4083ef85d71922b28fa5c75f0e727ced82340cc7a2f331613",
+        "raw_cond": "sha256:ea64f75c5ffaf294e9a1182605e9a4c0336da1609d674833c2f61e6ad66f9c72"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 12.316876523610437
+    },
+    "28": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.003064435543273829,
+        "cos_local_cond": 3.469446951953614e-18,
+        "cos_raw_cond": 0.055357344077118564,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 4.02284007564698
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L28.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L28.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L28.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L28.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L28.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:810e7acf84986823988cfbb46f5aaa1f4db1edec4e5113d3f3a98c523630258d",
+        "local": "sha256:edb9787b8080e013b510cf79b3d43f0d13b2295fea070d1d4c803d2c28db3fe9",
+        "local_cond": "sha256:85e1cfc1dbd8ecb1574c41bd1dbb118a2f1644644c4be7fdf00db5196ba4498c",
+        "raw": "sha256:9e23bb9c99de16b6d94f7d49b486a2aa5d280075a968ba5d1424d249397b26ba",
+        "raw_cond": "sha256:c60d24cea56e4fd3cb2c4f19384718c93c622430717d0672725a00ab321e433e"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 14.264784252065
+    },
+    "29": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.006668515706027072,
+        "cos_local_cond": -1.734723475976807e-17,
+        "cos_raw_cond": 0.08166098031510666,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 4.135746356354865
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L29.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L29.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L29.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L29.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L29.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:f7d2cc0130c2ee281020036c2e9fae1eb7253c941f3ebcd4225630c8623f779d",
+        "local": "sha256:61b0007515e905feb47b68c0e9a42e0dceab8f43801fb8e4fb6a164576c04330",
+        "local_cond": "sha256:50630011285f7d77bb4b9c989e89cf5e782b94e7e9ac3bed0c34b4247be3d9ad",
+        "raw": "sha256:dd067a1d7d97148200843ba679dd1b9c559d3917906dc7e71f13d8a89792d89c",
+        "raw_cond": "sha256:f96e879f91cfec46e841ed8d1853da26fe67c77b03c53b2315b78a9eb4710634"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 15.607671484414142
+    },
+    "3": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 4.080360787384848e-08,
+        "cos_local_cond": -3.469446951953614e-18,
+        "cos_raw_cond": -0.0002019990293882824,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 0.899811312925461
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L3.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L3.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L3.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L3.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L3.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:3ebb42215d4e2da499551a5113e164fef428c078d39b1237bc1eb4d70c69f55a",
+        "local": "sha256:b18f81386b301d136229395709e0fa1402336c46b3a99a31cc764d5e64e86aab",
+        "local_cond": "sha256:3cca7622012d83d7c9d5d93b2f5242f8faf9a2e34f9019a6d68ea77e2cb019f6",
+        "raw": "sha256:e031ba10112be0ea84ad43abf929f81f00fd47b6fdfe2c23bac98037ac074cf0",
+        "raw_cond": "sha256:8cea249d5ec5ac20069a90a517dab561a1e3c33df034a628413c0a993cac252a"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 4.677916768236248
+    },
+    "30": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.014163513737389694,
+        "cos_local_cond": -2.42861286636753e-17,
+        "cos_raw_cond": 0.11901056145310698,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 4.202967482356225
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L30.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L30.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L30.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L30.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L30.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:b9900a71bbe1c8c8376ad7530a2b73a637c4ebaabb391c4bb89dd029194d3872",
+        "local": "sha256:86d04a6e68c038e8199df1e93743fb5d3d536d751eafa32d264ae988eb9463bc",
+        "local_cond": "sha256:d334a444c92844c976a4780667382f0d9eb4bdeaf5bbe9b6a789e2aa7ec6fe78",
+        "raw": "sha256:3fc33cceaca36b5d662d2c94daa3b1aa003a42d5b954983f0946e0e0d6f28af6",
+        "raw_cond": "sha256:0a66b12067668362732c49580a0a6cb0300e8cfeaac1de739ef329f6a397085c"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 16.54193207529922
+    },
+    "31": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.02167773006018611,
+        "cos_local_cond": 2.42861286636753e-17,
+        "cos_raw_cond": 0.14723359012187784,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 4.263691957496387
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L31.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L31.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L31.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L31.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L31.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:f6952647a4611f26860873235b8e79f2b270d7c6a85c00ab40157d74ab566adb",
+        "local": "sha256:92ad6a505cfb0253c07e8a41b622980dc7eee935608673ac51bb4c8ef5c9db2b",
+        "local_cond": "sha256:532b87648507c922927ef7a74727abc547f8ddd26c61144be87c9be7e90e636a",
+        "raw": "sha256:2e547428a3147e9f86506a036bafe36b00fbc734e66e3c9cc4e4a327651ea2e0",
+        "raw_cond": "sha256:1be59c9840fe114492d38516330ef9bc87ab6734b1065cee0394a25b8280c735"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 18.026260295912955
+    },
+    "4": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0004718913784902957,
+        "cos_local_cond": -1.0408340855860843e-17,
+        "cos_raw_cond": 0.02172306098343013,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 0.96647916275292
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L4.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L4.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L4.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L4.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L4.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:2e3d9e8f58ef4fdc549db2b7e8e5849213dd613b5c7c79d6bd9d7bc94fc2fc29",
+        "local": "sha256:2c014f6f988157d54577bcabd153cf79ea0fa692396b7c2c53b40a806424cb66",
+        "local_cond": "sha256:90f86a0ff65d08c28bb758069fb999b12dca105b3b35085bbbb69b35a3d0a0bc",
+        "raw": "sha256:887c18de7ca8cc0d26bf9b7c488287c242b5e64ba9174ff6532a827bb989f93d",
+        "raw_cond": "sha256:b1aef2db023ee89be0cbd7ac3d62e3235eaa40798b993caa0b9c613b33bcf4a6"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 4.870156318587823
+    },
+    "5": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0006535752885582063,
+        "cos_local_cond": -1.214306433183765e-17,
+        "cos_raw_cond": 0.02556511859071952,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 0.9980786858094799
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L5.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L5.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L5.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L5.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L5.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:b4bd5129b86a7bfcab766fa04dedd6767a6c9cc6830aa5649432afb7d2688e1c",
+        "local": "sha256:1fac367d5c3494118790855a9f27323343b0e0c128a8b303788ff6052bfc6aea",
+        "local_cond": "sha256:103e8bb1c16e22161e704eae16182a14bc1904114767aca379916f2d14de8ac0",
+        "raw": "sha256:33fc229c9dd1d7351435a3fb076bf7c31ebf225238aff6d1b256683e7e3dbbf1",
+        "raw_cond": "sha256:972927fa67218719055cbdc378a32b6a824fa28ada857280bbfa13bdbc0ae001"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 5.030892922429645
+    },
+    "6": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.0027498069193957818,
+        "cos_local_cond": -3.469446951953614e-18,
+        "cos_raw_cond": 0.052438601424840345,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 0.9999999999999999,
+        "v_raw_norm": 1.4147517602315687
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L6.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L6.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L6.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L6.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L6.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:0f61125d92a07024a2a7ff39f21cc269fad8b0151b646b297459223da4b9e94c",
+        "local": "sha256:c5e3f9a26b6dda87d721d32207ad383fcaa8fd296d482ad26ede52298196cf13",
+        "local_cond": "sha256:516a1817014d205b5cc22593f7adfa65c416c7de0c57a9674c1bcf43688ee5be",
+        "raw": "sha256:8033a2ed7ffe2e99c4e5fc76585a4099b5292af215d80ab10278db617f76c10a",
+        "raw_cond": "sha256:0e2bf807ea3a070bdc87478148b3dfb9ec69f0129124ab662a13b49885fabbe8"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 5.3147260868554556
+    },
+    "7": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.005133199992712309,
+        "cos_local_cond": 2.42861286636753e-17,
+        "cos_raw_cond": 0.07164635365953942,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.5341584444703662
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L7.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L7.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L7.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L7.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L7.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:543927d7d5820184949526a688729ad70f1e8b3aee0cf22c27e68e88b79c720f",
+        "local": "sha256:2e98c6527a4ee39724bbb97f4bb567846092b933efb039bf54dfd58a55ba94f4",
+        "local_cond": "sha256:88966280a9c119a4e2bbcc401443b4a75983d52fff53887bc166b460dab0eb53",
+        "raw": "sha256:5ad2a877b78953fcb3b294e735b479fb6cbb580a14351ef878636d6104168658",
+        "raw_cond": "sha256:0a8a7b4771e628d180e1a1dde5938d8ca98679fed03a8999121208b5079877dc"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 5.78356571973126
+    },
+    "8": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.012677614981164844,
+        "cos_local_cond": -5.204170427930421e-17,
+        "cos_raw_cond": 0.11259491543206444,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 0.9999999999999999,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.5452406660671225
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L8.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L8.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L8.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L8.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L8.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:ceb4668b377fff6d1495599aa1ac40747aaeb379d8c5e425a2540faa07dc1af2",
+        "local": "sha256:8cdb88aaa993c4f90c6764996773edeb46cd6739d0b288c321c8c9386d6e0d4a",
+        "local_cond": "sha256:0d2a16d2c2483a68a4ae62bdeda5c7f820a78a31eb9c85b9094221a0356f9ba9",
+        "raw": "sha256:8632184d96a15cb3c8db2d63baaa829de5f45eb84bb9d78448c4a570391b9df7",
+        "raw_cond": "sha256:50c5254daab31e855da8566f30e28159609400fa7ea69c8859b14156a55ea885"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 6.159611781889939
+    },
+    "9": {
+      "basis_metrics": {
+        "conditioning_fraction_removed": 0.010038996916174272,
+        "cos_local_cond": -6.938893903907228e-18,
+        "cos_raw_cond": 0.10019479485564833,
+        "n_cond_contrasts": 125,
+        "n_raw_contrasts": 233,
+        "v_cond_norm": 1.0,
+        "v_local_norm": 1.0,
+        "v_raw_norm": 1.5358696303074157
+      },
+      "files": {
+        "conditioning": "results/basis_frozen_layer_atlas/directions/conditioning_L9.npy",
+        "local": "results/basis_frozen_layer_atlas/directions/local_L9.npy",
+        "local_cond": "results/basis_frozen_layer_atlas/directions/local_cond_L9.npy",
+        "raw": "results/basis_frozen_layer_atlas/directions/raw_L9.npy",
+        "raw_cond": "results/basis_frozen_layer_atlas/directions/raw_cond_L9.npy"
+      },
+      "hashes": {
+        "conditioning": "sha256:724b716329c6ff9fb86400b503eaf89399110df316121f3689d5683a353f61c4",
+        "local": "sha256:6395ad0ad61ab56ec8d04be18db52a5e4482a23c896bb0684c89c4ab12287001",
+        "local_cond": "sha256:b1d280690a4bd7203e0dc4557dc481a28adfc070b885829148d07f816794391b",
+        "raw": "sha256:ac59ab980538cf9b1d8fba8ca12a98062e2960727427f42a1e34a9ebb5b79bcf",
+        "raw_cond": "sha256:32d00b5431424006a70a9282db056584299b5bf796d591d356ce3e5857390d14"
+      },
+      "mixture_coefficients": {
+        "a_cond": 0.5,
+        "a_local": 0.5
+      },
+      "n_cond": 125,
+      "n_raw": 233,
+      "scale_s_l": 6.157087026645275
+    }
+  },
+  "model": {
+    "chunk_sec": 30.0,
+    "d_model": 1280,
+    "device": "cuda",
+    "dtype": "torch.bfloat16",
+    "encoder_step_sec": 0.02,
+    "max_encoder_frames": 1500,
+    "model_id": "openai/whisper-large-v3",
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "modules": {
+      "decoder_hook_location": "residual stream output of decoder block k",
+      "decoder_layer_class": "WhisperDecoderLayer",
+      "decoder_layer_module_path": "model.model.decoder.layers[k]",
+      "encoder_final_layer_norm": "model.model.encoder.layer_norm (applied after last block)",
+      "encoder_hook_location": "residual stream output of encoder block l (before block l+1)",
+      "encoder_layer_class": "WhisperEncoderLayer",
+      "encoder_layer_indexing": "zero-indexed",
+      "encoder_layer_module_path": "model.model.encoder.layers[l]",
+      "encoder_output_is_tuple": true,
+      "num_decoder_layers": 32,
+      "num_encoder_layers": 32
+    },
+    "num_decoder_layers": 32,
+    "num_encoder_layers": 32,
+    "sample_rate": 16000,
+    "tokenizer_revision": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca"
+  },
+  "schema_version": "basis_a2_layer_directions_v1",
+  "site": "decoder_post_cross_attn_residual",
+  "source_role": "D-construct",
+  "status": "COMPLETE"
+}

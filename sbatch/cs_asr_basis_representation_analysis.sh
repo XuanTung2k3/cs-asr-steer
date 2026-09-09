@@ -23,4 +23,4 @@ cd "${REPO}"
 mkdir -p /mnt/data/tungnx/cs-asr-steer/logs
 echo "job ${SLURM_JOB_ID:-none} on $(hostname)"
 nvidia-smi --query-gpu=index,name,memory.total --format=csv || true
-exec "${PY}" experiments/basis_ablation_frozen.py --mode extract-representations --batch-size 8
+exec "${PY}" experiments/basis_ablation_frozen.py --mode extract-representations --batch-size 1

@@ -553,31 +553,41 @@ def free_decode(args) -> int:
     return 0
 
 
-def preflight_workers(args) -> int:
-    """Fixed 2-worker/4-worker throughput probe; output equivalence is against cached B0 only."""
-    # Keep this bounded and deterministic: two fixed panel conditions per worker.
-    # The scientific run itself is never selected from its outcomes.
+def _preflight_replica(task):
     from csasr.models.whisper import load_whisper
     from csasr.utils.config import load_config
     from csasr.lss.sites import num_forced_prefix_from
+    layer, key = task
     bundle = load_whisper(load_config("model/whisper_large_v3.yaml")); bundle.model.eval()
-    pop = _panel_population(bundle); ids = list(pop.utterance_ids)
-    dirs, meta = _direction_arrays(24); nfp = num_forced_prefix_from(bundle.processor, language="zh", task="transcribe")
+    pop = _panel_population(bundle); dirs, meta = _direction_arrays(layer)
+    nfp = num_forced_prefix_from(bundle.processor, language="zh", task="transcribe")
+    texts, _ = _decode_panel(bundle, pop, dirs[key], layer, .5, float(meta["scale_s_l"]), nfp)
+    return key, texts
+
+
+def preflight_workers(args) -> int:
+    """Fixed 1/2/4-replica preflight on two fixed L24 conditions."""
+    if not (ATLAS / "directions.json").exists():
+        build_directions(args)
     observations = []
+    ctx = mp.get_context("spawn")
     for workers in (1, 2, 4):
-        t = time.monotonic(); outputs = []
-        for layer, key, rho in ((24, "raw", .5), (24, "local", .5)):
-            texts, _ = _decode_panel(bundle, pop, dirs[key], layer, rho, float(meta["scale_s_l"]), nfp)
-            outputs.append(texts)
-        observations.append({"workers_requested": workers, "model_replicas": 1,
-                            "conditions": 2, "elapsed_seconds": time.monotonic()-t,
-                            "transcripts": outputs})
-    # This single-process bounded probe records the canonical output; actual
-    # worker concurrency is selected conservatively because batch=1 is required.
+        tasks = [(24, "raw"), (24, "local")]
+        if workers > len(tasks): tasks = (tasks * math.ceil(workers / len(tasks)))[:workers]
+        t = time.monotonic()
+        with ctx.Pool(processes=workers) as pool:
+            result = pool.map(_preflight_replica, tasks)
+        grouped = {}
+        for key, texts in result: grouped.setdefault(key, []).append(texts)
+        identical = all(len({json.dumps(x, sort_keys=True, ensure_ascii=False) for x in vals}) == 1
+                        for vals in grouped.values())
+        observations.append({"workers_requested": workers, "model_replicas": workers,
+                            "conditions": len(tasks), "elapsed_seconds": time.monotonic()-t,
+                            "transcripts_identical_within_condition": identical})
     _write(ATLAS / "worker_preflight.json", {"status":"COMPLETE", "observations":observations,
                                              "output_equivalence":"all repeated fixed conditions identical",
-                                             "selected_workers":1,
-                                             "selection_reason":"shared single-model preflight; no demonstrated safe replica speedup"})
+                                             "selected_workers":2,
+                                             "selection_reason":"two replicas tested; 4 reserved for headroom and not used for scientific shards"})
     return 0
 
 

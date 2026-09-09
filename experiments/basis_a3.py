@@ -161,12 +161,21 @@ def _encoder_span(dataset: str, row: dict, bundle) -> tuple[int, int] | None:
         seg = DATA_ROOT / "audio/segments" / uid / "segments.json"
         if not seg.is_file():
             return None
-        boundaries = _load_json(seg).get("boundaries", [])
-        if len(boundaries) < 2:
+        payload = _load_json(seg)
+        segments = payload.get("segments", [])
+        targets = [s for s in segments if bool(s.get("target", False))]
+        if not targets:
             return None
-        b = boundaries[1]
-        return bundle.sec_to_frames(float(b["start_seconds"]), float(b["end_seconds"]),
-                                    bundle.valid_frames(row["duration_sec"]))
+        silence = float(payload.get("silence_seconds", 0.08))
+        starts_ends = {}
+        cursor = 0.0
+        for item in segments:
+            duration = float(item["audio"]["duration"])
+            starts_ends[int(item["index"])] = (cursor, cursor + duration)
+            cursor += duration + silence
+        start = min(starts_ends[int(s["index"])][0] for s in targets)
+        end = max(starts_ends[int(s["index"])][1] for s in targets)
+        return bundle.sec_to_frames(start, end, bundle.valid_frames(row["duration_sec"]))
     # The CS panel's accepted alignment is already stored in candidates_all;
     # this branch is populated in _cs_encoder_spans below.
     return None
@@ -292,7 +301,7 @@ def _decode_condition(bundle, dataset: str, side: str, layer: int, direction_key
     else:
         meta = _load_json(RESULTS / "directions/raw_encoder/manifest.json")["layers"][str(layer)]
         direction = np.load(REPO / meta["path"]); scale = float(meta["scale"]); dhash = meta["sha256"]
-    texts = {}; edit_norms = []; edited = 0; start = time.monotonic()
+    texts = {}; edit_norms = []; edited = 0; eligible_frames = 0; start = time.monotonic()
     for row in frame.sort_values("duration_sec").to_dict(orient="records"):
         uid = str(row["utterance_id"])
         inp = (_decoder_cached_inputs(bundle, uid, row["audio_path"])
@@ -318,6 +327,7 @@ def _decode_condition(bundle, dataset: str, side: str, layer: int, direction_key
         else:
             for rec in hook.records:
                 edited += rec.active_frames; edit_norms.append(float(rec.edit_norm))
+            eligible_frames += bundle.valid_frames(row["duration_sec"])
     refs = [str(x) for x in frame["reference"]]; ids = [str(x) for x in frame["utterance_id"]]
     base = [baseline[x] for x in ids]; method = [texts[x] for x in ids]
     from csasr.evaluation import canonical, retention
@@ -334,13 +344,24 @@ def _decode_condition(bundle, dataset: str, side: str, layer: int, direction_key
     metrics["edited_positions_or_frames"] = int(edited)
     metrics["total_intervention_energy"] = float(np.sum(edit_norms) if edit_norms else 0.0)
     metrics["mean_intervention_norm"] = float(np.mean(edit_norms) if edit_norms else 0.0)
+    if side == "encoder":
+        metrics["fraction_acoustic_frames_edited"] = float(edited / eligible_frames) if eligible_frames else 0.0
+        metrics["corrections_per_1000_edited_frames"] = float(metrics["poi_corrections"] * 1000 / edited) if edited else None
+        metrics["outside_harm_per_1000_edited_frames"] = None
     metrics["runtime_seconds"] = time.monotonic() - start
     metrics["scope"] = scope; metrics["side"] = side
+    alignment = None
+    if side == "encoder":
+        alignment = ({"method": "existing_ctc", "convention": "blank_to_preceding",
+                      "boundary_tolerance_ms": 80, "frame_stride_seconds": bundle.encoder_step_sec}
+                     if dataset == "cs_dialogue" else
+                     {"method": "frozen_seame_target_segments", "silence_seconds": 0.08,
+                      "boundary_tolerance_ms": 80, "frame_stride_seconds": bundle.encoder_step_sec})
     return {"schema_version": "basis_a3_condition_v1", "dataset": dataset, "data_role": _panel(dataset)["data_role"],
             "direction": direction_key.title() if direction_key != "conditioning" else "Conditioning",
             "layer": int(layer), "scope": scope, "rho": float(rho), "direction_hash": dhash,
             "scale": scale, "panel_fingerprint": _panel(dataset)["fingerprint"], "baseline_reused": True,
-            "metrics": metrics, "texts": texts, "baseline_texts": baseline}
+            "alignment": alignment, "metrics": metrics, "texts": texts, "baseline_texts": baseline}
 
 
 def _preflight_child(spec: tuple[str, str, int]) -> str:

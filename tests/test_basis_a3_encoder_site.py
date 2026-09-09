@@ -14,6 +14,22 @@ def test_decoder_oracle_gate_has_explicit_batch_and_token_axes():
     assert torch.equal(out, torch.tensor([[0.0, 1.0, 0.0, 1.0]]))
 
 
+def test_seame_local_span_uses_frozen_target_segment_metadata():
+    from experiments.basis_a3 import _encoder_span
+
+    class Bundle:
+        def valid_frames(self, _duration):
+            return 1000
+
+        def sec_to_frames(self, start, end, valid):
+            return (round(start * 100), round(end * 100))
+
+    span = _encoder_span("seame_dev_man", {"utterance_id": "dev_man_00085", "duration_sec": 1}, Bundle())
+    assert span is not None
+    assert span[0] > 0  # this frozen example's target segment is not segment 1
+    assert span[1] > span[0]
+
+
 def test_encoder_site_reconstructs_post_self_attention_before_ffn(tiny_bundle, tiny_features):
     from csasr.lss.encoder_sites import EncoderPostSelfAttnInterventionHook, EncoderPostSelfAttnRecorder
     from csasr.models.hooks import ActivationRecorder

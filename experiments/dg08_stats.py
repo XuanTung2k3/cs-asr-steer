@@ -289,7 +289,7 @@ def _markdown(table: dict[str, Any], regime: str) -> str:
 
 def main() -> int:
     cfg = load_config("configs/dg08_locked_eval.yaml")
-    manifest = json.loads((REPO / "results/dg08/dtest_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((REPO / "results/dg08/dtest/dtest_manifest.json").read_text(encoding="utf-8"))
     refs = manifest["references"]; dialogues = manifest["dialogues"]; ids = manifest["ids"]
     reps = int(cfg["bootstrap"]["repetitions"]); bseed = int(cfg["bootstrap"]["seed"])
     out_tables = REPO / "results/dg08/tables"; out_tables.mkdir(parents=True, exist_ok=True)

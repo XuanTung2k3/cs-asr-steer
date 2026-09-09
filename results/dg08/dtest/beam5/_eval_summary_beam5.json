@@ -1,0 +1,18 @@
+{
+  "n_utterances": 6257,
+  "regime": "beam5",
+  "runtime_sec": 2742.8808057308197,
+  "schema_version": "dg08_dtest_eval_v1",
+  "slurm": {
+    "job_ids": [
+      "51102"
+    ],
+    "node": "worker-mig-3g40gb-0",
+    "partition": "mig"
+  },
+  "task": "dtest",
+  "written": [
+    "F0_FROZEN_WHISPER",
+    "F4_MSTAR_seed73"
+  ]
+}

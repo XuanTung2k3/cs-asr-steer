@@ -1,0 +1,104 @@
+{
+  "MSTAR_vs_FROZEN": {
+    "mer": {
+      "ci95": [
+        -0.04039225024406232,
+        -0.019309963964403196
+      ],
+      "excludes_zero": true,
+      "mean_diff": -0.02923335244101878,
+      "n_replicates": 2000
+    },
+    "pier": {
+      "ci95": [
+        -0.0974673775257425,
+        -0.0574582221951486
+      ],
+      "excludes_zero": true,
+      "mean_diff": -0.07687583468659867,
+      "n_replicates": 2000
+    },
+    "utility": {
+      "ci95": [
+        1877.9333333333334,
+        3701.0416666666665
+      ],
+      "excludes_zero": true,
+      "mean_diff": 2750.9876666666664,
+      "n_replicates": 2000
+    }
+  },
+  "MSTAR_vs_LORA": {
+    "mer": {
+      "ci95": [
+        -2.1151238880270467,
+        -1.135352804107393
+      ],
+      "excludes_zero": true,
+      "mean_diff": -1.6149531277330629,
+      "n_replicates": 2000
+    },
+    "pier": {
+      "ci95": [
+        0.4243909939394174,
+        0.5466308438484148
+      ],
+      "excludes_zero": true,
+      "mean_diff": 0.4914185408492306,
+      "n_replicates": 2000
+    },
+    "utility": {
+      "ci95": [
+        -24058.375,
+        -12315.133333333335
+      ],
+      "excludes_zero": true,
+      "mean_diff": -17692.7495,
+      "n_replicates": 2000
+    }
+  },
+  "MSTAR_vs_SALSA": {
+    "mer": {
+      "ci95": [
+        -0.029324838868382924,
+        0.021981939594276637
+      ],
+      "excludes_zero": false,
+      "mean_diff": -0.0018537868664018796,
+      "n_replicates": 2000
+    },
+    "pier": {
+      "ci95": [
+        0.24659032556773483,
+        0.3270089407720669
+      ],
+      "excludes_zero": true,
+      "mean_diff": 0.29316990934555653,
+      "n_replicates": 2000
+    },
+    "utility": {
+      "ci95": [
+        -14770.266666666666,
+        -6952.350000000002
+      ],
+      "excludes_zero": true,
+      "mean_diff": -10588.001333333334,
+      "n_replicates": 2000
+    }
+  },
+  "arms_present": {
+    "F2_SALSA:13": true,
+    "F2_SALSA:42": true,
+    "F2_SALSA:73": true,
+    "F3_LORA:13": true,
+    "F3_LORA:42": true,
+    "F3_LORA:73": true,
+    "F4_MSTAR:13": true,
+    "F4_MSTAR:42": true,
+    "F4_MSTAR:73": true
+  },
+  "n_dialogues": 15,
+  "regime": "beam5",
+  "reps": 2000,
+  "seed": 42
+}

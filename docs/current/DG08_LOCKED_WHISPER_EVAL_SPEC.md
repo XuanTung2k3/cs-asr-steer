@@ -164,5 +164,19 @@ metric definition may change; D-test is evaluation-only.
   M* 13 `50718`→ep1, M* 73 `50719`→ep2. Seed 42 reused from DG-06/DG-07 (hash-verified in the lock).
 - Selected checkpoint SHA-256 (per finalist × seed) recorded in `DG08_TEST_LOCK.json`.
 - D-test manifest fingerprint recorded in the lock; D-test = 6,257 utts / 15 dialogues.
-- Test-lock commit: _recorded at the PHASE F commit below_.
-- Final result commit: _recorded after PHASE Q_.
+- Test-lock commit: `1fb2c3729cd2a51128edbd80e0d99754ce63d526`.
+- Greedy D-test jobs (`mig`): F0 `50725`; finalists `50733`/`50734` (all COMPLETED, 11 decodes,
+  ~11 min/system). Beam-5 jobs: F0 `50760`, F1+SALSA×3 `50767`, LoRA×3 `50768`, M*×3
+  `51100`/`51101`/`51102` (batch-16, ~46 min/decode) — all COMPLETED, 11 decodes. Timing `50761`.
+- All D-test evaluation ran on `partition=mig`, H100 3g.40gb, ≤ 2 concurrent. No `main`.
+- **Result: M\* significantly improves over frozen Whisper on PIER, MER, and utility in BOTH greedy
+  and beam-5 (all 95% CIs exclude zero); competitive with SALSA/LoRA (does not dominate SALSA on raw
+  correction; LoRA is non-viable — MER 1.29 greedy / 1.91 beam). Beam robustness: PERSISTS.**
+  Full tables/bootstrap: `results/dg08/DG08_RESULTS_SUMMARY.md`, `results/dg08/tables/`,
+  `results/dg08/stats/`.
+- Final result commit: _recorded at the PHASE Q commit_.
+- Implementation note (mechanical, throughput-only): the frozen DG-06/DG-07 runners gained a
+  backward-compatible `--seed` (default 42 → identical behavior) for the multi-seed runs; the D-test
+  evaluator gained a `--batch-size` flag (decode throughput only; not a locked decoder parameter) —
+  M* beam-5 used batch 16 on `mig`, other beam-5 systems batch 8; the difference is bf16 reduction
+  jitter within the accepted noise floor, not a protocol change.

@@ -112,8 +112,34 @@
   metrics, efficiency accounting, provenance, Slurm partition, and data-role separation **PASS**.
   Focused DG-07 tests: **17 passed**. No D-dev-confirm or D-test data was read.
 
-**Current ticket:** `DG-08 — locked Whisper core evaluation: 3 seeds, finalist decoding, efficiency,
-and statistical reporting.` Do not begin DG-08 in this audit.
+- **DG-08 — READY FOR INDEPENDENT AUDIT (not FROZEN).** Locked Whisper core evaluation on
+  Whisper-large-v3 × CS-Dialogue only. Protocol frozen + committed (`f1dc4a8`); hard D-test lock
+  committed BEFORE any D-test decode (`1fb2c3`, `results/dg08/DG08_TEST_LOCK.json`). Finalists F0
+  frozen Whisper, F1 DG-04 frozen steering (B1 ρ=0.5), F2 SALSA global (1,280 params), F3 matched
+  LoRA (rank 9, 46,080), F4 **M\*** = DG-06 D1 adaptive controller (43,651). Learned finalists trained
+  at **seeds [13,42,73]** — seed 42 reused hash-verified from DG-06/DG-07; seeds 13/73 newly trained
+  on `mig` (SALSA `50704`/`50705`, LoRA `50713`/`50714`, M* `50718`/`50719`, all COMPLETED, only the
+  seed varied via a backward-compatible `--seed`). D-test (6,257 utts / 15 dialogues) decoded greedy
+  (jobs `50725`/`50733`/`50734`) and beam-5 (`50760`/`50767`/`50768`/`51100`/`51101`/`51102`), all
+  `mig`, never `main`; 2000-rep dialogue-block bootstrap (seed 42) offline.
+  - **Greedy (mean/3 seeds):** MER — F0 0.361, F1 0.407, SALSA 0.299, LoRA **1.289**, M* 0.347;
+    PIER — F0 0.831, SALSA 0.518, LoRA 0.145, M* 0.790; matrix-ret — M* **0.977** (best).
+  - **Beam-5:** M* has the **lowest MER (0.320) and en-WER (0.689) of any system** and best matrix
+    retention (0.988); LoRA MER catastrophe worsens (1.91, en-WER 8.2).
+  - **Bootstrap:** M* significantly beats frozen Whisper on PIER, MER, and utility in **both**
+    regimes (all 95% CIs exclude zero); SALSA beats M* on PIER/utility (MER tied under beam); M*
+    significantly beats LoRA on MER. **Beam robustness: PERSISTS** (M* edge over F0 grows under beam).
+  - **Efficiency:** M* 43,651 params (0.0028% backbone), train 46.2±1.9 min, peak 5.51 GB, inference
+    ≈ parity with F0; LoRA inference 2.63× overhead; SALSA smallest (1,280 params).
+  - **Verdict:** RQ1 adaptive gives a better correction–**damage** trade-off than fixed steering;
+    RQ2 M* **COMPETITIVE** (best ASR quality + retention + inference parity; does not dominate SALSA
+    on raw correction; LoRA non-viable). Outside-harm not computable on D-test (no candidate/POI
+    alignments) — documented, text metrics complete. No SOTA claim; no post-test tuning. Focused
+    tests: 13 DG-08 (+ DG-06/07 regression) pass. Full report `results/dg08/DG08_RESULTS_SUMMARY.md`.
+    **Do not begin SEAME/ViMedCSS/Qwen cross-dataset/model expansion.**
+
+**Current ticket (historical):** `DG-08 — locked Whisper core evaluation` — implementation/evaluation
+complete; awaiting independent DG-08 audit/freeze.
 
 ---
 

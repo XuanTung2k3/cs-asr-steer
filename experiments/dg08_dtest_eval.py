@@ -379,8 +379,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--systems", default="",
                         help="comma list, e.g. 'F1_DG04_FROZEN_STEERING,F2_SALSA:13,F4_MSTAR:42'")
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--batch-size", type=int, default=None,
+                        help="decode batch size (throughput only; not a locked decoder parameter)")
     parser.add_argument("--run", action="store_true")
     args = parser.parse_args(argv)
+    if args.batch_size is not None:
+        global BATCH_SIZE
+        BATCH_SIZE = int(args.batch_size)
     cfg = load_config(args.config)
     if not args.run:
         print(json.dumps({"ready": True, "task": args.task, "regime": args.regime,

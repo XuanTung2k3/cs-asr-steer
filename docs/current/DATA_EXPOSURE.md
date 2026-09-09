@@ -159,9 +159,18 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   `G=15` (`docs/RESULTS_RUN_7DAYS.md`). A unit-tagging bug was discovered through those counts.
 - **Intervention exposure:** no steered `D-test` result artifact was found. Production/smoke C00
   baseline artifacts are present and are within the permitted exposure.
-- **Status:** not untouched, but still locked for intervened evaluation. The observed MDE is about
-  four times the largest prior oracle effect, so the split is underpowered for effects of that
-  size; this is a scientific limitation, not grounds to redraw or inspect alternatives.
+- **DG-08 FINAL INTERVENED EVALUATION EXPOSED (2026-09-09).** After the hard D-test lock
+  (`results/dg08/DG08_TEST_LOCK.json`, commit `1fb2c3`, committed BEFORE any D-test decode), the
+  frozen finalists F0–F4 (learned F2/F3/F4 at seeds 13/42/73) were evaluated once on the entire
+  locked `D-test` manifest (6,257 utts / 15 dialogues) under greedy and beam-5 decoding
+  (`partition=mig`; jobs 50725/50733/50734 greedy, 50760/50767/50768/51100/51101/51102 beam-5). This
+  is the sanctioned single final evaluation after full pipeline freeze; no selection, checkpoint,
+  seed, hyperparameter, decoder, normalization, or metric was chosen or changed from D-test outcomes.
+  D-test carries no candidate/POI alignment artifacts, so outside-harm/candidate-utility were not
+  computed on it (text metrics only). **`D-test` must not be used for any later selection or tuning.**
+- **Status:** `D-test` is now the exposed final intervened evaluation split; locked, one-shot,
+  evaluation-only. The observed MDE (~4× the largest prior oracle effect) means the 15-dialogue
+  bootstrap is underpowered; this is a reported scientific limitation, not grounds to redraw the split.
 
 ### SEAME
 

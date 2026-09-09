@@ -25,7 +25,7 @@ def _condition_rows(root=OUT, subdir="raw_r1"):
         m = x.get("metrics", {})
         t = m.get("transitions", {})
         rows.append({
-            "Dataset": x["dataset"], "Side": x["side"], "Layer": x["layer"],
+            "Dataset": x["dataset"], "Side": m.get("side", x.get("side")), "Layer": x["layer"],
             "Scope": x["scope"], "rho": x["rho"],
             "MER": m.get("mer"), "PIER": m.get("pier"), "EN-WER": m.get("en_wer"),
             "Matrix-CER": m.get("zh_cer"),

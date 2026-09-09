@@ -174,11 +174,11 @@ def select_r2_layers(result_root: Path = RESULTS) -> dict[str, Any]:
     path = result_root / "tables/raw_full_depth.csv"
     if not path.is_file():
         raise FileNotFoundError("R1 table is required before mechanical R2 selection")
-    rows = [r for r in _csv.DictReader(path.open()) if r["dataset"] == "cs_dialogue"]
+    rows = [r for r in _csv.DictReader(path.open()) if r["Dataset"] == "cs_dialogue"]
     grouped = {}
     for side in ("encoder", "decoder"):
         for layer in range(32):
-            z = [r for r in rows if r["side"] == side and int(r["layer"]) == layer]
+            z = [r for r in rows if r["Side"] == side and int(r["Layer"]) == layer]
             if len(z) != 2: continue
             corr = sum(float(r["Corr"]) for r in z) / 2.0
             corrupt = sum(float(r["Corrupt"]) for r in z) / 2.0
@@ -206,7 +206,10 @@ def select_r2_layers(result_root: Path = RESULTS) -> dict[str, Any]:
             for x in (best, middle, negative):
                 if x not in chosen: chosen.append(x)
             chosen = chosen[:max_n]
-        selected[side] = {"layers": chosen, "labels": {str(best): "E_best", str(middle): "E_mid", str(negative): "E_negative"},
+        labels = ({str(best): "E_best", str(middle): "E_mid", str(negative): "E_negative"}
+                  if side == "encoder" else
+                  {"0": "D0", "24": "D24", "27": "D27", str(negative): "D_negative"})
+        selected[side] = {"layers": chosen, "labels": labels,
                           "score": {str(l): int(score[l]) for l in score}, "metrics": {str(l): vals[l] for l in vals}}
     payload = {"schema_version": "basis_a3_r2_selection_v1", "source": "CS-Dialogue R1 only",
                "mechanical": True, "selected": selected}

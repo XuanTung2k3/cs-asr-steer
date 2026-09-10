@@ -1,0 +1,134 @@
+{
+  "boundary_tolerance_ms": 80,
+  "datasets": [
+    "seame_dev_man",
+    "seame_dev_sge"
+  ],
+  "layer": 16,
+  "mask_definition": "target-segment union alignment",
+  "mask_implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+  "observations": [
+    {
+      "active_mask_frames": 1,
+      "baseline_transcript": "等一下你去我",
+      "dataset": "seame_dev_man",
+      "rho0_transcript": "等一下你去我",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_man_01646"
+    },
+    {
+      "active_mask_frames": 1,
+      "baseline_transcript": "多麼去",
+      "dataset": "seame_dev_man",
+      "rho0_transcript": "多麼去",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_man_01804"
+    },
+    {
+      "active_mask_frames": 71,
+      "baseline_transcript": "等一下他往旁了",
+      "dataset": "seame_dev_man",
+      "rho0_transcript": "等一下他往旁了",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_man_01303"
+    },
+    {
+      "baseline_metrics": {
+        "deletions": 3,
+        "en_wer": 1.0,
+        "insertions": 0,
+        "mer": 0.6842105263157895,
+        "num_en_ref": 3,
+        "num_poi": 3,
+        "num_poi_errors": 3,
+        "num_ref_units": 19,
+        "num_zh_ref": 16,
+        "pier": 1.0,
+        "substitutions": 10,
+        "zh_cer": 0.625
+      },
+      "canonical_metrics_identical": true,
+      "dataset": "seame_dev_man",
+      "rho0_metrics": {
+        "deletions": 3,
+        "en_wer": 1.0,
+        "insertions": 0,
+        "mer": 0.6842105263157895,
+        "num_en_ref": 3,
+        "num_poi": 3,
+        "num_poi_errors": 3,
+        "num_ref_units": 19,
+        "num_zh_ref": 16,
+        "pier": 1.0,
+        "substitutions": 10,
+        "zh_cer": 0.625
+      }
+    },
+    {
+      "active_mask_frames": 46,
+      "baseline_transcript": "是很好的",
+      "dataset": "seame_dev_sge",
+      "rho0_transcript": "是很好的",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_sge_03000"
+    },
+    {
+      "active_mask_frames": 35,
+      "baseline_transcript": "你要再講什麼",
+      "dataset": "seame_dev_sge",
+      "rho0_transcript": "你要再講什麼",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_sge_02687"
+    },
+    {
+      "active_mask_frames": 47,
+      "baseline_transcript": "来怕因为好像",
+      "dataset": "seame_dev_sge",
+      "rho0_transcript": "来怕因为好像",
+      "token_ids_identical": true,
+      "transcript_identical": true,
+      "utterance_id": "dev_sge_00906"
+    },
+    {
+      "baseline_metrics": {
+        "deletions": 0,
+        "en_wer": 1.0,
+        "insertions": 1,
+        "mer": 0.4,
+        "num_en_ref": 3,
+        "num_poi": 3,
+        "num_poi_errors": 3,
+        "num_ref_units": 15,
+        "num_zh_ref": 12,
+        "pier": 1.0,
+        "substitutions": 5,
+        "zh_cer": 0.25
+      },
+      "canonical_metrics_identical": true,
+      "dataset": "seame_dev_sge",
+      "rho0_metrics": {
+        "deletions": 0,
+        "en_wer": 1.0,
+        "insertions": 1,
+        "mer": 0.4,
+        "num_en_ref": 3,
+        "num_poi": 3,
+        "num_poi_errors": 3,
+        "num_ref_units": 15,
+        "num_zh_ref": 12,
+        "pier": 1.0,
+        "substitutions": 5,
+        "zh_cer": 0.25
+      }
+    }
+  ],
+  "rho": 0.0,
+  "schema_version": "basis_a3_encoder_rho0_identity_v1",
+  "scope": "oracle_local",
+  "status": "PASS"
+}

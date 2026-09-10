@@ -1,0 +1,88 @@
+{
+  "mask_implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+  "observations": [
+    {
+      "dataset": "seame_dev_man",
+      "duration_sec": 1.039,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_man_01646",
+      "valid_edited_frames": 1,
+      "valid_frames": 52
+    },
+    {
+      "dataset": "seame_dev_man",
+      "duration_sec": 1.13,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_man_01804",
+      "valid_edited_frames": 1,
+      "valid_frames": 57
+    },
+    {
+      "dataset": "seame_dev_man",
+      "duration_sec": 1.41,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_man_01303",
+      "valid_edited_frames": 71,
+      "valid_frames": 71
+    },
+    {
+      "dataset": "seame_dev_man",
+      "duration_sec": 1.62,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_man_01508",
+      "valid_edited_frames": 49,
+      "valid_frames": 81
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "duration_sec": 0.909,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_sge_03000",
+      "valid_edited_frames": 46,
+      "valid_frames": 46
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "duration_sec": 0.961,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_sge_02687",
+      "valid_edited_frames": 35,
+      "valid_frames": 49
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "duration_sec": 1.01,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_sge_00906",
+      "valid_edited_frames": 47,
+      "valid_frames": 51
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "duration_sec": 1.02,
+      "padding_changed_frames": 0,
+      "padding_max_abs_delta": 0.0,
+      "total_frames": 1500,
+      "utterance_id": "dev_sge_03157",
+      "valid_edited_frames": 1,
+      "valid_frames": 51
+    }
+  ],
+  "requirement": "valid frames may change; padded frames have zero gain and remain unchanged",
+  "schema_version": "basis_a3_encoder_padding_exclusion_v1",
+  "status": "PASS"
+}

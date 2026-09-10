@@ -1,0 +1,122 @@
+{
+  "mask_implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+  "max_abs_error": 0.12488937377929688,
+  "max_relative_error": 0.004958256760582866,
+  "observations": [
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 0,
+      "max_abs_error": 0.032623291015625,
+      "max_relative_error": 0.0012527789991347593,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01646"
+    },
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 16,
+      "max_abs_error": 0.10399246215820312,
+      "max_relative_error": 0.00432038351426851,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01646"
+    },
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 31,
+      "max_abs_error": 0.03972625732421875,
+      "max_relative_error": 0.0015567634150133343,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01646"
+    },
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 0,
+      "max_abs_error": 0.03603553771972656,
+      "max_relative_error": 0.001391911544769115,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01804"
+    },
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 16,
+      "max_abs_error": 0.026409149169921875,
+      "max_relative_error": 0.0011110799936670205,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01804"
+    },
+    {
+      "dataset": "seame_dev_man",
+      "edited_frames": 1,
+      "layer": 31,
+      "max_abs_error": 0.08198738098144531,
+      "max_relative_error": 0.0031594658139698297,
+      "scope": "oracle_local",
+      "utterance_id": "dev_man_01804"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 46,
+      "layer": 0,
+      "max_abs_error": 0.11041259765625,
+      "max_relative_error": 0.004215942669355622,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_03000"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 46,
+      "layer": 16,
+      "max_abs_error": 0.12488937377929688,
+      "max_relative_error": 0.004958256760582866,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_03000"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 46,
+      "layer": 31,
+      "max_abs_error": 0.10312271118164062,
+      "max_relative_error": 0.004093768856145738,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_03000"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 35,
+      "layer": 0,
+      "max_abs_error": 0.09173965454101562,
+      "max_relative_error": 0.004251257465531784,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_02687"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 35,
+      "layer": 16,
+      "max_abs_error": 0.10827445983886719,
+      "max_relative_error": 0.004296794045299095,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_02687"
+    },
+    {
+      "dataset": "seame_dev_sge",
+      "edited_frames": 35,
+      "layer": 31,
+      "max_abs_error": 0.10876083374023438,
+      "max_relative_error": 0.004152367764250489,
+      "scope": "oracle_local",
+      "utterance_id": "dev_sge_02687"
+    }
+  ],
+  "schema_version": "basis_a3_encoder_normpreserve_v1",
+  "status": "PASS",
+  "tensor_dtype": "bfloat16 (Whisper inference path)",
+  "tolerance": {
+    "basis": "src/csasr/models/hook_tests.py::run_hook_tests norm_tol",
+    "relative": 0.01
+  }
+}

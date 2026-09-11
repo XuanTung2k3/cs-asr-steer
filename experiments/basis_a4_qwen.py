@@ -112,6 +112,19 @@ def _raw_decoder_onset_indices(content_start, eng_idx):
     return onset, control
 
 
+def _matrix_token_indices(bundle, row, eng_idx, ref_ids, norm, units):
+    """Return the matched preceding-token count for construction provenance.
+
+    Raw steering no longer uses this pooled interval; the scientific Raw
+    contrast is the onset/control pair above.  The count is retained so the
+    construction manifest continues to expose the matched matrix population
+    used by the frozen alignment trace.
+    """
+    n = max(1, len(eng_idx))
+    start = max(0, min(eng_idx) - n)
+    return list(range(start, min(eng_idx)))
+
+
 def _qwen_audio_length(mel_length: int) -> int:
     leave = int(mel_length) % 100
     feat = (leave - 1) // 2 + 1

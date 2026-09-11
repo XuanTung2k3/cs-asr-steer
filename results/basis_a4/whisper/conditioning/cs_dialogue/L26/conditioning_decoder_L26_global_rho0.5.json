@@ -1,5 +1,5 @@
 {
-  "a4_protocol_hash": "sha256:9d3f8452f09fab1ac6d9273f0791981aca47850b772855bfd62c81bd663bea3c",
+  "a4_protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "a4_reuse": {
     "accepted": true,
     "protocol_compatibility": "A3 exact-site R1 rho=.5; A4 fields re-sealed",
@@ -311,11 +311,14 @@
     "ZH-CN_U2012_S0_31": "按时去完成你的homework和完成老师布置的taskwell prepared一般这个exam应该不会很难的",
     "ZH-CN_U2012_S0_42": "不用担心,因为我们体育课是可以根据你的interest去选择的比如说你非常喜欢basketball,那你就可以选basketball lesson如果你想选择体操,你也可以选择yoga等等而且也不用像中考那样有体测,所以不用担心"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "D-dev-select",
   "dataset": "cs_dialogue",
   "direction": "Conditioning",
   "direction_hash": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 26,
+  "mask_hash": "sha256:c19a47c2fa7b9b20b0d449091791fd5f5695ea7bdfef161232e2c780f0db9a2e",
   "metrics": {
     "candidate_level_utility": -1076.0,
     "deletions": 2997,
@@ -388,25 +391,28 @@
     "zh_cer": 0.2550696647813491,
     "zh_cer_gain": -0.02896951303628084
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
   "provenance": {
-    "outside_harm_accounting": {
-      "gpu_rerun_required": false,
-      "method": "frozen DG-03 existing_ctc candidate partition",
-      "population": {
-        "inside_units": 736,
-        "outside_units": 16030,
-        "target_candidates": 210,
-        "unknown_units": 67
-      },
-      "role": "D-dev-select"
-    }
+    "direction_hash": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+    "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "resealed_at": 1789141438.6463933,
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
+    "source_model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "source_path": "BASIS-A3",
+    "stage": "basis_a4_whisper_anchor_reseal"
   },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51653_worker1.json",
   "scale": 10.525815203418851,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "decoder",
+  "site": "decoder_post_cross_attn_residual",
+  "site_hash": "sha256:1629d5d6ba2aa530259a76fdb5ecc7109108d4bb4b5c47bf48a4dc3d82cb4395",
   "texts": {
     "ZH-CN_U0011_S0_103": "就是那个 period 在时间我觉得还是挺幸运的因为 high school 在国外比较简单",
     "ZH-CN_U0011_S0_111": "所以你用什么样的 transportation 去去想?",

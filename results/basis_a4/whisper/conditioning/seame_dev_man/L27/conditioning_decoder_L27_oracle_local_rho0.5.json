@@ -1,5 +1,5 @@
 {
-  "a4_protocol_hash": "sha256:9d3f8452f09fab1ac6d9273f0791981aca47850b772855bfd62c81bd663bea3c",
+  "a4_protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "a4_reuse": {
     "accepted": true,
     "protocol_compatibility": "A3 exact-site R1 rho=.5; A4 fields re-sealed",
@@ -61,11 +61,14 @@
     "dev_man_02473": "還是繼續的去研究,去explore啊",
     "dev_man_02545": "我们要做好自己的本分就是要isolate"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_man",
   "dataset": "seame_dev_man",
   "direction": "Conditioning",
   "direction_hash": "sha256:370ddf5447a17f4bb4c0f4f3e9da9962728c40b63d3a99f56517f0af17cf5e49",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 27,
+  "mask_hash": "sha256:6b778779488d9ac0998bd25b2a9122ec8d41de3ed7f651fc9cf832c6be3a6d2e",
   "metrics": {
     "candidate_level_utility": null,
     "deletions": 40,
@@ -123,12 +126,28 @@
     "zh_cer": 0.3215962441314554,
     "zh_cer_gain": -0.0011737089201877549
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "provenance": {
+    "direction_hash": "sha256:370ddf5447a17f4bb4c0f4f3e9da9962728c40b63d3a99f56517f0af17cf5e49",
+    "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "resealed_at": 1789141438.6923738,
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
+    "source_model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "source_path": "BASIS-A3",
+    "stage": "basis_a4_whisper_anchor_reseal"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51654_worker0.json",
   "scale": 12.316876523610437,
   "schema_version": "basis_a3_condition_v1",
   "scope": "oracle_local",
+  "side": "decoder",
+  "site": "decoder_post_cross_attn_residual",
+  "site_hash": "sha256:1629d5d6ba2aa530259a76fdb5ecc7109108d4bb4b5c47bf48a4dc3d82cb4395",
   "texts": {
     "dev_man_00040": "我知道我知道因為就是你的那個好像比如說你Tendon的Bicep Tricep那些櫻花我會的啦我謝謝你提醒我",
     "dev_man_00085": "那个就是看夜景啊去上顶啊就是那个什么的啊去看那个拉香馆然后and then got a lot of star 来哦甚至还去那个佛江那个呃大鱼山那边啊就是看那个阿姆大 statue 那个然后我还做 fairy 这样的东西买 and 做啊",

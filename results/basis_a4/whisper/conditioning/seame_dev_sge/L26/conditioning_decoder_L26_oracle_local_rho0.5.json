@@ -1,5 +1,5 @@
 {
-  "a4_protocol_hash": "sha256:9d3f8452f09fab1ac6d9273f0791981aca47850b772855bfd62c81bd663bea3c",
+  "a4_protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "a4_reuse": {
     "accepted": true,
     "protocol_compatibility": "A3 exact-site R1 rho=.5; A4 fields re-sealed",
@@ -61,11 +61,14 @@
     "dev_sge_03006": "他很厲害",
     "dev_sge_03157": "那时候他有call"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_sge",
   "dataset": "seame_dev_sge",
   "direction": "Conditioning",
   "direction_hash": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 26,
+  "mask_hash": "sha256:1c6052b58cedd5db937aeca8f67c17c384a64e6cdc2798ecc3f95ad33b2be861",
   "metrics": {
     "candidate_level_utility": null,
     "deletions": 105,
@@ -123,12 +126,28 @@
     "zh_cer": 0.23735408560311283,
     "zh_cer_gain": -0.0012970168612191912
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "provenance": {
+    "direction_hash": "sha256:8fb7260b4f1e230117f7c09ad5c6299cb22081337471a11fad6312cc10216ab8",
+    "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "resealed_at": 1789141438.7574313,
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
+    "source_model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "source_path": "BASIS-A3",
+    "stage": "basis_a4_whisper_anchor_reseal"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51655_worker0.json",
   "scale": 10.525815203418851,
   "schema_version": "basis_a3_condition_v1",
   "scope": "oracle_local",
+  "side": "decoder",
+  "site": "decoder_post_cross_attn_residual",
+  "site_hash": "sha256:1629d5d6ba2aa530259a76fdb5ecc7109108d4bb4b5c47bf48a4dc3d82cb4395",
   "texts": {
     "dev_sge_00010": "是从cam那边拿来的是从mark那边拿来的之后",
     "dev_sge_00028": "他丢身不懂丢身人身上没有什么好罗邦将来",

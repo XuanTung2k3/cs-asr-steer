@@ -22,7 +22,7 @@
   "cache_policy": "OFF",
   "cache_identity_evidence": false,
   "model_revision": "sha256:5d87c842f212c25fef15bbb1d300fbbb5fafc98eb97fc37f01fcfbf2ce3453e8",
-  "git_commit": "4c82f57404bf3b33f0c565d534ddd8c356351340",
+  "git_commit": "b605244179b88f8f01d63fce14de32c8be747ab4",
   "pytest_command": [
     "/home/tungnx/miniconda3/envs/acl1/bin/python",
     "-m",

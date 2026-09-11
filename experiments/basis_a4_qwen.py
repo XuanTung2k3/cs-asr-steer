@@ -48,7 +48,13 @@ def _stage_manifest(stage, status, **extra):
 
 def _normalized(row):
     from csasr.data.normalize import normalize_and_segment
-    return normalize_and_segment(str(row["reference"]))
+    # Evaluation panels expose ``reference``; the frozen D-construct manifest
+    # exposes the same transcript as ``transcript_raw``.  They are the same
+    # normalized reference role, not different construction populations.
+    text = row.get("reference", row.get("transcript_raw"))
+    if text is None:
+        raise KeyError("row must contain reference or transcript_raw")
+    return normalize_and_segment(str(text))
 
 
 def _token_offsets(tokenizer, ids):
@@ -526,11 +532,16 @@ def main():
     a.add_argument("--side", choices=("encoder", "decoder")); a.add_argument("--direction", choices=("Raw", "Conditioning"))
     a.add_argument("--layer-start", type=int, default=0); a.add_argument("--layer-end", type=int)
     args = ap.parse_args()
-    if args.command == "construct": return construct_directions()
-    if args.command == "preflight": return preflight()
-    if args.command == "baseline": return baseline(args.dataset)
-    return atlas(args.dataset, side_filter=args.side, direction_filter=args.direction,
-                 layer_start=args.layer_start, layer_end=args.layer_end)
+    try:
+        if args.command == "construct": return construct_directions()
+        if args.command == "preflight": return preflight()
+        if args.command == "baseline": return baseline(args.dataset)
+        return atlas(args.dataset, side_filter=args.side, direction_filter=args.direction,
+                     layer_start=args.layer_start, layer_end=args.layer_end)
+    except Exception as exc:
+        stage = "construct" if args.command == "construct" else args.command
+        _stage_manifest(stage, "FAILED", error=repr(exc))
+        raise
 
 
 if __name__ == "__main__": raise SystemExit(main())

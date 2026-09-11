@@ -195,7 +195,7 @@ class QwenSiteInterventionHook:
         if self.gain_fn is not None:
             g = self.gain_fn(site=site, abs_pos=pos)
         elif self.gain is not None:
-            g = self.gain
+            g = self.gain.to(device=site.device, dtype=site.dtype)
         else:
             g = torch.ones((b, t), device=site.device, dtype=site.dtype)
         g = g if torch.is_tensor(g) else torch.as_tensor(g, device=site.device, dtype=site.dtype)

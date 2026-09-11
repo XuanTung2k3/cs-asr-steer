@@ -261,7 +261,10 @@ def construct_directions() -> int:
                 # construction alignment.  Use the same duration, clamped.
                 width = hi - lo; clo = max(0, lo - width); chi = lo
                 if chi <= clo: continue
-                enc_values[l].append(block[lo:hi].mean(0) - block[clo:chi].mean(0)); enc_groups.append(str(row["dialogue_id"]))
+                enc_values[l].append(block[lo:hi].mean(0) - block[clo:chi].mean(0))
+                # One label per span vector, not once per encoder layer.
+                if l == enc_layers[0]:
+                    enc_groups.append(str(row["dialogue_id"]))
         raw_idx = _raw_decoder_onset_indices(content_start, emb_idx)
         if raw_idx is None:
             continue

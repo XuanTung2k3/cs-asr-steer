@@ -88,11 +88,22 @@ def _span_token_indices(bundle, row, span, ref_ids, norm, units):
     return [i for i, (a, b) in enumerate(offsets) if b > lo and a < hi]
 
 
-def _matrix_token_indices(bundle, row, eng_idx, ref_ids, norm, units):
-    # A4 retains the accepted A3 matched preceding matrix continuation for the
-    # raw decoder contrast.  It is strictly before the English onset.
-    n = max(1, len(eng_idx)); start = max(0, min(eng_idx) - n)
-    return list(range(start, min(eng_idx)))
+def _raw_decoder_onset_indices(content_start, eng_idx):
+    """Return the accepted A3 onset/control predictor positions.
+
+    A Raw decoder contrast is a switch-onset contrast, not a pooled
+    embedded-token contrast: the state predicting the first English token is
+    contrasted with the immediately preceding matrix continuation state.
+    Both positions are still transcript-generation states; the caller rejects
+    spans whose control would fall in the prompt/control prefix.
+    """
+    if not eng_idx:
+        return None
+    onset = int(content_start) + int(min(eng_idx)) - 1
+    control = onset - 1
+    if control < int(content_start) - 1 or onset < int(content_start):
+        return None
+    return onset, control
 
 
 def _qwen_audio_length(mel_length: int) -> int:
@@ -229,11 +240,15 @@ def construct_directions() -> int:
                 width = hi - lo; clo = max(0, lo - width); chi = lo
                 if chi <= clo: continue
                 enc_values[l].append(block[lo:hi].mean(0) - block[clo:chi].mean(0)); enc_groups.append(str(row["dialogue_id"]))
+        raw_idx = _raw_decoder_onset_indices(content_start, emb_idx)
+        if raw_idx is None:
+            continue
+        raw_onset, raw_control = raw_idx
         for l in dec_layers:
             e = zstate[l][0, content_start:content_start + len(ref_ids)]
             c = estate[l][0, content_start:content_start + len(ref_ids)]
             dec_norms[l].append(float(np.linalg.norm(e, axis=-1).mean()))
-            dec_values[l].append(e[emb_idx].mean(0) - e[matrix_idx].mean(0) if matrix_idx else e[emb_idx].mean(0))
+            dec_values[l].append(zstate[l][0, raw_onset] - zstate[l][0, raw_control])
             cond_values[l].append(c.mean(0) - e.mean(0)); dec_groups.append(str(row["dialogue_id"])); cond_groups.append(str(row["dialogue_id"]))
         n_content += len(ref_ids); n_emb += len(emb_idx); n_matrix += len(matrix_idx)
         if number % 10 == 0: print(f"construction {number}/{len(rows)}", flush=True)

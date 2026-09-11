@@ -1,0 +1,9 @@
+{
+  "schema_version": "basis_a4_quarantine_v1",
+  "status": "QUARANTINED",
+  "reason": "Whisper Conditioning cells were generated before the repaired implementation was committed and have empty or non-immutable provenance.",
+  "count": 118,
+  "recoverable": true,
+  "accepted": false,
+  "replacement": "clean committed A4 reruns for all non-anchor layers"
+}

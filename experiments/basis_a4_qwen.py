@@ -235,7 +235,10 @@ def construct_directions() -> int:
                     bundle.thinker_model(**inp, use_cache=False)
                 return inp, {l: ae.states[l].numpy() for l in enc_layers}, {l: de.states[l].numpy() for l in dec_layers}
         inp, astate, zstate = run("Chinese", prompt_zh)
-        _, estate, _ = run("English", prompt_en)
+        # ``run`` returns (inputs, audio-site states, text-site states).
+        # Conditioning uses the English text-decoder states, not the 24-layer
+        # audio stack (which previously caused a misleading KeyError at D24).
+        _, _, estate = run("English", prompt_en)
         # The site state is (1,T,D) for text and packed (T,D) for audio.
         content_start = _content_start(inp["input_ids"], ref_ids)
         offsets = _token_offsets(bundle.processor.tokenizer, ref_ids)

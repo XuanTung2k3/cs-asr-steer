@@ -183,11 +183,15 @@ def figures(rows):
 def report(rows, proto):
     counts = {}
     for r in rows: counts[f"{r['model']}:{r['direction']}:{r['side']}"] = counts.get(f"{r['model']}:{r['direction']}:{r['side']}", 0) + 1
-    write(OUT / "manifests" / "final_manifest.json", {"schema_version": "basis_a4_final_manifest_v1", "status": "COMPLETE",
+    final_manifest = {"schema_version": "basis_a4_final_manifest_v1", "status": "COMPLETE",
           "protocol_hash": proto["protocol_hash"], "git": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
           "cell_counts": counts, "total_cells": len(rows), "conditioning_avg": "REDUNDANT_NOT_RUN",
           "d_test_intervened": False, "table": "results/basis_a4/tables/basis_a4_atlas.csv",
-          "geometry": "results/basis_a4/geometry/raw_conditioning.json"})
+          "geometry": "results/basis_a4/geometry/raw_conditioning.json"}
+    write(OUT / "manifests" / "final_manifest.json", final_manifest)
+    # Keep the audit-facing manifest at the exact path frozen by the A4 repair
+    # request, while retaining the historical manifests/ copy for compatibility.
+    write(OUT / "FINAL_MANIFEST.json", final_manifest)
     def vals(model, direction):
         x = [r for r in rows if r["model"] == model and r["direction"] == direction]
         return (min((r["mer"] for r in x), default=float("nan")), max((r["mer"] for r in x), default=float("nan")))

@@ -249,7 +249,12 @@ def construct_directions() -> int:
             c = estate[l][0, content_start:content_start + len(ref_ids)]
             dec_norms[l].append(float(np.linalg.norm(e, axis=-1).mean()))
             dec_values[l].append(zstate[l][0, raw_onset] - zstate[l][0, raw_control])
-            cond_values[l].append(c.mean(0) - e.mean(0)); dec_groups.append(str(row["dialogue_id"])); cond_groups.append(str(row["dialogue_id"]))
+            cond_values[l].append(c.mean(0) - e.mean(0))
+        # One aggregation label per utterance, matching one vector per layer
+        # in each direction population.  Appending inside the layer loop would
+        # multiply the group vector by 28 and corrupt dialogue balancing.
+        dec_groups.append(str(row["dialogue_id"]))
+        cond_groups.append(str(row["dialogue_id"]))
         n_content += len(ref_ids); n_emb += len(emb_idx); n_matrix += len(matrix_idx)
         if number % 10 == 0: print(f"construction {number}/{len(rows)}", flush=True)
     fps = float(np.median(fps_values))

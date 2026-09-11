@@ -1,5 +1,6 @@
 {
-  "cache_generation": true,
+  "cache_generation": false,
+  "cache_policy": "OFF",
   "cached_encoder_identity": false,
   "conditioning_alias_tested": true,
   "conditioning_avg": "NOT_RUN_REDUNDANT_ALIAS",
@@ -28,7 +29,7 @@
   "raw_decoder_tested": true,
   "raw_encoder_tested": true,
   "row": "ZH-CN_U0091_S0_68",
-  "runtime_seconds": 3.4635159522295,
+  "runtime_seconds": 3.5166753847151995,
   "schema_version": "basis_a4_qwen_preflight_v1",
-  "status": "FAIL"
+  "status": "PASS"
 }

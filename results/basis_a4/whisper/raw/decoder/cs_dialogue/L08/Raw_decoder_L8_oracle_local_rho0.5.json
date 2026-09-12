@@ -310,11 +310,14 @@
     "ZH-CN_U2012_S0_31": "按时去完成你的homework和完成老师布置的taskwell prepared一般这个exam应该不会很难的",
     "ZH-CN_U2012_S0_42": "不用担心,因为我们体育课是可以根据你的interest去选择的比如说你非常喜欢basketball,那你就可以选basketball lesson如果你想选择体操,你也可以选择yoga等等而且也不用像中考那样有体测,所以不用担心"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "D-dev-select",
   "dataset": "cs_dialogue",
   "direction": "Raw",
   "direction_hash": "sha256:cb9d97cbb8f1bb483c344ec7e05c5dd8deb591e9d911e98b57aeedaf943becd8",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 8,
+  "mask_hash": "sha256:0cc65e50364fa26ee31b657e748e26033311fbf3161b6d27991b694e461bcfba",
   "metrics": {
     "candidate_level_utility": -186.0,
     "deletions": 3146,
@@ -387,8 +390,11 @@
     "zh_cer": 0.22658297696233964,
     "zh_cer_gain": -0.00048282521727135985
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
   "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
     "outside_harm_accounting": {
       "gpu_rerun_required": false,
       "method": "frozen DG-03 existing_ctc candidate partition",
@@ -399,13 +405,20 @@
         "unknown_units": 67
       },
       "role": "D-dev-select"
-    }
+    },
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
   },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51639_worker1.json",
   "scale": 6.159611781889939,
   "schema_version": "basis_a3_condition_v1",
   "scope": "oracle_local",
+  "side": "decoder",
+  "site": "decoder_post_cross_attn_residual",
+  "site_hash": "sha256:1629d5d6ba2aa530259a76fdb5ecc7109108d4bb4b5c47bf48a4dc3d82cb4395",
   "texts": {
     "ZH-CN_U0011_S0_103": "就是那个period的时间我觉得还是挺幸运的因为high school在国外比较简单",
     "ZH-CN_U0011_S0_111": "所以你用什么样的transportation去去向?",

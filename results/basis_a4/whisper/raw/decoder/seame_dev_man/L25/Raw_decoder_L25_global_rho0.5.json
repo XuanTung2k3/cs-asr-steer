@@ -61,11 +61,14 @@
     "dev_man_02473": "還是繼續的去研究,去explore啊",
     "dev_man_02545": "我们要做好自己的本分就是要isolate"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_man",
   "dataset": "seame_dev_man",
   "direction": "Raw",
   "direction_hash": "sha256:a7d5592acd41cd8ba80606def806971ac84db421fdc6d929b281447ef3dc926f",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 25,
+  "mask_hash": "sha256:968945e6a24670d2ba0a1d25ca40accd4573a19896b5db2e55a43c612bbd427e",
   "metrics": {
     "candidate_level_utility": null,
     "deletions": 111,
@@ -123,12 +126,24 @@
     "zh_cer": 0.36502347417840375,
     "zh_cer_gain": -0.04460093896713613
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51650_worker0.json",
   "scale": 9.633279581074117,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "decoder",
+  "site": "decoder_post_cross_attn_residual",
+  "site_hash": "sha256:1629d5d6ba2aa530259a76fdb5ecc7109108d4bb4b5c47bf48a4dc3d82cb4395",
   "texts": {
     "dev_man_00040": "我知道我知道 因為就是你的那個 比如說Tendon,Bicep,Tricep 啊那些 櫻花嗯我會的啦 謝謝你提醒我",
     "dev_man_00085": "那个就是看夜景啊去上ding啊就是那个tpick啊去看那个拉香�kwan然后and then got a lot of star 啊甚至还去佛江大u山那边啊就是看buddha statue 那个然后我还做fairy 这样的东西",

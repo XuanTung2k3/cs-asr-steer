@@ -66,11 +66,14 @@
     "dev_man_02473": "還是繼續的去研究,去explore啊",
     "dev_man_02545": "我们要做好自己的本分就是要isolate"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_man",
   "dataset": "seame_dev_man",
   "direction": "Raw",
   "direction_hash": "sha256:db317a49c594d058fc26e436e5b21bc38f27a523d0a5ac8989e8ea14cd2c86d5",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 15,
+  "mask_hash": "sha256:3578c4a298c6ed4e1c832c9cdb9de1a710e2793be370726301adacb5b54db523",
   "metrics": {
     "candidate_level_utility": null,
     "corrections_per_1000_edited_frames": 0.0,
@@ -131,12 +134,24 @@
     "zh_cer": 1.9671361502347418,
     "zh_cer_gain": -1.646713615023474
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51649_worker0.json",
   "scale": 20.273404586791994,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "dev_man_00040": "我知道我知道 因為就是你的那卡比爾說你的那白色Tricer 話那是英華我回答啦 我覺得是你的英華",
     "dev_man_00085": "就是看夜景啊去上庭啊就是去看大象館然後然後到我身上去那個火箱那個大雨傘那邊啊就是看那個阿姆達的 statue 啊然後我還在做 fairy 這樣東西嘛",

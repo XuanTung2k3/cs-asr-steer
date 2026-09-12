@@ -66,11 +66,14 @@
     "dev_man_02473": "還是繼續的去研究,去explore啊",
     "dev_man_02545": "我们要做好自己的本分就是要isolate"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_man",
   "dataset": "seame_dev_man",
   "direction": "Raw",
   "direction_hash": "sha256:60549d23539d07d5654ac450b8a9f19741cabcd90dfa1cb3c6278a4ab018a485",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 9,
+  "mask_hash": "sha256:3578c4a298c6ed4e1c832c9cdb9de1a710e2793be370726301adacb5b54db523",
   "metrics": {
     "candidate_level_utility": null,
     "corrections_per_1000_edited_frames": 0.5263157894736842,
@@ -131,12 +134,24 @@
     "zh_cer": 2.3826291079812205,
     "zh_cer_gain": -2.062206572769953
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51649_worker0.json",
   "scale": 20.127543563842774,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "dev_man_00040": "我知道我知道因為就是你的那個好像比如說那台你的白色Triceratops那些櫻花我會的啦謝謝你提醒我",
     "dev_man_00085": "就是看夜景啊去山顶啊就是那个怎么的 特匹啊去看那个蜡像馆然后and then got a lot of star我现在去那个佛像那个大御山那边啊就是看那个Buddha statue那个然后我还坐ferry这样东西买and用啊",

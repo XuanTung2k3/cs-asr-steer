@@ -310,11 +310,14 @@
     "ZH-CN_U2012_S0_31": "按时去完成你的homework和完成老师布置的taskwell prepared一般这个exam应该不会很难的",
     "ZH-CN_U2012_S0_42": "不用担心,因为我们体育课是可以根据你的interest去选择的比如说你非常喜欢basketball,那你就可以选basketball lesson如果你想选择体操,你也可以选择yoga等等而且也不用像中考那样有体测,所以不用担心"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "D-dev-select",
   "dataset": "cs_dialogue",
   "direction": "Raw",
   "direction_hash": "sha256:07684d7cc3418a07e45b7b6a61d1807a83055672f9b07a143317ea0794e0b28f",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 31,
+  "mask_hash": "sha256:fb40ad95f83009c74dc209e8d85a636bef2fe30cee5cdb998e55bd30d8e49dcf",
   "metrics": {
     "candidate_level_utility": -11814.0,
     "deletions": 13199,
@@ -387,8 +390,11 @@
     "zh_cer": 1.0715271071871981,
     "zh_cer_gain": -0.8454269554421299
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
   "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
     "outside_harm_accounting": {
       "gpu_rerun_required": false,
       "method": "frozen DG-03 existing_ctc candidate partition",
@@ -399,13 +405,20 @@
         "unknown_units": 67
       },
       "role": "D-dev-select"
-    }
+    },
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
   },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51638_worker0.json",
   "scale": 27.56610643005371,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "ZH-CN_U0011_S0_103": "就是在那里",
     "ZH-CN_U0011_S0_111": "所以你用了什么方法?",

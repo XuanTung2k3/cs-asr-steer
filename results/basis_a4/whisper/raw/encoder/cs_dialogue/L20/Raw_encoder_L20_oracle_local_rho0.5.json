@@ -310,11 +310,14 @@
     "ZH-CN_U2012_S0_31": "按时去完成你的homework和完成老师布置的taskwell prepared一般这个exam应该不会很难的",
     "ZH-CN_U2012_S0_42": "不用担心,因为我们体育课是可以根据你的interest去选择的比如说你非常喜欢basketball,那你就可以选basketball lesson如果你想选择体操,你也可以选择yoga等等而且也不用像中考那样有体测,所以不用担心"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "D-dev-select",
   "dataset": "cs_dialogue",
   "direction": "Raw",
   "direction_hash": "sha256:91d76339c1fb055b76145d9e515d8146cb214b2a93052fdce8b9b9fa652466c7",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 20,
+  "mask_hash": "sha256:10022e9839d9be3dafbe1bd1508d369194e67f9d5f1e4c3677336fa056376fd6",
   "metrics": {
     "candidate_level_utility": -4361.0,
     "deletions": 6574,
@@ -387,8 +390,11 @@
     "zh_cer": 0.5684922058214926,
     "zh_cer_gain": -0.34239205407642437
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
   "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
     "outside_harm_accounting": {
       "gpu_rerun_required": false,
       "method": "frozen DG-03 existing_ctc candidate partition",
@@ -399,13 +405,20 @@
         "unknown_units": 67
       },
       "role": "D-dev-select"
-    }
+    },
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
   },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51638_worker1.json",
   "scale": 20.37407962036133,
   "schema_version": "basis_a3_condition_v1",
   "scope": "oracle_local",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "ZH-CN_U0011_S0_103": "这是那个,比较简单的",
     "ZH-CN_U0011_S0_111": "所以你用什么样的句子去讲?",

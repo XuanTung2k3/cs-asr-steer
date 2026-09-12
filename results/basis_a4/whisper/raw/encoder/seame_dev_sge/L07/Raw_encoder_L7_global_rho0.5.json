@@ -66,11 +66,14 @@
     "dev_sge_03006": "他很厲害",
     "dev_sge_03157": "那时候他有call"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_sge",
   "dataset": "seame_dev_sge",
   "direction": "Raw",
   "direction_hash": "sha256:8823aec2cd4359006a94994dce397952b7d90f6f553d4013e79d17635f68205e",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 7,
+  "mask_hash": "sha256:345e56dfebdd568eb6867bbbd7382e2a9f7c6fe26046fb7de72252dfe63ac370",
   "metrics": {
     "candidate_level_utility": null,
     "corrections_per_1000_edited_frames": 0.10184336490477645,
@@ -131,12 +134,24 @@
     "zh_cer": 1.6186770428015564,
     "zh_cer_gain": -1.3826199740596627
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
+  },
   "rho": 0.5,
   "run_manifest": "results/basis_a3_raw_cond_scope_depth/manifests/job_51652_worker0.json",
   "scale": 20.03614373779297,
   "schema_version": "basis_a3_condition_v1",
   "scope": "global",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "dev_sge_00010": "是从CAM那边拿来的",
     "dev_sge_00028": "他丢身不懂丢身先生什么好漏帮讲的",

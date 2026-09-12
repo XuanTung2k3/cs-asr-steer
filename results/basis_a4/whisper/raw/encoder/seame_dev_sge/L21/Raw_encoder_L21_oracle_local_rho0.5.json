@@ -66,11 +66,14 @@
     "dev_sge_03006": "他很厲害",
     "dev_sge_03157": "那时候他有call"
   },
+  "config_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "data_role": "SEAME-dev_sge",
   "dataset": "seame_dev_sge",
   "direction": "Raw",
   "direction_hash": "sha256:61f32fab7095415c742dcf8f0951efdcff60dff3bc3d1e4aa150833f9ae18255",
+  "git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7",
   "layer": 21,
+  "mask_hash": "sha256:762b6659d9ce860dec9d0ada3f410521eb69e564df643e06d28479b1fde4f89a",
   "metrics": {
     "candidate_level_utility": null,
     "corrections_per_1000_edited_frames": 0.45955882352941174,
@@ -131,7 +134,16 @@
     "zh_cer": 0.32944228274967574,
     "zh_cer_gain": -0.0933852140077821
   },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
   "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "provenance": {
+    "a4_metadata_resealed": true,
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+    "scientific_decode_reused": true,
+    "source": "BASIS-A3 accepted Raw",
+    "source_git_commit": "6b9660e9479fa65c9923bc395c9e752bb88e20c7"
+  },
   "repair_provenance": {
     "boundary_tolerance_ms": 80,
     "mask_definition": "target-segment union alignment",
@@ -145,6 +157,9 @@
   "scale": 24.547752868652342,
   "schema_version": "basis_a3_condition_v1",
   "scope": "oracle_local",
+  "side": "encoder",
+  "site": "encoder_post_self_attn_residual_pre_ffn",
+  "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
   "texts": {
     "dev_sge_00010": "是从CAM那边拿来的是从MARK那边拿来的之后",
     "dev_sge_00028": "他丢生不懂丢生也真是没有什么好乐观",

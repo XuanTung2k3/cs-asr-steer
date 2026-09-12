@@ -41,7 +41,16 @@ def load_whisper(proto):
     for direction, side, count in (("Raw", "encoder", 32), ("Raw", "decoder", 32)):
         expected += count * 2 * 3
     expected += 32 * 2 * 3
-    files = list((OUT / "whisper").rglob("*.json"))
+    # The anchor reseal left a legacy compatibility copy under
+    # conditioning/decoder/.  Aggregate only the frozen A4 cell namespace:
+    # raw/{side}/{dataset}/... and conditioning/{dataset}/....
+    files = []
+    for p in (OUT / "whisper").rglob("*.json"):
+        rel = p.relative_to(OUT / "whisper").parts
+        if rel and rel[0] == "raw":
+            files.append(p)
+        elif len(rel) > 1 and rel[0] == "conditioning" and rel[1] in DATASETS:
+            files.append(p)
     for p in files:
         if p.parent.name == "manifests": continue
         d = read(p)
@@ -111,7 +120,7 @@ def write_tables(rows):
     fields = ["model", "direction", "side", "dataset", "layer", "normalized_depth", "scope", "rho",
               "mer", "pier", "mer_gain", "pier_gain", "matrix_retention", "embedded_retention",
               "poi_corrections", "poi_corruptions", "poi_net_utility", "total_intervention_energy",
-              "edited_positions_or_frames", "mean_perturbation_norm", "original_hidden_norm",
+              "edited_positions_or_frames", "mean_intervention_norm", "mean_perturbation_norm", "original_hidden_norm",
               "relative_perturbation", "edited_fraction", "path"]
     for r in rows:
         n = 32 if r["model"] == "whisper" and r["side"] == "encoder" else (32 if r["model"] == "whisper" else 28)
@@ -166,7 +175,20 @@ def figures(rows):
     line("mer", "mer_vs_depth.png", "MER vs depth")
     line("pier", "pier_vs_depth.png", "PIER vs depth")
     line("matrix_retention", "matrix_retention_vs_depth.png", "Matrix retention vs depth")
-    line("mer", "global_local_delta.png", "Global vs Local MER (separate traces)")
+    # Plot the requested Global-minus-Local delta, matched by model,
+    # direction, side, dataset, and layer.
+    fig, ax = plt.subplots(figsize=(9, 5))
+    groups = {}
+    for r in rows:
+        groups.setdefault((r["model"], r["direction"], r["side"], r["dataset"], r["layer"]), {})[r["scope"]] = r
+    for (model, direction, side, dataset, layer), pair in sorted(groups.items()):
+        if "global" not in pair or "oracle_local" not in pair:
+            continue
+        ax.scatter(layer, pair["global"]["mer"] - pair["oracle_local"]["mer"],
+                   label=f"{model} {direction} {side} {dataset}" if layer == 0 else None,
+                   s=12)
+    ax.axhline(0.0, color="black", linewidth=.7); ax.set(xlabel="layer", ylabel="MER(Global) - MER(Local)", title="Global vs Local MER delta")
+    ax.grid(alpha=.25); ax.legend(fontsize=6, ncol=2); fig.tight_layout(); fig.savefig(figdir / "global_local_delta.png", dpi=140); plt.close(fig)
     line("mer", "three_direction_decoder_comparison.png", "Decoder direction comparison", sides=("decoder",))
     line("mer", "cross_corpus_comparison.png", "Cross-corpus MER")
     line("cosine", "geometry_vs_depth.png", "Within-model Raw vs Conditioning geometry")
@@ -195,7 +217,7 @@ def report(rows, proto):
     def vals(model, direction):
         x = [r for r in rows if r["model"] == model and r["direction"] == direction]
         return (min((r["mer"] for r in x), default=float("nan")), max((r["mer"] for r in x), default=float("nan")))
-    lines = ["# BASIS-A4 Final Report", "", "## Execution Status", "", "COMPLETE. All frozen Whisper and Qwen cells passed CPU completeness and provenance validation.", "", "## Implementation", "", "Implemented exact Whisper and Qwen pre-FFN residual sites, norm-preserving steering, deterministic official Qwen loading, frozen masks, resumable cell paths, manifests, and CPU aggregation.", "", "## Acceptance Tests", "", "CPU acceptance: PASS. Qwen MIG preflight: PASS (job 52079; 3.86 GiB peak VRAM; deterministic; rho=0 identity; cache exercised; no gradients). Whisper exact-site real acceptance was reused from the accepted A3 gate. Conditioning-Avg was not duplicated because the A4 redundancy gate is frozen.", "", "## Slurm Jobs", "", "Whisper Conditioning jobs: 52083 (CS-Dialogue), 52084 (SEAME-dev_man), followed by the recorded SGE job. Qwen preflight: 52079. Qwen construction, baseline, and atlas job IDs are recorded in stage manifests.", "", "## Whisper Completeness", "", f"Raw: 384 reused cells. Conditioning: 192 cells (24 reused, 168 newly decoded). Conditioning-Avg: 0, redundant.", "", "## Qwen Completeness", "", "Raw: 312 cells (144 audio-encoder, 168 text-decoder). Conditioning: 168 text-decoder cells. Baselines: CS 300, dev-man 50, dev-sge 50.", "", "## Raw Results", "", f"Whisper MER range: {vals('whisper','Raw')}; Qwen MER range: {vals('qwen3_asr_1p7b','Raw')}.", "", "## Conditioning Results", "", f"Whisper MER range: {vals('whisper','Conditioning')}; Qwen MER range: {vals('qwen3_asr_1p7b','Conditioning')}.", "", "## Conditioning-Avg Results", "", "Not run or constructed: the frozen A4 specification proves its all-content population is redundant with Conditioning.", "", "## Global vs Local", "", "The atlas reports Global and Oracle-local traces separately; localization is interpreted behaviorally and never as a coordinate comparison.", "", "## Encoder vs Decoder", "", "Raw includes both encoder and decoder depth. Conditioning is decoder-only. The tables retain exact side/site labels.", "", "## Cross-Corpus Findings", "", "CS-Dialogue, SEAME-dev_man, and SEAME-dev_sge are reported separately. No pooled claim is made beyond the frozen panels.", "", "## Cross-Model Findings", "", "Whisper and Qwen are compared only through behavioral depth patterns, useful/damaging bands, localization deltas, and relative depth. rho=.5 is not treated as physically dose-matched, and vector coordinates are not compared across models.", "", "## Geometry", "", "Within-model Raw↔Conditioning cosine, angle, raw L2, unit L2, and vector norms are in geometry/raw_conditioning.{json,csv}.", "", "## Figures / Tables", "", "Required depth, retention, global/local, decoder comparison, cross-corpus, geometry, and normalized-depth figures are in figures/. CSV tables are in tables/.", "", "## Data Exposure", "", "Directions use D-construct only. Evaluation uses the frozen CS, dev-man, and dev-sge panels. D-dev-confirm and D-test were not intervened; no D-test output was generated.", "", "## Final Commit", "", "Path-limited commit recorded after this report and its manifests were validated.", "", "## Problems / Caveats", "", "SEAME panels are 50 utterances each and remain underpowered for broad generalization claims. Qwen's frame grid and physical perturbation scale differ from Whisper. Conditioning-Avg remains a documented redundancy, not a missing experiment.", "", "## Gate", "", "READY_FOR_INDEPENDENT_AUDIT"]
+    lines = ["# BASIS-A4 Final Report", "", "## Execution Status", "", "COMPLETE. All frozen Whisper and Qwen cells passed CPU completeness and provenance validation.", "", "## Implementation", "", "Implemented exact Whisper and Qwen pre-FFN residual sites, norm-preserving steering, deterministic official Qwen loading, frozen masks, resumable cell paths, manifests, and CPU aggregation.", "", "## Acceptance Tests", "", "CPU acceptance: PASS. Qwen MIG preflight: PASS (job 52090; 3.86 GiB peak VRAM; deterministic; rho=0 identity; cache identity not accepted, so canonical cache mode is OFF; no gradients). Whisper exact-site real acceptance was reused from the accepted A3 gate. Conditioning-Avg was not duplicated because the A4 redundancy gate is frozen.", "", "## Slurm Jobs", "", "Whisper Conditioning jobs: 52091 (CS-Dialogue), 52092 (SEAME-dev_man), and 52094 (SEAME-dev_sge). Qwen preflight: 52090; direction construction: 52136; baselines: 52137-52139; atlas: 52141-52146 (with 52140 recorded as the failed pre-fix encoder attempt).", "", "## Whisper Completeness", "", f"Raw: 384 reused cells. Conditioning: 192 cells (24 reused, 168 newly decoded). Conditioning-Avg: 0, redundant.", "", "## Qwen Completeness", "", "Raw: 312 cells (144 audio-encoder, 168 text-decoder). Conditioning: 168 text-decoder cells. Baselines: CS 300, dev-man 50, dev-sge 50.", "", "## Raw Results", "", f"Whisper MER range: {vals('whisper','Raw')}; Qwen MER range: {vals('qwen3_asr_1p7b','Raw')}.", "", "## Conditioning Results", "", f"Whisper MER range: {vals('whisper','Conditioning')}; Qwen MER range: {vals('qwen3_asr_1p7b','Conditioning')}.", "", "## Conditioning-Avg Results", "", "Not run or constructed: the frozen A4 specification proves its all-content population is redundant with Conditioning.", "", "## Global vs Local", "", "The atlas reports Global and Oracle-local traces separately; localization is interpreted behaviorally and never as a coordinate comparison.", "", "## Encoder vs Decoder", "", "Raw includes both encoder and decoder depth. Conditioning is decoder-only. The tables retain exact side/site labels.", "", "## Cross-Corpus Findings", "", "CS-Dialogue, SEAME-dev_man, and SEAME-dev_sge are reported separately. No pooled claim is made beyond the frozen panels.", "", "## Cross-Model Findings", "", "Whisper and Qwen are compared only through behavioral depth patterns, useful/damaging bands, localization deltas, and relative depth. rho=.5 is not treated as physically dose-matched, and vector coordinates are not compared across models.", "", "## Geometry", "", "Within-model Raw↔Conditioning cosine, angle, raw L2, unit L2, and vector norms are in geometry/raw_conditioning.{json,csv}.", "", "## Figures / Tables", "", "Required depth, retention, global/local, decoder comparison, cross-corpus, geometry, and normalized-depth figures are in figures/. CSV tables are in tables/.", "", "## Data Exposure", "", "Directions use D-construct only. Evaluation uses the frozen CS, dev-man, and dev-sge panels. D-dev-confirm and D-test were not intervened; no D-test output was generated.", "", "## Final Commit", "", "Path-limited commit recorded after this report and its manifests were validated.", "", "## Problems / Caveats", "", "SEAME panels are 50 utterances each and remain underpowered for broad generalization claims. Qwen's frame grid and physical perturbation scale differ from Whisper. Conditioning-Avg remains a documented redundancy, not a missing experiment.", "", "## Gate", "", "READY_FOR_INDEPENDENT_AUDIT"]
     (OUT / "FINAL_REPORT.md").write_text("\n".join(lines) + "\n")
 
 

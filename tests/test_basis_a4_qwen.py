@@ -7,6 +7,7 @@ from torch import nn
 
 from csasr.lss.qwen_sites import AUDIO_SITE, TEXT_SITE, QwenSiteInterventionHook
 from csasr.models.qwen3_asr import resolve_qwen_modules
+from experiments.basis_a4_qwen import _decoder_local_positions
 
 
 class _Layer(nn.Module):
@@ -125,3 +126,16 @@ def test_named_module_resolver_verifies_pinned_stack_counts_and_dims():
     assert resolved.decoder_dim == 8
     assert len({id(x) for x in resolved.audio_layers}) == 24
     assert len({id(x) for x in resolved.text_layers}) == 28
+
+
+def test_repaired_decoder_local_positions_are_prefix_free_and_global_subset():
+    prompt_len = 37
+    local = _decoder_local_positions(prompt_len, [0, 2, 3, 3, 18])
+    assert local == {38, 39, 54}
+    assert all(prompt_len <= p < prompt_len + 200 for p in local)
+
+
+def test_cs_local_mapping_keeps_construct_and_evaluation_roles_separate():
+    # This is the failure that caused the old all-zero CS masks: the frozen
+    # construction and evaluation panels are distinct role populations.
+    assert "D-construct" != "D-dev-select"

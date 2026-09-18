@@ -18,6 +18,7 @@ def main():
     proc = subprocess.run(cmd, cwd=REPO, text=True, capture_output=True)
     log_path.write_text(proc.stdout + ("\nSTDERR\n" + proc.stderr if proc.stderr else ""))
     preflight = json.loads((OUT / "manifests/qwen_preflight.json").read_text())
+    traces = json.loads((OUT / "acceptance/qwen_local_mask_traces.json").read_text())
     checks = {
         "layer_resolver": proc.returncode == 0,
         "exact_encoder_site": preflight.get("raw_encoder_tested", False),
@@ -35,13 +36,22 @@ def main():
         "direction_normalization": True,
         "vector_hash_reproducibility": True,
         "english_chinese_states_distinct": preflight.get("language_condition_states_distinct", False),
+        "cs_local_nonzero_encoder": traces.get("encoder_nonzero_rate", 0) > 0,
+        "cs_local_nonzero_decoder": traces.get("decoder_nonzero_rate", 0) > 0,
+        "cs_local_semantic_equality": traces.get("all_alignable_semantic_decoder_equal", False),
+        "cs_local_prefix_exclusion": traces.get("all_alignable_prefix_exclusion", False),
+        "cs_local_decoder_subset": traces.get("all_alignable_decoder_subset", False),
+        "cs_local_encoder_subset": traces.get("all_alignable_encoder_subset", False),
     }
     payload = {"schema_version": "basis_a4_qwen_acceptance_v1", "status": "PASS" if all(checks.values()) else "FAIL",
                "checks": checks, "cache_policy": "OFF",
                "cache_identity_evidence": preflight.get("cached_encoder_identity"),
                "model_revision": preflight.get("model", {}).get("model_revision"),
                "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
-               "pytest_command": cmd, "log": str(log_path.relative_to(REPO))}
+               "pytest_command": cmd, "log": str(log_path.relative_to(REPO)),
+               "local_trace": str((OUT / "acceptance/qwen_local_mask_traces.json").relative_to(REPO)),
+               "local_trace_sha256": __import__("hashlib").sha256(
+                   (OUT / "acceptance/qwen_local_mask_traces.json").read_bytes()).hexdigest()}
     p = OUT / "acceptance/qwen_acceptance.json"; p.write_text(json.dumps(payload, indent=2) + "\n")
     print(json.dumps(payload, indent=2))
     return 0 if payload["status"] == "PASS" else 1

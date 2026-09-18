@@ -20,6 +20,7 @@ DATASETS = ("cs_dialogue", "seame_dev_man", "seame_dev_sge")
 SCOPES = ("global", "oracle_local")
 RHO = 0.5
 QWEN_ENCODER_CACHE = "OFF"  # cache identity failed acceptance; canonical runs recompute it
+CS_LOCAL_MASK_VERSION = "cs_ddev_select_alignment_v1"
 
 
 def _read(path): return json.loads(Path(path).read_text())
@@ -92,6 +93,46 @@ def _span_token_indices(bundle, row, span, ref_ids, norm, units):
     lo = min(spans[i][0] for i in indices); hi = max(spans[i][1] for i in indices)
     offsets = _token_offsets(bundle.processor.tokenizer, ref_ids)
     return [i for i, (a, b) in enumerate(offsets) if b > lo and a < hi]
+
+
+def _decoder_local_positions(prompt_len, reference_token_indices, *, max_new_tokens=200):
+    """Map frozen reference subword indices to eligible absolute decode states."""
+    return {int(prompt_len) + int(i) - 1 for i in sorted(set(reference_token_indices))
+            if int(i) > 0 and int(i) - 1 < int(max_new_tokens)}
+
+
+def _load_cs_eval_spans():
+    """Load the frozen, baseline-correct spans for the CS evaluation panel.
+
+    The A4 evaluation panel is D-dev-select.  D-construct is used only to
+    construct the directions; its utterance IDs are intentionally disjoint
+    from the evaluation panel.  Reusing D-construct IDs here silently makes
+    every CS local mask empty.  This loader mirrors the frozen alignment and
+    baseline-status path used by DG-03, but selects D-dev-select explicitly.
+    """
+    import pandas as pd
+    from csasr.utils.config import load_config
+    from csasr.experiments.v2r3_directions import build_spans, attach_baseline_status
+    from csasr.lss.align import conventions as conv
+
+    cfg = load_config("lss/l1b_candidates_dialogue_v2r3.yaml")
+    root = Path(cfg["experiment"]["output_root"])
+    candidates, _ = conv.read_development_candidates(root / "alignments/candidates_all.parquet")
+    role_root = Path(cfg["v2_namespace"]["role_root"])
+    poi_root = root.parent.parent / "baselines" / "generation_001"
+    manifests, pois = [], []
+    for role in conv.DEVELOPMENT_ROLES:
+        manifests.append(pd.read_parquet(role_root / f"role_{role}.parquet"))
+        pois.append(pd.read_parquet(poi_root / f"poi_{role}.parquet").rename(
+            columns={"poi_index": "reference_unit_index"}))
+    manifest = pd.concat(manifests, ignore_index=True)
+    poi = pd.concat(pois, ignore_index=True)
+    dialogue_of = dict(zip(manifest["conversation_id"].astype(str),
+                           manifest["dialogue_id"].astype(str)))
+    spans = attach_baseline_status(build_spans(candidates, dialogue_of=dialogue_of), poi)
+    selected = spans[(spans["role"] == "D-dev-select") & spans["all_correct"]].copy()
+    return {str(uid): g.to_dict("records")
+            for uid, g in selected.groupby("utterance_id")}
 
 
 def _raw_decoder_onset_indices(content_start, eng_idx):
@@ -422,7 +463,7 @@ def _direction(name, layer):
 
 
 def atlas(dataset: str, *, side_filter=None, direction_filter=None,
-          layer_start=0, layer_end=None) -> int:
+          scope_filter=None, layer_start=0, layer_end=None) -> int:
     import torch
     _stage_manifest("atlas_" + dataset, "RUNNING", dataset=dataset, side=side_filter,
                     direction=direction_filter, layer_start=layer_start, layer_end=layer_end)
@@ -434,15 +475,14 @@ def atlas(dataset: str, *, side_filter=None, direction_filter=None,
     if not baseline_file.is_file(): raise RuntimeError("Qwen baseline must complete before atlas")
     p = _panel(dataset); base = _read(baseline_file)["texts"]; bundle = load_qwen(device="cuda:0")
     dmeta = _read(QOUT / "directions/manifest.json"); fps = float(dmeta["measured_audio_fps_median"])
-    # Frozen reference spans from D-construct are mapped to evaluation rows by
-    # their accepted CS IDs; SEAME carries its frozen target segment records.
+    # Directions are constructed on D-construct, but evaluation-local masks use
+    # the frozen D-dev-select alignment rows.  The role separation is
+    # intentional; the two ID spaces are disjoint.
     local_spans = {}
     local_decoder = {}
     encoder_cache = {}
     if dataset == "cs_dialogue":
-        from experiments.dg03_build_basis import _load_construct
-        _, _, c = _load_construct(); c = c[c["all_correct"]]
-        for uid, g in c.groupby("utterance_id"): local_spans[str(uid)] = g.to_dict("records")
+        local_spans = _load_cs_eval_spans()
     else:
         for row in p["rows"]:
             uid = str(row["utterance_id"])
@@ -487,7 +527,7 @@ def atlas(dataset: str, *, side_filter=None, direction_filter=None,
                     else:
                         idx = local_decoder.get(str(row["utterance_id"]), [])
                     # The state at position j produces logits for token j+1.
-                    allowed = {prompt_len + int(x) - 1 for x in sorted(set(idx)) if int(x) > 0}
+                    allowed = _decoder_local_positions(prompt_len, idx)
                 excluded = set(getattr(bundle.processor.tokenizer, "all_special_ids", []))
                 hook = QwenSiteInterventionHook(bundle, layer, direction_vec, alpha=RHO,
                                                 site=TEXT_SITE, scale=float(dmeta["layers"]["decoder"][str(layer)][vecname]["mean_site_norm"]),
@@ -525,7 +565,10 @@ def atlas(dataset: str, *, side_filter=None, direction_filter=None,
                       "git_commit": __import__("csasr.utils.logging", fromlist=["git_state"]).git_state(str(REPO))["commit"],
                       "config_hash": _protocol_hash(),
                       "site_hash": __import__("hashlib").sha256((AUDIO_SITE if side == "encoder" else TEXT_SITE).encode()).hexdigest(),
-                      "mask_hash": __import__("hashlib").sha256(json.dumps({"dataset": dataset, "scope": scope, "side": side}, sort_keys=True).encode()).hexdigest(),
+                      "mask_hash": __import__("hashlib").sha256(json.dumps({
+                          "dataset": dataset, "scope": scope, "side": side,
+                          "version": CS_LOCAL_MASK_VERSION if scope == "oracle_local" else "global_all_eligible_v1",
+                      }, sort_keys=True).encode()).hexdigest(),
                       "provenance": {"stage": "basis_a4_qwen_atlas", "model_revision": bundle.revision,
                                      "panel_fingerprint": p["fingerprint"], "direction_hash": dhash,
                                      "cache_policy": QWEN_ENCODER_CACHE},
@@ -536,7 +579,9 @@ def atlas(dataset: str, *, side_filter=None, direction_filter=None,
         for direction in (("Raw",) if side == "encoder" else ("Raw", "Conditioning")):
             if direction_filter and direction != direction_filter: continue
             for layer in layers:
-                for scope in SCOPES: emit(direction, side, layer, scope)
+                for scope in SCOPES:
+                    if scope_filter and scope != scope_filter: continue
+                    emit(direction, side, layer, scope)
     _stage_manifest("atlas_" + dataset, "COMPLETED", dataset=dataset, side=side_filter,
                     direction=direction_filter, layer_start=layer_start, layer_end=layer_end)
     return 0
@@ -549,6 +594,7 @@ def main():
     b = sub.add_parser("baseline"); b.add_argument("--dataset", choices=DATASETS, required=True)
     a = sub.add_parser("atlas"); a.add_argument("--dataset", choices=DATASETS, required=True)
     a.add_argument("--side", choices=("encoder", "decoder")); a.add_argument("--direction", choices=("Raw", "Conditioning"))
+    a.add_argument("--scope", choices=SCOPES)
     a.add_argument("--layer-start", type=int, default=0); a.add_argument("--layer-end", type=int)
     args = ap.parse_args()
     try:
@@ -556,7 +602,7 @@ def main():
         if args.command == "preflight": return preflight()
         if args.command == "baseline": return baseline(args.dataset)
         return atlas(args.dataset, side_filter=args.side, direction_filter=args.direction,
-                     layer_start=args.layer_start, layer_end=args.layer_end)
+                     scope_filter=args.scope, layer_start=args.layer_start, layer_end=args.layer_end)
     except Exception as exc:
         stage = "construct" if args.command == "construct" else args.command
         _stage_manifest(stage, "FAILED", error=repr(exc))

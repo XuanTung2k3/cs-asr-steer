@@ -13,12 +13,19 @@
   "empty_provenance": 0,
   "geometry": "results/basis_a4/geometry/raw_conditioning.json",
   "geometry_rows": 60,
-  "git": "0bffa356d43e3d1ad15f0f49185e55c0f4849f64",
+  "git": "83ad4a928fd15f7768d6a76c1ea0c7073f94dd69",
   "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
   "qwen_acceptance": "results/basis_a4/acceptance/qwen_acceptance.json",
   "qwen_completeness": "results/basis_a4/manifests/qwen_completeness.json",
+  "qwen_local_repair": "results/basis_a4/manifests/qwen_local_repair_completeness.json",
+  "qwen_local_repair_jobs": [
+    52994,
+    52995,
+    52997
+  ],
   "schema_version": "basis_a4_final_manifest_v1",
   "status": "COMPLETE",
+  "superseded_qwen_local": "results/basis_a4/quarantine/superseded_broken_qwen_local_mask/MANIFEST.json",
   "table": "results/basis_a4/tables/basis_a4_atlas.csv",
   "total_cells": 1056,
   "whisper_completeness": "results/basis_a4/manifests/whisper_clean_completeness.json"

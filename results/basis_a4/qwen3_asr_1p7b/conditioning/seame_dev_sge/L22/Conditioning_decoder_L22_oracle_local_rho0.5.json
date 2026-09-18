@@ -55,9 +55,9 @@
   "dataset": "seame_dev_sge",
   "direction": "Conditioning",
   "direction_hash": "sha256:c0045c3e26b059d982145988e2c2de4d507b3c0968fb6be955e0d06a4618431d",
-  "git_commit": "a105f6733675f1371a12f97f9f611312f1576b99",
+  "git_commit": "83ad4a928fd15f7768d6a76c1ea0c7073f94dd69",
   "layer": 22,
-  "mask_hash": "bed15a781440fa9ea44eda75cec518ec511a65c1dbb453bf7017e40d6b98c6f0",
+  "mask_hash": "6a0a8a1a8fb2d3b2a6e91486b635c65f2ac7fcd9bcd1f12e8259a5c4b2047838",
   "metrics": {
     "deletions": 19,
     "edited_fraction": 0.008488564017920301,
@@ -99,7 +99,7 @@
         "rate": 1.0
       }
     },
-    "runtime_seconds": 10.495741166174412,
+    "runtime_seconds": 11.736988931894302,
     "scope": "oracle_local",
     "side": "decoder",
     "substitutions": 155,

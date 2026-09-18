@@ -55,9 +55,9 @@
   "dataset": "seame_dev_man",
   "direction": "Raw",
   "direction_hash": "sha256:26ffd2cce5d96ac387c1c0c837c10484df01c79770526378fab01cbf2b9fbb65",
-  "git_commit": "a105f6733675f1371a12f97f9f611312f1576b99",
+  "git_commit": "83ad4a928fd15f7768d6a76c1ea0c7073f94dd69",
   "layer": 16,
-  "mask_hash": "8cc631cffa63db22ac6fe20f209c8ce0a1c3b43e0a0be4068776f60c78eb69bc",
+  "mask_hash": "90c54e06be3d19143155f8244930003fd646c5ef32a0ee4bb22f177c9a01abea",
   "metrics": {
     "deletions": 28,
     "edited_fraction": 0.21450252951096122,
@@ -99,7 +99,7 @@
         "rate": 1.0
       }
     },
-    "runtime_seconds": 11.565593117848039,
+    "runtime_seconds": 12.489458406344056,
     "scope": "oracle_local",
     "side": "encoder",
     "substitutions": 147,

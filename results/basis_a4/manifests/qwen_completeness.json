@@ -22,5 +22,8 @@
   "poi_net_utility_identity_failures": 0,
   "scientific_git_commit": "a105f6733675f1371a12f97f9f611312f1576b99",
   "aggregation_git_commit": "0bffa356d43e3d1ad15f0f49185e55c0f4849f64",
-  "jobs": [52141, 52142, 52144, 52145, 52146]
+  "jobs": [52141, 52142, 52144, 52145, 52146],
+  "local_repair_manifest": "results/basis_a4/manifests/qwen_local_repair_completeness.json",
+  "local_repair_jobs": [52994, 52995, 52997],
+  "live_atlas_includes_repaired_local": true
 }

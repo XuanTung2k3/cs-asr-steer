@@ -38,7 +38,7 @@ Not run or constructed: the frozen A4 specification proves its all-content popul
 
 ## Global vs Local
 
-Localization is behavioral: mean MER(Global)-MER(Local) is +0.591 for Whisper Raw encoder, +0.019 for Whisper Raw decoder, +0.083 for Whisper Conditioning decoder, +0.025 for Qwen Raw encoder, +0.005 for Qwen Raw decoder, and +0.006 for Qwen Conditioning decoder. Positive values indicate lower MER under Oracle-local; these are averages across the frozen datasets/layers and do not imply coordinate equivalence.
+Whisper Global-vs-Local values remain frozen. Corrected Qwen mean MER(Global)-MER(Local), recomputed from the repaired local rows, are: Raw encoder: +0.024795; Raw decoder: +0.004664; Conditioning decoder: +0.005665. Positive values indicate lower MER under Oracle-local; no local benefit is claimed unless supported by these corrected rows.
 
 ## Encoder vs Decoder
 
@@ -50,7 +50,7 @@ The CS-Dialogue, SEAME-dev_man, and SEAME-dev_sge traces are retained separately
 
 ## Cross-Model Findings
 
-Both models show a decoder-localized useful band and behavioral benefit from Oracle-local masks, but Whisper encoder steering is substantially more damaging than Qwen encoder steering. Relative-depth patterns, not layer numbers, are compared. A high POI correction score with a negative MER gain is labeled high corrective power/high damage rather than best. rho=.5 is not treated as physically dose-matched, and vector coordinates are not compared across models.
+The repaired Qwen local masks are no longer a no-op (CS alignable encoder/decoder nonzero rate is 100%); corrected Global-vs-Local behavior is reported numerically above. Whisper encoder steering remains substantially more damaging than Qwen encoder steering. Relative-depth patterns, not layer numbers, are compared. A high POI correction score with a negative MER gain is labeled high corrective power/high damage rather than best. rho=.5 is not treated as physically dose-matched, and vector coordinates are not compared across models.
 
 ## Geometry
 

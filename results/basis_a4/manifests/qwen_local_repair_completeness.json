@@ -1,0 +1,28 @@
+{
+  "schema_version": "basis_a4_qwen_local_repair_completeness_v1",
+  "status": "PASS",
+  "repair_commit": "45a300d5629409fd592193a0bc7e12b1796221f6",
+  "freeze_commit": "83ad4a928fd15f7768d6a76c1ea0c7073f94dd69",
+  "model_revision": "sha256:5d87c842f212c25fef15bbb1d300fbbb5fafc98eb97fc37f01fcfbf2ce3453e8",
+  "cache_policy": "OFF",
+  "rho": 0.5,
+  "affected_mask_types": ["encoder", "decoder"],
+  "counts": {
+    "raw_encoder": 72,
+    "raw_decoder": 84,
+    "conditioning_decoder": 84,
+    "total_local": 240,
+    "final_qwen_total": 480
+  },
+  "datasets": {
+    "cs_dialogue": {"local": 80, "alignable_nonzero_encoder_rate": 1.0, "alignable_nonzero_decoder_rate": 1.0},
+    "seame_dev_man": {"local": 80, "all_cells_nonzero": true},
+    "seame_dev_sge": {"local": 80, "all_cells_nonzero": true}
+  },
+  "duplicate_keys": 0,
+  "empty_provenance": 0,
+  "poi_net_utility_identity_failures": 0,
+  "jobs": [52994, 52995, 52997],
+  "superseded_manifest": "results/basis_a4/quarantine/superseded_broken_qwen_local_mask/MANIFEST.json",
+  "old_noop_results_excluded": 240
+}

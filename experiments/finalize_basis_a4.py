@@ -136,6 +136,10 @@ def write_tables(rows):
 
 
 def geometry():
+    # Geometry is independent of Oracle-local behavioral rows.  Preserve the
+    # already-frozen A4 geometry artifact during a local-mask repair.
+    if (OUT / "geometry/raw_conditioning.json").is_file() and (OUT / "geometry/raw_conditioning.csv").is_file():
+        return
     a3 = read(REPO / "results/basis_frozen_layer_atlas/directions.json")
     out = []
     def one(model, layer, rawp, condp):
@@ -212,6 +216,9 @@ def report(rows, proto):
           "geometry": "results/basis_a4/geometry/raw_conditioning.json",
           "geometry_rows": 60, "duplicate_keys": 0, "empty_provenance": 0,
           "qwen_acceptance": "results/basis_a4/acceptance/qwen_acceptance.json",
+          "qwen_local_repair": "results/basis_a4/manifests/qwen_local_repair_completeness.json",
+          "superseded_qwen_local": "results/basis_a4/quarantine/superseded_broken_qwen_local_mask/MANIFEST.json",
+          "qwen_local_repair_jobs": [52994, 52995, 52997],
           "whisper_completeness": "results/basis_a4/manifests/whisper_clean_completeness.json",
           "qwen_completeness": "results/basis_a4/manifests/qwen_completeness.json"}
     write(OUT / "manifests" / "final_manifest.json", final_manifest)
@@ -221,8 +228,25 @@ def report(rows, proto):
     def vals(model, direction):
         x = [r for r in rows if r["model"] == model and r["direction"] == direction]
         return (min((r["mer"] for r in x), default=float("nan")), max((r["mer"] for r in x), default=float("nan")))
+    qwen_delta = {}
+    for direction, side in (("Raw", "encoder"), ("Raw", "decoder"), ("Conditioning", "decoder")):
+        pairs = []
+        for dataset in DATASETS:
+            for layer in range(24 if side == "encoder" else 28):
+                g = next((r for r in rows if r["model"] == "qwen3_asr_1p7b" and r["direction"] == direction and r["side"] == side and r["dataset"] == dataset and r["layer"] == layer and r["scope"] == "global"), None)
+                l = next((r for r in rows if r["model"] == "qwen3_asr_1p7b" and r["direction"] == direction and r["side"] == side and r["dataset"] == dataset and r["layer"] == layer and r["scope"] == "oracle_local"), None)
+                if g is not None and l is not None: pairs.append(float(g["mer"]) - float(l["mer"]))
+        qwen_delta[f"{direction} {side}"] = float(np.mean(pairs)) if pairs else float("nan")
+    qwen_delta_text = "; ".join(f"{k}: {v:+.6f}" for k, v in qwen_delta.items())
     lines = ["# BASIS-A4 Final Report", "", "## Execution Status", "", "COMPLETE. All frozen Whisper and Qwen cells passed CPU completeness and provenance validation.", "", "## Implementation", "", "Implemented exact Whisper and Qwen pre-FFN residual sites, norm-preserving steering, deterministic official Qwen loading, frozen masks, resumable cell paths, manifests, and CPU aggregation.", "", "## Acceptance Tests", "", "CPU acceptance: PASS. Qwen MIG preflight: PASS (job 52090; 3.86 GiB peak VRAM; deterministic; rho=0 identity; cache identity not accepted, so canonical cache mode is OFF; no gradients). Whisper exact-site real acceptance was reused from the accepted A3 gate. Conditioning-Avg was not duplicated because the A4 redundancy gate is frozen.", "", "## Slurm Jobs", "", "Whisper Conditioning jobs: 52091 (CS-Dialogue), 52092 (SEAME-dev_man), and 52094 (SEAME-dev_sge). Qwen preflight: 52090; direction construction: 52136; baselines: 52137-52139; atlas: 52141-52146 (with 52140 recorded as the failed pre-fix encoder attempt).", "", "## Whisper Completeness", "", f"Raw: 384 reused cells. Conditioning: 192 cells (24 reused, 168 newly decoded). Conditioning-Avg: 0, redundant.", "", "## Qwen Completeness", "", "Raw: 312 cells (144 audio-encoder, 168 text-decoder). Conditioning: 168 text-decoder cells. Baselines: CS 300, dev-man 50, dev-sge 50.", "", "## Raw Results", "", f"Whisper MER range: {vals('whisper','Raw')}; Qwen MER range: {vals('qwen3_asr_1p7b','Raw')}.", "", "## Conditioning Results", "", f"Whisper MER range: {vals('whisper','Conditioning')}; Qwen MER range: {vals('qwen3_asr_1p7b','Conditioning')}.", "", "## Conditioning-Avg Results", "", "Not run or constructed: the frozen A4 specification proves its all-content population is redundant with Conditioning.", "", "## Global vs Local", "", "Localization is behavioral: mean MER(Global)-MER(Local) is +0.591 for Whisper Raw encoder, +0.019 for Whisper Raw decoder, +0.083 for Whisper Conditioning decoder, +0.025 for Qwen Raw encoder, +0.005 for Qwen Raw decoder, and +0.006 for Qwen Conditioning decoder. Positive values indicate lower MER under Oracle-local; these are averages across the frozen datasets/layers and do not imply coordinate equivalence.", "", "## Encoder vs Decoder", "", "Whisper Raw encoder steering is broadly damaging (mean layer MER-gain range -0.921 to -0.138), while Raw decoder steering has a narrow useful region (best mean layer 16, +0.013). Qwen Raw encoder effects are much smaller and mostly damaging (best mean layer 19, -0.0006); Qwen Raw decoder has a narrow best-MER region around layer 22 (+0.003). Conditioning is decoder-only: Whisper's best mean MER layer is 3 (+0.0035) while late layers can show corrective power with damage; Qwen's best mean MER layer is 24 (+0.0020), while its best mean PIER layer is 10 (+0.0054), illustrating the correction-versus-damage tradeoff.", "", "## Cross-Corpus Findings", "", "The CS-Dialogue, SEAME-dev_man, and SEAME-dev_sge traces are retained separately. The same depth conclusions are summarized across panels only as averages; SEAME panels remain small and no pooled generalization claim is made.", "", "## Cross-Model Findings", "", "Both models show a decoder-localized useful band and behavioral benefit from Oracle-local masks, but Whisper encoder steering is substantially more damaging than Qwen encoder steering. Relative-depth patterns, not layer numbers, are compared. A high POI correction score with a negative MER gain is labeled high corrective power/high damage rather than best. rho=.5 is not treated as physically dose-matched, and vector coordinates are not compared across models.", "", "## Geometry", "", "Within-model Raw↔Conditioning cosine, angle, raw L2, unit L2, and vector norms are in geometry/raw_conditioning.{json,csv}; the unit-L2 identity holds for all 60 rows.", "", "## Figures / Tables", "", "Required depth, retention, global/local delta, decoder comparison, cross-corpus, geometry, and normalized-depth figures are in figures/. CSV tables are in tables/.", "", "## Data Exposure", "", "Directions use D-construct only. Evaluation uses the frozen CS, dev-man, and dev-sge panels. D-dev-confirm and D-test were not intervened; no D-test output was generated.", "", "## Final Commit", "", "Path-limited commit recorded after this report and its manifests were validated.", "", "## Problems / Caveats", "", "SEAME panels are 50 utterances each and remain underpowered for broad generalization claims. Qwen's frame grid and physical perturbation scale differ from Whisper. Conditioning-Avg remains a documented redundancy, not a missing experiment.", "", "## Gate", "", "READY_FOR_INDEPENDENT_AUDIT"]
-    (OUT / "FINAL_REPORT.md").write_text("\n".join(lines) + "\n")
+    report_text = "\n".join(lines) + "\n"
+    report_text = report_text.replace(
+        "Localization is behavioral: mean MER(Global)-MER(Local) is +0.591 for Whisper Raw encoder, +0.019 for Whisper Raw decoder, +0.083 for Whisper Conditioning decoder, +0.025 for Qwen Raw encoder, +0.005 for Qwen Raw decoder, and +0.006 for Qwen Conditioning decoder. Positive values indicate lower MER under Oracle-local; these are averages across the frozen datasets/layers and do not imply coordinate equivalence.",
+        "Whisper Global-vs-Local values remain frozen. Corrected Qwen mean MER(Global)-MER(Local), recomputed from the repaired local rows, are: " + qwen_delta_text + ". Positive values indicate lower MER under Oracle-local; no local benefit is claimed unless supported by these corrected rows.")
+    report_text = report_text.replace(
+        "Both models show a decoder-localized useful band and behavioral benefit from Oracle-local masks, but Whisper encoder steering is substantially more damaging than Qwen encoder steering.",
+        "The repaired Qwen local masks are no longer a no-op (CS alignable encoder/decoder nonzero rate is 100%); corrected Global-vs-Local behavior is reported numerically above. Whisper encoder steering remains substantially more damaging than Qwen encoder steering.")
+    (OUT / "FINAL_REPORT.md").write_text(report_text)
 
 
 def main():

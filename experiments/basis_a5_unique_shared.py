@@ -413,9 +413,21 @@ def refresh_direction_manifests() -> int:
                 a_path, b_path = root / "moments_A.npz", root / "moments_B.npz"
                 if not a_path.is_file() or not b_path.is_file():
                     raise FileNotFoundError(f"missing corpus moments: {root}")
+                # The construction artifacts are already frozen.  Refresh
+                # only provenance here; recomputing 116 eigensystems would be
+                # unnecessary and could create concurrent-write risk at the
+                # commit boundary.
+                diag_path = root / "diagnostics.json"
+                diag = _json(diag_path)
                 a, b = _moment(a_path), _moment(b_path)
-                layers_meta[side][str(layer)] = _save_directions(
-                    model, side, layer, a, b, dim=int(a.sum.shape[0]))
+                diag.update({
+                    "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+                    "git_commit": _git_state().get("commit"),
+                    "construction_population": "corpus_aggregated_D-construct",
+                    "construction_count_A": int(a.count), "construction_count_B": int(b.count),
+                })
+                _write(diag_path, diag)
+                layers_meta[side][str(layer)] = diag
         manifests[model] = {"schema_version": "basis_a5_direction_manifest_v2",
                             "model": model, "source_role": "D-construct",
                             "construction_population": "full eligible baseline-correct corpus samples",

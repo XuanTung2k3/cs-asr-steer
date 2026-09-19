@@ -615,11 +615,21 @@ def rank_stability() -> int:
     for model in ("whisper", "qwen3_asr_1p7b"):
         for side in ("encoder", "decoder"):
             group = [x for x in rows if x["model"] == model and x["side"] == side]
-            medians[f"{model}:{side}"] = {
-                k: float(np.median([x[k] for x in group]))
-                for k in ("cos_abs_unique_16_vs_32", "cos_abs_unique_64_vs_32",
-                          "cos_abs_shared_16_vs_32", "cos_abs_shared_64_vs_32")}
-    passed = all(v >= 0.90 for m in medians.values() for v in m.values())
+            key = f"{model}:{side}"
+            if not group:
+                # The A4 decoder anchor indices do not intersect the 24-layer
+                # Qwen audio encoder.  Record that explicitly; it is not a
+                # failed gate and does not authorize a substituted layer.
+                medians[key] = {"status": "NOT_APPLICABLE", "n_layers": 0}
+            else:
+                medians[key] = {
+                    k: float(np.median([x[k] for x in group]))
+                    for k in ("cos_abs_unique_16_vs_32", "cos_abs_unique_64_vs_32",
+                              "cos_abs_shared_16_vs_32", "cos_abs_shared_64_vs_32")}
+                medians[key]["n_layers"] = len(group)
+    numeric_medians = [v for m in medians.values() for k, v in m.items()
+                       if k != "n_layers" and isinstance(v, (int, float))]
+    passed = bool(numeric_medians) and all(v >= 0.90 for v in numeric_medians)
     report = {"schema_version": "basis_a5_rank_stability_v1", "status": "PASS" if passed else "FAIL",
               "primary_rank": 32, "ranks": [16, 32, 64],
               "anchor_policy": "A4 frozen anchor/candidate indices {24,26,27,31}, clipped to model depth",

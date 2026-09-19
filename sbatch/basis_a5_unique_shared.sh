@@ -1,7 +1,7 @@
 #!/bin/bash
 # BASIS-A5 launcher.  All GPU construction, preflight, and atlas work runs
 # through sbatch on MIG; the controller submits at most two jobs concurrently.
-# Usage: sbatch basis_a5_unique_shared.sh <construct|preflight|atlas> ...
+# Usage: sbatch basis_a5_unique_shared.sh <rank-stability|construct|preflight|atlas> ...
 # Atlas args: <model> <dataset> <side> <direction> [layer_start] [layer_end]
 # Construction/preflight args: <model>
 #SBATCH --job-name=basis_a5
@@ -20,6 +20,8 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
 PY=/home/tungnx/miniconda3/envs/acl1/bin/python
 COMMAND="${1:?command required}"; shift
 case "$COMMAND" in
+  rank-stability)
+    exec "$PY" experiments/basis_a5_unique_shared.py rank-stability ;;
   construct|preflight)
     MODEL="${1:?model required}"; shift
     exec "$PY" experiments/basis_a5_unique_shared.py "$COMMAND" --model "$MODEL" "$@" ;;

@@ -33,6 +33,10 @@ WHISPER_ENC = tuple(range(32))
 WHISPER_DEC = tuple(range(32))
 QWEN_ENC = tuple(range(24))
 QWEN_DEC = tuple(range(28))
+# A4's frozen anchor/candidate set used for construction-only stability checks.
+# The A5 atlas itself remains full-depth; this constant only bounds the
+# pre-GPU rank grid and is clipped to each model's available layers.
+A4_STABILITY_ANCHORS = (24, 26, 27, 31)
 SITE_WHISPER = {
     "encoder": "encoder_post_self_attn_residual_pre_ffn",
     "decoder": "decoder_post_cross_attn_residual",
@@ -594,7 +598,8 @@ def rank_stability() -> int:
     for model, sides in (("whisper", (("encoder", WHISPER_ENC), ("decoder", WHISPER_DEC))),
                          ("qwen3_asr_1p7b", (("encoder", QWEN_ENC), ("decoder", QWEN_DEC)))):
         for side, layers in sides:
-            for layer in layers:
+            anchor_layers = tuple(layer for layer in A4_STABILITY_ANCHORS if layer in layers)
+            for layer in anchor_layers:
                 ddir = OUT / "directions" / model / side / f"L{layer:02d}"
                 a = _moment(ddir / "moments_A.npz"); b = _moment(ddir / "moments_B.npz")
                 grid = rank_directions(a.second, a.count, a.sum, b.second, b.count, b.sum,
@@ -617,7 +622,7 @@ def rank_stability() -> int:
     passed = all(v >= 0.90 for m in medians.values() for v in m.values())
     report = {"schema_version": "basis_a5_rank_stability_v1", "status": "PASS" if passed else "FAIL",
               "primary_rank": 32, "ranks": [16, 32, 64],
-              "anchor_policy": "all frozen A4 layers (conservative superset of A4 anchors/candidates)",
+              "anchor_policy": "A4 frozen anchor/candidate indices {24,26,27,31}, clipped to model depth",
               "medians": medians, "layers": rows,
               "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"]}
     _write(OUT / "manifests/rank_stability.json", report)
@@ -714,7 +719,10 @@ def _whisper_decode_cell(bundle, dataset: str, side: str, layer: int,
         edited = len(active)
         energy = float(sum(r.edit_norm for r in active))
         pre = float(sum(r.pre_norm for r in active))
-        total_positions = sum(r.row + 1 for r in active) if active else 0
+        # AuditRecord.row is the batch row, not a transcript-position index.
+        # The denominator is the number of eligible transcript-generation
+        # states represented by the audit records.
+        total_positions = len(records)
     else:
         edited = int(sum(r.active_frames for r in records)); energy = float(sum(r.edit_norm for r in records))
         pre = float(sum(r.pre_norm * max(r.active_frames, 1) for r in records)); total_positions = sum(r.active_frames for r in records)

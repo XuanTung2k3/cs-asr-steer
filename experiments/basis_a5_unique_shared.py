@@ -404,6 +404,8 @@ def _save_directions(model: str, side: str, layer: int, moments_a: _Moments,
 def refresh_direction_manifests() -> int:
     """Re-emit provenance from existing corpus moments without model execution."""
     manifests = {}
+    protocol_hash = _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"]
+    git_commit = _git_state().get("commit")
     for model, sides in (("whisper", (("encoder", WHISPER_ENC), ("decoder", WHISPER_DEC))),
                          ("qwen3_asr_1p7b", (("encoder", QWEN_ENC), ("decoder", QWEN_DEC)))):
         layers_meta = {"encoder": {}, "decoder": {}}
@@ -421,8 +423,8 @@ def refresh_direction_manifests() -> int:
                 diag = _json(diag_path)
                 a, b = _moment(a_path), _moment(b_path)
                 diag.update({
-                    "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
-                    "git_commit": _git_state().get("commit"),
+                    "protocol_hash": protocol_hash,
+                    "git_commit": git_commit,
                     "construction_population": "corpus_aggregated_D-construct",
                     "construction_count_A": int(a.count), "construction_count_B": int(b.count),
                 })
@@ -433,7 +435,8 @@ def refresh_direction_manifests() -> int:
                             "construction_population": "full eligible baseline-correct corpus samples",
                             "rank": 32, "model_revision": _model_revision(model),
                             "git_commit": _git_state().get("commit"),
-                            "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+                            "protocol_hash": protocol_hash,
+                            "git_commit": git_commit,
                             "site": SITE_WHISPER if model == "whisper" else SITE_QWEN,
                             "layers": layers_meta}
         _write(OUT / "directions" / model / "manifest.json", manifests[model])
@@ -441,7 +444,7 @@ def refresh_direction_manifests() -> int:
         "schema_version": "basis_a5_direction_refresh_v1", "status": "PASS",
         "rank": 32, "source_role": "D-construct", "models": list(manifests),
         "qwen_encoder_layers": len(manifests["qwen3_asr_1p7b"]["layers"]["encoder"]),
-        "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+        "protocol_hash": protocol_hash, "git_commit": git_commit,
     })
     return 0
 

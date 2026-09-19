@@ -1,0 +1,39 @@
+{
+  "git": {
+    "branch": "learned-expansion",
+    "commit": "9aaf632cf4cd877596a9d5e66dbbb57174baa31a",
+    "dirty": true,
+    "dirty_files": [
+      "M docs/current/CODE_MAP.md",
+      " M docs/current/STATUS.md",
+      "?? configs/expansion/aga_clean.yaml",
+      "?? configs/expansion/bilora.yaml",
+      "?? configs/expansion/learned_expansion.yaml",
+      "?? configs/expansion/lora_paper_style.yaml",
+      "?? configs/expansion/salsa.yaml",
+      "?? docs/current/AGA_REIMPLEMENTATION_AUDIT.md",
+      "?? docs/current/TRAINING_EXPANSION_IMPLEMENTATION.md",
+      "?? docs/reports/",
+      "?? results/basis_a5_unique_shared/directions/",
+      "?? results/basis_a5_unique_shared/manifests/construct_whisper_53029.json",
+      "?? results/basis_frozen_layer_atlas/free_decode/",
+      "?? results/basis_frozen_layer_atlas/mixture/",
+      "?? results/basis_frozen_layer_atlas/quarantined_raw_norm_bug/",
+      "?? results/basis_frozen_layer_atlas/teacher_forced/",
+      "?? results/learned_expansion/",
+      "?? slurm-51490.out",
+      "?? src/csasr/steering/expansion/controller_factory.py",
+      "?? src/csasr/steering/expansion/layered.py",
+      "?? src/csasr/steering/expansion/lora_baselines.py",
+      "?? src/csasr/steering/expansion/manifest.py",
+      "?? src/csasr/steering/expansion/reporting.py",
+      "?? tests/test_training_expansion.py"
+    ],
+    "is_git_repo": true
+  },
+  "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+  "protocol_hash": "sha256:81b54db57113effa5463efe135861760ffc1a0ba0628763979027b70ad60e91f",
+  "schema_version": "basis_a5_stage_manifest_v1",
+  "stage": "construct_whisper",
+  "status": "COMPLETED"
+}

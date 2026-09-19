@@ -908,7 +908,7 @@ def _whisper_decode_cell(bundle, dataset: str, side: str, layer: int,
                          direction: str, vector: np.ndarray, dhash: str,
                          diag: dict) -> dict:
     import torch
-    from csasr.experiments.basis_a3 import _cs_eval_spans, _decoder_cached_inputs, _decoder_gate, _encoder_gain
+    from experiments.basis_a3 import _cs_eval_spans, _decoder_cached_inputs, _decoder_gate, _encoder_gain
     from csasr.lss.encoder_sites import EncoderPostSelfAttnInterventionHook
     from csasr.lss.sites import DecoderPostCrossAttnInterventionHook, num_forced_prefix_from
     from csasr.models.whisper import batch_model_inputs
@@ -1105,7 +1105,7 @@ def atlas_qwen(dataset: str, side: str, direction: str, layer_start: int = 0,
 
 def _preflight_whisper() -> dict:
     import torch
-    from csasr.experiments.basis_a3 import _decoder_cached_inputs, _decoder_gate, _encoder_gain, GEN
+    from experiments.basis_a3 import _decoder_cached_inputs, _decoder_gate, _encoder_gain, GEN
     from csasr.lss.encoder_sites import EncoderPostSelfAttnInterventionHook
     from csasr.lss.sites import DecoderPostCrossAttnInterventionHook, num_forced_prefix_from
     from csasr.models.whisper import batch_model_inputs, load_whisper

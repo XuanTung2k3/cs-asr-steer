@@ -56,6 +56,7 @@ def construct_unique_shared(
     *,
     rank: int = 32,
     top_vectors: int | None = None,
+    _basis: tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray] | None = None,
 ) -> UniqueSharedResult:
     """Construct the frozen A5 directions from uncentered moments.
 
@@ -77,8 +78,13 @@ def construct_unique_shared(
         raise ValueError("effective rank is zero")
     k = min(int(top_vectors or r_eff), d, int(count_a), int(count_b))
     k = max(k, r_eff)
-    ua, eva = _top_eigenvectors(sa / float(count_a), k)
-    ub, evb = _top_eigenvectors(sb / float(count_b), k)
+    if _basis is None:
+        ua, eva = _top_eigenvectors(sa / float(count_a), k)
+        ub, evb = _top_eigenvectors(sb / float(count_b), k)
+    else:
+        ua, eva, ub, evb = _basis
+        if ua.shape[1] < k or ub.shape[1] < k:
+            raise ValueError("cached eigensystem is smaller than requested rank")
     p, sigma, qt = np.linalg.svd(ua.T @ ub, full_matrices=False)
     a = ua @ p
     b = ub @ qt.T
@@ -159,6 +165,11 @@ def construct_unique_shared(
 def rank_directions(second_a, count_a, sum_a, second_b, count_b, sum_b,
                     ranks=(16, 32, 64)) -> dict[str, UniqueSharedResult]:
     """Recompute directions at the frozen stability ranks."""
+    top = max(int(r) for r in ranks)
+    sa = np.asarray(second_a, dtype=np.float64); sb = np.asarray(second_b, dtype=np.float64)
+    ua, eva = _top_eigenvectors(sa / float(count_a), top)
+    ub, evb = _top_eigenvectors(sb / float(count_b), top)
+    basis = (ua, eva, ub, evb)
     return {str(int(r)): construct_unique_shared(
-        second_a, count_a, sum_a, second_b, count_b, sum_b,
-        rank=int(r), top_vectors=max(ranks)) for r in ranks}
+        sa, count_a, sum_a, sb, count_b, sum_b,
+        rank=int(r), top_vectors=top, _basis=basis) for r in ranks}

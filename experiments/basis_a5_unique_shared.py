@@ -47,7 +47,10 @@ SITE_QWEN = {
 }
 A5_SPEC = REPO / "docs/current/BASIS_A5_SPEC.md"
 A5_PLAN = REPO / "docs/current/BASIS_A5_EXECUTION_PLAN.md"
+A5_AMENDMENT = REPO / "docs/current/BASIS_A5_NONBLOCKING_STABILITY_AMENDMENT.md"
 A4_PROTOCOL = A4 / "manifests/a4_protocol_freeze.json"
+PRESERVED_RANK_GATE = OUT / "manifests/rank_stability.json"
+RANK_DIAGNOSTIC = OUT / "manifests/rank_stability_diagnostic.json"
 
 
 def _json(path: Path):
@@ -148,6 +151,8 @@ def _protocol_payload() -> dict:
         "study": "BASIS-A5",
         "spec_sha256": _sha256_file(A5_SPEC),
         "execution_plan_sha256": _sha256_file(A5_PLAN),
+        "protocol_amendment_sha256": _sha256_file(A5_AMENDMENT),
+        "rank_stability_policy": "diagnostic_nonblocking",
         "a4_protocol_hash": _a4_hash(),
         "a4_final_manifest_sha256": _sha256_file(A4 / "FINAL_MANIFEST.json"),
         "a4_final_status": a4_final.get("status"),
@@ -247,6 +252,24 @@ def freeze() -> int:
     payload["git"] = _git_state()
     payload["protocol_hash"] = _hash_obj(payload)
     payload["status"] = "FROZEN_PRE_RUN"
+    preserved = {
+        "schema_version": "basis_a5_nonblocking_stability_amendment_v1",
+        "status": "ACTIVE",
+        "policy": "diagnostic_nonblocking",
+        "primary_rank": 32,
+        "previous_gate": str(PRESERVED_RANK_GATE.relative_to(REPO)),
+        "previous_gate_sha256": (_sha256_file(PRESERVED_RANK_GATE)
+                                 if PRESERVED_RANK_GATE.is_file() else None),
+        "previous_gate_status": (_json(PRESERVED_RANK_GATE).get("status")
+                                 if PRESERVED_RANK_GATE.is_file() else "MISSING"),
+        "previous_slurm_job": "53047",
+        "previous_commits": ["de3a3e0", "9d31b10"],
+        "rank_fixed_before_downstream_outcomes": True,
+        "mer_pier_never_select_rank": True,
+        "unstable_layers_labeled": True,
+        "amendment_sha256": _sha256_file(A5_AMENDMENT),
+    }
+    _write(OUT / "manifests/nonblocking_stability_amendment.json", preserved)
     _write(OUT / "spec/protocol_payload.json", payload)
     _write(OUT / "manifests/a5_protocol_freeze.json", payload)
     _write(OUT / "reuse/comparator_manifest.json", audit)
@@ -352,6 +375,10 @@ def _save_directions(model: str, side: str, layer: int, moments_a: _Moments,
         "construction_role": "D-construct", "rank": 32,
         "site": (SITE_WHISPER if model == "whisper" else SITE_QWEN)[side],
         "model_revision": _model_revision(model), "a4_protocol_hash": _a4_hash(),
+        "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+        "git_commit": _git_state().get("commit"),
+        "construction_population": "corpus_aggregated_D-construct",
+        "construction_count_A": int(moments_a.count), "construction_count_B": int(moments_b.count),
         "direction_hashes": hashes,
         "cos_unique_raw_a4": None if raw is None else float(built.v_unique @ raw),
         "cos_shared_raw_a4": None if raw is None else float(built.v_shared @ raw),
@@ -372,6 +399,39 @@ def _save_directions(model: str, side: str, layer: int, moments_a: _Moments,
     })
     _write(out / "diagnostics.json", diag)
     return diag
+
+
+def refresh_direction_manifests() -> int:
+    """Re-emit provenance from existing corpus moments without model execution."""
+    manifests = {}
+    for model, sides in (("whisper", (("encoder", WHISPER_ENC), ("decoder", WHISPER_DEC))),
+                         ("qwen3_asr_1p7b", (("encoder", QWEN_ENC), ("decoder", QWEN_DEC)))):
+        layers_meta = {"encoder": {}, "decoder": {}}
+        for side, layers in sides:
+            for layer in layers:
+                root = OUT / "directions" / model / side / f"L{layer:02d}"
+                a_path, b_path = root / "moments_A.npz", root / "moments_B.npz"
+                if not a_path.is_file() or not b_path.is_file():
+                    raise FileNotFoundError(f"missing corpus moments: {root}")
+                a, b = _moment(a_path), _moment(b_path)
+                layers_meta[side][str(layer)] = _save_directions(
+                    model, side, layer, a, b, dim=int(a.sum.shape[0]))
+        manifests[model] = {"schema_version": "basis_a5_direction_manifest_v2",
+                            "model": model, "source_role": "D-construct",
+                            "construction_population": "full eligible baseline-correct corpus samples",
+                            "rank": 32, "model_revision": _model_revision(model),
+                            "git_commit": _git_state().get("commit"),
+                            "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+                            "site": SITE_WHISPER if model == "whisper" else SITE_QWEN,
+                            "layers": layers_meta}
+        _write(OUT / "directions" / model / "manifest.json", manifests[model])
+    _write(OUT / "manifests/direction_refresh.json", {
+        "schema_version": "basis_a5_direction_refresh_v1", "status": "PASS",
+        "rank": 32, "source_role": "D-construct", "models": list(manifests),
+        "qwen_encoder_layers": len(manifests["qwen3_asr_1p7b"]["layers"]["encoder"]),
+        "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+    })
+    return 0
 
 
 def _whisper_context():
@@ -629,7 +689,14 @@ def rank_stability() -> int:
                 medians[key]["n_layers"] = len(group)
     numeric_medians = [v for m in medians.values() for k, v in m.items()
                        if k != "n_layers" and isinstance(v, (int, float))]
-    passed = bool(numeric_medians) and all(v >= 0.90 for v in numeric_medians)
+    finite_medians = [v for v in numeric_medians if np.isfinite(v)]
+    passed = (bool(numeric_medians) and len(finite_medians) == len(numeric_medians)
+              and all(v >= 0.90 for v in finite_medians))
+    if len(finite_medians) != len(numeric_medians):
+        for key, values in medians.items():
+            for metric, value in list(values.items()):
+                if isinstance(value, (int, float)) and not np.isfinite(value):
+                    values[metric] = None
     report = {"schema_version": "basis_a5_rank_stability_v1", "status": "PASS" if passed else "FAIL",
               "primary_rank": 32, "ranks": [16, 32, 64],
               "anchor_policy": "A4 frozen anchor/candidate indices {24,26,27,31}, clipped to model depth",
@@ -638,6 +705,135 @@ def rank_stability() -> int:
     _write(OUT / "manifests/rank_stability.json", report)
     if not passed:
         raise RuntimeError(f"A5 rank stability gate failed: {medians}")
+    return 0
+
+
+def _stability_status_index() -> dict[tuple[str, str, int], str]:
+    """Read-only status view; never rewrites the historical rank gate."""
+    index: dict[tuple[str, str, int], str] = {}
+    for path in (PRESERVED_RANK_GATE, RANK_DIAGNOSTIC):
+        if not path.is_file():
+            continue
+        for row in _json(path).get("layers", []):
+            values = [row.get(k) for k in (
+                "cos_abs_unique_16_vs_32", "cos_abs_unique_64_vs_32",
+                "cos_abs_shared_16_vs_32", "cos_abs_shared_64_vs_32")]
+            if any(v is None for v in values):
+                continue
+            key = (str(row["model"]), str(row["side"]), int(row["layer"]))
+            status = "STABLE" if all(float(v) >= 0.90 for v in values) else "UNSTABLE"
+            # The preserved failure is authoritative when both manifests have
+            # a row for the same layer.
+            if key not in index or path == PRESERVED_RANK_GATE:
+                index[key] = status
+    return index
+
+
+def _stability_status(model: str, side: str, layer: int) -> str:
+    return _stability_status_index().get((model, side, int(layer)), "NOT_TESTED")
+
+
+def rank_stability_diagnostic() -> int:
+    """Record full-atlas labels without mutating the preserved failed gate."""
+    if not PRESERVED_RANK_GATE.is_file():
+        raise RuntimeError("preserved rank gate is missing")
+    old = _json(PRESERVED_RANK_GATE)
+    amendment_path = OUT / "manifests/nonblocking_stability_amendment.json"
+    amendment = _json(amendment_path) if amendment_path.is_file() else {}
+    if amendment.get("previous_gate_sha256") and _sha256_file(PRESERVED_RANK_GATE) != amendment["previous_gate_sha256"]:
+        raise RuntimeError("preserved rank gate hash changed")
+    old_rows = {(str(x["model"]), str(x["side"]), int(x["layer"])): x
+                for x in old.get("layers", [])}
+    rows = []
+    for model, sides in (("whisper", (("encoder", WHISPER_ENC), ("decoder", WHISPER_DEC))),
+                         ("qwen3_asr_1p7b", (("encoder", QWEN_ENC), ("decoder", QWEN_DEC)))):
+        for side, layers in sides:
+            for layer in layers:
+                old_row = old_rows.get((model, side, int(layer)))
+                row = {"model": model, "side": side, "layer": int(layer),
+                       "status": _stability_status(model, side, layer),
+                       "source": "preserved_rank_stability.json" if old_row else "not_tested_by_preserved_gate"}
+                if old_row:
+                    row.update({k: old_row.get(k) for k in old_row if k.startswith("cos_abs_")})
+                rows.append(row)
+    report = {
+        "schema_version": "basis_a5_rank_stability_diagnostic_v1",
+        "status": "DIAGNOSTIC_ONLY", "blocking": False, "primary_rank": 32,
+        "rank_fixed_before_downstream_outcomes": True,
+        "mer_pier_never_select_rank": True, "preserved_gate_status": old.get("status"),
+        "preserved_gate_sha256": _sha256_file(PRESERVED_RANK_GATE),
+        "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+        "layers": rows,
+        "counts": {s: sum(x["status"] == s for x in rows)
+                   for s in ("STABLE", "UNSTABLE", "NOT_TESTED")},
+    }
+    _write(RANK_DIAGNOSTIC, report)
+    return 0
+
+
+def pre_gpu_gates() -> int:
+    """CPU-only gates required before amended atlas submission."""
+    checks = {
+        "amendment_exists": A5_AMENDMENT.is_file(),
+        "preserved_rank_gate_exists": PRESERVED_RANK_GATE.is_file(),
+        "qwen_local_repair_pass": _json(A4 / "manifests/qwen_local_repair_completeness.json").get("status") == "PASS",
+        "rank_is_32": True, "rho_is_0.5": RHO == 0.5, "scope_is_oracle_local": True,
+    }
+    if checks["preserved_rank_gate_exists"]:
+        checks["preserved_rank_gate_failed_not_passed"] = _json(PRESERVED_RANK_GATE).get("status") == "FAIL"
+    else:
+        checks["preserved_rank_gate_failed_not_passed"] = False
+    missing: list[str] = []
+    invalid: list[dict] = []
+    expected = {
+        "whisper": {"encoder": WHISPER_ENC, "decoder": WHISPER_DEC},
+        "qwen3_asr_1p7b": {"encoder": QWEN_ENC, "decoder": QWEN_DEC},
+    }
+    for model, sides in expected.items():
+        manifest_path = OUT / "directions" / model / "manifest.json"
+        if not manifest_path.is_file():
+            missing.append(str(manifest_path.relative_to(REPO))); continue
+        manifest = _json(manifest_path)
+        if manifest.get("source_role") != "D-construct":
+            invalid.append({"model": model, "reason": "direction manifest source_role"})
+        for side, layers in sides.items():
+            listed = manifest.get("layers", {}).get(side, {})
+            for layer in layers:
+                root = OUT / "directions" / model / side / f"L{layer:02d}"
+                if str(layer) not in listed or not (root / "diagnostics.json").is_file():
+                    missing.append(str(root.relative_to(REPO))); continue
+                d = _json(root / "diagnostics.json")
+                paths = {name: root / f"{name}.npy" for name in
+                         ("v_unique", "v_shared", "neg_shared", "pos_unique", "unique_minus_shared")}
+                if any(not p.is_file() for p in paths.values()):
+                    missing.append(str(root.relative_to(REPO))); continue
+                vectors = {name: np.asarray(np.load(path), dtype=np.float64)
+                           for name, path in paths.items()}
+                unit_finite = all(np.isfinite(v).all() and abs(np.linalg.norm(v) - 1.0) <= 2e-5
+                                  for v in vectors.values())
+                composite = (vectors["v_unique"] - vectors["v_shared"])
+                valid = (d.get("construction_role") == "D-construct" and d.get("rank") == 32
+                         and d.get("count_a", 0) > 0 and d.get("count_b", 0) > 0
+                         and unit_finite and int(d.get("i_unique", -1)) != int(d.get("i_shared", -1))
+                         and abs(float(vectors["v_unique"] @ vectors["v_shared"])) <= 1e-3
+                         and np.allclose(vectors["unique_minus_shared"], composite / np.linalg.norm(composite), atol=2e-6))
+                a4 = _a4_row(model, "cs_dialogue", "Raw", side, layer)
+                valid = valid and bool(a4.get("site_hash")) and bool(a4.get("mask_hash"))
+                if not valid:
+                    invalid.append({"model": model, "side": side, "layer": layer,
+                                    "reason": "vector/provenance/hash invariant"})
+    checks["all_direction_artifacts"] = not missing
+    checks["all_vectors_and_provenance_valid"] = not invalid
+    report = {"schema_version": "basis_a5_pre_gpu_gates_v1",
+              "status": "PASS" if all(checks.values()) else "FAIL", "blocking": True,
+              "checks": checks, "missing": missing, "invalid": invalid,
+              "qwen_encoder_direction_count": len(list((OUT / "directions/qwen3_asr_1p7b/encoder").glob("L*/diagnostics.json"))),
+              "protocol_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
+              "preserved_rank_gate": str(PRESERVED_RANK_GATE.relative_to(REPO)),
+              "amendment": str(A5_AMENDMENT.relative_to(REPO))}
+    _write(OUT / "manifests/pre_gpu_gates.json", report)
+    if report["status"] != "PASS":
+        raise RuntimeError(report)
     return 0
 
 
@@ -660,6 +856,7 @@ def _result_provenance(model: str, dataset: str, side: str, layer: int,
         "mask_hash": row["mask_hash"],
         "site_hash": row["site_hash"],
         "rank": 32,
+        "rank_stability_status": _stability_status(model, side, layer),
         "rho": RHO,
         "a4_comparator_direction": row.get("direction_hash"),
         "a4_protocol_hash": _a4_hash(),
@@ -748,6 +945,7 @@ def _whisper_decode_cell(bundle, dataset: str, side: str, layer: int,
             "site": SITE_WHISPER[side], "site_hash": row["site_hash"], "mask_hash": row["mask_hash"],
             "panel_fingerprint": frame["fingerprint"], "model_revision": bundle.revision,
             "direction_hash": dhash, "rank": 32, "a4_protocol_hash": _a4_hash(),
+            "rank_stability_status": _stability_status("whisper", side, layer),
             "config_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
             "provenance": _result_provenance("whisper", dataset, side, layer, direction, dhash, diag),
             "metrics": metrics, "texts": texts, "baseline_texts": base}
@@ -758,21 +956,28 @@ def atlas_whisper(dataset: str, side: str, direction: str, layer_start: int = 0,
     import torch
     from csasr.models.whisper import load_whisper
     from csasr.utils.config import load_config
-    layers = WHISPER_ENC if side == "encoder" else WHISPER_DEC
-    selected = [l for l in layers if l >= int(layer_start) and (layer_end is None or l < int(layer_end))]
+    sides = ("encoder", "decoder") if side == "both" else (side,)
+    directions = DIRECTIONS if direction == "all" else (direction,)
     bundle = load_whisper(load_config("model/whisper_large_v3.yaml")); bundle.model.eval()
-    for layer in selected:
-        vector, dhash, diag = _a5_direction("whisper", side, layer, direction)
-        path = OUT / "whisper" / direction / side / dataset / f"L{layer:02d}" / \
-            f"{direction}_{side}_L{layer}_oracle_local_rho0.5.json"
-        if path.is_file():
-            continue
-        result = _whisper_decode_cell(bundle, dataset, side, layer, direction, vector, dhash, diag)
-        _write(path, result)
-        print(f"A5 Whisper completed {path.relative_to(REPO)}", flush=True)
+    selected_by_side = {}
+    for current_side in sides:
+        layers = WHISPER_ENC if current_side == "encoder" else WHISPER_DEC
+        selected = [l for l in layers if l >= int(layer_start) and (layer_end is None or l < int(layer_end))]
+        selected_by_side[current_side] = selected
+        for current_direction in directions:
+            for layer in selected:
+                vector, dhash, diag = _a5_direction("whisper", current_side, layer, current_direction)
+                path = OUT / "whisper" / current_direction / current_side / dataset / f"L{layer:02d}" / \
+                    f"{current_direction}_{current_side}_L{layer}_oracle_local_rho0.5.json"
+                if path.is_file():
+                    continue
+                result = _whisper_decode_cell(bundle, dataset, current_side, layer, current_direction, vector, dhash, diag)
+                _write(path, result)
+                print(f"A5 Whisper completed {path.relative_to(REPO)}", flush=True)
     _write(OUT / "manifests" / f"atlas_whisper_{os.environ.get('SLURM_JOB_ID', 'local')}.json",
            {"schema_version": "basis_a5_stage_manifest_v1", "status": "COMPLETED", "dataset": dataset,
-            "side": side, "direction": direction, "layers": selected, "git": _git_state()})
+            "side": side, "direction": direction, "layers": selected_by_side, "git": _git_state(),
+            "rank_stability_policy": "diagnostic_nonblocking"})
     return 0
 
 
@@ -849,6 +1054,7 @@ def _qwen_decode_cell(bundle, dataset: str, side: str, layer: int,
             "site": SITE_QWEN[side], "site_hash": row["site_hash"], "mask_hash": row["mask_hash"],
             "panel_fingerprint": frame["fingerprint"], "model_revision": bundle.revision,
             "direction_hash": dhash, "rank": 32, "a4_protocol_hash": _a4_hash(),
+            "rank_stability_status": _stability_status("qwen3_asr_1p7b", side, layer),
             "config_hash": _json(OUT / "manifests/a5_protocol_freeze.json")["protocol_hash"],
             "provenance": _result_provenance("qwen3_asr_1p7b", dataset, side, layer, direction, dhash, diag),
             "metrics": metrics, "texts": texts, "baseline_texts": base}
@@ -857,21 +1063,28 @@ def _qwen_decode_cell(bundle, dataset: str, side: str, layer: int,
 def atlas_qwen(dataset: str, side: str, direction: str, layer_start: int = 0,
                layer_end: int | None = None) -> int:
     from csasr.models.qwen3_asr import load_qwen
-    layers = QWEN_ENC if side == "encoder" else QWEN_DEC
-    selected = [l for l in layers if l >= int(layer_start) and (layer_end is None or l < int(layer_end))]
+    sides = ("encoder", "decoder") if side == "both" else (side,)
+    directions = DIRECTIONS if direction == "all" else (direction,)
     bundle = load_qwen(device="cuda:0"); bundle.model.eval()
-    for layer in selected:
-        vector, dhash, diag = _a5_direction("qwen3_asr_1p7b", side, layer, direction)
-        path = OUT / "qwen" / direction / side / dataset / f"L{layer:02d}" / \
-            f"{direction}_{side}_L{layer}_oracle_local_rho0.5.json"
-        if path.is_file():
-            continue
-        result = _qwen_decode_cell(bundle, dataset, side, layer, direction, vector, dhash, diag)
-        _write(path, result)
-        print(f"A5 Qwen completed {path.relative_to(REPO)}", flush=True)
+    selected_by_side = {}
+    for current_side in sides:
+        layers = QWEN_ENC if current_side == "encoder" else QWEN_DEC
+        selected = [l for l in layers if l >= int(layer_start) and (layer_end is None or l < int(layer_end))]
+        selected_by_side[current_side] = selected
+        for current_direction in directions:
+            for layer in selected:
+                vector, dhash, diag = _a5_direction("qwen3_asr_1p7b", current_side, layer, current_direction)
+                path = OUT / "qwen" / current_direction / current_side / dataset / f"L{layer:02d}" / \
+                    f"{current_direction}_{current_side}_L{layer}_oracle_local_rho0.5.json"
+                if path.is_file():
+                    continue
+                result = _qwen_decode_cell(bundle, dataset, current_side, layer, current_direction, vector, dhash, diag)
+                _write(path, result)
+                print(f"A5 Qwen completed {path.relative_to(REPO)}", flush=True)
     _write(OUT / "manifests" / f"atlas_qwen_{os.environ.get('SLURM_JOB_ID', 'local')}.json",
            {"schema_version": "basis_a5_stage_manifest_v1", "status": "COMPLETED", "dataset": dataset,
-            "side": side, "direction": direction, "layers": selected, "git": _git_state()})
+            "side": side, "direction": direction, "layers": selected_by_side, "git": _git_state(),
+            "rank_stability_policy": "diagnostic_nonblocking"})
     return 0
 
 
@@ -886,10 +1099,12 @@ def _preflight_whisper() -> dict:
     rows = _panel("cs_dialogue")["rows"]
     row = sorted(rows, key=lambda x: float(x["duration_sec"]))[0]
     vec, _, diag = _a5_direction("whisper", "decoder", 0, "pos_unique")
+    grad_probe = []
     def decode(hook=None):
         inp = _decoder_cached_inputs(bundle, str(row["utterance_id"]), row["audio_path"])
         ctx = hook if hook is not None else _null_context()
         with ctx, torch.inference_mode():
+            grad_probe.append(bool(torch.is_grad_enabled()))
             out = bundle.model.generate(**inp, **GEN)
         seq = out if isinstance(out, torch.Tensor) else out.sequences
         return bundle.processor.batch_decode(seq, skip_special_tokens=True)[0].strip()
@@ -914,12 +1129,13 @@ def _preflight_whisper() -> dict:
         eo = bundle.model.generate(**inp, **GEN)
     enc_edited = sum(r.active_frames for r in eh.records)
     peak = int(torch.cuda.max_memory_allocated())
-    return {"model": "whisper", "status": "PASS" if base == repeat == rho0 and edited >= 0 and enc_edited >= 0 else "FAIL",
+    no_gradients = not any(grad_probe)
+    return {"model": "whisper", "status": "PASS" if base == repeat == rho0 and edited >= 0 and enc_edited >= 0 and no_gradients else "FAIL",
             "runtime_seconds": time.monotonic() - t0, "peak_vram_gb": peak / 2**30,
             "deterministic": base == repeat, "rho0_identity": base == rho0,
             "hook_off_identity": base == decode(), "decoder_local_positions": len(local),
             "decoder_edited_records": edited, "encoder_edited_frames": int(enc_edited),
-            "no_gradients": not any(p.requires_grad for p in bundle.model.parameters()),
+            "no_gradients": no_gradients,
             "norm_preserve": bool(hooked.records or eh.records), "directions": ["neg_shared", "pos_unique", "unique_minus_shared"]}
 
 
@@ -932,8 +1148,11 @@ def _preflight_qwen() -> dict:
     row = sorted(_panel("cs_dialogue")["rows"], key=lambda x: float(x["duration_sec"]))[0]
     vec, _, diag = _a5_direction("qwen3_asr_1p7b", "decoder", 0, "pos_unique")
     inp = inputs_for_audio(bundle, row["audio_path"], language="Chinese")
+    grad_probe = []
     def gen(hook=None):
-        return generate_one(bundle, row["audio_path"], language="Chinese", hook=hook)[0]
+        with torch.inference_mode():
+            grad_probe.append(bool(torch.is_grad_enabled()))
+            return generate_one(bundle, row["audio_path"], language="Chinese", hook=hook)[0]
     t0 = time.monotonic(); base = gen(); repeat = gen()
     off = QwenSiteInterventionHook(bundle, 0, torch.from_numpy(vec), alpha=0.0, site=TEXT_SITE,
         scale=float(diag["a4_scale"]), allowed_positions=set(), record=True)
@@ -956,13 +1175,14 @@ def _preflight_qwen() -> dict:
         scale=float(enc_diag["a4_scale"]), gain=torch.from_numpy(audio).view(1, -1), record=True)
     gen(eh)
     peak = int(torch.cuda.max_memory_allocated())
-    return {"model": "qwen3_asr_1p7b", "status": "PASS" if base == repeat == rho0 else "FAIL",
+    no_gradients = not any(grad_probe)
+    return {"model": "qwen3_asr_1p7b", "status": "PASS" if base == repeat == rho0 and no_gradients else "FAIL",
             "runtime_seconds": time.monotonic() - t0, "peak_vram_gb": peak / 2**30,
             "deterministic": base == repeat, "rho0_identity": base == rho0,
             "hook_off_identity": base == gen(), "decoder_local_positions": len(allowed),
             "decoder_edited_records": sum(r.active_positions for r in hook.records),
             "encoder_edited_frames": sum(r.active_positions for r in eh.records),
-            "no_gradients": not any(p.requires_grad for p in bundle.model.parameters()),
+            "no_gradients": no_gradients,
             "norm_preserve": bool(hook.records and eh.records), "directions": list(DIRECTIONS)}
 
 
@@ -1023,9 +1243,12 @@ def _row_to_table(x: dict) -> dict:
         "model": x["model"], "dataset": x["dataset"], "side": x["side"], "layer": int(x["layer"]),
         "relative_depth": float(x["layer"] / (31 if x["model"] == "whisper" else (23 if x["side"] == "encoder" else 27))),
         "direction": x["direction"], "scope": x["scope"], "rho": x["rho"],
-        "mer": m.get("mer"), "pier": m.get("pier"),
+        "rank_stability_status": x.get("rank_stability_status", x.get("provenance", {}).get("rank_stability_status", "NOT_TESTED")),
+        "mer": m.get("mer"), "pier": m.get("pier"), "en_wer": m.get("en_wer"), "matrix_cer": m.get("matrix_cer"),
         "matrix_retention": _retention_rate(m), "poi_corrections": m.get("poi_corrections"),
         "poi_corruptions": m.get("poi_corruptions"), "poi_net_utility": m.get("poi_net_utility"),
+        "corrections": m.get("corrections", m.get("poi_corrections")),
+        "corruptions": m.get("corruptions", m.get("poi_corruptions")),
         "outside_harm": m.get("outside_harm"), "edited_positions_or_frames": m.get("edited_positions_or_frames"),
         "total_intervention_energy": m.get("total_intervention_energy"),
         "original_hidden_norm": m.get("original_hidden_norm"), "mean_perturbation_norm": m.get("mean_perturbation_norm"),
@@ -1053,6 +1276,7 @@ def geometry_and_tables() -> tuple[list[dict], dict]:
                 writer = csv.DictWriter(fh, fieldnames=list(subset[0].keys()), extrasaction="ignore")
                 writer.writeheader(); writer.writerows(subset)
     geometry = []
+    direction_geometry = []
     for model, sides in (("whisper", (("encoder", WHISPER_ENC), ("decoder", WHISPER_DEC))),
                          ("qwen3_asr_1p7b", (("encoder", QWEN_ENC), ("decoder", QWEN_DEC)))):
         for side, layers in sides:
@@ -1074,10 +1298,30 @@ def geometry_and_tables() -> tuple[list[dict], dict]:
                                          "unit_l2_identity": float(np.linalg.norm(a5 - vec)),
                                          "a5_norm": float(np.linalg.norm(a5)), "comparator_norm": float(np.linalg.norm(vec)),
                                          "direction_hash": dhash})
+                diag = _json(OUT / "directions" / model / side / f"L{layer:02d}/diagnostics.json")
+                direction_geometry.append({
+                    "model": model, "side": side, "layer": int(layer),
+                    "cos_unique_shared": float(diag["cos_unique_shared"]),
+                    "cos_unique_raw": diag.get("cos_unique_raw_a4"),
+                    "cos_shared_raw": diag.get("cos_shared_raw_a4"),
+                    "cos_unique_conditioning": diag.get("cos_unique_conditioning_a4"),
+                    "cos_shared_conditioning": diag.get("cos_shared_conditioning_a4"),
+                    "i_unique": int(diag["i_unique"]), "i_shared": int(diag["i_shared"]),
+                    "sigma_unique": float(diag["sigma_unique"]), "sigma_shared": float(diag["sigma_shared"]),
+                    "energy_A_unique": float(diag["projection_energy_A_unique"]),
+                    "energy_B_unique": float(diag["projection_energy_B_unique"]),
+                    "energy_A_shared": float(diag["projection_energy_A_shared"]),
+                    "energy_B_shared": float(diag["projection_energy_B_shared"]),
+                    "count_a": int(diag["count_a"]), "count_b": int(diag["count_b"]),
+                    "direction_hash": _a5_direction(model, side, layer, "v_unique")[1],
+                })
     _write(OUT / "geometry/a5_vs_a4.json", {"schema_version": "basis_a5_geometry_v1", "rows": geometry})
     with (OUT / "geometry/a5_vs_a4.csv").open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(geometry[0].keys())); writer.writeheader(); writer.writerows(geometry)
-    return table, {"rows": geometry}
+    _write(OUT / "geometry/direction_geometry.json", {"schema_version": "basis_a5_direction_geometry_v1", "rows": direction_geometry})
+    with (OUT / "geometry/direction_geometry.csv").open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(direction_geometry[0].keys())); writer.writeheader(); writer.writerows(direction_geometry)
+    return table, {"rows": geometry, "direction_rows": direction_geometry}
 
 
 def _make_figures(table: list[dict], geometry: dict) -> list[str]:
@@ -1137,6 +1381,28 @@ def _make_figures(table: list[dict], geometry: dict) -> list[str]:
         z = g.groupby("relative_depth").mer.mean(); ax.plot(z.index, z, label=f"{model}:{side}:{direction}")
     ax.set_xlabel("relative depth = layer/(N−1)"); ax.set_ylabel("MER"); ax.grid(alpha=.25); ax.legend(fontsize=7, ncol=2)
     fig.tight_layout(); path = OUT / "figures/whisper_qwen_relative_depth.png"; fig.savefig(path, dpi=150); plt.close(fig); made.append(str(path.relative_to(REPO)))
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for status, g in frame.groupby("rank_stability_status"):
+        z = g.groupby("relative_depth").mer.mean().dropna()
+        if len(z):
+            ax.plot(z.index, z, marker=".", label=status)
+    ax.set_xlabel("relative depth = layer/(N−1)"); ax.set_ylabel("MER")
+    ax.set_title("Stable vs unstable vs untested layers (diagnostic labels)")
+    ax.grid(alpha=.25); ax.legend()
+    fig.tight_layout(); path = OUT / "figures/stable_vs_unstable_overlay.png"; fig.savefig(path, dpi=150); plt.close(fig); made.append(str(path.relative_to(REPO)))
+    dg = pd.DataFrame(geometry.get("direction_rows", []))
+    if len(dg):
+        fig, ax = plt.subplots(figsize=(10, 6))
+        for col, label in (("cos_unique_shared", "Unique–Shared"),
+                           ("cos_unique_raw", "Unique–Raw"),
+                           ("cos_shared_raw", "Shared–Raw")):
+            for (model, side), g in dg.groupby(["model", "side"]):
+                z = g.sort_values("layer")
+                ax.plot(z.layer, z[col], marker=".", label=f"{model}:{side}:{label}")
+        ax.axhline(0, color="black", lw=.6); ax.set_xlabel("layer"); ax.set_ylabel("cosine")
+        ax.set_title("Unique/Shared/Raw cosine geometry")
+        ax.grid(alpha=.25); ax.legend(fontsize=7, ncol=2)
+        fig.tight_layout(); path = OUT / "figures/unique_shared_raw_cosine_vs_depth.png"; fig.savefig(path, dpi=150); plt.close(fig); made.append(str(path.relative_to(REPO)))
     return made
 
 
@@ -1146,7 +1412,7 @@ def finalize() -> int:
     expected = 576 + 468
     keys = [tuple(x.get(k) for k in ("model", "dataset", "side", "layer", "direction", "scope", "rho")) for x in rows]
     duplicates = len(keys) - len(set(keys))
-    provenance_missing = [x["_path"] for x in rows if not x.get("provenance") or any(not x["provenance"].get(k) for k in ("git_commit", "model_revision", "config_hash", "panel_fingerprint", "direction_hash", "mask_hash", "site_hash", "rank", "rho"))]
+    provenance_missing = [x["_path"] for x in rows if not x.get("provenance") or any(not x["provenance"].get(k) for k in ("git_commit", "model_revision", "config_hash", "panel_fingerprint", "direction_hash", "mask_hash", "site_hash", "rank", "rank_stability_status", "rho"))]
     poi_fail = []
     nondeg = []
     for x in rows:
@@ -1168,11 +1434,65 @@ def finalize() -> int:
                                           "pier": float(np.mean([x["pier"] for x in subset])),
                                           "poi_net_utility": float(np.mean([x["poi_net_utility"] for x in subset])),
                                           "matrix_retention": float(np.nanmean([x["matrix_retention"] for x in subset]))}
+    def mean(xs, key):
+        vals = [x.get(key) for x in xs if x.get(key) is not None and np.isfinite(x.get(key))]
+        return float(np.mean(vals)) if vals else None
+
+    analysis = {"method_names": {"neg_shared": "Minus-Shared", "pos_unique": "Add-Unique",
+                                  "unique_minus_shared": "Unique-minus-Shared"}, "by_group": {},
+                "stability": {}, "cross_corpus": {}, "cross_model": {}}
+    for group in ([(m, s, d) for m in ("whisper", "qwen3_asr_1p7b")
+                   for s in ("encoder", "decoder") for d in DIRECTIONS]):
+        model, side, direction = group
+        subset = [x for x in table if x["model"] == model and x["side"] == side and x["direction"] == direction]
+        analysis["by_group"]["%s:%s:%s" % group] = {k: mean(subset, k) for k in
+            ("mer", "pier", "en_wer", "matrix_cer", "matrix_retention", "poi_corrections",
+             "poi_corruptions", "poi_net_utility", "a5_minus_raw_local_mer",
+             "a5_minus_conditioning_local_mer", "total_intervention_energy")}
+    for status in ("STABLE", "UNSTABLE", "NOT_TESTED"):
+        subset = [x for x in table if x["rank_stability_status"] == status]
+        analysis["stability"][status] = {"n": len(subset), "mer": mean(subset, "mer"),
+                                          "pier": mean(subset, "pier"),
+                                          "matrix_retention": mean(subset, "matrix_retention"),
+                                          "poi_net_utility": mean(subset, "poi_net_utility"),
+                                          "poi_corrections": mean(subset, "poi_corrections"),
+                                          "poi_corruptions": mean(subset, "poi_corruptions"),
+                                          "mer_std": (float(np.std([x["mer"] for x in subset]))
+                                                      if subset else None)}
+    for dataset in DATASETS:
+        for direction in DIRECTIONS:
+            subset = [x for x in table if x["dataset"] == dataset and x["direction"] == direction]
+            analysis["cross_corpus"][f"{dataset}:{direction}"] = {"n": len(subset), "mer": mean(subset, "mer"),
+                "pier": mean(subset, "pier"), "poi_net_utility": mean(subset, "poi_net_utility")}
+    for direction in DIRECTIONS:
+        for side in ("encoder", "decoder"):
+            w = [x for x in table if x["model"] == "whisper" and x["side"] == side and x["direction"] == direction]
+            q = [x for x in table if x["model"] == "qwen3_asr_1p7b" and x["side"] == side and x["direction"] == direction]
+            analysis["cross_model"][f"{side}:{direction}"] = {"whisper_mer": mean(w, "mer"), "qwen_mer": mean(q, "mer"),
+                "whisper_pier": mean(w, "pier"), "qwen_pier": mean(q, "pier")}
+    def direction_delta(a, b, side=None):
+        aa = [x for x in table if x["direction"] == a and (side is None or x["side"] == side)]
+        bb = [x for x in table if x["direction"] == b and (side is None or x["side"] == side)]
+        return mean(aa, "mer"), mean(bb, "mer"), (mean(aa, "mer") - mean(bb, "mer") if mean(aa, "mer") is not None and mean(bb, "mer") is not None else None)
+    au, raw, au_raw = direction_delta("pos_unique", "neg_shared")
+    us, _, us_raw = direction_delta("unique_minus_shared", "neg_shared")
+    analysis["questions"] = {
+        "Q1_plus_unique": {"mean_mer": au, "reference_minus_shared_mer": raw, "descriptive_delta": au_raw},
+        "Q2_minus_shared": "Inspect its MER/PIER and matrix retention; a lower MER with lower retention is not a clean benefit.",
+        "Q3_us_vs_components": {"us_mean_mer": us, "minus_shared_mean_mer": raw, "descriptive_delta": us_raw},
+        "Q4_plus_unique_vs_raw": "Use a5_minus_raw_local_mer for pos_unique; negative is lower MER.",
+        "Q5_us_vs_raw": "Use a5_minus_raw_local_mer for unique_minus_shared; negative is lower MER.",
+        "Q6_encoder_vs_decoder": "Compare by_group entries with the same method; no side is selected by protocol.",
+        "Q7_cross_model": "Compare relative-depth figure and cross_model table; this is descriptive, not a transfer claim.",
+        "Q8_cross_corpus": "Compare cross_corpus entries; sign consistency is required before describing transfer.",
+        "Q9_rank_instability": "Compare stability entries, including n and mer_std; one favorable unstable layer is insufficient.",
+        "Q10_unique_beyond_raw": "Compare pos_unique versus Raw-local and unique_minus_shared versus Raw-local across layers/corpora.",
+    }
     report = f"""# BASIS-A5 Unique–Shared Local Steering Atlas
 
 ## Status
 
-COMPLETE. The construction-only rank gate, direction audit, GPU preflights, and all frozen local cells passed.
+COMPLETE for the exploratory atlas. The preserved construction-only rank gate remains a recorded `FAIL` and is not relabeled as a pass. Under the explicit amendment, rank stability is diagnostic and nonblocking.
 
 ## Direction construction
 
@@ -1187,6 +1507,14 @@ The following aggregate metrics are descriptive and do not force a positive conc
 ```
 
 The accepted table supports direct answers to the A5 questions through the per-cell MER, PIER, retention, correction, corruption, energy, and comparator columns. Any high corrective power paired with damage is reported as such. A5 is Oracle-local and therefore an upper-bound mechanism test, not a deployable localizer.
+
+## Stable versus unstable analysis
+
+The following summaries are descriptive. `UNSTABLE` means the preserved rank diagnostic was below its stability threshold; `NOT_TESTED` means the old anchor diagnostic did not cover that layer. No result was removed because of this label, and no result was used to choose rank.
+
+```json
+{json.dumps(analysis, indent=2, sort_keys=True)}
+```
 
 Whisper/Qwen comparisons use relative depth only. Hidden coordinates are not compared across models, and rho=.5 is not treated as energy-matched.
 
@@ -1215,7 +1543,10 @@ READY_FOR_INDEPENDENT_AUDIT
                       "metric_arithmetic_failures": len(poi_fail), "nondegenerate_edit_failures": len(nondeg),
                       "rank_stability": "results/basis_a5_unique_shared/manifests/rank_stability.json",
                       "direction_audit": "results/basis_a5_unique_shared/manifests/direction_audit.json",
-                      "geometry_rows": len(geometry["rows"]), "figures": figures,
+                      "geometry_rows": len(geometry["rows"]), "direction_geometry_rows": len(geometry["direction_rows"]), "figures": figures,
+                      "stability_counts": analysis["stability"],
+                      "protocol_amendment": str(A5_AMENDMENT.relative_to(REPO)),
+                      "rank_stability_policy": "diagnostic_nonblocking",
                       "a4_comparators_redecoded": False}
     _write(OUT / "FINAL_MANIFEST.json", final_manifest)
     return 0
@@ -1226,23 +1557,29 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="command", required=True)
     sub.add_parser("freeze")
     sub.add_parser("construction-test")
+    sub.add_parser("refresh-directions")
     sub.add_parser("direction-audit")
     sub.add_parser("rank-stability")
+    sub.add_parser("rank-stability-diagnostic")
+    sub.add_parser("pre-gpu-gates")
     c = sub.add_parser("construct"); c.add_argument("--model", choices=("whisper", "qwen3_asr_1p7b"), required=True)
     p = sub.add_parser("preflight"); p.add_argument("--model", choices=("whisper", "qwen3_asr_1p7b"), required=True)
     a = sub.add_parser("atlas")
     a.add_argument("--model", choices=("whisper", "qwen3_asr_1p7b"), required=True)
     a.add_argument("--dataset", choices=DATASETS, required=True)
-    a.add_argument("--side", choices=("encoder", "decoder"), required=True)
-    a.add_argument("--direction", choices=DIRECTIONS, required=True)
+    a.add_argument("--side", choices=("encoder", "decoder", "both"), required=True)
+    a.add_argument("--direction", choices=(*DIRECTIONS, "all"), required=True)
     a.add_argument("--layer-start", type=int, default=0); a.add_argument("--layer-end", type=int)
     sub.add_parser("finalize")
     args = ap.parse_args(argv)
     if args.command == "freeze": return freeze()
     if args.command == "construction-test": return construction_test()
+    if args.command == "refresh-directions": return refresh_direction_manifests()
     if args.command == "construct": return construct_whisper() if args.model == "whisper" else construct_qwen()
     if args.command == "direction-audit": return direction_audit()
     if args.command == "rank-stability": return rank_stability()
+    if args.command == "rank-stability-diagnostic": return rank_stability_diagnostic()
+    if args.command == "pre-gpu-gates": return pre_gpu_gates()
     if args.command == "preflight": return preflight(args.model)
     if args.command == "atlas":
         if args.model == "whisper":

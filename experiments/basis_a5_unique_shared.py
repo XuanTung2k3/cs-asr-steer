@@ -499,7 +499,7 @@ def construct_qwen() -> int:
     bundle = load_qwen(device="cuda:0"); bundle.model.eval()
     ma_e = {l: _Moments(bundle.encoder_dim) for l in QWEN_ENC}; mb_e = {l: _Moments(bundle.encoder_dim) for l in QWEN_ENC}
     ma_d = {l: _Moments(bundle.decoder_dim) for l in QWEN_DEC}; mb_d = {l: _Moments(bundle.decoder_dim) for l in QWEN_DEC}
-    from experiments.basis_a4_qwen import _content_plan, _span_token_indices, _raw_decoder_onset_indices
+    from experiments.basis_a4_qwen import _content_plan, _span_token_indices, _content_start
     for number, (_, row0) in enumerate(rows.iterrows(), 1):
         row = row0.to_dict(); uid = str(row["utterance_id"]); spans = by_uid[uid]
         norm, units, ref_ids, _, _ = _content_plan(bundle, row, "Chinese")
@@ -525,9 +525,13 @@ def construct_qwen() -> int:
                 width = hi - lo; clo = max(0, lo - width); chi = lo
                 if chi > clo:
                     ma_e[layer].add(astates[layer][lo:hi]); mb_e[layer].add(astates[layer][clo:chi])
-        prompt_len = int(inp["input_ids"].shape[1])
-        apos = [prompt_len + i - 1 for i in emb if i > 0]
-        bpos = [prompt_len + i - 1 for i in midx if i > 0]
+        # Teacher-forced input_ids contain expanded audio placeholders and the
+        # language/control suffix before the reference.  The frozen A4 helper
+        # locates the actual reference subsequence; raw prompt length is not a
+        # valid teacher-forced index here.
+        content_start = _content_start(inp["input_ids"], ref_ids)
+        apos = [content_start + i - 1 for i in emb if i > 0]
+        bpos = [content_start + i - 1 for i in midx if i > 0]
         for layer in QWEN_DEC:
             ma_d[layer].add(zstates[layer][apos]); mb_d[layer].add(zstates[layer][bpos])
         if number % 10 == 0:

@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=02:55:00
-#SBATCH --array=0-2783%2
+#SBATCH --array=0-999%2
 #SBATCH --output=results/basis_a6_expanded/slurm/atlas-%A_%a.out
 
 set -euo pipefail
@@ -15,7 +15,8 @@ a6_print_environment 1
 ROW_JSON="$(${BASIS_A6_PYTHON} - "$SLURM_ARRAY_TASK_ID" <<'PY'
 import json, sys
 rows=json.load(open("results/basis_a6_expanded/manifests/FULL_RUN_SHARDS.json"))["rows"]
-print(json.dumps(rows[int(sys.argv[1])]))
+offset=int(__import__("os").environ.get("BASIS_A6_SHARD_OFFSET", "0"))
+print(json.dumps(rows[offset+int(sys.argv[1])]))
 PY
 )"
 MODEL="$(${BASIS_A6_PYTHON} -c 'import json,sys; print(json.loads(sys.argv[1])["model"])' "$ROW_JSON")"

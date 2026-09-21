@@ -5,7 +5,7 @@
   "model": "qwen3_asr_1p7b",
   "data_role": "search",
   "selection_only_phase_a": true,
-  "git_head": "2db8b3a31b83fa74df3e72fc417b74801a8fb7ea",
+  "git_head": "6c20c905a4796ea78a6116f9a96ecdcf76ed5e40",
   "selection_rule": {
     "name": "a6_ott_phase_a_selection_v1",
     "eligibility_floor": 0.5,

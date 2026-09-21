@@ -1,0 +1,101 @@
+{
+  "dataset": "seame_dev_man",
+  "direction_constructions": 0,
+  "gpu_job_id": "53560",
+  "ineligible": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_00135|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_00475|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01275|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01303|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01646|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01804|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01808|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01844|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01854|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01875|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01900|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01984|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02085|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02473|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 0,
+  "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "phase": "C",
+  "reused_rows": 72,
+  "rho_cache_hits": 0,
+  "runtime_sec": 0.9846186228096485,
+  "side": "encoder",
+  "status": "PASS"
+}

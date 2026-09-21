@@ -1,0 +1,84 @@
+{
+  "manifest_sha256": "sha256:222716243ad1ad696cc56e134e0dfe9346ed6a58b8e7d0bc1f8f1c2af0b62b11",
+  "schema_version": "a6_ott_phase_b_fingerprint_v1",
+  "search_phase_immutable": true,
+  "settings": {
+    "qwen3_asr_1p7b": [
+      {
+        "family": "add_unique",
+        "layer": 0,
+        "rho": 2.0,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 15,
+        "rho": 2.0,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 13,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 7,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 3,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 0,
+        "rho": 0.5,
+        "side": "decoder"
+      }
+    ],
+    "whisper": [
+      {
+        "family": "add_unique",
+        "layer": 4,
+        "rho": 0.5,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 20,
+        "rho": 1.0,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 25,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 24,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 11,
+        "rho": 2.0,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 0,
+        "rho": 0.5,
+        "side": "decoder"
+      }
+    ]
+  },
+  "status": "IMMUTABLE"
+}

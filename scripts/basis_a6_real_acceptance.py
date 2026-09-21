@@ -88,7 +88,12 @@ def _reference_groups(row: dict[str, Any], tokenizer, text_ids: list[int], norm:
     spans = unit_char_spans(norm, units)
     offsets = token_char_offsets(tokenizer, text_ids)
     target = []
-    for item in row["oracle_spans"]:
+    # Decoder-only confirmation/transfer rows may have an accepted transcript
+    # language-region oracle without an acoustic timestamp span.  Keep the
+    # acoustic field untouched (encoder code still requires it) and let the
+    # decoder use this explicitly named, outcome-blind transcript field.
+    oracle_spans = row.get("oracle_transcript_spans", row["oracle_spans"])
+    for item in oracle_spans:
         for ui in item.get("unit_indices", []):
             ui = int(ui)
             if ui >= len(spans): continue

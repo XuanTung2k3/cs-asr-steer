@@ -283,15 +283,27 @@ def _qwen_analysis(bundle, row, baseline, masks, layers: list[int], side: str) -
 
 def _direction_set(model: str, dataset: str, uid: str, mode: str, side: str,
                    layer: int, analysis: dict[str, Any], cache: DirectionCache,
-                   stats: dict[str, int]) -> dict[str, np.ndarray]:
+                   stats: dict[str, int], wanted_methods: set[str] | None = None) -> dict[str, np.ndarray]:
     a, b = np.asarray(analysis["A"]), np.asarray(analysis["B"])
     if len(a) == 0 or len(b) == 0:
         raise RuntimeError(f"empty oracle A/B group for {uid} {side} L{layer}")
+    wanted = ({"add_unique"} if side == "encoder" else {"add_unique", "conditioning_cs"}) \
+        if wanted_methods is None else set(wanted_methods)
     cond = analysis.get("conditioning")
+    conditioning_eligible = (
+        cond is not None and len(np.asarray(cond[1], dtype=int)) > 0
+    )
+    if "conditioning_cs" in wanted and not conditioning_eligible:
+        wanted.remove("conditioning_cs")
+    # A decoder sample with no accepted Conditioning-CS positions remains
+    # valid for Add-Unique decoder.  Do not ask the shared builder to form an
+    # ineligible conditioning direction when the caller explicitly requests
+    # only Add-Unique.
+    if "conditioning_cs" not in wanted:
+        cond = None
     delta = None if cond is None else np.asarray(cond[0])
     cs = None if cond is None else np.asarray(cond[1], dtype=int)
     methods = build_method_directions(a, b, conditioning_deltas=delta, conditioning_cs_positions=cs)
-    wanted = {"add_unique"} if side == "encoder" else {"add_unique", "conditioning_cs"}
     missing = wanted.difference(methods)
     if missing:
         raise RuntimeError(f"required compact direction(s) ineligible for {uid} {side} L{layer}: {sorted(missing)}")

@@ -1,0 +1,41 @@
+{
+  "dataset": "seame_dev_sge",
+  "direction_constructions": 4,
+  "gpu_job_id": "53559",
+  "ineligible": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_01750|add_unique|decoder|13|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_01750|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02604|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03157|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 0,
+  "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "phase": "C",
+  "reused_rows": 140,
+  "rho_cache_hits": 0,
+  "runtime_sec": 5.007440984249115,
+  "side": "decoder",
+  "status": "PASS"
+}

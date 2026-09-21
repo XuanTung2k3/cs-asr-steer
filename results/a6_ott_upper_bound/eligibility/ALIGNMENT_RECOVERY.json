@@ -1,0 +1,14 @@
+{
+  "reason": "accepted D-dev-select alignment loader has no contract-valid span; no alternate authoritative local artifact exists",
+  "recovered": [],
+  "remaining_acoustic_ineligible": 152,
+  "schema_version": "a6_ott_confirmation_alignment_recovery_v1",
+  "source": {
+    "accepted_cs_loader": "experiments.basis_a4_qwen._load_cs_eval_spans",
+    "accepted_cs_span_map_hash": "sha256:813e4fb8bf3fded5d9ef307b26aaf4318d30d71f4b605453e46c3024fb4ede30",
+    "outcome_artifacts_loaded": false,
+    "phase_b_manifest": "sha256:b2887043bd183fbab7d44ed16a75a4d45ae8ad0d8e730e5a8ab803c79f9a665b"
+  },
+  "status": "PASS",
+  "steering_outcomes_consulted": false
+}

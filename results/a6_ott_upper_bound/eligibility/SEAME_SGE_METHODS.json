@@ -1,0 +1,4437 @@
+{
+  "common_ids": [
+    "dev_sge_00010",
+    "dev_sge_00028",
+    "dev_sge_00031",
+    "dev_sge_00033",
+    "dev_sge_00043",
+    "dev_sge_00126",
+    "dev_sge_00170",
+    "dev_sge_00191",
+    "dev_sge_00192",
+    "dev_sge_00371",
+    "dev_sge_00396",
+    "dev_sge_00406",
+    "dev_sge_00423",
+    "dev_sge_00442",
+    "dev_sge_00450",
+    "dev_sge_00489",
+    "dev_sge_00507",
+    "dev_sge_00510",
+    "dev_sge_00516",
+    "dev_sge_00519",
+    "dev_sge_00557",
+    "dev_sge_00607",
+    "dev_sge_00624",
+    "dev_sge_00629",
+    "dev_sge_00740",
+    "dev_sge_00743",
+    "dev_sge_00745",
+    "dev_sge_00755",
+    "dev_sge_00789",
+    "dev_sge_00796",
+    "dev_sge_00906",
+    "dev_sge_00920",
+    "dev_sge_01662",
+    "dev_sge_01750",
+    "dev_sge_01920",
+    "dev_sge_02208",
+    "dev_sge_02372",
+    "dev_sge_02604",
+    "dev_sge_02611",
+    "dev_sge_02637",
+    "dev_sge_02687",
+    "dev_sge_02732",
+    "dev_sge_02842",
+    "dev_sge_02902",
+    "dev_sge_02960",
+    "dev_sge_02998",
+    "dev_sge_03000",
+    "dev_sge_03006",
+    "dev_sge_03157"
+  ],
+  "counts": {
+    "FULLY_ELIGIBLE": 49,
+    "acoustic_fully_eligible": 50,
+    "structurally_ineligible_acoustic": 0,
+    "structurally_ineligible_transcript": 1,
+    "transcript_fully_eligible": 49
+  },
+  "dataset": "SEAME-sge",
+  "entries": {
+    "dev_sge_00010": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.1173333333333333,
+          "start_sec": 1.1466666666666667,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_sge_00010"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00010"
+    },
+    "dev_sge_00028": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.946666666666667,
+          "start_sec": 2.5600000000000005,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_sge_00028"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00028"
+    },
+    "dev_sge_00031": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.2026666666666666,
+          "start_sec": 5.466666666666667,
+          "unit_indices": [
+            21
+          ],
+          "utterance_id": "dev_sge_00031"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            21
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            35
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            43
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00031"
+    },
+    "dev_sge_00033": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.832,
+          "start_sec": 3.904,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_sge_00033"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00033"
+    },
+    "dev_sge_00043": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 15.130666666666666,
+          "start_sec": 6.586666666666667,
+          "unit_indices": [
+            15
+          ],
+          "utterance_id": "dev_sge_00043"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            15
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00043"
+    },
+    "dev_sge_00126": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.6533333333333333,
+          "start_sec": 1.1466666666666667,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_sge_00126"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00126"
+    },
+    "dev_sge_00170": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 14.928,
+          "start_sec": 5.690666666666667,
+          "unit_indices": [
+            22,
+            23
+          ],
+          "utterance_id": "dev_sge_00170"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22,
+            23
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            30
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            32
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00170"
+    },
+    "dev_sge_00191": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 26.688,
+          "start_sec": 24.096,
+          "unit_indices": [
+            64
+          ],
+          "utterance_id": "dev_sge_00191"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            34
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            57
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            64
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00191"
+    },
+    "dev_sge_00192": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.858666666666666,
+          "start_sec": 2.586666666666667,
+          "unit_indices": [
+            12,
+            13,
+            14
+          ],
+          "utterance_id": "dev_sge_00192"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00192"
+    },
+    "dev_sge_00371": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.7893333333333333,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00371"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00371"
+    },
+    "dev_sge_00396": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 1.648,
+          "start_sec": 0.816,
+          "unit_indices": [
+            2
+          ],
+          "utterance_id": "dev_sge_00396"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            2
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00396"
+    },
+    "dev_sge_00406": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.685333333333333,
+          "start_sec": 6.992,
+          "unit_indices": [
+            19
+          ],
+          "utterance_id": "dev_sge_00406"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            19
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00406"
+    },
+    "dev_sge_00423": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.7546666666666666,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00423"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00423"
+    },
+    "dev_sge_00442": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.672,
+          "start_sec": 1.744,
+          "unit_indices": [
+            6
+          ],
+          "utterance_id": "dev_sge_00442"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00442"
+    },
+    "dev_sge_00450": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.4800000000000004,
+          "start_sec": 1.6053333333333335,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_sge_00450"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00450"
+    },
+    "dev_sge_00489": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.818666666666667,
+          "start_sec": 2.3360000000000003,
+          "unit_indices": [
+            6
+          ],
+          "utterance_id": "dev_sge_00489"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00489"
+    },
+    "dev_sge_00507": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 12.074666666666666,
+          "start_sec": 7.199999999999999,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_sge_00507"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            15
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00507"
+    },
+    "dev_sge_00510": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.490666666666667,
+          "start_sec": 1.7973333333333334,
+          "unit_indices": [
+            7
+          ],
+          "utterance_id": "dev_sge_00510"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00510"
+    },
+    "dev_sge_00516": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.058666666666666,
+          "start_sec": 1.744,
+          "unit_indices": [
+            7,
+            8,
+            9,
+            10
+          ],
+          "utterance_id": "dev_sge_00516"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7,
+            8,
+            9
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00516"
+    },
+    "dev_sge_00519": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.6933333333333334,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00519"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00519"
+    },
+    "dev_sge_00557": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.7386666666666666,
+          "start_sec": 1.7013333333333334,
+          "unit_indices": [
+            7,
+            8
+          ],
+          "utterance_id": "dev_sge_00557"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7,
+            8
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00557"
+    },
+    "dev_sge_00607": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.928,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00607"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00607"
+    },
+    "dev_sge_00624": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 8.165333333333335,
+          "start_sec": 7.333333333333334,
+          "unit_indices": [
+            24
+          ],
+          "utterance_id": "dev_sge_00624"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            19
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            24
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            28
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00624"
+    },
+    "dev_sge_00629": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.522666666666667,
+          "start_sec": 3.7333333333333334,
+          "unit_indices": [
+            13
+          ],
+          "utterance_id": "dev_sge_00629"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00629"
+    },
+    "dev_sge_00740": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.896,
+          "start_sec": 4.816,
+          "unit_indices": [
+            19,
+            20
+          ],
+          "utterance_id": "dev_sge_00740"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            19,
+            20
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00740"
+    },
+    "dev_sge_00743": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 1.552,
+          "start_sec": 0.816,
+          "unit_indices": [
+            2
+          ],
+          "utterance_id": "dev_sge_00743"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            2
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00743"
+    },
+    "dev_sge_00745": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.242666666666667,
+          "start_sec": 4.314666666666667,
+          "unit_indices": [
+            13
+          ],
+          "utterance_id": "dev_sge_00745"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00745"
+    },
+    "dev_sge_00755": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.1173333333333333,
+          "start_sec": 1.2853333333333334,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_sge_00755"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00755"
+    },
+    "dev_sge_00789": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.7573333333333334,
+          "start_sec": 2.021333333333333,
+          "unit_indices": [
+            6
+          ],
+          "utterance_id": "dev_sge_00789"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            17
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00789"
+    },
+    "dev_sge_00796": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.7146666666666666,
+          "start_sec": 1.744,
+          "unit_indices": [
+            6
+          ],
+          "utterance_id": "dev_sge_00796"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            10
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00796"
+    },
+    "dev_sge_00906": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.928,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00906"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00906"
+    },
+    "dev_sge_00920": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.832,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_00920"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_00920"
+    },
+    "dev_sge_01662": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.7893333333333333,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_01662"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_01662"
+    },
+    "dev_sge_01750": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.533333333333333,
+          "start_sec": 1.5626666666666666,
+          "unit_indices": [
+            7
+          ],
+          "utterance_id": "dev_sge_01750"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_01750"
+    },
+    "dev_sge_01920": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.6719999999999997,
+          "start_sec": 1.5626666666666666,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_sge_01920"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_01920"
+    },
+    "dev_sge_02208": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.5120000000000005,
+          "start_sec": 3.4026666666666667,
+          "unit_indices": [
+            9
+          ],
+          "utterance_id": "dev_sge_02208"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02208"
+    },
+    "dev_sge_02219": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.125333333333334,
+          "start_sec": 1.3706666666666667,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_sge_02219"
+        }
+      ],
+      "oracle_transcript_spans": [],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "STRUCTURALLY_INELIGIBLE",
+      "utterance_id": "dev_sge_02219"
+    },
+    "dev_sge_02372": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.824,
+          "start_sec": 1.232,
+          "unit_indices": [
+            1
+          ],
+          "utterance_id": "dev_sge_02372"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            1
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02372"
+    },
+    "dev_sge_02604": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.7813333333333325,
+          "start_sec": 3.376,
+          "unit_indices": [
+            14
+          ],
+          "utterance_id": "dev_sge_02604"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02604"
+    },
+    "dev_sge_02611": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 30.944,
+          "start_sec": 21.194666666666667,
+          "unit_indices": [
+            14,
+            15
+          ],
+          "utterance_id": "dev_sge_02611"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14,
+            15
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02611"
+    },
+    "dev_sge_02637": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.818666666666666,
+          "start_sec": 1.5093333333333334,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_sge_02637"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02637"
+    },
+    "dev_sge_02687": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.6933333333333334,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_02687"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02687"
+    },
+    "dev_sge_02732": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.9706666666666667,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_02732"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02732"
+    },
+    "dev_sge_02842": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.736,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_02842"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02842"
+    },
+    "dev_sge_02902": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.864,
+          "start_sec": 1.7973333333333334,
+          "unit_indices": [
+            6
+          ],
+          "utterance_id": "dev_sge_02902"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            10
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02902"
+    },
+    "dev_sge_02960": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 8.970666666666666,
+          "start_sec": 4.373333333333334,
+          "unit_indices": [
+            9,
+            10
+          ],
+          "utterance_id": "dev_sge_02960"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9,
+            10
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02960"
+    },
+    "dev_sge_02998": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.8746666666666667,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0,
+            1
+          ],
+          "utterance_id": "dev_sge_02998"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0,
+            1
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_02998"
+    },
+    "dev_sge_03000": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.9226666666666667,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_03000"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_03000"
+    },
+    "dev_sge_03006": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.832,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_sge_03006"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_03006"
+    },
+    "dev_sge_03157": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.5040000000000004,
+          "start_sec": 1.6053333333333335,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_sge_03157"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_sge_03157"
+    }
+  },
+  "methods": {
+    "add_unique_decoder": {
+      "eligible_ids": [
+        "dev_sge_00010",
+        "dev_sge_00028",
+        "dev_sge_00031",
+        "dev_sge_00033",
+        "dev_sge_00043",
+        "dev_sge_00126",
+        "dev_sge_00170",
+        "dev_sge_00191",
+        "dev_sge_00192",
+        "dev_sge_00371",
+        "dev_sge_00396",
+        "dev_sge_00406",
+        "dev_sge_00423",
+        "dev_sge_00442",
+        "dev_sge_00450",
+        "dev_sge_00489",
+        "dev_sge_00507",
+        "dev_sge_00510",
+        "dev_sge_00516",
+        "dev_sge_00519",
+        "dev_sge_00557",
+        "dev_sge_00607",
+        "dev_sge_00624",
+        "dev_sge_00629",
+        "dev_sge_00740",
+        "dev_sge_00743",
+        "dev_sge_00745",
+        "dev_sge_00755",
+        "dev_sge_00789",
+        "dev_sge_00796",
+        "dev_sge_00906",
+        "dev_sge_00920",
+        "dev_sge_01662",
+        "dev_sge_01750",
+        "dev_sge_01920",
+        "dev_sge_02208",
+        "dev_sge_02372",
+        "dev_sge_02604",
+        "dev_sge_02611",
+        "dev_sge_02637",
+        "dev_sge_02687",
+        "dev_sge_02732",
+        "dev_sge_02842",
+        "dev_sge_02902",
+        "dev_sge_02960",
+        "dev_sge_02998",
+        "dev_sge_03000",
+        "dev_sge_03006",
+        "dev_sge_03157"
+      ],
+      "ineligible_ids": [
+        "dev_sge_02219"
+      ],
+      "requires": "accepted_transcript_oracle_region"
+    },
+    "add_unique_encoder": {
+      "eligible_ids": [
+        "dev_sge_00010",
+        "dev_sge_00028",
+        "dev_sge_00031",
+        "dev_sge_00033",
+        "dev_sge_00043",
+        "dev_sge_00126",
+        "dev_sge_00170",
+        "dev_sge_00191",
+        "dev_sge_00192",
+        "dev_sge_00371",
+        "dev_sge_00396",
+        "dev_sge_00406",
+        "dev_sge_00423",
+        "dev_sge_00442",
+        "dev_sge_00450",
+        "dev_sge_00489",
+        "dev_sge_00507",
+        "dev_sge_00510",
+        "dev_sge_00516",
+        "dev_sge_00519",
+        "dev_sge_00557",
+        "dev_sge_00607",
+        "dev_sge_00624",
+        "dev_sge_00629",
+        "dev_sge_00740",
+        "dev_sge_00743",
+        "dev_sge_00745",
+        "dev_sge_00755",
+        "dev_sge_00789",
+        "dev_sge_00796",
+        "dev_sge_00906",
+        "dev_sge_00920",
+        "dev_sge_01662",
+        "dev_sge_01750",
+        "dev_sge_01920",
+        "dev_sge_02208",
+        "dev_sge_02219",
+        "dev_sge_02372",
+        "dev_sge_02604",
+        "dev_sge_02611",
+        "dev_sge_02637",
+        "dev_sge_02687",
+        "dev_sge_02732",
+        "dev_sge_02842",
+        "dev_sge_02902",
+        "dev_sge_02960",
+        "dev_sge_02998",
+        "dev_sge_03000",
+        "dev_sge_03006",
+        "dev_sge_03157"
+      ],
+      "ineligible_ids": [],
+      "requires": "accepted_acoustic_oracle_span"
+    },
+    "conditioning_cs_decoder": {
+      "eligible_ids": [
+        "dev_sge_00010",
+        "dev_sge_00028",
+        "dev_sge_00031",
+        "dev_sge_00033",
+        "dev_sge_00043",
+        "dev_sge_00126",
+        "dev_sge_00170",
+        "dev_sge_00191",
+        "dev_sge_00192",
+        "dev_sge_00371",
+        "dev_sge_00396",
+        "dev_sge_00406",
+        "dev_sge_00423",
+        "dev_sge_00442",
+        "dev_sge_00450",
+        "dev_sge_00489",
+        "dev_sge_00507",
+        "dev_sge_00510",
+        "dev_sge_00516",
+        "dev_sge_00519",
+        "dev_sge_00557",
+        "dev_sge_00607",
+        "dev_sge_00624",
+        "dev_sge_00629",
+        "dev_sge_00740",
+        "dev_sge_00743",
+        "dev_sge_00745",
+        "dev_sge_00755",
+        "dev_sge_00789",
+        "dev_sge_00796",
+        "dev_sge_00906",
+        "dev_sge_00920",
+        "dev_sge_01662",
+        "dev_sge_01750",
+        "dev_sge_01920",
+        "dev_sge_02208",
+        "dev_sge_02372",
+        "dev_sge_02604",
+        "dev_sge_02611",
+        "dev_sge_02637",
+        "dev_sge_02687",
+        "dev_sge_02732",
+        "dev_sge_02842",
+        "dev_sge_02902",
+        "dev_sge_02960",
+        "dev_sge_02998",
+        "dev_sge_03000",
+        "dev_sge_03006",
+        "dev_sge_03157"
+      ],
+      "ineligible_ids": [
+        "dev_sge_02219"
+      ],
+      "requires": "accepted_transcript_oracle_region"
+    }
+  },
+  "model_specific_decoder_eligibility": {
+    "qwen3_asr_1p7b": {
+      "baseline_artifact": "/home/tungnx/cs-asr-steer/results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_sge/greedy.json",
+      "baseline_hash": "sha256:4fa81655b1998ee0bb10fb951fc1d19e814e0371dbd386a8a077bcf9f59fb9a4",
+      "details": {
+        "dev_sge_00010": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            15
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00028": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00031": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            33,
+            50,
+            61
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00033": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            6,
+            7,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00043": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            24
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00126": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00170": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            29,
+            30,
+            39,
+            41
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00191": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            61,
+            99,
+            109
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00192": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                16,
+                17,
+                18
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            16,
+            17,
+            18
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00371": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00396": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00406": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                15
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            26
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00423": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00442": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11,
+            12
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00450": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00489": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00507": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            10,
+            23
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00510": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00516": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            9,
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00519": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00557": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            9
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00607": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00624": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            29,
+            37,
+            45
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00629": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1,
+            21
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00740": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                17,
+                18
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            34,
+            35
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00743": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1,
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00745": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            20,
+            27
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00755": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00789": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            18,
+            27,
+            36
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00796": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00906": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00920": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_01662": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_01750": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                8
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_01920": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02208": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            14
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02219": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02372": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02604": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                16
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            25
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02611": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                14,
+                15
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            21,
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02637": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02687": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02732": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02842": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02902": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7,
+            12
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02960": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            15,
+            16,
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02998": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_03000": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_03006": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_03157": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        }
+      },
+      "eligible_ids": [
+        "dev_sge_00010",
+        "dev_sge_00028",
+        "dev_sge_00031",
+        "dev_sge_00033",
+        "dev_sge_00043",
+        "dev_sge_00126",
+        "dev_sge_00170",
+        "dev_sge_00191",
+        "dev_sge_00192",
+        "dev_sge_00396",
+        "dev_sge_00406",
+        "dev_sge_00442",
+        "dev_sge_00450",
+        "dev_sge_00489",
+        "dev_sge_00507",
+        "dev_sge_00510",
+        "dev_sge_00516",
+        "dev_sge_00557",
+        "dev_sge_00624",
+        "dev_sge_00629",
+        "dev_sge_00740",
+        "dev_sge_00743",
+        "dev_sge_00745",
+        "dev_sge_00755",
+        "dev_sge_00789",
+        "dev_sge_00796",
+        "dev_sge_01750",
+        "dev_sge_01920",
+        "dev_sge_02208",
+        "dev_sge_02372",
+        "dev_sge_02604",
+        "dev_sge_02611",
+        "dev_sge_02637",
+        "dev_sge_02902",
+        "dev_sge_02960",
+        "dev_sge_02998",
+        "dev_sge_03157"
+      ],
+      "ineligible_ids": [
+        "dev_sge_00371",
+        "dev_sge_00423",
+        "dev_sge_00519",
+        "dev_sge_00607",
+        "dev_sge_00906",
+        "dev_sge_00920",
+        "dev_sge_01662",
+        "dev_sge_02219",
+        "dev_sge_02687",
+        "dev_sge_02732",
+        "dev_sge_02842",
+        "dev_sge_03000",
+        "dev_sge_03006"
+      ],
+      "modes_checked": [
+        "greedy"
+      ]
+    },
+    "whisper": {
+      "baseline_artifact": "/home/tungnx/cs-asr-steer/results/basis_a6_expanded/baselines/whisper/seame_dev_sge/greedy.json",
+      "baseline_hash": "sha256:1022de7912448f3ea2134d61bff743e4b1e1208fcbd1585b2c1b04c7339bebf2",
+      "details": {
+        "dev_sge_00010": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            14
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00028": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00031": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            30,
+            44,
+            54
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00033": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            4,
+            5,
+            6
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00043": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00126": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            2
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00170": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            24,
+            25,
+            33,
+            35
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00191": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            57,
+            82,
+            90
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00192": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            14,
+            15,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00371": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00396": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00406": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                13,
+                14
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                13,
+                14
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            19
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00423": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00442": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00450": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00489": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00507": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            6,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00510": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00516": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00519": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00557": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00607": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00624": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            28,
+            35,
+            40,
+            41
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00629": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1,
+            18
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00740": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                23,
+                24
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                23,
+                24
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            30,
+            31
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00743": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1,
+            9
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00745": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            14,
+            19
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00755": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00789": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7,
+            16,
+            22,
+            29
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00796": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            13
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_00906": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_00920": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_01662": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_01750": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_01920": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02208": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            13
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02219": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02372": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02604": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                22
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                20
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02611": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                13,
+                14
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                13,
+                14
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            16,
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02637": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02687": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02732": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02842": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_02902": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02960": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            9,
+            10,
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_02998": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_sge_03000": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_03006": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_sge_03157": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6
+          ],
+          "status": "FULLY_ELIGIBLE"
+        }
+      },
+      "eligible_ids": [
+        "dev_sge_00010",
+        "dev_sge_00028",
+        "dev_sge_00031",
+        "dev_sge_00033",
+        "dev_sge_00043",
+        "dev_sge_00126",
+        "dev_sge_00170",
+        "dev_sge_00191",
+        "dev_sge_00192",
+        "dev_sge_00396",
+        "dev_sge_00406",
+        "dev_sge_00423",
+        "dev_sge_00442",
+        "dev_sge_00450",
+        "dev_sge_00489",
+        "dev_sge_00507",
+        "dev_sge_00510",
+        "dev_sge_00516",
+        "dev_sge_00557",
+        "dev_sge_00624",
+        "dev_sge_00629",
+        "dev_sge_00740",
+        "dev_sge_00743",
+        "dev_sge_00745",
+        "dev_sge_00755",
+        "dev_sge_00789",
+        "dev_sge_00796",
+        "dev_sge_01750",
+        "dev_sge_01920",
+        "dev_sge_02208",
+        "dev_sge_02372",
+        "dev_sge_02604",
+        "dev_sge_02611",
+        "dev_sge_02637",
+        "dev_sge_02902",
+        "dev_sge_02960",
+        "dev_sge_02998",
+        "dev_sge_03157"
+      ],
+      "ineligible_ids": [
+        "dev_sge_00371",
+        "dev_sge_00519",
+        "dev_sge_00607",
+        "dev_sge_00906",
+        "dev_sge_00920",
+        "dev_sge_01662",
+        "dev_sge_02219",
+        "dev_sge_02687",
+        "dev_sge_02732",
+        "dev_sge_02842",
+        "dev_sge_03000",
+        "dev_sge_03006"
+      ],
+      "modes_checked": [
+        "greedy",
+        "official_standard"
+      ]
+    }
+  },
+  "panel": "seame_dev_sge",
+  "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "phase": "C",
+  "schema_version": "a6_ott_method_eligibility_v1",
+  "source": {
+    "accepted_cs_loader": "experiments.basis_a4_qwen._load_cs_eval_spans",
+    "accepted_cs_span_map_hash": "sha256:813e4fb8bf3fded5d9ef307b26aaf4318d30d71f4b605453e46c3024fb4ede30",
+    "outcome_artifacts_loaded": false,
+    "phase_b_manifest": "sha256:b2887043bd183fbab7d44ed16a75a4d45ae8ad0d8e730e5a8ab803c79f9a665b"
+  },
+  "status": "PASS",
+  "steering_outcomes_consulted": false,
+  "total": 50
+}

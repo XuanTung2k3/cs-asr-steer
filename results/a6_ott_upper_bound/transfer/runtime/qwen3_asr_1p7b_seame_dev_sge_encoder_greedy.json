@@ -1,0 +1,107 @@
+{
+  "dataset": "seame_dev_sge",
+  "direction_constructions": 0,
+  "gpu_job_id": "53562",
+  "ineligible": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00033|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00043|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00191|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00406|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00489|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00507|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00624|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00629|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00740|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00745|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02604|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02611|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02960|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03000|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03157|add_unique|encoder|15|2.0|greedy|encoder_post_self_attn_residual_pre_ffn",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 0,
+  "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "phase": "C",
+  "reused_rows": 70,
+  "rho_cache_hits": 0,
+  "runtime_sec": 1.075569186359644,
+  "side": "encoder",
+  "status": "PASS"
+}

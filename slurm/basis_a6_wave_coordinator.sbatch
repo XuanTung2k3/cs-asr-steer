@@ -2,7 +2,7 @@
 # CPU-only scheduler coordinator. Every scientific worker it submits is an
 # sbatch GPU array with %2 concurrency; this job never requests a GPU.
 #SBATCH --job-name=basis-a6-waves
-#SBATCH --partition=cpu
+#SBATCH --partition=main
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
 #SBATCH --time=7-00:00:00

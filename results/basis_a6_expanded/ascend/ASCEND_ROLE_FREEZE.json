@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "test_usage": 0,
+  "construct_source": "train",
+  "eval_source": "validation",
+  "construct_N": 125,
+  "eval_N": 220,
+  "construct_fingerprint": "sha256:564eb07cff2057dd2a303b8d068f2742fd30e887a28e96aa847440951f11bf93",
+  "eval_fingerprint": "sha256:eefe1d22cb7668e4a4e3fa7532858942b0325b5cb1544c96ad2e90a898cbc578",
+  "hf_fingerprints": {
+    "train": "1fd524f9a0b1019f",
+    "test": "10a739ffe0346d73",
+    "validation": "6d67003534257f4e"
+  },
+  "download_provenance": "external/ASCEND/ASCEND_DOWNLOAD_PROVENANCE.json"
+}

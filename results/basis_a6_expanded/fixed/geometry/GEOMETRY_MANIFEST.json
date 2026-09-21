@@ -1,0 +1,12 @@
+{
+  "schema_version": "basis_a6_cross_source_geometry_v1",
+  "status": "PASS",
+  "rows": 704,
+  "cross_source_rows": 584,
+  "within_source_conditioning_rows": 120,
+  "models": [
+    "whisper",
+    "qwen3_asr_1p7b"
+  ],
+  "path": "results/basis_a6_expanded/fixed/geometry/fixed_cs_vs_ascend.csv"
+}

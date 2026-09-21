@@ -1,0 +1,3 @@
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+  warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+ASCEND CTC alignment 10/125

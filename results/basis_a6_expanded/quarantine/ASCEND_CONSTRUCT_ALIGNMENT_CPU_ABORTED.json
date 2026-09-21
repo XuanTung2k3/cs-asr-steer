@@ -1,0 +1,511 @@
+{
+  "aligner": "/mnt/data/tungnx/models/mms-fa",
+  "alignment_method": "csasr.data.ctc_alignment.align_units",
+  "failures": [
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk2_L236_436.8090_3.8400.wav': \")",
+      "utterance_id": "ascend/train/00116"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk2_L266_516.6290_5.0600.wav': \")",
+      "utterance_id": "ascend/train/00130"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk21_L455_97.240_3.680.wav': \")",
+      "utterance_id": "ascend/train/00223"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk22_L516_198.4400_11.1200.wav': \")",
+      "utterance_id": "ascend/train/00253"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk21_L603_347.200_6.980.wav': \")",
+      "utterance_id": "ascend/train/00296"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk26_L1004_7.340_3.020.wav': \")",
+      "utterance_id": "ascend/train/00499"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk26_L1056_70.620_2.140.wav': \")",
+      "utterance_id": "ascend/train/00525"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk19_L1605_35.240_2.360.wav': \")",
+      "utterance_id": "ascend/train/00782"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk19_L2036_864.800_2.770.wav': \")",
+      "utterance_id": "ascend/train/00921"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk10_L2221_233.720_3.300.wav': \")",
+      "utterance_id": "ascend/train/01002"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk11_L2331_9.940_9.840.wav': \")",
+      "utterance_id": "ascend/train/01050"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk11_L2558_467.640_2.500.wav': \")",
+      "utterance_id": "ascend/train/01085"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk13_L2874_10.1500_6.6800.wav': \")",
+      "utterance_id": "ascend/train/01155"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk13_L3003_183.7100_1.6400.wav': \")",
+      "utterance_id": "ascend/train/01209"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk14_L3172_394.460_3.280.wav': \")",
+      "utterance_id": "ascend/train/01281"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk14_L3226_465.740_1.020.wav': \")",
+      "utterance_id": "ascend/train/01305"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk15_2_L3490_171.340_3.080.wav': \")",
+      "utterance_id": "ascend/train/01429"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk16_2_L3533_251.7400_5.6500.wav': \")",
+      "utterance_id": "ascend/train/01452"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk16_2_L3722_605.2800_4.6700.wav': \")",
+      "utterance_id": "ascend/train/01543"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk15_2_L3783_714.169_2.370.wav': \")",
+      "utterance_id": "ascend/train/01573"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk18_L4486_779.740_2.120.wav': \")",
+      "utterance_id": "ascend/train/01750"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk18_L4509_800.880_2.100.wav': \")",
+      "utterance_id": "ascend/train/01755"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk19_L4913_606.460_3.120.wav': \")",
+      "utterance_id": "ascend/train/01842"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk22_L4987_96.3400_6.0400.wav': \")",
+      "utterance_id": "ascend/train/01878"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk21_L5168_442.200_6.570.wav': \")",
+      "utterance_id": "ascend/train/01966"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk21_L5321_717.720_4.420.wav': \")",
+      "utterance_id": "ascend/train/02044"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk22_L5328_731.2600_2.2000.wav': \")",
+      "utterance_id": "ascend/train/02048"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk24_L5472_36.280_6.460.wav': \")",
+      "utterance_id": "ascend/train/02120"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk24_L5537_141.080_7.020.wav': \")",
+      "utterance_id": "ascend/train/02152"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk25_L6075_72.2200_3.8200.wav': \")",
+      "utterance_id": "ascend/train/02410"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk26_L6288_418.080_6.270.wav': \")",
+      "utterance_id": "ascend/train/02517"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk5_L7083_156.470_1.000.wav': \")",
+      "utterance_id": "ascend/train/02666"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk6_L7263_405.9800_2.9000.wav': \")",
+      "utterance_id": "ascend/train/02753"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk5_L7321_484.718_2.980.wav': \")",
+      "utterance_id": "ascend/train/02781"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk6_L7323_492.6280_2.6600.wav': \")",
+      "utterance_id": "ascend/train/02782"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk8_L7404_150.740_8.040.wav': \")",
+      "utterance_id": "ascend/train/02791"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses1_spk8_L7556_457.400_3.480.wav': \")",
+      "utterance_id": "ascend/train/02843"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk1_L7969_562.360_4.740.wav': \")",
+      "utterance_id": "ascend/train/03023"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk2_L8069_779.0620_5.0300.wav': \")",
+      "utterance_id": "ascend/train/03073"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk10_L8545_591.400_2.990.wav': \")",
+      "utterance_id": "ascend/train/03308"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk10_L8863_1076.260_1.760.wav': \")",
+      "utterance_id": "ascend/train/03464"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk11_L9020_132.960_6.460.wav': \")",
+      "utterance_id": "ascend/train/03528"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk11_L9440_948.100_8.520.wav': \")",
+      "utterance_id": "ascend/train/03581"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk13_L9525_126.5050_1.9000.wav': \")",
+      "utterance_id": "ascend/train/03620"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk13_L9565_187.7450_3.4000.wav': \")",
+      "utterance_id": "ascend/train/03640"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk14_L9746_452.920_1.520.wav': \")",
+      "utterance_id": "ascend/train/03729"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk15_L9909_35.630_2.770.wav': \")",
+      "utterance_id": "ascend/train/03810"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk16_L10265_632.6700_2.4300.wav': \")",
+      "utterance_id": "ascend/train/03988"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk15_L10325_768.520_8.910.wav': \")",
+      "utterance_id": "ascend/train/04017"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk16_L10504_1127.4200_4.6800.wav': \")",
+      "utterance_id": "ascend/train/04102"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk18_L11217_735.000_5.120.wav': \")",
+      "utterance_id": "ascend/train/04304"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk18_L11299_880.980_1.180.wav': \")",
+      "utterance_id": "ascend/train/04326"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk19_L11644_624.160_9.800.wav': \")",
+      "utterance_id": "ascend/train/04429"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk19_L11665_686.060_4.040.wav': \")",
+      "utterance_id": "ascend/train/04440"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk24_L11868_121.360_5.400.wav': \")",
+      "utterance_id": "ascend/train/04521"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk23_L12062_478.8700_6.5300.wav': \")",
+      "utterance_id": "ascend/train/04618"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk24_L12374_917.540_3.340.wav': \")",
+      "utterance_id": "ascend/train/04772"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk25_L12831_711.4300_2.5200.wav': \")",
+      "utterance_id": "ascend/train/04995"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk25_L12833_714.2700_4.1400.wav': \")",
+      "utterance_id": "ascend/train/04996"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk26_L12883_838.800_6.020.wav': \")",
+      "utterance_id": "ascend/train/05021"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk26_L12887_854.980_5.940.wav': \")",
+      "utterance_id": "ascend/train/05023"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk4_L13261_433.1200_4.7100.wav': \")",
+      "utterance_id": "ascend/train/05157"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk4_L13615_1218.1400_6.8000.wav': \")",
+      "utterance_id": "ascend/train/05274"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk6_L13700_121.8950_7.4200.wav': \")",
+      "utterance_id": "ascend/train/05313"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk6_L13730_195.1150_4.1600.wav': \")",
+      "utterance_id": "ascend/train/05328"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk5_L13742_211.760_1.360.wav': \")",
+      "utterance_id": "ascend/train/05333"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk5_L13884_540.100_3.320.wav': \")",
+      "utterance_id": "ascend/train/05404"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk8_L14037_270.620_13.720.wav': \")",
+      "utterance_id": "ascend/train/05458"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses2_spk8_L14039_284.900_3.310.wav': \")",
+      "utterance_id": "ascend/train/05459"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk2_L14066_38.0500_6.9200.wav': \")",
+      "utterance_id": "ascend/train/05469"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk1_L14100_121.960_4.700.wav': \")",
+      "utterance_id": "ascend/train/05484"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk2_L14156_266.3130_6.7370.wav': \")",
+      "utterance_id": "ascend/train/05512"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk9_L14393_164.9200_3.7600.wav': \")",
+      "utterance_id": "ascend/train/05626"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk9_L14585_668.8400_12.5400.wav': \")",
+      "utterance_id": "ascend/train/05721"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk10_L14611_758.980_1.900.wav': \")",
+      "utterance_id": "ascend/train/05734"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk10_L14763_1151.850_9.120.wav': \")",
+      "utterance_id": "ascend/train/05809"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk11_L15029_490.400_3.040.wav': \")",
+      "utterance_id": "ascend/train/05885"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk11_L15276_925.800_5.520.wav': \")",
+      "utterance_id": "ascend/train/05935"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk13_2_L15389_159.0800_5.9000.wav': \")",
+      "utterance_id": "ascend/train/05987"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk14_2_L15443_39.340_6.680.wav': \")",
+      "utterance_id": "ascend/train/06013"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk14_2_L15449_52.500_5.110.wav': \")",
+      "utterance_id": "ascend/train/06016"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk13_2_L15690_452.5400_4.4500.wav': \")",
+      "utterance_id": "ascend/train/06140"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk16_L16064_479.1600_2.8000.wav': \")",
+      "utterance_id": "ascend/train/06312"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk16_L16156_739.5400_8.4600.wav': \")",
+      "utterance_id": "ascend/train/06358"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk15_L16192_823.470_3.890.wav': \")",
+      "utterance_id": "ascend/train/06376"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk15_L16300_1078.740_2.220.wav': \")",
+      "utterance_id": "ascend/train/06431"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk18_L16821_665.560_2.880.wav': \")",
+      "utterance_id": "ascend/train/06560"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk19_L17601_764.990_1.140.wav': \")",
+      "utterance_id": "ascend/train/06781"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk21_L17662_7.280_4.260.wav': \")",
+      "utterance_id": "ascend/train/06799"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk22_L17813_292.3700_4.2900.wav': \")",
+      "utterance_id": "ascend/train/06880"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk21_L17864_382.890_8.350.wav': \")",
+      "utterance_id": "ascend/train/06904"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk24_L18552_979.040_7.000.wav': \")",
+      "utterance_id": "ascend/train/07255"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk4_L18761_305.8500_4.8700.wav': \")",
+      "utterance_id": "ascend/train/07326"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk5_L19249_26.160_2.200.wav': \")",
+      "utterance_id": "ascend/train/07486"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk5_L19313_170.460_9.070.wav': \")",
+      "utterance_id": "ascend/train/07519"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk6_L19673_720.2230_3.3600.wav': \")",
+      "utterance_id": "ascend/train/07697"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk8_1_L19854_353.320_11.600.wav': \")",
+      "utterance_id": "ascend/train/07732"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses3_spk8_1_L19876_433.560_7.120.wav': \")",
+      "utterance_id": "ascend/train/07743"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk10_L20063_210.240_4.960.wav': \")",
+      "utterance_id": "ascend/train/07830"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk9_L20145_307.2400_3.5000.wav': \")",
+      "utterance_id": "ascend/train/07871"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk10_L20362_691.340_5.160.wav': \")",
+      "utterance_id": "ascend/train/07978"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk11_L20998_421.560_4.940.wav': \")",
+      "utterance_id": "ascend/train/08199"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk11_L21061_486.860_6.880.wav': \")",
+      "utterance_id": "ascend/train/08224"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk14_L21382_49.360_1.380.wav': \")",
+      "utterance_id": "ascend/train/08295"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk13_L21747_583.2700_1.6900.wav': \")",
+      "utterance_id": "ascend/train/08470"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk14_L21807_672.880_2.500.wav': \")",
+      "utterance_id": "ascend/train/08499"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk13_L21836_713.1400_3.8800.wav': \")",
+      "utterance_id": "ascend/train/08512"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk15_L22059_216.500_4.180.wav': \")",
+      "utterance_id": "ascend/train/08619"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk16_L22148_419.8000_4.6400.wav': \")",
+      "utterance_id": "ascend/train/08664"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk15_L22308_701.780_8.180.wav': \")",
+      "utterance_id": "ascend/train/08744"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk16_L22352_802.3000_3.7000.wav': \")",
+      "utterance_id": "ascend/train/08768"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk18_L22626_215.290_1.880.wav': \")",
+      "utterance_id": "ascend/train/08847"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk18_L22890_525.720_3.440.wav': \")",
+      "utterance_id": "ascend/train/08902"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk21_L23220_16.340_3.500.wav': \")",
+      "utterance_id": "ascend/train/08955"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk22_L23222_18.8600_3.8400.wav': \")",
+      "utterance_id": "ascend/train/08956"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk21_L23239_44.210_4.550.wav': \")",
+      "utterance_id": "ascend/train/08964"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk22_L23556_565.2100_4.6100.wav': \")",
+      "utterance_id": "ascend/train/09118"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk24_L23725_152.220_2.960.wav': \")",
+      "utterance_id": "ascend/train/09205"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk24_L23787_249.420_2.000.wav': \")",
+      "utterance_id": "ascend/train/09234"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk23_L23819_303.4700_5.1100.wav': \")",
+      "utterance_id": "ascend/train/09250"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk23_L23970_524.1700_2.3700.wav': \")",
+      "utterance_id": "ascend/train/09323"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk25_L24597_648.8800_9.7600.wav': \")",
+      "utterance_id": "ascend/train/09629"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk26_L24631_753.810_1.390.wav': \")",
+      "utterance_id": "ascend/train/09646"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk8_L24916_195.280_2.880.wav': \")",
+      "utterance_id": "ascend/train/09786"
+    },
+    {
+      "reason": "LibsndfileError(2, \"Error opening '/storage/hf-datasets-cache/all/datasets/16739474757983-config-parquet-and-info-CAiRE-ASCEND-5c1abf9c/downloads/extracted/f0790e45797bd654a35ecd1eb4865fa761f1cbd842b674e0defb6812ae8cffbf/waves/ses4_spk8_L25043_499.880_3.400.wav': \")",
+      "utterance_id": "ascend/train/09850"
+    }
+  ],
+  "fingerprint": "sha256:723a39ea6f2e5ae49da66602cc69d82d6daae330a27200a2479b5b8c55f68605",
+  "manifest_fingerprint": "sha256:564eb07cff2057dd2a303b8d068f2742fd30e887a28e96aa847440951f11bf93",
+  "rows": {},
+  "source_split": "train",
+  "status": "BLOCKED"
+}

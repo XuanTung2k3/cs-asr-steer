@@ -52,8 +52,12 @@ def _code_hash() -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", default="data/external/ASCEND",
-                    help="output root (default: data/external/ASCEND)")
+    ap.add_argument("--out", default=None,
+                    help="output root (legacy alias; default: data/external/ASCEND)")
+    ap.add_argument("--cache-dir", default=None,
+                    help="Hugging Face cache directory (default: <out>/hf_cache)")
+    ap.add_argument("--output-dir", default=None,
+                    help="saved DatasetDict directory (default: <out>/dataset)")
     ap.add_argument("--revision", default=None,
                     help="optional pinned dataset revision (commit sha / tag)")
     ap.add_argument("--allow-size-mismatch", action="store_true",
@@ -68,17 +72,22 @@ def main() -> int:
 
     from datasets import load_dataset
 
-    out = Path(args.out)
-    cache_dir = out / "hf_cache"
-    save_dir = out / "dataset"
+    if args.out and args.output_dir:
+        raise SystemExit("use either --out or --output-dir, not both")
+    out = Path(args.out or "data/external/ASCEND")
+    cache_dir = Path(args.cache_dir or (out / "hf_cache"))
+    save_dir = Path(args.output_dir or (out / "dataset"))
+    # Provenance belongs beside the snapshot even when callers provide the
+    # explicit cache/output paths requested by the A6 runbook.
+    out = out if args.out else save_dir.parent
     out.mkdir(parents=True, exist_ok=True)
+    cache_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"[info] loading {DATASET_REPO} (revision={args.revision or 'default'})")
-    ds = load_dataset(
-        DATASET_REPO,
-        cache_dir=str(cache_dir),
-        revision=args.revision,
-    )
+    load_kwargs = {"cache_dir": str(cache_dir)}
+    if args.revision is not None:
+        load_kwargs["revision"] = args.revision
+    ds = load_dataset(DATASET_REPO, **load_kwargs)
 
     got_splits = tuple(ds.keys())
     missing = [s for s in EXPECTED_SPLITS if s not in got_splits]
@@ -131,6 +140,8 @@ def main() -> int:
         "save_dir": str(save_dir),
         "cache_dir": str(cache_dir),
         "preparation_code_hash": _code_hash(),
+        "test_rows_consumed_by_a6": 0,
+        "test_split_policy": "metadata-only download verification; adapter/manifests refuse test rows",
     }
     prov_path = out / "ASCEND_DOWNLOAD_PROVENANCE.json"
     prov_path.write_text(json.dumps(provenance, indent=2, ensure_ascii=False))

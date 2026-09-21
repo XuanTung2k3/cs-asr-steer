@@ -1,0 +1,69 @@
+hostname worker-mig-3g40gb-0
+date 2026-09-21T04:02:45.656977+00:00
+which_python /home/tungnx/miniconda3/envs/acl1/bin/python
+sys.executable /home/tungnx/miniconda3/envs/acl1/bin/python
+python_version 3.11.9 | packaged by conda-forge | (main, Apr 19 2024, 18:36:13) [GCC 12.3.0]
+git_head a05a7d7879246e482b9e3ce39df06c7e97f164c3
+cuda_visible_devices MIG-09c332c6-27d7-5b98-8a77-6f93e77f7cd3
+torch_version 2.10.0+cu128
+torch_cuda_version 12.8
+torch_cuda_available True
+visible_gpu NVIDIA H100 80GB HBM3 MIG 3g.40gb
+scipy_version 1.17.1
+transformers_version 4.57.6
+datasets_version 4.8.4
+sklearn_version 1.8.0
+A6 CTC alignment 10/125
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 1024 n 50 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 1024 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 31 n 50 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 31 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+A6 CTC alignment 20/125
+A6 CTC alignment 30/125
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 1024 n 49 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 1024 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 31 n 49 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 31 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+A6 CTC alignment 40/125
+A6 CTC alignment 50/125
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 1024 n 58 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 1024 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 31 n 58 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 31 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+A6 CTC alignment 60/125
+A6 CTC alignment 70/125
+A6 CTC alignment 80/125
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 1024 n 56 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 1024 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_NOT_INITIALIZED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 31 n 56 k 1024 mat1_ld 1024 mat2_ld 1024 result_ld 31 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at /pytorch/aten/src/ATen/cuda/CUDABlas.cpp:1765.)
+  return F.linear(input, self.weight, self.bias)
+A6 CTC alignment 90/125
+A6 CTC alignment 100/125
+A6 CTC alignment 110/125
+A6 CTC alignment 120/125
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  1.24it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  2.22it/s]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+A6 Qwen cs_dialogue 10/125
+A6 Qwen cs_dialogue 20/125
+A6 Qwen cs_dialogue 30/125
+A6 Qwen cs_dialogue 40/125
+A6 Qwen cs_dialogue 50/125
+A6 Qwen cs_dialogue 60/125
+A6 Qwen cs_dialogue 70/125
+A6 Qwen cs_dialogue 80/125
+A6 Qwen cs_dialogue 90/125
+A6 Qwen cs_dialogue 100/125
+A6 Qwen cs_dialogue 110/125
+A6 Qwen cs_dialogue 120/125
+A6 Qwen ascend 10/125
+A6 Qwen ascend 20/125
+A6 Qwen ascend 30/125
+A6 Qwen ascend 40/125
+A6 Qwen ascend 50/125
+A6 Qwen ascend 60/125
+A6 Qwen ascend 70/125
+A6 Qwen ascend 80/125
+A6 Qwen ascend 90/125
+A6 Qwen ascend 100/125
+A6 Qwen ascend 110/125
+A6 Qwen ascend 120/125

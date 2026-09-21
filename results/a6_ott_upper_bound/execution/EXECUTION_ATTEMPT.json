@@ -2,7 +2,7 @@
   "schema_version": "a6_ott_execution_attempt_v1",
   "status": "BLOCKED",
   "recorded": "2026-09-21",
-  "implementation_commit": "PENDING_COMMIT",
+  "implementation_commit": "4e90551",
   "result_namespace": "results/a6_ott_upper_bound",
   "jobs_at_start": [],
   "jobs_at_final_sync": [],

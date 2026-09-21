@@ -1,0 +1,35 @@
+{
+  "schema_version": "a6_ott_execution_attempt_v1",
+  "status": "BLOCKED",
+  "recorded": "2026-09-21",
+  "implementation_commit": "6eafee02f020929129e111b990ba4d45479b1019",
+  "result_namespace": "results/a6_ott_upper_bound",
+  "jobs_at_start": [],
+  "jobs_at_final_sync": [],
+  "superseded_jobs_cancelled_this_attempt": [],
+  "new_jobs_submitted": [],
+  "result_index": {
+    "exact_baselines_reused": 16,
+    "validated_direction_construction_reuse": 12,
+    "exact_phase_a_steered_rows": 0,
+    "phase_a_search_rows_remaining": {
+      "whisper": 11520,
+      "qwen3_asr_1p7b": 12800
+    }
+  },
+  "blocker": {
+    "kind": "IMPLEMENTATION_GAP",
+    "message": "No contract-conformant physical A6-OTT executor or Slurm launcher exists. experiments/a6_ott.py exposes only --dry-run and explicitly refuses physical execution.",
+    "unsafe_alternative_rejected": "scripts/basis_a6_execute.py is the superseded 70,080-cell atlas executor; it writes the legacy namespace and schedules Raw, Minus-Shared, U-S, Conditioning-All, fixed-vector, and five-rho work.",
+    "required_before_execution": [
+      "Implement a compact phase-aware physical executor under the A6-OTT namespace.",
+      "Wire result-first cell indexing and IN_FLIGHT ownership.",
+      "Add compact Slurm submission with a maximum of two concurrent jobs.",
+      "Implement Phase-A selection, conditional Qwen rescue, Phase-B freeze, and Phase-C unlocks."
+    ]
+  },
+  "artifacts_preserved": [
+    "results/a6_ott_upper_bound/migration/",
+    "results/basis_a6_expanded/"
+  ]
+}

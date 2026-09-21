@@ -2,12 +2,21 @@
   "schema_version": "a6_ott_execution_attempt_v1",
   "status": "BLOCKED",
   "recorded": "2026-09-21",
-  "implementation_commit": "6eafee02f020929129e111b990ba4d45479b1019",
+  "implementation_commit": "PENDING_COMMIT",
   "result_namespace": "results/a6_ott_upper_bound",
   "jobs_at_start": [],
   "jobs_at_final_sync": [],
   "superseded_jobs_cancelled_this_attempt": [],
-  "new_jobs_submitted": [],
+  "new_jobs_submitted": [
+    {"job_id": "53418", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53419", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53421", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53422", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53423", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53424", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53425", "model": "whisper", "purpose": "physical_acceptance", "status": "PASS"},
+    {"job_id": "53426", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "PASS"}
+  ],
   "result_index": {
     "exact_baselines_reused": 16,
     "validated_direction_construction_reuse": 12,
@@ -19,13 +28,11 @@
   },
   "blocker": {
     "kind": "IMPLEMENTATION_GAP",
-    "message": "No contract-conformant physical A6-OTT executor or Slurm launcher exists. experiments/a6_ott.py exposes only --dry-run and explicitly refuses physical execution.",
-    "unsafe_alternative_rejected": "scripts/basis_a6_execute.py is the superseded 70,080-cell atlas executor; it writes the legacy namespace and schedules Raw, Minus-Shared, U-S, Conditioning-All, fixed-vector, and five-rho work.",
+    "message": "Physical executor and Slurm launchers are implemented and both real-model acceptance jobs pass, but Phase-A cannot start: frozen CS Search IDs lack an accepted acoustic oracle span in the canonical D-dev-select loader. The first failing frozen ID is ZH-CN_U0011_S0_758; its A group is empty before any direction construction.",
+    "unsafe_alternative_rejected": "Using a different acceptance panel, a corpus/fixed direction, a guessed time span, or the superseded large atlas would violate the frozen Search IDs or oracle information budget.",
     "required_before_execution": [
-      "Implement a compact phase-aware physical executor under the A6-OTT namespace.",
-      "Wire result-first cell indexing and IN_FLIGHT ownership.",
-      "Add compact Slurm submission with a maximum of two concurrent jobs.",
-      "Implement Phase-A selection, conditional Qwen rescue, Phase-B freeze, and Phase-C unlocks."
+      "Repair or provide accepted oracle span metadata for all frozen CS_SEARCH_20 IDs without changing the frozen IDs.",
+      "Re-run the result-first Phase-A preflight, then submit only the four full-depth model-resident shards per model."
     ]
   },
   "artifacts_preserved": [

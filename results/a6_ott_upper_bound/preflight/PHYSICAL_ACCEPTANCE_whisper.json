@@ -1,0 +1,31 @@
+{
+  "all_layer_collection": true,
+  "count": 3,
+  "counters": {
+    "decoder": {
+      "direction_constructions": 6,
+      "rho_cache_hits": 18
+    },
+    "encoder": {
+      "direction_constructions": 3,
+      "rho_cache_hits": 9
+    }
+  },
+  "dataset": "cs_dialogue",
+  "direction_sample_varying": true,
+  "families": [
+    "add_unique_encoder",
+    "add_unique_decoder",
+    "conditioning_cs_decoder"
+  ],
+  "git_commit": "2ee1bcdc9b5593f0aeb7a1d0e51683b8bd73fb6b",
+  "local_edit_nonzero": true,
+  "model": "whisper",
+  "panel_fingerprint": "sha256:c81c6316c9333f3225e9c9c44df80adef0893050189d09bca8e23ba46806409b",
+  "phase": "A",
+  "regime": "oracle_tt",
+  "rho_cache_reused": true,
+  "runtime_sec": 35.461343593895435,
+  "schema_version": "a6_ott_physical_acceptance_v1",
+  "status": "PASS"
+}

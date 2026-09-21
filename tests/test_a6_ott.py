@@ -86,3 +86,11 @@ def test_resumability_requires_identity_and_provenance(tmp_path) -> None:
     accepted = load_accepted_cell(path, canonical_key="k", phase="A", result_root=tmp_path)
     assert accepted and accepted["reused"] is True and accepted["source_hash"].startswith("sha256:")
     assert load_accepted_cell(path, canonical_key="wrong", phase="A", result_root=tmp_path) is None
+
+
+def test_physical_runner_exposes_only_compact_model_resident_shards() -> None:
+    from csasr.experiments.a6_ott import list_shards
+
+    assert len(list_shards("whisper")) == 4
+    assert len(list_shards("qwen")) == 4
+    assert all("encoder" in x or "decoder" in x for x in list_shards("whisper"))

@@ -21,4 +21,5 @@ ARGS=(--stage "${STAGE}" --model "${MODEL}" --dataset "${DATASET}" --decode-mode
 if [[ "${STAGE}" == "fixed" ]]; then
   ARGS+=(--source "${BASIS_A6_SOURCE:?BASIS_A6_SOURCE must be set for fixed}")
 fi
+if [[ "${BASIS_A6_PILOT:-0}" == "1" ]]; then ARGS+=(--pilot); fi
 exec "${BASIS_A6_PYTHON}" scripts/basis_a6_execute.py "${ARGS[@]}"

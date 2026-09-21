@@ -244,17 +244,18 @@ def run_baselines(model: str) -> int:
     return 0
 
 
-def run_fixed(model: str, source: str, dataset: str, mode: str, side: str, layer: int) -> int:
+def run_fixed(model: str, source: str, dataset: str, mode: str, side: str, layer: int, *, pilot: bool = False) -> int:
     import torch
     from scripts.basis_a6_real_acceptance import _whisper_masks, _qwen_masks
     bundle = _model_bundle(model); bundle.model.eval()
     rows, panel_fp = _load_rows(dataset); base = load_baseline(model, dataset, mode)
-    methods = NONCOND + (COND if side == "decoder" else ())
+    methods = ("raw",) if pilot else NONCOND + (COND if side == "decoder" else ())
+    doses = (0.5,) if pilot else RHOS
     path = _result_path("fixed", source=source, model=model, dataset=dataset, mode=mode, side=side, layer=layer)
     done = _accepted(path, "fixed", source, model, dataset, mode, side, layer)
     for method in methods:
         vec, dmeta = _direction(source, model, side, layer, method)
-        for rho in RHOS:
+        for rho in doses:
             key = _cell_key("fixed", source=source, model=model, dataset=dataset, mode=mode, side=side, layer=layer, method=method, rho=rho)
             if key in done: continue
             outputs, energy, active, pre = {}, 0.0, 0, 0.0; started = time.monotonic(); failures = []
@@ -299,7 +300,7 @@ def run_fixed(model: str, source: str, dataset: str, mode: str, side: str, layer
             _append(path, cell); done.add(key)
     _write(path.with_suffix(".manifest.json"), {"status": "PASS", "branch": "fixed", "source": source,
         "model": model, "dataset": dataset, "decode_mode": mode, "side": side, "layer": layer,
-        "cells": len(done), "expected_cells": len(methods) * len(RHOS), "panel_fingerprint": panel_fp,
+        "cells": len(done), "expected_cells": len(methods) * len(doses), "pilot": pilot, "panel_fingerprint": panel_fp,
         "git_commit": _git()})
     return 0
 
@@ -428,6 +429,7 @@ def main() -> int:
     ap.add_argument("--side", choices=("encoder", "decoder"))
     ap.add_argument("--layer", type=int)
     ap.add_argument("--output", default="results/basis_a6_expanded/manifests/FULL_RUN_SHARDS.json")
+    ap.add_argument("--pilot", action="store_true")
     args = ap.parse_args()
     if args.stage == "enumerate": return enumerate_shards(REPO / args.output)
     if not args.model: ap.error("--model is required")
@@ -436,7 +438,7 @@ def main() -> int:
         if getattr(args, name) is None: ap.error(f"--{name.replace('_', '-')} is required")
     if args.stage == "fixed":
         if not args.source: ap.error("--source is required for fixed")
-        return run_fixed(args.model, args.source, args.dataset, args.decode_mode, args.side, args.layer)
+        return run_fixed(args.model, args.source, args.dataset, args.decode_mode, args.side, args.layer, pilot=args.pilot)
     return run_tt(args.model, args.dataset, args.decode_mode, args.side, args.layer)
 
 

@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
 #SBATCH --time=02:55:00
-#SBATCH --array=0-998%2
+#SBATCH --array=0-997%2
 #SBATCH --output=results/basis_a6_expanded/slurm/atlas-%A_%a.out
 
 set -euo pipefail

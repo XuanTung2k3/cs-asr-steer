@@ -125,6 +125,8 @@ def _accepted(path: Path, branch: str, source: str | None, model: str, dataset: 
             expected_prefix = _cell_key(branch, source=source, model=model, dataset=dataset, mode=mode, side=side, layer=layer, method=row["method"], rho=row["rho"])
             if key != expected_prefix or not row.get("provenance"):
                 raise ValueError("invalid key/provenance")
+            if branch == "fixed" and not row.get("construction_fingerprint"):
+                raise ValueError("missing construction fingerprint")
             accepted.add(key); good.append(line)
         except Exception:
             quarantine.parent.mkdir(parents=True, exist_ok=True)
@@ -282,7 +284,7 @@ def run_fixed(model: str, source: str, dataset: str, mode: str, side: str, layer
                     "changed_rate": metric["changed_rate"], "delta_margin": None,
                     "runtime": time.monotonic() - started, "edited_positions": active,
                     "direction_hash": dmeta["direction_hash"], "panel_fingerprint": panel_fp,
-                    "construction_fingerprint": dmeta.get("construction_manifest"),
+                    "construction_fingerprint": dmeta.get("construction_fingerprint"),
                     "model_revision": dmeta.get("model_revision"),
                     "site": "decoder_post_cross_attn_residual" if model == "whisper" and side == "decoder" else
                             "encoder_post_self_attn_residual_pre_ffn" if model == "whisper" else

@@ -92,3 +92,15 @@ Executed 2026-09-21T08:45:37 (`scancel 53354`, `scancel 53355`). Result:
 On-disk artifacts verified intact after cancel: baselines **16** files, oracle_tt cache+runs
 **1,190** files; `results/basis_a6_expanded/` subtree unchanged. Nothing was deleted.
 
+## Current-session re-check (2026-09-21)
+
+`squeue -u "$USER"` was re-run before A6-OTT preflight and returned an empty queue. There
+were therefore no superseded large-A6 jobs left to cancel and no unrelated user jobs to
+disturb. No GPU job was submitted or allowed to finish in this session.
+
+The requested reuse/audit files are located at
+`results/a6_ott_upper_bound/migration/`; no top-level `migration/` directory exists. The
+reuse manifest was validated against artifact bytes and embedded provenance. All 16
+`REUSE_EXACT` baseline claims passed. The Whisper L00 direction cache passed direction-only
+validation and is reusable for construction only; L01 was downgraded to `NEED_RUN` because
+its source run manifest is absent. No aggregate old oracle-TT result row was imported.

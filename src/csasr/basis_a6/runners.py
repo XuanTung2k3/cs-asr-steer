@@ -28,7 +28,8 @@ class OracleTTCallbacks:
 
 def run_oracle_tt_sample(*, sample: Any, model: str, dataset: str, utterance_id: str,
                          decode_mode: str, side: str, layers: list[int], callbacks: OracleTTCallbacks,
-                         cache: DirectionCache) -> dict[str, Any]:
+                         cache: DirectionCache,
+                         allowed_methods: tuple[str, ...] | None = None) -> dict[str, Any]:
     """Run phases A–E once and return reusable per-sample state.
 
     The callbacks receive the current ``sample`` on every phase. A callback
@@ -44,6 +45,7 @@ def run_oracle_tt_sample(*, sample: Any, model: str, dataset: str, utterance_id:
     cond = callbacks.extract_conditioning_deltas(sample, baseline, side) if side == "decoder" else {}
     directions: dict[str, np.ndarray] = {}
     records = []
+    selected_methods = None if allowed_methods is None else set(allowed_methods)
     for layer in layers:
         state = states[layer]
         group_a, group_b = np.asarray(state["A"]), np.asarray(state["B"])
@@ -56,6 +58,8 @@ def run_oracle_tt_sample(*, sample: Any, model: str, dataset: str, utterance_id:
         raw_eligible = "raw" in methods
         us_eligible = rank >= 2
         for method, vector in methods.items():
+            if selected_methods is not None and method not in selected_methods:
+                continue
             eligible = method == "raw" or us_eligible
             # Conditioning eligibility is represented by the callback's
             # non-empty selection; build_method_directions omits empty ones.

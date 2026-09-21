@@ -37,11 +37,12 @@ def main() -> int:
     ap.add_argument("--dataset-dir", default="data/external/ASCEND/dataset")
     ap.add_argument("--manifest", default="results/basis_a6_expanded/ascend/ASCEND_EVAL_MANIFEST.json")
     ap.add_argument("--output", default="results/basis_a6_expanded/ascend/ASCEND_EVAL_ALIGNMENT.json")
+    ap.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     args = ap.parse_args()
     wanted = set(json.loads(Path(args.manifest).read_text())["utterance_ids"])
     rows = [r for r in load_ascend_split(args.dataset_dir, "validation") if r.utterance_id in wanted]
     cfg = load_config("lss/align.yaml")
-    cfg["model"] = {"device": "cpu"}
+    cfg["model"] = {"device": args.device}
     aligner = load_ctc_aligner(cfg)
     aligned, failures = {}, []
     for n, row in enumerate(rows, 1):

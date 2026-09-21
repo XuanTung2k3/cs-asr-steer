@@ -83,9 +83,14 @@ def _direction(source: str, model: str, side: str, layer: int, method: str) -> t
     norm = float(np.linalg.norm(v))
     if not np.isfinite(v).all() or not np.isclose(norm, 1.0, atol=2e-5):
         raise RuntimeError(f"invalid direction {p}: norm={norm}")
-    manifest = json.loads((ROOT / "fixed" / source / "A6_FIXED_DIRECTION_MANIFEST.json").read_text())
-    key = f"{model}/{side}/L{int(layer):02d}/{method}"
-    meta = manifest.get("rows", {}).get(key)
+    # The per-model construction manifest is written once per construction
+    # worker; the inventory is the canonical combined 584-entry source of
+    # truth and is therefore required here.
+    inventory = json.loads((ROOT / "manifests/FIXED_DIRECTION_INVENTORY.json").read_text())
+    meta = next((r for r in inventory.get("rows", [])
+                 if r.get("source") == source and r.get("model") == model
+                 and r.get("side") == side and int(r.get("layer", -1)) == int(layer)
+                 and r.get("method") == method), None)
     if not meta or meta.get("direction_hash") is None:
         raise RuntimeError(f"missing direction provenance {key}")
     return v, meta

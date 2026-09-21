@@ -81,8 +81,13 @@ class DirectionCache:
         metadata = []
         for rec in self.records():
             name = rec.direction_hash.removeprefix("sha256:") + ".npy"
-            np.save(vectors / name, rec.vector)
-            metadata.append({**rec.metadata(), "vector_file": str(Path("vectors") / name)})
+            # The canonical hash remains over the in-memory float64 vector,
+            # while the persisted cache uses float32.  This halves the full
+            # A6-TT cache footprint without dropping any required direction;
+            # metadata carries the canonical hash and the storage dtype.
+            np.save(vectors / name, rec.vector.astype(np.float32))
+            metadata.append({**rec.metadata(), "vector_file": str(Path("vectors") / name),
+                             "canonical_hash_dtype": "float64", "storage_dtype": "float32"})
         bundles = {}
         for key in {(r.model, r.dataset, r.side, r.method, r.decode_analysis_mode) for r in self.records()}:
             bundles["|".join(map(str, key))] = self.bundle_hash(model=key[0], dataset=key[1], side=key[2], method=key[3], decode_analysis_mode=key[4])

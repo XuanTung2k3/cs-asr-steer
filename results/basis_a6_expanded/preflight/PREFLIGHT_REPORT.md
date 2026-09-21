@@ -1,8 +1,6 @@
 # BASIS-A6 Expanded Preflight
 
-Status: **BLOCKED**
-
-Implementation commit: `4acfee0e9c87b20b7c82cdc9fee7dff1dbc7f9ca`
+Status: **READY_FOR_FULL_RUN**
 
 The 70,080-cell atlas was not executed.
 
@@ -23,15 +21,17 @@ The 70,080-cell atlas was not executed.
 | gpu_acceptance | PASS |
 | fixed_directions_complete | PASS |
 | cross_source_geometry_complete | PASS |
-| oracle_tt_model_acceptance | BLOCKED |
-| decoding_acceptance_both_models | BLOCKED |
-| runtime_vram_preflight | BLOCKED |
+| oracle_tt_model_acceptance | PASS |
+| decoding_acceptance_both_models | PASS |
+| runtime_vram_preflight | PASS |
+| real_model_dynamic_rank | PASS |
+| real_model_cache_reuse | PASS |
+| runtime_sharding_measured | PASS |
+| real_acceptance_artifact_validation | PASS |
 
 ## Blocking gates
 
-- `oracle_tt_model_acceptance`
-- `decoding_acceptance_both_models`
-- `runtime_vram_preflight`
+
 
 ## Matrix dry run
 
@@ -47,12 +47,14 @@ CS fixed directions: 584/584. ASCEND fixed directions: 584/584. Cross-source geo
 
 ## Oracle-TT / leakage
 
-CPU phase orchestration, dynamic-rank rules, cache keys/bundle hashing, local-mask guard, and gold-token trace PASS. Model-resident causal acceptance remains BLOCKED.
+Real-model Whisper and Qwen Oracle-TT PASS. Decoder traces identify `baseline_hypothesis`; gold hidden states/logits/target directions are false. Dynamic rank and per-sample eligibility are recorded in the TT artifacts.
 
 ## Local steering / decoding
 
-Accepted A4 Whisper/Qwen local site and mask hashes PASS. Direction construction jobs 53312 (Whisper) and 53315 (Qwen) PASS; 53313 was a repaired manifest bookkeeping failure. CUDA/environment acceptance PASS via 53316 (H100 MIG 3g.40gb, acl1 bootstrap). End-to-end Whisper/Qwen greedy and official-standard acceptance remains BLOCKED.
+Whisper greedy PASS; Whisper official-standard PASS with beam traces. Qwen greedy PASS; Qwen official-standard PASS and recorded equivalent to greedy. rho=0 identities and positive local edits pass on all 12 frozen panel rows per condition.
 
 ## Runtime / sharding
 
-No representative decode benchmark was run; runtime, VRAM, cache-size, and disk-size measurements are null. The recorded sharding plan is `FULL_RUN_SHARDING_PLAN.md`; atlas authorization is false.
+Real model-resident measurements are in `REAL_BENCHMARK_whisper.json` and `REAL_BENCHMARK_qwen3_asr_1p7b.json`; storage/capacity is in `DISK_CAPACITY.json`; derived runtime and contiguous layer-block sizes are in `RUNTIME_ESTIMATES.json` and `FULL_RUN_SHARDING_PLAN.md`.
+
+Measured jobs: Whisper 53326, Qwen 53321. Peak allocated/reserved VRAM: Whisper 4.64/4.97 GiB; Qwen 4.38/4.45 GiB. Free disk 759.9 GiB; estimated planned cache/result total 4.32 GiB.

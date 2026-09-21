@@ -1,0 +1,29 @@
+hostname worker-mig-3g40gb-0
+date 2026-09-21T04:30:33.396455+00:00
+which_python /home/tungnx/miniconda3/envs/acl1/bin/python
+sys.executable /home/tungnx/miniconda3/envs/acl1/bin/python
+python_version 3.11.9 | packaged by conda-forge | (main, Apr 19 2024, 18:36:13) [GCC 12.3.0]
+git_head 96024c1cfeb8388215c40bbc5cad0a6313a2249a
+cuda_visible_devices MIG-09c332c6-27d7-5b98-8a77-6f93e77f7cd3
+torch_version 2.10.0+cu128
+torch_cuda_version 12.8
+torch_cuda_available True
+visible_gpu NVIDIA H100 80GB HBM3 MIG 3g.40gb
+scipy_version 1.17.1
+transformers_version 4.57.6
+datasets_version 4.8.4
+sklearn_version 1.8.0
+Traceback (most recent call last):
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 527, in <module>
+    if __name__ == "__main__": raise SystemExit(main())
+                                                ^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 524, in main
+    return run(ap.parse_args().model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 500, in run
+    if model == "whisper": traces[mode] = _whisper_fixed(bundle, rows, mode, 16, 16)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 230, in _whisper_fixed
+    zero_d = DecoderPostCrossAttnInterventionHook(bundle, layer_d, torch.from_numpy(_load_direction("whisper", "decoder", layer_d, methods["decoder"])), alpha=0.0, num_forced_prefix=num_forced_prefix_from(bundle.processor, "zh"), gain_fn=lambda **kw: torch.tensor([1.0 if int(p) in set(masks["decoder_positions"]) else 0.0 for p in kw["abs_pos"]], device=kw["r"].device), record=True, record_last_only=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: DecoderPostCrossAttnInterventionHook.__init__() got an unexpected keyword argument 'gain_fn'

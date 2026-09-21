@@ -15,6 +15,10 @@ fi
 # The environment-local C++ runtime is required by SciPy/sklearn and must win over
 # the batch host's older system libstdc++.  This is process-local, not a system change.
 export PATH="${BASIS_A6_ENV_PREFIX}/bin:${PATH}"
+# The cluster's 64 MB /dev/shm is already occupied by unrelated jobs; keep
+# joblib/scikit-learn temporary state on the large node-local /tmp instead.
+export JOBLIB_TEMP_FOLDER="${JOBLIB_TEMP_FOLDER:-/tmp/basis_a6_joblib}"
+mkdir -p "${JOBLIB_TEMP_FOLDER}"
 if [[ -d "${BASIS_A6_ENV_PREFIX}/lib" ]]; then
     if [[ -n "${LD_LIBRARY_PATH:-}" ]]; then
         export LD_LIBRARY_PATH="${BASIS_A6_ENV_PREFIX}/lib:${LD_LIBRARY_PATH}"

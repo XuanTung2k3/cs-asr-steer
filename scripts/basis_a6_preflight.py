@@ -107,6 +107,8 @@ def main() -> int:
     checks = {**primitive_checks, **external_checks}
     blocking = [name for name, ok in external_checks.items() if not ok]
     manifest = {"schema_version": "basis_a6_preflight_manifest_v1", "status": "READY_FOR_FULL_RUN" if not blocking and all(primitive_checks.values()) else "BLOCKED",
+                "implementation_commit": "4acfee0e9c87b20b7c82cdc9fee7dff1dbc7f9ca",
+                "acceptance_preflight_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
                 "baseline_clean_implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
                 "git": git_state(REPO), "environment": environment_info(), "checks": checks,
                 "blocking_gates": blocking, "gold_leakage_trace": trace, "matrix": expected_counts(),

@@ -60,6 +60,32 @@ def unique_shared_direction(states_a: np.ndarray, states_b: np.ndarray) -> Uniqu
                         rank, dict(built.diagnostics))
 
 
+def _rank_one_unique_direction(states_a: np.ndarray, states_b: np.ndarray) -> np.ndarray:
+    """A6 Add-Unique construction for the frozen dynamic-rank ``r=1`` case.
+
+    The historical A5 constructor also builds a distinct shared principal
+    vector, so it requires two indices.  A6-OTT explicitly permits
+    Add-Unique at rank one; only the unique principal vector is needed here.
+    """
+    a = np.asarray(states_a, dtype=np.float64)
+    b = np.asarray(states_b, dtype=np.float64)
+    if a.ndim != 2 or b.ndim != 2 or a.shape[1] != b.shape[1] or not len(a) or not len(b):
+        raise ValueError("rank-one unique requires non-empty A/B states with matching dimensions")
+    sa = (a.T @ a) / float(len(a))
+    sb = (b.T @ b) / float(len(b))
+    vals_a, vecs_a = np.linalg.eigh(sa)
+    vals_b, vecs_b = np.linalg.eigh(sb)
+    ua = vecs_a[:, int(np.argmax(vals_a))]
+    ub = vecs_b[:, int(np.argmax(vals_b))]
+    if float(ua @ ub) < 0.0:
+        ub = -ub
+    vu = normalize(ua, name="rank-one unique direction")
+    delta = a.mean(axis=0) - b.mean(axis=0)
+    if np.linalg.norm(delta) > 0.0 and float(vu @ (delta / np.linalg.norm(delta))) < 0.0:
+        vu = -vu
+    return vu
+
+
 def conditioning_direction(deltas: np.ndarray, positions: np.ndarray | list[int] | None = None) -> np.ndarray:
     x = np.asarray(deltas, dtype=np.float64)
     if x.ndim != 2 or not len(x):
@@ -81,8 +107,11 @@ def build_method_directions(states_a: np.ndarray, states_b: np.ndarray,
     eligibility). No direction is borrowed from another utterance.
     """
     out = {"raw": raw_direction(states_a, states_b)}
-    us = unique_shared_direction(states_a, states_b)
-    if us is not None:
+    rank = dynamic_rank(len(states_a), len(states_b), np.asarray(states_a).shape[-1])
+    us = unique_shared_direction(states_a, states_b) if rank >= 2 else None
+    if rank == 1:
+        out["add_unique"] = _rank_one_unique_direction(states_a, states_b)
+    elif us is not None:
         out.update({"add_unique": us.v_unique, "minus_shared": -us.v_shared,
                     "unique_minus_shared": us.v_unique_minus_shared})
     if conditioning_deltas is not None:

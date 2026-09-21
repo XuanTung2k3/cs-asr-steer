@@ -94,3 +94,16 @@ def test_physical_runner_exposes_only_compact_model_resident_shards() -> None:
     assert len(list_shards("whisper")) == 4
     assert len(list_shards("qwen")) == 4
     assert all("encoder" in x or "decoder" in x for x in list_shards("whisper"))
+
+
+def test_add_unique_accepts_frozen_rank_one_case() -> None:
+    import numpy as np
+
+    from csasr.basis_a6.directions import build_method_directions
+
+    directions = build_method_directions(
+        np.asarray([[1.0, 0.0, 0.0], [1.0, 0.0, 0.0]]),
+        np.asarray([[0.0, 1.0, 0.0]]),
+    )
+    assert "add_unique" in directions
+    assert np.isclose(np.linalg.norm(directions["add_unique"]), 1.0)

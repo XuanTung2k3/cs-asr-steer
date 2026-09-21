@@ -1,14 +1,14 @@
 {
   "all_layer_collection": true,
-  "count": 3,
+  "count": 8,
   "counters": {
     "decoder": {
-      "direction_constructions": 6,
-      "rho_cache_hits": 18
+      "direction_constructions": 16,
+      "rho_cache_hits": 48
     },
     "encoder": {
-      "direction_constructions": 3,
-      "rho_cache_hits": 9
+      "direction_constructions": 8,
+      "rho_cache_hits": 24
     }
   },
   "dataset": "cs_dialogue",
@@ -18,14 +18,14 @@
     "add_unique_decoder",
     "conditioning_cs_decoder"
   ],
-  "git_commit": "2ee1bcdc9b5593f0aeb7a1d0e51683b8bd73fb6b",
+  "git_commit": "2db8b3a31b83fa74df3e72fc417b74801a8fb7ea",
   "local_edit_nonzero": true,
   "model": "whisper",
-  "panel_fingerprint": "sha256:c81c6316c9333f3225e9c9c44df80adef0893050189d09bca8e23ba46806409b",
+  "panel_fingerprint": "sha256:66e34fadcde4c87157810fca13f58e1b91dfac760c6dd5edc1748715beb44cd7",
   "phase": "A",
   "regime": "oracle_tt",
   "rho_cache_reused": true,
-  "runtime_sec": 35.461343593895435,
+  "runtime_sec": 40.90251302905381,
   "schema_version": "a6_ott_physical_acceptance_v1",
   "status": "PASS"
 }

@@ -121,8 +121,30 @@ def accepted(key: str) -> dict[str, Any] | None:
         return None
 
 
+def ensure_search_manifest_fingerprint() -> dict[str, Any]:
+    """Freeze the v2 Search manifest before a full Phase-A row is computed."""
+    path = ROOT / "manifests/v2/SEARCH_FREEZE.json"
+    if not path.is_file():
+        path = SEARCH_FREEZE
+    digest = _file_sha(path)
+    guard_path = ROOT / "phase_a/SEARCH_MANIFEST_FINGERPRINT.json"
+    guard = {"schema_version": "a6_ott_phase_a_search_guard_v1", "phase": "A",
+             "manifest": str(path.relative_to(REPO)), "manifest_sha256": digest,
+             "ids": json.loads(path.read_text())["ids"], "locked": True,
+             "locked_before_full_search": True}
+    if guard_path.is_file():
+        old = json.loads(guard_path.read_text())
+        if old.get("manifest_sha256") != digest or old.get("ids") != guard["ids"]:
+            raise RuntimeError("Phase-A Search manifest changed after the first accepted row")
+        return old
+    _atomic_json(guard_path, guard)
+    return guard
+
+
 def _frozen_ids() -> dict[str, list[str]]:
-    payload = json.loads(SEARCH_FREEZE.read_text())
+    versioned = ROOT / "manifests/v2/SEARCH_FREEZE.json"
+    path = versioned if versioned.is_file() else SEARCH_FREEZE
+    payload = json.loads(path.read_text())
     return {str(k): [str(x) for x in v] for k, v in payload["ids"].items()}
 
 
@@ -353,6 +375,7 @@ def run_shard(model_arg: str, dataset: str, side: str, layer_start: int, layer_s
         raise ValueError("invalid model/side")
     if not (0 <= layer_start < layer_stop <= SITES[model][side]):
         raise ValueError("invalid layer block")
+    ensure_search_manifest_fingerprint()
     if acceptance:
         rows, panel_fp = _dataset_rows("cs_dialogue")
         dataset = "cs_dialogue"
@@ -399,17 +422,29 @@ def run_shard(model_arg: str, dataset: str, side: str, layer_start: int, layer_s
     return 0
 
 
-def run_acceptance(model_arg: str, *, count: int = 3) -> int:
+def run_acceptance(model_arg: str, *, count: int = 3, acceptance_ids: list[str] | None = None,
+                   acceptance_ids_file: str | None = None) -> int:
     """Run the compact physical integration acceptance in one resident process."""
     model = MODEL_NAMES.get(model_arg, model_arg)
     # The compact acceptance is plumbing-only.  Use the already validated
     # small D-dev-select panel so a missing search-ID alignment cannot be
     # mistaken for an executor failure.  Phase-A itself still uses the frozen
     # IDs and is refused below until every one has accepted oracle spans.
-    acceptance_panel = REPO / "results/basis_a6_expanded/preflight/REAL_ACCEPTANCE_PANEL.json"
-    panel_payload = json.loads(acceptance_panel.read_text())
-    rows = [dict(x) for x in panel_payload["rows"][:int(count)]]
-    panel_fp = str(panel_payload.get("fingerprint"))
+    if acceptance_ids_file:
+        audit = json.loads((REPO / acceptance_ids_file).read_text()) if not Path(acceptance_ids_file).is_absolute() else json.loads(Path(acceptance_ids_file).read_text())
+        acceptance_ids = [str(x["replacement_id"]) for x in audit.get("replacements", [])]
+    if acceptance_ids:
+        rows, panel_fp = _dataset_rows("cs_dialogue")
+        wanted = set(map(str, acceptance_ids))
+        rows = [dict(x) for x in rows if str(x["utterance_id"]) in wanted]
+        if {str(x["utterance_id"]) for x in rows} != wanted:
+            raise RuntimeError("replacement acceptance IDs are not in the v2 frozen Search panel")
+        panel_fp = _sha(sorted(wanted))
+    else:
+        acceptance_panel = REPO / "results/basis_a6_expanded/preflight/REAL_ACCEPTANCE_PANEL.json"
+        panel_payload = json.loads(acceptance_panel.read_text())
+        rows = [dict(x) for x in panel_payload["rows"][:int(count)]]
+        panel_fp = str(panel_payload.get("fingerprint"))
     old_dataset = "cs_dialogue_dev_select"
     base_payload = json.loads((REPO / "results/basis_a6_expanded/baselines" / model /
                                old_dataset / "greedy.json").read_text())
@@ -453,13 +488,17 @@ def main() -> int:
     ap.add_argument("--layer-stop", type=int)
     ap.add_argument("--acceptance", action="store_true")
     ap.add_argument("--acceptance-count", type=int, default=3)
+    ap.add_argument("--acceptance-ids", default="", help="comma-separated v2 Search IDs for replacement acceptance")
+    ap.add_argument("--acceptance-ids-file", default="", help="v2 audit JSON containing replacement IDs")
     ap.add_argument("--list-shards", action="store_true")
     args = ap.parse_args()
     model = MODEL_NAMES.get(args.model, args.model)
     if args.list_shards:
         print("\n".join(list_shards(model))); return 0
     if args.acceptance:
-        return run_acceptance(model, count=args.acceptance_count)
+        ids = [x for x in args.acceptance_ids.split(",") if x]
+        return run_acceptance(model, count=args.acceptance_count, acceptance_ids=ids or None,
+                              acceptance_ids_file=args.acceptance_ids_file or None)
     for name in ("dataset", "side", "layer_start", "layer_stop"):
         if getattr(args, name) is None: ap.error(f"--{name.replace('_', '-')} is required")
     if args.model == "qwen": model = "qwen3_asr_1p7b"

@@ -17,4 +17,6 @@ a6_print_environment 1
 echo "experiment_phase=physical_acceptance"
 echo "model=${A6_OTT_MODEL:?A6_OTT_MODEL must be set}"
 exec "${BASIS_A6_PYTHON}" -m csasr.experiments.a6_ott \
-  --model "${A6_OTT_MODEL}" --acceptance --acceptance-count "${A6_OTT_ACCEPTANCE_COUNT:-3}"
+  --model "${A6_OTT_MODEL}" --acceptance --acceptance-count "${A6_OTT_ACCEPTANCE_COUNT:-3}" \
+  --acceptance-ids "${A6_OTT_ACCEPTANCE_IDS:-}" \
+  --acceptance-ids-file "${A6_OTT_ACCEPTANCE_IDS_FILE:-}"

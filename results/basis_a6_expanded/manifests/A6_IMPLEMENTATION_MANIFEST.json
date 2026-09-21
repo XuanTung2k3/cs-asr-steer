@@ -2,6 +2,7 @@
   "schema_version": "basis_a6_implementation_manifest_v1",
   "status": "BLOCKED",
   "baseline_clean_implementation_commit": "a05a7d7879246e482b9e3ce39df06c7e97f164c3",
+  "implementation_commit": "4acfee0e9c87b20b7c82cdc9fee7dff1dbc7f9ca",
   "git": {
     "is_git_repo": true,
     "commit": "a05a7d7879246e482b9e3ce39df06c7e97f164c3",

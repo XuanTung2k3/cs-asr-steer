@@ -178,6 +178,21 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
 - **Exposure:** none found; current Round-1 runners do not consume it.
 - **Status:** optional and unimplemented in the current Round-1 path.
 
+### ASCEND (CAiRE/ASCEND) — added for BASIS-A6 (2026-09-21)
+
+- **Role:** third corpus for BASIS-A6 (`BASIS_A6_ASCEND_DATA_SPEC.md`). Official HF splits map to
+  BASIS-A6 roles as: `train` → `ASCEND-construct` (construction source only, frozen size-matched
+  subset), `validation` → `ASCEND-eval` (evaluation panel, target 300 or all eligible),
+  `test` → **DO NOT READ / DO NOT USE**.
+- **Exposure:** none yet. Protocol frozen; the download script (`scripts/download_ascend.py`) and
+  subset manifests (`ASCEND_CONSTRUCT_MANIFEST.json`, `ASCEND_EVAL_MANIFEST.json`) are the
+  reproducible data path. No model inference, no eligibility scan, and no subset freeze have run.
+- **Guards:** eligibility requires *verified* transcript-level code-switching (≥1 EN content unit
+  AND ≥1 ZH content unit) via the canonical `language_tags` pipeline, not the dataset "mixed"
+  label. Construction=train only, eval=validation only, disjoint by split. `test` is guarded by
+  the download marker `DO_NOT_USE_TEST.marker` and adapter refusal.
+- **Status:** frozen protocol, unexposed. ASCEND `test` is locked out of BASIS-A6 entirely.
+
 ## Leakage guards and do-not rules
 
 - `csasr.lss.features_contract.assert_inference_safe` rejects forbidden reference-, alignment-,
@@ -190,3 +205,5 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
 - Do not produce or inspect intervened `D-test` output before the entire pipeline is frozen.
 - Before gate calibration, create and freeze dialogue-v2 `calib-prob`/`calib-thresh` sub-roles or
   obtain a scientific decision that replaces that requirement.
+- ASCEND `test` must never be read for BASIS-A6. Construct only from ASCEND `train`; evaluate only
+  on ASCEND `validation`. Do not enter any `validation`/`test` utterance into construction.

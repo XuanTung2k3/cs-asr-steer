@@ -84,9 +84,11 @@ def steered_replay(bundle, encoded, tokens: list[int], edits: dict[int, tuple[fl
         bundle, LAYER, None, alpha=float(alpha), num_forced_prefix=num_forced_prefix,
         action_fn=action_fn, norm_preserve=True, record=True, record_last_only=True)
     with hook:
+        # Same call signature as the unsteered F1 replay (output_attentions=True) so that, at zero
+        # dose, F3 runs the identical eager compute path and must be bitwise equal to F1.
         out = bundle.model(encoder_outputs=encoded, decoder_input_ids=ids,
                            decoder_attention_mask=torch.ones_like(ids), use_cache=False,
-                           return_dict=True)
+                           output_attentions=True, return_dict=True)
     audit = hook.records[-1].to_dict() if hook.records else None
     return out.logits[0, -1].float().cpu(), audit, hook.steered_calls
 

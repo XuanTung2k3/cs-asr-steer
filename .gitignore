@@ -32,3 +32,7 @@ environment.lock.txt
 
 # disposable smoke-test backup
 out/smoke/results_A.pre_42674_debug_residue.jsonl.bak
+
+# P0-R2 evaluator outputs derived from dataset reference transcripts (regenerable; keep out of Git)
+results/inference_cf/p0_r2/evaluation_panel.json
+results/inference_cf/p0_r2/evaluation_units.json

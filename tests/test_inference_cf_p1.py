@@ -238,3 +238,40 @@ def test_config_frozen_and_no_reference_or_tuning_api():
     assert digest(config) == digest(json.loads(json.dumps(config)))
     names = inspect.signature(p1.decode).parameters
     assert not any(x in names for x in ("reference", "oracle", "ctc", "stratum", "layer", "alphas"))
+
+
+# ---- v1.1 A6 instrument (after attempt 1, job 54770) ------------------------------------
+
+def test_hook_realized_edit_equals_site_precision_replica(monkeypatch):
+    b = tiny_bundle()
+    r = run_decode(b, 1.0, monkeypatch)
+    edits = [s for s in r["steps"] if s["edit_applied"]]
+    assert edits
+    for s in edits:
+        assert s["hook_audit"]["edit_norm"] == pytest.approx(s["replica_edit_norm"], rel=1e-6)
+        assert s["hook_audit"]["post_norm"] == pytest.approx(s["replica_post_norm"], rel=1e-6)
+
+
+def test_bf16_sub_resolution_edit_breaks_float64_reference_but_not_replica():
+    from csasr.models.hooks import apply_steering
+    torch.manual_seed(0)
+    h = (torch.randn(1280) * 9 / 1280 ** .5).to(torch.bfloat16)
+    d = torch.nn.functional.normalize(torch.randn(1280), dim=0)
+    g = 0.0042                                               # attempt-1 failing edit size
+    site = h.view(1, 1, -1)
+    realized = apply_steering(site, d.to(torch.bfloat16).view(1, 1, -1), 1.0, 1.0,
+                              torch.tensor([[g]], dtype=torch.bfloat16), True)
+    realized_norm = float((realized - site).float().norm())
+    f64 = reference_edit(h.float(), d, 1.0, g)["edit_norm"]
+    assert abs(realized_norm - f64) > 0.05 * f64            # v1 instrument would fail
+    replica = apply_steering(h.view(1, 1, -1), d.to(torch.bfloat16).view(1, 1, -1), 1.0, 1.0,
+                             torch.tensor([[g]], dtype=torch.bfloat16), True)
+    assert float((replica - site).float().norm()) == realized_norm   # v1.1 instrument is exact
+
+
+def test_v11_config_versioning():
+    config = json.loads(Path("configs/inference_cf/p1_causal_acceptance.json").read_text())
+    assert config["acceptance_version"] == "v1.1"
+    assert config["acceptance"]["a6_reference"] == "site_precision_replica"
+    assert config["acceptance"]["reference_edit_rel_tol"] == 0.05           # tolerance unchanged
+    assert config["supersedes_attempt"]["job"] == "54770"

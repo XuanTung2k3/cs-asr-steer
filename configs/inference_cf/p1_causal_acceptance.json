@@ -8,17 +8,52 @@
   "tokenizer_partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
   "direction": "d = (hE - hB) / (||hE - hB|| + 1e-6); hB = hM for forced zh",
   "direction_tiny_tolerance": 0.0001,
-  "site": {"module": "decoder", "tensor": "decoder_post_cross_attn_residual", "layer": 24,
-           "semantics": "r = q + u_source, post-cross-attention, input to FFN, before final_layer_norm"},
+  "site": {
+    "module": "decoder",
+    "tensor": "decoder_post_cross_attn_residual",
+    "layer": 24,
+    "semantics": "r = q + u_source, post-cross-attention, input to FFN, before final_layer_norm"
+  },
   "norm_preserve": true,
   "scale": 1.0,
-  "alphas": [0.0, 1.0],
+  "alphas": [
+    0.0,
+    1.0
+  ],
   "num_forced_prefix": 4,
   "population_rule": "positions 0,30,...,270 of the frozen R2 inference panel (sorted utterance IDs)",
-  "population_indices": [0, 30, 60, 90, 120, 150, 180, 210, 240, 270],
-  "decode": {"greedy": true, "num_beams": 1, "max_new_tokens": 200,
-             "logits_processing": "suppress_tokens always; begin_suppress_tokens at t=0",
-             "cache": "full causal replay per forward (use_cache=False); stored edits re-applied per step"},
-  "acceptance": {"normpreserve_rel_tol": 0.01, "reference_edit_rel_tol": 0.05,
-                 "gate_abs_tol": 1e-6, "direction_variation_cos_max": 0.99}
+  "population_indices": [
+    0,
+    30,
+    60,
+    90,
+    120,
+    150,
+    180,
+    210,
+    240,
+    270
+  ],
+  "decode": {
+    "greedy": true,
+    "num_beams": 1,
+    "max_new_tokens": 200,
+    "logits_processing": "suppress_tokens always; begin_suppress_tokens at t=0",
+    "cache": "full causal replay per forward (use_cache=False); stored edits re-applied per step"
+  },
+  "acceptance": {
+    "normpreserve_rel_tol": 0.01,
+    "reference_edit_rel_tol": 0.05,
+    "gate_abs_tol": 1e-06,
+    "direction_variation_cos_max": 0.99,
+    "a6_reference": "site_precision_replica"
+  },
+  "acceptance_version": "v1.1",
+  "output_dir": "results/inference_cf/p1_r1",
+  "supersedes_attempt": {
+    "job": "54770",
+    "manifest_hash": "sha256:4e9d12fa2abab6fe4c1e3e16634799163f5db760b6946d1368c7b5efbc8896cd",
+    "verdict_v1": "P1_BLOCKED",
+    "reason": "A6 instrument compared bf16 edit with float64 reference"
+  }
 }

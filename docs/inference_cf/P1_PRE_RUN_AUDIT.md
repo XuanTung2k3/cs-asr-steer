@@ -33,3 +33,21 @@ spec before implementation.
 - GPU/bf16 determinism for A1 is expected but empirical.
 
 **PASS_TO_P1_RUN**
+
+## Re-audit for v1.1 (before rerun) — `PASS_TO_P1_RUN`
+
+- **What was checked:** the attempt-1 diagnosis. A6 failed only on 2 of 20 edits with realized
+  norms ≤ 0.064, below or near bf16 site resolution. The sign held on all 20, and the other 18
+  matched the float64 reference within 2.5%.
+- **The fix is instrument-only:**
+  - it adds a site-precision replica using the same `apply_steering` on the recorded site;
+  - the tolerance is unchanged;
+  - no intervention, gate, direction, site, α or population change.
+- **Tests:** a new test reproduces the defect in bf16 (the float64 comparison fails, the replica
+  is exact). A tiny-model decode confirms the hook-realized edit equals the replica. All 60
+  inference-CF tests pass.
+- **Provenance:** attempt 1 artifacts are preserved and unmodified. The new output directory is
+  versioned, the manifest cites the superseded attempt, and the prepare script hashes the defect
+  report.
+
+**PASS_TO_P1_RUN (v1.1)**

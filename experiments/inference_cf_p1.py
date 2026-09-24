@@ -29,6 +29,7 @@ from csasr.inference_cf.core_p1 import (LAYER, VERSION_P1, direction, processed_
                                         reference_edit, selected_gate, step_inputs)
 from csasr.lss.sites import (DecoderPostCrossAttnInterventionHook, DecoderPostCrossAttnRecorder,
                              assert_no_site_hooks, num_forced_prefix_from)
+from csasr.models.hooks import apply_steering
 from csasr.models.whisper import batch_model_inputs, load_audio, load_whisper
 from csasr.utils.config import load_config
 import experiments.inference_cf_p0_r2 as r2
@@ -182,6 +183,17 @@ def decode(bundle, *, waveform: np.ndarray, encoded, conditions: dict, partition
         step["history_edits"] = len(edits)
         step["f3_bitwise_equals_f1"] = bool(torch.equal(logits_s, logits_b))
         if edit_now:
+            # v1.1 A6 instrument: the frozen edit replicated at the site's actual precision and
+            # device, with the same bf16-cast gate/direction the hook receives. The recorded
+            # site (float32 view of the bf16 value) converts back exactly.
+            dtype = getattr(bundle, "dtype", h_b.dtype)
+            site = h_b.to(device=bundle.device, dtype=dtype).view(1, 1, -1)
+            replica = apply_steering(site, dirn["d"].to(bundle.device, dtype).view(1, 1, -1),
+                                     alpha, 1.0,
+                                     torch.tensor([[step["g"]]], device=bundle.device, dtype=dtype),
+                                     True)
+            step["replica_edit_norm"] = float((replica - site).float().norm())
+            step["replica_post_norm"] = float(replica.float().norm())
             ref = reference_edit(h_b, dirn["d"], alpha, step["g"])
             step["reference_edit_norm"] = ref["edit_norm"]
             step["reference_cos_edit_d"] = ref["cos_edit_d"]
@@ -200,7 +212,7 @@ def decode(bundle, *, waveform: np.ndarray, encoded, conditions: dict, partition
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default="results/inference_cf/p1")
+    parser.add_argument("--out", default="results/inference_cf/p1_r1")
     args = parser.parse_args()
     out = ROOT / args.out
     manifest = json.loads((out / "manifest.json").read_text())

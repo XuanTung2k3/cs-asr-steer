@@ -40,7 +40,7 @@ def main() -> None:
     import torch
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default="results/inference_cf/p1")
+    parser.add_argument("--out", default="results/inference_cf/p1_r1")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     config = json.loads(CONFIG.read_text())
@@ -59,6 +59,7 @@ def main() -> None:
     sources = [ROOT / x for x in (
         "docs/inference_cf/P1_CAUSAL_ACCEPTANCE_SPEC.md",
         "docs/inference_cf/P1_PRE_RUN_AUDIT.md",
+        "docs/inference_cf/P1_ATTEMPT1_INSTRUMENT_DEFECT.md",
         "docs/inference_cf/P0_R2_REPORT.md",
         "docs/inference_cf/P0_R2_POST_RUN_AUDIT.md",
         "INFERENCE_STEERING_IMPLEMENTATION_PLAN.md",

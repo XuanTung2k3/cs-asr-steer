@@ -63,11 +63,15 @@ def evaluate(out: Path) -> dict:
     audits = [s["hook_audit"] for s in all_steps if s.get("hook_audit")]
     a5 = bool(audits) and all(a["layer"] == LAYER for a in audits) and \
         all(s["hook_audit"]["abs_pos"] == s["query_index"] for s in all_steps if s.get("hook_audit"))
-    # A6 sign and hook/reference consistency
+    # A6 sign and hook/specified-edit consistency. v1.1 instrument: the specified edit is
+    # replicated at the site's actual precision (apply_steering on the recorded site); v1 compared
+    # against float64, which bf16 cannot meet below its resolution (attempt 1, job 54770).
+    ref_key = "replica_edit_norm" if tol.get("a6_reference") == "site_precision_replica" else "reference_edit_norm"
     a6 = bool(edits) and all(
         s["reference_cos_edit_d"] is not None and s["reference_cos_edit_d"] > 0 and
-        abs(s["hook_audit"]["edit_norm"] - s["reference_edit_norm"])
-        <= tol["reference_edit_rel_tol"] * max(s["reference_edit_norm"], 1e-12) for s in edits)
+        s.get(ref_key) is not None and
+        abs(s["hook_audit"]["edit_norm"] - s[ref_key])
+        <= tol["reference_edit_rel_tol"] * max(s[ref_key], 1e-12) for s in edits)
     # A7 gate recomputed from logged components; fallbacks have g=0 and no edit
     def gate_ok(s):
         if s["fallback_reason"] is not None:
@@ -133,6 +137,14 @@ def evaluate(out: Path) -> dict:
                    "max_normpreserve_rel_error": max((abs(s["hook_audit"]["post_norm"] - s["hook_audit"]["pre_norm"])
                                                       / s["hook_audit"]["pre_norm"] for s in edits), default=None),
                    "min_cos_edit_d": min((s["reference_cos_edit_d"] for s in edits), default=None),
+                   "max_rel_error_hook_vs_replica": max((abs(s["hook_audit"]["edit_norm"] - s["replica_edit_norm"])
+                                                         / max(s["replica_edit_norm"], 1e-12) for s in edits
+                                                         if s.get("replica_edit_norm") is not None), default=None),
+                   # descriptive: float64 reference agreement for edits well above bf16 resolution
+                   "max_rel_error_hook_vs_float64_above_resolution": max(
+                       (abs(s["hook_audit"]["edit_norm"] - s["reference_edit_norm"]) / s["reference_edit_norm"]
+                        for s in edits if s["reference_edit_norm"] >= 10 * s["hook_audit"]["pre_norm"] * 2 ** -8),
+                       default=None),
                    "min_cos_between_consecutive_directions": min(cos_prev) if cos_prev else None},
                "diagnostics": {"alpha0_equals_r2_generate_tokens": b0_match,
                                "alpha0_generate_agreement": (sum(b0_match.values()) / len(b0_match)
@@ -146,7 +158,7 @@ def evaluate(out: Path) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default="results/inference_cf/p1")
+    parser.add_argument("--out", default="results/inference_cf/p1_r1")
     args = parser.parse_args()
     s = evaluate(ROOT / args.out)
     print(json.dumps({"verdict": s["verdict"], "checks": s["checks"]}, indent=2))

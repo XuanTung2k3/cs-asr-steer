@@ -1,4 +1,4 @@
-# P1 causal-acceptance specification — v1 (frozen before any P1 GPU outcome)
+# P1 causal-acceptance specification — v1.1 (v1 frozen before any P1 GPU outcome; §9 instrument amendment)
 
 **Question.** Can the frozen Whisper model perform a correctly localized, same-prefix
 counterfactual hidden-state intervention, driven by the R2-selected gate, with correct
@@ -156,3 +156,24 @@ are reported descriptively only, with no recognition claim.
 - **Reruns:** only for a concrete infrastructure or implementation invalidity, never for an
   outcome.
 - **Never in P1:** layer or alpha sweep, P2 controls, test data.
+
+## 9. v1.1 amendment — A6 instrument only (after attempt 1, job 54770)
+
+**Attempt 1.** It ran under v1 and is preserved as `P1_BLOCKED` (`P1_ATTEMPT1_INSTRUMENT_DEFECT.md`).
+The failure was in the acceptance instrument, not the intervention. A6's norm clause compared the
+**bf16**-realized edit with a **float64** reference under a relative 5% tolerance. That cannot be
+met for edits at or below bf16 resolution at the site (≈ ‖h‖·2⁻⁸).
+
+**Changed in v1.1: the A6 reference only.** It is now the frozen edit (`apply_steering`, NormPreserve,
+`α`, gate) recomputed at the **site's actual precision and device**. It uses the recorded site
+value, which converts back exactly to bf16, and the same bf16-cast gate and direction the hook
+receives.
+
+**Kept as it was:**
+
+- the 5% tolerance and the sign clause (`cos(h' − hB, d) > 0`, float64);
+- the float64 reference, reported descriptively for edits ≥ 10× bf16 resolution;
+- gate, direction, site, α, population, all other criteria and the decode.
+
+**Rerun.** Output goes to `results/inference_cf/p1_r1/` under a new manifest. The rerun is justified
+by instrument invalidity only; recognition outcomes played no role.

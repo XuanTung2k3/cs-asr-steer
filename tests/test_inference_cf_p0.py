@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from csasr.inference_cf.core import (aligned_input, atomic_json, cache_key,
-                                      condition_tokens, conditions_identical,
+                                      condition_tokens, conditions_identical, generated_content,
                                       digest, permutation, support, validated_row)
 
 
@@ -31,6 +31,12 @@ def test_content_alignment_first_and_later_position():
         ins = [aligned_input(c[k], content) for k in c]
         assert all(x[-len(content):] == content for x in ins) if content else all(len(x)==4 for x in ins)
         assert len(set(len(x) for x in ins)) == 1
+
+
+def test_hf_generate_omits_forced_prompt_regression():
+    assert generated_content([101, 102, 99, 103], 99) == [101, 102]
+    assert generated_content([101, 102], 99) == [101, 102]
+    assert generated_content([], 99) == []
 
 
 def test_score_algebra_collision_finite_and_candidate_parity():

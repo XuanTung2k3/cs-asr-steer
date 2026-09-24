@@ -44,6 +44,13 @@ def aligned_input(prompt, content):
     return prompt + content
 
 
+def generated_content(sequence, eos_id):
+    """HF Whisper generate returns content tokens, omitting the forced prefix."""
+    if not sequence:
+        return []
+    return list(sequence[:sequence.index(eos_id)]) if eos_id in sequence else list(sequence)
+
+
 def support(scores, y_e, y_m):
     if not all(math.isfinite(float(scores[x])) for x in ("sE_yE", "sE_yM", "sM_yE", "sM_yM")):
         raise ValueError("nonfinite score")

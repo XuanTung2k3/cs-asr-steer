@@ -84,6 +84,8 @@ def main():
                                               ROOT / "results/dg02_real_acceptance.json",
                                               ROOT / "docs/inference_cf/P0_FEASIBILITY_SPEC.md",
                                               ROOT / "experiments/inference_cf_p0.py",
+                                              ROOT / "experiments/inference_cf_p0_prepare.py",
+                                              ROOT / "slurm/inference_cf_p0_retry.sbatch",
                                               ROOT / "src/csasr/inference_cf/core.py")}
     rev = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     manifest = {"schema": VERSION, "git_commit": rev, "sources": sources, "panel_hash": digest(panel),

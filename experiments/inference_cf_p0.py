@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 import torch
 from transformers.modeling_outputs import BaseModelOutput
-from csasr.inference_cf.core import (VERSION, aligned_input, atomic_json, cache_key,
+from csasr.inference_cf.core import (VERSION, aligned_input, atomic_json, cache_key, generated_content,
                                       condition_tokens, conditions_identical, digest,
                                       support, validated_row)
 from csasr.lss.sites import DecoderPostCrossAttnRecorder
@@ -88,12 +88,8 @@ def inference_row(bundle, *, audio_path, shuffled_audio_path, position_fraction,
         return {"status": "skip", "reason": "frozen_baseline_text_mismatch",
                 "fresh_baseline_text": baseline_text, "frozen_baseline_text": frozen_baseline_text}
     p0 = conditions["c0"]
-    if baseline_seq[:len(p0)] != p0:
-        return {"status": "skip", "reason": "baseline_prompt_mismatch", "baseline_sequence": baseline_seq}
     eos = bundle.processor.tokenizer.eos_token_id
-    content = baseline_seq[len(p0):]
-    if eos in content:
-        content = content[:content.index(eos)]
+    content = generated_content(baseline_seq, eos)
     if not content:
         return {"status": "skip", "reason": "empty_baseline_content", "baseline_sequence": baseline_seq}
     logical = min(len(content)-1, max(0, int(math.floor(position_fraction * len(content)))))

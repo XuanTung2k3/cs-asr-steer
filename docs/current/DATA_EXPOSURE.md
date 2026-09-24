@@ -15,7 +15,7 @@ Prior exposure below is unchanged.
 unsteered forced-ZH baseline plus same-prefix forced-EN and diagnostic forced-RU replays. Evaluator
 only: role references, MMS-FA/CTC unit times (`candidates_existing_ctc.parquet`) and the B0_AUTO
 comparator transcripts. Pre-run design/implementation checks read only these baseline texts,
-references and CTC times (no gate value). No D-dev-confirm, D-test, SEAME, ASCEND or P1 use.
+references and CTC times (no gate value). No D-dev-confirm, D-test, SEAME, ASCEND use. **P1 (jobs 54770, 54781):** 10 of the same already-exposed D-dev-select utterances (R2 panel positions 0,30,…,270), decoded unsteered (α=0) and with the α=1.0 engineering edit; the R2 `generate()` tokens were compared only as a diagnostic. No references entered P1 and no recognition outcome selected any P1 setting.
 
 Companion to `METHOD_CONTRACT.md` and `EXPERIMENT_MATRIX.md`. This records what each role has
 already been used for. No inspected development or test role is described as untouched.

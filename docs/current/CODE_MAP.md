@@ -22,6 +22,11 @@ does evaluator-only alignment, timing and cluster-bootstrap analysis. The config
 `docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md` (`PASS_TO_R2_RUN`). **Run as job 54758**
 (`results/inference_cf/p0_r2/`; report `docs/inference_cf/P0_R2_REPORT.md`, post-run audit
 `P0_R2_POST_RUN_AUDIT.md`): `R2_CF_FEASIBLE_NOT_PREFERRED`, selected gate `g_old`.
+**P1 causal acceptance:** `src/csasr/inference_cf/core_p1.py` (direction, reference edit, selected
+gate), `experiments/inference_cf_p1{,_prepare,_accept}.py`, `configs/inference_cf/p1_causal_acceptance.json`,
+`slurm/inference_cf_p1.sbatch`, `tests/test_inference_cf_p1.py`; reuses the canonical
+`csasr.lss.sites.DecoderPostCrossAttnInterventionHook` + `models.hooks.apply_steering` at L24.
+Results `results/inference_cf/p1_r1/` (PASS; attempt 1 `p1/` preserved).
 P0/P0-R1 `core.py`/`core_r1.py` and their artifacts remain frozen.
 
 ---

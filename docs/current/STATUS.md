@@ -1,6 +1,6 @@
 # STATUS
 
-**Separate inference-time P0-R2 repairability proposal (2026-09-24): `READY_FOR_R2_RUN` (independent audit `PASS_TO_R2_RUN`, `docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md`; spec v1.1). No R2 GPU outcome exists; P1 not started.**
+**Separate inference-time P0-R2 repairability proposal (2026-09-24): R2 RUN — `R2_CF_FEASIBLE_NOT_PREFERRED`, `POST_R2_AUDIT: PASS`, selected gate `g_old=E·R_B`.** Job 54758 (300/300, manifest `e8869f0c…`, commit `fe960e4`). ALIGN 0.962, LOCALIZER 0.890 (EN-confusion only 0.464), LS AUROC 0.820 (mismatched audio 0.503), g_cf 0.710/0.726 vs g_old 0.820/0.836 (ΔAUROC −0.11, CI<0). See `docs/inference_cf/P0_R2_REPORT.md` and `P0_R2_POST_RUN_AUDIT.md`. P1 causal acceptance is the next stage.
 `docs/inference_cf/P0_R2_REPAIRABILITY_SPEC.md` freezes a causal maximum-50-frame attention-mass
 window, unchanged LS-B and BC-B, a same-baseline-prefix forced-English conflict, and
 `g_cf=E[R_B-R_Ecf]_+` with `g_old=ER_B` retained as an ablation. New R2 code under
@@ -11,7 +11,7 @@ The R2 population remains the already-exposed 300-utterance D-dev-select candida
 B0 is forced ZH and B0_AUTO is a mandatory unsteered comparator (development PIER 0.390 vs B0 0.470).
 `g_cf` is a *repair-need ranking score / counterfactually language-responsive matrix-script
 conflict*, not proven repairability; a diagnostic-only forced-Russian counterfactual tests prompt
-susceptibility. Next: prepare the clean-state manifest and run the frozen R2 feasibility job only.
+susceptibility. The frozen R2 feasibility job has run; P1 consumes `g_old` unchanged.
 
 **Separate inference-time counterfactual P0 (2026-09-24): `P0_BLOCKED_EVIDENCE`.**
 Worktree `feature/inference-cf-steering` completed the pre-registered 60-row D-dev-select

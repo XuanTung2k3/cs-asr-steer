@@ -19,8 +19,9 @@ native local LID and both gates; `experiments/inference_cf_p0_r2_evaluate.py`
 does evaluator-only alignment, timing and cluster-bootstrap analysis. The config is
 `configs/inference_cf/p0_r2_repairability.json`; the launcher is
 `slurm/inference_cf_p0_r2.sbatch`. Tests: `tests/test_inference_cf_p0_r2.py`. Audit:
-`docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md` (`PASS_TO_R2_RUN`). **Implemented and audited,
-not GPU-run; no P1 steering.**
+`docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md` (`PASS_TO_R2_RUN`). **Run as job 54758**
+(`results/inference_cf/p0_r2/`; report `docs/inference_cf/P0_R2_REPORT.md`, post-run audit
+`P0_R2_POST_RUN_AUDIT.md`): `R2_CF_FEASIBLE_NOT_PREFERRED`, selected gate `g_old`.
 P0/P0-R1 `core.py`/`core_r1.py` and their artifacts remain frozen.
 
 ---

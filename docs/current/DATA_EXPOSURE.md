@@ -10,6 +10,13 @@ and retained the same 57. No P0/P0-R1 confirmation/test inference or P1 run occu
 or role was touched. See `FEASIBILITY.md` for source hashes and Slurm jobs 54702/54703/54712.
 Prior exposure below is unchanged.
 
+**Inference-time P0-R2 exposure (prepared, unrun, 2026-09-24):** the frozen R2 panel is the same
+300 already-exposed DG-04 B0 `D-dev-select` utterances (20 dialogues), decoded densely by the
+unsteered forced-ZH baseline plus same-prefix forced-EN and diagnostic forced-RU replays. Evaluator
+only: role references, MMS-FA/CTC unit times (`candidates_existing_ctc.parquet`) and the B0_AUTO
+comparator transcripts. Pre-run design/implementation checks read only these baseline texts,
+references and CTC times (no gate value). No D-dev-confirm, D-test, SEAME, ASCEND or P1 use.
+
 Companion to `METHOD_CONTRACT.md` and `EXPERIMENT_MATRIX.md`. This records what each role has
 already been used for. No inspected development or test role is described as untouched.
 

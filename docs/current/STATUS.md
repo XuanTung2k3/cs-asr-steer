@@ -1,5 +1,18 @@
 # STATUS
 
+**Separate inference-time P0-R2 repairability proposal (2026-09-24): `READY_FOR_R2_RUN` (independent audit `PASS_TO_R2_RUN`, `docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md`; spec v1.1). No R2 GPU outcome exists; P1 not started.**
+`docs/inference_cf/P0_R2_REPAIRABILITY_SPEC.md` freezes a causal maximum-50-frame attention-mass
+window, unchanged LS-B and BC-B, a same-baseline-prefix forced-English conflict, and
+`g_cf=E[R_B-R_Ecf]_+` with `g_old=ER_B` retained as an ablation. New R2 code under
+`src/csasr/inference_cf/core_r2.py` and `experiments/inference_cf_p0_r2*.py` is an
+**unsteered gate-feasibility path only**. It has no GPU outcome and does not start P1. The
+existing P0/P0-R1 `P0_BLOCKED_EVIDENCE` verdict below remains historical and unchanged.
+The R2 population remains the already-exposed 300-utterance D-dev-select candidate set;
+B0 is forced ZH and B0_AUTO is a mandatory unsteered comparator (development PIER 0.390 vs B0 0.470).
+`g_cf` is a *repair-need ranking score / counterfactually language-responsive matrix-script
+conflict*, not proven repairability; a diagnostic-only forced-Russian counterfactual tests prompt
+susceptibility. Next: prepare the clean-state manifest and run the frozen R2 feasibility job only.
+
 **Separate inference-time counterfactual P0 (2026-09-24): `P0_BLOCKED_EVIDENCE`.**
 Worktree `feature/inference-cf-steering` completed the pre-registered 60-row D-dev-select
 diagnostic. Frozen spec/implementation commit `55faf76`; parser-only correction `cba7784`;

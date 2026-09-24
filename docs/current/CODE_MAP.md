@@ -9,6 +9,20 @@ Classification: **canonical** means the implementation satisfies the current con
 preserved pilot/current-execution code that does not satisfy the finalized contract. There is
 currently no end-to-end canonical free-decoding runner.
 
+The **separate inference-time P0-R2 proposal** is versioned by
+`docs/inference_cf/P0_R2_REPAIRABILITY_SPEC.md`, independently of the DG-03R core method.
+`src/csasr/inference_cf/core_r2.py` contains its pure causal-window, LS-B, BC-B, Ecf
+repairability and gate algebra. `experiments/inference_cf_p0_r2_prepare.py` freezes the
+existing 300-item D-dev-select panel and provenance;
+`experiments/inference_cf_p0_r2.py` performs unsteered B0/Ecf same-prefix replay,
+native local LID and both gates; `experiments/inference_cf_p0_r2_evaluate.py`
+does evaluator-only alignment, timing and cluster-bootstrap analysis. The config is
+`configs/inference_cf/p0_r2_repairability.json`; the launcher is
+`slurm/inference_cf_p0_r2.sbatch`. Tests: `tests/test_inference_cf_p0_r2.py`. Audit:
+`docs/inference_cf/P0_R2_REPAIRABILITY_AUDIT.md` (`PASS_TO_R2_RUN`). **Implemented and audited,
+not GPU-run; no P1 steering.**
+P0/P0-R1 `core.py`/`core_r1.py` and their artifacts remain frozen.
+
 ---
 
 ## 1. Entry points and commands

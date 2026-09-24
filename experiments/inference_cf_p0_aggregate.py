@@ -8,6 +8,7 @@ import statistics as st
 import sys
 from collections import Counter
 from pathlib import Path
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -45,8 +46,12 @@ def aggregate(out):
     assert len(rows) == len(expected) and {r["identity"] for r in rows} == expected
     assert all(r["manifest_hash"] == manifest["manifest_hash"] for r in rows)
     assert len({r["identity"] for r in rows}) == len(rows)
+    panel_by_id = {r["identity"]: r for r in panel["rows"]}
+    assert set(perm) == expected and set(perm.values()) == expected
     for r in rows:
         assert r["shuffled_identity"] == perm[r["identity"]]
+        assert r["audio_sha256"] == panel_by_id[r["identity"]]["audio_sha256"]
+        assert r["shuffled_audio_sha256"] == panel_by_id[perm[r["identity"]]]["audio_sha256"]
         if r["status"] != "ok":
             assert r.get("reason")
             continue
@@ -54,14 +59,29 @@ def aggregate(out):
         assert support(r["real_scores"], y["yE"], y["yM"]) == r["real_support"]
         assert support(r["shuffled_scores"], y["yE"], y["yM"]) == r["shuffled_support"]
         assert r["conditions"]["c0"] == r["conditions"]["cM"]
+        assert r["conditions"] == manifest["conditions"]["prompt_tokens"]
         assert all(a["logical_next_content_position"] == r["logical_position"] and
                    a["content_prefix_length"] == len(r["shared_content_prefix"]) and
+                   a["prompt_length"] == len(r["conditions"][c]) and
+                   a["prediction_query_absolute_index"] == a["prompt_length"] + r["logical_position"] - 1 and
                    a["decoder_mask"] == [1]*len(a["cache_positions_full_replay"]) and
                    a["cache_positions_full_replay"] == list(range(len(a["cache_positions_full_replay"]))) and
                    not a["cache_used"] and a["beam_lineage"] == "greedy:0"
-                   for a in r["alignment"].values())
+                   for c,a in r["alignment"].items())
         assert all(len(r["states"][c]) == len(r["states"]["c0"]) for c in ("cM", "cE"))
         assert r["geometry"]["finite"]
+        h0, hm, he = (np.asarray(r["states"][c], dtype=np.float64) for c in ("c0", "cM", "cE"))
+        delta = he-hm
+        dn = np.linalg.norm(delta)
+        d = delta/(dn+1e-6)
+        derived = {"h0_norm": np.linalg.norm(h0), "hM_norm": np.linalg.norm(hm),
+                   "hE_norm": np.linalg.norm(he), "delta_norm": dn,
+                   "direction_norm": np.linalg.norm(d),
+                   "c0_cM_residual_norm": np.linalg.norm(h0-hm),
+                   "rho": 2*np.dot(h0-(hm+he)/2,d)/(dn+1e-6)}
+        for key,value in derived.items():
+            assert math.isclose(float(value), r["geometry"][key], abs_tol=1e-6), (r["identity"], key)
+        assert r["logical_position"] == len(r["shared_content_prefix"])
     kept = [r for r in rows if r["status"] == "ok"]
     by = {s: [r for r in kept if r["stratum"] == s] for s in ("english_wrong", "english_correct", "mandarin")}
     coll = [r for r in kept if r["real_support"]["collision"]]
@@ -100,8 +120,10 @@ def aggregate(out):
                "representative": {s: [r["identity"] for r in sorted(v, key=lambda x:x["identity"])[:3]] for s,v in by.items()},
                "runtime": runtime, "processed_audio_sec": sum(r["duration_sec"] for r in rows),
                "output_tokens": sum(r.get("output_tokens",0) for r in rows),
-               "model_evaluations": {k: sum(r.get("model_evaluations",{}).get(k,0) for r in rows)
-                                     for k in ("encoder", "baseline_generate", "real_decoder_full_replay", "shuffled_decoder_full_replay")},
+               "model_evaluations": {"encoder": 2*len(rows), "baseline_generate": len(rows),
+                                     "real_decoder_full_replay": 3*len(kept),
+                                     "shuffled_decoder_full_replay": 2*len(kept)},
+               "model_evaluation_accounting": "all rows encode real and shuffled audio and generate baseline; only retained rows execute five diagnostic full-replay forwards",
                "G1": g1, "G2": g2, "G3": g3}
     atomic_json(out / "summary.json", summary)
     return summary

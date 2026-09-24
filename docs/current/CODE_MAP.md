@@ -13,6 +13,13 @@ currently no end-to-end canonical free-decoding runner.
 
 ## 1. Entry points and commands
 
+**Separate inference-time P0 proposal (2026-09-24):** `src/csasr/inference_cf/core.py`,
+`experiments/inference_cf_p0_{prepare,aggregate}.py`, `experiments/inference_cf_p0.py`,
+`slurm/inference_cf_p0_retry.sbatch`, `docs/inference_cf/P0_FEASIBILITY_SPEC.md`, and
+`FEASIBILITY.md` implement a diagnostic only. They reuse the canonical Whisper loader,
+`build_prefix`, DG-02 L24 recorder and D-dev-select roles. They do not implement the
+training-based method in this code map or any P1 steering decoder. P0 G3 is blocked.
+
 | Entry point | Path | Classification and verified behavior |
 |---|---|---|
 | Round-1 frozen sweep | `experiments/round1_frozen.py` | **legacy for this contract / current execution wrapper**. Runs 84 greedy `D-dev-select` cells over seven layers and imports `NormPreserveDecoderHook` from Job A. It does not dispatch Job A and does not consume its YAML `confirm_split`. The hook is post-FFN. |

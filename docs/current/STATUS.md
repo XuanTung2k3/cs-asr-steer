@@ -1,5 +1,14 @@
 # STATUS
 
+**Separate inference-time counterfactual P0 (2026-09-24): `BLOCKED_G3`.**
+Worktree `feature/inference-cf-steering` completed the pre-registered 60-row D-dev-select
+diagnostic. Frozen spec/implementation commit `55faf76`; parser-only correction `cba7784`;
+Slurm jobs 54702 (preserved invalid first attempt) and 54703 (corrected run). G1 is
+`DEGENERATE_BY_CONSTRUCTION` (`c0=cM`, 57 zero state residuals); G2 is `PASS` on 57 retained rows;
+G3 is `WEAK/BLOCKED` (50/57 candidate collisions, AUROC unestimable). See `FEASIBILITY.md` and
+`results/inference_cf/p0_retry/`. This is a separate proposal and does not alter the frozen
+DG-03R/DG-08 method. P1 has not started.
+
 ## Stage roll-up (2026-09-08)
 
 - **DG-00 — COMPLETE.** Scientific contract & guardrails.

@@ -1,5 +1,12 @@
 # DATA EXPOSURE
 
+**Inference-time P0 exposure, 2026-09-24:** The separate `feature/inference-cf-steering`
+feasibility diagnostic used only the dialogue-v2r3 `D-dev-select` role, frozen DG-04 B0
+transcripts, and its evaluator-only POI/reference units to select 60 positions (20 wrong
+English, 20 correct English, 20 Mandarin). The corrected run retained 57; three frozen-baseline
+text mismatches were skipped. No P0 confirmation/test inference or P1 run occurred. See
+`FEASIBILITY.md` for source hashes and Slurm jobs 54702/54703. Prior exposure below is unchanged.
+
 Companion to `METHOD_CONTRACT.md` and `EXPERIMENT_MATRIX.md`. This records what each role has
 already been used for. No inspected development or test role is described as untouched.
 

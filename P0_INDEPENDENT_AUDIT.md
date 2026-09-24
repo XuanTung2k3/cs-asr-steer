@@ -128,3 +128,14 @@ G1 = `DEGENERATE_BY_CONSTRUCTION`, G2 = `PASS`, G3 = `WEAK/BLOCKED`, and the G3 
 a genuine K=1 argmax-collision property rather than any defect. The Phase II P0-R1 precondition
 (repair only the G3 evidence definition, K=1→K=3, everything else frozen) is satisfied. P1 has
 not started and does not start here.
+
+## P0-R1 outcome (appended after the K=3 run)
+
+The authorized single K=3 repair was run once (job 54712, COMPLETED) under
+`docs/inference_cf/P0_R1_EVIDENCE_SPEC.md`, committed before the GPU result. Independently
+recomputed from raw per-step log-probs (0 mismatches vs the committed summary): G1 unchanged
+(`‖h0−hM‖=0`), G2 `PASS`, **G3 still `WEAK/BLOCKED`**. Full-sequence collision fell 87.7%→73.7%,
+usable rows rose 7→15, and the audio-control statistic now meets its bar (0.485 over 15), but the
+collision rate stays above 50% and Mandarin yields only 3 usable rows, so AUROC is still not
+estimable. Frozen thresholds were **not** weakened. Final status: **`P0_BLOCKED_EVIDENCE`**. See
+`docs/inference_cf/P0_R1_REPORT.md`. P1 has not started.

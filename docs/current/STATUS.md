@@ -1,13 +1,20 @@
 # STATUS
 
-**Separate inference-time counterfactual P0 (2026-09-24): `BLOCKED_G3`.**
+**Separate inference-time counterfactual P0 (2026-09-24): `P0_BLOCKED_EVIDENCE`.**
 Worktree `feature/inference-cf-steering` completed the pre-registered 60-row D-dev-select
 diagnostic. Frozen spec/implementation commit `55faf76`; parser-only correction `cba7784`;
-Slurm jobs 54702 (preserved invalid first attempt) and 54703 (corrected run). G1 is
+Slurm jobs 54702 (preserved invalid first attempt) and 54703 (corrected K=1 run). G1 is
 `DEGENERATE_BY_CONSTRUCTION` (`c0=cM`, 57 zero state residuals); G2 is `PASS` on 57 retained rows;
-G3 is `WEAK/BLOCKED` (50/57 candidate collisions, AUROC unestimable). See `FEASIBILITY.md` and
-`results/inference_cf/p0_retry/`. This is a separate proposal and does not alter the frozen
-DG-03R/DG-08 method. P1 has not started.
+K=1 G3 was `WEAK/BLOCKED` (50/57 candidate collisions, AUROC unestimable). An independent audit
+(`P0_INDEPENDENT_AUDIT.md`) reproduced every number and confirmed the block is a genuine K=1
+argmax-collision property, not a defect. The one authorized repair (K=1→K=3, spec
+`docs/inference_cf/P0_R1_EVIDENCE_SPEC.md`, report `docs/inference_cf/P0_R1_REPORT.md`, job 54712,
+manifest `e4514a8…` superseding `0287abb…`) lowered collision to 73.7% and doubled usable rows to
+15 but **still fails frozen G3** (collision >50%; Mandarin usable 3; AUROC unestimable) →
+`P0_BLOCKED_EVIDENCE`. Thresholds not weakened; no further K/scorer variant attempted. The
+matrix-collapse need factor is non-identifiable and removed; `d=normalize(hE−hM)` has no validated
+gate. See `FEASIBILITY.md`, `results/inference_cf/{p0_retry,p0_r1}/`. Separate proposal; does not
+alter the frozen DG-03R/DG-08 method. P1 has not started.
 
 ## Stage roll-up (2026-09-08)
 

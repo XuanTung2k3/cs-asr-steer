@@ -1,6 +1,6 @@
 # P0 inference-time counterfactual feasibility — provisional
 
-**Status: `BLOCKED_G3`. P1 has not started.** The frozen P0 rules were committed before GPU work in `55faf76ca6d16173efc5eabeedea1bda0c3f4242`. A narrow parser correction after physical job 54702 was committed as `cba7784` before the only corrected run, job 54703. The corrected manifest is `sha256:0287abb2f6537f1d88f179fa62310424e411b1baee47258670c87d781badfb6c`. The original checkout is `/home/tungnx/cs-asr-steer` (`learned-expansion`, HEAD/base `ce5d225f41d66c5d8aadc9df3c734fbc608646db`) with unrelated A7 edits untouched. This worktree is `/home/tungnx/cs_asr_steer_inf`, branch `feature/inference-cf-steering`.
+**Status: `BLOCKED_G3` (K=1) → `P0_BLOCKED_EVIDENCE` after the one authorized K=3 repair. P1 has not started.** The frozen P0 rules were committed before GPU work in `55faf76ca6d16173efc5eabeedea1bda0c3f4242`. An independent audit (`P0_INDEPENDENT_AUDIT.md`) reproduced every K=1 number from the row shards and confirmed the gate verdicts; the P0-R1 K=3 revision (`docs/inference_cf/P0_R1_EVIDENCE_SPEC.md`, report `docs/inference_cf/P0_R1_REPORT.md`, job 54712, manifest `sha256:e4514a8229c34c119e74cdf0da2d4fd324c5310e5b3e7f8ff89b4b16042ee9eb`) reduced candidate collision 87.7%→73.7% and doubled usable rows 7→15 but still fails the frozen G3 support criteria (collision >50%; Mandarin usable 3≪10; AUROC not estimable). See the P0-R1 section below. A narrow parser correction after physical job 54702 was committed as `cba7784` before the only corrected run, job 54703. The corrected manifest is `sha256:0287abb2f6537f1d88f179fa62310424e411b1baee47258670c87d781badfb6c`. The original checkout is `/home/tungnx/cs-asr-steer` (`learned-expansion`, HEAD/base `ce5d225f41d66c5d8aadc9df3c734fbc608646db`) with unrelated A7 edits untouched. This worktree is `/home/tungnx/cs_asr_steer_inf`, branch `feature/inference-cf-steering`.
 
 ## Fixed configuration and data
 
@@ -46,3 +46,25 @@ The CPU audit verified the corrected Git commit/manifest and all pinned source h
 Artifacts: `docs/inference_cf/P0_FEASIBILITY_SPEC.md` (pre-run freeze), `results/inference_cf/p0_retry/{manifest.json,panel.json,audio_permutation.json,runtime.json,rows/*.json,summary.json,slurm-54703.out,slurm-54703.err}`, and preserved failed attempt `results/inference_cf/p0/`. The panel includes evaluator-only surfaces for audit; the inference API accepts no reference, target token or oracle switch position.
 
 **Next contract:** stop before P1. If later scientific work repairs G3, it must freeze a new evidence definition and run under a new authorized stage. Because G1 degenerates, any future gate would have to be explicitly evidence-only; the original `e*c` geometry need interpretation is invalid. **P1 has not started.**
+
+## P0-R1 revised evidence (K=3), 2026-09-24
+
+The one authorized scientific-definition repair — K=1→K=3 short greedy continuations scored by
+token-average log probability, everything else frozen and the byte-identical panel reused — was
+run once (Slurm **54712**, H100 MIG `3g.40gb`, COMPLETED, 69 s; manifest `e4514a8…` supersedes the
+P0 manifest `0287abb…`). Independent CPU recomputation from raw per-step log-probs reproduces the
+committed `summary.json` exactly.
+
+| Gate | K=1 (54703) | K=3 (54712) |
+|---|---|---|
+| G1 | `DEGENERATE_BY_CONSTRUCTION` (`‖h0−hM‖=0`) | `DEGENERATE_BY_CONSTRUCTION` (unchanged) |
+| G2 | `PASS` | `PASS` (0 violations across all 3 continuation positions) |
+| G3 | `WEAK/BLOCKED` (collision 87.7%, usable 7, AUROC n/e) | `WEAK/BLOCKED` (collision 73.7%, usable 15, AUROC n/e) |
+
+K=3 met the audio-dependence sub-criterion (abs Δq_cross mean 0.485 over 15 rows ≥ 0.05/≥10) but
+failed the collision (≤50%) and ≥10-per-class/AUROC sub-criteria; collisions concentrate in the
+Mandarin stratum (17/20). Frozen thresholds were **not** weakened. Final: **`P0_BLOCKED_EVIDENCE`**
+— the candidate-continuation support formulation has failed P0; a new support definition must be a
+separately versioned experiment. The direction `d = normalize(hE − hM)` at L24 is well-defined but
+has **no** validated evidence gate. Full detail: `docs/inference_cf/P0_R1_REPORT.md`. **P1 has not
+started.**

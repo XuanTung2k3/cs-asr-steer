@@ -3,9 +3,12 @@
 **Inference-time P0 exposure, 2026-09-24:** The separate `feature/inference-cf-steering`
 feasibility diagnostic used only the dialogue-v2r3 `D-dev-select` role, frozen DG-04 B0
 transcripts, and its evaluator-only POI/reference units to select 60 positions (20 wrong
-English, 20 correct English, 20 Mandarin). The corrected run retained 57; three frozen-baseline
-text mismatches were skipped. No P0 confirmation/test inference or P1 run occurred. See
-`FEASIBILITY.md` for source hashes and Slurm jobs 54702/54703. Prior exposure below is unchanged.
+English, 20 correct English, 20 Mandarin). The corrected K=1 run retained 57; three frozen-baseline
+text mismatches were skipped. The one authorized K=3 repair (P0-R1, job 54712) **reused the exact
+same 60-position panel and permutation byte-identically** (hash-checked; no new example selection)
+and retained the same 57. No P0/P0-R1 confirmation/test inference or P1 run occurred; no new split
+or role was touched. See `FEASIBILITY.md` for source hashes and Slurm jobs 54702/54703/54712.
+Prior exposure below is unchanged.
 
 Companion to `METHOD_CONTRACT.md` and `EXPERIMENT_MATRIX.md`. This records what each role has
 already been used for. No inspected development or test role is described as untouched.

@@ -13,12 +13,19 @@ currently no end-to-end canonical free-decoding runner.
 
 ## 1. Entry points and commands
 
-**Separate inference-time P0 proposal (2026-09-24):** `src/csasr/inference_cf/core.py`,
-`experiments/inference_cf_p0_{prepare,aggregate}.py`, `experiments/inference_cf_p0.py`,
-`slurm/inference_cf_p0_retry.sbatch`, `docs/inference_cf/P0_FEASIBILITY_SPEC.md`, and
-`FEASIBILITY.md` implement a diagnostic only. They reuse the canonical Whisper loader,
-`build_prefix`, DG-02 L24 recorder and D-dev-select roles. They do not implement the
-training-based method in this code map or any P1 steering decoder. P0 G3 is blocked.
+**Separate inference-time P0 proposal (2026-09-24):** `src/csasr/inference_cf/core.py` (K=1,
+frozen/byte-stable), `src/csasr/inference_cf/core_r1.py` (K=3, additive),
+`experiments/inference_cf_p0{,_prepare,_aggregate}.py` (K=1),
+`experiments/inference_cf_p0_r1{,_prepare,_aggregate}.py` (K=3),
+`slurm/inference_cf_p0_retry.sbatch`, `slurm/inference_cf_p0_r1.sbatch`,
+`docs/inference_cf/P0_FEASIBILITY_SPEC.md`, `docs/inference_cf/P0_R1_EVIDENCE_SPEC.md`,
+`docs/inference_cf/P0_R1_REPORT.md`, `P0_INDEPENDENT_AUDIT.md`, and `FEASIBILITY.md` implement a
+diagnostic only. They reuse the canonical Whisper loader, `build_prefix`, DG-02 L24 recorder and
+D-dev-select roles. They do not implement the training-based method in this code map or any P1
+steering decoder. P0 G3 is blocked at K=1 and at the one authorized K=3 revision
+(`P0_BLOCKED_EVIDENCE`); the matrix-collapse need factor is non-identifiable and removed.
+`core.py` is left byte-identical to keep the original P0 manifest verifiable; K=3 lives in
+`core_r1.py`.
 
 | Entry point | Path | Classification and verified behavior |
 |---|---|---|

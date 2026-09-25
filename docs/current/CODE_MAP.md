@@ -27,6 +27,11 @@ gate), `experiments/inference_cf_p1{,_prepare,_accept}.py`, `configs/inference_c
 `slurm/inference_cf_p1.sbatch`, `tests/test_inference_cf_p1.py`; reuses the canonical
 `csasr.lss.sites.DecoderPostCrossAttnInterventionHook` + `models.hooks.apply_steering` at L24.
 Results `results/inference_cf/p1_r1/` (PASS; attempt 1 `p1/` preserved).
+**Pre-P2 / P2:** `experiments/inference_cf_cached.py` (KV-cached B/E/S branches; the P2 execution
+path), `experiments/inference_cf_ce{,_accept}.py` (cached-equivalence harness/acceptance; results
+`pre_p2_ce_r1/` PASS, attempt 1 `pre_p2_ce/` preserved), `experiments/inference_cf_p2{,_prepare,_evaluate}.py`,
+`configs/inference_cf/p2_compact_development.json`, `slurm/inference_cf_{pre_p2_ce,p2}.sbatch`,
+`tests/test_inference_cf_{cached,ce,p2}.py`. Unapplied post-R2 runner patch: `docs/inference_cf/patches/`.
 P0/P0-R1 `core.py`/`core_r1.py` and their artifacts remain frozen.
 
 ---

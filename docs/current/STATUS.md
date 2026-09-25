@@ -1,6 +1,6 @@
 # STATUS
 
-**Separate inference-time steering proposal — current state (2026-09-25): `READY_FOR_P2_COMPACT_DEVELOPMENT`; Pre-P2 hardening in progress.**
+**Separate inference-time steering proposal — current state (2026-09-25): Pre-P2 COMPLETE (`CACHED_EQUIVALENCE: PASS`, job 54802; `PASS_TO_P2_DEVELOPMENT`); P2 compact development running under `docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md`.**
 Main method, frozen from P1 onward:
 - **Detector:** `g = E·R_B`. `E` = LS-B null-corrected local support on the 1.0 s max-attention window; `R_B` = BC-B baseline matrix-script conflict.
 - **Direction:** `d = norm(hE − hB)`.

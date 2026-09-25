@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""CPU-only P2 evaluation: metrics vs B0, frozen validity/selection, alpha_c, paired intervals.
+"""CPU-only P2 evaluation: metrics vs the matched alpha=0 baseline (v1.1), frozen validity/selection,
 References are read here (evaluator side) and never by the runner."""
 from __future__ import annotations
 
@@ -107,7 +107,7 @@ def metrics(refs, ids, shards, system, base_hyps=None) -> dict:
         out["matrix_zh_retention"] = zr["numerator"] / zr["denominator"] if zr["denominator"] else None
         out["matrix_damage_units"] = zr["denominator"] - zr["numerator"]
         out["en_retention"] = er["numerator"] / er["denominator"] if er["denominator"] else None
-    if system not in ("B0", "B1", "B0_AUTO"):
+    if system not in ("B0", "B1", "B0_AUTO") and not system.startswith("B0M_"):
         out["edits"] = edit_stats(shards, ids, system)
     return out
 
@@ -173,80 +173,133 @@ def paired_bootstrap(refs, ids, a_hyps, b_hyps, reps: int, seed: int) -> dict:
             for k, n in enumerate(names)}
 
 
-def evaluate_configs(refs, ids, shards_by_dir: dict, b0: dict, b0_hyps, cfg) -> list[dict]:
-    out = []
-    for shards, manifest in shards_by_dir.values():
-        for c in manifest["configs"]:
-            m = metrics(refs, ids, shards, c["name"], b0_hyps)
-            if not m["complete"]:
-                out.append({"config": c, "metrics": m, "validity": {"valid": False, "checks": {"complete": False}},
-                            "delta": {}, "delta_zh_cer_increase": None})
+def divergence_attribution(shards: dict, ids: list[str], name: str, base: str) -> dict:
+    """Every method-vs-matched-baseline divergence must follow an applied edit (v1.1 validity)."""
+    diverged, unattributed = 0, []
+    for u in ids:
+        x, b = shards[u]["systems"][name], shards[u]["systems"][base]
+        if x["tokens"] == b["tokens"]:
+            continue
+        diverged += 1
+        k = next((t for t, (p, q) in enumerate(zip(x["tokens"], b["tokens"])) if p != q),
+                 min(len(x["tokens"]), len(b["tokens"])))
+        if not any(st["edit"] and st["t"] <= k for st in x.get("steps", [])):
+            unattributed.append({"utterance_id": u, "first_divergence": k})
+    return {"diverged_utterances": diverged, "unattributed": unattributed}
+
+
+def evaluate_configs(refs, ids, runs: dict, cfg) -> tuple[list[dict], dict]:
+    """Each configuration against the matched alpha=0 baseline of its own run and layer."""
+    out, baselines = [], {}
+    for d, (m, shards, _) in runs.items():
+        for layer in m["matched_baseline_layers"]:
+            bname = f"B0M_L{layer}"
+            bh = hyps(shards, ids, bname)
+            baselines[f"{d}:{bname}"] = {
+                "metrics": metrics(refs, ids, shards, bname),
+                "zero_dose_bitwise": all(shards[u]["systems"][bname]["zero_dose_bitwise"] for u in ids
+                                         if shards[u].get("status") == "ok"),
+                "lineage_ok": all(shards[u]["systems"][bname]["lineage_ok"] for u in ids
+                                  if shards[u].get("status") == "ok"),
+                "hyps": bh}
+        for c in m["configs"]:
+            bkey = f"{d}:B0M_L{c['layer']}"
+            b0 = baselines[bkey]["metrics"]
+            m_ = metrics(refs, ids, shards, c["name"], baselines[bkey]["hyps"])
+            if not m_["complete"] or not b0["complete"]:
+                out.append({"config": c, "run": d, "baseline": bkey, "metrics": m_, "delta": {},
+                            "validity": {"valid": False, "checks": {"complete": False}},
+                            "delta_zh_cer_increase": None, "attribution": None})
                 continue
-            out.append({"config": c, "metrics": m, "validity": validity(m, b0, cfg["validity"]),
-                        "delta": {"pier": b0["pier"] - m["pier"], "pier_errors": b0["pier_errors"] - m["pier_errors"],
-                                  "mer": b0["mer"] - m["mer"], "en_wer": b0["en_wer"] - m["en_wer"],
-                                  "zh_cer": b0["zh_cer"] - m["zh_cer"]},
-                        "delta_zh_cer_increase": m["zh_cer"] - b0["zh_cer"]})
-    return out
+            out.append({"config": c, "run": d, "baseline": bkey, "metrics": m_,
+                        "validity": validity(m_, b0, cfg["validity"]),
+                        "delta": {"pier": b0["pier"] - m_["pier"], "pier_errors": b0["pier_errors"] - m_["pier_errors"],
+                                  "mer": b0["mer"] - m_["mer"], "en_wer": b0["en_wer"] - m_["en_wer"],
+                                  "zh_cer": b0["zh_cer"] - m_["zh_cer"]},
+                        "delta_zh_cer_increase": m_["zh_cer"] - b0["zh_cer"],
+                        "attribution": divergence_attribution(shards, ids, c["name"], f"B0M_L{c['layer']}")})
+    return out, baselines
+
+
+def experiment_validity(evals, baselines, runs) -> dict:
+    fails = {d: [u for u, sh in s.items() if sh.get("status") != "ok"] for d, (_, s, _) in runs.items()}
+    unattr = {e["config"]["name"]: e["attribution"]["unattributed"] for e in evals
+              if e.get("attribution") and e["attribution"]["unattributed"]}
+    checks = {"no_failures": not any(fails.values()),
+              "matched_baselines_zero_dose_bitwise": all(b["zero_dose_bitwise"] for b in baselines.values()),
+              "matched_baselines_lineage": all(b["lineage_ok"] for b in baselines.values()),
+              "all_divergences_edit_attributed": not unattr,
+              "all_configs_complete": all(e["metrics"].get("complete") for e in evals)}
+    return {"valid": all(checks.values()), "checks": checks, "failures": fails, "unattributed": unattr}
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", required=True, choices=["A", "final", "A_diag"])
+    ap.add_argument("--stage", required=True, choices=["A", "final", "A_diag", "B"])
     ap.add_argument("--dirs", nargs="+", required=True)
-    ap.add_argument("--baseline-dir", required=True)
+    ap.add_argument("--baseline-dir", required=True, help="stage-A dir holding B1/B0_AUTO/cached-greedy diagnostics")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     cfg = json.loads(CONFIG.read_text())
     refs = load_references()
-    bm, bshards, brt = load_run(ROOT / args.baseline_dir)
+    _, bshards, _ = load_run(ROOT / args.baseline_dir)
     ids = [r["utterance_id"] for r in json.loads((ROOT / args.baseline_dir / "panel.json").read_text())["rows"]]
-    b0 = metrics(refs, ids, bshards, "B0")
-    b0_hyps = hyps(bshards, ids, "B0")
-    baselines = {name: metrics(refs, ids, bshards, name, b0_hyps) for name in ("B0", "B1", "B0_AUTO")}
     runs = {d: load_run(ROOT / d) for d in args.dirs}
-    # determinism: B0 identical across stage-A layer jobs
-    b0_consistent = all(hyps(s, ids, "B0") == b0_hyps for (m, s, _) in runs.values() if m["baselines"])
-    evals = evaluate_configs(refs, ids, {d: (s, m) for d, (m, s, _) in runs.items()}, b0, b0_hyps, cfg)
-    failures = {d: [u for u, s in sh.items() if s.get("status") != "ok"] for d, (_, sh, _) in runs.items()}
-    summary = {"schema": "p2_evaluation_v1", "stage": args.stage, "baselines": baselines,
-               "b0_identical_across_jobs": b0_consistent, "failures": failures,
+    evals, baselines = evaluate_configs(refs, ids, runs, cfg)
+    reference_hyps = next(iter(baselines.values()))["hyps"]
+    diag = {name: metrics(refs, ids, bshards, name, reference_hyps) for name in ("B0", "B1", "B0_AUTO")}
+    ev_valid = experiment_validity(evals, baselines, runs)
+    matched_identical = len({tuple(b["hyps"] or []) for b in baselines.values()}) == 1
+    summary = {"schema": "p2_evaluation_v1_1", "stage": args.stage,
+               "matched_baselines": {k: {kk: vv for kk, vv in v.items() if kk != "hyps"} for k, v in baselines.items()},
+               "matched_baselines_identical_across_runs": matched_identical,
+               "diagnostic_systems": diag,
+               "experiment_validity": ev_valid,
                "runtime": {d: rt for d, (_, _, rt) in runs.items()},
                "manifests": {d: m["manifest_hash"] for d, (m, _, _) in runs.items()},
                "configs": evals}
     reps, seed = cfg["bootstrap"]["replicates"], cfg["bootstrap"]["seed"]
     auto_hyps = hyps(bshards, ids, "B0_AUTO")
+
+    def intervals(sel):
+        d = sel["run"]
+        shards = runs[d][1]
+        sel_hyps = hyps(shards, ids, sel["config"]["name"])
+        return {"vs_matched_B0": paired_bootstrap(refs, ids, sel_hyps, baselines[sel["baseline"]]["hyps"], reps, seed),
+                "vs_B0_AUTO": paired_bootstrap(refs, ids, sel_hyps, auto_hyps, reps, seed)}
+
+    if not ev_valid["valid"]:
+        summary["verdict"] = "P2_BLOCKED_INVALID_EXPERIMENT"
+        atomic_json(ROOT / args.out, summary)
+        print(json.dumps({"stage": args.stage, "verdict": summary["verdict"],
+                          "checks": ev_valid["checks"]}, indent=2))
+        return
     if args.stage == "A":
         sel = select(evals)
         if sel is not None:
-            shards = next(s for (m, s, _) in runs.values() if sel["config"] in m["configs"])
-            sel_hyps = hyps(shards, ids, sel["config"]["name"])
             selection = {"p2_a_verdict": "P2_A_VALID_CONFIG_EXISTS", "selected": sel["config"],
                          "alpha_c": alpha_c(sel["metrics"]), "alpha_c_formula": cfg["stages"]["B"]["alpha_c"]}
-            summary["selected_vs_B0"] = paired_bootstrap(refs, ids, sel_hyps, b0_hyps, reps, seed)
-            summary["selected_vs_B0_AUTO"] = paired_bootstrap(refs, ids, sel_hyps, auto_hyps, reps, seed)
+            summary["selected_intervals"] = intervals(sel)
         else:
             pos = [e for e in evals if e["metrics"].get("complete") and e["delta"].get("pier_errors", 0) > 0]
             best = sorted(pos, key=lambda c: (-c["delta"]["pier_errors"], c["delta_zh_cer_increase"],
                                               c["metrics"]["edits"]["realized_energy"], c["config"]["alpha"]))
-            diag = best[0]["config"] if best else {"layer": 24, "alpha": 1.0, "gate": "ER", "dose": "id",
-                                                   "direction_sign": 1.0}
-            selection = {"p2_a_verdict": "P2_A_NO_VALID_CONFIG", "diagnostic_config": diag}
+            diagc = best[0]["config"] if best else {"layer": 24, "alpha": 1.0, "gate": "ER", "dose": "id",
+                                                    "direction_sign": 1.0}
+            selection = {"p2_a_verdict": "P2_A_NO_VALID_CONFIG", "diagnostic_config": diagc}
         summary["selection"] = selection
         atomic_json(ROOT / args.out, summary)
         atomic_json(SELECTION, {**selection, "source_summary": args.out})
-    else:
-        if args.stage == "final":
-            sel = select([e for e in evals if e["config"]["gate"] == "ER" and e["config"]["direction_sign"] > 0])
-            summary["final_selection"] = sel["config"] if sel else None
-            if sel is not None:
-                shards = next(s for (m, s, _) in runs.values() if sel["config"] in m["configs"])
-                sel_hyps = hyps(shards, ids, sel["config"]["name"])
-                summary["selected_vs_B0"] = paired_bootstrap(refs, ids, sel_hyps, b0_hyps, reps, seed)
-                summary["selected_vs_B0_AUTO"] = paired_bootstrap(refs, ids, sel_hyps, auto_hyps, reps, seed)
+    elif args.stage == "final":
+        sel = select([e for e in evals if e["config"]["gate"] == "ER" and e["config"]["direction_sign"] > 0])
+        summary["final_selection"] = sel["config"] if sel else None
+        if sel is not None:
+            summary["selected_intervals"] = intervals(sel)
         atomic_json(ROOT / args.out, summary)
-    print(json.dumps({"stage": args.stage, "selection": summary.get("selection") or summary.get("final_selection")},
-                     indent=2, default=str))
+    else:
+        atomic_json(ROOT / args.out, summary)
+    print(json.dumps({"stage": args.stage, "selection": summary.get("selection") or summary.get("final_selection"),
+                      "experiment_valid": ev_valid["valid"]}, indent=2, default=str))
 
 
 if __name__ == "__main__":

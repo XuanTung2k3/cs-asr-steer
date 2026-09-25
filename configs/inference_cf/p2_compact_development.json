@@ -1,34 +1,136 @@
 {
-  "schema": "p2_compact_development_v1",
+  "schema": "p2_compact_development_v1_1",
   "role": "D-dev-select",
   "population": "R2 panel, all 300 D-dev-select utterances (20 dialogues)",
   "r2_manifest_hash": "sha256:e8869f0c8be31783187f3976b905def858751978a0631118e094ead901af1c25",
-  "cached_equivalence": {"verdict": "CACHED_EQUIVALENCE: PASS", "job": "54802", "spec": "v1.1"},
+  "cached_equivalence": {
+    "verdict": "CACHED_EQUIVALENCE: PASS",
+    "job": "54802",
+    "spec": "v1.1"
+  },
   "detector": "g = E * R_B (frozen R2)",
   "direction": "d = norm(hE - hB), tiny/nonfinite fallback 1e-4",
   "site": "decoder post-cross-attention residual (pre-FFN), canonical DG-02 hook, NormPreserve, positions < 4 never edited",
   "execution": "experiments/inference_cf_cached.py, bf16, greedy, max_new_tokens 200, generate() suppression",
-  "dose_maps": ["id", "sqrt"],
-  "layers": [16, 24],
-  "alphas": [0.5, 1.0, 2.0],
+  "dose_maps": [
+    "id",
+    "sqrt"
+  ],
+  "layers": [
+    16,
+    24
+  ],
+  "alphas": [
+    0.5,
+    1.0,
+    2.0
+  ],
   "stages": {
-    "A": {"gate": "ER", "dose": "id", "layers": [16, 24], "alphas": [0.5, 1.0, 2.0]},
-    "A_diag": {"note": "only if P2_A_NO_VALID_CONFIG: at the best-dPIER P2-A config (or L24, alpha 1.0 if none > 0)",
-               "controls": [{"gate": "one"}, {"gate": "ER", "direction_sign": -1.0}]},
-    "B": {"note": "only if P2-A valid: at (layer*, alpha*), dose id",
-          "controls": [{"gate": "one"}, {"gate": "one", "alpha": "alpha_c"}, {"gate": "E"},
-                       {"gate": "R"}, {"gate": "cf"}, {"gate": "ER", "direction_sign": -1.0}],
-          "alpha_c": "sqrt(sum_edits ||h'-h||^2 / N_elig) over the selected P2-A config; N_elig = its steps with no structural fallback and query >= 4"},
-    "C": {"note": "only if P2-A valid: dose sqrt at layer*", "gate": "ER", "dose": "sqrt", "alphas": [0.5, 1.0, 2.0]}
+    "A": {
+      "gate": "ER",
+      "dose": "id",
+      "layers": [
+        16,
+        24
+      ],
+      "alphas": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    },
+    "A_diag": {
+      "note": "only if P2_A_NO_VALID_CONFIG: at the best-dPIER P2-A config (or L24, alpha 1.0 if none > 0)",
+      "controls": [
+        {
+          "gate": "one"
+        },
+        {
+          "gate": "ER",
+          "direction_sign": -1.0
+        }
+      ]
+    },
+    "B": {
+      "note": "only if P2-A valid: at (layer*, alpha*), dose id",
+      "controls": [
+        {
+          "gate": "one"
+        },
+        {
+          "gate": "one",
+          "alpha": "alpha_c"
+        },
+        {
+          "gate": "E"
+        },
+        {
+          "gate": "R"
+        },
+        {
+          "gate": "cf"
+        },
+        {
+          "gate": "ER",
+          "direction_sign": -1.0
+        }
+      ],
+      "alpha_c": "sqrt(sum_edits ||h'-h||^2 / N_elig) over the selected P2-A config; N_elig = its steps with no structural fallback and query >= 4"
+    },
+    "C": {
+      "note": "only if P2-A valid: dose sqrt at layer*",
+      "gate": "ER",
+      "dose": "sqrt",
+      "alphas": [
+        0.5,
+        1.0,
+        2.0
+      ]
+    }
   },
-  "baselines": {"B0": "cached_greedy forced-ZH (reference for all deltas)",
-                "B1": "cached_greedy forced-EN, no steering",
-                "B0_AUTO": "generate(language=None), batch 1; plus R2 B0_AUTO parquet"},
-  "validity": {"max_cap_increase": 3, "max_zh_cer_increase_abs": 0.005, "max_mer_increase_abs": 0.005,
-               "min_matrix_zh_retention": 0.99, "min_pier_gain_exclusive": 0.0,
-               "sources": {"zh_cer": "configs/base.yaml pilot_max_zh_cer_degradation_abs", "mer": "configs/base.yaml pilot_max_mer_degradation_abs",
-                           "retention": "derived from the ZH-CER tolerance on this panel, conservative two-decimal bound"}},
-  "selection": {"metric": "max delta PIER (B0 - method)",
-                "tie_break": ["higher delta PIER", "lower ZH-CER increase", "lower realized edit energy", "simpler dose map (id < sqrt)", "lower alpha"]},
-  "bootstrap": {"replicates": 2000, "seed": 240924, "unit": "dialogue"}
+  "baselines": {
+    "B0M_L{layer}": "v1.1 \u0394 reference: alpha=0 cached_decode (gate ER, dose id) at the configuration's own layer, same job",
+    "B0": "cached_greedy forced-ZH (diagnostic only since v1.1)",
+    "B1": "cached_greedy forced-EN, no steering",
+    "B0_AUTO": "generate(language=None), batch 1; plus R2 B0_AUTO parquet"
+  },
+  "validity": {
+    "max_cap_increase": 3,
+    "max_zh_cer_increase_abs": 0.005,
+    "max_mer_increase_abs": 0.005,
+    "min_matrix_zh_retention": 0.99,
+    "min_pier_gain_exclusive": 0.0,
+    "sources": {
+      "zh_cer": "configs/base.yaml pilot_max_zh_cer_degradation_abs",
+      "mer": "configs/base.yaml pilot_max_mer_degradation_abs",
+      "retention": "derived from the ZH-CER tolerance on this panel, conservative two-decimal bound"
+    }
+  },
+  "selection": {
+    "metric": "max delta PIER (B0M_L{layer} - method)",
+    "tie_break": [
+      "higher delta PIER",
+      "lower ZH-CER increase",
+      "lower realized edit energy",
+      "simpler dose map (id < sqrt)",
+      "lower alpha"
+    ]
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 240924,
+    "unit": "dialogue"
+  },
+  "experiment_validity": {
+    "version": "v1.1",
+    "checks": [
+      "no_failures",
+      "matched_baselines_zero_dose_bitwise",
+      "matched_baselines_lineage",
+      "all_divergences_edit_attributed",
+      "all_configs_complete"
+    ],
+    "divergence_attribution": "for each (config, utterance) whose tokens differ from B0M_L{layer}: some step t <= first differing token index has an applied edit",
+    "on_fail": "P2_BLOCKED_INVALID_EXPERIMENT"
+  }
 }

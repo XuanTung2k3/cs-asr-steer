@@ -29,7 +29,7 @@ from csasr.models.whisper import batch_model_inputs, load_audio, load_whisper
 from csasr.utils.config import load_config
 import experiments.inference_cf_cached as cached
 
-SCHEMA = "p2_compact_development_v1"
+SCHEMA = "p2_compact_development_v1_1"
 CONDITIONS = {"cB": [50258, 50260, 50360, 50364], "cE": [50258, 50259, 50360, 50364],
               "language_token_ids": [50259, 50260]}
 
@@ -79,9 +79,22 @@ def compact_steps(steps: list[dict]) -> list[dict]:
 
 
 def run_utterance(bundle, *, waveform, encoded, inputs, configs, partition, null_probs,
-                  language_ids, nfp, uid, baselines: bool, max_new_tokens: int = 200) -> dict:
+                  language_ids, nfp, uid, baselines: bool, matched_layers=(), max_new_tokens: int = 200) -> dict:
     lid_cache: dict = {}
     result = {"systems": {}}
+    # v1.1 matched baseline: the alpha=0 run of the identical cached_decode path at each layer
+    # (CE1: bitwise equal to its own B branch). All deltas are measured against it.
+    for layer in matched_layers:
+        r = cached.cached_decode(bundle, waveform=waveform, encoded=encoded, conditions=CONDITIONS,
+                                 partition=partition, null_probs=null_probs, language_ids=language_ids,
+                                 layer=int(layer), alpha=0.0, gate_policy="ER", dose="id",
+                                 max_new_tokens=max_new_tokens, num_forced_prefix=nfp,
+                                 lid_cache=lid_cache, lid_key=uid)
+        assert_no_site_hooks(bundle)
+        result["systems"][f"B0M_L{int(layer)}"] = {
+            "tokens": r["tokens"], "text": r["text"], "terminated": r["terminated"],
+            "zero_dose_bitwise": all(s["f3_bitwise_equals_b"] for s in r["steps"]),
+            "lineage_ok": r["lineage_ok"]}
     if baselines:
         b0 = cached.cached_greedy(bundle, encoded, CONDITIONS["cB"], max_new_tokens)
         b1 = cached.cached_greedy(bundle, encoded, CONDITIONS["cE"], max_new_tokens)
@@ -156,7 +169,8 @@ def main() -> None:
             res = run_utterance(bundle, waveform=waveform, encoded=enc, inputs=inputs,
                                 configs=manifest["configs"], partition=partition, null_probs=null_probs,
                                 language_ids=language_ids, nfp=nfp, uid=item["utterance_id"],
-                                baselines=manifest["baselines"])
+                                baselines=manifest["baselines"],
+                                matched_layers=manifest["matched_baseline_layers"])
             res["status"] = "ok"
             runtime["audio_sec"] += min(len(waveform) / 16000, 30.0)
         except Exception as exc:

@@ -49,6 +49,7 @@ def main() -> None:
     partition = tokenizer_partition(WhisperProcessor.from_pretrained(MODEL, local_files_only=True).tokenizer)
     sources = [ROOT / x for x in ("docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md",
                                   "docs/inference_cf/PRE_P2_AUDIT.md",
+                                  "docs/inference_cf/P2_A_ATTEMPT1_INVALID_BASELINE.md",
                                   "configs/inference_cf/p2_compact_development.json",
                                   "experiments/inference_cf_cached.py", "experiments/inference_cf_p2.py",
                                   "experiments/inference_cf_p2_prepare.py",
@@ -60,8 +61,10 @@ def main() -> None:
     rev = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     if subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT, text=True).strip():
         raise ValueError("commit before preparing a P2 manifest")
+    matched = sorted({int(c["layer"]) for c in configs})
     manifest = {"schema": SCHEMA, "stage": args.stage, "layer": args.layer, "git_commit": rev,
-                "configs": configs, "baselines": args.stage == "A", "config_hash": digest(config),
+                "configs": configs, "baselines": args.stage == "A",
+                "matched_baseline_layers": matched, "config_hash": digest(config),
                 "panel_hash": digest(panel), "partition_hash": partition["hash"],
                 "sources": {str(p): file_hash(p) for p in sources},
                 "r2_manifest_hash": r2m["manifest_hash"]}

@@ -76,21 +76,28 @@ def test_run_utterance_tiny_configs(monkeypatch):
     cfgs = p2.configs_for_stage("A", CFG, layer=24)
     res = p2.run_utterance(b, waveform=np.ones(FRAMES * 320, dtype=np.float32), encoded=encoded(), inputs=None,
                            configs=cfgs, partition=PART, null_probs={4: .5, 5: .5}, language_ids=(4, 5),
-                           nfp=4, uid="u", baselines=False, max_new_tokens=6)
-    assert set(res["systems"]) == {c["name"] for c in cfgs}
+                           nfp=4, uid="u", baselines=False, matched_layers=(24,), max_new_tokens=6)
+    assert set(res["systems"]) == {c["name"] for c in cfgs} | {"B0M_L24"}
+    m0 = res["systems"]["B0M_L24"]
+    assert m0["zero_dose_bitwise"] and m0["lineage_ok"]
+    # attribution invariant on the tiny model: a divergence from B0M is preceded by an edit
+    for c in cfgs:
+        s = res["systems"][c["name"]]
+        if s["tokens"] != m0["tokens"]:
+            k = next((i for i, (a, b) in enumerate(zip(s["tokens"], m0["tokens"])) if a != b),
+                     min(len(s["tokens"]), len(m0["tokens"])))
+            assert any(x["edit"] and x["t"] <= k for x in s["steps"])
     for c in cfgs:
         s = res["systems"][c["name"]]
         assert s["lineage_ok"] and s["distinct_caches"] and s["steps"]
         assert all(set(x) >= {"t", "fb", "g", "dose", "edit", "edit_norm", "next", "unsteered_next"} for x in s["steps"])
 
 
-def test_evaluator_stage_a_plumbing_no_valid_when_identical(tmp_path, monkeypatch):
-    monkeypatch.setattr(ev, "SELECTION", tmp_path / "selection.json")
-    refs = ev.load_references()
+def _fake_run(tmp_path, *, diverge_without_edit=False):
     panel = json.loads(Path("results/inference_cf/p0_r2/inference_panel.json").read_text())
     b0 = json.loads(Path("results/dg04/results/B0.json").read_text())["texts"]
     cfgs = p2.configs_for_stage("A", CFG, layer=24)[:1]
-    m = {"schema": p2.SCHEMA, "configs": cfgs, "baselines": True}
+    m = {"schema": p2.SCHEMA, "configs": cfgs, "baselines": True, "matched_baseline_layers": [24]}
     m["manifest_hash"] = digest(m)
     d = tmp_path / "A"
     atomic_json(d / "manifest.json", m)
@@ -100,16 +107,45 @@ def test_evaluator_stage_a_plumbing_no_valid_when_identical(tmp_path, monkeypatc
             "edit_norm": .4, "pre_norm": 9.0, "next": 5, "unsteered_next": 5}
     for i, r in enumerate(panel["rows"]):
         t = b0[r["utterance_id"]]
+        toks = [7, 8, 9]
+        meth = {"text": t, "terminated": "eos", "tokens": toks, "steps": [step]}
+        if diverge_without_edit and i == 0:
+            meth = {**meth, "tokens": [6, 8, 9]}            # differs at t=0; first edit is at t=1
         sysd = {"B0": {"text": t, "terminated": "eos"}, "B1": {"text": t, "terminated": "eos"},
                 "B0_AUTO": {"text": t, "terminated": "eos"},
-                cfgs[0]["name"]: {"text": t, "terminated": "eos", "steps": [step]}}
+                "B0M_L24": {"text": t, "terminated": "eos", "tokens": toks, "zero_dose_bitwise": True,
+                            "lineage_ok": True},
+                cfgs[0]["name"]: meth}
         atomic_json(d / "rows" / f"{i:03d}.json", {"status": "ok", "manifest_hash": m["manifest_hash"], "systems": sysd})
+    return d
+
+
+def test_evaluator_stage_a_plumbing_no_valid_when_identical(tmp_path, monkeypatch):
+    monkeypatch.setattr(ev, "SELECTION", tmp_path / "selection.json")
+    d = _fake_run(tmp_path)
     monkeypatch.setattr(sys, "argv", ["x", "--stage", "A", "--dirs", str(d), "--baseline-dir", str(d),
                                       "--out", str(tmp_path / "summary.json")])
     ev.main()
     s = json.loads((tmp_path / "summary.json").read_text())
+    assert s["experiment_validity"]["valid"]
     assert s["selection"]["p2_a_verdict"] == "P2_A_NO_VALID_CONFIG"      # dPIER = 0 fails V5
-    assert s["b0_identical_across_jobs"] and s["baselines"]["B0"]["pier"] == pytest.approx(0.47, abs=0.01)
+    assert s["matched_baselines_identical_across_runs"]
+    (bm,) = s["matched_baselines"].values()
+    assert bm["metrics"]["pier"] == pytest.approx(0.47, abs=0.01) and "edits" not in bm["metrics"]
+    assert s["diagnostic_systems"]["B0"]["pier"] == pytest.approx(bm["metrics"]["pier"])
     cfg_eval = s["configs"][0]
+    assert cfg_eval["baseline"].endswith(":B0M_L24")
     assert cfg_eval["validity"]["checks"]["V5_efficacy"] is False
     assert cfg_eval["metrics"]["edits"]["edited"] == 300 and cfg_eval["metrics"]["corrections"] == 0
+
+
+def test_evaluator_blocks_unattributed_divergence(tmp_path, monkeypatch):
+    monkeypatch.setattr(ev, "SELECTION", tmp_path / "selection.json")
+    d = _fake_run(tmp_path, diverge_without_edit=True)
+    monkeypatch.setattr(sys, "argv", ["x", "--stage", "A", "--dirs", str(d), "--baseline-dir", str(d),
+                                      "--out", str(tmp_path / "summary.json")])
+    ev.main()
+    s = json.loads((tmp_path / "summary.json").read_text())
+    assert s["verdict"] == "P2_BLOCKED_INVALID_EXPERIMENT"
+    assert not s["experiment_validity"]["checks"]["all_divergences_edit_attributed"]
+    assert not (tmp_path / "selection.json").exists()

@@ -157,3 +157,30 @@ is added. Conclusions are restricted to these predeclared questions, with no opt
 - **LID reuse:** LID posteriors are reused only for identical (utterance, crop) inputs.
 - **Reruns:** only for concrete infrastructure or implementation invalidity, into versioned
   directories.
+
+## 11. v1.1 amendment — matched baseline and experiment validity (after P2-A attempt 1)
+
+This amendment follows P2-A attempt 1 (jobs 54803/54804). That attempt is recorded as
+`P2_BLOCKED_INVALID_EXPERIMENT`; see `P2_A_ATTEMPT1_INVALID_BASELINE.md`. The fix is to
+execution, not to any rule.
+
+- **Δ reference (replaces §3 B0 as the reference):** for each layer ℓ in a run, `B0M_Lℓ` is the
+  α = 0 run of the identical `cached_decode` path (gate ER, dose id) in the same job. By CE1 it is
+  bitwise its own B branch.
+  - Every Δ, V1–V5 check, flip, retention value, selection and "vs B0" interval uses the
+    `B0M_Lℓ` of the configuration's own run and layer.
+- **Diagnostics:** B0 (`cached_greedy`), B1 and B0_AUTO remain reported baselines. B0_AUTO
+  intervals are still reported.
+- **Experiment validity (frozen before the rerun; all must hold, otherwise
+  `P2_BLOCKED_INVALID_EXPERIMENT`):**
+  1. 0 failed rows.
+  2. Every `B0M_Lℓ` step is bitwise equal to its B branch (`zero_dose_bitwise`) and has
+     `lineage_ok`.
+  3. **Divergence attribution:** for every configuration and utterance where the tokens differ
+     from `B0M_Lℓ`, let k be the first differing token index. Some step t ≤ k must have an
+     applied edit. Step t emits token t, and an edit at t can affect only tokens ≥ t.
+  4. All configurations are complete.
+- **Also reported:** whether `B0M_Lℓ` hypotheses agree across layers and jobs.
+- **Unchanged:** population, detector, direction, site, dose maps, layers, α grid, V1–V5
+  thresholds, selection and tie rule, P2-B/P2-C/A_diag definitions, bootstrap.
+- **Reruns:** P2-A reruns into `p2_A_r1_L16` and `p2_A_r1_L24`.

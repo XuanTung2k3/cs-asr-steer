@@ -181,7 +181,7 @@ def d2_records(pop, rows) -> tuple[list[dict], list[dict], dict]:
 
 
 def transcript_eval(tok, refs, uid, base_tokens, t, cont, unit_index):
-    from csasr.evaluation.pier import evaluate_pois
+    from csasr.evaluation.pier import evaluate_pois, unit_status
     from csasr.evaluation.retention import matrix_zh_retention
     ref = refs[uid]["reference"]
     base = tok.decode(base_tokens, skip_special_tokens=True)
@@ -189,7 +189,12 @@ def transcript_eval(tok, refs, uid, base_tokens, t, cont, unit_index):
     bp = {p.poi_index: p.correct for p in evaluate_pois(ref, base)}
     hp = {p.poi_index: p.correct for p in evaluate_pois(ref, hyp)}
     zr = matrix_zh_retention([ref], [base], [hyp])
-    return {"target_correct": hp.get(unit_index), "baseline_target_correct": bp.get(unit_index),
+    def unit_ok(poi: dict, text: str):          # POI correctness for English units; unit status for Han
+        if unit_index in poi:
+            return poi[unit_index]
+        st = unit_status(ref, text).get(unit_index)
+        return None if st is None else bool(st[0])
+    return {"target_correct": unit_ok(hp, hyp), "baseline_target_correct": unit_ok(bp, base),
             "corrections": sum(1 for k, v in bp.items() if not v and hp.get(k)),
             "corruptions": sum(1 for k, v in bp.items() if v and not hp.get(k)),
             "zh_retained": zr["numerator"], "zh_denominator": zr["denominator"], "identical": hyp == base}
@@ -393,7 +398,7 @@ def main() -> None:
             if r["stratum"] == C:
                 ps["target_recovered"] += int(bool(e["target_correct"]))
             else:
-                ps["target_lost"] += int(e["baseline_target_correct"] and not e["target_correct"])
+                ps["target_lost"] += int(bool(e["baseline_target_correct"]) and not e["target_correct"])
         agg["target_recovered"] = per_stratum.get(C, {}).get("target_recovered", 0)
         companion[a] = {**agg, "per_stratum": per_stratum}
     d2_pulses = {"current_recovered": 0, "oracle_recovered": 0, "n": 0, "details": []}

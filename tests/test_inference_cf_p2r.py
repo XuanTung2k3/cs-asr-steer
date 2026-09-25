@@ -239,3 +239,51 @@ def test_dialogue_bootstrap_averages_within_dialogue_first():
     vals = [("a", 1.0), ("a", 1.0), ("a", 1.0), ("b", 0.0)]
     r = an.dialogue_bootstrap(vals, 2000, 1, 0.05)
     assert r["estimate"] == pytest.approx(0.5) and r["dialogues"] == 2 and r["positions"] == 4
+
+
+def test_run_utterance_end_to_end_tiny_oracle_replay_and_serialization(monkeypatch):
+    b = tiny_bundle()
+    base = _baseline(b, monkeypatch, max_new_tokens=8)
+    toks = base["tokens"]
+    ctx = _ctx(b, target=0.03)
+    ctx.cfg["d2"]["alpha"] = 0.05                        # tiny states (|r| ~ 0.14) need small packets
+    real_gate = p2r.gate_step
+
+    def gate_zero_at_targets(ctx_, waveform, prefix, *a, **k):   # make targets unedited -> relocations
+        out = real_gate(ctx_, waveform, prefix, *a, **k)
+        if len(prefix) in (1, 3):
+            out = {**out, "g": 0.0}
+        return out
+    monkeypatch.setattr(p2r, "gate_step", gate_zero_at_targets)
+    d1 = [{"utterance_id": "u", "t": t, "stratum": s, "target_ids": [toks[t]], "companion": t == 1}
+          for t, s in ((1, "EN-confusion"), (2, "ZH-correct"))]
+    d2t = [{"utterance_id": "u", "t": t, "target_ids": [toks[t]], "stratum": "EN-confusion",
+            "ctc_midpoint_sec": None} for t in (3, 1)]
+    d2c = [{"utterance_id": "u", "t": 2, "target_ids": [toks[2]], "stratum": "ZH-correct"}]
+    budget = []
+    with torch.inference_mode():
+        res = p2r.run_utterance(ctx, encoded=encoded(), waveform=np.ones(FRAMES * 320, dtype=np.float32), uid="u",
+                                tokens=toks, terminated=base["terminated"], lid_cache={}, d1_positions=d1,
+                                d2_targets=d2t, d2_controls=d2c, pulse_budget=budget,
+                                oracle_crop=lambda t, gs: {"status": "no_ctc_midpoint"})
+    json.dumps(res)                                              # serializable
+    assert res["current"]["lineage_ok"] and res["oracle"]["lineage_ok"]
+    assert all(s["baseline_argmax_ok"] for p in ("current", "oracle") for s in res[p]["steps"])
+    assert [(a["g"], a["fb"]) for a in res["current"]["steps"]] == [(a["g"], a["fb"]) for a in res["oracle"]["steps"]]
+    assert res["baseline_mismatch"] == []
+    plan = res["plan"]
+    moved = {m["to"]: m for m in plan["moves"]}
+    ora = {s["t"]: s for s in res["oracle"]["steps"]}
+    assert len(plan["moves"]) == 2 and plan["retained"] == []
+    for m in plan["moves"]:
+        assert ora[m["to"]]["solver"]["status"] == "ok" and ora[m["to"]]["edit"]
+        assert ora[m["from"]]["kind"] == "moved_away" and not ora[m["from"]]["edit"]
+        assert ora[m["to"]]["kind"] == "relocated_in"
+        if ora[m["to"]]["solver"]["status"] == "ok":
+            assert abs(ora[m["to"]]["edit_norm"] ** 2 / m["energy"] ** 2 - 1) <= 0.02
+    for t in (1, 2):
+        assert res["pulses"][str(t)]["restore_bitwise"]
+    for s in res["current"]["steps"]:
+        if s["t"] in (1, 2, 3):
+            assert "none" in s and "arm" in s
+    assert len(budget) == len(res["pulse_companions"]) == len([m for m in plan["moves"]][:20])

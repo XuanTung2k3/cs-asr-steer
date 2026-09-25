@@ -287,3 +287,17 @@ def test_run_utterance_end_to_end_tiny_oracle_replay_and_serialization(monkeypat
         if s["t"] in (1, 2, 3):
             assert "none" in s and "arm" in s
     assert len(budget) == len(res["pulse_companions"]) == len([m for m in plan["moves"]][:20])
+
+
+def test_pulse_at_final_eos_step_is_supported(monkeypatch):
+    """A P2 donor edit can sit on the final step that emits EOS (t == len(tokens))."""
+    b = tiny_bundle()
+    toks = _baseline(b, monkeypatch)["tokens"][:3]          # truncated: step 3 plays the EOS-step role
+    ctx = _ctx(b, target=0.03)
+    jobs = {3: {"target_ids": None, "stratum": None,
+                "arms": {"pulse_current_9": {"dir": "plus_d", "energy": 0.03, "continue": True}}}}
+    with torch.inference_mode():
+        out = p2r.pulse_pass(ctx, encoded=encoded(), uid="u", tokens=toks, jobs=jobs)
+    assert out[3]["restore_bitwise"] and out[3]["arms"]["pulse_current_9"]["solver"]["status"] == "ok"
+    assert "continuation" in out[3]["arms"]["pulse_current_9"]
+    assert out.get("_baseline_mismatch", []) in ([], [3])    # tiny model need not emit EOS there

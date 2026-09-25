@@ -347,14 +347,15 @@ def pulse_pass(ctx: Ctx, *, encoded, uid, tokens, jobs: dict) -> dict:
         L = B.length
         lb, _, hb = B.step(new, capture_layer=ctx.layer, attention=True)
         le, _, he = E.step(new_e, capture_layer=ctx.layer, attention=False)
-        if processed_argmax(lb, t, ctx.suppress, ctx.begin) != tokens[t]:
+        expected = tokens[t] if t < len(tokens) else ctx.eos     # the final step emits EOS (a P2 edit site)
+        if processed_argmax(lb, t, ctx.suppress, ctx.begin) != expected:
             out.setdefault("_baseline_mismatch", []).append(t)
         if t in jobs:
             query = L + len(new) - 1
             dirn = direction(he, hb)
             rec = {"t": t, "query": query, "dir": dirn["status"], "dir_norm": dirn["norm"],
                    "cos_d_state": None, "arms": {}}
-            none, lp0 = summarize(lb, t, ctx.suppress, ctx.begin, ctx.partition, jobs[t].get("target_ids"), tokens[t])
+            none, lp0 = summarize(lb, t, ctx.suppress, ctx.begin, ctx.partition, jobs[t].get("target_ids"), expected)
             rec["none"] = none
             d = dirn["d"]
             if d is not None:
@@ -374,7 +375,7 @@ def pulse_pass(ctx: Ctx, *, encoded, uid, tokens, jobs: dict) -> dict:
                 assert_no_site_hooks(ctx.bundle)
                 audit = hook.records[-1].to_dict() if hook.records else None
                 ms, _ = summarize(la, t, ctx.suppress, ctx.begin, ctx.partition, jobs[t].get("target_ids"),
-                                  tokens[t], lp0)
+                                  expected, lp0)
                 v = info.pop("v", None)
                 a = {"solver": info, "summary": ms,
                      "edit_norm": audit["edit_norm"] if audit and audit["steered"] else 0.0,
@@ -392,7 +393,8 @@ def pulse_pass(ctx: Ctx, *, encoded, uid, tokens, jobs: dict) -> dict:
             lb2, _, hb2 = B.step(new, capture_layer=ctx.layer, attention=True)
             rec["restore_bitwise"] = bool(torch.equal(lb2, lb) and torch.equal(hb2, hb))
             out[t] = rec
-        new, new_e = [tokens[t]], [tokens[t]]
+        if t < len(tokens):
+            new, new_e = [tokens[t]], [tokens[t]]
     return out
 
 

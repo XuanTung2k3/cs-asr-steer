@@ -1,17 +1,26 @@
 # STATUS
 
-**Separate inference-time P0-R2 repairability proposal (2026-09-24): R2 RUN — `R2_CF_FEASIBLE_NOT_PREFERRED`, `POST_R2_AUDIT: PASS`, selected gate `g_old=E·R_B`.** Job 54758 (300/300, manifest `e8869f0c…`, commit `fe960e4`). ALIGN 0.962, LOCALIZER 0.890 (EN-confusion only 0.464), LS AUROC 0.820 (mismatched audio 0.503), g_cf 0.710/0.726 vs g_old 0.820/0.836 (ΔAUROC −0.11, CI<0). See `docs/inference_cf/P0_R2_REPORT.md` and `P0_R2_POST_RUN_AUDIT.md`. **P1: `P1_CAUSAL_ACCEPTANCE_PASS`, `POST_P1_AUDIT: PASS`** (job 54781, spec v1.1; attempt 1 job 54770 blocked by an A6 instrument defect and preserved): `g_old`-gated `norm(hE−hB)` edit at decoder L24 post-cross-attention/pre-FFN with NormPreserve; bitwise α=0 identity; 20 real edits; isolation verified. See `docs/inference_cf/P1_REPORT.md`. **State: `READY_FOR_P2_COMPACT_DEVELOPMENT`** — P2 not started; no ASR-improvement claim.
-`docs/inference_cf/P0_R2_REPAIRABILITY_SPEC.md` freezes a causal maximum-50-frame attention-mass
-window, unchanged LS-B and BC-B, a same-baseline-prefix forced-English conflict, and
-`g_cf=E[R_B-R_Ecf]_+` with `g_old=ER_B` retained as an ablation. New R2 code under
-`src/csasr/inference_cf/core_r2.py` and `experiments/inference_cf_p0_r2*.py` is an
-**unsteered gate-feasibility path only**. It has no GPU outcome and does not start P1. The
-existing P0/P0-R1 `P0_BLOCKED_EVIDENCE` verdict below remains historical and unchanged.
-The R2 population remains the already-exposed 300-utterance D-dev-select candidate set;
-B0 is forced ZH and B0_AUTO is a mandatory unsteered comparator (development PIER 0.390 vs B0 0.470).
-`g_cf` is a *repair-need ranking score / counterfactually language-responsive matrix-script
-conflict*, not proven repairability; a diagnostic-only forced-Russian counterfactual tests prompt
-susceptibility. The frozen R2 feasibility job has run; P1 consumed `g_old` unchanged.
+**Separate inference-time steering proposal — current state (2026-09-25): `READY_FOR_P2_COMPACT_DEVELOPMENT`; Pre-P2 hardening in progress.**
+Main method, frozen from P1 onward:
+- **Detector:** `g = E·R_B`. `E` = LS-B null-corrected local support on the 1.0 s max-attention window; `R_B` = BC-B baseline matrix-script conflict.
+- **Direction:** `d = norm(hE − hB)`.
+- **Edit:** NormPreserve at the decoder post-cross-attention / pre-FFN site.
+
+The R2 counterfactual gate `g_cf = E·[R_B − R_Ecf]_+` was rejected (not preferred) and is kept only as an ablation.
+
+- **R2** (job 54758, manifest `e8869f0c…`, commit `fe960e4`): `R2_CF_FEASIBLE_NOT_PREFERRED`, `POST_R2_AUDIT: PASS`.
+  - ALIGN 0.962; LOCALIZER 0.890 (EN-confusion only 0.464).
+  - LS AUROC 0.820 (mismatched audio 0.503).
+  - g_cf 0.710/0.726 vs g=E·R_B 0.820/0.836 (ΔAUROC −0.11, CI<0).
+  - See `docs/inference_cf/P0_R2_REPORT.md`, `P0_R2_POST_RUN_AUDIT.md`.
+- **P1** (job 54781, spec v1.1): `P1_CAUSAL_ACCEPTANCE_PASS`, `POST_P1_AUDIT: PASS`.
+  - Attempt 1 (job 54770) was blocked by an A6 instrument defect and is preserved.
+  - Verified: bitwise α=0 identity; 20 real L24 edits; isolation.
+  - See `docs/inference_cf/P1_REPORT.md`.
+- **Baselines:** B0 forced-ZH and B0_AUTO (stronger: PIER 0.390 vs 0.474) remain mandatory.
+- **Claims:** no ASR-improvement claim yet. The post-R2 runner patch is preserved unapplied (`docs/inference_cf/patches/`).
+
+*History (pre-run R2 design, kept for provenance):* `P0_R2_REPAIRABILITY_SPEC.md` froze the max-50-frame window, LS-B, BC-B, a same-prefix forced-English conflict, and `g_cf` as the R2 primary candidate, with `E·R_B` as its ablation. R2 then selected `E·R_B`.
 
 **Separate inference-time counterfactual P0 (2026-09-24): `P0_BLOCKED_EVIDENCE`.**
 Worktree `feature/inference-cf-steering` completed the pre-registered 60-row D-dev-select
@@ -27,7 +36,7 @@ manifest `e4514a8…` superseding `0287abb…`) lowered collision to 73.7% and d
 `P0_BLOCKED_EVIDENCE`. Thresholds not weakened; no further K/scorer variant attempted. The
 matrix-collapse need factor is non-identifiable and removed; `d=normalize(hE−hM)` has no validated
 gate. See `FEASIBILITY.md`, `results/inference_cf/{p0_retry,p0_r1}/`. Separate proposal; does not
-alter the frozen DG-03R/DG-08 method. P1 has not started.
+alter the frozen DG-03R/DG-08 method. (Historical as of P0: P1 had not started then.)
 
 ## Stage roll-up (2026-09-08)
 

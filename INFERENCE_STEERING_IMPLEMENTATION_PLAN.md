@@ -18,13 +18,13 @@ The primary experiment remains Mandarin-English with Whisper-large-v3. A later m
 
 **Important P0 finding for the selected Whisper baseline.** Matrix (`M`) and embedded (`E`) languages are supplied task metadata. The primary known-M baseline `B0` forces Chinese, so its ordinary condition equals explicit Mandarin conditioning (`cB == cM`) and `hB == hM`. This identity is specific to that condition. Ordinary **auto-LID** Whisper (`B0_AUTO`) is a mandatory unsteered comparator because the R2 audit found it stronger on development data. The earlier `rho/c` "matrix-side collapse" geometry is non-identifiable and retired. The P0/P0-R1 candidate-continuation evidence (`q_cross`, K=1 then K=3) is also retired as the main gate because conditioned branches usually produced the same discrete continuation. These negative feasibility results are preserved as motivation/evidence; they are not overwritten by P0-R2.
 
-The revised gate hypothesis is
+The **selected (frozen) repair-need detector**, after R2, is
 
 ```math
-g_t^{cf} = E_t [R_t^B-R_t^{Ecf}]_+,
+g_t = E_t R_t^B .
 ```
 
-where `E_t` measures **positive English evidence beyond Whisper's null-template bias**, `R_t^B` is baseline excess matrix-script mass, and `R_t^{Ecf}` is the same mass under forced English with the **identical baseline content prefix**. This is an uncalibrated **repair-need ranking/strength** score. The previous `g_t^{old}=E_tR_t^B` was a predeclared R2 ablation. **R2 outcome: `g^{cf}` is feasible but not preferred; the frozen rule selects `g_selected = g^{old} = E_tR_t^B` for P1 onward** (the Ecf term is retained only as a reported negative diagnostic). The selected gate should be low on Mandarin and already-correct English and high on English-to-Han confusion; it does not target every failed English position.
+R2 also tested the counterfactual candidate `g_t^{cf} = E_t [R_t^B-R_t^{Ecf}]_+`, where `E_t` measures **positive English evidence beyond Whisper's null-template bias**, `R_t^B` is baseline excess matrix-script mass, and `R_t^{Ecf}` is the same mass under forced English with the **identical baseline content prefix**. This is an uncalibrated **repair-need ranking/strength** score. The previous `g_t^{old}=E_tR_t^B` was a predeclared R2 ablation. **R2 outcome: `g^{cf}` is feasible but not preferred; the frozen rule selects `g_selected = g^{old} = E_tR_t^B` for P1 onward** (the Ecf term is retained only as a reported negative diagnostic). The selected gate should be low on Mandarin and already-correct English and high on English-to-Han confusion; it does not target every failed English position.
 
 **Training-free** means frozen model weights and no learned gate, probe, basis, adapter, or reference-derived switch detector in the deployable path. **Inference-time** means the direction and gate are computed from the current utterance/prefix without reference transcripts, gold future tokens, or aligned code-switch spans. Development examples may be used to validate/freeze architecture choices and hyperparameters; report this as *development-tuned, training-free inference*, not zero-shot hyperparameter selection. Always disclose extra model passes, local-LID cost, memory, and latency. Oracle/reference localization is diagnostic only.
 
@@ -145,13 +145,15 @@ The Mandarin-English vocabulary partition is a first feasibility instantiation, 
 
 ### 3.5 Repair-need gate: when to repair
 
-Add a same-prefix forced-English counterfactual conflict `R_t^{Ecf}` using exactly the same frozen tokenizer classes as `R_t^B`. Define `D_t=[R_t^B-R_t^{Ecf}]_+` and combine it with local evidence:
+**Frozen after R2 (main method from P1 onward):**
 
 ```math
 \boxed{
-g_t^{cf} = E_t D_t,\qquad g_t^{old}=E_tR_t^B\ \text{(ablation)}.
+g_t = E_t R_t^B .
 }
 ```
+
+*Historical R2 candidate (rejected, now an ablation):* R2 added a same-prefix forced-English counterfactual conflict `R_t^{Ecf}` (same tokenizer classes) and `D_t=[R_t^B-R_t^{Ecf}]_+`, giving `g_t^{cf}=E_tD_t`. It was feasible but significantly worse than `E_tR_t^B` (paired ΔAUROC −0.11), so the frozen rule rejected it. `g^{cf}` survives only as a P2/P3 mechanism ablation.
 
 Desired qualitative behavior:
 
@@ -163,7 +165,7 @@ Desired qualitative behavior:
 
 English-to-English substitutions are out of this mechanism. Deletions have no emitted word; evaluate their next-token or EOS gap slot separately and conditionally.
 
-Thus the primary gate asks whether **local acoustics support `E`, baseline decoding is `M`-like, and same-prefix English conditioning reduces that conflict**. It is a score, not proof of repair.
+Thus the selected gate asks whether **local acoustics support `E` while baseline decoding is `M`-like**. It is a ranking score, not a proof of repair. The detector formula is frozen; only the score-to-dose relation remains to be validated in P2.
 
 ### 3.6 Intervention
 
@@ -193,7 +195,7 @@ P0-R2 is a **gate-feasibility study**, not a steering experiment. It must evalua
 
 - **R2-LS — LocalSupport validity.** On a predeclared development diagnostic panel with improved token/reference alignment, test whether `E_t` is dense/finite and separates embedded-language positions from matrix-language positions. Report full distributions, pairwise language posterior mass, local-window/alignment failures, and an audio-dependence control. If local native LID is unstable or nearly constant on short windows, block this instantiation rather than tuning many windows.
 - **R2-BC — BaselineConflict validity.** Verify tokenizer-language partition coverage and ambiguity, finite full-distribution masses, and the `0≤R≤Q` invariant. Report `P_M/P_E/Q/R` by `EN-confusion`, `EN-deletion-slot`, `EN-same-language-sub`, `EN-correct`, and `ZH-correct`; no generic baseline-wrong English category or arbitrary `R≥0.5` boundary.
-- **R2-ECF / R2-GATE — repair-need discrimination.** Evaluate both `g_t^{old}=E_tR_t^B` and `g_t^{cf}=E_t[R_t^B-R_t^{Ecf}]_+`, with the latter primary, for `EN-confusion` versus `ZH-correct` and versus `EN-correct`. Report paired AUROC differences, deletion slots secondarily, and same-language substitutions as out-of-mechanism diagnostics while retaining all in overall ASR metrics. Reference labels are evaluator-only and never enter inference.
+- **R2-ECF / R2-GATE — repair-need discrimination (historical R2 contract; outcome: `g^{cf}` not preferred, `E_tR_t^B` selected).** Evaluate both `g_t^{old}=E_tR_t^B` and `g_t^{cf}=E_t[R_t^B-R_t^{Ecf}]_+`, with the latter primary in R2, for `EN-confusion` versus `ZH-correct` and versus `EN-correct`. Report paired AUROC differences, deletion slots secondarily, and same-language substitutions as out-of-mechanism diagnostics while retaining all in overall ASR metrics. Reference labels are evaluator-only and never enter inference.
 - **Alignment validity.** The previous coarse character-fraction position mapping produced noisy examples. R2 must use a documented, reproducible alignment with explicit unalignable cases; do not silently force labels onto generated positions. Alignment quality is part of the feasibility verdict.
 - **No-reference / no-leakage.** Local audio spans, token sets, posterior calculations, and gate values must be computable without reference transcripts or oracle switch positions.
 - **P1 entry condition.** P1 stays blocked until the final R2 gate contract is versioned and the above component/combined diagnostics are judged usable under predeclared criteria. A promising `hE-hM` direction alone is not sufficient.
@@ -208,9 +210,10 @@ d_{\ell,t} = norm(h^E_{\ell,t}-h^M_{\ell,t}),
 E_t = LocalSupport(E|x,t;M,E),
 \qquad
 R_t^B = BaselineConflict(p_t^B;M,E),
-\qquad R_t^{Ecf}=BaselineConflict(p_t^{Ecf};M,E),
-\qquad g_t=E_t[R_t^B-R_t^{Ecf}]_+.
+\qquad g_t=E_tR_t^B .
 ```
+
+(The R2-rejected counterfactual `R_t^{Ecf}` / `g_t^{cf}` is an ablation, not part of the paper-level method.)
 
 `LocalSupport` and `BaselineConflict` are provider interfaces, not permanently tied to Whisper local LID or Chinese-vs-Latin script. For a new model such as Qwen3-ASR, revalidate `cB/cM/cE`, common-prefix semantics, the hidden intervention site, local language evidence, and baseline-conflict provider on that model's development data before any locked evaluation.
 
@@ -223,11 +226,12 @@ The critical path is now **P0/P0-R1 completed negative feasibility → P0-R2 rev
 | **P0 / P0-R1 — original feasibility** | **COMPLETE.** Preserve the K=1/K=3 candidate-support artifacts and the `cB==cM` result. Do not continue K sweeps. | Historical evidence: geometry collapse is non-identifiable; common-prefix plumbing passed; discrete candidate-continuation support is blocked. |
 | **P0-R2 — revised repair-need feasibility** | **COMPLETE: `R2_CF_FEASIBLE_NOT_PREFERRED`, POST_R2_AUDIT PASS, selected `g_old=E·R_B` (job 54758).** The independent design audit, formula reconciliation, and repairability spec are complete. Commit and prepare the clean-state manifest, then evaluate the exact contract on the dense, existing 300-utterance D-dev-select panel. No steering intervention or alpha/layer tuning. | Freeze or reject the revised gate; compare old and counterfactual gates. Separate verdicts for local support, both conflicts, alignment, and combined repair-need discrimination. |
 | **P1 — working causal method** | **COMPLETE: `P1_CAUSAL_ACCEPTANCE_PASS` (job 54781), POST_P1_AUDIT PASS → READY_FOR_P2_COMPACT_DEVELOPMENT.** After R2 passes, implement the smallest frozen-model path: per-prefix `hE-hM`, the R2-selected gate `g_selected=g_old=E_tR_t^B` (unchanged), norm-preserving edit at the existing engineering anchor, isolated branch/cache semantics, and standard reference-free decoding. | One integrated GPU acceptance covering alpha=0 identity, real eligible edit, cache/mask/beam behavior, direction/gate plumbing, and serialization. This is the first stage that tests an intervention. |
-| **P2 — compact development and freeze** | On CS development, tune the main method and Section 9 baselines under small predeclared budgets. Use an anchor layer plus at most one justified alternative and two/three alpha values. Gate-provider choices are already frozen by R2 except for explicitly declared P2 calibration parameters. | Freeze deployable single-layer configuration, comparator settings, damage constraints, selection rule, hashes, and attempted settings. |
+| **Pre-P2 — cached execution and contract freeze** | Implement a KV-cached steering path, pass a frozen cached-vs-replay equivalence acceptance, reconcile docs/provenance, and freeze the P2 contract before any P2 recognition outcome. | `CACHED_EQUIVALENCE` verdict; `PASS_TO_P2_DEVELOPMENT` or `BLOCK_BEFORE_P2`. |
+| **P2 — compact development and freeze** | On D-dev-select, with the frozen detector `g=E·R_B`: P2-A efficacy screen over layers {16,24} × α∈{0.5,1.0,2.0} (φ(g)=g); P2-B mechanism controls (g=1, g=E, g=R_B, g=E·R_B, g_cf, −d, energy-matched constant); P2-C one dose map φ(g)=√g vs g, only if P2-A finds a valid configuration. Constraints and tie rule are frozen in `docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md` before outcomes. No detector search. | Freeze deployable single-layer configuration, comparator settings, damage constraints, selection rule, hashes, and attempted settings. |
 | **P3 — locked evaluation** | Evaluate frozen systems according to Section 9's corpus-by-system matrix, including gate ablations and monolingual guard. | Core recognition, component evidence, preservation, uncertainty and cost results. No retuning on test/transfer splits. |
 | **P4 — paper artifacts and audit** | Regenerate tables/figures from saved records; expand multilingual/two-architecture claims only after the required transfer/replication evidence. | Auditable paper package; negative transfer/model results narrow claims rather than triggering test-time redesign. |
 
-**Minimum development comparisons after R2/P1:** (1) standard ASR; (2) embedded-language-forced decoding without steering; (3) dynamic `hE-hM` with constant gate/dose; (4) the R2-selected gate `g_old=ER_B` at one layer; (5) the R2-rejected counterfactual gate `g_cf=E[R_B-R_Ecf]_+` only as a reported ablation, `LocalSupport`-only (`g=E`), and baseline-conflict-only (`g=R_B`) at matched/appropriately tuned dose; (6) reversed direction at matched dose; (7) the all-layer comparator. Do not resurrect the retired `rho/c` collapse ablation. Additional random vectors, broad window sweeps, extensive gate-temperature grids, 32 individual behavioral layer scans, retraining, and several speech-LLMs are outside the critical path.
+**Minimum development comparisons after R2/P1:** (1) standard ASR (B0 forced-ZH and B0_AUTO); (2) embedded-language-forced decoding without steering; (3) dynamic `hE-hM` with constant gate/dose; (4) the R2-selected gate `g=ER_B` at one layer (main method); (5) the R2-rejected counterfactual gate `g_cf=E[R_B-R_Ecf]_+` only as a reported ablation, `LocalSupport`-only (`g=E`), and baseline-conflict-only (`g=R_B`) at matched/appropriately tuned dose; (6) reversed direction at matched dose; (7) the all-layer comparator. Do not resurrect the retired `rho/c` collapse ablation. Additional random vectors, broad window sweeps, extensive gate-temperature grids, 32 individual behavioral layer scans, retraining, and several speech-LLMs are outside the critical path.
 
 ### Layer policy: single-layer primary and one all-layer comparator
 
@@ -266,7 +270,7 @@ Runtime projections must be regenerated after P1 because local-LID/window extrac
 
 Evaluate ordinary decoding and method on identical eligible IDs. Report micro MER, PIER where canonically defined, embedded English WER/target metric, matrix-language error, corrections/corruptions, outside-target harm, transcript edits, matrix/embedded retention, gate coverage with explicit denominator, edit norms, extra model/LID passes, latency, peak VRAM and GPU-hours. Define `Delta = baseline - method` so positive means improvement. Final locked tests use paired bootstrap intervals with the independent sampling unit specified in Section 9.4.
 
-For gate diagnostics, keep reference labels and alignments strictly evaluator-side. Report `E_t`, `R_t^B`, `R_t^{Ecf}`, `D_t`, `g_t^{old}`, `g_t^{cf}`, raw/null language posterior/log-odds components, both `Q_t` values, ambiguous-token mass, local-window/alignment status, and offline category labels separately. Do not call either gate a calibrated probability of error unless calibration is explicitly established. Report B0_AUTO as a mandatory matched-ID unsteered comparator to the known-M B0 and proposed method.
+For gate diagnostics, keep reference labels and alignments strictly evaluator-side. Report `E_t`, `R_t^B`, the selected `g_t=E_tR_t^B` (and, where the ablation is run, `R_t^{Ecf}`, `D_t`, `g_t^{cf}`), raw/null language posterior/log-odds components, both `Q_t` values, ambiguous-token mass, local-window/alignment status, and offline category labels separately. Do not call either gate a calibrated probability of error unless calibration is explicitly established. Report B0_AUTO as a mandatory matched-ID unsteered comparator to the known-M B0 and proposed method.
 
 Keep baseline and steered decode settings identical within each model (model revision, beam/temperature, language/task prefix, token limit, cache mode and timestamp policy). Greedy remains allowed for plumbing/development when labeled; final comparison uses the frozen standard setup. For Whisper, document that ordinary Mandarin-dominant decoding may be computationally identical to explicit Mandarin conditioning.
 
@@ -278,8 +282,9 @@ Use repository conventions, but the revised method should expose separate interf
 - `StateProvider`: baseline/M/E hidden states and cache identity.
 - `Localizer` or `AudioSpanProvider`: deterministic current-token acoustic window with alignment provenance.
 - `LocalSupport`: positive null-relative embedded-language evidence `E_t`.
-- `BaselineConflict`: full-distribution excess matrix-script mass under both B0 and same-prefix Ecf, including both `Q_t` values and tokenizer coverage diagnostics.
-- `Gate`: primary `g_t^{cf}=E_t[R_t^B-R_t^{Ecf}]_+`, with old `g_t^{old}=E_tR_t^B` ablation and explicit fallback behavior.
+- `BaselineConflict`: full-distribution excess matrix-script mass under B0 (and, for the ablation only, same-prefix Ecf), including `Q_t` and tokenizer coverage diagnostics.
+- `Gate`: frozen main detector `g_t=E_tR_t^B` with explicit fallback behavior; `g_t^{cf}=E_t[R_t^B-R_t^{Ecf}]_+` is the R2-rejected ablation.
+- `DoseMap`: `s_t=α·φ(g_t)` with `φ(g)=g` (reference) and, in P2 only, the single predeclared alternative `φ(g)=√g`.
 - `SteeringHook` / `Decoder`: only from P1 onward.
 - `Evaluation` / `RunManifest`: immutable population/config/provenance accounting.
 
@@ -338,7 +343,7 @@ At the start of every pass:
 4. Respect the data-role firewall and strict reference-free inference API. References may be used only after inference for diagnostic labels/metrics.
 5. Return: stage/status; files changed; scientific assumptions confirmed/rejected; commands/tests/jobs; evidence/limitations; Git commit; exact next stage or blocker.
 
-**Next concrete task:** after committing the R2 spec/code, prepare the clean-state R2 manifest and run focused preflight checks. A GPU feasibility run requires a separate explicit request; P1 remains blocked.
+**Next concrete task:** Pre-P2 hardening (cached steering path + frozen cached-equivalence acceptance + frozen P2 contract), then P2 compact development under `docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md`. R2 and P1 are complete (see status line).
 
 ## 9. Paper-completeness contract
 
@@ -362,15 +367,16 @@ Do not run every system on every corpus. Use the primary CS test for mechanistic
 | B1 | Embedded-language-forced decoding without edits; include matrix-forced separately only when distinct from baseline | Both core tests; Qwen primary test | Is steering better than simply forcing a language? |
 | B2 | Valid bilingual/context prompt without transcript/test vocabulary leakage | Both core tests; Qwen primary test | Is a simple prompt sufficient? |
 | B3 | Reference-free output-distribution mixture using the same M/E branches | Both core tests; Qwen primary test | Do hidden-state edits add value beyond branch predictions? |
-| M | Dynamic `hE-hM` direction + final frozen `g_cf=E[R_B-R_Ecf]_+`, selected single layer | Every approved corpus/model with a valid provider | Main deployable method, conditional on R2 and P1 evidence |
+| M | Dynamic `hE-hM` direction + frozen detector `g=E·R_B` with the P2-selected dose map `α·φ(g)`, selected single layer | Every approved corpus/model with a valid provider | Main deployable method (R2 and P1 passed; P2 selects layer/α/φ) |
 | C1 | Dynamic direction, constant gate/dose; separately tuned constant dose and a development energy-matched dose when needed | Primary CS test | Is localization useful beyond reducing total perturbation? |
 | C2 | `LocalSupport` only (`g=E`) | Primary CS test | Does baseline contradiction suppress unnecessary edits on already-correct embedded positions? |
 | C3 | `BaselineConflict` only (`g=R`) | Primary CS test | Does local acoustic evidence suppress matrix-language over-steering? |
+| C3b | R2-rejected counterfactual gate `g_cf=E[R_B-R_Ecf]_+` | Primary CS test | Does the counterfactual restriction add intervention-level value despite worse R2 ranking? |
 | C4 | Reversed direction with same gate/site/dose | Primary CS test | Does direction sign matter? |
 | C5 | Simultaneous all-layer steering with its own frozen development strength | Primary CS test | Is one site sufficient relative to distributed intervention? |
 | C6 | One fixed direction per current utterance from an unsteered draft, same final gate | Primary CS test | Does token-varying direction add value beyond utterance personalization? |
 | C7 | Corpus-fixed mean conditioned displacement built from declared development donors, same final gate | Primary CS test | How does a conventional construction-data fixed direction compare? |
-| D1 | `E_t`, B0/Ecf conflicts, `D_t`, both gates, direction diagnostics + audio/localization controls on generated baseline prefixes | Predeclared diagnostic panel | Does the gate target the claimed repair cases and depend on speech? |
+| D1 | `E_t`, `R_t^B`, selected `g=E·R_B` (plus Ecf/`D_t`/`g_cf` ablation diagnostics), direction diagnostics + audio/localization controls on generated baseline prefixes | Predeclared diagnostic panel | Does the gate target the claimed repair cases and depend on speech? |
 | D2 | Matrix-language-only speech: B0 and M | Fixed held-out monolingual panel | Does the method introduce embedded-language insertions or damage ordinary speech? |
 
 **B3 default:** for the same audio/content prefix obtain `pM` and `pE` over the common vocabulary and decode from a predeclared mixture family. On development compare a small fixed lambda grid and, if well-defined, a gate-linked mixture such as `lambda=g_t`; freeze one recipe before test. Do not reuse independently generated branch histories as the current mixture prefix.
@@ -415,7 +421,7 @@ Profile on a fixed representative panel during P1/P2 and accumulate timing durin
 - **Table M1 — recognition:** B0–B3 and M on the two core held-out corpora; compact overall/embedded/matrix error columns and intervals for principal deltas.
 - **Table M2 — method evidence and cost:** M, constant gate, `g=E`, `g=R`, fixed-direction controls and all-layer result; key error/damage/cost columns. Reverse-sign and detailed energy accounting may move to appendix.
 - **Table M3 — generalization summary:** separate SEAME rows, CS-FLEURS language-macro summary with language count/N, ViMedCSS, and Qwen block. Keep metric units distinct and expose provider feasibility/failures.
-- **Figure M1 — actual implemented algorithm:** local acoustic support + B0 conflict + same-prefix Ecf conflict reduction → repair gate, plus counterfactual direction and intervention site. Do not show retired `rho/c` or continuation `q_cross` as the final method.
+- **Figure M1 — actual implemented algorithm:** local acoustic support `E` + baseline matrix-script conflict `R_B` → `g = E·R_B`; same-prefix hidden-state displacement `hE − hB` → direction `d`; `g` + `d` → localized, norm-preserving intervention at the selected site. Do not show retired `rho/c`, continuation `q_cross`, or the R2-rejected Ecf conflict-reduction gate as the final method (those belong to negative/ablation evidence).
 - **Figure M2 — two panels:** (a) development correction-damage curve with frozen test operating points; (b) held-out `E/R/g` distributions for wrong embedded, correct embedded and matrix positions. If alignment is not reliable enough, replace panel (b) with an auditable transition summary and state the limitation.
 
 **Appendix:**
@@ -430,10 +436,11 @@ Profile on a fixed representative panel during P1/P2 and accumulate timing durin
 
 ### 9.7 Completion checklist and stopping rule
 
-- [ ] Historical P0/P0-R1 conclusions preserved: `cB==cM` geometry retired for Whisper; continuation evidence recorded as blocked; common-prefix plumbing evidence retained.
+- [x] Historical P0/P0-R1 conclusions preserved: `cB==cM` geometry retired for Whisper; continuation evidence recorded as blocked; common-prefix plumbing evidence retained.
 - [x] P0-R2 repairability design, maximum-mass localizer, LS-B, BC-B, same-prefix Ecf and both gate formulas versioned before GPU outcomes.
-- [ ] R2-LS, R2-BC, alignment and combined gate feasibility resolved with no reference leakage; P1 begins only after a positive/usable frozen gate verdict.
-- [ ] P1 causal plumbing passes exact zero-dose identity and a real eligible edit; direction usefulness is not claimed from P0 alone.
+- [x] R2-LS, R2-BC, alignment and combined gate feasibility resolved with no reference leakage (job 54758: `R2_CF_FEASIBLE_NOT_PREFERRED`, selected `g=E·R_B`, POST_R2_AUDIT PASS); P1 began only after that verdict.
+- [x] P1 causal plumbing passes exact zero-dose identity and a real eligible edit (job 54781, `P1_CAUSAL_ACCEPTANCE_PASS`, POST_P1_AUDIT PASS); direction usefulness is not claimed from P0/P1.
+- [ ] Pre-P2 cached-execution equivalence and P2 contract frozen before any P2 recognition outcome.
 - [ ] Scope, metrics, damage tolerances, baseline/ablation matrix, provider versions and search budgets frozen before test.
 - [ ] B0–B3 and M evaluated on approved core corpora, or missing populations and narrower claims explicitly recorded.
 - [ ] C1–C7 evaluated where mathematically applicable; retired/non-applicable components have documented reasons.

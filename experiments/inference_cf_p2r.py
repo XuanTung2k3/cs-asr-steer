@@ -67,10 +67,16 @@ def random_direction(uid: str, t: int, r: torch.Tensor) -> tuple[torch.Tensor, s
     return v / n, "ok"
 
 
+def scaled_direction(v: torch.Tensor, s: float, like: torch.Tensor) -> torch.Tensor:
+    """s*v formed in CPU float64, rounded to the site dtype on CPU, then moved to the site device.
+    Used identically by the solver emulation and by the hook, so both see the same tensor."""
+    return (float(s) * v.detach().cpu().double()).to(like.dtype).to(like.device)
+
+
 def emulate_edit_norm(site_vec: torch.Tensor, v: torch.Tensor, s: float) -> float:
-    """Realized ||steered - site|| of the hook for direction s*v (exact hook arithmetic)."""
+    """Realized ||steered - site|| of the hook for direction s*v (exact hook arithmetic, site device)."""
     x = site_vec.reshape(1, 1, -1)
-    dirs = (s * v).to(x.device, x.dtype).reshape(1, 1, -1)
+    dirs = scaled_direction(v, s, x).reshape(1, 1, -1)
     gain = torch.ones((1, 1), device=x.device, dtype=x.dtype)
     st = apply_steering(x, dirs, 1.0, 1.0, gain, True)
     return float((st - x).detach().float().norm())
@@ -78,8 +84,9 @@ def emulate_edit_norm(site_vec: torch.Tensor, v: torch.Tensor, s: float) -> floa
 
 def solve_scale(site_vec: torch.Tensor, v: torch.Tensor, target: float, max_eval: int = 8) -> dict:
     """Smallest s >= 0 with realized hook edit norm ~= target (analytic chord + secant in site dtype)."""
-    r = site_vec.detach().double().reshape(-1)
-    vv = v.detach().double().to(r.device).reshape(-1)
+    # geometry in CPU float64 (no fp64 kernels on the GPU); only the bf16 emulation uses the device
+    r = site_vec.detach().cpu().double().reshape(-1)
+    vv = v.detach().cpu().double().reshape(-1)
     vv = vv / torch.linalg.vector_norm(vv)
     rn = float(torch.linalg.vector_norm(r))
     phi = math.acos(max(-1.0, min(1.0, float(torch.dot(r, vv)) / rn)))
@@ -166,14 +173,15 @@ def pulse_hook(bundle, layer: int, query: int, v_fn, target: float, nfp: int, in
             v, vstatus = v_fn(r[0, k])
             info["direction_status"] = vstatus
             if v is not None:
-                sol = solve_scale(r[0, k], v.to(r.device), target)
+                sol = solve_scale(r[0, k], v, target)
                 info.update(sol)
-                vv = v.double().to(r.device)
+                vv = v.detach().cpu().double()
                 vv = vv / torch.linalg.vector_norm(vv)
-                info["cos_v_state"] = float(torch.dot(vv, r[0, k].double()) / torch.linalg.vector_norm(r[0, k].double()))
+                rc = r[0, k].detach().cpu().double()
+                info["cos_v_state"] = float(torch.dot(vv, rc) / torch.linalg.vector_norm(rc))
                 if sol["status"] == "ok":
                     g[0, k] = 1.0
-                    dirs[0, k] = (sol["s"] * vv).to(r.dtype)
+                    dirs[0, k] = scaled_direction(vv, sol["s"], r)
                     info["v"] = vv
         return g, dirs
     return DecoderPostCrossAttnInterventionHook(

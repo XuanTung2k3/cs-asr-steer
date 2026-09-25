@@ -73,8 +73,21 @@ def evaluate(out: Path) -> dict:
     np_ok = all(abs(c["audit"][0]["post_norm"] - c["audit"][0]["pre_norm"]) <= 1e-2 * c["audit"][0]["pre_norm"]
                 for c in cached_edits)
     common = [c for c in cached_edits if c["edit"][1] and abs(c["g"][0] - c["g"][1]) <= .02]
-    common_ok = [abs(c["audit"][0]["edit_norm"] - c["audit"][1]["edit_norm"]) <= .05 * c["audit"][1]["edit_norm"]
-                 for c in common]
+    v11 = m["schema"].endswith("v1_1")
+    if v11:
+        # v1.1 measurand: specified edits of the two paths (float64 from each path's own inputs);
+        # tolerance (5%) and share (>=95%) unchanged. Each path must equal its own replica.
+        common_ok = [abs(c["spec_edit_norm_cached"] - c["spec_edit_norm_replay"])
+                     <= .05 * c["spec_edit_norm_replay"] for c in common]
+        replay_edits = [c for _, c in dose if c["edit"][1]]
+        replica_ok = replica_ok and all(
+            abs(c["audit"][1]["edit_norm"] - c["replay_replica_edit_norm"])
+            <= .05 * max(c["replay_replica_edit_norm"], 1e-12) for c in replay_edits)
+    else:
+        common_ok = [abs(c["audit"][0]["edit_norm"] - c["audit"][1]["edit_norm"]) <= .05 * c["audit"][1]["edit_norm"]
+                     for c in common]
+    realized_cross = [abs(c["audit"][0]["edit_norm"] - c["audit"][1]["edit_norm"]) / c["audit"][1]["edit_norm"]
+                      for c in common]
     disagreements = [{"id": s["identity"], "t": c["t"], "argmax": c["argmax"], "margin": c["margin"],
                       "near_tie": min(c["margin"]) <= NEAR_TIE}
                      for s, c in comps if c["argmax"][0] != c["argmax"][1]]
@@ -82,6 +95,9 @@ def evaluate(out: Path) -> dict:
     ce6_stats = {"edit_applied_identical": frac(edit_same), "cached_edits": len(cached_edits),
                  "sign_ok": sign_ok, "replica_ok": replica_ok, "normpreserve_ok": np_ok,
                  "common_edits": len(common), "common_edit_norm_within_5pct": frac(common_ok),
+                 "measurand": "specified_edit_norm" if v11 else "realized_edit_norm",
+                 "descriptive_realized_cross_rel_diff_max": max(realized_cross, default=None),
+                 "descriptive_realized_cross_within_5pct": frac(x <= .05 for x in realized_cross),
                  "argmax_disagreements": disagreements, "non_near_tie_disagreements": len(non_near),
                  "max_abs_dlogit": max((c["max_abs_dlogit"] for _, c in comps), default=None)}
     ce6 = (bool(cached_edits) and (ce6_stats["edit_applied_identical"] or 0) >= .97 and sign_ok and replica_ok
@@ -108,6 +124,6 @@ def evaluate(out: Path) -> dict:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="results/inference_cf/pre_p2_ce")
+    ap.add_argument("--out", default="results/inference_cf/pre_p2_ce_r1")
     s = evaluate(ROOT / ap.parse_args().out)
     print(json.dumps({"verdict": s["verdict"], "checks": s["checks"]}, indent=2))

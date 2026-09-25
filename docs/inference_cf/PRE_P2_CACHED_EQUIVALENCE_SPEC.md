@@ -1,4 +1,4 @@
-# Pre-P2 cached-equivalence acceptance — v1 (frozen before any equivalence outcome)
+# Pre-P2 cached-equivalence acceptance — v1.1 (v1 frozen before any outcome; §v1.1 measurand correction after attempt 1)
 
 **Purpose.** Validate the KV-cached steering path (`experiments/inference_cf_cached.py`) as a
 faithful execution of the accepted P1 algorithm. It must be validated before it is used for P2
@@ -58,3 +58,25 @@ A token disagreement is a near-tie only if the top-1 − top-2 margin of the pro
   versioned directory.
 - **Blocked by a genuine cache-semantic problem:** stop before P2.
 - **Never:** fall back to unmatched full replay for headline P2 comparisons.
+
+## v1.1 — CE6 measurand correction (after attempt 1, job 54801; disclosed post-outcome change)
+
+**Attempt 1.** It returned `BLOCK` on a single CE6 clause (36/38 = 94.7% < 95%) and is preserved
+(`PRE_P2_CE_ATTEMPT1_INSTRUMENT_DEFECT.md`). That clause compared the two paths' **realized** bf16
+edit norms. Those norms carry NormPreserve scalar rounding from the shared `apply_steering`.
+Simulation of identical math gives >5% differences in 39% (g ≈ 0.004) and 4% (g ≈ 0.1) of
+draws, so the clause cannot measure equivalence for small edits.
+
+**What changes in v1.1: the measurand only.**
+
+- The cross-path clause compares each path's **specified edit**: the float64 reference edit from
+  that path's own logged `h_B`, `g`, `d`.
+- Each path's realized edit must equal its own same-precision replica within 5%. This covers both
+  cached and replay.
+
+**What does not change:** the 5% tolerance, the ≥95% share and every other criterion.
+
+**Descriptive:** realized cross-path norms are still reported.
+
+**Rerun:** into `results/inference_cf/pre_p2_ce_r1/`. The Pre-P2 audit must explicitly accept or
+reject this post-outcome correction.

@@ -32,7 +32,7 @@ from csasr.utils.config import load_config
 import experiments.inference_cf_cached as cached
 import experiments.inference_cf_p0_r2 as r2
 
-SCHEMA = "pre_p2_cached_equivalence_v1"
+SCHEMA = "pre_p2_cached_equivalence_v1_1"
 LAYERS = (16, 24)
 ALPHAS = (0.0, 1.0)
 INDICES = list(range(0, 300, 30))
@@ -154,6 +154,16 @@ def ce_decode(bundle, *, enc, waveform, uid, layer, alpha, conditions, partition
                                  torch.tensor([[step["g"]]], device=dev, dtype=dt), True)
             rec["replica_edit_norm"] = float((rep - site).float().norm())
             rec["reference_cos"] = reference_edit(h_b, d, alpha, step["g"])["cos_edit_d"]
+            # v1.1: each path's *specified* edit (float64, from its own logged inputs) for the
+            # cross-path comparison; the realized bf16 norms carry NormPreserve scalar rounding.
+            rec["spec_edit_norm_cached"] = reference_edit(h_b, d, alpha, step["g"])["edit_norm"]
+        if edit_r:
+            dev, dt = bundle.device, getattr(bundle, "dtype", hb_r.dtype)
+            site_r = hb_r.to(device=dev, dtype=dt).view(1, 1, -1)
+            rep_r = apply_steering(site_r, dr["d"].to(dev, dt).view(1, 1, -1), alpha, 1.0,
+                                   torch.tensor([[rg["g"]]], device=dev, dtype=dt), True)
+            rec["replay_replica_edit_norm"] = float((rep_r - site_r).float().norm())
+            rec["spec_edit_norm_replay"] = reference_edit(hb_r, dr["d"], alpha, rg["g"])["edit_norm"]
         comps.append(rec)
         probe_time[0] += time.time() - p0
 
@@ -167,7 +177,7 @@ def ce_decode(bundle, *, enc, waveform, uid, layer, alpha, conditions, partition
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="results/inference_cf/pre_p2_ce")
+    ap.add_argument("--out", default="results/inference_cf/pre_p2_ce_r1")
     args = ap.parse_args()
     out = ROOT / args.out
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()

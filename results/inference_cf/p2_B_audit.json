@@ -51,7 +51,7 @@
       "valid": false,
       "diverged": 125,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 122,
+      "b_branch_consistent_at_divergence": 125,
       "edit_at_divergence_changed_token": 125,
       "config": {
         "alpha": 2.0,
@@ -108,7 +108,7 @@
       "valid": true,
       "diverged": 26,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 25,
+      "b_branch_consistent_at_divergence": 26,
       "edit_at_divergence_changed_token": 26,
       "config": {
         "alpha": 0.311046585991223,
@@ -165,7 +165,7 @@
       "valid": true,
       "diverged": 57,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 55,
+      "b_branch_consistent_at_divergence": 57,
       "edit_at_divergence_changed_token": 43,
       "config": {
         "alpha": 2.0,
@@ -222,7 +222,7 @@
       "valid": true,
       "diverged": 88,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 85,
+      "b_branch_consistent_at_divergence": 88,
       "edit_at_divergence_changed_token": 64,
       "config": {
         "alpha": 2.0,
@@ -336,7 +336,7 @@
       "valid": true,
       "diverged": 18,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 17,
+      "b_branch_consistent_at_divergence": 18,
       "edit_at_divergence_changed_token": 9,
       "config": {
         "alpha": 2.0,

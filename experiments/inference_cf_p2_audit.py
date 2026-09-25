@@ -23,6 +23,7 @@ from csasr.evaluation.pier import evaluate_pois
 from csasr.evaluation.retention import matrix_zh_retention
 
 CONFIG = ROOT / "configs/inference_cf/p2_compact_development.json"
+EOS = 50257   # Whisper <|endoftext|>
 
 
 def canonical_digest(obj) -> str:
@@ -128,7 +129,8 @@ def main() -> None:
                 if not any(s["edit"] for t, s in steps.items() if t <= k):
                     unattr += 1
                 sk = steps.get(k)
-                if sk is not None and k < len(bt) and sk["unsteered_next"] == bt[k]:
+                expected = bt[k] if k < len(bt) else EOS    # saved tokens exclude the final EOS
+                if sk is not None and sk["unsteered_next"] == expected:
                     bconsist += 1
                 if sk is not None and sk["edit"] and sk["next"] != sk["unsteered_next"]:
                     edit_at_k_changed += 1

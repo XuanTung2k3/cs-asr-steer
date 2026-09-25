@@ -527,7 +527,7 @@
       "valid": false,
       "diverged": 32,
       "unattributed": 0,
-      "b_branch_consistent_at_divergence": 31,
+      "b_branch_consistent_at_divergence": 32,
       "edit_at_divergence_changed_token": 19,
       "config": {
         "alpha": 2.0,

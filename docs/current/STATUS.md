@@ -1,6 +1,6 @@
 # STATUS
 
-**Separate inference-time steering proposal — current state (2026-09-25): Pre-P2 COMPLETE (`CACHED_EQUIVALENCE: PASS`, job 54802; `PASS_TO_P2_DEVELOPMENT`); P2 compact development running under `docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md`.**
+**Separate inference-time steering proposal — current state (2026-09-25): Pre-P2 COMPLETE (`CACHED_EQUIVALENCE: PASS`, job 54802; `PASS_TO_P2_DEVELOPMENT`); P2 compact development running under `docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md` (v1.1).** P2-A attempt 1 (jobs 54803/54804) = `P2_BLOCKED_INVALID_EXPERIMENT` (baseline execution mismatch; `docs/inference_cf/P2_A_ATTEMPT1_INVALID_BASELINE.md`, preserved, not used). v1.1 (`04d2383`) uses the matched α=0 `cached_decode` baseline `B0M_Lℓ` and a divergence-attribution validity check; P2-A r1 jobs 54821/54822 (`results/inference_cf/p2_A_r1_L16`, `p2_A_r1_L24`).
 Main method, frozen from P1 onward:
 - **Detector:** `g = E·R_B`. `E` = LS-B null-corrected local support on the 1.0 s max-attention window; `R_B` = BC-B baseline matrix-script conflict.
 - **Direction:** `d = norm(hE − hB)`.

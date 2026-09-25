@@ -1,0 +1,367 @@
+{
+  "summary": "results/inference_cf/p2_B_summary.json",
+  "runs": {
+    "results/inference_cf/p2_B": {
+      "manifest_hash_ok": true,
+      "sources_match_commit": true,
+      "source_mismatches": [],
+      "statuses": [
+        "ok"
+      ],
+      "stale_rows": 0,
+      "runtime_status": "completed",
+      "job": "54824",
+      "elapsed_sec": 4776.204922676086,
+      "peak_vram_gb": 3.933920383453369
+    }
+  },
+  "configs": {
+    "L16_a2_one_id_pos": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.2506386265074556,
+        "mer_errors": 4219,
+        "pier": 0.4656084656084656,
+        "pier_errors": 1056,
+        "zh_cer": 0.21313284590978065,
+        "en_wer": 0.4691358024691358,
+        "caps": 0
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9855248331455317,
+      "dpier_errors": 18,
+      "dzh_cer_increase": -0.015105531797489302,
+      "dmer_increase": -0.01407948672250936,
+      "realized_energy": 48717.81912797401,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": false,
+        "V5": true
+      },
+      "valid": false,
+      "diverged": 125,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 122,
+      "edit_at_divergence_changed_token": 125,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "one",
+        "label": null,
+        "layer": 16,
+        "name": "L16_a2_one_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a0.311047_one_id_pos": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.25818333036297747,
+        "mer_errors": 4346,
+        "pier": 0.4713403880070547,
+        "pier_errors": 1069,
+        "zh_cer": 0.220927024417161,
+        "en_wer": 0.47530864197530864,
+        "caps": 1
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9986998353124729,
+      "dpier_errors": 5,
+      "dzh_cer_increase": -0.007311353290108957,
+      "dmer_increase": -0.0065347828669874986,
+      "realized_energy": 1176.1508289846668,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 26,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 25,
+      "edit_at_divergence_changed_token": 26,
+      "config": {
+        "alpha": 0.311046585991223,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "one",
+        "label": "energy_matched_constant",
+        "layer": 16,
+        "name": "L16_a0.311047_one_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a2_E_id_pos": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.26459929899601975,
+        "mer_errors": 4454,
+        "pier": 0.47001763668430335,
+        "pier_errors": 1066,
+        "zh_cer": 0.22865222789350256,
+        "en_wer": 0.4739858906525573,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9980064141457918,
+      "dpier_errors": 8,
+      "dzh_cer_increase": 0.00041385018623260605,
+      "dmer_increase": -0.00011881423394521917,
+      "realized_energy": 5675.539120240627,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 57,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 55,
+      "edit_at_divergence_changed_token": 43,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "E",
+        "label": null,
+        "layer": 16,
+        "name": "L16_a2_E_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a2_R_id_pos": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.24974751975286638,
+        "mer_errors": 4204,
+        "pier": 0.4691358024691358,
+        "pier_errors": 1064,
+        "zh_cer": 0.2115464201958891,
+        "en_wer": 0.47266313932980597,
+        "caps": 0
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9914189130623212,
+      "dpier_errors": 10,
+      "dzh_cer_increase": -0.01669195751138086,
+      "dmer_increase": -0.014970593477098587,
+      "realized_energy": 35795.183027662475,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 88,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 85,
+      "edit_at_divergence_changed_token": 64,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "R",
+        "label": null,
+        "layer": 16,
+        "name": "L16_a2_R_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a2_cf_id_pos": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.25972791540426543,
+        "mer_errors": 4372,
+        "pier": 0.47266313932980597,
+        "pier_errors": 1072,
+        "zh_cer": 0.2225824251620913,
+        "en_wer": 0.47619047619047616,
+        "caps": 1
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.999393256479154,
+      "dpier_errors": 2,
+      "dzh_cer_increase": -0.005655952545178644,
+      "dmer_increase": -0.004990197825699538,
+      "realized_energy": 72.65333870370269,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 13,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 13,
+      "edit_at_divergence_changed_token": 6,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "cf",
+        "label": null,
+        "layer": 16,
+        "name": "L16_a2_cf_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a2_ER_id_neg": {
+      "run": "results/inference_cf/p2_B",
+      "method": {
+        "mer": 0.2520643973147983,
+        "mer_errors": 4243,
+        "pier": 0.468694885361552,
+        "pier_errors": 1063,
+        "zh_cer": 0.21423644640640088,
+        "en_wer": 0.4722222222222222,
+        "caps": 1
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9985264800208027,
+      "dpier_errors": 11,
+      "dzh_cer_increase": -0.014001931300869075,
+      "dmer_increase": -0.012653715915166674,
+      "realized_energy": 1088.938756403591,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 18,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 17,
+      "edit_at_divergence_changed_token": 9,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": -1.0,
+        "dose": "id",
+        "gate": "ER",
+        "label": null,
+        "layer": 16,
+        "name": "L16_a2_ER_id_neg"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    }
+  },
+  "issues": [],
+  "matched_baselines_identical": true,
+  "independent_selection": null,
+  "evaluator_selection": null,
+  "verdict": "AUDIT_PASS"
+}

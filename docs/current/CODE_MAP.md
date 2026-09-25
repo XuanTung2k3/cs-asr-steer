@@ -31,6 +31,7 @@ Results `results/inference_cf/p1_r1/` (PASS; attempt 1 `p1/` preserved).
 path), `experiments/inference_cf_ce{,_accept}.py` (cached-equivalence harness/acceptance; results
 `pre_p2_ce_r1/` PASS, attempt 1 `pre_p2_ce/` preserved), `experiments/inference_cf_p2{,_prepare,_evaluate,_audit}.py` (runner / manifest / frozen evaluator with v1.1 matched `B0M_Lℓ` baseline + divergence attribution / independent audit; results `p2_A_r1_L{16,24}`, `p2_B`, `p2_C`; attempt 1 `p2_A_L{16,24}` invalid, preserved),
 `configs/inference_cf/p2_compact_development.json`, `slurm/inference_cf_{pre_p2_ce,p2}.sbatch`,
+**P2-R (mechanism diagnosis, evaluator/diagnostic namespace only):** `experiments/inference_cf_p2r.py` (GPU runner: D1/D3 energy-matched pulses, D2 current vs energy-packet oracle replay), `inference_cf_p2r_population.py` (frozen evaluator-built panel), `inference_cf_p2r_prepare.py`, `inference_cf_p2r_analyze.py` (frozen decisions), `inference_cf_p2r_audit.py` (independent audit); `configs/inference_cf/p2_r_mechanism_diagnosis.json`; `slurm/inference_cf_p2r.sbatch`; `tests/test_inference_cf_p2r.py`; results `results/inference_cf/p2r/` (population, run3 valid, run1/run2 preserved attempts). Never imported by the deployable path.
 `tests/test_inference_cf_{cached,ce,p2}.py`. Unapplied post-R2 runner patch: `docs/inference_cf/patches/`.
 P0/P0-R1 `core.py`/`core_r1.py` and their artifacts remain frozen.
 

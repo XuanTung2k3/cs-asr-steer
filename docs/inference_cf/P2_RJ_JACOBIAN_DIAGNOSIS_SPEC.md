@@ -280,3 +280,40 @@ with PARTIAL or ALIGNED, which would contradict P2-R's inertness at first order.
    be used as an edit. First-order validity is checked only against saved P2-R arm outcomes (V6).
 6. **Precision (V7).** bf16 gradients are coarse, so the diagnosis must survive a float32
    recomputation. A label change counts as ambiguity.
+
+## 12. Amendment v1.1: tie-aware state identity (made before any P2-RJ outcome)
+
+**What was found.** The CPU pipeline was exercised end to end on a *synthetic* run: random vectors
+laid over the 180 real position keys, with no model and no outcome. Two EN-correct positions
+failed the V3 argmax check for a reason unrelated to state identity:
+
+| Position | Baseline token | P2-R `none.argmax` |
+|---|---|---|
+| `ZH-CN_U1064_S0_100` t = 100 | 20579 | 35630 |
+| `ZH-CN_U0101_S0_190` t = 37 | 24999 | 35223 |
+
+**Cause.** At both positions the two tokens have **exactly tied bf16 logits**, and the two P2-R
+code paths break the tie differently:
+
+- P2-R `summarize` takes the argmax as the first `topk` element.
+- The decode rule, `processed_argmax`, takes the first index.
+
+P2-R itself recorded 0 baseline mismatches, because its decode-rule check equals the baseline
+token at both positions. The states are identical; only the summary field differs.
+
+**Correction** (V3 only; no decision rule, threshold, population or metric changes):
+
+- **Argmax check.** The recomputed decode-rule argmax must equal the baseline token. The P2-R
+  `none.argmax` must equal it too, or have exactly the same recomputed processed log-probability
+  (an exact tie).
+- **Competitor check.** The recomputed first-index best non-reference token must equal c\*, or c\*
+  must have exactly the maximal non-reference log-probability.
+  - c\* itself stays as frozen: the first non-reference token in P2-R's saved top-20 order. At a
+    tie, m(r₀) is unaffected, and the gradient is taken with respect to the frozen token.
+- **Runner fields.** The runner additionally records the processed log-probabilities of the
+  baseline token, the P2-R argmax, c\*, and the maximum non-reference token.
+- **Valid set.** The precision cosine (V7) and the audit's first-order check use the same
+  state-valid positions as the analysis, as §7 already specified.
+
+The synthetic run lives in scratchpad only, outside `results/`. It is not an outcome, and none of
+its values is reported.

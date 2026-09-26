@@ -1,0 +1,34 @@
+{
+ "schema_version": "learned_expansion_prereq_gate_v1",
+ "spec": "docs/current/LEARNED_EXPANSION_PREREQ_VALIDATION_SPEC.md",
+ "question": "Did the 10-utt atlas Conditioning signal at L26/L27 survive on 300-utt D-dev-select (bounded-damage causal-correction-headroom gate)?",
+ "conditioning_verdicts": [
+  {
+   "layer": 26,
+   "direction": "conditioning",
+   "pier_gain": -0.0317460317460318,
+   "corrections": 70,
+   "corruptions": 142,
+   "net_utility": -72,
+   "matrix_retention": 0.9138512053918604,
+   "outside_harm": 1099,
+   "verdict": "NOT SUPPORTED"
+  },
+  {
+   "layer": 27,
+   "direction": "conditioning",
+   "pier_gain": -0.011904761904761918,
+   "corrections": 81,
+   "corruptions": 108,
+   "net_utility": -27,
+   "matrix_retention": 0.9456493562602609,
+   "outside_harm": 717,
+   "verdict": "NOT SUPPORTED"
+  }
+ ],
+ "l24_conditioning_reference_outside_harm": 791,
+ "unlock_L26_L27_learned_conditioning": false,
+ "decision": "NO L26/L27 learned training: Conditioning cross-layer signal did NOT survive full-dev validation",
+ "note": "Frozen Raw/Local/rank-2 at L26/L27 show positive POI utility but at heavy matrix-retention cost (0.77-0.86) and high outside harm; these layers were justified ONLY by the Conditioning hypothesis (now NOT SUPPORTED), so chasing their raw-correction signal would be post-hoc (ticket \u00a716). Recorded as an observation for a future pre-registered stage, not acted on now.",
+ "continue_with": "L24-only learned basis conclusions (authorized raw_only/raw_cond + reused M*/A1/A2)"
+}

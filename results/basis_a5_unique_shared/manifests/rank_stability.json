@@ -1,0 +1,184 @@
+{
+  "anchor_policy": "A4 frozen anchor/candidate indices {24,26,27,31}, clipped to model depth",
+  "layers": [
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 8.673617379884035e-18,
+      "counts": {
+        "A": 14745,
+        "B": 12639
+      },
+      "layer": 24,
+      "model": "whisper",
+      "side": "encoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 2.0469737016526324e-16,
+      "cos_abs_unique_64_vs_32": 3.642919299551295e-16,
+      "counts": {
+        "A": 14745,
+        "B": 12639
+      },
+      "layer": 26,
+      "model": "whisper",
+      "side": "encoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 3.608224830031759e-16,
+      "cos_abs_unique_64_vs_32": 1.7694179454963432e-16,
+      "counts": {
+        "A": 14745,
+        "B": 12639
+      },
+      "layer": 27,
+      "model": "whisper",
+      "side": "encoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0000000000000002,
+      "cos_abs_shared_64_vs_32": 1.0000000000000002,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 3.8163916471489756e-17,
+      "counts": {
+        "A": 14745,
+        "B": 12639
+      },
+      "layer": 31,
+      "model": "whisper",
+      "side": "encoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 0.9999999999999999,
+      "cos_abs_unique_64_vs_32": 0.9999999999999999,
+      "counts": {
+        "A": 453,
+        "B": 378
+      },
+      "layer": 24,
+      "model": "whisper",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 0.9999999999999999,
+      "cos_abs_unique_64_vs_32": 0.9999999999999999,
+      "counts": {
+        "A": 453,
+        "B": 378
+      },
+      "layer": 26,
+      "model": "whisper",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 1.0,
+      "cos_abs_unique_64_vs_32": 1.0,
+      "counts": {
+        "A": 453,
+        "B": 378
+      },
+      "layer": 27,
+      "model": "whisper",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0000000000000002,
+      "cos_abs_shared_64_vs_32": 1.0000000000000002,
+      "cos_abs_unique_16_vs_32": 1.0000000000000004,
+      "cos_abs_unique_64_vs_32": 1.0000000000000004,
+      "counts": {
+        "A": 453,
+        "B": 378
+      },
+      "layer": 31,
+      "model": "whisper",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999999,
+      "cos_abs_shared_64_vs_32": 0.9999999999999999,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 1.0000000000000002,
+      "counts": {
+        "A": 447,
+        "B": 346
+      },
+      "layer": 24,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 1.0000000000000002,
+      "counts": {
+        "A": 447,
+        "B": 346
+      },
+      "layer": 26,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 1.0,
+      "cos_abs_unique_64_vs_32": 1.0,
+      "counts": {
+        "A": 447,
+        "B": 346
+      },
+      "layer": 27,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder"
+    }
+  ],
+  "medians": {
+    "qwen3_asr_1p7b:decoder": {
+      "cos_abs_shared_16_vs_32": 0.9999999999999999,
+      "cos_abs_shared_64_vs_32": 0.9999999999999999,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 1.0000000000000002,
+      "n_layers": 3
+    },
+    "qwen3_asr_1p7b:encoder": {
+      "n_layers": 0,
+      "status": "NOT_APPLICABLE"
+    },
+    "whisper:decoder": {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 1.0,
+      "cos_abs_unique_64_vs_32": 1.0,
+      "n_layers": 4
+    },
+    "whisper:encoder": {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 0.5000000000000003,
+      "cos_abs_unique_64_vs_32": 1.0755285551056204e-16,
+      "n_layers": 4
+    }
+  },
+  "primary_rank": 32,
+  "protocol_hash": "sha256:81b54db57113effa5463efe135861760ffc1a0ba0628763979027b70ad60e91f",
+  "ranks": [
+    16,
+    32,
+    64
+  ],
+  "schema_version": "basis_a5_rank_stability_v1",
+  "status": "FAIL"
+}

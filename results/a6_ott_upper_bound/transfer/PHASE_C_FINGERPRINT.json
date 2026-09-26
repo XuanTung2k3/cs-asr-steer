@@ -1,0 +1,49 @@
+{
+  "manifest_sha256": "sha256:f5d29822ab64dbe3fb5437f8eb18e11336e0a671da9a0c44a05a4ff0c1fe4f66",
+  "phase_b_final_settings": [
+    {
+      "family": "add_unique",
+      "layer": 20,
+      "model": "whisper",
+      "rho": 1.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 24,
+      "model": "whisper",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "model": "whisper",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 15,
+      "model": "qwen3_asr_1p7b",
+      "rho": 2.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 13,
+      "model": "qwen3_asr_1p7b",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "model": "qwen3_asr_1p7b",
+      "rho": 0.5,
+      "side": "decoder"
+    }
+  ],
+  "schema_version": "a6_ott_phase_c_fingerprint_v1",
+  "status": "IMMUTABLE"
+}

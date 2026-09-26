@@ -1,0 +1,32 @@
+{
+  "schema_version": "basis_a2_runtime_v1",
+  "partition_policy": "mig only",
+  "gpu_type": "NVIDIA H100 80GB HBM3, MIG 3g.40gb",
+  "available_vram_gb": 40,
+  "peak_vram": null,
+  "peak_vram_note": "nvidia-smi memory telemetry was unavailable under cluster permissions; no VRAM OOM occurred in the final runs",
+  "generation_batch_size": 1,
+  "teacher_forced_probe_batch_size": 8,
+  "selected_free_decode_workers": 2,
+  "worker_preflight": {
+    "job_id": 51457,
+    "observed_seconds": {"1": 35.0492064878, "2": 30.3182221055, "4": 44.1902311724},
+    "transcripts_identical": true,
+    "selected_workers": 2
+  },
+  "jobs": {
+    "free_decode_full_shard0": {"job_id": 51468, "partition": "mig", "state": "COMPLETED", "elapsed": "00:27:02", "shard": 0, "layers": "even", "conditions": 320, "utterances": 3200, "throughput_utt_per_sec": 1.975},
+    "free_decode_full_shard1": {"job_id": 51477, "partition": "mig", "state": "COMPLETED", "elapsed": "00:30:53", "shard": 1, "layers": "odd", "conditions": 320, "utterances": 3200, "throughput_utt_per_sec": 1.727},
+    "diagnostics_full": {"job_id": 51479, "partition": "mig", "state": "COMPLETED", "elapsed": "00:09:59", "fixed_dose_conditions": 640, "mixture_conditions": 448, "probe": "COMPLETED"},
+    "free_decode_raw_repair_shard0": {"job_id": 51493, "partition": "mig", "state": "COMPLETED", "elapsed": "00:10:12", "conditions": 128, "utterances": 1280, "throughput_utt_per_sec": 2.092},
+    "free_decode_raw_repair_shard1": {"job_id": 51495, "partition": "mig", "state": "COMPLETED", "elapsed": "00:10:43", "conditions": 128, "utterances": 1280, "throughput_utt_per_sec": 1.991},
+    "diagnostics_raw_repair": {"job_id": 51492, "partition": "mig", "state": "COMPLETED", "elapsed": "00:06:29", "conditions": 480},
+    "diagnostics_projection_final": {"job_id": 51496, "partition": "mig", "state": "COMPLETED", "elapsed": "00:13:17", "fixed_dose_conditions": 640, "mixture_conditions": 448, "projection_fields": "COMPLETED"}
+  },
+  "operational_failures": [
+    {"job_id": 51471, "state": "FAILED", "reason": "unsupported steer_prefill keyword; fixed narrowly"},
+    {"job_id": 51478, "state": "OUT_OF_MEMORY", "reason": "probe batch state views retained old buffers; fixed by copying rows"},
+    {"job_id": 51490, "state": "FAILED", "reason": "--wrap invoked /bin/sh and rejected pipefail; replaced by standard MIG launcher"}
+  ],
+  "final_completed_conditions": {"free_decode": 640, "teacher_forced_fixed_dose": 640, "teacher_forced_mixture": 448, "projection_aware_diagnostics": 1088, "probe": true}
+}

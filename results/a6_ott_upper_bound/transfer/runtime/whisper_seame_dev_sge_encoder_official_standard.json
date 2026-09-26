@@ -1,0 +1,16 @@
+{
+  "dataset": "seame_dev_sge",
+  "direction_constructions": 50,
+  "gpu_job_id": "53555",
+  "ineligible": [],
+  "mode": "official_standard",
+  "model": "whisper",
+  "new_rows": 50,
+  "panel_fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "phase": "C",
+  "reused_rows": 0,
+  "rho_cache_hits": 0,
+  "runtime_sec": 39.64569443464279,
+  "side": "encoder",
+  "status": "PASS"
+}

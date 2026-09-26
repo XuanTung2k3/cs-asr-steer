@@ -1,0 +1,77 @@
+{
+  "Raw": {
+    "rho": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "mean_utility": [
+      -4.0,
+      -10.40625,
+      -93.65625,
+      -178.125
+    ],
+    "classification": "DAMAGE GROWS FASTER THAN CORRECTION"
+  },
+  "Local": {
+    "rho": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "mean_utility": [
+      -3.90625,
+      -9.9375,
+      -95.84375,
+      -178.125
+    ],
+    "classification": "DAMAGE GROWS FASTER THAN CORRECTION"
+  },
+  "Conditioning": {
+    "rho": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "mean_utility": [
+      -3.125,
+      -9.21875,
+      -41.65625,
+      -131.3125
+    ],
+    "classification": "DAMAGE GROWS FASTER THAN CORRECTION"
+  },
+  "Raw+Cond": {
+    "rho": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "mean_utility": [
+      -4.09375,
+      -10.3125,
+      -60.4375,
+      -170.0625
+    ],
+    "classification": "DAMAGE GROWS FASTER THAN CORRECTION"
+  },
+  "Local+Cond": {
+    "rho": [
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "mean_utility": [
+      -4.125,
+      -9.625,
+      -60.46875,
+      -171.1875
+    ],
+    "classification": "DAMAGE GROWS FASTER THAN CORRECTION"
+  }
+}

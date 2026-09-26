@@ -1,0 +1,363 @@
+{
+  "direction_source": "/home/tungnx/cs-asr-steer/results/basis_frozen_layer_atlas/directions.json",
+  "layers": [
+    {
+      "angle_deg": 92.64082570131573,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L0.npy",
+      "cos_raw_cond": -0.04607478594743321,
+      "layer": 0,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L0.npy",
+      "raw_l2": 1.4464264834048313,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4464264834048313
+    },
+    {
+      "angle_deg": 92.71825487632721,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L1.npy",
+      "cos_raw_cond": -0.04742470231542284,
+      "layer": 1,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L1.npy",
+      "raw_l2": 1.447359459371046,
+      "raw_norm": 1.0,
+      "unit_l2": 1.447359459371046
+    },
+    {
+      "angle_deg": 89.12755736162653,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L2.npy",
+      "cos_raw_cond": 0.01522640815570516,
+      "layer": 2,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L2.npy",
+      "raw_l2": 1.4034055663594147,
+      "raw_norm": 1.0,
+      "unit_l2": 1.403405566359415
+    },
+    {
+      "angle_deg": 90.0115736919284,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L3.npy",
+      "cos_raw_cond": -0.00020199902938851984,
+      "layer": 3,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L3.npy",
+      "raw_l2": 1.4143563900441702,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4143563900441702
+    },
+    {
+      "angle_deg": 88.75526237762521,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L4.npy",
+      "cos_raw_cond": 0.02172306098345261,
+      "layer": 4,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L4.npy",
+      "raw_l2": 1.3987687006911096,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3987687006911096
+    },
+    {
+      "angle_deg": 88.53506699843753,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L5.npy",
+      "cos_raw_cond": 0.025565118590745128,
+      "layer": 5,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L5.npy",
+      "raw_l2": 1.3960192558910174,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3960192558910174
+    },
+    {
+      "angle_deg": 86.99411077746238,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L6.npy",
+      "cos_raw_cond": 0.05243860142487741,
+      "layer": 6,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L6.npy",
+      "raw_l2": 1.376634591004543,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.376634591004543
+    },
+    {
+      "angle_deg": 85.89144618729156,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L7.npy",
+      "cos_raw_cond": 0.07164635365958615,
+      "layer": 7,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L7.npy",
+      "raw_l2": 1.3626104698999004,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.3626104698999006
+    },
+    {
+      "angle_deg": 83.53507719527275,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L8.npy",
+      "cos_raw_cond": 0.11259491543213734,
+      "layer": 8,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L8.npy",
+      "raw_l2": 1.332220015288663,
+      "raw_norm": 1.0,
+      "unit_l2": 1.332220015288663
+    },
+    {
+      "angle_deg": 84.2496122625317,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L9.npy",
+      "cos_raw_cond": 0.10019479485571357,
+      "layer": 9,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L9.npy",
+      "raw_l2": 1.3414955871297427,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.3414955871297427
+    },
+    {
+      "angle_deg": 85.38804089873946,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L10.npy",
+      "cos_raw_cond": 0.08040697594210923,
+      "layer": 10,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L10.npy",
+      "raw_l2": 1.3561659367923167,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3561659367923167
+    },
+    {
+      "angle_deg": 86.75165906241982,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L11.npy",
+      "cos_raw_cond": 0.0566638780088433,
+      "layer": 11,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L11.npy",
+      "raw_l2": 1.3735618821088162,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3735618821088162
+    },
+    {
+      "angle_deg": 86.77923808515465,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L12.npy",
+      "cos_raw_cond": 0.056183300082850725,
+      "layer": 12,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L12.npy",
+      "raw_l2": 1.3739117147161597,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3739117147161597
+    },
+    {
+      "angle_deg": 88.64019458747387,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L13.npy",
+      "cos_raw_cond": 0.023730853718479973,
+      "layer": 13,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L13.npy",
+      "raw_l2": 1.3973325633373896,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3973325633373896
+    },
+    {
+      "angle_deg": 90.7409150530778,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L14.npy",
+      "cos_raw_cond": -0.012931046755709746,
+      "layer": 14,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L14.npy",
+      "raw_l2": 1.4233278236272275,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4233278236272275
+    },
+    {
+      "angle_deg": 90.16329197618826,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L15.npy",
+      "cos_raw_cond": -0.0028499787684579496,
+      "layer": 15,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L15.npy",
+      "raw_l2": 1.4162273678816253,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4162273678816253
+    },
+    {
+      "angle_deg": 90.28383532046783,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L16.npy",
+      "cos_raw_cond": -0.004953840613741634,
+      "layer": 16,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L16.npy",
+      "raw_l2": 1.417712129181197,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.4177121291811972
+    },
+    {
+      "angle_deg": 90.7077576034189,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L17.npy",
+      "cos_raw_cond": -0.012352386339947511,
+      "layer": 17,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L17.npy",
+      "raw_l2": 1.422921210988119,
+      "raw_norm": 1.0,
+      "unit_l2": 1.422921210988119
+    },
+    {
+      "angle_deg": 94.9550015853025,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L18.npy",
+      "cos_raw_cond": -0.08637333402615392,
+      "layer": 18,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L18.npy",
+      "raw_l2": 1.4740239713289292,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.4740239713289292
+    },
+    {
+      "angle_deg": 93.55681349354609,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L19.npy",
+      "cos_raw_cond": -0.06203824238076644,
+      "layer": 19,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L19.npy",
+      "raw_l2": 1.4574211761743867,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.4574211761743867
+    },
+    {
+      "angle_deg": 92.57823921076569,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L20.npy",
+      "cos_raw_cond": -0.04498357842162474,
+      "layer": 20,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L20.npy",
+      "raw_l2": 1.445671870392189,
+      "raw_norm": 1.0,
+      "unit_l2": 1.445671870392189
+    },
+    {
+      "angle_deg": 91.12394960107059,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L21.npy",
+      "cos_raw_cond": -0.01961536307139689,
+      "layer": 21,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L21.npy",
+      "raw_l2": 1.4280163606005336,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.4280163606005338
+    },
+    {
+      "angle_deg": 91.64380847786653,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L22.npy",
+      "cos_raw_cond": -0.028685934559541416,
+      "layer": 22,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L22.npy",
+      "raw_l2": 1.4343541644653468,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4343541644653468
+    },
+    {
+      "angle_deg": 90.52801872178372,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L23.npy",
+      "cos_raw_cond": -0.00921553476243741,
+      "layer": 23,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L23.npy",
+      "raw_l2": 1.420714985324247,
+      "raw_norm": 1.0,
+      "unit_l2": 1.420714985324247
+    },
+    {
+      "angle_deg": 94.98484848400237,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L24.npy",
+      "cos_raw_cond": -0.08689230215112904,
+      "layer": 24,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L24.npy",
+      "raw_l2": 1.4743760050618897,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.47437600506189
+    },
+    {
+      "angle_deg": 92.06074675280729,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L25.npy",
+      "cos_raw_cond": -0.035959061871310614,
+      "layer": 25,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L25.npy",
+      "raw_l2": 1.4394158967243003,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.4394158967243003
+    },
+    {
+      "angle_deg": 87.74697799948255,
+      "cond_norm": 1.0000000000000002,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L26.npy",
+      "cos_raw_cond": 0.03931251889985814,
+      "layer": 26,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L26.npy",
+      "raw_l2": 1.3861367040087655,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.3861367040087653
+    },
+    {
+      "angle_deg": 89.50568211678802,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L27.npy",
+      "cos_raw_cond": 0.00862736758534218,
+      "layer": 27,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L27.npy",
+      "raw_l2": 1.4080998774338829,
+      "raw_norm": 1.0,
+      "unit_l2": 1.4080998774338829
+    },
+    {
+      "angle_deg": 86.82663564811664,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L28.npy",
+      "cos_raw_cond": 0.055357344077132324,
+      "layer": 28,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L28.npy",
+      "raw_l2": 1.3745127543408737,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3745127543408737
+    },
+    {
+      "angle_deg": 85.31595466870817,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L29.npy",
+      "cos_raw_cond": 0.0816609803151264,
+      "layer": 29,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L29.npy",
+      "raw_l2": 1.3552409525135178,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.355240952513518
+    },
+    {
+      "angle_deg": 83.16499727834058,
+      "cond_norm": 0.9999999999999999,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L30.npy",
+      "cos_raw_cond": 0.11901056145313535,
+      "layer": 30,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L30.npy",
+      "raw_l2": 1.3273955239843658,
+      "raw_norm": 0.9999999999999999,
+      "unit_l2": 1.327395523984366
+    },
+    {
+      "angle_deg": 81.53335707882835,
+      "cond_norm": 1.0,
+      "conditioning_artifact": "results/basis_frozen_layer_atlas/directions/conditioning_L31.npy",
+      "cos_raw_cond": 0.1472335901219124,
+      "layer": 31,
+      "raw_artifact": "results/basis_frozen_layer_atlas/directions/raw_L31.npy",
+      "raw_l2": 1.3059604970121321,
+      "raw_norm": 1.0,
+      "unit_l2": 1.3059604970121321
+    }
+  ],
+  "schema_version": "basis_a3_raw_cond_decoder_geometry_v1",
+  "validation": {
+    "finite": true,
+    "same_dimension": true,
+    "unit_l2_identity": true
+  }
+}

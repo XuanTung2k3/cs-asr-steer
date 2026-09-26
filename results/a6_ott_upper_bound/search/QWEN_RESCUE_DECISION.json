@@ -1,0 +1,7 @@
+{
+  "schema_version": "a6_ott_qwen_rescue_decision_v1",
+  "status": "NOT_TRIGGERED",
+  "trigger_rule": "no Qwen family has selected setting with positive Search poi_net_utility at eligibility >= 0.5",
+  "selection_source": "QWEN_SELECTION.json",
+  "confirmation_and_seame_outcomes_loaded": false
+}

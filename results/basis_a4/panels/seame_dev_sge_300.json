@@ -1,0 +1,1995 @@
+{
+  "count": 50,
+  "data_role": "SEAME-dev_sge",
+  "dataset": "dev_sge",
+  "fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+  "rows": [
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00010.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 4.233,
+      "language_runs": [
+        {
+          "end": 6,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 是 从"
+        },
+        {
+          "end": 10,
+          "kind": "en",
+          "start": 6,
+          "text": "camp"
+        },
+        {
+          "end": 21,
+          "kind": "zh",
+          "start": 11,
+          "text": "那边 拿来的 自从"
+        },
+        {
+          "end": 25,
+          "kind": "en",
+          "start": 21,
+          "text": "mark"
+        },
+        {
+          "end": 37,
+          "kind": "zh",
+          "start": 27,
+          "text": "那时 拿来 了 之后"
+        }
+      ],
+      "panel_source_row": 10,
+      "reference": "我 是 从 camp 那边 拿来的 自从 mark* 那时 拿来 了 之后",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "camp",
+      "target_span_indices": [
+        6,
+        10
+      ],
+      "utterance_id": "dev_sge_00010"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00028.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.428,
+      "language_runs": [
+        {
+          "end": 7,
+          "kind": "en",
+          "start": 0,
+          "text": "tuition"
+        },
+        {
+          "end": 11,
+          "kind": "zh",
+          "start": 8,
+          "text": "不懂"
+        },
+        {
+          "end": 18,
+          "kind": "en",
+          "start": 11,
+          "text": "tuition"
+        },
+        {
+          "end": 39,
+          "kind": "zh",
+          "start": 19,
+          "text": "也是 好像 也是 没有 什么 好 这样的"
+        }
+      ],
+      "panel_source_row": 28,
+      "reference": "tuition 不懂 tuition 也是 好像 也是 没有 什么 好 这样的",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "tuition",
+      "target_span_indices": [
+        11,
+        18
+      ],
+      "utterance_id": "dev_sge_00028"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00031.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 8.025,
+      "language_runs": [
+        {
+          "end": 35,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 只是 想 问他 他 已经 选到 人 了 他 已经 选到 人 的话"
+        },
+        {
+          "end": 39,
+          "kind": "en",
+          "start": 35,
+          "text": "then"
+        },
+        {
+          "end": 60,
+          "kind": "zh",
+          "start": 40,
+          "text": "我 可以 不要 去 如果 不够 人的话"
+        },
+        {
+          "end": 64,
+          "kind": "en",
+          "start": 60,
+          "text": "then"
+        },
+        {
+          "end": 76,
+          "kind": "zh",
+          "start": 65,
+          "text": "我 就去 够人 的话"
+        },
+        {
+          "end": 80,
+          "kind": "en",
+          "start": 76,
+          "text": "then"
+        }
+      ],
+      "panel_source_row": 31,
+      "reference": "我 只是 想 问他 他 已经 选到 人 了 他 已经 选到 人 的话 then 我 可以 不要 去 如果 不够 人的话 then 我 就去 够人 的话 then",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        35,
+        39
+      ],
+      "utterance_id": "dev_sge_00031"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00033.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.79,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "en",
+          "start": 0,
+          "text": "but"
+        },
+        {
+          "end": 9,
+          "kind": "zh",
+          "start": 4,
+          "text": "我 觉得"
+        },
+        {
+          "end": 16,
+          "kind": "en",
+          "start": 9,
+          "text": "othello"
+        },
+        {
+          "end": 34,
+          "kind": "zh",
+          "start": 17,
+          "text": "很 像 比较 多 人 这样的 感觉"
+        }
+      ],
+      "panel_source_row": 33,
+      "reference": "but 我 觉得 othello 很 像 比较 多 人 这样的 感觉",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "othello",
+      "target_span_indices": [
+        9,
+        16
+      ],
+      "utterance_id": "dev_sge_00033"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00043.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.428,
+      "language_runs": [
+        {
+          "end": 9,
+          "kind": "zh",
+          "start": 0,
+          "text": "所以 倒是 真的"
+        },
+        {
+          "end": 12,
+          "kind": "en",
+          "start": 9,
+          "text": "but"
+        },
+        {
+          "end": 26,
+          "kind": "zh",
+          "start": 13,
+          "text": "我 那边 很多 东西 要"
+        },
+        {
+          "end": 30,
+          "kind": "en",
+          "start": 26,
+          "text": "pack"
+        },
+        {
+          "end": 33,
+          "kind": "zh",
+          "start": 31,
+          "text": "一下"
+        }
+      ],
+      "panel_source_row": 43,
+      "reference": "所以 倒是 真的 but 我 那边 很多 东西 要 pack 一下",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "pack",
+      "target_span_indices": [
+        26,
+        30
+      ],
+      "utterance_id": "dev_sge_00043"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00126.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.156,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "zh",
+          "start": 0,
+          "text": "那时候"
+        },
+        {
+          "end": 6,
+          "kind": "en",
+          "start": 4,
+          "text": "we"
+        }
+      ],
+      "panel_source_row": 126,
+      "reference": "那时候 we",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "we",
+      "target_span_indices": [
+        4,
+        6
+      ],
+      "utterance_id": "dev_sge_00126"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00170.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 11.894,
+      "language_runs": [
+        {
+          "end": 33,
+          "kind": "zh",
+          "start": 0,
+          "text": "怎么 这样 迟来 以后 不要 这样迟 那时候 都 已经 是 那时"
+        },
+        {
+          "end": 47,
+          "kind": "en",
+          "start": 33,
+          "text": "anime festival"
+        },
+        {
+          "end": 57,
+          "kind": "zh",
+          "start": 48,
+          "text": "在 哪里 是九月"
+        },
+        {
+          "end": 58,
+          "kind": "en",
+          "start": 57,
+          "text": "a"
+        },
+        {
+          "end": 61,
+          "kind": "en",
+          "start": 60,
+          "text": "f"
+        },
+        {
+          "end": 64,
+          "kind": "en",
+          "start": 63,
+          "text": "a"
+        },
+        {
+          "end": 67,
+          "kind": "en",
+          "start": 66,
+          "text": "o"
+        },
+        {
+          "end": 78,
+          "kind": "zh",
+          "start": 69,
+          "text": "九 是 九月 九月"
+        }
+      ],
+      "panel_source_row": 170,
+      "reference": "怎么 这样 迟来 以后 不要 这样迟 那时候 都 已经 是 那时 anime festival 在 哪里 是九月 a. f. a. o. 九 是 九月 九月",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "anime festival",
+      "target_span_indices": [
+        33,
+        47
+      ],
+      "utterance_id": "dev_sge_00170"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00191.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 16.469,
+      "language_runs": [
+        {
+          "end": 13,
+          "kind": "zh",
+          "start": 0,
+          "text": "那时候 我 叫 他 停在"
+        },
+        {
+          "end": 32,
+          "kind": "en",
+          "start": 13,
+          "text": "yew-tee yew-tee mal"
+        },
+        {
+          "end": 46,
+          "kind": "en",
+          "start": 34,
+          "text": "yew-tee-mall"
+        },
+        {
+          "end": 79,
+          "kind": "zh",
+          "start": 47,
+          "text": "那边 因为 我 想要 拿 我 想要 提钱 还有二十多块 应该够"
+        },
+        {
+          "end": 82,
+          "kind": "en",
+          "start": 79,
+          "text": "yes"
+        },
+        {
+          "end": 118,
+          "kind": "zh",
+          "start": 83,
+          "text": "然后 他 不用紧 他还 他等 他 真的 在 那边 等 他 还把 那个"
+        },
+        {
+          "end": 120,
+          "kind": "en",
+          "start": 118,
+          "text": "me"
+        },
+        {
+          "end": 132,
+          "kind": "zh",
+          "start": 122,
+          "text": "他 还是 放住 在"
+        },
+        {
+          "end": 137,
+          "kind": "en",
+          "start": 132,
+          "text": "meter"
+        },
+        {
+          "end": 146,
+          "kind": "zh",
+          "start": 138,
+          "text": "在那边跑 在那边"
+        }
+      ],
+      "panel_source_row": 191,
+      "reference": "那时候 我 叫 他 停在 yew-tee yew-tee mal- yew-tee-mall 那边 因为 我 想要 拿 我 想要 提钱 还有二十多块 应该够 yes 然后 他 不用紧 他还 他等 他 真的 在 那边 等 他 还把 那个 me~ 他 还是 放住 在 meter 在那边跑 在那边",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "meter",
+      "target_span_indices": [
+        132,
+        137
+      ],
+      "utterance_id": "dev_sge_00191"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00192.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 4.161,
+      "language_runs": [
+        {
+          "end": 18,
+          "kind": "zh",
+          "start": 0,
+          "text": "因为 我在 我 要去 提钱 还他钱"
+        },
+        {
+          "end": 28,
+          "kind": "en",
+          "start": 18,
+          "text": "it is like"
+        }
+      ],
+      "panel_source_row": 192,
+      "reference": "因为 我在 我 要去 提钱 还他钱 it is like",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "it is like",
+      "target_span_indices": [
+        18,
+        28
+      ],
+      "utterance_id": "dev_sge_00192"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00371.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.422,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 45,
+          "kind": "zh",
+          "start": 5,
+          "text": "我 一定 要 用 两个 华语 跟 英语 我 可以 他讲 英语 我 讲 华语 这样"
+        }
+      ],
+      "panel_source_row": 371,
+      "reference": "then 我 一定 要 用 两个 华语 跟 英语 我 可以 他讲 英语 我 讲 华语 这样",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00371"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00396.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.266,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "zh",
+          "start": 0,
+          "text": "这个"
+        },
+        {
+          "end": 8,
+          "kind": "en",
+          "start": 3,
+          "text": "month"
+        },
+        {
+          "end": 18,
+          "kind": "zh",
+          "start": 9,
+          "text": "我们 要 做 什么"
+        }
+      ],
+      "panel_source_row": 396,
+      "reference": "这个 month 我们 要 做 什么",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "month",
+      "target_span_indices": [
+        3,
+        8
+      ],
+      "utterance_id": "dev_sge_00396"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00406.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.085,
+      "language_runs": [
+        {
+          "end": 30,
+          "kind": "zh",
+          "start": 0,
+          "text": "不是 不要 跟我讲 他 他 也是 讲 一半 一半 没有 讲"
+        },
+        {
+          "end": 34,
+          "kind": "en",
+          "start": 30,
+          "text": "then"
+        },
+        {
+          "end": 48,
+          "kind": "zh",
+          "start": 35,
+          "text": "我 不知道 他在 做 什么"
+        }
+      ],
+      "panel_source_row": 406,
+      "reference": "不是 不要 跟我讲 他 他 也是 讲 一半 一半 没有 讲 then 我 不知道 他在 做 什么",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        30,
+        34
+      ],
+      "utterance_id": "dev_sge_00406"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00423.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 4.041,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "exam"
+        },
+        {
+          "end": 26,
+          "kind": "zh",
+          "start": 5,
+          "text": "要 到了 就 先 读书 不要 讲 这些 先"
+        }
+      ],
+      "panel_source_row": 423,
+      "reference": "exam 要 到了 就 先 读书 不要 讲 这些 先",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "exam",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00423"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00442.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 4.513,
+      "language_runs": [
+        {
+          "end": 10,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 很久 没有 跟"
+        },
+        {
+          "end": 16,
+          "kind": "en",
+          "start": 10,
+          "text": "castor"
+        },
+        {
+          "end": 23,
+          "kind": "zh",
+          "start": 17,
+          "text": "志扬 说话了"
+        }
+      ],
+      "panel_source_row": 442,
+      "reference": "我 很久 没有 跟 castor 志扬 说话了",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "castor",
+      "target_span_indices": [
+        10,
+        16
+      ],
+      "utterance_id": "dev_sge_00442"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00450.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 5.604,
+      "language_runs": [
+        {
+          "end": 8,
+          "kind": "zh",
+          "start": 0,
+          "text": "在 拜六 还是"
+        },
+        {
+          "end": 14,
+          "kind": "en",
+          "start": 8,
+          "text": "sunday"
+        },
+        {
+          "end": 24,
+          "kind": "zh",
+          "start": 15,
+          "text": "可是 我 不可 以"
+        }
+      ],
+      "panel_source_row": 450,
+      "reference": "在 拜六 还是 sunday 可是 我 不可 以",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "sunday",
+      "target_span_indices": [
+        8,
+        14
+      ],
+      "utterance_id": "dev_sge_00450"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00489.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.069,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 14,
+          "kind": "zh",
+          "start": 5,
+          "text": "他 拿 这样 多"
+        },
+        {
+          "end": 20,
+          "kind": "en",
+          "start": 14,
+          "text": "survey"
+        },
+        {
+          "end": 28,
+          "kind": "zh",
+          "start": 21,
+          "text": "这样 厚 我说"
+        }
+      ],
+      "panel_source_row": 489,
+      "reference": "then 他 拿 这样 多 survey 这样 厚 我说",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "survey",
+      "target_span_indices": [
+        14,
+        20
+      ],
+      "utterance_id": "dev_sge_00489"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00507.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 4.415,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 12,
+          "kind": "zh",
+          "start": 5,
+          "text": "你 看 那个"
+        },
+        {
+          "end": 16,
+          "kind": "en",
+          "start": 12,
+          "text": "pole"
+        },
+        {
+          "end": 30,
+          "kind": "zh",
+          "start": 17,
+          "text": "可以 中 哪一个 哪一个"
+        },
+        {
+          "end": 34,
+          "kind": "en",
+          "start": 30,
+          "text": "dart"
+        },
+        {
+          "end": 39,
+          "kind": "zh",
+          "start": 35,
+          "text": "的 那个"
+        }
+      ],
+      "panel_source_row": 507,
+      "reference": "then 你 看 那个 pole 可以 中 哪一个 哪一个 dart 的 那个",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "pole",
+      "target_span_indices": [
+        12,
+        16
+      ],
+      "utterance_id": "dev_sge_00507"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00510.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.609,
+      "language_runs": [
+        {
+          "end": 12,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 就 没有 讲 什么"
+        },
+        {
+          "end": 16,
+          "kind": "en",
+          "start": 12,
+          "text": "then"
+        },
+        {
+          "end": 28,
+          "kind": "zh",
+          "start": 17,
+          "text": "我跟 志凯 讲 不可以"
+        }
+      ],
+      "panel_source_row": 510,
+      "reference": "我 就 没有 讲 什么 then 我跟 志凯 讲 不可以",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        12,
+        16
+      ],
+      "utterance_id": "dev_sge_00510"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00516.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.177,
+      "language_runs": [
+        {
+          "end": 11,
+          "kind": "zh",
+          "start": 0,
+          "text": "这样 如果 有 那个"
+        },
+        {
+          "end": 26,
+          "kind": "en",
+          "start": 11,
+          "text": "game at least d"
+        },
+        {
+          "end": 29,
+          "kind": "en",
+          "start": 28,
+          "text": "n"
+        },
+        {
+          "end": 32,
+          "kind": "en",
+          "start": 31,
+          "text": "d"
+        },
+        {
+          "end": 69,
+          "kind": "zh",
+          "start": 34,
+          "text": "也 可以 赚 五 毛 虽然 不是 很多 但是 我们 两个 都 可以 赚"
+        }
+      ],
+      "panel_source_row": 516,
+      "reference": "这样 如果 有 那个 game at least d. n. d. 也 可以 赚 五 毛 虽然 不是 很多 但是 我们 两个 都 可以 赚",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "game at least d",
+      "target_span_indices": [
+        11,
+        26
+      ],
+      "utterance_id": "dev_sge_00516"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00519.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.392,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 20,
+          "kind": "zh",
+          "start": 5,
+          "text": "我 不知道 他们 在 做 什么"
+        }
+      ],
+      "panel_source_row": 519,
+      "reference": "then 我 不知道 他们 在 做 什么",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00519"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00557.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.509,
+      "language_runs": [
+        {
+          "end": 12,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 不 知道 乔治 的"
+        },
+        {
+          "end": 28,
+          "kind": "en",
+          "start": 12,
+          "text": "listening skills"
+        },
+        {
+          "end": 53,
+          "kind": "zh",
+          "start": 29,
+          "text": "有 问题 还是 什么 那天 我们 四个 都 明白"
+        }
+      ],
+      "panel_source_row": 557,
+      "reference": "我 不 知道 乔治 的 listening skills 有 问题 还是 什么 那天 我们 四个 都 明白",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "listening skills",
+      "target_span_indices": [
+        12,
+        28
+      ],
+      "utterance_id": "dev_sge_00557"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00607.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.676,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 28,
+          "kind": "zh",
+          "start": 5,
+          "text": "我 不 要 做 因为 我们 还要 花钱 去 买"
+        }
+      ],
+      "panel_source_row": 607,
+      "reference": "then 我 不 要 做 因为 我们 还要 花钱 去 买",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00607"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00624.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 5.92,
+      "language_runs": [
+        {
+          "end": 32,
+          "kind": "zh",
+          "start": 0,
+          "text": "他 要 卖 我们 两 百 五十 还是 一百 五十 我 忘记 了"
+        },
+        {
+          "end": 35,
+          "kind": "en",
+          "start": 32,
+          "text": "but"
+        },
+        {
+          "end": 44,
+          "kind": "zh",
+          "start": 36,
+          "text": "是 算 百 的"
+        },
+        {
+          "end": 48,
+          "kind": "en",
+          "start": 44,
+          "text": "then"
+        },
+        {
+          "end": 55,
+          "kind": "zh",
+          "start": 49,
+          "text": "我 就 跟"
+        },
+        {
+          "end": 59,
+          "kind": "en",
+          "start": 55,
+          "text": "alex"
+        },
+        {
+          "end": 73,
+          "kind": "zh",
+          "start": 60,
+          "text": "说 要 就 五十 不要 算"
+        }
+      ],
+      "panel_source_row": 624,
+      "reference": "他 要 卖 我们 两 百 五十 还是 一百 五十 我 忘记 了 but 是 算 百 的 then 我 就 跟 alex 说 要 就 五十 不要 算",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        44,
+        48
+      ],
+      "utterance_id": "dev_sge_00624"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00629.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.814,
+      "language_runs": [
+        {
+          "end": 5,
+          "kind": "en",
+          "start": 0,
+          "text": "alvin"
+        },
+        {
+          "end": 25,
+          "kind": "zh",
+          "start": 6,
+          "text": "每次 讲 很多 东西 讲 很好 很好"
+        },
+        {
+          "end": 28,
+          "kind": "en",
+          "start": 25,
+          "text": "but"
+        },
+        {
+          "end": 37,
+          "kind": "zh",
+          "start": 29,
+          "text": "他 没有 做 的"
+        }
+      ],
+      "panel_source_row": 629,
+      "reference": "alvin 每次 讲 很多 东西 讲 很好 很好 but 他 没有 做 的",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "but",
+      "target_span_indices": [
+        25,
+        28
+      ],
+      "utterance_id": "dev_sge_00629"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00740.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.904,
+      "language_runs": [
+        {
+          "end": 33,
+          "kind": "zh",
+          "start": 0,
+          "text": "也 应该 会 驾车 不然 那个 女 的 会 驾 你 不会 驾 很"
+        },
+        {
+          "end": 44,
+          "kind": "en",
+          "start": 33,
+          "text": "loser right"
+        }
+      ],
+      "panel_source_row": 740,
+      "reference": "也 应该 会 驾车 不然 那个 女 的 会 驾 你 不会 驾 很 loser right",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "loser right",
+      "target_span_indices": [
+        33,
+        44
+      ],
+      "utterance_id": "dev_sge_00740"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00743.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.9,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "zh",
+          "start": 0,
+          "text": "没有"
+        },
+        {
+          "end": 6,
+          "kind": "en",
+          "start": 3,
+          "text": "but"
+        },
+        {
+          "end": 17,
+          "kind": "zh",
+          "start": 7,
+          "text": "如果 你 这样 讲"
+        },
+        {
+          "end": 21,
+          "kind": "en",
+          "start": 17,
+          "text": "then"
+        }
+      ],
+      "panel_source_row": 743,
+      "reference": "没有 but 如果 你 这样 讲 then",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "but",
+      "target_span_indices": [
+        3,
+        6
+      ],
+      "utterance_id": "dev_sge_00743"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00745.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.15,
+      "language_runs": [
+        {
+          "end": 17,
+          "kind": "zh",
+          "start": 0,
+          "text": "她 有 空 来 载 你 没有 空"
+        },
+        {
+          "end": 21,
+          "kind": "en",
+          "start": 17,
+          "text": "then"
+        },
+        {
+          "end": 27,
+          "kind": "zh",
+          "start": 22,
+          "text": "你 要在"
+        },
+        {
+          "end": 33,
+          "kind": "en",
+          "start": 27,
+          "text": "office"
+        },
+        {
+          "end": 42,
+          "kind": "zh",
+          "start": 34,
+          "text": "等 她 等到 她"
+        }
+      ],
+      "panel_source_row": 745,
+      "reference": "她 有 空 来 载 你 没有 空 then 你 要在 office 等 她 等到 她",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "office",
+      "target_span_indices": [
+        27,
+        33
+      ],
+      "utterance_id": "dev_sge_00745"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00755.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 5.252,
+      "language_runs": [
+        {
+          "end": 7,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 一直 笑"
+        },
+        {
+          "end": 11,
+          "kind": "en",
+          "start": 7,
+          "text": "then"
+        },
+        {
+          "end": 38,
+          "kind": "zh",
+          "start": 12,
+          "text": "如果 的 声音 这样 也是 不懂 他们 在 讲 什么"
+        }
+      ],
+      "panel_source_row": 755,
+      "reference": "我 一直 笑 then 如果 的 声音 这样 也是 不懂 他们 在 讲 什么",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        7,
+        11
+      ],
+      "utterance_id": "dev_sge_00755"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00789.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 6.393,
+      "language_runs": [
+        {
+          "end": 10,
+          "kind": "zh",
+          "start": 0,
+          "text": "变成 我 的 事情"
+        },
+        {
+          "end": 14,
+          "kind": "en",
+          "start": 10,
+          "text": "then"
+        },
+        {
+          "end": 27,
+          "kind": "zh",
+          "start": 15,
+          "text": "他 很 生 我 的 气"
+        },
+        {
+          "end": 31,
+          "kind": "en",
+          "start": 27,
+          "text": "then"
+        },
+        {
+          "end": 38,
+          "kind": "zh",
+          "start": 32,
+          "text": "他 去 跟"
+        },
+        {
+          "end": 41,
+          "kind": "en",
+          "start": 38,
+          "text": "sam"
+        },
+        {
+          "end": 50,
+          "kind": "zh",
+          "start": 42,
+          "text": "讲 说 我 我"
+        },
+        {
+          "end": 54,
+          "kind": "en",
+          "start": 50,
+          "text": "like"
+        },
+        {
+          "end": 56,
+          "kind": "zh",
+          "start": 55,
+          "text": "我"
+        }
+      ],
+      "panel_source_row": 789,
+      "reference": "变成 我 的 事情 then 他 很 生 我 的 气 then 他 去 跟 sam 讲 说 我 我 like 我",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        10,
+        14
+      ],
+      "utterance_id": "dev_sge_00789"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00796.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.32,
+      "language_runs": [
+        {
+          "end": 11,
+          "kind": "zh",
+          "start": 0,
+          "text": "我 自己 打 给 他"
+        },
+        {
+          "end": 15,
+          "kind": "en",
+          "start": 11,
+          "text": "then"
+        },
+        {
+          "end": 22,
+          "kind": "zh",
+          "start": 16,
+          "text": "我 问 他"
+        },
+        {
+          "end": 25,
+          "kind": "en",
+          "start": 22,
+          "text": "nat"
+        }
+      ],
+      "panel_source_row": 796,
+      "reference": "我 自己 打 给 他 then 我 问 他 nat",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        11,
+        15
+      ],
+      "utterance_id": "dev_sge_00796"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00906.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.01,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "like"
+        },
+        {
+          "end": 12,
+          "kind": "zh",
+          "start": 5,
+          "text": "怕 因为 好像"
+        }
+      ],
+      "panel_source_row": 906,
+      "reference": "like 怕 因为 好像",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "like",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00906"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_00920.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.09,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 10,
+          "kind": "zh",
+          "start": 5,
+          "text": "然后 你们"
+        }
+      ],
+      "panel_source_row": 920,
+      "reference": "then 然后 你们",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_00920"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_01662.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.806,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "en",
+          "start": 0,
+          "text": "she"
+        },
+        {
+          "end": 8,
+          "kind": "zh",
+          "start": 4,
+          "text": "很 厉害"
+        }
+      ],
+      "panel_source_row": 1662,
+      "reference": "she 很 厉害",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "she",
+      "target_span_indices": [
+        0,
+        3
+      ],
+      "utterance_id": "dev_sge_01662"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_01750.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.777,
+      "language_runs": [
+        {
+          "end": 12,
+          "kind": "zh",
+          "start": 0,
+          "text": "你 有 去 过 什么国"
+        },
+        {
+          "end": 19,
+          "kind": "en",
+          "start": 12,
+          "text": "country"
+        }
+      ],
+      "panel_source_row": 1750,
+      "reference": "你 有 去 过 什么国 country",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "country",
+      "target_span_indices": [
+        12,
+        19
+      ],
+      "utterance_id": "dev_sge_01750"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_01920.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.592,
+      "language_runs": [
+        {
+          "end": 8,
+          "kind": "zh",
+          "start": 0,
+          "text": "太 多了 太多"
+        },
+        {
+          "end": 13,
+          "kind": "en",
+          "start": 8,
+          "text": "movie"
+        },
+        {
+          "end": 15,
+          "kind": "zh",
+          "start": 14,
+          "text": "了"
+        }
+      ],
+      "panel_source_row": 1920,
+      "reference": "太 多了 太多 movie 了",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "movie",
+      "target_span_indices": [
+        8,
+        13
+      ],
+      "utterance_id": "dev_sge_01920"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02208.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 5.257,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 18,
+          "kind": "zh",
+          "start": 5,
+          "text": "他 就问 欣怡 在 后面"
+        },
+        {
+          "end": 21,
+          "kind": "en",
+          "start": 18,
+          "text": "raj"
+        },
+        {
+          "end": 37,
+          "kind": "zh",
+          "start": 22,
+          "text": "在 后面 就讲 谁踢的 谁打我"
+        }
+      ],
+      "panel_source_row": 2208,
+      "reference": "then 他 就问 欣怡 在 后面 raj 在 后面 就讲 谁踢的 谁打我",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "raj",
+      "target_span_indices": [
+        18,
+        21
+      ],
+      "utterance_id": "dev_sge_02208"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02219.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.941,
+      "language_runs": [
+        {
+          "end": 7,
+          "kind": "zh",
+          "start": 0,
+          "text": "我们 就 讲"
+        },
+        {
+          "end": 8,
+          "kind": "en",
+          "start": 7,
+          "text": "h"
+        },
+        {
+          "end": 11,
+          "kind": "en",
+          "start": 10,
+          "text": "d"
+        },
+        {
+          "end": 14,
+          "kind": "en",
+          "start": 13,
+          "text": "b"
+        }
+      ],
+      "panel_source_row": 2219,
+      "reference": "我们 就 讲 h. d. b.",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "h",
+      "target_span_indices": [
+        7,
+        8
+      ],
+      "utterance_id": "dev_sge_02219"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02372.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.74,
+      "language_runs": [
+        {
+          "end": 2,
+          "kind": "zh",
+          "start": 0,
+          "text": "会"
+        },
+        {
+          "end": 10,
+          "kind": "en",
+          "start": 2,
+          "text": "actually"
+        },
+        {
+          "end": 32,
+          "kind": "zh",
+          "start": 11,
+          "text": "我 根本 都 不 认识 他 其实 讲 真的"
+        }
+      ],
+      "panel_source_row": 2372,
+      "reference": "会 actually 我 根本 都 不 认识 他 其实 讲 真的",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "actually",
+      "target_span_indices": [
+        2,
+        10
+      ],
+      "utterance_id": "dev_sge_02372"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02604.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.62,
+      "language_runs": [
+        {
+          "end": 24,
+          "kind": "zh",
+          "start": 0,
+          "text": "可是 我 脸 没有 瘦 昨天 就 吹 这样 多"
+        },
+        {
+          "end": 31,
+          "kind": "en",
+          "start": 24,
+          "text": "whistle"
+        }
+      ],
+      "panel_source_row": 2604,
+      "reference": "可是 我 脸 没有 瘦 昨天 就 吹 这样 多 whistle",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "whistle",
+      "target_span_indices": [
+        24,
+        31
+      ],
+      "utterance_id": "dev_sge_02604"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02611.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.824,
+      "language_runs": [
+        {
+          "end": 8,
+          "kind": "zh",
+          "start": 0,
+          "text": "可是 他 没有"
+        },
+        {
+          "end": 9,
+          "kind": "en",
+          "start": 8,
+          "text": "p"
+        },
+        {
+          "end": 12,
+          "kind": "en",
+          "start": 11,
+          "text": "e"
+        },
+        {
+          "end": 25,
+          "kind": "zh",
+          "start": 14,
+          "text": "老师 的 那个 身材"
+        },
+        {
+          "end": 32,
+          "kind": "en",
+          "start": 25,
+          "text": "ops ops"
+        }
+      ],
+      "panel_source_row": 2611,
+      "reference": "可是 他 没有 p. e. 老师 的 那个 身材 ops ops",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "ops ops",
+      "target_span_indices": [
+        25,
+        32
+      ],
+      "utterance_id": "dev_sge_02611"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02637.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.52,
+      "language_runs": [
+        {
+          "end": 8,
+          "kind": "zh",
+          "start": 0,
+          "text": "可以 如果 是"
+        },
+        {
+          "end": 15,
+          "kind": "en",
+          "start": 8,
+          "text": "kenneth"
+        },
+        {
+          "end": 30,
+          "kind": "zh",
+          "start": 16,
+          "text": "的话 他 也是 不可 以 的"
+        }
+      ],
+      "panel_source_row": 2637,
+      "reference": "可以 如果 是 kenneth 的话 他 也是 不可 以 的",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "kenneth",
+      "target_span_indices": [
+        8,
+        15
+      ],
+      "utterance_id": "dev_sge_02637"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02687.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 0.961,
+      "language_runs": [
+        {
+          "end": 4,
+          "kind": "en",
+          "start": 0,
+          "text": "then"
+        },
+        {
+          "end": 11,
+          "kind": "zh",
+          "start": 5,
+          "text": "要 讲 什么"
+        }
+      ],
+      "panel_source_row": 2687,
+      "reference": "then 要 讲 什么",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "then",
+      "target_span_indices": [
+        0,
+        4
+      ],
+      "utterance_id": "dev_sge_02687"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02732.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.79,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "en",
+          "start": 0,
+          "text": "but"
+        },
+        {
+          "end": 17,
+          "kind": "zh",
+          "start": 4,
+          "text": "要 看 地方 在 哪里 先"
+        }
+      ],
+      "panel_source_row": 2732,
+      "reference": "but 要 看 地方 在 哪里 先",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "but",
+      "target_span_indices": [
+        0,
+        3
+      ],
+      "utterance_id": "dev_sge_02732"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02842.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.713,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "en",
+          "start": 0,
+          "text": "but"
+        },
+        {
+          "end": 33,
+          "kind": "zh",
+          "start": 4,
+          "text": "不 可以 如果 那个 人 怎么 都 没有 做 你 会 不爽"
+        }
+      ],
+      "panel_source_row": 2842,
+      "reference": "but 不 可以 如果 那个 人 怎么 都 没有 做 你 会 不爽",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "but",
+      "target_span_indices": [
+        0,
+        3
+      ],
+      "utterance_id": "dev_sge_02842"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02902.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 5.539,
+      "language_runs": [
+        {
+          "end": 9,
+          "kind": "zh",
+          "start": 0,
+          "text": "他的 英文 还是"
+        },
+        {
+          "end": 17,
+          "kind": "en",
+          "start": 9,
+          "text": "actually"
+        },
+        {
+          "end": 23,
+          "kind": "zh",
+          "start": 18,
+          "text": "有 一点"
+        },
+        {
+          "end": 29,
+          "kind": "en",
+          "start": 23,
+          "text": "accent"
+        },
+        {
+          "end": 60,
+          "kind": "zh",
+          "start": 30,
+          "text": "的 可是 不会 很 听 得 懂 他 的 讲 他 讲 的 英文"
+        }
+      ],
+      "panel_source_row": 2902,
+      "reference": "他的 英文 还是 actually 有 一点 accent 的 可是 不会 很 听 得 懂 他 的 讲 他 讲 的 英文",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "actually",
+      "target_span_indices": [
+        9,
+        17
+      ],
+      "utterance_id": "dev_sge_02902"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02960.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 2.63,
+      "language_runs": [
+        {
+          "end": 1,
+          "kind": "en",
+          "start": 0,
+          "text": "i"
+        },
+        {
+          "end": 14,
+          "kind": "zh",
+          "start": 2,
+          "text": "我 真的 这样 跟他讲"
+        },
+        {
+          "end": 26,
+          "kind": "en",
+          "start": 14,
+          "text": "because it's"
+        },
+        {
+          "end": 34,
+          "kind": "zh",
+          "start": 27,
+          "text": "真的 很 容易"
+        }
+      ],
+      "panel_source_row": 2960,
+      "reference": "i 我 真的 这样 跟他讲 because it's 真的 很 容易",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "because it's",
+      "target_span_indices": [
+        14,
+        26
+      ],
+      "utterance_id": "dev_sge_02960"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_02998.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 3.745,
+      "language_runs": [
+        {
+          "end": 6,
+          "kind": "en",
+          "start": 0,
+          "text": "is not"
+        },
+        {
+          "end": 26,
+          "kind": "zh",
+          "start": 7,
+          "text": "她 不是 那种 班上 会 很多 会 很"
+        }
+      ],
+      "panel_source_row": 2998,
+      "reference": "is not 她 不是 那种 班上 会 很多 会 很",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "is not",
+      "target_span_indices": [
+        0,
+        6
+      ],
+      "utterance_id": "dev_sge_02998"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_03000.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 0.909,
+      "language_runs": [
+        {
+          "end": 2,
+          "kind": "en",
+          "start": 0,
+          "text": "is"
+        },
+        {
+          "end": 7,
+          "kind": "zh",
+          "start": 3,
+          "text": "很好 的"
+        }
+      ],
+      "panel_source_row": 3000,
+      "reference": "is 很好 的",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "is",
+      "target_span_indices": [
+        0,
+        2
+      ],
+      "utterance_id": "dev_sge_03000"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_03006.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.424,
+      "language_runs": [
+        {
+          "end": 3,
+          "kind": "en",
+          "start": 0,
+          "text": "she"
+        },
+        {
+          "end": 10,
+          "kind": "zh",
+          "start": 4,
+          "text": "她 很 厉害"
+        }
+      ],
+      "panel_source_row": 3006,
+      "reference": "she 她 很 厉害",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "she",
+      "target_span_indices": [
+        0,
+        3
+      ],
+      "utterance_id": "dev_sge_03006"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/seame_accent_stress_pilot/audio/orig/dev_sge_03157.wav",
+      "data_role": "dev_sge",
+      "dialogue_id": "SEAME:dev_sge:unavailable_in_hf_export",
+      "duration_sec": 1.02,
+      "language_runs": [
+        {
+          "end": 9,
+          "kind": "zh",
+          "start": 0,
+          "text": "那时 候 他 有"
+        },
+        {
+          "end": 13,
+          "kind": "en",
+          "start": 9,
+          "text": "call"
+        }
+      ],
+      "panel_source_row": 3157,
+      "reference": "那时 候 他 有 call",
+      "selection_reason": "prefer Mandarin-surrounded; then longest suitable span; then earliest",
+      "speaker_id": "unavailable_in_hf_export",
+      "target_english_text": "call",
+      "target_span_indices": [
+        9,
+        13
+      ],
+      "utterance_id": "dev_sge_03157"
+    }
+  ],
+  "schema_version": "basis_a3_panel_v1",
+  "selection": "reused frozen canonical SEAME eval_100 panel; no outcome selection",
+  "shortfall_reason": "repository's frozen panel is the only accepted SEAME artifact",
+  "source_freeze": "/mnt/data/tungnx/seame_accent_stress_pilot/manifests/eval_100.freeze.json",
+  "source_freeze_n": 100,
+  "source_freeze_sha256": "sha256:1fe5ba40d7dbe6030ed40b7952bca2db625690ddde537d5333fbaed585eec46e",
+  "target_count": 300
+}

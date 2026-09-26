@@ -1,0 +1,155 @@
+{
+  "basis_hashes": {
+    "cond": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+    "local": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93"
+  },
+  "beta": 4.465628877080159,
+  "bootstrap": {
+    "ci": 0.95,
+    "repetitions": 2000,
+    "seed": 42,
+    "unit": "dialogue"
+  },
+  "checkpoints": {
+    "F2_SALSA": {
+      "13": {
+        "checkpoint": "results/dg08/train/SALSA/seed13/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 13,
+        "selected_epoch": 3,
+        "sha256": "sha256:c33c93d67103a6cb60c3f1a98b7d7c684733fa40bf0c847ad78b0cea69b59b95"
+      },
+      "42": {
+        "checkpoint": "results/dg07/LB1_SALSA_EXACT_GLOBAL/selected_checkpoint.pt",
+        "reused_from_frozen": true,
+        "seed": 42,
+        "selected_epoch": 3,
+        "sha256": "sha256:03cc0bf68a8c241f55b515e48792624e6d348fa9cb6ae8407a42d1642be96f8e"
+      },
+      "73": {
+        "checkpoint": "results/dg08/train/SALSA/seed73/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 73,
+        "selected_epoch": 3,
+        "sha256": "sha256:f162e0c01d2a3b252a05d9130d68d9e148a2d78772ac17f39021e70efa224407"
+      }
+    },
+    "F3_LORA": {
+      "13": {
+        "checkpoint": "results/dg08/train/LORA/seed13/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 13,
+        "selected_epoch": 3,
+        "sha256": "sha256:e731d0d42d9d2d0f125944985c711ac8e8ba841cd88b212e50cff2035a972fbc"
+      },
+      "42": {
+        "checkpoint": "results/dg07/LB2_LORA_MATCHED_BUDGET/selected_checkpoint.pt",
+        "reused_from_frozen": true,
+        "seed": 42,
+        "selected_epoch": 3,
+        "sha256": "sha256:7861cdf83b364a417f1cf627f42660c150f1386dccc8898355ab79d04fea0046"
+      },
+      "73": {
+        "checkpoint": "results/dg08/train/LORA/seed73/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 73,
+        "selected_epoch": 2,
+        "sha256": "sha256:39d0f3055b6b65a515b7f6536218ffdba7e73d635e8d4a3b6a7d0ac482a7a36c"
+      }
+    },
+    "F4_MSTAR": {
+      "13": {
+        "checkpoint": "results/dg08/train/MSTAR/seed13/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 13,
+        "selected_epoch": 1,
+        "sha256": "sha256:9f113fd4e4a7c1983ebd446a81d9395fd479dfa7966066c6319742806fda4ab2"
+      },
+      "42": {
+        "checkpoint": "results/dg06/d1/selected_checkpoint.pt",
+        "reused_from_frozen": true,
+        "seed": 42,
+        "selected_epoch": 1,
+        "sha256": "sha256:b9c45a1e279a5b5acf84c45adff6f48a2eae67f0e1062294b9211c7b77fef241"
+      },
+      "73": {
+        "checkpoint": "results/dg08/train/MSTAR/seed73/selected_checkpoint.pt",
+        "reused_from_frozen": false,
+        "seed": 73,
+        "selected_epoch": 2,
+        "sha256": "sha256:2e4c43aec429622f372215e61b862b4d749a91db7b2ae6d018b3bd05c31335e7"
+      }
+    }
+  },
+  "decode": {
+    "beam5": {
+      "condition_on_prev_tokens": false,
+      "do_sample": false,
+      "language": "zh",
+      "max_new_tokens": 200,
+      "num_beams": 5,
+      "task": "transcribe",
+      "temperature": 0.0
+    },
+    "greedy": {
+      "condition_on_prev_tokens": false,
+      "do_sample": false,
+      "language": "zh",
+      "max_new_tokens": 200,
+      "num_beams": 1,
+      "task": "transcribe",
+      "temperature": 0.0
+    }
+  },
+  "dtest_manifest_fingerprint": "sha256:dfbf53bc7ec96da19d6e01856d9759ee2119905b8eb67e8a2f6481c7f16e1a42",
+  "dtest_manifest_path": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/manifests/roles/locked/role_D-test.parquet",
+  "finalists": {
+    "F0_FROZEN_WHISPER": {
+      "deterministic": true,
+      "kind": "baseline"
+    },
+    "F1_DG04_FROZEN_STEERING": {
+      "beta_nominal": 4.465628877080159,
+      "deterministic": true,
+      "kind": "fixed_direction_v_local",
+      "reference": "results/dg04/reference.json",
+      "rho": 0.5,
+      "scale_s_l": 8.931257754160319
+    },
+    "F2_SALSA": {
+      "kind": "global_vector",
+      "trainable_parameters": 1280
+    },
+    "F3_LORA": {
+      "alpha": 9.0,
+      "kind": "qv_lora_l24",
+      "rank": 9,
+      "trainable_parameters": 46080
+    },
+    "F4_MSTAR": {
+      "kind": "adaptive_controller_D1",
+      "trainable_parameters": 43651
+    }
+  },
+  "git_commit": "f1dc4a8d9e55856b531c441f892d50a04f5deff8",
+  "lambda_m": 1.0,
+  "layer": 24,
+  "metrics_schema": "metrics_v1",
+  "model": {
+    "dtype": "bfloat16",
+    "hub_id": "openai/whisper-large-v3",
+    "id": "/mnt/data/tungnx/whisper-large-v3",
+    "local_files_only": true,
+    "revision": null
+  },
+  "normalization": "metrics_v1 canonical (DG-01); gains = baseline - method (positive better)",
+  "objective": "L_corr(C_E) + 1.0 * L_ret,M(R_M), KL(p0 || p_theta)",
+  "outside_harm_on_dtest": "NOT_AVAILABLE_no_candidate_poi_alignments",
+  "schema_version": "dg08_test_lock_v1",
+  "seeds": [
+    13,
+    42,
+    73
+  ],
+  "status": "D-TEST CONFIGURATION LOCKED - NO FURTHER SCIENTIFIC SELECTION"
+}

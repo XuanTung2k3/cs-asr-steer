@@ -7,12 +7,18 @@ applies to you in full.** The authoritative files:
   until a human revises this file. Never resolve a contradiction in favour of existing code.
 - `docs/current/CODE_MAP.md` · `EXPERIMENT_MATRIX.md` · `DATA_EXPOSURE.md` · `STATUS.md`.
 
-Proposal (do not duplicate here): `docs/proposal_arr/CS_ASR_ARR_October_2026_Method_First_Proposal_v5.md`.
+Proposal — **current authority is v6** (do not duplicate here):
+`docs/proposal_arr/CS_ASR_ARR_October_2026_Method_First_Proposal_v6.md` (contrastive basis →
+adaptive controller → damage-aware). v5 (`…Method_First_Proposal_v5.md`) is **SUPERSEDED /
+HISTORICAL** and must not override v6 post-DG-02.
 
 ## Non-negotiables (see AGENTS.md for the full list)
-- **Scientific invariants:** decoder post-cross-attention pre-FFN site (not post-FFN);
-  no `sqrt(num_layers)` rescale; norm-preserving repair; candidate layers `{16, 24}`;
-  conditioning-residualized `Δ^⊥` primary; rank-one primary direction.
+- **Scientific invariants:** decoder post-cross-attention pre-FFN site (not post-FFN), **FROZEN
+  (DG-02)**; no `sqrt(num_layers)` rescale; norm-preserving repair; candidate layers `{16, 24}`.
+  Core method (updated proposal, DG-03R): frozen basis `V^0 = [v_local, v_cond]` → adaptive
+  controller `f_θ(LN(r_t)) → (g_t, π_t)` (per-position direction is rank-one) → damage-aware
+  training (correction-set CE + KL retention). The disagreement/localizer/utility-selector/
+  factorized-gate roadmap is **superseded** (LEGACY). See `METHOD_CONTRACT.md` §4–§8.
 - **Data-role separation:** selection→`D-dev-select`, calibration→`router-calib`, one freeze on
   `D-dev-confirm`, **no intervened `D-test`** before full freeze (`D-test` is locked + underpowered).
 - **Preserve legacy** files, results, and docs — do not delete or rename.

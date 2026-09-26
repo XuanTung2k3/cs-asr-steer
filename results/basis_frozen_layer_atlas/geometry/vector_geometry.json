@@ -1,0 +1,1861 @@
+{
+  "layers": [
+    {
+      "layer": 0,
+      "cos_raw_local": 0.9989379931206434,
+      "angle_raw_local": 2.6408257013155483,
+      "cos_raw_cond": -0.04607478594743321,
+      "angle_raw_cond": 92.64082570131573,
+      "cos_local_cond": 6.93889390390723e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.04607478594743321,
+      "removed_energy_fraction": 0.002122885900101789,
+      "residual_norm_before_renorm": 0.9989379931206432,
+      "raw_local_distance": 0.04608702375629816,
+      "gram_raw": [
+        [
+          1.0,
+          -0.04607478594743321
+        ],
+        [
+          -0.04607478594743321,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          6.938893903907228e-18
+        ],
+        [
+          6.938893903907228e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0227779749033674,
+        0.9766909511470694
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        1.0
+      ],
+      "condition_raw": 1.0471869056452006,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.1766215063266144e-16,
+      "cos_rc_lc": 0.9997344630252183,
+      "angle_rc_lc": 1.3204128506579247,
+      "cos_rc_raw": 0.6906247946796317,
+      "cos_rc_cond": 0.6906247946796318,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 0.4196843590304283,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 1,
+      "cos_raw_local": 0.9988748157853885,
+      "angle_raw_local": 2.71825487632702,
+      "cos_raw_cond": -0.04742470231542284,
+      "angle_raw_cond": 92.71825487632721,
+      "cos_local_cond": 0.0,
+      "angle_local_cond": 90.0,
+      "alpha": -0.04742470231542284,
+      "removed_energy_fraction": 0.0022491023897064726,
+      "residual_norm_before_renorm": 0.9988748157853885,
+      "raw_local_distance": 0.047438048328565144,
+      "gram_raw": [
+        [
+          1.0,
+          -0.04742470231542284
+        ],
+        [
+          -0.04742470231542284,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.023437688535762,
+        0.9759996402071967
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0486045756312927,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 6.320679671918994e-16,
+      "cos_rc_lc": 0.9997186643714793,
+      "angle_rc_lc": 1.3591274381633107,
+      "cos_rc_raw": 0.6901359640261393,
+      "cos_rc_cond": 0.6901359640261393,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 0.7285602571323867,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 2,
+      "cos_raw_local": 0.9998840715276328,
+      "angle_raw_local": 0.8724426383726249,
+      "cos_raw_cond": 0.01522640815570516,
+      "angle_raw_cond": 89.12755736162653,
+      "cos_local_cond": -6.93889390390723e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.015226408155705157,
+      "removed_energy_fraction": 0.00023184350532412453,
+      "residual_norm_before_renorm": 0.9998840715276327,
+      "raw_local_distance": 0.015226849468449806,
+      "gram_raw": [
+        [
+          1.0000000000000002,
+          0.015226408155705157
+        ],
+        [
+          0.015226408155705157,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0000000000000002,
+          -6.938893903907228e-18
+        ],
+        [
+          -6.938893903907228e-18,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.0075844421961393,
+        0.9923575927276894
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0153441154479363,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.827518824234443e-16,
+      "cos_rc_lc": 0.9999710174619144,
+      "angle_rc_lc": 0.4362213191865594,
+      "cos_rc_raw": 0.7124697916949553,
+      "cos_rc_cond": 0.712469791694955,
+      "cos_lc_local": 0.7071067811865477,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 0.8338528699130244,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 3,
+      "cos_raw_local": 0.9999999795981959,
+      "angle_raw_local": 0.011573691925548841,
+      "cos_raw_cond": -0.00020199902938851984,
+      "angle_raw_cond": 90.0115736919284,
+      "cos_local_cond": -3.469446951953614e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.00020199902938851984,
+      "removed_energy_fraction": 4.0803607873904104e-08,
+      "residual_norm_before_renorm": 0.9999999795981959,
+      "raw_local_distance": 0.00020199903041879296,
+      "gram_raw": [
+        [
+          1.0,
+          -0.00020199902938851984
+        ],
+        [
+          -0.00020199902938851984,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -3.469446951953614e-18
+        ],
+        [
+          -3.469446951953614e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0001009944147585,
+        0.9998989953843395
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        1.0
+      ],
+      "condition_raw": 1.0002020194353145,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        1.9090959104164224e-06
+      ],
+      "projection_frobenius_distance": 5.92712983036486e-16,
+      "cos_rc_lc": 0.9999999948995492,
+      "angle_rc_lc": 0.005786845845177768,
+      "cos_rc_raw": 0.7070353601378829,
+      "cos_rc_cond": 0.707035360137883,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 0.899811312925461,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 4,
+      "cos_raw_local": 0.999764026469001,
+      "angle_raw_local": 1.244737622374672,
+      "cos_raw_cond": 0.02172306098345261,
+      "angle_raw_cond": 88.75526237762521,
+      "cos_local_cond": -1.0408340855860846e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.021723060983452606,
+      "removed_energy_fraction": 0.00047189137849080093,
+      "residual_norm_before_renorm": 0.9997640264690009,
+      "raw_local_distance": 0.02172434261371638,
+      "gram_raw": [
+        [
+          1.0,
+          0.021723060983452606
+        ],
+        [
+          0.021723060983452606,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          -1.0408340855860843e-17
+        ],
+        [
+          -1.0408340855860843e-17,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.0108031761838958,
+        0.98907883357018
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0219642174884074,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.831646840510158e-06
+      ],
+      "projection_frobenius_distance": 4.279467756972843e-16,
+      "cos_rc_lc": 0.999941004877038,
+      "angle_rc_lc": 0.6223688111874056,
+      "cos_rc_raw": 0.7147457803245336,
+      "cos_rc_cond": 0.7147457803245335,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 0.96647916275292,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 5,
+      "cos_raw_local": 0.9996731589431823,
+      "angle_raw_local": 1.464933001562556,
+      "cos_raw_cond": 0.025565118590745128,
+      "angle_raw_cond": 88.53506699843753,
+      "cos_local_cond": -1.214306433183765e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.025565118590745128,
+      "removed_energy_fraction": 0.0006535752885588621,
+      "residual_norm_before_renorm": 0.9996731589431823,
+      "raw_local_distance": 0.025567207779405323,
+      "gram_raw": [
+        [
+          1.0,
+          0.025565118590745128
+        ],
+        [
+          0.025565118590745128,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -1.214306433183765e-17
+        ],
+        [
+          -1.214306433183765e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0127018902869416,
+        0.9871346825075364
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0259004249698318,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        1.2074182697257333e-06,
+        1.478779333471098e-06
+      ],
+      "projection_frobenius_distance": 4.747423272698582e-16,
+      "cos_rc_lc": 0.9999182863972392,
+      "angle_rc_lc": 0.7324665007808745,
+      "cos_rc_raw": 0.7160883739423317,
+      "cos_rc_cond": 0.7160883739423316,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 0.9980786858094799,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 6,
+      "cos_raw_local": 0.9986241500587711,
+      "angle_raw_local": 3.0058892225374945,
+      "cos_raw_cond": 0.05243860142487741,
+      "angle_raw_cond": 86.99411077746238,
+      "cos_local_cond": -3.469446951953615e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.052438601424877405,
+      "removed_energy_fraction": 0.002749806919397155,
+      "residual_norm_before_renorm": 0.998624150058771,
+      "raw_local_distance": 0.05245664764791909,
+      "gram_raw": [
+        [
+          0.9999999999999998,
+          0.052438601424877405
+        ],
+        [
+          0.052438601424877405,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          -3.469446951953614e-18
+        ],
+        [
+          -3.469446951953614e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.025884302163201,
+        0.9734276545152817
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0538885939849736,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 5.079593899931542e-16,
+      "cos_rc_lc": 0.9996559783392412,
+      "angle_rc_lc": 1.5029446112687543,
+      "cos_rc_raw": 0.7254097467724284,
+      "cos_rc_cond": 0.7254097467724285,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 1.4147517602315687,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 7,
+      "cos_raw_local": 0.9974300978049968,
+      "angle_raw_local": 4.108553812708446,
+      "cos_raw_cond": 0.07164635365958615,
+      "angle_raw_cond": 85.89144618729156,
+      "cos_local_cond": 2.42861286636753e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.07164635365958613,
+      "removed_energy_fraction": 0.005133199992714491,
+      "residual_norm_before_renorm": 0.9974300978049967,
+      "raw_local_distance": 0.07169242909824142,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          0.07164635365958613
+        ],
+        [
+          0.07164635365958613,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          2.42861286636753e-17
+        ],
+        [
+          2.42861286636753e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.035203532480249,
+        0.9635111033820077
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.0744074757899464,
+      "condition_local": 1.0000000000000004,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        8.537736462515939e-07,
+        1.7075472925031877e-06
+      ],
+      "projection_frobenius_distance": 5.438199147488974e-16,
+      "cos_rc_lc": 0.9993573179311286,
+      "angle_rc_lc": 2.0542769063538895,
+      "cos_rc_raw": 0.7319994377250526,
+      "cos_rc_cond": 0.7319994377250526,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 1.5341584444703662,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 8,
+      "cos_raw_local": 0.9936409739029636,
+      "angle_raw_local": 6.46492280472723,
+      "cos_raw_cond": 0.11259491543213734,
+      "angle_raw_cond": 83.53507719527275,
+      "cos_local_cond": -5.204170427930422e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.11259491543213733,
+      "removed_energy_fraction": 0.012677614981170158,
+      "residual_norm_before_renorm": 0.9936409739029635,
+      "raw_local_distance": 0.11277434191372147,
+      "gram_raw": [
+        [
+          1.0,
+          0.11259491543213733
+        ],
+        [
+          0.11259491543213733,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0000000000000002,
+          -5.204170427930421e-17
+        ],
+        [
+          -5.204170427930421e-17,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.054796148756781,
+        0.9420218068430597
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.119715213697287,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.0913097891518726e-06
+      ],
+      "projection_frobenius_distance": 8.299065574571264e-16,
+      "cos_rc_lc": 0.9984089777999202,
+      "angle_rc_lc": 3.232461402363721,
+      "cos_rc_raw": 0.7458535095553742,
+      "cos_rc_cond": 0.7458535095553741,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 1.5452406660671225,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 9,
+      "cos_raw_local": 0.9949678402259149,
+      "angle_raw_local": 5.750387737468226,
+      "cos_raw_cond": 0.10019479485571357,
+      "angle_raw_cond": 84.2496122625317,
+      "cos_local_cond": -6.938893903907228e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.10019479485571356,
+      "removed_energy_fraction": 0.010038996916178525,
+      "residual_norm_before_renorm": 0.9949678402259148,
+      "raw_local_distance": 0.10032108227172616,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          0.10019479485571356
+        ],
+        [
+          0.10019479485571356,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -6.938893903907228e-18
+        ],
+        [
+          -6.938893903907228e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.048901708862996,
+        0.9485806265912701
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        1.0
+      ],
+      "condition_raw": 1.1057591515781113,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 7.610635463218673e-16,
+      "cos_rc_lc": 0.9987411677271331,
+      "angle_rc_lc": 2.8751938687341765,
+      "cos_rc_raw": 0.7416855111351824,
+      "cos_rc_cond": 0.7416855111351824,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 1.5358696303074157,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 10,
+      "cos_raw_local": 0.9967621171673035,
+      "angle_raw_local": 4.611959101260505,
+      "cos_raw_cond": 0.08040697594210923,
+      "angle_raw_cond": 85.38804089873946,
+      "cos_local_cond": -2.0816681711721688e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.08040697594210923,
+      "removed_energy_fraction": 0.006465281780154933,
+      "residual_norm_before_renorm": 0.9967621171673035,
+      "raw_local_distance": 0.0804721421697795,
+      "gram_raw": [
+        [
+          1.0,
+          0.08040697594210923
+        ],
+        [
+          0.08040697594210923,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999999,
+          -2.0816681711721685e-17
+        ],
+        [
+          -2.0816681711721685e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0394262724898333,
+        0.9589541303200538
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.083916570798774,
+      "condition_local": 1.0000000000000004,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.6998693283819165e-06
+      ],
+      "projection_frobenius_distance": 5.90040474970105e-16,
+      "cos_rc_lc": 0.9991902014049435,
+      "angle_rc_lc": 2.3059795506303407,
+      "cos_rc_raw": 0.7349853658210174,
+      "cos_rc_cond": 0.7349853658210174,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 1.585999323288793,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 11,
+      "cos_raw_local": 0.9983933117409186,
+      "angle_raw_local": 3.248340937580095,
+      "cos_raw_cond": 0.0566638780088433,
+      "angle_raw_cond": 86.75165906241982,
+      "cos_local_cond": 1.387778780781446e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.0566638780088433,
+      "removed_energy_fraction": 0.0032107950710010755,
+      "residual_norm_before_renorm": 0.9983933117409185,
+      "raw_local_distance": 0.05668665202817101,
+      "gram_raw": [
+        [
+          1.0,
+          0.0566638780088433
+        ],
+        [
+          0.0566638780088433,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          1.3877787807814457e-17
+        ],
+        [
+          1.3877787807814457e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0279415732466721,
+        0.9712549212185009
+      ],
+      "singular_values_local": [
+        0.9999999999999999,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0583643395670566,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.523686172516627e-16,
+      "cos_rc_lc": 0.9995982472325866,
+      "angle_rc_lc": 1.6241704687900036,
+      "cos_rc_raw": 0.72686445710629,
+      "cos_rc_cond": 0.7268644571062899,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 1.541743332732518,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 12,
+      "cos_raw_local": 0.9984204709398742,
+      "angle_raw_local": 3.2207619148454527,
+      "cos_raw_cond": 0.056183300082850725,
+      "angle_raw_cond": 86.77923808515465,
+      "cos_local_cond": -2.4286128663675302e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.05618330008285072,
+      "removed_energy_fraction": 0.0031565632081996535,
+      "residual_norm_before_renorm": 0.9984204709398743,
+      "raw_local_distance": 0.05620549902146085,
+      "gram_raw": [
+        [
+          1.0,
+          0.05618330008285072
+        ],
+        [
+          0.05618330008285072,
+          0.9999999999999998
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -2.42861286636753e-17
+        ],
+        [
+          -2.42861286636753e-17,
+          0.9999999999999998
+        ]
+      ],
+      "singular_values_raw": [
+        1.0277077892488948,
+        0.971502290227434
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.0578542115513725,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 1.082181220903058e-15,
+      "cos_rc_lc": 0.9996050397381645,
+      "angle_rc_lc": 1.6103809574223769,
+      "cos_rc_raw": 0.7266991468561288,
+      "cos_rc_cond": 0.7266991468561289,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 1.7032187490599646,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 13,
+      "cos_raw_local": 0.9997183836370082,
+      "angle_raw_local": 1.3598054125259944,
+      "cos_raw_cond": 0.023730853718479973,
+      "angle_raw_cond": 88.64019458747387,
+      "cos_local_cond": 1.0408340855860846e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.02373085371847997,
+      "removed_energy_fraction": 0.0005631534182078946,
+      "residual_norm_before_renorm": 0.9997183836370082,
+      "raw_local_distance": 0.023732524644120758,
+      "gram_raw": [
+        [
+          1.0,
+          0.02373085371847997
+        ],
+        [
+          0.02373085371847997,
+          0.9999999999999998
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          1.0408340855860843e-17
+        ],
+        [
+          1.0408340855860843e-17,
+          0.9999999999999998
+        ]
+      ],
+      "singular_values_raw": [
+        1.01179585575277,
+        0.988063331108649
+      ],
+      "singular_values_local": [
+        0.9999999999999999,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.024019234290875,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 7.656285086528403e-16,
+      "cos_rc_lc": 0.9999295934307096,
+      "angle_rc_lc": 0.6799027062625118,
+      "cos_rc_raw": 0.7154477107792295,
+      "cos_rc_cond": 0.7154477107792295,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 1.9776004153585145,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 14,
+      "cos_raw_local": 0.9999163905196282,
+      "angle_raw_local": 0.7409150530778115,
+      "cos_raw_cond": -0.012931046755709746,
+      "angle_raw_cond": 90.7409150530778,
+      "cos_local_cond": 5.204170427930421e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.012931046755709746,
+      "removed_energy_fraction": 0.00016721197019835154,
+      "residual_norm_before_renorm": 0.9999163905196282,
+      "raw_local_distance": 0.012931317053709555,
+      "gram_raw": [
+        [
+          1.0,
+          -0.012931046755709746
+        ],
+        [
+          -0.012931046755709746,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          5.204170427930421e-18
+        ],
+        [
+          5.204170427930421e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.006444755938303,
+        0.993513438884593
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0130157444757142,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.2588727439225506e-06
+      ],
+      "projection_frobenius_distance": 6.405618504397871e-16,
+      "cos_rc_lc": 0.9999790974114481,
+      "angle_rc_lc": 0.3704575265377453,
+      "cos_rc_raw": 0.7025200898352624,
+      "cos_rc_cond": 0.7025200898352624,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 1.973324769405793,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 15,
+      "cos_raw_local": 0.9999959388022631,
+      "angle_raw_local": 0.16329197618600877,
+      "cos_raw_cond": -0.0028499787684579496,
+      "angle_raw_cond": 90.16329197618826,
+      "cos_local_cond": 3.469446951953614e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.0028499787684579496,
+      "removed_energy_fraction": 8.12237898066109e-06,
+      "residual_norm_before_renorm": 0.999995938802263,
+      "raw_local_distance": 0.002849981662044202,
+      "gram_raw": [
+        [
+          1.0,
+          -0.0028499787684579496
+        ],
+        [
+          -0.0028499787684579496,
+          1.0000000000000002
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          3.469446951953614e-18
+        ],
+        [
+          3.469446951953614e-18,
+          1.0000000000000002
+        ]
+      ],
+      "singular_values_raw": [
+        1.0014239755310725,
+        0.9985739938690282
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0028540515570628,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.3552891587690547e-16,
+      "cos_rc_lc": 0.9999989847000504,
+      "angle_rc_lc": 0.08164598808981907,
+      "cos_rc_raw": 0.7060984425813237,
+      "cos_rc_cond": 0.7060984425813239,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 1.9411680206751118,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 16,
+      "cos_raw_local": 0.9999877296563062,
+      "angle_raw_local": 0.28383532046702664,
+      "cos_raw_cond": -0.004953840613741634,
+      "angle_raw_cond": 90.28383532046783,
+      "cos_local_cond": -1.387778780781446e-17,
+      "angle_local_cond": 90.0,
+      "alpha": -0.004953840613741633,
+      "removed_energy_fraction": 2.4540536826356082e-05,
+      "residual_norm_before_renorm": 0.9999877296563061,
+      "raw_local_distance": 0.0049538558101432624,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          -0.004953840613741633
+        ],
+        [
+          -0.004953840613741633,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          -1.3877787807814457e-17
+        ],
+        [
+          -1.3877787807814457e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.002473860314443,
+        0.9975200045042998
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0049661718940714,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 3.633040844089042e-16,
+      "cos_rc_lc": 0.9999969324093715,
+      "angle_rc_lc": 0.14191766023382643,
+      "cos_rc_raw": 0.7053531595542258,
+      "cos_rc_cond": 0.7053531595542258,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 2.396367643617688,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 17,
+      "cos_raw_local": 0.9999237063654951,
+      "angle_raw_local": 0.7077576034184523,
+      "cos_raw_cond": -0.012352386339947511,
+      "angle_raw_cond": 90.7077576034189,
+      "cos_local_cond": -1.5612511283791264e-17,
+      "angle_local_cond": 90.0,
+      "alpha": -0.012352386339947511,
+      "removed_energy_fraction": 0.00015258144829132186,
+      "residual_norm_before_renorm": 0.999923706365495,
+      "raw_local_distance": 0.012352621948800489,
+      "gram_raw": [
+        [
+          1.0,
+          -0.012352386339947511
+        ],
+        [
+          -0.012352386339947511,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -1.5612511283791264e-17
+        ],
+        [
+          -1.5612511283791264e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0061572373838732,
+        0.9938046154350725
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0124296282759695,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        1.9090959104164224e-06
+      ],
+      "projection_frobenius_distance": 4.116578606073311e-16,
+      "cos_rc_lc": 0.9999809264094729,
+      "angle_rc_lc": 0.35387880170881286,
+      "cos_rc_raw": 0.7027259827486289,
+      "cos_rc_cond": 0.702725982748629,
+      "cos_lc_local": 0.7071067811865477,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 2.654406921721539,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 18,
+      "cos_raw_local": 0.9962628404036793,
+      "angle_raw_local": 4.955001585302317,
+      "cos_raw_cond": -0.08637333402615392,
+      "angle_raw_cond": 94.9550015853025,
+      "cos_local_cond": 1.908195823574488e-17,
+      "angle_local_cond": 90.0,
+      "alpha": -0.08637333402615391,
+      "removed_energy_fraction": 0.007460352830793556,
+      "residual_norm_before_renorm": 0.996262840403679,
+      "raw_local_distance": 0.08645414502869096,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          -0.08637333402615391
+        ],
+        [
+          -0.08637333402615391,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999999,
+          1.9081958235744878e-17
+        ],
+        [
+          1.9081958235744878e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.042292345758211,
+        0.9558382007295201
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0904485141551226,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        2.6998693283819165e-06,
+        3.078324659199975e-06
+      ],
+      "projection_frobenius_distance": 8.398810765336572e-16,
+      "cos_rc_lc": 0.9990652732438654,
+      "angle_rc_lc": 2.477500792651295,
+      "cos_rc_raw": 0.6758796734529919,
+      "cos_rc_cond": 0.6758796734529919,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 3.6050547766433145,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 19,
+      "cos_raw_local": 0.9980737730660523,
+      "angle_raw_local": 3.556813493545936,
+      "cos_raw_cond": -0.06203824238076644,
+      "angle_raw_cond": 93.55681349354609,
+      "cos_local_cond": -2.2551405187698495e-17,
+      "angle_local_cond": 90.0,
+      "alpha": -0.06203824238076643,
+      "removed_energy_fraction": 0.0038487435176947243,
+      "residual_norm_before_renorm": 0.998073773066052,
+      "raw_local_distance": 0.062068138911165895,
+      "gram_raw": [
+        [
+          0.9999999999999998,
+          -0.06203824238076643
+        ],
+        [
+          -0.06203824238076643,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999999,
+          -2.2551405187698492e-17
+        ],
+        [
+          -2.2551405187698492e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0305523967177828,
+        0.9684842578066167
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0640879171869406,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 5.506162748635336e-16,
+      "cos_rc_lc": 0.9995183272621999,
+      "angle_rc_lc": 1.778406746772941,
+      "cos_rc_raw": 0.6848217861674794,
+      "cos_rc_cond": 0.6848217861674795,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 3.3842954833681245,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 20,
+      "cos_raw_local": 0.9989877264873608,
+      "angle_raw_local": 2.578239210765419,
+      "cos_raw_cond": -0.04498357842162474,
+      "angle_raw_cond": 92.57823921076569,
+      "cos_local_cond": -5.204170427930421e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.04498357842162474,
+      "removed_energy_fraction": 0.0020235223276144627,
+      "residual_norm_before_renorm": 0.9989877264873607,
+      "raw_local_distance": 0.044994966666048915,
+      "gram_raw": [
+        [
+          1.0,
+          -0.04498357842162474
+        ],
+        [
+          -0.04498357842162474,
+          1.0000000000000002
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -5.204170427930421e-18
+        ],
+        [
+          -5.204170427930421e-18,
+          1.0000000000000002
+        ]
+      ],
+      "singular_values_raw": [
+        1.0222443829249563,
+        0.9772494162589076
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.046042459496469,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 7.475193488470836e-16,
+      "cos_rc_lc": 0.999746899591932,
+      "angle_rc_lc": 1.2891196053825658,
+      "cos_rc_raw": 0.6910196891472687,
+      "cos_rc_cond": 0.6910196891472687,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 3.103794965243074,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 21,
+      "cos_raw_local": 0.999807600256958,
+      "angle_raw_local": 1.1239496010707233,
+      "cos_raw_cond": -0.01961536307139689,
+      "angle_raw_cond": 91.12394960107059,
+      "cos_local_cond": -1.7347234759768075e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.019615363071396885,
+      "removed_energy_fraction": 0.00038476246842272067,
+      "residual_norm_before_renorm": 0.999807600256958,
+      "raw_local_distance": 0.019616306637179268,
+      "gram_raw": [
+        [
+          0.9999999999999998,
+          -0.019615363071396885
+        ],
+        [
+          -0.019615363071396885,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -1.734723475976807e-18
+        ],
+        [
+          -1.734723475976807e-18,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.0097600522259713,
+        0.9901437455887924
+      ],
+      "singular_values_local": [
+        0.9999999999999999,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.0198115745562923,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 6.8512914490115e-16,
+      "cos_rc_lc": 0.999951898907382,
+      "angle_rc_lc": 0.5619748005350297,
+      "cos_rc_raw": 0.7001373568552828,
+      "cos_rc_cond": 0.7001373568552829,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 3.0693871546921043,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 22,
+      "cos_raw_local": 0.9995884739023584,
+      "angle_raw_local": 1.6438084778664162,
+      "cos_raw_cond": -0.028685934559541416,
+      "angle_raw_cond": 91.64380847786653,
+      "cos_local_cond": -3.469446951953614e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.028685934559541416,
+      "removed_energy_fraction": 0.0008228828415542925,
+      "residual_norm_before_renorm": 0.9995884739023584,
+      "raw_local_distance": 0.028688886267740233,
+      "gram_raw": [
+        [
+          1.0,
+          -0.028685934559541416
+        ],
+        [
+          -0.028685934559541416,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -3.469446951953614e-18
+        ],
+        [
+          -3.469446951953614e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0142415563166112,
+        0.9855526700488709
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.029109439951411,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        1.7075472925031877e-06,
+        1.7075472925031877e-06
+      ],
+      "projection_frobenius_distance": 6.417796187335848e-16,
+      "cos_rc_lc": 0.9998971131827409,
+      "angle_rc_lc": 0.8219042389337354,
+      "cos_rc_raw": 0.6968909762080646,
+      "cos_rc_cond": 0.6968909762080647,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 3.072230743521573,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 23,
+      "cos_raw_local": 0.999957536057928,
+      "angle_raw_local": 0.5280187217833139,
+      "cos_raw_cond": -0.00921553476243741,
+      "angle_raw_cond": 90.52801872178372,
+      "cos_local_cond": -8.673617379884035e-19,
+      "angle_local_cond": 90.0,
+      "alpha": -0.00921553476243741,
+      "removed_energy_fraction": 8.492608095769231e-05,
+      "residual_norm_before_renorm": 0.999957536057928,
+      "raw_local_distance": 0.009215632595978896,
+      "gram_raw": [
+        [
+          1.0,
+          -0.00921553476243741
+        ],
+        [
+          -0.00921553476243741,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0000000000000002,
+          -8.673617379884035e-19
+        ],
+        [
+          -8.673617379884035e-19,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0045972002561214,
+        0.9953815676601422
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        0.9999999999999999
+      ],
+      "condition_raw": 1.009258391852325,
+      "condition_local": 1.0000000000000004,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 6.848647224408934e-16,
+      "cos_rc_lc": 0.9999893839581318,
+      "angle_rc_lc": 0.26400936089271787,
+      "cos_rc_raw": 0.7038410563605829,
+      "cos_rc_cond": 0.7038410563605829,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865474,
+      "pre_norm_raw": 3.3821398840851904,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 24,
+      "cos_raw_local": 0.9962177110586204,
+      "angle_raw_local": 4.9848484840023355,
+      "cos_raw_cond": -0.08689230215112904,
+      "angle_raw_cond": 94.98484848400237,
+      "cos_local_cond": 6.93889390390723e-18,
+      "angle_local_cond": 90.0,
+      "alpha": -0.08689230215112903,
+      "removed_energy_fraction": 0.007550272173123103,
+      "residual_norm_before_renorm": 0.9962177110586203,
+      "raw_local_distance": 0.08697458181997304,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          -0.08689230215112903
+        ],
+        [
+          -0.08689230215112903,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          6.938893903907228e-18
+        ],
+        [
+          6.938893903907228e-18,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.0425412711979938,
+        0.9555666893780209
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        1.0
+      ],
+      "condition_raw": 1.091018850684911,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 5.076127064180069e-16,
+      "cos_rc_lc": 0.9990539802880073,
+      "angle_rc_lc": 2.4924242420012725,
+      "cos_rc_raw": 0.6756876859351779,
+      "cos_rc_cond": 0.6756876859351778,
+      "cos_lc_local": 0.7071067811865477,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 3.8113374111779437,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 25,
+      "cos_raw_local": 0.9993532638008121,
+      "angle_raw_local": 2.0607467528070136,
+      "cos_raw_cond": -0.035959061871310614,
+      "angle_raw_cond": 92.06074675280729,
+      "cos_local_cond": 1.0408340855860844e-17,
+      "angle_local_cond": 90.0,
+      "alpha": -0.03595906187131061,
+      "removed_energy_fraction": 0.0012930541306647443,
+      "residual_norm_before_renorm": 0.9993532638008119,
+      "raw_local_distance": 0.03596487728848919,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          -0.03595906187131061
+        ],
+        [
+          -0.03595906187131061,
+          1.0000000000000002
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999999,
+          1.0408340855860843e-17
+        ],
+        [
+          1.0408340855860843e-17,
+          1.0000000000000002
+        ]
+      ],
+      "singular_values_raw": [
+        1.0178207415214677,
+        0.9818558642329788
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0366294876861428,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.561320938754782e-06
+      ],
+      "projection_frobenius_distance": 3.6260164788243386e-16,
+      "cos_rc_lc": 0.9998383028772232,
+      "angle_rc_lc": 1.0303733764037628,
+      "cos_rc_raw": 0.6942769397469174,
+      "cos_rc_cond": 0.6942769397469175,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 3.6045942354576312,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 26,
+      "cos_raw_local": 0.9992269641366511,
+      "angle_raw_local": 2.253022000517462,
+      "cos_raw_cond": 0.03931251889985814,
+      "angle_raw_cond": 87.74697799948255,
+      "cos_local_cond": 2.6020852139652103e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.03931251889985814,
+      "removed_energy_fraction": 0.0015454741422517033,
+      "residual_norm_before_renorm": 0.999226964136651,
+      "raw_local_distance": 0.039320118599741355,
+      "gram_raw": [
+        [
+          0.9999999999999998,
+          0.03931251889985814
+        ],
+        [
+          0.03931251889985814,
+          1.0000000000000004
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          2.6020852139652106e-18
+        ],
+        [
+          2.6020852139652106e-18,
+          1.0000000000000004
+        ]
+      ],
+      "singular_values_raw": [
+        1.0194667816559098,
+        0.9801466630561684
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.0401165663076772,
+      "condition_local": 1.0000000000000004,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        1.9090959104164224e-06
+      ],
+      "projection_frobenius_distance": 8.033144870980438e-16,
+      "cos_rc_lc": 0.999806722356039,
+      "angle_rc_lc": 1.1265110002587249,
+      "cos_rc_raw": 0.720871874503319,
+      "cos_rc_cond": 0.7208718745033192,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865477,
+      "pre_norm_raw": 3.6294750870230383,
+      "pre_norm_conditioning": 1.0000000000000002
+    },
+    {
+      "layer": 27,
+      "cos_raw_local": 0.9999627835717425,
+      "angle_raw_local": 0.4943178832114348,
+      "cos_raw_cond": 0.00862736758534218,
+      "angle_raw_cond": 89.50568211678802,
+      "cos_local_cond": -5.204170427930421e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.00862736758534218,
+      "removed_energy_fraction": 7.443147145261294e-05,
+      "residual_norm_before_renorm": 0.9999627835717424,
+      "raw_local_distance": 0.008627447856414153,
+      "gram_raw": [
+        [
+          1.0,
+          0.00862736758534218
+        ],
+        [
+          0.00862736758534218,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -5.204170427930421e-18
+        ],
+        [
+          -5.204170427930421e-18,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0043044197778592,
+        0.995676971921445
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0086649064904707,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 5.44108875929954e-16,
+      "cos_rc_lc": 0.9999906958496518,
+      "angle_rc_lc": 0.24715894160819282,
+      "cos_rc_raw": 0.7101504656005453,
+      "cos_rc_cond": 0.7101504656005452,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865475,
+      "pre_norm_raw": 3.7865992397829102,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 28,
+      "cos_raw_local": 0.998466606580674,
+      "angle_raw_local": 3.1733643518831407,
+      "cos_raw_cond": 0.055357344077132324,
+      "angle_raw_cond": 86.82663564811664,
+      "cos_local_cond": 3.469446951953614e-18,
+      "angle_local_cond": 90.0,
+      "alpha": 0.055357344077132324,
+      "removed_energy_fraction": 0.0030644355432740173,
+      "residual_norm_before_renorm": 0.9984666065806738,
+      "raw_local_distance": 0.05537857743435137,
+      "gram_raw": [
+        [
+          1.0,
+          0.055357344077132324
+        ],
+        [
+          0.055357344077132324,
+          1.0000000000000002
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          3.469446951953614e-18
+        ],
+        [
+          3.469446951953614e-18,
+          1.0000000000000002
+        ]
+      ],
+      "singular_values_raw": [
+        1.0273058668561825,
+        0.9719272894218308
+      ],
+      "singular_values_local": [
+        1.0000000000000002,
+        1.0
+      ],
+      "condition_raw": 1.0569781073513171,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        2.2588727439225506e-06
+      ],
+      "projection_frobenius_distance": 7.872206850709842e-16,
+      "cos_rc_lc": 0.9996165781390067,
+      "angle_rc_lc": 1.5866821759416214,
+      "cos_rc_raw": 0.726414944806731,
+      "cos_rc_cond": 0.7264149448067312,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 4.02284007564698,
+      "pre_norm_conditioning": 1.0
+    },
+    {
+      "layer": 29,
+      "cos_raw_local": 0.9966601648977312,
+      "angle_raw_local": 4.684045331291716,
+      "cos_raw_cond": 0.0816609803151264,
+      "angle_raw_cond": 85.31595466870817,
+      "cos_local_cond": -1.7347234759768074e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.08166098031512639,
+      "removed_energy_fraction": 0.00666851570602746,
+      "residual_norm_before_renorm": 0.996660164897731,
+      "raw_local_distance": 0.08172924938195514,
+      "gram_raw": [
+        [
+          0.9999999999999999,
+          0.08166098031512639
+        ],
+        [
+          0.08166098031512639,
+          0.9999999999999998
+        ]
+      ],
+      "gram_local": [
+        [
+          1.0,
+          -1.734723475976807e-17
+        ],
+        [
+          -1.734723475976807e-17,
+          0.9999999999999998
+        ]
+      ],
+      "singular_values_raw": [
+        1.0400293170459793,
+        0.9583000676640242
+      ],
+      "singular_values_local": [
+        1.0,
+        1.0
+      ],
+      "condition_raw": 1.0852856554431645,
+      "condition_local": 1.0,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 6.6510430556007045e-16,
+      "cos_rc_lc": 0.9991646923550018,
+      "angle_rc_lc": 2.342022665645979,
+      "cos_rc_raw": 0.7354117827160259,
+      "cos_rc_cond": 0.7354117827160259,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 4.135746356354865,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 30,
+      "cos_raw_local": 0.9928929883238221,
+      "angle_raw_local": 6.835002721659414,
+      "cos_raw_cond": 0.11901056145313535,
+      "angle_raw_cond": 83.16499727834058,
+      "cos_local_cond": -2.4286128663675305e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.11901056145313532,
+      "removed_energy_fraction": 0.014163513737390498,
+      "residual_norm_before_renorm": 0.992892988323822,
+      "raw_local_distance": 0.11922257903751216,
+      "gram_raw": [
+        [
+          0.9999999999999998,
+          0.11901056145313532
+        ],
+        [
+          0.11901056145313532,
+          0.9999999999999999
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          -2.42861286636753e-17
+        ],
+        [
+          -2.42861286636753e-17,
+          0.9999999999999999
+        ]
+      ],
+      "singular_values_raw": [
+        1.0578329553635277,
+        0.9386103763260155
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.1270203079409615,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.0568262768405006e-16,
+      "cos_rc_lc": 0.9982216658447717,
+      "angle_rc_lc": 3.4175013608297315,
+      "cos_rc_raw": 0.7480008561001569,
+      "cos_rc_cond": 0.748000856100157,
+      "cos_lc_local": 0.7071067811865475,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 4.202967482356225,
+      "pre_norm_conditioning": 0.9999999999999999
+    },
+    {
+      "layer": 31,
+      "cos_raw_local": 0.9891017490328347,
+      "angle_raw_local": 8.466642921171665,
+      "cos_raw_cond": 0.1472335901219124,
+      "angle_raw_cond": 81.53335707882835,
+      "cos_local_cond": 2.4286128663675302e-17,
+      "angle_local_cond": 90.0,
+      "alpha": 0.1472335901219124,
+      "removed_energy_fraction": 0.0216777300601873,
+      "residual_norm_before_renorm": 0.9891017490328348,
+      "raw_local_distance": 0.1476363841819848,
+      "gram_raw": [
+        [
+          1.0,
+          0.1472335901219124
+        ],
+        [
+          0.1472335901219124,
+          1.0
+        ]
+      ],
+      "gram_local": [
+        [
+          0.9999999999999998,
+          2.42861286636753e-17
+        ],
+        [
+          2.42861286636753e-17,
+          1.0
+        ]
+      ],
+      "singular_values_raw": [
+        1.0710899075810174,
+        0.9234535233990325
+      ],
+      "singular_values_local": [
+        1.0,
+        0.9999999999999998
+      ],
+      "condition_raw": 1.159874190136356,
+      "condition_local": 1.0000000000000002,
+      "rank_raw": 2,
+      "rank_local": 2,
+      "principal_angles_deg": [
+        0.0,
+        0.0
+      ],
+      "projection_frobenius_distance": 4.80651678234061e-16,
+      "cos_rc_lc": 0.997271715490025,
+      "angle_rc_lc": 4.233321460585798,
+      "cos_rc_raw": 0.75737493691101,
+      "cos_rc_cond": 0.7573749369110099,
+      "cos_lc_local": 0.7071067811865476,
+      "cos_lc_cond": 0.7071067811865476,
+      "pre_norm_raw": 4.263691957496387,
+      "pre_norm_conditioning": 1.0
+    }
+  ],
+  "schema_version": "basis_a2_vector_geometry_v1"
+}

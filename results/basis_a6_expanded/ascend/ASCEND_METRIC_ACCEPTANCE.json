@@ -1,0 +1,45 @@
+{
+  "schema_version": "basis_a6_metric_acceptance_v1",
+  "status": "PASS",
+  "metrics": {
+    "fixture": {
+      "mer": 0.0,
+      "en_wer": 0.0,
+      "zh_cer": 0.0,
+      "pier": 0.0,
+      "num_ref_units": 7,
+      "num_en_ref": 3,
+      "num_zh_ref": 4,
+      "num_poi": 3,
+      "num_poi_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0
+    },
+    "real_identity": {
+      "mer": 0.0,
+      "en_wer": 0.0,
+      "zh_cer": 0.0,
+      "pier": 0.0,
+      "num_ref_units": 72,
+      "num_en_ref": 27,
+      "num_zh_ref": 45,
+      "num_poi": 27,
+      "num_poi_errors": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 0
+    }
+  },
+  "checks": {
+    "fixture_mer_zero": true,
+    "fixture_pier_zero": true,
+    "fixture_en_wer_zero": true,
+    "fixture_matrix_cer_zero": true,
+    "real_rows_nonempty": true,
+    "real_identity_mer_zero": true,
+    "trace_has_en_zh": true
+  },
+  "test_usage": 0,
+  "segmentation_trace": "ASCEND_SEGMENTATION_TRACE.json"
+}

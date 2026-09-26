@@ -1,0 +1,15 @@
+{
+  "schema_version": "basis_a6_real_acceptance_validation_v1",
+  "status": "PASS",
+  "checks": {
+    "whisper_greedy": true,
+    "whisper_official_standard": true,
+    "whisper_tt": true,
+    "whisper_cache": true,
+    "qwen3_asr_1p7b_greedy": true,
+    "qwen3_asr_1p7b_official_standard": true,
+    "qwen3_asr_1p7b_tt": true,
+    "qwen3_asr_1p7b_cache": true
+  },
+  "atlas_execution": "NOT_STARTED"
+}

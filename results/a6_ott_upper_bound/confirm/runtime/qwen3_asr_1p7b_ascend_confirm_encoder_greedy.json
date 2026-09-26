@@ -1,0 +1,15 @@
+{
+  "dataset": "ascend_confirm",
+  "direction_constructions": 400,
+  "gpu_job_id": "53510",
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 0,
+  "panel_fingerprint": "sha256:eefe1d22cb7668e4a4e3fa7532858942b0325b5cb1544c96ad2e90a898cbc578",
+  "phase": "B",
+  "reused_rows": 800,
+  "rho_cache_hits": 0,
+  "runtime_sec": 84.93732602521777,
+  "side": "encoder",
+  "status": "PASS"
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "p2r_mechanism_diagnosis_v1",
+  "stage": "P2-R mechanism diagnosis (diagnostic only; not a method-selection stage)",
+  "role": "D-dev-select (already exposed; exploratory causal diagnosis only)",
+  "p2_reference": {
+    "frozen_configuration": "results/inference_cf/p2_frozen_configuration.json",
+    "selected": "L16_a2_ER_id_pos",
+    "unchanged": true
+  },
+  "baseline_run": "results/inference_cf/p2_A_r1_L16",
+  "baseline_system": "B0M_L16",
+  "conditions": {
+    "cB": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "cE": [
+      50258,
+      50259,
+      50360,
+      50364
+    ],
+    "language_token_ids": [
+      50259,
+      50260
+    ]
+  },
+  "site": {
+    "layer": 16,
+    "hook": "csasr.lss.sites.DecoderPostCrossAttnInterventionHook (DG-02 post-cross-attention, pre-FFN)",
+    "norm_preserve": true,
+    "num_forced_prefix": 4,
+    "min_step": 1,
+    "dtype": "bfloat16",
+    "attention": "eager",
+    "max_new_tokens": 200,
+    "suppression": "generation_config suppress_tokens / begin_suppress_tokens"
+  },
+  "population": {
+    "hash_tag": "P2R-v1",
+    "positions_per_stratum": 60,
+    "max_positions_per_utterance_per_stratum": 2,
+    "max_utterances": 80,
+    "companion_positions_per_stratum": 20,
+    "target_dialogues_per_stratum": 15,
+    "minimum_interpretable": {
+      "positions": 40,
+      "dialogues": 12
+    },
+    "strata": [
+      "EN-confusion",
+      "EN-correct",
+      "ZH-correct"
+    ],
+    "secondary_stratification": "EN-confusion span_initial (previous reference unit MATCH or none) vs within-span; descriptive"
+  },
+  "target_tokens": {
+    "EN": "reference-consistent first-token set after the exact generated prefix: variants {raw, lower, Capitalized, UPPER} x {'', ' '}; prefix IDs must be unchanged; distinguishing beginning (stripped lower-cased token text is a prefix of the word, length >= min(2, len(word))); log p(ref) = log of summed probability over the set; rank = best rank in the set",
+    "EN-correct": "the same set; the baseline token must belong to it",
+    "ZH-correct": "the baseline token",
+    "probabilities": "suppression-processed next-token distribution (the decode rule); raw-logit quantities co-reported"
+  },
+  "energy": {
+    "target_edit_norm": 1.1260757575454359,
+    "target_edit_norm_source": "sqrt(1203.3762345332195 / 949): RMS realized edit norm of the selected P2 run (results/inference_cf/p2_final_summary.json)",
+    "solver": "inside the hook action on the pre-edit site state r: analytic NormPreserve chord solution s = |r| sin(theta*) / sin(phi - theta*), theta* = 2 asin(e*/(2|r|)), phi = angle(r, v); then bf16 secant refinement of s by re-evaluating models.hooks.apply_steering on r (the exact hook arithmetic); max 8 evaluations; never reads logits or correctness",
+    "direction_passed_to_hook": "s * v as a (D,) tensor with gain 1 and alpha 1 (avoids bf16 rounding of the scalar gain)",
+    "unreachable": "phi <= theta*: condition recorded as energy_unreachable, no edit, position excluded from matched comparisons involving it",
+    "max_pairwise_squared_energy_mismatch": 0.02,
+    "max_squared_energy_mismatch_vs_target": 0.02
+  },
+  "directions": {
+    "plus_d": "d = norm(hE - hB) at the position (core_p1.direction, fallback -> excluded)",
+    "minus_d": "-d",
+    "random": {
+      "seed": "int(sha256('P2R-random-v1|' + utterance_id + '|' + str(t)).hexdigest()[:16], 16)",
+      "generator": "numpy.random.default_rng(seed).standard_normal(1280) (float64)",
+      "construction": "project orthogonal to the pre-edit site state r (float64), normalize",
+      "degeneracy_fallback": "if the projected norm < 1e-8: e_0 projected orthogonal to r, normalized",
+      "count": "exactly one vector per position; no seed selection or retries"
+    }
+  },
+  "d1": {
+    "arms": [
+      "none",
+      "plus_d",
+      "minus_d",
+      "random"
+    ],
+    "pulse": "each arm edits only the query predicting token t, from the same unedited B-branch cache (cropped back after every arm); no earlier intervention",
+    "companion": "first 20 selected positions per stratum: after the pulse, greedy free continuation with no further edits to the 200-token cap (all four arms)",
+    "primary_stratum": "EN-confusion"
+  },
+  "d2": {
+    "current": "controlled baseline-prefix replay of the frozen P2 schedule (L16, alpha 2, g = E*R_B via the frozen R2 providers, phi_id, +d, NormPreserve, persistent S-branch cache) while feeding the matched-baseline tokens",
+    "oracle": "energy-packet relocation: keep current edits at D2 targets; order the other positive-energy edits (donors) by descending realized energy (ties: position); assign each once to an unedited target in frozen hash order within the same utterance; remove the donor edit; destination direction d_t = norm(hE_t - hB_t), +d; destination energy = the donor's realized edit norm via the D1 solver; unmatched donors and all other edits unchanged",
+    "no_edit": "B branch",
+    "targets": "all valid EN-confusion positions (target rule above) in the D1 utterances",
+    "controls": "all valid EN-correct and ZH-correct positions in the D1 utterances (damage)",
+    "total_energy_tolerance": 0.02,
+    "pulse_companion": "first 20 relocations in plan order: single pulse at the donor's original position vs at the oracle target, from the clean baseline prefix, free continuation, no further edits",
+    "acoustic_annotation": "at D2 targets with a valid CTC midpoint: evaluator-centred 1.0 s window clipped to [0, heard audio]; unchanged LocalSupport provider; report timing error |current window centre - midpoint| and E(oracle crop) - E(current)",
+    "alpha": 2.0,
+    "pulse_companions": 20,
+    "schedule_source": "frozen P2 selected configuration L16_a2_ER_id_pos (alpha 2, g = E*R_B, phi_id, +d)"
+  },
+  "analysis": {
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "aggregation": "average positions within dialogue, then average dialogues",
+      "simultaneous": "Bonferroni over the frozen primary family (two-sided 95% family-wise)"
+    },
+    "primary_family": [
+      "D1.L_plus",
+      "D1.L_minus",
+      "D1.L_plus_minus",
+      "D1.Lex_plus_minus",
+      "D3.L_plus_random",
+      "D3.L_minus_random",
+      "D3.P_plus_random",
+      "D3.P_minus_random",
+      "D2.L_oracle_current",
+      "D2.L_oracle_none",
+      "D2.P_oracle_current"
+    ],
+    "delta_p": "1 / N_valid_EN_confusion_D1_positions",
+    "decision_rules": "docs/inference_cf/P2_R_MECHANISM_DIAGNOSIS_SPEC.md section 7 (frozen)"
+  },
+  "compute": {
+    "slurm_partition": "mig",
+    "gpus": 1,
+    "time_limit": "02:00:00",
+    "batch_size": 1,
+    "max_jobs": 1
+  }
+}

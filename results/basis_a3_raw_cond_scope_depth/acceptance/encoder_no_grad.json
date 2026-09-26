@@ -1,0 +1,14 @@
+{
+  "controller": null,
+  "direction_requires_grad": false,
+  "generated_token_count": 4,
+  "gradients_present_after": [],
+  "gradients_present_before": [],
+  "inference_mode_grad_disabled": true,
+  "mask_implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+  "optimizer": null,
+  "parameter_count": 1259,
+  "parameters_requiring_grad": [],
+  "schema_version": "basis_a3_encoder_no_grad_v1",
+  "status": "PASS"
+}

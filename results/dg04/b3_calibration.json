@@ -1,0 +1,45 @@
+{
+  "T": 1.9582403898239136,
+  "git_commit": "33799da7d207b905f025faa3a360f5c109d3b7e6",
+  "n_positions": 328,
+  "n_utterances": 300,
+  "provenance": {
+    "basis_artifact_hashes": {
+      "conditioning_residualized_local": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93",
+      "language_conditioning": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+      "raw_language_contrast": "sha256:b637493362f2ba319aef3d24f74f382334508cdc28f79fc7a062cd528cf3b2c8"
+    },
+    "config_hash": "sha256:e0993e984b0bb5556dfdb995d6945f4f6f337e3e6438621bbf21d70596bd6dcd",
+    "dataset_fingerprint": {
+      "composite": "sha256:3981d6a8134e8f73b49e1fc66451980a59d0f460759aab279a142ecb2f7310ab",
+      "files": {
+        "candidates_all.parquet": "sha256:343d10b8cdf3a29d026b2e1e9747a666ca2fc3d4027a428af9a0e67da4a0fdf3",
+        "poi_D-construct.parquet": "sha256:ed863f2184a856f685041b10cba5eeab01639d6a1e26318c4300d2cbcaccda15",
+        "poi_D-dev-select.parquet": "sha256:4a16bfac78de9ac4cb299e640dc67c6284bab59319d38c0add53e6bad998eb6f",
+        "role_D-construct.parquet": "sha256:5f81fc215caa1170f950fa24f075a2ca4e46a3150b44ccff8ba3a8f672d5b725",
+        "role_D-dev-select.parquet": "sha256:25a45f28c0e192c6b2d71bdd0eccbfe354ac1a4e0019cddd78168d86423d2109"
+      }
+    },
+    "git_commit": "33799da7d207b905f025faa3a360f5c109d3b7e6",
+    "layer": 24,
+    "model_id": "openai/whisper-large-v3",
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "slurm": {
+      "elapsed": "00:05:03",
+      "gpu": "nvidia_h100_80gb_hbm3_3g.40gb:1",
+      "job_ids": [
+        "50484"
+      ],
+      "node": "worker-mig-3g40gb-0",
+      "partition": "mig",
+      "state": "COMPLETED",
+      "stderr": "logs/cs_asr_dg04_frozen_baselines_50484.err",
+      "stdout": "logs/cs_asr_dg04_frozen_baselines_50484.log"
+    }
+  },
+  "role": "router-calib",
+  "s_mean": 1.6047061681747437,
+  "s_std": 1.9582403898239136,
+  "subset": "300 shortest by duration",
+  "tau": 1.203751802444458
+}

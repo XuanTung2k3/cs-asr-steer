@@ -1,0 +1,98 @@
+{
+  "schema_version": "basis_ablation_frozen_manifest_v1",
+  "status": "PLANNED_PRE_RUN",
+  "experiment": "BASIS-A",
+  "scientific_scope": "frozen/no-training direction-construction ablation",
+  "git_commit": "6c0fa30e50c23c5ddbdb9e534fde17fc7f997d77",
+  "git_commit_note": "pre-run code/spec freeze commit; manifest was committed before GPU evaluation",
+  "provenance": {
+    "implementation": "csasr.utils.provenance.stage_provenance plus csasr.lss.specfreeze-compatible frozen spec",
+    "provenance_version": "artifact-provenance-v1",
+    "resolved_config_hash": "3602b7a864316f4d3ff7721a9be480e2dbdddb44744302dbec5d83d06a99b3cb",
+    "code_config_snapshot_hash": "4f9927c77ef451d6a9bc2b80eaae9440883e6a7e915af0e9c9103d64b06a216b",
+    "test_snapshot_hash": "0c5b0d7f710f52c55560a73c1c22c5cd3d95ec410a10376c98733e799e4fcae7",
+    "source_snapshot_hash": "bab42882d3b03da60f53992be51746e7472674177a14a6fcc5269b5f881c3b5e"
+  },
+  "model": {
+    "id": "openai/whisper-large-v3",
+    "local_path": "/mnt/data/tungnx/whisper-large-v3",
+    "revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "dtype": "bfloat16",
+    "freeze_backbone": true
+  },
+  "site": {
+    "tensor": "decoder_post_cross_attn_residual",
+    "layer": 24,
+    "python_layer_index": 24,
+    "hook": "csasr.lss.sites.DecoderPostCrossAttnInterventionHook",
+    "norm_preserve": true,
+    "depth_rescale": false,
+    "eligible_positions": "all non-prefix positions; forced-prefix positions receive zero gain"
+  },
+  "basis": {
+    "artifact": "results/dg03/basis/steering_basis_v1_L24.json",
+    "raw_hash": "sha256:b637493362f2ba319aef3d24f74f382334508cdc28f79fc7a062cd528cf3b2c8",
+    "raw_normalized_hash": "sha256:1bcb2a7a15f665715703b3717e4ef50d23432e4df72d037739d646e689fdc542",
+    "local_hash": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93",
+    "conditioning_hash": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+    "rc_hash": "sha256:2142a7d4d69a7b54a5596bcca953d1966ce0244f3a6ed5feb1d8b459068be4c9",
+    "lc_hash": "sha256:b3aa31d521d79c93fae1c22599b42136d8b6cfbd191846f84cbde487e635a930",
+    "mixture_coefficients": {"a_local": 0.5, "a_cond": 0.5},
+    "nominal_scale_s_l": 8.931257754160319,
+    "rho_grid": [0.5, 1.0, 2.0]
+  },
+  "data": {
+    "dataset": "CS-Dialogue",
+    "role": "D-dev-select",
+    "utterances": 300,
+    "dialogues": 20,
+    "subset_fingerprint": "sha256:4a4ce18e7a368e60108fe1506ee6a70611d532d0821b376dc1ac8d483e2b4440",
+    "full_input_composite_fingerprint": "sha256:3981d6a8134e8f73b49e1fc66451980a59d0f460759aab279a142ecb2f7310ab",
+    "forbidden_roles": ["D-dev-confirm", "D-test"],
+    "calibration_role": null
+  },
+  "decoder": {
+    "regime": "free_decoding",
+    "task": "transcribe",
+    "language": "zh",
+    "do_sample": false,
+    "temperature": 0.0,
+    "num_beams": 1,
+    "max_new_tokens": 200,
+    "condition_on_prev_tokens": false
+  },
+  "metric_schema": "result_v1 via csasr.evaluation.canonical; overall WER=n/a (no frozen canonical overall WER)",
+  "planned_conditions": [
+    {"direction": "B0 Frozen", "rho": 0.0, "source": "REUSED DG-04"},
+    {"direction": "R Raw", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "L Local", "rho": [0.5, 1.0, 2.0], "source": "REUSED DG-04"},
+    {"direction": "C Conditioning", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "RC Raw+Conditioning", "rho": [0.5, 1.0, 2.0], "source": "NEW"},
+    {"direction": "LC Local+Conditioning", "rho": [0.5, 1.0, 2.0], "source": "REUSED DG-04"}
+  ],
+  "representation_pca": {
+    "source": "baseline free-decoding exact-site L24 final rows if naturally available",
+    "sampling_seed": 2408,
+    "max_vectors": 10000,
+    "population": "same D-dev-select 300; one deterministic final row per utterance",
+    "fit_rows_not_directions": true,
+    "projection_categories": "deferred unless existing unambiguous metadata is available",
+    "defer_without_compatible_cache": true
+  },
+  "geometry": {
+    "implementation": "csasr.experiments.basis_ablation.basis_geometry",
+    "version": "basis-ablation-geometry-v1",
+    "principal_angle_tolerance": 1e-10,
+    "effective_rank_tolerance": "machine epsilon * max(matrix shape) * largest singular value"
+  },
+  "batch_policy": {
+    "partition": "main",
+    "gpus": 1,
+    "gpu_request": "gpu:1",
+    "batch_size": 1,
+    "preflight": {"batch_1": 1, "failed_proposed_batch": 32, "failed_job_id": "51105", "failure": "Local transcripts differed; no scientific outputs accepted", "final_resolution": "batch 1 exact reference path", "utterances": 8, "conditions": ["Frozen", "Local"]},
+    "fallback": "Batch 1 is frozen after the batch-32 semantic mismatch; no scientific parameter changes."
+  },
+  "planned_output": "results/basis_ablation_frozen/",
+  "data_exposure": {"D-dev-select_only": true, "D-dev-confirm": false, "D-test": false}
+}

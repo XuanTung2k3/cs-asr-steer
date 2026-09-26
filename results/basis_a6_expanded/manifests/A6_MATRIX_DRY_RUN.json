@@ -1,0 +1,20 @@
+{
+  "schema_version": "basis_a6_matrix_dry_run_v1",
+  "status": "PASS",
+  "checks": {
+    "a6_f": true,
+    "a6_tt": true,
+    "total": true,
+    "baselines": true,
+    "duplicate_scientific_keys": true,
+    "atlas_execution_not_started": true
+  },
+  "counts": {
+    "a6_f": 46720,
+    "a6_tt": 23360,
+    "total": 70080,
+    "baselines": 16,
+    "one_regime": 23360
+  },
+  "scientific_execution": "NOT_STARTED"
+}

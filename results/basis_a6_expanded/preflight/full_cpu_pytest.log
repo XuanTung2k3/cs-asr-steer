@@ -1,0 +1,119 @@
+........................................................................ [  7%]
+........................................................................ [ 14%]
+........................................................................ [ 22%]
+........................................................................ [ 29%]
+........................................................................ [ 36%]
+........................................................................ [ 44%]
+........................................................................ [ 51%]
+............................................F........................... [ 58%]
+........................................................................ [ 66%]
+........................................................................ [ 73%]
+........................................................................ [ 81%]
+........................................................................ [ 88%]
+........................................................................ [ 95%]
+.........................................                                [100%]
+=================================== FAILURES ===================================
+______ test_synthetic_scoring_turns_known_boundaries_into_measured_error _______
+
+root = PosixPath('/tmp/pytest-of-tungnx/pytest-13/test_synthetic_scoring_turns_k0/artifacts_lss')
+synthetic_stubs = {'dev': (          pair_id  utterance_id  ... zh_utterance_id en_utterance_id
+0    dev_syn_0000  dev_syn_0000  ...    ...     unknown        test
+959  nat5h_alignment_v2  gate_syn_0119  ...     unknown        test
+
+[960 rows x 26 columns])}
+
+    def test_synthetic_scoring_turns_known_boundaries_into_measured_error(
+            root, synthetic_stubs):
+        """The gap that made automatic Gate A block: rendering was not scoring.
+    
+        The gate set's families are placed 30 ms early by construction, so the
+        published table must say 30 ms -- and Gate A must read it rather than
+        reporting missing calibration.
+        """
+        _publish_candidates(root, _candidate_rows(_manifest(30),
+                                                  ["existing_ctc", "whisper_dtw"]))
+        code, status = _run(root, only="synthetic," + DEFAULT_PARTS)
+    
+        scores = pd.read_parquet(root / autoevidence.SYNTHETIC_SCORES_FILE)
+        gate_rows = scores[scores["purpose"] == "gate"]
+        assert len(gate_rows), "the gate set was not scored"
+        assert set(gate_rows["family"]) == {"existing_ctc", "whisper_dtw"}
+        # only the convention the pipeline consumes reaches the gate's table
+        assert set(scores["convention"]) == {"unit_edge_canonical"}
+        dtw = gate_rows[gate_rows["family"] == "whisper_dtw"]
+        assert dtw["median_abs_error_ms"].max() == pytest.approx(30.0, abs=1e-3)
+    
+        names = {c["name"]: c for c in status["gate"]["criteria"]}
+>       assert "synthetic_boundaries_scored" in names
+E       AssertionError: assert 'synthetic_boundaries_scored' in {'accepted_rejected_accounted_rate': {'comparison': '>=', 'group': 'coverage', 'name': 'accepted_rejected_accounted_ra...'comparison': 'report', 'group': 'reporting', 'name': 'aligner_selection_pred_start_offset', 'passed': True, ...}, ...}
+
+tests/test_lss_l1b_production_paths.py:329: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-09-21 03:33:42,233 | INFO    | csasr | stage=l1b_valid seed=42 config=/home/tungnx/cs-asr-steer/configs/lss/l1b_valid.yaml
+2026-09-21 03:33:42,704 | INFO    | csasr | mode=automatic intent=explicit parts=['consensus', 'coverage', 'evidence', 'gate', 'jitter', 'synthetic']
+2026-09-21 03:33:43,042 | INFO    | csasr | gate generation 1: 15 of 15 gate-pool sources are unexposed (0 already read)
+2026-09-21 03:33:43,246 | INFO    | csasr | synthetic sets: dev=120 (reused from l1a, sha256 39b4597ad4d9) gate=120 (generation 1), sources disjoint=True; rendering is not scoring
+2026-09-21 03:33:43,767 | INFO    | csasr | synthetic dev: 120 items, 960 candidate rows, 6 score rows
+2026-09-21 03:33:44,310 | INFO    | csasr | synthetic gate: 120 items, 960 candidate rows, 6 score rows
+2026-09-21 03:33:44,695 | INFO    | csasr | convention comparison (canonical vs legacy midpoint):
+      family purpose            reference_kind                   metric_semantics          convention     edge   n  median_signed_offset_ms  median_absolute_offset_ms  p90_absolute_offset_ms
+existing_ctc     dev constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical      end 120                      0.0                        0.0                     0.0
+existing_ctc     dev constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical    start 120                      0.0                        0.0                     0.0
+existing_ctc     dev constructed_exact_lexical absolute_lexical_boundary_accuracy     midpoint_legacy combined 120                      0.0                        0.0                     0.0
+existing_ctc    gate constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical      end 120                      0.0                        0.0                     0.0
+existing_ctc    gate constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical    start 120                      0.0                        0.0                     0.0
+existing_ctc    gate constructed_exact_lexical absolute_lexical_boundary_accuracy     midpoint_legacy combined 120                      0.0                        0.0                     0.0
+ whisper_dtw     dev constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical      end 120                      0.0                        0.0                     0.0
+ whisper_dtw     dev constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical    start 120                      0.0                        0.0                     0.0
+ whisper_dtw     dev constructed_exact_lexical absolute_lexical_boundary_accuracy     midpoint_legacy combined 120                      0.0                        0.0                     0.0
+ whisper_dtw    gate constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical      end 120                    -30.0                       30.0                    30.0
+ whisper_dtw    gate constructed_exact_lexical absolute_lexical_boundary_accuracy unit_edge_canonical    start 120                    -30.0                       30.0                    30.0
+ whisper_dtw    gate constructed_exact_lexical absolute_lexical_boundary_accuracy     midpoint_legacy combined 120                    -30.0                       30.0                    30.0
+2026-09-21 03:33:44,698 | INFO    | csasr | synthetic scores:
+         schema_version       family          convention     edge purpose            reference_kind                   metric_semantics  num_boundaries  within_50ms  within_100ms  p90_abs_error_ms  median_abs_error_ms  median_signed_error_ms
+lss_reference_scores_v2 existing_ctc unit_edge_canonical    start     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2 existing_ctc unit_edge_canonical      end     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2 existing_ctc unit_edge_canonical combined     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical    start     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical      end     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical combined     dev constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2 existing_ctc unit_edge_canonical    start    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2 existing_ctc unit_edge_canonical      end    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2 existing_ctc unit_edge_canonical combined    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0               0.0                  0.0                     0.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical    start    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0              30.0                 30.0                   -30.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical      end    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0              30.0                 30.0                   -30.0
+lss_reference_scores_v2  whisper_dtw unit_edge_canonical combined    gate constructed_exact_lexical absolute_lexical_boundary_accuracy             120          1.0           1.0              30.0                 30.0                   -30.0
+2026-09-21 03:34:04,895 | INFO    | csasr | operating-tolerance selection on synthetic development boundaries:
+ tolerance_ms purpose    instrument  accepted_spans  rejected_units  items_scored  min_boundaries  eligible   n  median_abs_error_ms  p90_abs_error_ms  median_signed_error_ms  within_100ms
+         50.0     dev synthetic_dev             480               0           120              50      True 120                  0.0               0.0                     0.0           1.0
+        100.0     dev synthetic_dev             480               0           120              50      True 120                  0.0               0.0                     0.0           1.0
+        200.0     dev synthetic_dev             480               0           120              50      True 120                  0.0               0.0                     0.0           1.0
+        300.0     dev synthetic_dev             480               0           120              50      True 120                  0.0               0.0                     0.0           1.0
+2026-09-21 03:34:04,981 | INFO    | csasr | operating tolerance selected: 300.0 ms by largest swept tolerance whose accepted spans satisfy median <= 100.0 ms and p90 <= 200.0 ms, measured on synthetic_dev known boundaries (canonical unit-edge convention, worse edge per item)
+2026-09-21 03:34:09,200 | INFO    | csasr | tolerance sweep:
+ tolerance_ms  accepted  accepted_en  accepted_zh  en_retention  zh_retention  rejected  high_or_medium
+         50.0       120           60           60           1.0           1.0         0             120
+        100.0       120           60           60           1.0           1.0         0             120
+        200.0       120           60           60           1.0           1.0         0             120
+        300.0       120           60           60           1.0           1.0         0             120
+2026-09-21 03:34:11,739 | INFO    | csasr | independent valid aligner families: 2 (existing_ctc,whisper_dtw); rejected: none
+2026-09-21 03:34:11,741 | ERROR   | csasr | blocked_unauthenticated_synthetic_evidence: identity_mismatch: differs in ['code_config_sha256']
+2026-09-21 03:34:12,623 | INFO    | csasr | primary spans per role: {'D-construct': 120}
+2026-09-21 03:34:12,623 | INFO    | csasr | full-role data sufficiency: {'D-construct': {'bilingual': 30, 'en_targets': 60}}
+2026-09-21 03:34:12,714 | INFO    | csasr | next action 1 [accuracy]: re-run the `synthetic` part; the score table on disk is unsigned, stale or malformed
+2026-09-21 03:34:12,714 | INFO    | csasr | next action 2 [robustness]: the mask does not survive the boundary error it is allowed to have; widening padding or reducing erosion changes the claim, so this is a repair-or-restrict decision from `failure_response`
+2026-09-21 03:34:12,714 | INFO    | csasr | next action 3 [optional]: the optional manual audit is a second opinion on boundary accuracy only: --prepare-manual-audit. It repairs none of the items above except a missing human verdict
+2026-09-21 03:34:12,720 | INFO    | csasr | spans not frozen: Gate A is blocked
+2026-09-21 03:34:12,819 | INFO    | csasr | Gate A: BLOCKED
+=============================== warnings summary ===============================
+tests/test_basis_a3_encoder_site.py::test_encoder_site_reconstructs_post_self_attention_before_ffn
+  /home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+    warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+
+tests/test_steer_sweep.py: 14 warnings
+  /home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/jit/_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_lss_l1b_production_paths.py::test_synthetic_scoring_turns_known_boundaries_into_measured_error

@@ -1,0 +1,87 @@
+{
+ "schema": "p2rj_audit_v1",
+ "manifest_hash": "sha256:c020cf6238561c558a5922135674b851e793e2c8258c73117b78a8b119d7f38e",
+ "checks": {
+  "manifest_hash": true,
+  "sources_match_manifest_commit": true,
+  "decision_sources_unchanged": true,
+  "config_hash": true,
+  "positions_hash": true,
+  "runtime_completed": true,
+  "utterances_are_p2r_population": true,
+  "p2r_run3_manifest": true,
+  "no_gradient_into_edit_functions": true,
+  "no_steering_hook_in_runner": true,
+  "rows_ok_bf16": true,
+  "rows_ok_fp32": true,
+  "completeness_180_each_pass": true,
+  "zero_probe_value_identity_all": true,
+  "competitor_rederived_from_p2r_rows": true,
+  "baseline_margin_equals_p2r": true,
+  "state_mismatch_within_frozen_limit": true
+ },
+ "notes": {
+  "sources_changed_since_freeze": [],
+  "state_identity_all": true,
+  "state_mismatch_positions": 0
+ },
+ "bf16": {
+  "Q50": [
+   0.6137254901960785,
+   [
+    0.442156862745098,
+    0.7607965686274517
+   ]
+  ],
+  "K_plus": [
+   -0.010931435174945126,
+   [
+    -0.02162239928602769,
+    -0.0013242037678021176
+   ]
+  ],
+  "leverage": "UNRESOLVED",
+  "alignment": "MISALIGNED",
+  "label": "P2_RJ_STILL_AMBIGUOUS",
+  "median_rho": 0.5831361888617512,
+  "median_gap": 10.61072826385498,
+  "median_A": 5.072467053481445
+ },
+ "fp32": {
+  "Q50": [
+   0.6137254901960785,
+   [
+    0.442156862745098,
+    0.7607965686274517
+   ]
+  ],
+  "K_plus": [
+   -0.010635587282679515,
+   [
+    -0.021493653854448423,
+    -0.0006341247550541115
+   ]
+  ],
+  "leverage": "UNRESOLVED",
+  "alignment": "MISALIGNED",
+  "label": "P2_RJ_STILL_AMBIGUOUS",
+  "median_rho": 0.5826763206205077,
+  "median_gap": 10.597052574157715,
+  "median_A": 5.064427380148326
+ },
+ "fd_pearson_pooled": 0.9184943764212329,
+ "precision_median_cos": 0.9998183102649756,
+ "agreement_with_analysis": {
+  "bf16.Q50": true,
+  "bf16.K_plus": true,
+  "bf16.classes": true,
+  "fp32.Q50": true,
+  "fp32.K_plus": true,
+  "fp32.classes": true,
+  "fd_estimate": true,
+  "precision_cos": true,
+  "diagnosis": true
+ },
+ "independent_diagnosis": "P2_RJ_STILL_AMBIGUOUS",
+ "verdict": "P2_RJ_AUDIT: PASS"
+}

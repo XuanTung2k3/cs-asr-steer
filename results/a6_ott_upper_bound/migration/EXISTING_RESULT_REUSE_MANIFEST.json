@@ -1,0 +1,232 @@
+{
+  "schema_version": "a6_ott_existing_result_reuse_manifest_v1",
+  "recorded": "2026-09-21",
+  "superseded_experiment": "BASIS-A6 expanded (70,080-cell A6-F/A6-TT atlas)",
+  "new_experiment": "A6-OTT Oracle Per-Sample Test-Time Steering upper-bound search",
+  "implementation_commit_of_artifacts": "b7cf331a087a61c2c658bc14a837a78b67eb1586",
+  "reuse_rule": "Reuse ONLY if ALL scientifically relevant fields match: model revision, dataset, exact utterance id, side, layer, steering family, oracle per-sample construction, direction construction semantics, intervention site, local-mask semantics, rho, decode mode, baseline-hypothesis analysis semantics, NormPreserve, metric version, oracle information budget. Conditioning-CS additionally requires identical c_E/c_M semantics, identical baseline-hypothesis sequence, identical CS-position definition.",
+  "firewall": "During Phase-A selection, outcome metrics of confirmation/SEAME artifacts MUST NOT be loaded. Existence may be detected via metadata/IDs/hashes/manifests only. Reuse of Phase-B outcomes only AFTER Phase-A candidates are frozen; SEAME outcomes only AFTER final freeze.",
+  "classes": [
+    "REUSE_EXACT",
+    "NEED_RUN",
+    "INVALID_OLD_RESULT",
+    "PARTIAL_REQUIRES_VALIDATION"
+  ],
+  "entries": [
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|ascend_eval|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/ascend_eval/greedy.json",
+      "artifact_sha256": "sha256:a74d7ef8944919138e16e67b38056f10d6bbfc6ffa5ca37f6de288a3f7b22835",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|ascend_eval|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/ascend_eval/official_standard.json",
+      "artifact_sha256": "sha256:717f91b0298aa2b1d91d96d1d793f8bf86d96d2b3860a16b05bd99637f6fb5c9",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|cs_dialogue_dev_select|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/cs_dialogue_dev_select/greedy.json",
+      "artifact_sha256": "sha256:6ab8600c8eb6708f6f7deefdb307dd6f2f535fd54042d2b30036ffe2c971f854",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|cs_dialogue_dev_select|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/cs_dialogue_dev_select/official_standard.json",
+      "artifact_sha256": "sha256:f161b7e7b705f6879d604ff4f9e4d7fea1eba7204122c40a9b83e1b35336f15b",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|seame_dev_man|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_man/greedy.json",
+      "artifact_sha256": "sha256:adf24470c86646d263e81dce43d99308866eacb0283ac21d4302a361dbbb20b5",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|seame_dev_man|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_man/official_standard.json",
+      "artifact_sha256": "sha256:d630c9340707644416df608a17b6b7d3b6697e5d95ac64eabc360a5c42d3c038",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|seame_dev_sge|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_sge/greedy.json",
+      "artifact_sha256": "sha256:4fa81655b1998ee0bb10fb951fc1d19e814e0371dbd386a8a077bcf9f59fb9a4",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|qwen3_asr_1p7b|seame_dev_sge|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_sge/official_standard.json",
+      "artifact_sha256": "sha256:6b75d7b33ecd01bcc89693772cf6914e5ab521455deab4923350395910da1773",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|ascend_eval|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/ascend_eval/greedy.json",
+      "artifact_sha256": "sha256:47c1a94710f64f24f07ce11bcaa8564d6ed05fa00c2be5632f86e8f02b29c6c9",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|ascend_eval|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/ascend_eval/official_standard.json",
+      "artifact_sha256": "sha256:337e28f2d4e10e50aa542932deb3ab3e7b6edf82abb27dd0c8481b067c86fef7",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|cs_dialogue_dev_select|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/cs_dialogue_dev_select/greedy.json",
+      "artifact_sha256": "sha256:2bfab6ac79bcc94b81e31ecf09d2c5fb63f6b55d2e51736d420675b3bb4b3de8",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|cs_dialogue_dev_select|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/cs_dialogue_dev_select/official_standard.json",
+      "artifact_sha256": "sha256:b0826276f582673f754e935b0816d89d001482a7fc96509911ff0f538da34d7c",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|seame_dev_man|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/seame_dev_man/greedy.json",
+      "artifact_sha256": "sha256:82eb78a26f40d4fb8c3e93b78980278a06feb3a5740efd9cd55844b3c1561876",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|seame_dev_man|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/seame_dev_man/official_standard.json",
+      "artifact_sha256": "sha256:8d152f055269d33224b5ad2cf55b5093f4a202696b4ea673a65f0575fd5ad5fa",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|seame_dev_sge|greedy",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/seame_dev_sge/greedy.json",
+      "artifact_sha256": "sha256:1022de7912448f3ea2134d61bff743e4b1e1208fcbd1585b2c1b04c7339bebf2",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "baseline|whisper|seame_dev_sge|official_standard",
+      "classification": "REUSE_EXACT",
+      "artifact_path": "results/basis_a6_expanded/baselines/whisper/seame_dev_sge/official_standard.json",
+      "artifact_sha256": "sha256:57bdf6e7544271f9ecd71b6637effeb2aa53ac22d1f7b27ae1c80b9265099b79",
+      "original_job_id": "53318-53326 (preflight/baseline phase)",
+      "reason": "Unsteered baseline free-decode; identical between BASIS-A6 and A6-OTT for the same model/dataset/decode mode. Needed for A6-OTT baseline-hypothesis analysis and as comparison reference. Load gated on model-revision + panel-fingerprint + decode hash.",
+      "firewall_note": "seame_dev_* and ascend_eval/cs confirmation baselines are metadata-visible; their OUTCOME metrics must not be read during Phase-A selection."
+    },
+    {
+      "logical_cell": "oracle_tt|whisper|cs_dialogue|greedy|encoder|L00|add_unique(+minus_shared/raw/us present)",
+      "classification": "PARTIAL_REQUIRES_VALIDATION",
+      "artifact_path": "results/basis_a6_expanded/oracle_tt/cache/whisper/cs_dialogue_dev_select/greedy/encoder/L00/DIRECTION_CACHE.json",
+      "run_manifest": "results/basis_a6_expanded/oracle_tt/runs/whisper/cs_dialogue_dev_select/greedy/encoder/L00.manifest.json",
+      "artifact_sha256": "sha256:2d7b6c9f10d5d44ea2fd6d67666d69aad19d5db9828962e1b3712473d7dce643",
+      "direction_bundles": {
+        "whisper|cs_dialogue_dev_select|encoder|add_unique|greedy": "sha256:affe5a328c2a97d1f925288b7edb1bec8cb7d58a9cd1c4af518ac9a59fbf69d9",
+        "whisper|cs_dialogue_dev_select|encoder|minus_shared|greedy": "sha256:416f54de44af4b33d238542950693323bf9227b72a60d534e32317ffd996f5d5",
+        "whisper|cs_dialogue_dev_select|encoder|raw|greedy": "sha256:89167ca68f8ecd37d9961d138f1419d51894e18fe81d7a8fcc7b582a610bd3eb",
+        "whisper|cs_dialogue_dev_select|encoder|unique_minus_shared|greedy": "sha256:fa790bab2ab863ee20388312032aa9f5db4ad598e7a352c321932469b668bc03"
+      },
+      "reusable_component": "per-sample direction CACHE (vectors keyed by utterance_id) for Add-Unique encoder; construction reuse only.",
+      "NOT_reusable_component": "aggregate decoded result rows (jsonl) were aggregated over the full CS dev-select panel (~300), NOT the A6-OTT CS_SEARCH_20 subset; the Phase-A aggregate must be recomputed on the frozen 40-utt search subset.",
+      "validation_required": [
+        "oracle budget = location-only (gold_leakage=false)",
+        "local-mask semantics == A6-OTT encoder embedded-English frames",
+        "rank / dynamic-rank policy",
+        "NormPreserve",
+        "baseline-hypothesis analysis semantics",
+        "utterance_id ∈ frozen CS_SEARCH_20 (after outcome-blind freeze)",
+        "rho subset {0.5,1,2} ⊆ constructed set (construction is rho-independent)",
+        "metric version == canonical"
+      ],
+      "reason": "Add-Unique encoder is an A6-OTT family; whisper/cs/greedy/encoder L0,L1 per-sample directions already constructed. Reuse SAVES construction, not the SEARCH-subset decode."
+    },
+    {
+      "logical_cell": "oracle_tt|whisper|cs_dialogue|greedy|encoder|L01|add_unique(+minus_shared/raw/us present)",
+      "classification": "PARTIAL_REQUIRES_VALIDATION",
+      "artifact_path": "results/basis_a6_expanded/oracle_tt/cache/whisper/cs_dialogue_dev_select/greedy/encoder/L01/DIRECTION_CACHE.json",
+      "run_manifest": null,
+      "artifact_sha256": "sha256:4a5fb5175e14392f85a03c94ee7c5f63781fde588ea63ba838f4540d0aa889f7",
+      "direction_bundles": {
+        "whisper|cs_dialogue_dev_select|encoder|add_unique|greedy": "sha256:7db38199cd0270fabaa92415e685f61fa511eceeaa4c9e131ca6f6015bbe3d91",
+        "whisper|cs_dialogue_dev_select|encoder|minus_shared|greedy": "sha256:32f45497479db7fdc2c6a30c6aa890f07610f2fa3187f3b9130f6eb8dfdf0b0a",
+        "whisper|cs_dialogue_dev_select|encoder|raw|greedy": "sha256:66577324cd110a7c5c6671d0b3065f7e986c7355a267e1a8ca8210fc79b8384e",
+        "whisper|cs_dialogue_dev_select|encoder|unique_minus_shared|greedy": "sha256:aa43c2646652f963470e442e40802e710f8462063095b0cfaf1ca0b7d2a77acf"
+      },
+      "reusable_component": "per-sample direction CACHE (vectors keyed by utterance_id) for Add-Unique encoder; construction reuse only.",
+      "NOT_reusable_component": "aggregate decoded result rows (jsonl) were aggregated over the full CS dev-select panel (~300), NOT the A6-OTT CS_SEARCH_20 subset; the Phase-A aggregate must be recomputed on the frozen 40-utt search subset.",
+      "validation_required": [
+        "oracle budget = location-only (gold_leakage=false)",
+        "local-mask semantics == A6-OTT encoder embedded-English frames",
+        "rank / dynamic-rank policy",
+        "NormPreserve",
+        "baseline-hypothesis analysis semantics",
+        "utterance_id ∈ frozen CS_SEARCH_20 (after outcome-blind freeze)",
+        "rho subset {0.5,1,2} ⊆ constructed set (construction is rho-independent)",
+        "metric version == canonical"
+      ],
+      "reason": "Add-Unique encoder is an A6-OTT family; whisper/cs/greedy/encoder L0,L1 per-sample directions already constructed. Reuse SAVES construction, not the SEARCH-subset decode."
+    },
+    {
+      "logical_cell": "fixed|*|* (all corpus-level fixed-direction cells)",
+      "classification": "INVALID_OLD_RESULT",
+      "artifact_path": "results/basis_a6_expanded/fixed/",
+      "reason": "Corpus-level fixed-direction results (dataset-wide vectors). A6-OTT is Oracle Per-Sample ONLY. Fixed-direction Add-Unique/Cond etc. must NEVER be reused for per-sample Add-Unique/Conditioning-CS. Retained as evidence; not deleted.",
+      "count_files": 1439
+    },
+    {
+      "logical_cell": "oracle_tt aggregate rows over full CS dev-select (~300) panel",
+      "classification": "INVALID_OLD_RESULT",
+      "artifact_path": "results/basis_a6_expanded/oracle_tt/runs/whisper/cs_dialogue_dev_select/greedy/encoder/*.jsonl",
+      "reason": "Aggregated over the wrong selection subset for A6-OTT Phase-A (which uses CS_SEARCH_20). Underlying per-sample directions ARE reusable (see PARTIAL entry); the aggregate row is not."
+    },
+    {
+      "logical_cell": "ALL OTHER A6-OTT logical cells",
+      "classification": "NEED_RUN",
+      "scope": "All Qwen oracle-TT; all decoder families (Add-Unique decoder, Conditioning-CS decoder) for both models; whisper encoder layers L2..L31; ASCEND/SEAME oracle-TT; all official_standard oracle-TT; all Phase-B/Phase-C steered evals.",
+      "reason": "Not present on disk (atlas completed only 1 of 70,080 rows; oracle-TT completed only whisper/cs/greedy/encoder L0,L1)."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "p2_frozen_configuration_v1",
+  "verdict": "P2_VALID_CONFIGURATION_SELECTED",
+  "project_state": "READY_FOR_P3_LOCKED_EVALUATION",
+  "open_decision": "Human review before P3: the P2-B mechanism controls do not support the proposed mechanism (see docs/inference_cf/P2_REPORT.md section 'P2-B'). P3 is not started.",
+  "selected": {"layer": 16, "alpha": 2.0, "gate": "ER", "dose": "id", "direction_sign": 1.0,
+               "name": "L16_a2_ER_id_pos"},
+  "method": {
+    "detector": "g = E * R_B (frozen R2: LS-B null-corrected local support on the 1.0 s max-attention window; BC-B [P_M - P_E]_+, partition whisper_han_ascii_v1)",
+    "dose": "s_t = alpha * g_t (phi_id), no clipping or thresholding",
+    "direction": "d = norm(hE - hB), tiny/nonfinite fallback 1e-4",
+    "site": "decoder layer 16 post-cross-attention residual (pre-FFN), canonical DG-02 hook, NormPreserve, positions < 4 never edited",
+    "execution": "experiments/inference_cf_cached.py cached_decode, bf16, greedy, max_new_tokens 200, forced-ZH prompt [50258,50260,50360,50364], generate() suppression",
+    "comparators": {"matched_baseline": "B0M_L16 = alpha 0 cached_decode (same path)", "B0_AUTO": "generate(language=None)", "B0": "cached_greedy forced-ZH (diagnostic)", "B1": "cached_greedy forced-EN"}
+  },
+  "selection_evidence": {
+    "spec": "docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md (v1 + v1.1 amendment section 11)",
+    "config": "configs/inference_cf/p2_compact_development.json",
+    "final_summary": "results/inference_cf/p2_final_summary.json",
+    "final_audit": "results/inference_cf/p2_final_audit.json",
+    "role": "D-dev-select, 300 utterances / 20 dialogues (R2 panel)",
+    "dpier_errors_vs_matched": 2,
+    "pier_vs_matched_ci95": [0.0, 0.002653987779965522],
+    "pier_vs_B0_AUTO_delta": -0.08156966490299822,
+    "pier_vs_B0_AUTO_ci95": [-0.13267881032314446, -0.033610429817860166]
+  },
+  "attempted_settings": {
+    "P2-A r1": ["L16_a0.5_ER_id_pos", "L16_a1_ER_id_pos", "L16_a2_ER_id_pos", "L24_a0.5_ER_id_pos", "L24_a1_ER_id_pos", "L24_a2_ER_id_pos"],
+    "P2-B (not selectable)": ["L16_a2_one_id_pos", "L16_a0.311047_one_id_pos", "L16_a2_E_id_pos", "L16_a2_R_id_pos", "L16_a2_cf_id_pos", "L16_a2_ER_id_neg"],
+    "P2-C": ["L16_a0.5_ER_sqrt_pos", "L16_a1_ER_sqrt_pos", "L16_a2_ER_sqrt_pos"],
+    "P2-A attempt 1 (INVALID, unused)": "results/inference_cf/p2_A_L16, p2_A_L24"
+  },
+  "jobs": {"P2-A r1": ["54821", "54822"], "P2-B": "54824", "P2-C": "54825", "P2-A attempt 1 (invalid)": ["54803", "54804"]},
+  "manifests": {
+    "results/inference_cf/p2_A_r1_L16": "sha256:60bb8115afd9eb6ae0d3c43dc9b2f54ea63dce7c74c5ca097976596e29460587",
+    "results/inference_cf/p2_A_r1_L24": "sha256:0d377be5cbf6f73044379057637856feeda5e9e574a522269c0be611d6583a4a",
+    "results/inference_cf/p2_B": "sha256:bb07a502ef9989c13668cbda1cd747fa30a84619598a2ad8ae32c76ba0924a80",
+    "results/inference_cf/p2_C": "sha256:64d30a6f1087095d5d3536d932f12bc626bd85e17e5ddd6010e5fba3ceda9f0c"
+  },
+  "code_commits": {"P2-A r1": "04d2383", "P2-B/C": "816b385"}
+}

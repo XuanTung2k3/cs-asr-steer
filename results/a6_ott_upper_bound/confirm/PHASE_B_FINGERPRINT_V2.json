@@ -1,0 +1,7 @@
+{
+  "manifest_sha256": "sha256:d328969a7fe9dcd51e050d44ccd6eb6db32556561ef5032716c597c5595585be",
+  "phase_a_immutable": "sha256:20ca7e93c8823934f373b9107eb63650b50cd087178960dacac45951e61e235b",
+  "schema_version": "a6_ott_phase_b_fingerprint_v2",
+  "status": "IMMUTABLE",
+  "supersedes": "sha256:222716243ad1ad696cc56e134e0dfe9346ed6a58b8e7d0bc1f8f1c2af0b62b11"
+}

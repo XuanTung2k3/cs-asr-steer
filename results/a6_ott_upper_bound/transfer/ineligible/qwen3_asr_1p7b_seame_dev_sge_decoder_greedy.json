@@ -1,0 +1,35 @@
+{
+  "dataset": "seame_dev_sge",
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "phase": "C",
+  "rows": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_01750|add_unique|decoder|13|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_01750|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02604|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03157|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "schema_version": "a6_ott_ineligible_v1",
+  "side": "decoder",
+  "status": "PASS"
+}

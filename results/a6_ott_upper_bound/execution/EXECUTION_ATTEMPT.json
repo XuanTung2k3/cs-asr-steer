@@ -1,0 +1,42 @@
+{
+  "schema_version": "a6_ott_execution_attempt_v1",
+  "status": "BLOCKED",
+  "recorded": "2026-09-21",
+  "implementation_commit": "4e90551",
+  "result_namespace": "results/a6_ott_upper_bound",
+  "jobs_at_start": [],
+  "jobs_at_final_sync": [],
+  "superseded_jobs_cancelled_this_attempt": [],
+  "new_jobs_submitted": [
+    {"job_id": "53418", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53419", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53421", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53422", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53423", "model": "whisper", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53424", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "FAILED_BEFORE_SEARCH"},
+    {"job_id": "53425", "model": "whisper", "purpose": "physical_acceptance", "status": "PASS"},
+    {"job_id": "53426", "model": "qwen3_asr_1p7b", "purpose": "physical_acceptance", "status": "PASS"}
+  ],
+  "result_index": {
+    "exact_baselines_reused": 16,
+    "validated_direction_construction_reuse": 12,
+    "exact_phase_a_steered_rows": 0,
+    "phase_a_search_rows_remaining": {
+      "whisper": 11520,
+      "qwen3_asr_1p7b": 12800
+    }
+  },
+  "blocker": {
+    "kind": "IMPLEMENTATION_GAP",
+    "message": "Physical executor and Slurm launchers are implemented and both real-model acceptance jobs pass, but Phase-A cannot start: frozen CS Search IDs lack an accepted acoustic oracle span in the canonical D-dev-select loader. The first failing frozen ID is ZH-CN_U0011_S0_758; its A group is empty before any direction construction.",
+    "unsafe_alternative_rejected": "Using a different acceptance panel, a corpus/fixed direction, a guessed time span, or the superseded large atlas would violate the frozen Search IDs or oracle information budget.",
+    "required_before_execution": [
+      "Repair or provide accepted oracle span metadata for all frozen CS_SEARCH_20 IDs without changing the frozen IDs.",
+      "Re-run the result-first Phase-A preflight, then submit only the four full-depth model-resident shards per model."
+    ]
+  },
+  "artifacts_preserved": [
+    "results/a6_ott_upper_bound/migration/",
+    "results/basis_a6_expanded/"
+  ]
+}

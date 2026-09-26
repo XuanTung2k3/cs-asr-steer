@@ -1,0 +1,5 @@
+{
+  "max_principal_angle_deg": 3.078324659199975e-06,
+  "max_projection_frobenius_distance": 1.082181220903058e-15,
+  "statement": "RAW+COND and LOCAL+COND span the same 2D steering subspace within numerical precision; residualization changes coordinate geometry."
+}

@@ -1,0 +1,40 @@
+{
+  "ascend_confirm": {
+    "FULLY_ELIGIBLE": 200,
+    "acoustic_fully_eligible": 200,
+    "structurally_ineligible_acoustic": 0,
+    "structurally_ineligible_transcript": 0,
+    "transcript_fully_eligible": 200
+  },
+  "cs_confirm": {
+    "FULLY_ELIGIBLE": 128,
+    "acoustic_fully_eligible": 128,
+    "structurally_ineligible_acoustic": 152,
+    "structurally_ineligible_transcript": 0,
+    "transcript_fully_eligible": 280
+  },
+  "schema_version": "a6_ott_eligibility_summary_v1",
+  "seame": {
+    "SEAME-man": {
+      "FULLY_ELIGIBLE": 49,
+      "acoustic_fully_eligible": 50,
+      "structurally_ineligible_acoustic": 0,
+      "structurally_ineligible_transcript": 1,
+      "transcript_fully_eligible": 49
+    },
+    "SEAME-sge": {
+      "FULLY_ELIGIBLE": 49,
+      "acoustic_fully_eligible": 50,
+      "structurally_ineligible_acoustic": 0,
+      "structurally_ineligible_transcript": 1,
+      "transcript_fully_eligible": 49
+    }
+  },
+  "source": {
+    "accepted_cs_loader": "experiments.basis_a4_qwen._load_cs_eval_spans",
+    "accepted_cs_span_map_hash": "sha256:813e4fb8bf3fded5d9ef307b26aaf4318d30d71f4b605453e46c3024fb4ede30",
+    "outcome_artifacts_loaded": false,
+    "phase_b_manifest": "sha256:b2887043bd183fbab7d44ed16a75a4d45ae8ad0d8e730e5a8ab803c79f9a665b"
+  },
+  "status": "PASS"
+}

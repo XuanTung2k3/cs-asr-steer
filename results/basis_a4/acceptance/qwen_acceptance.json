@@ -1,0 +1,42 @@
+{
+  "schema_version": "basis_a4_qwen_acceptance_v1",
+  "status": "PASS",
+  "checks": {
+    "layer_resolver": true,
+    "exact_encoder_site": true,
+    "exact_decoder_site": true,
+    "rho0_transcript_identity": true,
+    "hook_off_baseline_identity": true,
+    "norm_preserve": true,
+    "padding_exclusion": true,
+    "decoder_prompt_audio_prefix_exclusion": true,
+    "global_mask_correctness": true,
+    "oracle_local_mask_correctness": true,
+    "encoder_local_time_span_mapping": true,
+    "deterministic_decoding": true,
+    "no_gradients": true,
+    "direction_normalization": true,
+    "vector_hash_reproducibility": true,
+    "english_chinese_states_distinct": true,
+    "cs_local_nonzero_encoder": true,
+    "cs_local_nonzero_decoder": true,
+    "cs_local_semantic_equality": true,
+    "cs_local_prefix_exclusion": true,
+    "cs_local_decoder_subset": true,
+    "cs_local_encoder_subset": true
+  },
+  "cache_policy": "OFF",
+  "cache_identity_evidence": false,
+  "model_revision": "sha256:5d87c842f212c25fef15bbb1d300fbbb5fafc98eb97fc37f01fcfbf2ce3453e8",
+  "git_commit": "45a300d5629409fd592193a0bc7e12b1796221f6",
+  "pytest_command": [
+    "/home/tungnx/miniconda3/envs/acl1/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_basis_a4_qwen.py"
+  ],
+  "log": "results/basis_a4/acceptance/qwen_acceptance.log",
+  "local_trace": "results/basis_a4/acceptance/qwen_local_mask_traces.json",
+  "local_trace_sha256": "ceb7f034e060f9854733c308b5a99364587e2626e9107b89f651a98a914de522"
+}

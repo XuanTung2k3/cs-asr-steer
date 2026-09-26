@@ -1,0 +1,17 @@
+BASIS-A3 focused CPU test log
+timestamp: 2026-09-10T02:20:00Z (recorded during post-run audit)
+git_commit: f5a7efa14ef207dd718f3e7e190884d3b3a10e5f
+command: LD_LIBRARY_PATH=/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-} /home/tungnx/miniconda3/envs/acl1/bin/python -m pytest -q tests/test_basis_a3_encoder_site.py tests/test_basis_a3_protocol.py
+
+output:
+.....                                                                    [100%]
+=============================== warnings summary ===============================
+tests/test_basis_a3_encoder_site.py::test_encoder_site_reconstructs_post_self_attention_before_ffn
+  UserWarning: [Errno 28] No space left on device. joblib will operate in serial mode
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 1 warning (duration not captured in the recovered terminal transcript)
+
+exit_code: 0
+passed: 5
+failed: 0
+acceptance_scope: focused CPU unit/protocol tests only; real-model acceptance checks were not run after the scientific snapshot mismatch was confirmed.

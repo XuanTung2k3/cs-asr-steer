@@ -1,0 +1,21 @@
+{
+  "eligible_epochs": [
+    1,
+    2,
+    3
+  ],
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive canonical net correction utility then PIER gain then lower realized intervention energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg05/controller/checkpoint_epoch3.pt",
+  "selected_checkpoint_sha256": "sha256:6d9390dee19097110bbe3f9ed6707ee72e83e93722cf448bd075c8c3f40dfbcc",
+  "selected_epoch": 3
+}

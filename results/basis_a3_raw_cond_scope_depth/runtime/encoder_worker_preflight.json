@@ -1,0 +1,27 @@
+{
+  "generation_batch_size": 1,
+  "note": "fixed plumbing conditions only",
+  "observations": [
+    {
+      "layer": 24,
+      "one_vs_two_identical": true,
+      "one_worker_seconds": 24.967147385701537,
+      "rho": 0.5,
+      "side": "encoder",
+      "transcript_sha256": "sha256:d68ab7757ba9e915593b6370cb0fd12c7dd0f1a08fa66f66b1661db68ea917b6",
+      "two_worker_transcripts_identical": true
+    },
+    {
+      "layer": 24,
+      "one_vs_two_identical": true,
+      "one_worker_seconds": 20.014301028102636,
+      "rho": 0.5,
+      "side": "decoder",
+      "transcript_sha256": "sha256:b1c3ee5fedc43ef91a5854517d45e1594321e5ab571349b3206ff721a7c0c357",
+      "two_worker_transcripts_identical": true
+    }
+  ],
+  "schema_version": "basis_a3_worker_preflight_v1",
+  "selected_workers": 2,
+  "status": "PASS"
+}

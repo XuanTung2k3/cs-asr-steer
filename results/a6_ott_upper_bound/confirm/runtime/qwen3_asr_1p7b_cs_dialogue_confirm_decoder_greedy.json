@@ -1,0 +1,29 @@
+{
+  "dataset": "cs_dialogue_confirm",
+  "direction_constructions": 28,
+  "gpu_job_id": "53537",
+  "ineligible": [
+    {
+      "canonical_key": "B|qwen3_asr_1p7b|cs_dialogue_confirm|ZH-CN_U1001_S0_406|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "B|qwen3_asr_1p7b|cs_dialogue_confirm|ZH-CN_U1001_S0_406|conditioning_cs|decoder|3|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 282,
+  "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+  "phase": "B",
+  "reused_rows": 286,
+  "rho_cache_hits": 0,
+  "runtime_sec": 24.350791232660413,
+  "side": "decoder",
+  "status": "PASS"
+}

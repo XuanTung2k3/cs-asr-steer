@@ -1,0 +1,66 @@
+{
+  "F2_SALSA": {
+    "checkpoint_size_bytes": 7365,
+    "n_seeds_with_timing": 3,
+    "optimizer_updates": 2019,
+    "peak_gpu_memory_bytes_mean": 7099762688.0,
+    "percent_of_backbone": 8.292891664980446e-05,
+    "train_wall_sec_mean": 2730.9110991160073,
+    "train_wall_sec_std": 21.816940515785554,
+    "trainable_parameters": 1280
+  },
+  "F3_LORA": {
+    "checkpoint_size_bytes": 187333,
+    "n_seeds_with_timing": 3,
+    "optimizer_updates": 2019,
+    "peak_gpu_memory_bytes_mean": 7313631232.0,
+    "percent_of_backbone": 0.0029854409993929605,
+    "train_wall_sec_mean": 2917.7298304239907,
+    "train_wall_sec_std": 90.35029452620655,
+    "trainable_parameters": 46080
+  },
+  "F4_MSTAR": {
+    "checkpoint_size_bytes": null,
+    "n_seeds_with_timing": 3,
+    "optimizer_updates": 2019,
+    "peak_gpu_memory_bytes_mean": 5514245120.0,
+    "percent_of_backbone": 0.00282807042240673,
+    "train_wall_sec_mean": 2771.1662775675454,
+    "train_wall_sec_std": 115.19263383808466,
+    "trainable_parameters": 43651
+  },
+  "inference_timing": {
+    "F0_FROZEN_WHISPER": {
+      "decode_sec": 5.344438552856445,
+      "n_utterances": 100,
+      "overhead_vs_F0": 1.0,
+      "rtf": 0.03857580108715751,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 18.711039337621898
+    },
+    "F2_SALSA": {
+      "decode_sec": 4.658548831939697,
+      "n_utterances": 100,
+      "overhead_vs_F0": 0.8716629045065623,
+      "rtf": 0.033625094819299116,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 21.465912155816692
+    },
+    "F3_LORA": {
+      "decode_sec": 14.065306901931763,
+      "n_utterances": 100,
+      "overhead_vs_F0": 2.6317651073777,
+      "rtf": 0.10152244729032389,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 7.109692002971209
+    },
+    "F4_MSTAR": {
+      "decode_sec": 4.708912134170532,
+      "n_utterances": 100,
+      "overhead_vs_F0": 0.8810864017986991,
+      "rtf": 0.033988613776385956,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 21.236327446915688
+    }
+  }
+}

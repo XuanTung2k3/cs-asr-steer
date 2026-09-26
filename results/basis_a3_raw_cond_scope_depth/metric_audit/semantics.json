@@ -1,0 +1,9 @@
+{
+  "schema_version": "basis_a3_metric_audit_v1",
+  "poi_corrections": "canonical POI baseline-incorrect -> method-correct transitions",
+  "poi_corruptions": "canonical POI baseline-correct -> method-incorrect transitions",
+  "poi_net_utility": "poi_corrections - poi_corruptions",
+  "candidate_level_utility": "not computed by the new runner; never substituted for POI net utility",
+  "outside_harm": "not computed for SEAME; CS candidate accounting remains a post-hoc CPU step where accepted candidate sets are available",
+  "headline_rule": "do not use ambiguous utility field"
+}

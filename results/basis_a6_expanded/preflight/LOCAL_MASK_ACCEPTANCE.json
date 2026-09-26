@@ -1,0 +1,74 @@
+{
+  "schema_version": "basis_a6_local_mask_acceptance_v1",
+  "status": "PASS",
+  "scope": "oracle_local_only",
+  "rows": [
+    {
+      "model": "whisper",
+      "side": "encoder",
+      "source_artifact": "results/basis_a4/whisper/raw/encoder/cs_dialogue/L16/Raw_encoder_L16_oracle_local_rho0.5.json",
+      "site": "encoder_post_self_attn_residual_pre_ffn",
+      "site_hash": "sha256:db44fc36dde6fe547757530d0681da140ba114b627899224deb9690f2a6ffe63",
+      "mask_hash": "sha256:10022e9839d9be3dafbe1bd1508d369194e67f9d5f1e4c3677336fa056376fd6",
+      "checks": {
+        "scope_oracle_local": true,
+        "site_exact": true,
+        "site_hash_present": true,
+        "mask_hash_present": true,
+        "no_global": true
+      },
+      "qwen_repaired_mask_evidence": true
+    },
+    {
+      "model": "whisper",
+      "side": "decoder",
+      "source_artifact": "results/basis_a4/whisper/conditioning/cs_dialogue/L16/conditioning_decoder_L16_oracle_local_rho0.5.json",
+      "site": "decoder_post_cross_attn_residual",
+      "site_hash": "sha256:2e53a62136f0510c279d179da416313f10e77d9c046346cf73da958f67b0069a",
+      "mask_hash": "sha256:93825e197ecd78c3b9a20014a7f304faed319cc3851078789187ae3a7e3d8344",
+      "checks": {
+        "scope_oracle_local": true,
+        "site_exact": true,
+        "site_hash_present": true,
+        "mask_hash_present": true,
+        "no_global": true
+      },
+      "qwen_repaired_mask_evidence": true
+    },
+    {
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source_artifact": "results/basis_a4/qwen3_asr_1p7b/raw/cs_dialogue/L16/Raw_encoder_L16_oracle_local_rho0.5.json",
+      "site": "qwen_audio_encoder_post_self_attn_residual_pre_ffn",
+      "site_hash": "8b4ab88bc21aaca167fa57e6b715893bc9ebdc581173b7787befd9aba9516451",
+      "mask_hash": "d1179ed50602de77c1ad3cac0e00938c113ab7ad172479ad08a02bb7d3cb4177",
+      "checks": {
+        "scope_oracle_local": true,
+        "site_exact": true,
+        "site_hash_present": true,
+        "mask_hash_present": true,
+        "no_global": true
+      },
+      "qwen_repaired_mask_evidence": "results/basis_a4/acceptance/qwen_acceptance.json"
+    },
+    {
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source_artifact": "results/basis_a4/qwen3_asr_1p7b/conditioning/cs_dialogue/L16/Conditioning_decoder_L16_oracle_local_rho0.5.json",
+      "site": "qwen_text_decoder_post_self_attn_residual_pre_mlp",
+      "site_hash": "2f70a1ed3ba6d07fdd12200ea38d699cc6d27fc02d28a8eff551f8b0ce6a30ed",
+      "mask_hash": "ff8218fe57b5bd55d7d7d290110765dbe90b3d9b9fc16723185f9d931db20c85",
+      "checks": {
+        "scope_oracle_local": true,
+        "site_exact": true,
+        "site_hash_present": true,
+        "mask_hash_present": true,
+        "no_global": true
+      },
+      "qwen_repaired_mask_evidence": "results/basis_a4/acceptance/qwen_acceptance.json"
+    }
+  ],
+  "failures": [],
+  "qwen_acceptance": "results/basis_a4/acceptance/qwen_acceptance.json",
+  "qwen_local_trace": "results/basis_a4/acceptance/qwen_local_mask_traces.json"
+}

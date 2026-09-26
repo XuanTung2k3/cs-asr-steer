@@ -1,0 +1,61 @@
+{
+  "schema": "p2rje_leverage_expansion_v1",
+  "stage": "P2-RJ-E: sample-size expansion of the single frozen P2-RJ leverage statistic Q50 (final diagnostic stage; not method development)",
+  "spec": "docs/inference_cf/P2_RJ_E_LEVERAGE_EXPANSION_SPEC.md",
+  "role": "D-dev-select (already exposed; diagnosis only)",
+  "p2rj_reference": {
+    "config": "configs/inference_cf/p2_rj_jacobian_diagnosis.json",
+    "positions": "results/inference_cf/p2rj/positions.json",
+    "run": "results/inference_cf/p2rj/run1",
+    "run_manifest_hash": "sha256:c020cf6238561c558a5922135674b851e793e2c8258c73117b78a8b119d7f38e",
+    "verdict": "P2_RJ_STILL_AMBIGUOUS (leverage UNRESOLVED, alignment MISALIGNED)",
+    "unchanged": true
+  },
+  "p2r_reference": {
+    "config": "configs/inference_cf/p2_r_mechanism_diagnosis.json",
+    "population": "results/inference_cf/p2r/population.json",
+    "population_hash": "sha256:6a880d2b20049200dbd7e58ab6d34c55238a772e7be616fac337c7fff8b743bb"
+  },
+  "population": {
+    "rule": "ALL structurally valid EN-confusion positions of the 300-utterance D-dev-select R2/P2 panel under the unchanged P2-R eligibility code (experiments/inference_cf_p2r_population.build, candidates before selection); no cap, no selection, no position dropped for any outcome-related reason",
+    "stratum": "EN-confusion",
+    "include_original": "the 60 P2-RJ EN-confusion positions are a subset and are recomputed in this run; every eligible position enters the estimator exactly once",
+    "eligibility_identity_check": "rebuilding with the frozen P2-R config must reproduce the frozen P2-R population hash",
+    "minimum_interpretable": {"positions": 40, "dialogues": 12}
+  },
+  "competitor": {
+    "rule": "c* = the first token of torch.topk(log_softmax(processed unedited logits), 20) that is not in Y_ref (the exact P2-R summarize ordering on which the frozen P2-RJ c* was defined)",
+    "original_positions": "the frozen P2-RJ c* is used and must equal the rule's value (otherwise the position is a state mismatch)",
+    "new_positions": "computed by a no-grad pre-pass on the identical unedited B branch before any gradient"
+  },
+  "reused_unchanged_from_p2rj": ["model/checkpoint", "bf16 primary + fp32 replicate", "layer 16 DG-02 post-cross-attention / pre-FFN site", "cached B/E branch semantics", "Y_ref construction (P2-R target_set)", "margin m = logsumexp z(Y_ref) - z(c*)", "gradient via zero-valued SiteGradientProbe", "tangent projection", "e* = 1.1260757575454359", "NormPreserve interpretation", "dialogue bootstrap (10000, seed 240924, mean of dialogue means, percentile)", "Bonferroni alpha 0.05/2 per bound (P2-RJ decision-family multiplicity)", "Q50 definition and 0.5 threshold", "leverage_class rule"],
+  "energy": {"e_star": 1.1260757575454359},
+  "site": {"layer": 16, "num_forced_prefix": 4},
+  "conditions": {"cB": [50258, 50260, 50360, 50364], "cE": [50258, 50259, 50360, 50364], "language_token_ids": [50259, 50260]},
+  "baseline_run": "results/inference_cf/p2_A_r1_L16",
+  "baseline_system": "B0M_L16",
+  "analysis": {
+    "primary": "Q50 = dialogue-weighted fraction of valid EN-confusion positions with rho = |g_tan| e* / gap >= 0.5",
+    "bootstrap": {"unit": "dialogue", "replicates": 10000, "seed": 240924, "interval": "percentile"},
+    "alpha_per_bound": 0.025,
+    "leverage": {"WEAK": "hi(Q50) < 0.5", "SUBSTANTIAL": "lo(Q50) > 0.5", "UNRESOLVED": "otherwise"},
+    "diagnosis": {
+      "P2_RJ_E_DIRECTION_ISSUE": "valid and SUBSTANTIAL (bf16 and fp32 agree)",
+      "P2_RJ_E_DIRECTION_AND_SITE_ISSUE": "valid and WEAK (bf16 and fp32 agree)",
+      "P2_RJ_E_DIRECTION_CONFIRMED_SITE_UNRESOLVED": "valid and (UNRESOLVED, or bf16/fp32 leverage classes differ, or precision cosine < 0.9) -- terminal"
+    },
+    "validity": {
+      "V1": "manifest, config, positions, source hashes, Git commit",
+      "V2": "every utterance row ok in both passes; all positions present",
+      "V3": "per position: decode-rule argmax == baseline token; grad-step logits bitwise equal to the unedited step; probe site == recorder site; recomputed best non-reference token == c* or exact tie; margin via the gradient path == margin via the summary path (|diff| <= 1e-3). Original positions additionally: P2-RJ/P2-R identity checks (P2-RJ state_checks) and overlap reproduction vs P2-RJ run1 bf16 (A, |g_tan|, gap within 1e-6 relative; margin gradient vector cosine >= 0.9999). More than 5% of positions mismatching = run invalid",
+      "V4": "every gradient finite and nonzero",
+      "V5": ">= 40 valid positions over >= 12 dialogues",
+      "V6": "first-order validity is carried over from P2-RJ (pooled r = 0.918 at the same site/energy/protocol); no new perturbation is run",
+      "V7": "fp32 replicate: median cos(g_tan bf16, g_tan fp32) >= 0.9 and identical leverage class; failure maps to SITE_UNRESOLVED (terminal), not to a rerun",
+      "invalid_run": "a V1-V5 failure is an implementation/infrastructure invalidity: no diagnosis; at most a versioned rerun with the failed attempt preserved"
+    },
+    "descriptive": ["median gap, |g|, |g_tan|, A, rho", "fractions rho >= 0.1, 0.5, 1.0", "kappa(+d), kappa(-d), kappa(random), cos(g_tan, +d) (H1 descriptive confirmation only)", "original-60 vs new-167 split"]
+  },
+  "compute": {"slurm_partition": "mig", "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1", "time_limit": "01:00:00", "max_jobs": 1},
+  "terminal": "P2-RJ-E ends the diagnostic program whatever the outcome: no P2-RJ-F, no further Q50 expansion, no new Jacobian, random-control or localization diagnostic."
+}

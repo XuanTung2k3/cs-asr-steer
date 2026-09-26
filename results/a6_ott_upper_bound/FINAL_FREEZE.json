@@ -1,0 +1,140 @@
+{
+  "schema_version": "a6_ott_final_freeze_v1",
+  "status": "FROZEN",
+  "audit": "INDEPENDENT_FINAL_AUDIT",
+  "audited_commit": "cef08b5512fc991ce0449d8267bf2b37c1f6547b",
+  "audit_date": "2026-09-22",
+  "branch": "learned-expansion",
+  "model_revisions": {
+    "whisper": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "qwen3_asr_1p7b": "sha256:5d87c842f212c25fef15bbb1d300fbbb5fafc98eb97fc37f01fcfbf2ce3453e8"
+  },
+  "final_manifest_hashes": {
+    "phase_a_immutable": "sha256:20ca7e93c8823934f373b9107eb63650b50cd087178960dacac45951e61e235b",
+    "phase_b": "sha256:72b6033d3488a69507469940eb963401c81693dc60f9cad58f8e0c68039b3521",
+    "phase_b_final_settings": "sha256:790b96b4ee3235b8a40e5b62f8a3c6cf12768992634cc7fc2bba5dea186bbd61",
+    "phase_c": "sha256:7858c2eec81157fa4702e8983bd461a6469d30aa22fee279f1fe5f960d9fb3ae",
+    "eligibility": "sha256:015678e54f420df320426d0df4fa9c962483184375ce2396e0d6c8aa5f5f870a"
+  },
+  "artifact_hashes": {
+    "FINAL_MANIFEST.json": "sha256:07b9b7f724124ae69ce7d29ae0c0c9162b8ca528fda83a01f1224b8fc148599e",
+    "FINAL_REPORT.md": "sha256:c9a0af299a9eaf9c66cfb9cf51bd37fbbc0adefecd0d1e3c370b92ba147bc768",
+    "search/WHISPER_SELECTION.json": "sha256:46601549573c3fb9a9f07d773772b22e1cd6714a0dd3090eb0b977c403d94aa9",
+    "search/QWEN_SELECTION.json": "sha256:107bb0fc30bdaf06a22a329898fc895fc0d081715e6b66fd6a81cd0631278b9e",
+    "confirm/PHASE_B_CONFIRM.json": "sha256:72b6033d3488a69507469940eb963401c81693dc60f9cad58f8e0c68039b3521",
+    "confirm/PHASE_B_FINAL_SETTINGS.json": "sha256:790b96b4ee3235b8a40e5b62f8a3c6cf12768992634cc7fc2bba5dea186bbd61",
+    "transfer/PHASE_C_TRANSFER.json": "sha256:7858c2eec81157fa4702e8983bd461a6469d30aa22fee279f1fe5f960d9fb3ae",
+    "manifests/v2/SEARCH_FREEZE.json": "sha256:906fa3982d6ce0d4fad85b40c4951b82491dc21cc04e301fa6e4b8be907deae0",
+    "eligibility/CONFIRMATION_ELIGIBILITY_SUMMARY.json": "sha256:015678e54f420df320426d0df4fa9c962483184375ce2396e0d6c8aa5f5f870a",
+    "preflight/SEARCH_ALIGNMENT_AUDIT_V2.json": "sha256:9acedd70e79caff172326f256a7d5334ba3dcaf2a6564fbbfd851fcf30cc584e",
+    "preflight/REUSE_LEDGER.json": "sha256:fba42b32b5da448df14e74e492739eca68a90aa1d86fcc5b3f96681060cf2fc3"
+  },
+  "phase_order_assertions": {
+    "fixed_direction_artifact": null,
+    "phase_a_selection_read_only_search": true,
+    "seame_opened_after_phase_b_freeze": true
+  },
+  "final_settings": {
+    "whisper": [
+      {
+        "family": "add_unique",
+        "layer": 20,
+        "rho": 1.0,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 24,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 0,
+        "rho": 0.5,
+        "side": "decoder"
+      }
+    ],
+    "qwen3_asr_1p7b": [
+      {
+        "family": "add_unique",
+        "layer": 15,
+        "rho": 2.0,
+        "side": "encoder"
+      },
+      {
+        "family": "add_unique",
+        "layer": 13,
+        "rho": 0.5,
+        "side": "decoder"
+      },
+      {
+        "family": "conditioning_cs",
+        "layer": 0,
+        "rho": 0.5,
+        "side": "decoder"
+      }
+    ]
+  },
+  "eligibility_counts": {
+    "cs_confirm": {
+      "FULLY_ELIGIBLE": 128,
+      "acoustic_fully_eligible": 128,
+      "structurally_ineligible_acoustic": 152,
+      "structurally_ineligible_transcript": 0,
+      "transcript_fully_eligible": 280
+    },
+    "ascend_confirm": {
+      "FULLY_ELIGIBLE": 200,
+      "acoustic_fully_eligible": 200,
+      "structurally_ineligible_acoustic": 0,
+      "structurally_ineligible_transcript": 0,
+      "transcript_fully_eligible": 200
+    },
+    "seame": {
+      "SEAME-man": {
+        "FULLY_ELIGIBLE": 49,
+        "acoustic_fully_eligible": 50,
+        "structurally_ineligible_acoustic": 0,
+        "structurally_ineligible_transcript": 1,
+        "transcript_fully_eligible": 49
+      },
+      "SEAME-sge": {
+        "FULLY_ELIGIBLE": 49,
+        "acoustic_fully_eligible": 50,
+        "structurally_ineligible_acoustic": 0,
+        "structurally_ineligible_transcript": 1,
+        "transcript_fully_eligible": 49
+      }
+    },
+    "search_per_dataset": 20
+  },
+  "runtime_gpu_hours": {
+    "phase_a_incl_failed": 3.012,
+    "phase_b_all_attempts": 2.548,
+    "phase_c_all_attempts": 0.297,
+    "total": 5.857,
+    "preflight_estimate": 44.0,
+    "note": "optimized physical executor (one-pass all-layer analysis + rho-cache reuse + method-specific eligibility) ~7.5x below conservative preflight"
+  },
+  "wall_time": {
+    "first_search_start": "2026-09-21T13:02:37",
+    "last_transfer_end": "2026-09-21T17:14:42",
+    "span": "~4h12m",
+    "includes": "all repair/resubmit cycles + firewall-sequential phases"
+  },
+  "reuse": {
+    "exact_reused_baselines": 16,
+    "oracle_tt_partial_reused": 1,
+    "fixed_reused_as_oracle_tt": 0
+  },
+  "next_stage_gate": {
+    "whisper": "PROCEED_TO_NON_ORACLE",
+    "qwen3_asr_1p7b": "ORACLE_MECHANISM_NOT_ESTABLISHED"
+  },
+  "recommended_non_oracle_target": {
+    "whisper": "add_unique/decoder L24 rho0.5 (primary); conditioning_cs/decoder L0 rho0.5 (secondary)",
+    "qwen3_asr_1p7b": "none \u2014 diagnose causal pathway (add target-logit-movement instrumentation) before any non-oracle steering"
+  },
+  "do_not_modify": "scientific result files under confirm/, transfer/, search/, eligibility/ are frozen; this freeze is metadata-only"
+}

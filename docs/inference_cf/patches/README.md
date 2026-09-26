@@ -42,7 +42,8 @@ differs on the files superseded by spec v1.1, as documented in
   the first paragraph of §4.
 - **Classification:** *accidental truncation.* It is a contiguous line-range deletion:
   - it cuts a sentence mid-heading;
-  - it deletes a section heading that later text still refers to (`§3.6`, `§4`);
+  - it deletes the `## 4.` heading, so §4's body ends up attached to §3.5, and it removes the
+    NormPreserve intervention definition (§3.6) that P1–P2-R rely on;
   - no commit, report or session note describes it as intended.
 - **Resolution (P2-RJ start, 2026-09-26):** the plan was restored to `HEAD` with
   `git checkout -- INFERENCE_STEERING_IMPLEMENTATION_PLAN.md`. Only this file was touched, and no

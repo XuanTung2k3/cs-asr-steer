@@ -1,0 +1,855 @@
+{
+  "schema": "p2_sel_mini_panel_v1",
+  "role": "D-dev-select",
+  "selection_tag": "P2SEL-mini100-v1",
+  "algorithm": "within each dialogue, first 5 by (sha256 UTF8(tag+|+utterance_id), utterance_id); emit dialogues lexicographic, hash rank within dialogue",
+  "parent_panel": "results/inference_cf/p2_A_r1_L16/panel.json",
+  "parent_panel_sha256": "a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+  "dialogue_mapping_source": "/mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/manifests/roles/role_D-dev-select.parquet",
+  "parent_id_dialogue_mapping_sha256": "25a45f28c0e192c6b2d71bdd0eccbfe354ac1a4e0019cddd78168d86423d2109",
+  "eligible_ids_by_dialogue": {
+    "CSD0006": [
+      "ZH-CN_U0011_S0_103",
+      "ZH-CN_U0011_S0_111",
+      "ZH-CN_U0011_S0_166",
+      "ZH-CN_U0011_S0_249",
+      "ZH-CN_U0011_S0_265",
+      "ZH-CN_U0011_S0_503",
+      "ZH-CN_U0011_S0_54",
+      "ZH-CN_U0011_S0_758",
+      "ZH-CN_U0011_S0_766",
+      "ZH-CN_U0011_S0_780",
+      "ZH-CN_U0011_S0_91",
+      "ZH-CN_U0012_S0_103",
+      "ZH-CN_U0012_S0_366",
+      "ZH-CN_U0012_S0_598",
+      "ZH-CN_U0012_S0_600"
+    ],
+    "CSD0011": [
+      "ZH-CN_U0021_S0_118",
+      "ZH-CN_U0021_S0_225",
+      "ZH-CN_U0021_S0_285",
+      "ZH-CN_U0021_S0_324",
+      "ZH-CN_U0021_S0_513",
+      "ZH-CN_U0022_S0_135",
+      "ZH-CN_U0022_S0_170",
+      "ZH-CN_U0022_S0_228",
+      "ZH-CN_U0022_S0_231",
+      "ZH-CN_U0022_S0_302",
+      "ZH-CN_U0022_S0_305",
+      "ZH-CN_U0022_S0_359",
+      "ZH-CN_U0022_S0_379",
+      "ZH-CN_U0022_S0_77",
+      "ZH-CN_U0022_S0_91"
+    ],
+    "CSD0012": [
+      "ZH-CN_U0023_S0_102",
+      "ZH-CN_U0023_S0_106",
+      "ZH-CN_U0023_S0_111",
+      "ZH-CN_U0023_S0_246",
+      "ZH-CN_U0023_S0_253",
+      "ZH-CN_U0023_S0_469",
+      "ZH-CN_U0023_S0_560",
+      "ZH-CN_U0023_S0_664",
+      "ZH-CN_U0023_S0_666",
+      "ZH-CN_U0023_S0_671",
+      "ZH-CN_U0023_S0_80",
+      "ZH-CN_U0023_S0_87",
+      "ZH-CN_U0023_S0_91",
+      "ZH-CN_U0024_S0_283",
+      "ZH-CN_U0024_S0_97"
+    ],
+    "CSD0014": [
+      "ZH-CN_U0027_S0_114",
+      "ZH-CN_U0027_S0_116",
+      "ZH-CN_U0027_S0_144",
+      "ZH-CN_U0027_S0_157",
+      "ZH-CN_U0027_S0_163",
+      "ZH-CN_U0027_S0_4",
+      "ZH-CN_U0027_S0_98",
+      "ZH-CN_U0028_S0_103",
+      "ZH-CN_U0028_S0_112",
+      "ZH-CN_U0028_S0_120",
+      "ZH-CN_U0028_S0_155",
+      "ZH-CN_U0028_S0_158",
+      "ZH-CN_U0028_S0_194",
+      "ZH-CN_U0028_S0_237",
+      "ZH-CN_U0028_S0_37"
+    ],
+    "CSD0015": [
+      "ZH-CN_U0029_S0_1085",
+      "ZH-CN_U0029_S0_1093",
+      "ZH-CN_U0029_S0_204",
+      "ZH-CN_U0029_S0_294",
+      "ZH-CN_U0029_S0_300",
+      "ZH-CN_U0029_S0_340",
+      "ZH-CN_U0029_S0_456",
+      "ZH-CN_U0029_S0_472",
+      "ZH-CN_U0029_S0_651",
+      "ZH-CN_U0029_S0_95",
+      "ZH-CN_U0030_S0_262",
+      "ZH-CN_U0030_S0_288",
+      "ZH-CN_U0030_S0_365",
+      "ZH-CN_U0030_S0_61",
+      "ZH-CN_U0030_S0_81"
+    ],
+    "CSD0020": [
+      "ZH-CN_U0039_S0_150",
+      "ZH-CN_U0039_S0_315",
+      "ZH-CN_U0039_S0_380",
+      "ZH-CN_U0039_S0_42",
+      "ZH-CN_U0039_S0_80",
+      "ZH-CN_U0039_S0_81",
+      "ZH-CN_U0040_S0_105",
+      "ZH-CN_U0040_S0_141",
+      "ZH-CN_U0040_S0_149",
+      "ZH-CN_U0040_S0_287",
+      "ZH-CN_U0040_S0_298",
+      "ZH-CN_U0040_S0_310",
+      "ZH-CN_U0040_S0_407",
+      "ZH-CN_U0040_S0_454",
+      "ZH-CN_U0040_S0_914"
+    ],
+    "CSD0043": [
+      "ZH-CN_U0085_S0_1",
+      "ZH-CN_U0085_S0_108",
+      "ZH-CN_U0085_S0_167",
+      "ZH-CN_U0085_S0_175",
+      "ZH-CN_U0085_S0_185",
+      "ZH-CN_U0085_S0_85",
+      "ZH-CN_U0085_S0_99",
+      "ZH-CN_U0086_S0_183",
+      "ZH-CN_U0086_S0_185",
+      "ZH-CN_U0086_S0_2",
+      "ZH-CN_U0086_S0_201",
+      "ZH-CN_U0086_S0_222",
+      "ZH-CN_U0086_S0_75",
+      "ZH-CN_U0086_S0_76",
+      "ZH-CN_U0086_S0_97"
+    ],
+    "CSD0046": [
+      "ZH-CN_U0091_S0_104",
+      "ZH-CN_U0091_S0_196",
+      "ZH-CN_U0091_S0_209",
+      "ZH-CN_U0091_S0_220",
+      "ZH-CN_U0091_S0_228",
+      "ZH-CN_U0091_S0_241",
+      "ZH-CN_U0091_S0_62",
+      "ZH-CN_U0091_S0_68",
+      "ZH-CN_U0091_S0_72",
+      "ZH-CN_U0091_S0_89",
+      "ZH-CN_U0092_S0_101",
+      "ZH-CN_U0092_S0_170",
+      "ZH-CN_U0092_S0_179",
+      "ZH-CN_U0092_S0_57",
+      "ZH-CN_U0092_S0_85"
+    ],
+    "CSD0051": [
+      "ZH-CN_U0101_S0_106",
+      "ZH-CN_U0101_S0_187",
+      "ZH-CN_U0101_S0_190",
+      "ZH-CN_U0101_S0_191",
+      "ZH-CN_U0101_S0_192",
+      "ZH-CN_U0101_S0_203",
+      "ZH-CN_U0101_S0_205",
+      "ZH-CN_U0101_S0_65",
+      "ZH-CN_U0101_S0_71",
+      "ZH-CN_U0101_S0_85",
+      "ZH-CN_U0102_S0_44",
+      "ZH-CN_U0102_S0_52",
+      "ZH-CN_U0102_S0_64",
+      "ZH-CN_U0102_S0_76",
+      "ZH-CN_U0102_S0_80"
+    ],
+    "CSD0501": [
+      "ZH-CN_U1001_S0_164",
+      "ZH-CN_U1001_S0_168",
+      "ZH-CN_U1001_S0_270",
+      "ZH-CN_U1001_S0_344",
+      "ZH-CN_U1001_S0_388",
+      "ZH-CN_U1001_S0_402",
+      "ZH-CN_U1001_S0_406",
+      "ZH-CN_U1001_S0_44",
+      "ZH-CN_U1001_S0_476",
+      "ZH-CN_U1001_S0_482",
+      "ZH-CN_U1001_S0_53",
+      "ZH-CN_U1002_S0_284",
+      "ZH-CN_U1002_S0_288",
+      "ZH-CN_U1002_S0_337",
+      "ZH-CN_U1002_S0_488"
+    ],
+    "CSD0502": [
+      "ZH-CN_U1003_S0_119",
+      "ZH-CN_U1003_S0_135",
+      "ZH-CN_U1003_S0_141",
+      "ZH-CN_U1003_S0_19",
+      "ZH-CN_U1003_S0_201",
+      "ZH-CN_U1003_S0_22",
+      "ZH-CN_U1003_S0_56",
+      "ZH-CN_U1003_S0_61",
+      "ZH-CN_U1003_S0_63",
+      "ZH-CN_U1003_S0_94",
+      "ZH-CN_U1004_S0_221",
+      "ZH-CN_U1004_S0_224",
+      "ZH-CN_U1004_S0_267",
+      "ZH-CN_U1004_S0_28",
+      "ZH-CN_U1004_S0_310"
+    ],
+    "CSD0511": [
+      "ZH-CN_U1021_S0_173",
+      "ZH-CN_U1021_S0_195",
+      "ZH-CN_U1021_S0_197",
+      "ZH-CN_U1021_S0_205",
+      "ZH-CN_U1021_S0_52",
+      "ZH-CN_U1021_S0_61",
+      "ZH-CN_U1021_S0_67",
+      "ZH-CN_U1021_S0_68",
+      "ZH-CN_U1022_S0_155",
+      "ZH-CN_U1022_S0_157",
+      "ZH-CN_U1022_S0_159",
+      "ZH-CN_U1022_S0_181",
+      "ZH-CN_U1022_S0_187",
+      "ZH-CN_U1022_S0_66",
+      "ZH-CN_U1022_S0_71"
+    ],
+    "CSD0514": [
+      "ZH-CN_U1027_S0_199",
+      "ZH-CN_U1027_S0_207",
+      "ZH-CN_U1027_S0_250",
+      "ZH-CN_U1027_S0_3",
+      "ZH-CN_U1027_S0_33",
+      "ZH-CN_U1027_S0_39",
+      "ZH-CN_U1027_S0_57",
+      "ZH-CN_U1028_S0_1",
+      "ZH-CN_U1028_S0_174",
+      "ZH-CN_U1028_S0_176",
+      "ZH-CN_U1028_S0_184",
+      "ZH-CN_U1028_S0_22",
+      "ZH-CN_U1028_S0_38",
+      "ZH-CN_U1028_S0_40",
+      "ZH-CN_U1028_S0_48"
+    ],
+    "CSD0517": [
+      "ZH-CN_U1033_S0_159",
+      "ZH-CN_U1033_S0_191",
+      "ZH-CN_U1033_S0_199",
+      "ZH-CN_U1033_S0_205",
+      "ZH-CN_U1033_S0_212",
+      "ZH-CN_U1033_S0_61",
+      "ZH-CN_U1034_S0_173",
+      "ZH-CN_U1034_S0_177",
+      "ZH-CN_U1034_S0_187",
+      "ZH-CN_U1034_S0_191",
+      "ZH-CN_U1034_S0_49",
+      "ZH-CN_U1034_S0_53",
+      "ZH-CN_U1034_S0_57",
+      "ZH-CN_U1034_S0_70",
+      "ZH-CN_U1034_S0_77"
+    ],
+    "CSD0532": [
+      "ZH-CN_U1063_S0_15",
+      "ZH-CN_U1063_S0_17",
+      "ZH-CN_U1063_S0_23",
+      "ZH-CN_U1063_S0_26",
+      "ZH-CN_U1063_S0_54",
+      "ZH-CN_U1063_S0_56",
+      "ZH-CN_U1063_S0_58",
+      "ZH-CN_U1064_S0_100",
+      "ZH-CN_U1064_S0_102",
+      "ZH-CN_U1064_S0_110",
+      "ZH-CN_U1064_S0_26",
+      "ZH-CN_U1064_S0_34",
+      "ZH-CN_U1064_S0_35",
+      "ZH-CN_U1064_S0_47",
+      "ZH-CN_U1064_S0_95"
+    ],
+    "CSD0538": [
+      "ZH-CN_U1075_S0_175",
+      "ZH-CN_U1075_S0_49",
+      "ZH-CN_U1075_S0_88",
+      "ZH-CN_U1076_S0_140",
+      "ZH-CN_U1076_S0_154",
+      "ZH-CN_U1076_S0_156",
+      "ZH-CN_U1076_S0_159",
+      "ZH-CN_U1076_S0_178",
+      "ZH-CN_U1076_S0_180",
+      "ZH-CN_U1076_S0_24",
+      "ZH-CN_U1076_S0_25",
+      "ZH-CN_U1076_S0_26",
+      "ZH-CN_U1076_S0_34",
+      "ZH-CN_U1076_S0_35",
+      "ZH-CN_U1076_S0_51"
+    ],
+    "CSD0540": [
+      "ZH-CN_U1079_S0_175",
+      "ZH-CN_U1079_S0_23",
+      "ZH-CN_U1079_S0_54",
+      "ZH-CN_U1079_S0_58",
+      "ZH-CN_U1079_S0_68",
+      "ZH-CN_U1079_S0_70",
+      "ZH-CN_U1080_S0_1",
+      "ZH-CN_U1080_S0_163",
+      "ZH-CN_U1080_S0_181",
+      "ZH-CN_U1080_S0_193",
+      "ZH-CN_U1080_S0_43",
+      "ZH-CN_U1080_S0_57",
+      "ZH-CN_U1080_S0_64",
+      "ZH-CN_U1080_S0_88",
+      "ZH-CN_U1080_S0_90"
+    ],
+    "CSD0541": [
+      "ZH-CN_U1081_S0_131",
+      "ZH-CN_U1081_S0_172",
+      "ZH-CN_U1081_S0_184",
+      "ZH-CN_U1081_S0_190",
+      "ZH-CN_U1081_S0_192",
+      "ZH-CN_U1081_S0_65",
+      "ZH-CN_U1081_S0_76",
+      "ZH-CN_U1081_S0_84",
+      "ZH-CN_U1082_S0_132",
+      "ZH-CN_U1082_S0_134",
+      "ZH-CN_U1082_S0_144",
+      "ZH-CN_U1082_S0_36",
+      "ZH-CN_U1082_S0_60",
+      "ZH-CN_U1082_S0_63",
+      "ZH-CN_U1082_S0_67"
+    ],
+    "CSD1002": [
+      "ZH-CN_U2003_S0_128",
+      "ZH-CN_U2003_S0_132",
+      "ZH-CN_U2003_S0_150",
+      "ZH-CN_U2003_S0_280",
+      "ZH-CN_U2004_S0_104",
+      "ZH-CN_U2004_S0_118",
+      "ZH-CN_U2004_S0_122",
+      "ZH-CN_U2004_S0_138",
+      "ZH-CN_U2004_S0_144",
+      "ZH-CN_U2004_S0_150",
+      "ZH-CN_U2004_S0_154",
+      "ZH-CN_U2004_S0_266",
+      "ZH-CN_U2004_S0_272",
+      "ZH-CN_U2004_S0_281",
+      "ZH-CN_U2004_S0_287"
+    ],
+    "CSD1006": [
+      "ZH-CN_U2011_S0_108",
+      "ZH-CN_U2011_S0_22",
+      "ZH-CN_U2011_S0_28",
+      "ZH-CN_U2011_S0_32",
+      "ZH-CN_U2011_S0_36",
+      "ZH-CN_U2011_S0_65",
+      "ZH-CN_U2011_S0_89",
+      "ZH-CN_U2011_S0_93",
+      "ZH-CN_U2011_S0_99",
+      "ZH-CN_U2012_S0_100",
+      "ZH-CN_U2012_S0_104",
+      "ZH-CN_U2012_S0_108",
+      "ZH-CN_U2012_S0_24",
+      "ZH-CN_U2012_S0_31",
+      "ZH-CN_U2012_S0_42"
+    ]
+  },
+  "rows": [
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_111",
+      "selection_sha256": "0f9816c669fab3e323ef13e7088f62a0cbad0b3290b2f7873d5890561aae3f31"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_54",
+      "selection_sha256": "1dd7169641f05050acb80255a3c858555313caef8940dc1e89c2e123eaa3f846"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0012_S0_103",
+      "selection_sha256": "2e8635837df2f55af7e60f6f4f54e0fa21fc7c32be9791ec2f75b361d7742f58"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_503",
+      "selection_sha256": "51d1cc6e9df60f3edf6fbb9e374aa0911b5fdad00eb60ab2ce771765036c6978"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_103",
+      "selection_sha256": "58c13aafe518381d42ce8ae6c6b8818dadb914a82e1c1467ed4cb81b1ab6e001"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_91",
+      "selection_sha256": "01c366659c13b37c1b61362d32a31bba5ae93905652a2474b3e44d70d47d15f7"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0021_S0_225",
+      "selection_sha256": "18f8b5a49855355c20b71654e3c2c497d1429a7133e0edf38a4d9192f37b41c7"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_228",
+      "selection_sha256": "39fc677f490ccde6f4c04870fea799c40c96d56e56ecdf982ed9bf6bcfe3a359"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_305",
+      "selection_sha256": "4b9ebb5b6a2f0d8d6446c14f97244bfac4a2e536d4bfbaa002e858e52efa5643"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0021_S0_513",
+      "selection_sha256": "506fb8a4917ca30bc18b28267918065c1c6389953e66fafdb55778a0932c3f28"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_111",
+      "selection_sha256": "012341c8c085ddab80fd4444fb0584b68fcebe9a5999f32a03e5947d0d297c3e"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_666",
+      "selection_sha256": "012ef05cf1323f3bbca92c9a3c0b9f1b454d206a85fe15803c66bc40d84fee97"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0024_S0_283",
+      "selection_sha256": "091ad596ea3309a6f9818a9596afa50a431b7a12e5a013b979ecd02c4351a96c"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_87",
+      "selection_sha256": "12e009c1b17e338eb99e4a554c97d6b1fa71f470d3d3fa3cf513282b05dcc968"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_664",
+      "selection_sha256": "1faf04200feb193d9ef931ded2605062882b6920745177044a19e48fd1ebb289"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_116",
+      "selection_sha256": "09da9be20d52d1a658f8d89767651760d119d8b174a250078c7ee695774261b7"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0028_S0_37",
+      "selection_sha256": "0f9e2654dc74c0ae86e0d89a5fd4a69ec4d60447dac4191408d8e42bc125cab4"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_163",
+      "selection_sha256": "157b9f0af1c22727e253cdd96191c3e9f16c3d1fc02ab29a3d6d6d5353a3a4a0"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_144",
+      "selection_sha256": "41912ab1f28449ff57788edcaf894e0db5697dc6a9954201fb3c9e3ab4d8825e"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0028_S0_120",
+      "selection_sha256": "5b75326eb0177ef43246c168c0380568b08b460e43fac76c7434a93e71f1f9f9"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_472",
+      "selection_sha256": "00f8807a45dffcb686b8f9ae7c1cfe9592d40ae90a56c6e96356300fd42cf150"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_204",
+      "selection_sha256": "07143260d806b07b0fb41ab0b8f6213994332f5358c21d0d423d945051ab8f42"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_456",
+      "selection_sha256": "1da9bbee10e7618d7f6bbb9922109791e730124a821a6b16a53f76b1531b6e1a"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0030_S0_81",
+      "selection_sha256": "373287a8c926d77e010325e384014e4a74ccf825bd8435db4c3c31a834edfc89"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_651",
+      "selection_sha256": "7bd33f191cb0a50fa9fd2296d7cbb3728521114565e59d86914ac4691ff3f337"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_380",
+      "selection_sha256": "052e7d37678950e94ef848085c6a0f7372006b40b136b173e3eeaa3629ff743f"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0040_S0_141",
+      "selection_sha256": "18eff4eb663ba6fb471ef7f81486d471b4476c3c23468d24dea4dab57c889b87"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0040_S0_105",
+      "selection_sha256": "223c61b3ff7fcd3bed51c2c16591061c8330be86c6e5bf2ad27ffd5828127c78"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_315",
+      "selection_sha256": "2d47802062ea8ecbe68c96f64d83451565e92851ec84039c16bc9eed97997327"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_80",
+      "selection_sha256": "49e8792276bfcd4e4522850fd63cbee617d96263c6591acb04823a1c6d400793"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0085_S0_185",
+      "selection_sha256": "07d893e5c480d9c1255925fa836bc715c9a6fa66e6fe4993614c0327de77a23f"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_185",
+      "selection_sha256": "2c323dbb9f145c92bf5f7a6cef99f7fb83623226f7efd3b2f0d292ca55149cd6"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_2",
+      "selection_sha256": "388964a1c0b281522021007a02179d0b68109c8eeb01aee371e188c0af568a16"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_222",
+      "selection_sha256": "425d58bc172d785f04d204056083af6207cbeb19ff02611c3b4039fd0329d2b3"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_183",
+      "selection_sha256": "4acac69efd64ea97091cf50e1442a55779ff138e66cd7c3a6b0d0545102edc47"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_196",
+      "selection_sha256": "1e4191c753852710305c6a2aa1b2b5a111eeec5e5736f3e38b35b8c34448b7d7"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_62",
+      "selection_sha256": "2c4c102ab15743273d5cdd9835a5c250bfeaae102fe4a968f6100980dfce55ca"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_68",
+      "selection_sha256": "320cc9e9992d5a763917cb105b248803be257e62ed598d0b2377753b233d519c"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_241",
+      "selection_sha256": "4b80e460733d608367b79cc81cf2bf37078e352c550ce3f8880e1ac24f9ce98e"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0092_S0_101",
+      "selection_sha256": "616434da79d09d73c1077e5c48bd856b1d8c27c0ee6ae4a4833354a19e8e45ec"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_80",
+      "selection_sha256": "10f78172ea23b8d799bbb1152a049de623562d9a0f3b00c24d8f6fc95726af75"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0101_S0_71",
+      "selection_sha256": "147fff61634da53aae57e17e1fb272ed64500c0208df83713809c6dad55d9c09"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_64",
+      "selection_sha256": "26c58d4c77d9cc9cc18fbcd7e19c00d0fc9d466051570f95ad34c3030afbf72b"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0101_S0_190",
+      "selection_sha256": "5dc86f7d0e5c47bbacaad84a40ca249a6537cfcb01d9b38784c1c5029ad50003"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_44",
+      "selection_sha256": "621a52b19113b49ec5254c8edd5693a80dccbe48a0bc58c2b87d1622d54694a6"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_402",
+      "selection_sha256": "1a5968fb5f9a949c915417db1fa0fae317c82ba4a3e53ae952b13c931ce2a1c5"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1002_S0_488",
+      "selection_sha256": "23e362b55e6eaa2285214bea0ce26512a367a6f2db2a7df73d02e877484b6832"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_482",
+      "selection_sha256": "338a0d85dbcf9f9dfa3cc3d664270eafefa81229eb36533f48ff35cb84470dbb"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1002_S0_284",
+      "selection_sha256": "3da5048eba74c301bcbede66e278714841f132cb49671ed4069067c69e367eee"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_44",
+      "selection_sha256": "3dd7175b7842225b848f6777830b20e010543636fed5d286cda092038704fdb2"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_141",
+      "selection_sha256": "13af929208284ab3f5330b8f040406cba5081178e25cb0c8a429fb1018968394"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1004_S0_221",
+      "selection_sha256": "5220f772b49cdbd1b088183e8919d0623efdc9f09609fbac49f4fce6f50cbedc"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_61",
+      "selection_sha256": "5f132fb06c73b11c72bcb3f3ebb98d36d5eb6e40ddd31c678c8f6039a16940ba"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_63",
+      "selection_sha256": "7ada9d2cea0a8edd43f9f764316756a3eeb2f70a320a73ef3136269f00cb1045"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_94",
+      "selection_sha256": "7b9878a774a791353d039e70ec62cccda13b78395aa1635194851095edcb8465"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_71",
+      "selection_sha256": "0a802d227e71b814418c70f4090e138a92fd230ac45c7d74af6f98ef286abb5c"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_66",
+      "selection_sha256": "3d392896827f2d54ecfaa4ee2ed36b8dd1600245c09016e9914d7f465bd90990"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_195",
+      "selection_sha256": "4e57ace5966471fed3e1b6ccb0acf54c1cd5b0e660ecb3d737a4c3c8f959b12e"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_68",
+      "selection_sha256": "5653a3c74c618119bf2ed2158f217687c9aeb5fede2ec03165b8207ca0c0dd5a"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_173",
+      "selection_sha256": "62387c27ce5a78c1f3d93957be7ae417dd7c87c84549f3505e56cf0ac4b6bf1e"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1027_S0_199",
+      "selection_sha256": "341b78113cd9d552816a0035db76a88e83b1e569ba53ce5f3912f0af6f2db084"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_184",
+      "selection_sha256": "41015cfd9f741dfd46ee390591f2ad2d9308b7e05d831563bd027496b88c9d02"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_38",
+      "selection_sha256": "4f5fc2c6e249808efbfc11c74dd85e78bfd3b6bb5248421ad91ce5c29d94b203"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_40",
+      "selection_sha256": "5dbaf4b9cba4a10ddffb89c6e7401d35059b23be37eb3ddd414355db3fa5b150"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_176",
+      "selection_sha256": "614ddadd05b868fbdcb3da482ecb974faf16a084973aa00b87583a79770d6f86"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_53",
+      "selection_sha256": "0161514f5775b1fcda916573350b461d8c6cad854998d35c4e26d509b6d9b621"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1033_S0_199",
+      "selection_sha256": "4687439aec5ce29921fa2ed238d82a6a158fdd1590d66bc42b33476703ead1d1"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1033_S0_191",
+      "selection_sha256": "48254b4a553a27f4c3e554471c25759d2e42b31f68a34d8c49d3e5ed711c0502"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_177",
+      "selection_sha256": "6208f1686ee40155ae28ccdf0e805727e797d8dc76bac7947154dee2d2bd2eaf"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_173",
+      "selection_sha256": "7cd1ce1dcd3a05a6b3d69bb851e0d918937397f307337441bd21077f774a4cc9"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_110",
+      "selection_sha256": "20c769d7de6307561ff6ded787c9aba1639be1860a55b97800b5b54aa8572a74"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_26",
+      "selection_sha256": "2cd304f336a0f09e40ac0037b34c5f84e7a70d57349861795dcb5858d5eb75f0"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_95",
+      "selection_sha256": "4cc9400167522cb8c0b1066fe805e9344fb3683df007b6582cb8bcbd72efc97a"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_100",
+      "selection_sha256": "5307e31b8a1f55ed068f4ad55fde9d2acd78ab2ec61bc1dbe19d09a0db81ac48"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1063_S0_54",
+      "selection_sha256": "65152c308bad17a47884deb37743e338bad57ad834c8ae69b3162d48568eb9aa"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_24",
+      "selection_sha256": "17e6ec056f2ed43a120c1d297d478835e3836e91fc29a8b6edca0b3c1b4ed4fd"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_35",
+      "selection_sha256": "19d3bb98075e53e236c7a0659a192e62b94e3f9a2d25c16fe257c7fd7845b67d"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_154",
+      "selection_sha256": "1af13249a4e85c45c8a13b543e6c1b2d4ddf4859a4eba8474051bef671f038da"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_178",
+      "selection_sha256": "265868949c1851b08466678a1f2635abd3b9f8977eab9c7b8221b68abdbd8878"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_26",
+      "selection_sha256": "29ae483b5f663930cdb309023ff0dd9b92030495423a4edb46538887ab44c7e0"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_23",
+      "selection_sha256": "231b7ae6b37685e1e29fe5317d91c83f469da5e406ce9c39afbaaa48c997bfac"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1080_S0_43",
+      "selection_sha256": "2b781cca2b253f6ce2c982f64e246e5ff2a5a55b20139e6e86d6665b473d206c"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1080_S0_64",
+      "selection_sha256": "2e7b87da7cfd668875525cbcc70b3ca85c7e1f6f431131e85181280cccba6feb"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_54",
+      "selection_sha256": "555ac9b3a90b733fc5d3a4f83d06014eb18785e12aa304605ae9a650c7a1d92d"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_68",
+      "selection_sha256": "80faded3d3dfa9812f4644e58044c6be91b6dbf0438962dfdd36fb355ea2b983"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_131",
+      "selection_sha256": "09643ac3e5185dbb78c738f743e828f8cc93b5ca08746f45d9aa87d7c13fb72f"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_76",
+      "selection_sha256": "324eecbc401af816ba147475cf9a8f2fd4584762ef965ed2d42bd9c374728e6e"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1082_S0_67",
+      "selection_sha256": "53bcbe105462b0b9925db424e2f061ddec8d7de24ccee58759920990d9b64a2f"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_172",
+      "selection_sha256": "6d7c79b0b0b21c1bf698d94ff16365649992c49902d4fd86389d123f763e12ea"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_65",
+      "selection_sha256": "77b00801a89cbd1958cb99daedc276d3fae30c07586f67d66c78a050e17207f1"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_266",
+      "selection_sha256": "2662039d24b85cd60c6ed8b7bc51bc757320926a22ed75b6e626d9e27072c61c"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_154",
+      "selection_sha256": "34482e57f93ba6faa0f527017d12a4a6a3c81ad04eea44927e6a0d93c48ca6ec"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_150",
+      "selection_sha256": "6cc970ff06a716dee72ae443e5aac664a3fc45a3c9b778580ab6724c316c3d01"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_104",
+      "selection_sha256": "79e013b03be7bb6765a4bf8428ee32494d9cce626d4cbb7b968816c0f0ddb930"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_287",
+      "selection_sha256": "921b5502118e62f5c666f7e4ebcf52f4de195320dbcec426c893439638d60f41"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2012_S0_24",
+      "selection_sha256": "049a8cd0ce33d85ce401966cf7baf80bd2eb4e98a3e27cb5fbf7be9a76991ec4"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_22",
+      "selection_sha256": "0d8c1f315c416663816b844aba0e8c7d72586bb571588abd0390e8a4e74475da"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_99",
+      "selection_sha256": "26c0a18bec61e4738b679231b1a1222ab63a7bba55bcd8fc8ee3aaaa63159c89"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_36",
+      "selection_sha256": "3bc2d39bb8f1d5533a58cb902eb7b497d82f49bcfd78dfbccdcfcd5d27c0f6dd"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_108",
+      "selection_sha256": "4b2333e315ccc7de33a3625a4a8efeeb8a244327056f22a942f0512145caf6cb"
+    }
+  ],
+  "panel_sha256": "3fd67b935239e0b135b6cddc6156d25103d92afb59fa90fef90716d7bb141cad"
+}

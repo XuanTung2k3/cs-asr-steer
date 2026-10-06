@@ -1,0 +1,251 @@
+{
+  "schema": "p2_sel_v1",
+  "status": "PRE_OUTCOME_FREEZE_IMPLEMENTATION_PENDING",
+  "design_base_commit": "6e480b777086cb963ff3cf77b730ca25167e6bc2",
+  "spec": "docs/inference_cf/P2_SEL_SPEC.md",
+  "codex_design": "docs/inference_cf/P2_SEL_CODEX_DESIGN.md",
+  "mini_panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+  "scope": {
+    "stage": "P2-SEL",
+    "role": "post-P2-DIR exposed development diagnostic only",
+    "scientific_question": "Can the unchanged E*R_B gate and localizer selectively deploy frozen D2 on EN-confusion positions while suppressing its known correct-Mandarin damage?",
+    "core_method_claim": false,
+    "scientific_outcomes_run_at_freeze": false
+  },
+  "source_sha256": {
+    "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/inference_cf/directions.py": "72a51a2d9c4c54db3525f13035a1d799509ba632234888c43e717c42eafd0cd7",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/broad.py": "6ab1eab736e0a4739c2bcc310e13129d141d1314ab4325eeb5e55cd23d3456ed",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p2dir.py": "ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+    "experiments/inference_cf_p2dir_analyze.py": "14b47bac4b5f5a99099edf94eb77ef23cea72704fc441d79cda66c6c536d1ca5",
+    "experiments/inference_cf_p2dir_audit.py": "9b43346e3dd72fbe97a7733c0792363bf99055b2b3f9189ae909ee1528c34c4f",
+    "results/inference_cf/p2rj/positions.json": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+    "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+    "results/inference_cf/p2dir/exp1_run1_audit.json": "37fbc7b9cb99999e3f72353ccf9dc10505ed1b6f7fbbc9f531b6971a14235457",
+    "results/inference_cf/p2dir/exp1_run1_analysis.json": "bce7e13d2555bf6dc82facebd40e14e18c51c2cb75848800cd9955fef9fb81b8",
+    "results/inference_cf/p2r/run3/manifest.json": "e43320264cb3d8060f0c9d4a429ea19423aca4f57338cd4c833e87f48a8a78eb",
+    "results/inference_cf/p2_A_r1_L16/manifest.json": "0ed2b5cbd1822c9b7da87b915917f1633eef1daeb32ef1787348ed3af37bc4f8",
+    "results/inference_cf/p2_A_r1_L16/panel.json": "a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5"
+  },
+  "frozen_intervention": {
+    "direction": "D2_READOUT",
+    "direction_version": "p2dir_readout_v1",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "partition": "whisper_han_ascii_v1",
+    "logits": "generate-suppressed float32, temperature 1",
+    "gradient": "autograd.grad through float32 zero leaf at current pre-FFN site; tangent projection and normalization float64; return float32",
+    "fallback": "inherit p2dir_readout_v1 tiny/nonfinite/normalization-fail no-edit",
+    "layer": 16,
+    "site": "decoder_post_cross_attn_residual",
+    "gate": "E*R_B",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "depth_rescale": false,
+    "dtype": "bfloat16",
+    "attention": "eager",
+    "max_new_tokens": 200,
+    "reference_free_provider_inputs": true
+  },
+  "S1": {
+    "population": "results/inference_cf/p2rj/positions.json",
+    "population_hash": "sha256:8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "positions": 180,
+    "strata_counts": {
+      "EN-confusion": 60,
+      "EN-correct": 60,
+      "ZH-correct": 60
+    },
+    "dialogue_universe": "the 20 dialogue IDs in the frozen positions artifact; equal dialogue weighting",
+    "mode": "independent same-state single pulse at frozen query; no earlier edits",
+    "arms": [
+      "C0_NONE",
+      "C1_OLD_GATED",
+      "C2_D2_GATED",
+      "C3_D2_BROAD"
+    ],
+    "ungated_reference": "results/inference_cf/p2dir/exp1_run1",
+    "gate_reference": "results/inference_cf/p2r/run3",
+    "gate_join_key": [
+      "utterance_id",
+      "absolute query"
+    ],
+    "broad_rule": {
+      "total_squared_energy": "sum(actual post-NormPreserve C2 edit norm squared) over the 180 frozen rows",
+      "eligible_query_count": 180,
+      "per_query_target_chord_norm": "sqrt(total_squared_energy/180)",
+      "solver": "unchanged P2-R solve_scale, maximum 8 evaluations, solve effective scalar lambda on unit D2 axis; apply alpha=2, g=1, direction tensor=(lambda/2)*d_readout and verify actual hook energy after dtype rounding",
+      "deployment_alpha": 2,
+      "broad_gate": 1,
+      "direction_orientation": "D2 axis only; scalar amplitude is the frozen energy-matching control",
+      "label_or_evaluator_allocation": false,
+      "aggregate_relative_energy_tolerance": 0.02,
+      "zero_C2_energy": "set target to zero and C3 exactly no-edit; zero-vs-zero aggregate match is valid",
+      "unreachable_rows": "retain row and count zero realized energy; overall C3/S1 invalid if aggregate tolerance fails"
+    },
+    "metrics": [
+      "EN-confusion delta_m_ref",
+      "EN-correct delta_m_correct",
+      "ZH-correct delta_m_correct",
+      "correct-state top1 corruption by stratum",
+      "same C1 OLD-GATED margin/corruption summaries, descriptive only",
+      "E, R_B, g=E*R_B, realized edit energy: per-stratum median/IQR/fraction-positive"
+    ],
+    "descriptive_ratios": {
+      "r_benefit": "C2 EN-confusion mean delta_m / matched ungated P2-DIR D2 mean delta_m; fixed denominator +4.499 nat",
+      "r_harm": "abs(C2 ZH-correct mean delta_m) / abs(matched ungated P2-DIR D2 mean delta_m); fixed denominator -2.011 nat",
+      "decision_use": false
+    },
+    "bootstrap": {
+      "unit": "dialogue",
+      "within_dialogue": "mean positions first, then equal mean over dialogue IDs represented in that endpoint/stratum; absent dialogue-stratum cells are omitted from that draw denominator",
+      "paired_shared_draws": true,
+      "replicates": 10000,
+      "seed": 240924,
+      "minimum_valid_draws": 9900,
+      "decision_family_size": 12,
+      "decision_family": "C2/C3 confusion margin (2), C2/C3 EN/ZH correct margins (4), paired C2-C3 confusion/ZH margins (2), C2/C3 EN/ZH corruption rates (4)",
+      "family_interval": "two-sided percentile Bonferroni simultaneous 95%, alpha=0.05/12",
+      "equivalence_interval": "paired percentile 90% CI for C2-C3 only"
+    },
+    "thresholds": {
+      "material_en_confusion_delta_m_nats": 0.5,
+      "confusion_ci_lower_strictly_above": 0.0,
+      "correct_margin_ci_lower_nats_each": -0.25,
+      "correct_corruption_observed_max_each": 0.05,
+      "correct_corruption_ci_upper_max_each": 0.05,
+      "all_180_rows_required_each_arm": true,
+      "missing_duplicate_identity_gate_or_D2_validity_failure": "P2_SEL_INVALID",
+      "C2_minus_C3_confusion_ci_lower_min_nats": -0.25,
+      "C2_minus_C3_ZH_correct_ci_lower_min_nats": 0.1,
+      "little_vs_broad_requires_C3_standalone_pass": true,
+      "little_vs_broad_equivalence_C2_minus_C3_confusion_ci90_nats": [
+        -0.25,
+        0.25
+      ],
+      "little_vs_broad_equivalence_C2_minus_C3_ZH_correct_ci90_nats": [
+        -0.1,
+        0.1
+      ]
+    },
+    "label_precedence": [
+      "P2_SEL_INVALID",
+      "P2_SEL_GATE_ADDS_LITTLE_VS_BROAD",
+      "P2_SEL_GATE_RESCUES_D2",
+      "P2_SEL_GATE_TOO_CONSERVATIVE",
+      "P2_SEL_GATE_INSUFFICIENTLY_SELECTIVE"
+    ],
+    "stop_unless_label": "P2_SEL_GATE_RESCUES_D2"
+  },
+  "S2": {
+    "requires": [
+      "P2_SEL_GATE_RESCUES_D2",
+      "P2_SEL_AUDIT: PASS (S1)"
+    ],
+    "role": "D-dev-select",
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "panel_payload_sha256": "3fd67b935239e0b135b6cddc6156d25103d92afb59fa90fef90716d7bb141cad",
+    "utterances": 100,
+    "dialogues": 20,
+    "per_dialogue": 5,
+    "selection": {
+      "tag": "P2SEL-mini100-v1",
+      "eligible_universe": "all role-mapped eligible IDs in the existing P2-A D-dev-select parent panel, grouped by its frozen 20 dialogues",
+      "algorithm": "within each dialogue, first five sorted by (hex(SHA256(UTF8(tag+'|'+utterance_id))), utterance_id); emit dialogue IDs lexicographically",
+      "uses_labels_or_outcomes": false,
+      "IDs_frozen_in_panel_json": true
+    },
+    "systems": [
+      "B0",
+      "OLD",
+      "NEW",
+      "BROAD"
+    ],
+    "reuse_B0": "P2-A B0M_L16 only if exact 100 IDs, model/tokenizer, prompt, generation settings, and cached path match; otherwise generate in S2",
+    "reuse_OLD": "P2-A L16_a2_ER_id_pos only if exact 100 IDs and execution semantics/manifests match; otherwise generate in S2",
+    "broad_rule": "unchanged csasr.inference_cf.broad.BroadBudget: per-utterance Q_new from actual reference-free NEW squared edit energy and N from B0 UTF8-complete eligible queries; equal packet, actual-energy debit, cap/exhaustion, 2% aggregate and 5% per-utterance mismatch validity; Q_new=0 means exact no-edit; Q_new>0 with N=0 invalidates S2; if all Q_new are zero, BROAD is exact no-edit and zero-vs-zero is valid",
+    "AUTO": "reuse B0_AUTO only when exact compatible cached outputs and hashes exist; else omit, no GPU regeneration",
+    "metrics": [
+      "PIER",
+      "MER",
+      "EN-WER",
+      "ZH-CER",
+      "POI corrections/corruptions",
+      "embedded-English and matrix-Mandarin retention",
+      "outside harm",
+      "gate/direction/edit coverage",
+      "realized and relative energy",
+      "runtime",
+      "D2 autograd calls",
+      "peak allocated/reserved VRAM"
+    ],
+    "uncertainty": {
+      "paired_dialogue_bootstrap_replicates": 10000,
+      "seed": 240924,
+      "interval": "two-sided pointwise percentile 95%; sample 20 dialogue clusters with replacement and recompute corpus ratio from summed utterance-level numerators/denominators; recompute retention/outside-harm rates from sampled counts",
+      "interpretation": "descriptive development mini-screen"
+    },
+    "thresholds": {
+      "promising_PIER_gain_vs_B0_and_OLD_min": 0.005,
+      "promising_gain_ci_lower_strictly_above": 0.0,
+      "MER_damage_upper": 0.005,
+      "ZH_CER_damage_upper": 0.005,
+      "EN_WER_damage_upper": 0.01,
+      "EN_retention_loss_upper": 0.01,
+      "ZH_retention_loss_upper": 0.01,
+      "outside_harm_rate_upper": 0.005
+    },
+    "label_precedence": [
+      "P2_SEL_MINI_INVALID",
+      "P2_SEL_MINI_DAMAGE_UNRESOLVED",
+      "P2_SEL_MINI_PROMISING",
+      "P2_SEL_MINI_INCONCLUSIVE"
+    ],
+    "full_300_run_authorized": false
+  },
+  "audit": {
+    "pre_run": "CPU only; verify hashes, provenance, fixed population, exact joins, threshold freeze, data firewall and no outcome before PASS_TO_P2_SEL_S1",
+    "post_run": "independent auditor; must not import primary analysis/decision module; recompute population, gates/directions, realized energy, outcomes, bootstrap and labels",
+    "required_pass_labels": [
+      "P2_SEL_AUDIT: PASS (S1)",
+      "P2_SEL_AUDIT: PASS (S2)"
+    ],
+    "compact_rows_only": true
+  },
+  "compute": {
+    "max_pending_or_running_gpu_jobs": 2,
+    "partition": "mig",
+    "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1",
+    "batch_size": 1,
+    "S1_time_limit": "00:30:00",
+    "S2_time_limit": "01:30:00",
+    "target_total_gpu_hours": 2,
+    "planned_jobs": "one S1; one conditional S2 only after audited rescue",
+    "no_gpu_in_design_session": true
+  },
+  "forbidden": [
+    "new direction",
+    "new layer",
+    "new alpha",
+    "new gate formula",
+    "new localizer",
+    "oracle localization",
+    "router-calib as a new role",
+    "D-dev-confirm",
+    "D-test",
+    "P3",
+    "SEAME",
+    "CS-FLEURS",
+    "ViMedCSS",
+    "ASCEND",
+    "other transfer corpora",
+    "full 300-utterance run in this stage"
+  ]
+}

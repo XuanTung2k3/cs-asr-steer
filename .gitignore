@@ -36,3 +36,7 @@ out/smoke/results_A.pre_42674_debug_residue.jsonl.bak
 # P0-R2 evaluator outputs derived from dataset reference transcripts (regenerable; keep out of Git)
 results/inference_cf/p0_r2/evaluation_panel.json
 results/inference_cf/p0_r2/evaluation_units.json
+
+# P2-DIR large raw tensors stay local; their sha256 hashes are recorded in committed row/fold JSONs
+results/inference_cf/p2dir/**/rows/*_logits.npz
+results/inference_cf/p2dir/folds_*/arrays/

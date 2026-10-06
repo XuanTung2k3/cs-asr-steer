@@ -40,3 +40,5 @@ results/inference_cf/p0_r2/evaluation_units.json
 # P2-DIR large raw tensors stay local; their sha256 hashes are recorded in committed row/fold JSONs
 results/inference_cf/p2dir/**/rows/*_logits.npz
 results/inference_cf/p2dir/folds_*/arrays/
+# P2-SEL arm logits stay local; sha256 recorded in committed row JSONs
+results/inference_cf/p2sel/**/rows/*_logits.npz

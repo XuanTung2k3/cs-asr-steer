@@ -244,3 +244,20 @@ def test_frozen_sources_population_panel_surface():
     src = Path("experiments/inference_cf_p2sel_xa_audit.py").read_text()
     assert re.search(r"^\s*(from|import)\s+\S*(_analyze|source_compatibility)", src, re.M) is None
     assert an.RECON_TOL == 0.03125
+
+
+def test_auditor_J_precision_within_frozen_tolerance():
+    """Audit attempt-1 compared derived FD ratios at 1e-6; float64 (auditor) vs float32 (frozen objective) J
+    differ legitimately up to the frozen 1e-4 J tolerance, so agreement is on per-row dJ within 2e-4."""
+    part = {"embedded_ids": list(range(44, 54)), "matrix_ids": list(range(8, 44))}
+    rng = np.random.default_rng(3)
+    worst = 0.0
+    for _ in range(50):
+        z1 = (rng.normal(size=64) * 5).astype(np.float32)
+        z2 = (z1 + rng.normal(size=64).astype(np.float32) * 0.01).astype(np.float32)
+        d_an = an.J_of(z2, 4, [0], [], part) - an.J_of(z1, 4, [0], [], part)
+        d_au = au.J_np(z2, 4, [0], [], part) - au.J_np(z1, 4, [0], [], part)
+        worst = max(worst, abs(d_an - d_au))
+    assert worst <= 2 * CFG["XA0"]["J_audit_abs_tolerance"]
+    src = Path("experiments/inference_cf_p2sel_xa_audit.py").read_text()
+    assert '2 * c["XA0"]["J_audit_abs_tolerance"]' in src

@@ -487,3 +487,14 @@ and commit/push reviewed implementation before scientific outcomes.
 Checklist: [x] D0 regression (bitwise solver vs P2-R) [x] D1 folds 20/20 [x] D2 spot audit 30/30
 [x] Exp-1 audit PASS [x] final audit PASS [ ] next stage: requires a new human-authorized,
 separately frozen pre-registration (none started). Reports `docs/inference_cf/P2_DIR_{EXP1,FINAL}_REPORT.md`.
+
+## P2-SEL — executed (2026-10-06): `P2_SEL_GATE_INSUFFICIENTLY_SELECTIVE`
+
+| Stage | Status |
+|---|---|
+| P2-SEL implementation + pre-run audit | DONE (`6c7644a`, `c8ec788`, `PASS_TO_P2_SEL_S1`) |
+| S1 180-position gate-coupled screen (C0/C1/C2/C3) | DONE, `P2_SEL_AUDIT: PASS (S1)`: D2 benefit retained 78%, margin harm cut 90%, but ZH corruption 5.4% and not non-inferior to BROAD on confusion -> insufficiently selective |
+| S2 100-utterance mini free decoding | NOT RUN (stop rule) |
+| P3 | HELD |
+
+Next: requires a new human-authorized, separately frozen stage (none started). Report `docs/inference_cf/P2_SEL_REPORT.md`.

@@ -227,3 +227,11 @@ D1 `UniqueDirection` sealed fold vector, D2 `ReadoutDirection`); D1 construction
 decision functions), independent audit (`prerun`/`spot`/`exp1`/`final`), `slurm/inference_cf_p2dir.sbatch`,
 tests `tests/test_inference_cf_p2dir_{directions,protocol,audit}.py`. Outputs `results/inference_cf/p2dir/`.
 Exp-2/Exp-3 runners were intentionally not implemented (stop rule). `inference_cf_cached.py` unchanged.
+
+## P2-SEL (2026-10-06; executed through S1)
+
+`experiments/inference_cf_p2sel.py` (S1 C1/C2 gated pulses via unchanged `inference_cf_cached._edit_hook`, pooled
+C3 BROAD via unchanged `inference_cf_p2r.solve_scale`; reuses sealed P2-DIR states/D2/NONE and P2-R run3 gates),
+`inference_cf_p2sel_analyze.py` (frozen family-12/TOST/label precedence; pre-committed S2 rule),
+`inference_cf_p2sel_audit.py` (independent prerun/s1/final), `slurm/inference_cf_p2sel.sbatch`,
+`tests/test_inference_cf_p2sel.py`. Outputs `results/inference_cf/p2sel/`. S2 runner intentionally not implemented.

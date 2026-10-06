@@ -243,3 +243,9 @@ unedited B/E states (extraction), D1 leave-one-dialogue-out fits on EN-correct/Z
 Exp-1 teacher-forced pulses + evaluator margin Jacobians. Exp-3's 300-utterance decoding panel was NOT
 decoded (stop rule). No router-calib, D-dev-confirm, D-test, P3 or transfer data. These outcomes are
 further development exposure of the same positions; any later stage motivated by them is post-hoc.
+
+## P2-SEL exposure (2026-10-06)
+
+S1 re-used the already-exposed 180 P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues) for gated
+and energy-matched single pulses. The 100-utterance S2 mini-panel (`P2_SEL_MINI_PANEL.json`) was frozen but not
+decoded. No router-calib, D-dev-confirm, D-test, P3 or transfer data. Further development exposure only.

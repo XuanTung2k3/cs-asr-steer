@@ -476,3 +476,13 @@ below 0.5 materiality); D2 READOUT +4.50 [3.83, 5.17], kappa about 0.80, but ZH-
 `P2_DIR_CAUSAL_POWER_WITH_DAMAGE:D2`. No selection; Exp-2/Exp-3 NOT run (stop rule). P3 HELD.
 Reports: `docs/inference_cf/P2_DIR_EXP1_REPORT.md`, `P2_DIR_FINAL_REPORT.md`. Next: human decision on
 any new separately pre-registered stage; nothing authorized.
+
+## P2-SEL result (2026-10-06) — terminal: `P2_SEL_GATE_INSUFFICIENTLY_SELECTIVE`
+
+Contract `b4602b8`; implementation `6c7644a`; pre-run `PASS_TO_P2_SEL_S1`; S1 Slurm 57805 (143 s, no autograd);
+`P2_SEL_AUDIT: PASS (S1)` (attempt-1 BLOCK from an auditor tolerance defect preserved; mechanical fix `a9606da`).
+D2-GATED (E·R_B, alpha 2, L16): EN-confusion +3.52 [1.91, 4.96] (78% of ungated), ZH-correct −0.195
+[−0.54, 0.00] (10% of ungated harm), but ZH corruption 0.054 [0, 0.158] > 0.05 and C2−C3 confusion
+lower −1.30 < −0.25. S2 NOT run. R_B does not separate EN-confusion from ZH-correct (≈1 in both); E false
+positives on 5/60 ZH positions carry all residual harm. P3 HELD. Report `docs/inference_cf/P2_SEL_REPORT.md`.
+Next: human decision on any new separately frozen stage; nothing authorized.

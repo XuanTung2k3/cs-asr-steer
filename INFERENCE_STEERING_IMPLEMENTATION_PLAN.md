@@ -535,3 +535,12 @@ or runner implementation in design session. Preserve both parents' stops and cor
 | XA0 source-compatibility diagnosis | DONE, `P2_SEL_XA_AUDIT: PASS (XA0)`: finite-difference validity failed (4/30 material rows) -> INVALID |
 | XA1 gate screen / XA2 mini decode | NOT RUN (stop rule) |
 | P3 | HELD |
+
+## P2-SEL-LAC — pre-outcome design freeze (2026-10-06)
+
+Human-authorized bounded next stage after terminal E/T/XA. See `docs/inference_cf/P2_SEL_LAC_SPEC.md`,
+`P2_SEL_LAC_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_lac.json`. Seal unmasked English/Mandarin
+next-token candidates; zero exact T-selected waveform W*, re-encode and cold-replay identical prefix.
+Only audited support permits E*R_B*max(0,tanh(S_lex/2)) with unchanged D2/site/alpha/NormPreserve;
+conditional existing100 mini decode only after gate support. No300/P3. No candidate extraction,
+scientific masked outcome or runner implementation in this design session; core authority unchanged.

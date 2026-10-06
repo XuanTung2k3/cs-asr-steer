@@ -1,5 +1,7 @@
 # STATUS
 
+**Newest bounded inference-time stage (2026-10-06): P2-SEL-LAC design frozen; implementation/pre-LAC0 audit pending.** Accept terminal E ambiguous, T token-LID-not-discriminative and XA INVALID. Contract: `docs/inference_cf/P2_SEL_LAC_SPEC.md`, `P2_SEL_LAC_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_lac.json`. Unmasked candidate seal + exact T-window waveform-zero counterfactual, whole masked encoder/prefix replay; only conditional tanh(S_lex/2) precision factor. No candidate extraction/masked outcome/job in design; core method unchanged, P3 HELD.
+
 **Newest bounded inference-time stage (2026-10-06): P2-SEL-XA design frozen; implementation/pre-XA0 audit pending.** Accept terminal P2-SEL-E ambiguous and P2-SEL-T token-LID-not-discriminative (audited PASS). New contract: `docs/inference_cf/P2_SEL_XA_SPEC.md`, `P2_SEL_XA_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_xa.json`. Raw D2-gradient/source dot diagnostic, fixed0.95 scratch validation, only conditional clip(S,0,1) gate factor. No XA outcomes/jobs in design; core method unchanged, P3 HELD.
 
 **Newest bounded inference-time development stage (2026-10-06): P2-SEL-T design frozen, implementation/pre-run audit pending.** Parent P2-SEL-E remains terminal `P2_SEL_E_DIAGNOSIS_AMBIGUOUS` (audited PASS). See `docs/inference_cf/P2_SEL_T_SPEC.md`, `P2_SEL_T_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_t.json`: fixed L/C/R query-attention diagnostic; only conditional E_tok repair; no outcomes in design session. P3 HELD; no core-method revision or fresh validation.

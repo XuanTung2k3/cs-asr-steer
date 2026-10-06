@@ -281,3 +281,10 @@ No fresh validation, router-calib new role, confirm/test/P3/transfer; developmen
 XA0 captured L16 q/u_source/r and one λ=0.95 scratch forward on the already-exposed 180 P2-R/P2-RJ D-dev-select positions
 (80 utterances, 20 dialogues), reusing sealed P2-DIR raw readout gradients. No steering, LID, decode or evaluator signal in
 construction; no router-calib/D-dev-confirm/D-test/P3/transfer data.
+
+## P2-SEL-LAC design freeze (2026-10-06)
+
+Read existing source/contracts/reports, T compact-window metadata and canonical tokenizer/suppression
+metadata. No new candidate pairs, S_lex, masked audio inference or scientific outcome computed.
+Conditional LAC0/LAC1 use same180 exposed positions; LAC2 only existing frozen100 panel after audited
+passes. Development-only; no router-calib new role, confirm/test/P3/transfer/fresh validation.

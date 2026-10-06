@@ -1,0 +1,355 @@
+{
+  "schema": "p2_sel_lac_v1",
+  "status": "PRE_LAC0_OUTCOME_FREEZE",
+  "base_commit": "6421b0cae58e3e2836c8ff9eaeeb8e41668c0550",
+  "spec": "docs/inference_cf/P2_SEL_LAC_SPEC.md",
+  "design": "docs/inference_cf/P2_SEL_LAC_CODEX_DESIGN.md",
+  "scope": "bounded training-free reference-free exposed-development counterfactual diagnosis; no core-method or confirmation claim",
+  "parents": [
+    "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+    "P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE",
+    "P2_SEL_XA_INVALID"
+  ],
+  "source_sha256": {
+    "results/inference_cf/p2rj/positions.json": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2dir/construction_population.json": "87cfe9f0e6cbe71e43575d20d597f2235101574504e921e0562ebf5a0426f4b8",
+    "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+    "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+    "results/inference_cf/p2sel/s1_run1/manifest.json": "195a3a825bf43bcafd33aab391fb43466a520141d00174ef34ff9434f9e10380",
+    "results/inference_cf/p2sel/s1_run1_audit.json": "ce18b36d4a14ac82cb5c0b3651fa98810977b72cf15e64565910d8e0f8754b2c",
+    "results/inference_cf/p2sel_t/t0_run1/manifest.json": "ea2c1b80a7dbd833d767bfbb97e9da0661de9b20138ba2e3be6226c76d3a4864",
+    "results/inference_cf/p2sel_t/t0_run1_audit.json": "f071bef454be1155e7f9aec122e7f1f77f6bc835523919734a59eba37fb9dfc0",
+    "results/inference_cf/p2sel_xa/xa0_run1_audit.json": "f05dcb4b4c2eee1c38dc5ef6e3eacdcc0b05aa45dbd3b6cf7f401206b92b83d1",
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "results/inference_cf/p0_r2/inference_panel.json": "a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+    "src/csasr/models/whisper.py": "24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/lss/sites.py": "d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "src/csasr/models/hooks.py": "4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2dir.py": "ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+    "experiments/inference_cf_p2sel.py": "a6a732b39b8bc823c71270e4d9724fd769fadd9893bf3543813ab44fafcbf1d0",
+    "experiments/inference_cf_p2sel_e.py": "ef534df7009b34b48fd54ff9f6e2a7f31c5ec3a772f7d9cec47ad4f178896eb3",
+    "experiments/inference_cf_p2sel_t.py": "4395329e201e980dd71ad2fcedf24c4e82b2180a691f3a135e3471ef53e96c5c",
+    "experiments/inference_cf_p2sel_xa.py": "94abf4205c59da228f3843a4d10a38a97bf261f49b26bf319f8cea9c98b0c64b",
+    "experiments/inference_cf_p2.py": "45b1aefd158c6ff5b5a936b11ad37b14e65cba61030ab91f05e6d1715f49657d",
+    "configs/inference_cf/p2_sel_xa.json": "26dfed94c6410b2e4b185c75ca3719906d3d0dced70f9bb6277607dc52f9b8e5",
+    "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742"
+  },
+  "frozen": {
+    "direction": "D2_READOUT",
+    "direction_version": "p2dir_readout_v1",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "partition": "whisper_han_ascii_v1",
+    "logits": "generate-suppressed float32, temperature 1",
+    "gradient": "existing p2dir_readout_v1 zero-leaf autograd.grad; float64 tangent projection and normalization; float32 return",
+    "fallback": "unchanged p2dir_readout_v1 no-edit fallback",
+    "layer": 16,
+    "site": "DG-02 decoder post-cross-attention residual, pre-FFN",
+    "gate": "E*R_B",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "localizer": "unchanged max_attention_window 50 frames (1.0 s), maximum current-query frozen alignment-head mass, earliest tie",
+    "depth_rescale": false,
+    "dtype": "bfloat16",
+    "reference_free_runtime_inputs": true
+  },
+  "population": {
+    "positions": 180,
+    "utterances": 80,
+    "dialogues": 20,
+    "strata": [
+      60,
+      60,
+      60
+    ],
+    "historical_groups": {
+      "EN_TP": 42,
+      "EN_FN": 18,
+      "ZH_TN": 55,
+      "ZH_FP": 5,
+      "EN_CORRECT": 60
+    },
+    "join": "unique (utterance_id,t,absolute query), retain original ordered keys and old E grouping"
+  },
+  "candidates": {
+    "partition_version": "whisper_han_ascii_v1",
+    "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+    "V_E": "embedded_ids, 37858 canonical ASCII-Latin content IDs",
+    "V_M": "matrix_ids, 1667 canonical Han/Han-lead IDs",
+    "selection": "raw unmasked B float32 logits; argmax over each exact canonical set; tie lowest integer token ID",
+    "suppression": "frozen generation semantics unchanged; verified no suppress/begin overlap with V_E/V_M; any overlap under a changed provider is INVALID",
+    "seal": "results/inference_cf/p2sel_lac/candidates_sealed.json; exact uid/t/query/prefix/c_E/c_M/unmasked logits/model/partition/W* hashes; commit/push before masked outcomes",
+    "masked_reselection": false,
+    "descriptive_probabilities_ranks": "generate-suppressed full-vocabulary probabilities and ranks, ties by token ID; no selection or gate feature"
+  },
+  "counterfactual": {
+    "sample_rate": 16000,
+    "audio": "csasr.models.whisper.load_audio unchanged: float32 soundfile, mono mean, existing scipy resample if needed",
+    "W_star": "audited P2-SEL-T row bounds[row.j], half-open resampled-waveform sample indices; no masked relocalization",
+    "mask": "x_mask=x.copy(); x_mask[a:b]=np.float32(0.0)",
+    "taper": "NONE; hard in-window zero replacement; no outside-window operation",
+    "heard": "existing offline available waveform, heard_samples=min(len(x),480000); W* fully contained; no streaming claim",
+    "features": "same batch_model_inputs feature_extractor([waveform],sampling_rate=16000,return_tensors=pt,return_attention_mask=True), unchanged default padding/truncation/normalization, model bf16 casting",
+    "decoder": "fresh unsteered forced-ZH cached B replay from prompt through exactly baseline tokens before t, with masked encoder; never reuse unmasked self/cross KV caches",
+    "dedup": "identical (waveform hash,mask bounds,model/provider hash) may reuse masked encoder; prefix cache only if its fed IDs are exact prefix of current query IDs",
+    "counterfactual_cache_entries_max_per_utterance": 2,
+    "noop": "if x_mask bytes equal x, reuse unmasked logits and S=0; zero-energy/no-op is valid",
+    "energy_fraction": "sum(x[a:b].astype(float64)^2)/(sum(x[:heard_samples].astype(float64)^2)+1e-12); descriptive only",
+    "decoder_attention": true
+  },
+  "LAC0": {
+    "M0": "z[c_E]-z[c_M] from raw unmasked logits",
+    "Mmask": "z_mask[c_E]-z_mask[c_M] for SAME sealed candidates",
+    "Delta_E": "z[c_E]-z_mask[c_E]",
+    "Delta_M": "z[c_M]-z_mask[c_M]",
+    "S_lex": "M0-Mmask == Delta_E-Delta_M; CPU float64 arithmetic from lossless float32 logits",
+    "only_factor": "max(0,tanh(S_lex/2))",
+    "descriptive": [
+      "Delta_E",
+      "Delta_M",
+      "M0",
+      "Mmask",
+      "candidate probabilities/ranks/top1 unmasked and masked",
+      "E_1s reused",
+      "E_tok reused",
+      "R_B reused",
+      "F_lex",
+      "removed waveform energy fraction"
+    ],
+    "bootstrap": {
+      "replicates": 10000,
+      "seed": 240924,
+      "rng": "numpy.random.default_rng",
+      "unit": "20 sorted dialogue IDs sampled with replacement, shared draws",
+      "statistic": "dialogue-equal within-group means/rates; omit empty cells per group",
+      "minimum_valid_draws": 9900,
+      "descriptive_interval": [
+        0.05,
+        0.95
+      ],
+      "decision_lower_percentile": 0.2
+    },
+    "thresholds": {
+      "EN_TP_min_count": 34,
+      "EN_TP_total": 42,
+      "EN_TP_S_min_nat": 1.7346010553881064,
+      "EN_TP_S_formula": "2*atanh(0.70)=log(17/3); implies F>=0.70",
+      "ZH_FP_min_count": 4,
+      "ZH_FP_total": 5,
+      "ZH_FP_S_max_nat": 0.20067069546215124,
+      "ZH_FP_S_formula": "2*atanh(0.10)=log(11/9); implies F<=0.10 including negative S",
+      "qualifying_group_min_dialogues": 3,
+      "mean_S_TP_minus_FP_min_nat": 0.5,
+      "one_sided80_lower_strictly_above": 0.0,
+      "recall_EN_FN_min_count": 9,
+      "recall_EN_FN_total": 18,
+      "recall_S_min_nat": 1.7346010553881064,
+      "recall_min_dialogues": 3
+    },
+    "supported": "all validity; >=34/42 TP S>=log(17/3), >=4/5 FP S<=log(11/9), each qualifying group>=3 dialogues; dialogue-equal mean S(TP)-S(FP)>=0.50 nat and lower80>0",
+    "recall_only": "not supported AND >=9/18 historical FN reach S>=log(17/3) across>=3 dialogues; descriptive compatibility only, E=0 remains zero",
+    "precedence": [
+      "P2_SEL_LAC_INVALID",
+      "P2_SEL_LAC_LEXICAL_COMPATIBILITY_SUPPORTED",
+      "P2_SEL_LAC_RECALL_ONLY",
+      "P2_SEL_LAC_NOT_DISCRIMINATIVE"
+    ],
+    "small_S_is_valid": true,
+    "integrity": {
+      "keys": 180,
+      "groups": [
+        42,
+        18,
+        55,
+        5,
+        60
+      ],
+      "W_star": "bit-exact saved j/bounds/query; within W_1s/heard and n=min(8000,W_1s length)",
+      "outside_waveform": "byte-identical x_mask[:a] and x_mask[b:]; finite shape/dtype/length unchanged",
+      "inside_waveform": "all positive float32 zeros; if original energy>0 then at least one numeric sample changes",
+      "unmasked_logits": "lossless sealed bf16 NONE logits, with all180 audited live XA0 bitwise identity reused; no redundant unmasked GPU replay",
+      "preprocessing": "CPU all80 unmasked in-memory feature/attention mask equals batch_model_inputs path bitwise before masking",
+      "candidate_serialization": "exact integers and per-key hashes before/after serialization; no masked chooser",
+      "logits": "all raw float32 finite, correct vocabulary shape; no NaN replacement",
+      "identity_abs_tolerance": 1e-10,
+      "no_reference_or_future_tokens": true
+    },
+    "selection": "results/inference_cf/p2sel_lac/lac0_selection.json; sole formula/data/source/config/row hashes and independent PASS; immutable and pushed before LAC1"
+  },
+  "LAC1": {
+    "requires": [
+      "P2_SEL_LAC_LEXICAL_COMPATIBILITY_SUPPORTED",
+      "P2_SEL_LAC_AUDIT: PASS (LAC0)",
+      "pushed immutable selection"
+    ],
+    "F_lex": "max(0,tanh(S_lex/2))",
+    "gate": "E_1s*R_B*F_lex",
+    "arms": [
+      "C0_NONE",
+      "C_OLD_E_RB_D2",
+      "C_NEW_E_RB_Flex_D2"
+    ],
+    "reuse": "P2-SEL C0/C2 and sealed D2; original unmasked model/cache only for steering; use sealed LAC0 factor, never steer masked branch",
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "minimum_valid_draws": 9900,
+      "family_size": 6,
+      "family": [
+        "new EN-confusion margin",
+        "new EN-correct margin",
+        "new ZH-correct margin",
+        "paired new-minus-old ZH margin",
+        "EN corruption rate",
+        "ZH corruption rate"
+      ],
+      "interval": "two-sided percentile 90% Bonferroni simultaneous; alpha=0.10/6"
+    },
+    "thresholds": {
+      "old_confusion_delta_m_nat": 3.52,
+      "old_ZH_delta_m_nat": -0.195,
+      "benefit_retention_min": 0.7,
+      "new_confusion_delta_m_equivalent_min_nat": 2.464,
+      "new_confusion_simultaneous_lower_strictly_above": 0.0,
+      "harm_ratio_max": 0.5,
+      "paired_ZH_new_minus_old_min_nat": 0.1,
+      "paired_ZH_simultaneous_lower_strictly_above": 0.0,
+      "correct_margin_simultaneous_lower_min_nat": -0.25,
+      "correct_corruption_observed_max": 0.05,
+      "correct_corruption_simultaneous_upper_max": 0.1,
+      "corruption_CI_note": "90% familywise upper bound 0.10 is development-only for dialogue-clustered n=60; observed cap remains 0.05 and this does not authorize deployment/confirmation"
+    },
+    "denominators": "exact independently recomputed dialogue-equal C_OLD margins; 3.520/-0.195 are rounded anchors only; 2.464 is illustrative not a second cutoff",
+    "EN_correct_no_regression": "new-minus-old mean margin >= -1e-6 and zero new corruptions; all R_B=0 rows bitwise NONE",
+    "gate_bounds_tolerance": 1e-07,
+    "precedence": [
+      "P2_SEL_LAC_INVALID",
+      "P2_SEL_LAC_GATE_STILL_UNSAFE",
+      "P2_SEL_LAC_GATE_TOO_CONSERVATIVE",
+      "P2_SEL_LAC_NO_MATERIAL_GAIN",
+      "P2_SEL_LAC_GATE_SUPPORTED"
+    ]
+  },
+  "LAC2": {
+    "requires": [
+      "P2_SEL_LAC_GATE_SUPPORTED",
+      "P2_SEL_LAC_AUDIT: PASS (LAC1)"
+    ],
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "utterances": 100,
+    "dialogues": 20,
+    "systems": [
+      "B0",
+      "OLD_E_RB_D2",
+      "NEW_E_RB_Flex_D2"
+    ],
+    "generation": {
+      "cB": [
+        50258,
+        50260,
+        50360,
+        50364
+      ],
+      "cE": [
+        50258,
+        50259,
+        50360,
+        50364
+      ],
+      "greedy": true,
+      "num_beams": 1,
+      "max_new_tokens": 200,
+      "suppression": "frozen generation_config suppress_tokens and begin_suppress_tokens only step0",
+      "precision": "bfloat16",
+      "prefix_semantics": "matched live S content prefix in B/E branches; no forced-prefix edit"
+    },
+    "runtime": "for each live NEW unmasked B prefix, seal c_E/c_M and select W* by unchanged T attention rule; mask/re-encode/cold prefix replay only when old E*R_B>0; F never computed from masked reselected candidates/window; normal unmasked D2 steering",
+    "metrics": [
+      "PIER",
+      "MER",
+      "EN-WER",
+      "ZH-CER",
+      "corrections",
+      "corruptions",
+      "EN retention",
+      "ZH retention",
+      "outside harm",
+      "gate/edit coverage",
+      "realized/relative energy",
+      "counterfactual calls/unique encodes/decoder steps",
+      "D2 autograd/native_lid calls",
+      "runtime",
+      "utterances/sec and audio-sec/sec throughput",
+      "peak allocated/reserved VRAM"
+    ],
+    "uncertainty": "10000 shared20-dialogue draws seed240924; paired pointwise90% intervals of corpus ratios recomputed from summed counts",
+    "terminal": "development-only descriptive; STOP even favorable; no300/P3"
+  },
+  "audit": {
+    "pre": "PASS_TO_P2_SEL_LAC_LAC0",
+    "post_LAC0": "P2_SEL_LAC_AUDIT: PASS (LAC0)",
+    "post_LAC1": "P2_SEL_LAC_AUDIT: PASS (LAC1)",
+    "post_LAC2": "P2_SEL_LAC_AUDIT: PASS (LAC2)",
+    "independence": "no import primary analysis/decision; own candidates/mask identity/lexical scalars/bootstrap/labels; exact bf16 energy, margins and canonical metric recomputation"
+  },
+  "compute": {
+    "LAC0_jobs_max": 1,
+    "LAC1_conditional_jobs_max": 1,
+    "LAC2_conditional_jobs_max": 1,
+    "pending_running_max": 2,
+    "submit": "sbatch",
+    "time_limits_minutes": [
+      15,
+      15,
+      120
+    ],
+    "LAC0_backward_calls": 0,
+    "LAC0_D2_calls": 0,
+    "LAC0_LID_calls": 0,
+    "LAC0_steering_calls": 0,
+    "LAC0_masked_counterfactual_evaluations_max": 180,
+    "prefix_rebuild": "each counterfactual evaluation includes masked encoder and all prefix decoder steps; no hot cache substitution for speed",
+    "exhaustion": "preserve partial artifacts and STOP; no automatic extra job",
+    "design_session_scientific_jobs": 0
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select",
+      "P2-R/P2-RJ/P2-DIR/P2-SEL/P2-SEL-E/P2-SEL-T/P2-SEL-XA artifacts",
+      "existing frozen100 panel"
+    ],
+    "forbidden": [
+      "router-calib new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "Qwen/other transfer",
+      "fresh validation"
+    ],
+    "reference_labels": "historical CPU groups/evaluation only; never choose candidates/window/mask/S/F"
+  },
+  "tests": [
+    "exact180 population/groups",
+    "W* exact T reuse and heard containment",
+    "unmasked logits/seal/CPU feature-adapter identity",
+    "unmasked-only candidates/lowest-ID tie/serialization seal",
+    "fresh masked encoder and prefix self/cross KV isolation",
+    "exact waveform hard-zero bounds/outside bytes/finite/nonzero-energy change/no-op valid",
+    "S margin-vs-delta identity",
+    "no reference/future audio/token or autograd in LAC0",
+    "exact bounded tanh factor/zero gate identity",
+    "old D2/RB/E/site/alpha unchanged",
+    "single factor/precedence/no fallback or sweep",
+    "mini-panel identity/live-prefix unmasked selection"
+  ]
+}

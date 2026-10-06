@@ -264,3 +264,12 @@ No XA outcome; no historical formula or core-method change.
 (XA0 DG-02 q/u/r capture + isolated λ=0.95 scratch source scaling, sealed raw-gradient reuse), `inference_cf_p2sel_xa_analyze.py`
 (FD validity, frozen precedence, selection artifact, XA1 label rule), `inference_cf_p2sel_xa_audit.py` (independent
 prerun/xa0/final), `slurm/inference_cf_p2sel_xa.sbatch`, `tests/test_inference_cf_p2sel_xa.py`. Outputs `results/inference_cf/p2sel_xa/`.
+
+## P2-SEL-LAC design freeze (2026-10-06; not implemented)
+
+Spec/design/config: `docs/inference_cf/P2_SEL_LAC_SPEC.md`, `P2_SEL_LAC_CODEX_DESIGN.md`,
+`configs/inference_cf/p2_sel_lac.json`. Reuse raw NONE logits/canonical script partitions, T j/W*,
+load_audio/feature-extractor/encoder, isolated cached B prefix replay, original D2/P2-SEL pulse/evaluator/
+auditor and100 panel. Additive lexical-compatibility helper/runner/analysis/audit/Slurm/tests pending.
+Masked acoustic prefix must be rebuilt from empty KV cache, never hot-swap original encoder/cache.
+No LAC outcome; historical formulas/reports and core method unchanged.

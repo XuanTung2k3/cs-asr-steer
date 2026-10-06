@@ -517,3 +517,12 @@ Next: requires a new human-authorized, separately frozen stage (none started). R
 | T0 token-local diagnosis (no steering) | DONE, `P2_SEL_T_AUDIT: PASS (T0)`: not discriminative |
 | T1 causal screen / T2 mini decode | NOT RUN (stop rule) |
 | P3 | HELD |
+
+## P2-SEL-XA — pre-outcome design freeze (2026-10-06)
+
+Human-authorized bounded next stage after terminal P2-SEL-E/P2-SEL-T. See
+`docs/inference_cf/P2_SEL_XA_SPEC.md`, `P2_SEL_XA_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_xa.json`.
+Exact180 current-query raw-gradient/source compatibility with fixed0.95 scratch check; only supported
+audited diagnosis permits clip(S_src,0,1) × E × R_B with unchanged D2/site/alpha/NormPreserve.
+Conditional existing100 mini decode only after gate support; no full300 or P3. No scientific run
+or runner implementation in design session. Preserve both parents' stops and core-method authority.

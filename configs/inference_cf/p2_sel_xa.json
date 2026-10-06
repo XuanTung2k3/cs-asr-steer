@@ -1,0 +1,322 @@
+{
+  "schema": "p2_sel_xa_v1",
+  "status": "PRE_XA0_OUTCOME_FREEZE",
+  "base_commit": "5186b5caba06ae1bd4ede7a340e10088a0fd541c",
+  "spec": "docs/inference_cf/P2_SEL_XA_SPEC.md",
+  "design": "docs/inference_cf/P2_SEL_XA_CODEX_DESIGN.md",
+  "scope": "bounded exposed-development diagnostic; separate from active core method",
+  "parents": [
+    "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+    "P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE"
+  ],
+  "source_sha256": {
+    "results/inference_cf/p2rj/positions.json": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2dir/construction_population.json": "87cfe9f0e6cbe71e43575d20d597f2235101574504e921e0562ebf5a0426f4b8",
+    "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+    "results/inference_cf/p2dir/exp1_run1_audit.json": "37fbc7b9cb99999e3f72353ccf9dc10505ed1b6f7fbbc9f531b6971a14235457",
+    "results/inference_cf/p2sel/s1_run1/manifest.json": "195a3a825bf43bcafd33aab391fb43466a520141d00174ef34ff9434f9e10380",
+    "results/inference_cf/p2sel/s1_run1_audit.json": "ce18b36d4a14ac82cb5c0b3651fa98810977b72cf15e64565910d8e0f8754b2c",
+    "results/inference_cf/p2sel_e/e0_run1_audit.json": "ef09f58dc29b080f134c054a9a654be0aac4f0fcd719765d57b891837b067fac",
+    "results/inference_cf/p2sel_t/t0_run1/manifest.json": "ea2c1b80a7dbd833d767bfbb97e9da0661de9b20138ba2e3be6226c76d3a4864",
+    "results/inference_cf/p2sel_t/t0_run1_audit.json": "f071bef454be1155e7f9aec122e7f1f77f6bc835523919734a59eba37fb9dfc0",
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "src/csasr/lss/sites.py": "d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/models/hooks.py": "4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2dir.py": "ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+    "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p2sel.py": "a6a732b39b8bc823c71270e4d9724fd769fadd9893bf3543813ab44fafcbf1d0",
+    "experiments/inference_cf_p2sel_e.py": "ef534df7009b34b48fd54ff9f6e2a7f31c5ec3a772f7d9cec47ad4f178896eb3",
+    "experiments/inference_cf_p2sel_t.py": "4395329e201e980dd71ad2fcedf24c4e82b2180a691f3a135e3471ef53e96c5c",
+    "experiments/inference_cf_p2.py": "45b1aefd158c6ff5b5a936b11ad37b14e65cba61030ab91f05e6d1715f49657d",
+    "docs/inference_cf/P2_COMPACT_DEVELOPMENT_SPEC.md": "894e9de6950a45797b8fc99ef094c32836352416352ceee091db6329bf3e545b",
+    "configs/inference_cf/p2_sel_t.json": "cbec92756698f4b1057cb49cbe24cd3b72d6b5461158871d0598070bc0c8051d"
+  },
+  "frozen": {
+    "direction": "D2_READOUT",
+    "direction_version": "p2dir_readout_v1",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "partition": "whisper_han_ascii_v1",
+    "logits": "generate-suppressed float32, temperature 1",
+    "gradient": "existing p2dir_readout_v1 zero-leaf autograd.grad; float64 tangent projection and normalization; float32 return",
+    "fallback": "unchanged p2dir_readout_v1 no-edit fallback",
+    "layer": 16,
+    "site": "DG-02 decoder post-cross-attention residual, pre-FFN",
+    "gate": "E*R_B",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "localizer": "unchanged max_attention_window 50 frames (1.0 s), maximum current-query frozen alignment-head mass, earliest tie",
+    "depth_rescale": false,
+    "dtype": "bfloat16",
+    "reference_free_runtime_inputs": true
+  },
+  "population": {
+    "positions": 180,
+    "utterances": 80,
+    "dialogues": 20,
+    "strata": [
+      60,
+      60,
+      60
+    ],
+    "historical_groups": {
+      "EN_TP": 42,
+      "EN_FN": 18,
+      "ZH_TN": 55,
+      "ZH_FP": 5,
+      "EN_CORRECT": 60
+    },
+    "join": "unique (utterance_id,t,absolute query), retain original ordered keys and old E grouping"
+  },
+  "XA0": {
+    "J": "readout.objective unchanged: log(P_E+1e-12)-log(P_M+1e-12), full-vocabulary script masses after frozen generate suppression, float32, temperature1",
+    "gradient": "raw pre-tangent float32 g_readout from sealed P2-DIR artifacts, reused after live B site/logit bitwise identity; never evaluator gradient",
+    "source": "exact current-query encoder_attn output[0] under eval, including output projection; no head selection or difference-of-hidden-states approximation",
+    "S_src": "float64 dot(raw g_J, u_source)",
+    "C_src": "S_src/(float64 norm(g_J)*norm(u_source)+1e-12)",
+    "F_src": "min(1,max(0,S_src)); sole bounded parameter-free factor",
+    "degenerate": "Use exact formulas without norm threshold; zero gradient/source norm implies S_src=C_src=F_src=0. Any nonfinite input/result is INVALID; unchanged D2 invalid-direction fallback remains no-edit.",
+    "reconstruction": "model-dtype (q+u_source) bitwise r; float64 reconstructed relative max error <=max(1e-3,4*finfo(model_dtype).eps)",
+    "finite_difference": {
+      "lambda_base": 1.0,
+      "lambda_probe": 0.95,
+      "query": "current predicting query only; q unchanged; u_lambda=(0.95*u_source).to(model_dtype); no NormPreserve, no D2 edit",
+      "cache": "isolated pre-step scratch clone; discard perturbed logits/cache, persistent B unchanged",
+      "delta_J": "J(lambda=.95)-J(lambda=1)",
+      "prediction_nominal": "-0.05*S_src",
+      "prediction_realized": "dot(g_J,r_0.95-r_1) in float64",
+      "material_subset": "all rows with abs(prediction_nominal)>=0.02 AND abs(prediction_realized)>=0.02; no labels for inclusion",
+      "minimum_material_rows": 30,
+      "minimum_material_dialogues": 10,
+      "sign_agreement_min": 0.9,
+      "median_realized_ratio_range": [
+        0.5,
+        1.5
+      ],
+      "realized_relative_RMS_error_max": 0.5,
+      "nominal_vs_realized_sign_agreement_min": 0.9,
+      "failure": "INVALID; no lambda retry or alternative gradient"
+    },
+    "bootstrap": {
+      "replicates": 10000,
+      "seed": 240924,
+      "rng": "numpy.random.default_rng",
+      "unit": "20 sorted dialogue IDs sampled with replacement, shared draws",
+      "statistic": "dialogue-equal within-group means/rates; omit empty cells per group",
+      "minimum_valid_draws": 9900,
+      "descriptive_interval": [
+        0.05,
+        0.95
+      ],
+      "decision_lower_percentile": 0.2
+    },
+    "criteria": {
+      "SOURCE_COMPATIBILITY_SUPPORTED": {
+        "ZH_FP": "at least4/5 historical ZH FP F_src<=0.10 across>=3 dialogues",
+        "EN_TP": "at least34/42 historical EN TP F_src>=0.70 across>=3 dialogues",
+        "contrast": "dialogue-equal mean F_src(EN_TP)-F_src(ZH_FP)>=0.50 and one-sided80% lower>0",
+        "validation": "finite-difference validity PASS"
+      },
+      "SOURCE_COMPATIBILITY_RECALL_ONLY": "not supported; ZH_FP safety predicate fails; at least9/18 historical EN_FN F_src>=0.70 across>=3 dialogues. Descriptive available compatibility only: E remains zero, multiplicative gate cannot recover these rows",
+      "SOURCE_COMPATIBILITY_NOT_DISCRIMINATIVE": "all other valid outcomes; no supported separation under frozen material criteria; report partial predicates, not proof of absent information"
+    },
+    "precedence": [
+      "INVALID",
+      "SOURCE_COMPATIBILITY_SUPPORTED",
+      "SOURCE_COMPATIBILITY_RECALL_ONLY",
+      "SOURCE_COMPATIBILITY_NOT_DISCRIMINATIVE"
+    ],
+    "S_vs_C": "S exclusively drives F/decision; C descriptive; sign(S_src) != sign(C_src) is numerical INVALID; never switch to C after outcomes",
+    "metrics": [
+      "S_src",
+      "C_src",
+      "norm(u_source)",
+      "norm(g_J)",
+      "J",
+      "E_1s reused",
+      "E_tok reused only",
+      "R_B",
+      "F_src",
+      "finite-difference predictions/change/error"
+    ],
+    "selection_artifact": "results/inference_cf/p2sel_xa/xa0_selection.json; sole formula, rows/source/config hashes and independent audit; immutable and pushed before XA1",
+    "J_audit_abs_tolerance": 0.0001
+  },
+  "XA1": {
+    "requires": [
+      "SOURCE_COMPATIBILITY_SUPPORTED",
+      "P2_SEL_XA_AUDIT: PASS (XA0)",
+      "pushed immutable selection"
+    ],
+    "gate": "E_1s*R_B*F_src",
+    "repair": "unchanged D2/alpha2/NormPreserve at L16 DG-02",
+    "arms": [
+      "NONE",
+      "OLD_E_RB_D2",
+      "NEW_E_RB_Fsrc_D2"
+    ],
+    "reuse": "exact P2-SEL C0/C2 and sealed D2; no OLD-direction C1 arm; invalid lineage stops",
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "minimum_valid_draws": 9900,
+      "family_size": 6,
+      "family": [
+        "new EN-confusion margin",
+        "new EN-correct margin",
+        "new ZH-correct margin",
+        "paired new-minus-old ZH margin",
+        "EN corruption rate",
+        "ZH corruption rate"
+      ],
+      "interval": "two-sided percentile 90% Bonferroni simultaneous; alpha=0.10/6"
+    },
+    "thresholds": {
+      "old_confusion_delta_m_nat": 3.52,
+      "old_ZH_delta_m_nat": -0.195,
+      "benefit_retention_min": 0.7,
+      "new_confusion_delta_m_equivalent_min_nat": 2.464,
+      "new_confusion_simultaneous_lower_strictly_above": 0.0,
+      "harm_ratio_max": 0.5,
+      "paired_ZH_new_minus_old_min_nat": 0.1,
+      "paired_ZH_simultaneous_lower_strictly_above": 0.0,
+      "correct_margin_simultaneous_lower_min_nat": -0.25,
+      "correct_corruption_observed_max": 0.05,
+      "correct_corruption_simultaneous_upper_max": 0.1,
+      "corruption_CI_note": "90% familywise upper bound 0.10 is development-only for dialogue-clustered n=60; observed cap remains 0.05 and this does not authorize deployment/confirmation"
+    },
+    "denominators": "exact independently recomputed dialogue-equal C_OLD margins; 3.520/-0.195 are rounded anchors only; 2.464 is illustrative not a second cutoff",
+    "EN_correct_no_regression": "new-minus-old mean margin >= -1e-6 and zero new corruptions; all R_B=0 rows bitwise NONE",
+    "metrics": [
+      "three-stratum reference-margin delta",
+      "EN/ZH correct top1 corruption",
+      "benefit retention new/old",
+      "ZH absolute harm ratio new/old",
+      "paired ZH margin improvement",
+      "F/gate/edit coverage",
+      "realized/relative edit energy",
+      "historical5FP/18FN descriptive only"
+    ],
+    "precedence": [
+      "P2_SEL_XA_INVALID",
+      "P2_SEL_XA_GATE_STILL_UNSAFE",
+      "P2_SEL_XA_GATE_TOO_CONSERVATIVE",
+      "P2_SEL_XA_NO_MATERIAL_GAIN",
+      "P2_SEL_XA_GATE_SUPPORTED"
+    ],
+    "gate_bounds_tolerance": 1e-07
+  },
+  "XA2": {
+    "requires": [
+      "P2_SEL_XA_GATE_SUPPORTED",
+      "P2_SEL_XA_AUDIT: PASS (XA1)"
+    ],
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "utterances": 100,
+    "dialogues": 20,
+    "systems": [
+      "B0",
+      "OLD_E_RB_D2",
+      "NEW_E_RB_Fsrc_D2"
+    ],
+    "metrics": [
+      "PIER",
+      "MER",
+      "EN-WER",
+      "ZH-CER",
+      "corrections/corruptions",
+      "EN/ZH retention",
+      "outside harm",
+      "gate/edit coverage",
+      "realized/relative energy",
+      "runtime",
+      "autograd count",
+      "native_lid calls",
+      "peak allocated/reserved VRAM"
+    ],
+    "runtime": "live B current-query q/u/raw gradient; reuse one live D2 scratch backward for both direction and F; no finite-difference validation at deployment",
+    "terminal": "descriptive development only; STOP even positive; no300/P3",
+    "generation": {
+      "cB": [
+        50258,
+        50260,
+        50360,
+        50364
+      ],
+      "cE": [
+        50258,
+        50259,
+        50360,
+        50364
+      ],
+      "greedy": true,
+      "num_beams": 1,
+      "max_new_tokens": 200,
+      "suppression": "frozen generation_config suppress_tokens and begin_suppress_tokens only step0",
+      "precision": "bfloat16",
+      "prefix_semantics": "matched live S content prefix in B/E branches; no forced-prefix edit"
+    }
+  },
+  "audit": {
+    "pre": "PASS_TO_P2_SEL_XA_XA0",
+    "post_XA0": "P2_SEL_XA_AUDIT: PASS (XA0)",
+    "post_XA1": "P2_SEL_XA_AUDIT: PASS (XA1)",
+    "post_XA2": "P2_SEL_XA_AUDIT: PASS (XA2)",
+    "independence": "must not import primary decision code; independently recompute site, J, S/C/F, finite difference, groups, bootstrap, selection, gate, exact bf16 energy, margins and metrics"
+  },
+  "compute": {
+    "XA0_jobs_max": 1,
+    "XA1_conditional_jobs_max": 1,
+    "XA2_conditional_jobs_max": 1,
+    "pending_running_max": 2,
+    "sbatch": true,
+    "XA0_time_limit_minutes": 15,
+    "XA1_time_limit_minutes": 15,
+    "XA2_time_limit_minutes": 120,
+    "XA0_new_backward_calls": 0,
+    "XA0_new_native_lid_calls": 0,
+    "XA0_D2_steering_calls": 0,
+    "design_session_scientific_jobs": 0,
+    "exhaustion": "preserve partial run and STOP for review; no automatic extra job"
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select",
+      "P2-R/P2-RJ/P2-DIR/P2-SEL/P2-SEL-E/P2-SEL-T artifacts",
+      "existing frozen100 panel"
+    ],
+    "forbidden": [
+      "router-calib new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "Qwen/other transfer",
+      "fresh validation"
+    ],
+    "evaluator": "only after independent construction, existing artifacts descriptive/evaluation only; forbidden in F orientation or inputs"
+  },
+  "tests": [
+    "exact180 keys/historical groups",
+    "model-dtype exact q+u=r and frozen tolerance",
+    "D2 J/raw-gradient provenance unchanged",
+    "S exact dot and C normalization/sign",
+    "F exact clip and bounds/degenerate rules",
+    "fixed .95 source scaling current-query isolation and bf16 realized prediction",
+    "no param grads/cache mutation/reference/future leakage",
+    "old E/RB/D2/site/alpha regression",
+    "zero new gate exact no-edit",
+    "deterministic precedence/one formula/no fallback/sweep",
+    "mini-panel identity and live-prefix feature construction",
+    "auditor independent from primary decision"
+  ]
+}

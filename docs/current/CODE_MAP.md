@@ -249,3 +249,11 @@ E1 family-6/labels), `inference_cf_p2sel_e_audit.py` (independent prerun/e0/pre_
 L/R-only LID; conditional T1 via `inference_cf_p2sel_e.e1_utterance`, unused), `inference_cf_p2sel_t_analyze.py`
 (frozen predicates/precedence, R_TOK selection artifact, T1 label rule), `inference_cf_p2sel_t_audit.py` (independent
 prerun/t0/final), `slurm/inference_cf_p2sel_t.sbatch`, `tests/test_inference_cf_p2sel_t.py`. Outputs `results/inference_cf/p2sel_t/`.
+
+## P2-SEL-XA design freeze (2026-10-06; not implemented)
+
+Spec/design/config: `docs/inference_cf/P2_SEL_XA_SPEC.md`, `P2_SEL_XA_CODEX_DESIGN.md`,
+`configs/inference_cf/p2_sel_xa.json`. Reuse DG-02 recorder q/u/r, sealed raw D2 g_readout and
+readout scratch/objective, cached B/P2-SEL pulse/evaluator/auditor and existing100 panel. Additive
+XA runner/analysis/audit/Slurm/tests pending; source-compatibility gate has not been implemented.
+No XA outcome; no historical formula or core-method change.

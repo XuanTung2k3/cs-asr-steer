@@ -268,3 +268,10 @@ no router-calib new role, D-dev-confirm, D-test, P3 or transfer. Parent terminal
 T0 computed current-query attention and LEFT/RIGHT 0.5 s native-LID probabilities on the already-exposed 180
 P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues). No steering, no mini-panel decode, no evaluator timing
 used; no router-calib/D-dev-confirm/D-test/P3/transfer data.
+
+## P2-SEL-XA design freeze (2026-10-06)
+
+Read existing contracts/source/reports and inventory/hash metadata for180 sealed raw D2 gradients.
+No S_src/C_src/XA quantity, new model inference or scientific outcome computed. Conditional XA0/XA1
+use only existing180 exposed positions; XA2 only existing frozen100 panel after audited passes.
+No fresh validation, router-calib new role, confirm/test/P3/transfer; development-only.

@@ -1,0 +1,322 @@
+{
+  "schema": "p2_sel_e_v1",
+  "status": "PRE_E0_OUTCOME_FREEZE",
+  "design_base_commit": "968135d6956e8aeb35384e231ab099a4a9cb0c5a",
+  "spec": "docs/inference_cf/P2_SEL_E_SPEC.md",
+  "codex_design": "docs/inference_cf/P2_SEL_E_CODEX_DESIGN.md",
+  "scope": {
+    "stage": "P2-SEL-E",
+    "role": "post-P2-SEL exposed D-dev-select development diagnosis only",
+    "scientific_question": "Why does E produce a small damaging ZH-correct false-positive tail and miss EN-confusion positions, and can one frozen reference-free repair improve the precision/recall tradeoff?",
+    "scientific_outcomes_run_at_freeze": false,
+    "core_method_claim": false,
+    "modify_method_contract": false
+  },
+  "starting_evidence": {
+    "terminal_parent_label": "P2_SEL_GATE_INSUFFICIENTLY_SELECTIVE",
+    "ungated_D2_EN_confusion_delta_m_nat": 4.499,
+    "gated_D2_EN_confusion_delta_m_nat": 3.52,
+    "benefit_retention": 0.782,
+    "ungated_D2_ZH_correct_delta_m_nat": -2.011,
+    "gated_D2_ZH_correct_delta_m_nat": -0.195,
+    "harm_ratio": 0.097,
+    "ZH_correct_top1_corruptions": 3,
+    "ZH_correct_positive_E": 5,
+    "EN_confusion_zero_E": 18,
+    "all_residual_ZH_harm_in_positive_E_rows": true,
+    "R_B_separates_EN_confusion_from_ZH_correct": false
+  },
+  "frozen_intervention": {
+    "direction": "D2_READOUT",
+    "direction_version": "p2dir_readout_v1",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "partition": "whisper_han_ascii_v1",
+    "logits": "generate-suppressed float32, temperature 1",
+    "gradient": "existing p2dir_readout_v1 zero-leaf autograd.grad; float64 tangent projection and normalization; float32 return",
+    "fallback": "unchanged p2dir_readout_v1 no-edit fallback",
+    "layer": 16,
+    "site": "DG-02 decoder post-cross-attention residual, pre-FFN",
+    "gate": "E*R_B",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "localizer": "unchanged max_attention_window 50 frames (1.0 s), maximum current-query frozen alignment-head mass, earliest tie",
+    "depth_rescale": false,
+    "dtype": "bfloat16",
+    "reference_free_runtime_inputs": true
+  },
+  "sources": {
+    "population": "results/inference_cf/p2rj/positions.json",
+    "population_sha256": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "p2r_run": "results/inference_cf/p2r/run3",
+    "p2r_manifest_sha256": "e43320264cb3d8060f0c9d4a429ea19423aca4f57338cd4c833e87f48a8a78eb",
+    "p2sel_report": "docs/inference_cf/P2_SEL_REPORT.md",
+    "p2sel_panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "p2sel_panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "p2dir_direction_version": "p2dir_readout_v1",
+    "code_sha256": {
+      "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+      "experiments/inference_cf_p0_r2.py": "91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+      "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+      "experiments/inference_cf_p2dir.py": "ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+      "experiments/inference_cf_p2sel.py": "a6a732b39b8bc823c71270e4d9724fd769fadd9893bf3543813ab44fafcbf1d0",
+      "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+      "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+      "src/csasr/models/hooks.py": "4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+      "src/csasr/lss/sites.py": "d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48"
+    },
+    "evidence_sha256": {
+      "docs/inference_cf/P2_SEL_REPORT.md": "27f4ac0850a9f9a1788a99e46dc4a5604477fb87ed994453154d1999eaa06a25",
+      "results/inference_cf/p2sel/final_audit.json": "5ab242956277a913b3db8c1ed34d808cd8b34924fe6a57d807417b39d0a5f3f6",
+      "results/inference_cf/p2sel/s1_run1_audit.json": "ce18b36d4a14ac82cb5c0b3651fa98810977b72cf15e64565910d8e0f8754b2c",
+      "docs/inference_cf/P2_DIR_EXP1_REPORT.md": "bad9f413adbb15879c90b376c646048a9e3de88ebe1802ebe9bf44fad6a54963",
+      "docs/inference_cf/P2_DIR_FINAL_REPORT.md": "83db90895e100b57491808884c46ed241383c8e4d3c3838871cbfc9531145f9d",
+      "results/inference_cf/p2dir/exp1_run1_audit.json": "37fbc7b9cb99999e3f72353ccf9dc10505ed1b6f7fbbc9f531b6971a14235457",
+      "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+      "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c"
+    }
+  },
+  "E0": {
+    "mode": "diagnostic_only_no_steering",
+    "population": "results/inference_cf/p2rj/positions.json",
+    "population_sha256": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "counts": {
+      "EN-confusion": 60,
+      "EN-correct": 60,
+      "ZH-correct": 60
+    },
+    "expected_failure_groups": {
+      "EN_confusion_TP_E_positive": 42,
+      "EN_confusion_FN_E_zero": 18,
+      "ZH_correct_TN_E_zero": 55,
+      "ZH_correct_FP_E_positive": 5,
+      "E_positive_rule": "strictly greater than zero"
+    },
+    "probabilities": {
+      "provider": "existing native_lid, softmax of exactly the two frozen language-token logits",
+      "null_input": "exact zero waveform, 30 seconds at 16 kHz",
+      "epsilon": 1e-12,
+      "ell_local": "log((pi_local_E+epsilon)/(pi_local_M+epsilon))",
+      "ell_null": "log((pi_null_E+epsilon)/(pi_null_M+epsilon))",
+      "A": "ell_local-ell_null",
+      "E_old": "max(0,tanh(A/2))",
+      "Q_local": "pi_local_E+pi_local_M",
+      "Q_expected_interval": [
+        0.999999,
+        1.000001
+      ],
+      "E_old_abs_tolerance_vs_p2r": 1e-06
+    },
+    "short_window": {
+      "diagnostic_only": true,
+      "length_samples": 8000,
+      "sample_rate": 16000,
+      "center": "center of frozen selected 1-second window",
+      "bounds": "for selected [s0,s1), a=clamp(floor((s0+s1-8000)/2),0,heard_samples-8000), crop [a,a+8000); if heard_samples<8000, use [0,heard_samples)",
+      "score": "same native_lid, same null correction, same E formula"
+    },
+    "localizer_scalars": [
+      "selected window start/end frames and samples",
+      "attention mass",
+      "maximum-attention frame",
+      "window center",
+      "existing evaluator timing error where present"
+    ],
+    "temporal": {
+      "source": "all current steps in existing P2-R run3 trace",
+      "join": [
+        "utterance_id",
+        "absolute_query"
+      ],
+      "E_lag_1": "previous absolute query E; zero if no previous row",
+      "E_lag_2": "two-previous absolute query E; zero if no previous row",
+      "future_access": false
+    },
+    "oracle": {
+      "source": "existing P2-R run3 acoustic.E_oracle and timing_error_sec for EN-confusion targets only",
+      "new_alignment": false,
+      "runtime_feature": false
+    },
+    "summaries": {
+      "by_stratum_and_failure_group": [
+        "exact n",
+        "distinct dialogue IDs and count per dialogue",
+        "median",
+        "IQR"
+      ],
+      "bootstrap": "10000 shared paired dialogue draws over fixed 20-dialogue universe; seed 240924; percentile 90% interval; resample dialogue clusters and retain all rows; for rates use equal dialogue weighting, omit empty dialogue-stratum cells, require >=9900 valid draws; same draws for H_E2 persistent-rate difference"
+    },
+    "hypotheses": {
+      "H_E1": {
+        "static_scale_pattern": "at least 4/5 ZH FP have E_short<=0.10 and E_long-E_short>=0.25; at least 34/42 EN TP have E_short>=0.20; each group spans at least 3 dialogues",
+        "oracle_FN_pattern": "at least 9/18 EN FN have existing E_oracle>=0.20 and E_oracle-E_long>=0.20; at least 3 dialogues",
+        "short_only_FN_pattern": "at least 9/18 EN FN have E_short>=0.20 while E_long=0; at least 3 dialogues",
+        "pass": "any one pattern; oracle_FN_pattern or short_only_FN_pattern routes LOCALIZER_PRIMARY; otherwise static_scale_pattern routes R2"
+      },
+      "H_E2": {
+        "persistence": "max(E_lag_1,E_lag_2)",
+        "ZH_FP_isolated": "E_current>=0.50 and persistence<=0.10",
+        "EN_TP_persistent": "persistence>=0.25",
+        "pass": "at least 4/5 ZH FP isolated across >=3 dialogues; at least 26/42 EN TP persistent across >=3 dialogues; one-sided 80% paired dialogue-bootstrap lower bound for EN-TP persistent rate minus ZH-FP persistent rate >0"
+      },
+      "H_E3": {
+        "eligibility": "structurally unavailable: current native_lid two-way softmax makes Q_local=1",
+        "Q_outside_interval": "P2_SEL_E_INVALID; do not enable H_E3 or confidence repair"
+      },
+      "H_E4": {
+        "null_share": "(-ell_null)/A when A>0",
+        "pass": "at least 4/5 ZH FP have ell_local<=0, A>0, null_share>=0.80 across >=3 dialogues; median ell_local among EN TP >0"
+      }
+    },
+    "repair_formulas": {
+      "R1_temporal": "E_new_t=E_t*max(E_lag_1,E_lag_2); missing lags are zero; no future values",
+      "R2_multiscale": "E_new=sqrt(E_long*E_short)",
+      "R3_confidence": "formal no-op E_new=E*min(1,Q_local); branch is ineligible because Q_local=1 under current provider",
+      "R4_null_shrink": "E_new=max(0,tanh((ell_local-0.5*ell_null)/2))",
+      "R5_localizer_primary": "stop before E1; no formula or steering",
+      "ambiguous": "stop before E1; no fallback"
+    },
+    "precedence": [
+      "P2_SEL_E_INVALID",
+      "H_E1 internal: LOCALIZER_PRIMARY for oracle_FN_pattern or short_only_FN_pattern; else R2 for static_scale_pattern",
+      "R1 if H_E2 passes",
+      "H_E3 is not selectable; out-of-interval Q already maps INVALID",
+      "R4 if H_E4 passes",
+      "P2_SEL_E_DIAGNOSIS_AMBIGUOUS"
+    ]
+  },
+  "E1": {
+    "requires": [
+      "one selected repair R1, R2, or R4",
+      "P2_SEL_E_AUDIT: PASS (E0)",
+      "P2_SEL_E_PRE_E1_AUDIT: PASS"
+    ],
+    "population": "same exact 180 P2-RJ positions",
+    "arms": [
+      "C0_NONE",
+      "C_OLD_E_GATED_D2",
+      "C_NEW_E_GATED_D2"
+    ],
+    "reuse_old": "reuse P2-SEL C0/C2 only after exact key, state, direction, hook, alpha, site, NormPreserve and evaluator hash verification; otherwise rerun C_old in the single E1 job",
+    "new_job": "only C_new pulse when reusable C0/C_old pass audit; no other arm/search",
+    "metrics": [
+      "dialogue-equal EN-confusion delta_m",
+      "dialogue-equal EN-correct delta_correct_margin",
+      "dialogue-equal ZH-correct delta_correct_margin",
+      "EN/ZH correct-state top1 corruption",
+      "E_new-positive rate by stratum",
+      "realized squared post-NormPreserve edit energy by stratum",
+      "benefit_retention = delta_m_conf_new/delta_m_conf_old",
+      "harm_ratio = abs(delta_m_ZH_new)/abs(delta_m_ZH_old)",
+      "descriptive outcomes on historical 5 ZH-FP and 18 EN-FN rows"
+    ],
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "minimum_valid_draws": 9900,
+      "family_size": 6,
+      "family": [
+        "new EN-confusion margin",
+        "new EN-correct margin",
+        "new ZH-correct margin",
+        "paired new-minus-old ZH margin",
+        "EN corruption rate",
+        "ZH corruption rate"
+      ],
+      "interval": "two-sided percentile 90% Bonferroni simultaneous; alpha=0.10/6"
+    },
+    "thresholds": {
+      "old_confusion_delta_m_nat": 3.52,
+      "old_ZH_delta_m_nat": -0.195,
+      "benefit_retention_min": 0.7,
+      "new_confusion_delta_m_equivalent_min_nat": 2.464,
+      "new_confusion_simultaneous_lower_strictly_above": 0.0,
+      "harm_ratio_max": 0.5,
+      "paired_ZH_new_minus_old_min_nat": 0.1,
+      "paired_ZH_simultaneous_lower_strictly_above": 0.0,
+      "correct_margin_simultaneous_lower_min_nat": -0.25,
+      "correct_corruption_observed_max": 0.05,
+      "correct_corruption_simultaneous_upper_max": 0.1,
+      "corruption_CI_note": "90% familywise upper bound 0.10 is development-only for dialogue-clustered n=60; observed cap remains 0.05 and this does not authorize deployment/confirmation"
+    },
+    "label_precedence": [
+      "P2_SEL_E_INVALID",
+      "P2_SEL_E_REPAIR_STILL_UNSAFE",
+      "P2_SEL_E_REPAIR_TOO_CONSERVATIVE",
+      "P2_SEL_E_NO_MATERIAL_GAIN",
+      "P2_SEL_E_REPAIR_SUPPORTED"
+    ],
+    "continue_only_if": "P2_SEL_E_REPAIR_SUPPORTED"
+  },
+  "E2": {
+    "requires": [
+      "P2_SEL_E_REPAIR_SUPPORTED",
+      "P2_SEL_E_AUDIT: PASS (E1)"
+    ],
+    "role": "already-exposed D-dev-select",
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "utterances": 100,
+    "dialogues": 20,
+    "systems": [
+      "B0",
+      "OLD_E_D2",
+      "NEW_E_D2"
+    ],
+    "AUTO": "omit unless exact compatible cached output already exists; never regenerate for this stage",
+    "metrics": [
+      "PIER",
+      "MER",
+      "EN-WER",
+      "ZH-CER",
+      "corrections/corruptions",
+      "EN/ZH retention",
+      "outside harm",
+      "gate/edit coverage",
+      "realized/relative energy",
+      "runtime",
+      "peak VRAM"
+    ],
+    "interpretation": "descriptive development mini-screen only; no pass label; no 300-utterance run or P3 authorization"
+  },
+  "audit": {
+    "pre_E0": "CPU pre-run audit verifies hashes, P2-SEL terminal status, exact population, P2-R trace joins, D2 seal, two-way Q provider, mini-panel, no E-stage outcomes, and data firewall",
+    "post_E0": "independent recomputation of probabilities, E identity, group counts/dialogues, lag joins, hypothesis predicates, precedence and selected formula; must not import primary decision module",
+    "pre_E1": "requires E0 audit PASS and exactly one eligible branch; verifies old/C0 reuse lineage",
+    "post_E1": "independently recompute energy, margins, corruption, bootstrap, label; must not import primary decision module",
+    "pre_E2": "requires E1 support and audit PASS plus exact mini-panel hash",
+    "required_pass": "P2_SEL_E_AUDIT: PASS"
+  },
+  "compute": {
+    "E0": "CPU/artifact analysis; at most one small MIG GPU job for missing probabilities and attention scalars",
+    "E1": "at most one MIG GPU job",
+    "E2": "at most one conditional MIG GPU job",
+    "max_pending_or_running_jobs": 2,
+    "submit": "sbatch",
+    "design_session_jobs": 0,
+    "compact_rows": true
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select",
+      "P2-R artifacts",
+      "P2-RJ artifacts",
+      "P2-DIR artifacts",
+      "P2-SEL artifacts"
+    ],
+    "forbidden": [
+      "router-calib as a new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "Qwen transfer",
+      "fresh validation"
+    ],
+    "evaluator_oracle_timing": "diagnostic only in E0; forbidden from E_new runtime inputs"
+  }
+}

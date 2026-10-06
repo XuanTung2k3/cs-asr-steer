@@ -255,3 +255,10 @@ decoded. No router-calib, D-dev-confirm, D-test, P3 or transfer data. Further de
 E0 recomputed local/null/short-window language-ID probabilities on the already-exposed 180 P2-R/P2-RJ
 D-dev-select positions (80 utterances, 20 dialogues) and reused existing P2-R oracle timing diagnostically.
 No steering, no mini-panel decode, no router-calib/D-dev-confirm/D-test/P3/transfer data.
+
+## P2-SEL-T design freeze (2026-10-06)
+
+Read only existing source/contracts and exposed P2-SEL/P2-SEL-E diagnostic artifacts. No scientific
+model inference, steering, new panel selection or new role exposure. Conditional T0/T1 reuse the same180
+positions; T2 may use only the already-frozen100-panel after both audited passes. Development-only;
+no router-calib new role, D-dev-confirm, D-test, P3 or transfer. Parent terminal reports unchanged.

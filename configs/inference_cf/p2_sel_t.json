@@ -1,0 +1,270 @@
+{
+  "schema": "p2_sel_t_v1",
+  "status": "PRE_T0_OUTCOME_DESIGN_FREEZE",
+  "base_commit": "2810cf263854751d5cb68469879ab7a8cb2877c0",
+  "spec": "docs/inference_cf/P2_SEL_T_SPEC.md",
+  "design": "docs/inference_cf/P2_SEL_T_CODEX_DESIGN.md",
+  "parent_terminal": "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+  "scope": "bounded exposed-development diagnosis; no core-method or confirmation claim",
+  "source_sha256": {
+    "results/inference_cf/p2rj/positions.json": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2dir/construction_population.json": "87cfe9f0e6cbe71e43575d20d597f2235101574504e921e0562ebf5a0426f4b8",
+    "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+    "results/inference_cf/p2sel/s1_run1/manifest.json": "195a3a825bf43bcafd33aab391fb43466a520141d00174ef34ff9434f9e10380",
+    "results/inference_cf/p2sel_e/e0_run1/manifest.json": "09a10f5a694333f3308fcc0c72d9a6f84b3cbffb5bc405e889569c8c4c00cfd3",
+    "results/inference_cf/p2sel_e/e0_run1_audit.json": "ef09f58dc29b080f134c054a9a654be0aac4f0fcd719765d57b891837b067fac",
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "experiments/inference_cf_p0_r2.py": "91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p2sel.py": "a6a732b39b8bc823c71270e4d9724fd769fadd9893bf3543813ab44fafcbf1d0",
+    "experiments/inference_cf_p2sel_e.py": "ef534df7009b34b48fd54ff9f6e2a7f31c5ec3a772f7d9cec47ad4f178896eb3"
+  },
+  "frozen_intervention": {
+    "direction": "D2_READOUT",
+    "direction_version": "p2dir_readout_v1",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "partition": "whisper_han_ascii_v1",
+    "logits": "generate-suppressed float32, temperature 1",
+    "gradient": "existing p2dir_readout_v1 zero-leaf autograd.grad; float64 tangent projection and normalization; float32 return",
+    "fallback": "unchanged p2dir_readout_v1 no-edit fallback",
+    "layer": 16,
+    "site": "DG-02 decoder post-cross-attention residual, pre-FFN",
+    "gate": "E*R_B",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "localizer": "unchanged max_attention_window 50 frames (1.0 s), maximum current-query frozen alignment-head mass, earliest tie",
+    "depth_rescale": false,
+    "dtype": "bfloat16",
+    "reference_free_runtime_inputs": true
+  },
+  "provider": {
+    "language_softmax_size": 100,
+    "language_id_source": "model generation_config.lang_to_id; sorted unique integer values",
+    "generation_config_sha256": "fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+    "canonical_mapping_sha256": "639cd6d6fbdb9cdf9bc09708371676fbc47f98c35f068399d23b3accd9c06731",
+    "mapping_digest_encoding": "UTF-8 JSON of sorted [[language_token, integer_id], ...] pairs with separators (\",\", \":\") and no whitespace",
+    "en_zh_token_ids": [
+      50259,
+      50260
+    ],
+    "native_lid_source_sha256": "91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+    "null_provider": "native_lid on an all-zero float32 waveform of 480000 samples at 16 kHz",
+    "localizer": "unchanged current selected 50-frame max-attention window",
+    "epsilon": 1e-12,
+    "recomputed_current_E_abs_tolerance": 1e-06,
+    "Q_range_check": [
+      0.0,
+      1.0
+    ],
+    "Q_near_one_integrity_check": false,
+    "generation_config_path": "/mnt/data/tungnx/whisper-large-v3/generation_config.json",
+    "mapping_digest_algorithm": "sha256(UTF8(json.dumps(sorted((str(language),int(id)) for language,id in lang_to_id.items()), separators=(\",\",\":\"), ensure_ascii=False)))",
+    "full_probability_sum_abs_tolerance": 1e-06
+  },
+  "population": {
+    "positions": 180,
+    "utterances": 80,
+    "dialogues": 20,
+    "strata": [
+      60,
+      60,
+      60
+    ],
+    "historical_groups": {
+      "EN_TP": 42,
+      "EN_FN": 18,
+      "ZH_TN": 55,
+      "ZH_FP": 5,
+      "EN_CORRECT": 60
+    },
+    "join": "unique (utterance_id,t,absolute query), retain original ordered keys and old E grouping"
+  },
+  "T0": {
+    "window_samples": 8000,
+    "sample_rate": 16000,
+    "frame_samples": 320,
+    "windows": "for W=[s0,s1), n=min(8000,s1-s0): L=[s0,s0+n), C=[floor((s0+s1-n)/2),floor((s0+s1-n)/2)+n), R=[s1-n,s1); all half-open",
+    "attention": "float64 frozen-head mean, truncate/normalize exactly as max_attention_window; integrate mass with frame/sample overlap divided by actual heard portion of each frame",
+    "tie": "exact maximum, first in L,C,R order; no tolerance tie",
+    "E_tok": "E[argmax(a_L,a_C,a_R)]",
+    "E_ctx": "mean of other two candidate E values",
+    "C_tokctx": "E_tok-E_ctx; diagnostic only",
+    "attention_score": "a_tok/(a_L+a_C+a_R+1e-12); descriptive overlapping windows",
+    "reuse": "E_1s and CENTER from audited P2-SEL-E; no long/center/null LID rerun when hash/bounds/provider identical",
+    "bootstrap": {
+      "replicates": 10000,
+      "seed": 240924,
+      "rng": "numpy.random.default_rng",
+      "unit": "20 sorted dialogue IDs sampled with replacement, shared draws",
+      "statistic": "dialogue-equal within-group means/rates; omit empty cells per group",
+      "minimum_valid_draws": 9900,
+      "descriptive_interval": [
+        0.05,
+        0.95
+      ],
+      "decision_lower_percentile": 0.2
+    },
+    "criteria": {
+      "TOKEN_LOCALIZATION_SUPPORTED": {
+        "ZH_FP": "at least 4/5 with E_tok<=0.10 and E_1s-E_tok>=0.25, spanning >=3 dialogues",
+        "EN_TP": "at least 34/42 with E_tok>=0.20, spanning >=3 dialogues",
+        "separation": "dialogue-equal mean E_tok(EN_TP)-E_tok(ZH_FP)>=0.25 and one-sided 80% bootstrap lower>0"
+      },
+      "CONTEXT_CONTRAST_ONLY": {
+        "ZH_FP": "at least 4/5 with C_tokctx<=-0.25 across >=3 dialogues",
+        "EN_TP": "at least 26/42 with C_tokctx>=0 across >=3 dialogues",
+        "separation": "dialogue-equal mean C_tokctx(EN_TP)-C_tokctx(ZH_FP)>=0.25 and one-sided 80% bootstrap lower>0"
+      },
+      "RECALL_ONLY": "at least 9/18 historical EN_FN with E_tok>=0.20 across >=3 dialogues AND TOKEN_LOCALIZATION_SUPPORTED ZH_FP suppression predicate fails",
+      "TOKEN_LID_NOT_DISCRIMINATIVE": "remaining valid outcomes; no supported safe token gate or contrast; report partial predicates, do not assert proof of no signal"
+    },
+    "precedence": [
+      "INVALID",
+      "TOKEN_LOCALIZATION_SUPPORTED",
+      "CONTEXT_CONTRAST_ONLY",
+      "RECALL_ONLY",
+      "TOKEN_LID_NOT_DISCRIMINATIVE"
+    ],
+    "only_repair": "R_TOK: E_new=E_tok",
+    "selection_artifact": "results/inference_cf/p2sel_t/t0_selection.json; audited immutable hashes/formula committed and pushed before T1"
+  },
+  "T1": {
+    "requires": [
+      "TOKEN_LOCALIZATION_SUPPORTED",
+      "P2_SEL_T_AUDIT: PASS (T0)",
+      "pushed immutable selection artifact"
+    ],
+    "arms": [
+      "C0_NONE",
+      "C_OLD_E_1s_RB_D2",
+      "C_NEW_E_tok_RB_D2"
+    ],
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "minimum_valid_draws": 9900,
+      "family_size": 6,
+      "family": [
+        "new EN-confusion margin",
+        "new EN-correct margin",
+        "new ZH-correct margin",
+        "paired new-minus-old ZH margin",
+        "EN corruption rate",
+        "ZH corruption rate"
+      ],
+      "interval": "two-sided percentile 90% Bonferroni simultaneous; alpha=0.10/6"
+    },
+    "thresholds": {
+      "old_confusion_delta_m_nat": 3.52,
+      "old_ZH_delta_m_nat": -0.195,
+      "benefit_retention_min": 0.7,
+      "new_confusion_delta_m_equivalent_min_nat": 2.464,
+      "new_confusion_simultaneous_lower_strictly_above": 0.0,
+      "harm_ratio_max": 0.5,
+      "paired_ZH_new_minus_old_min_nat": 0.1,
+      "paired_ZH_simultaneous_lower_strictly_above": 0.0,
+      "correct_margin_simultaneous_lower_min_nat": -0.25,
+      "correct_corruption_observed_max": 0.05,
+      "correct_corruption_simultaneous_upper_max": 0.1,
+      "corruption_CI_note": "90% familywise upper bound 0.10 is development-only for dialogue-clustered n=60; observed cap remains 0.05 and this does not authorize deployment/confirmation"
+    },
+    "threshold_denominators": "exact independently recomputed dialogue-equal C_OLD margins; 3.520/-0.195 are rounded anchors only; 2.464 is illustrative not a second cutoff",
+    "EN_correct_no_regression": "new-minus-old mean margin >= -1e-6 and zero new corruptions; all R_B=0 rows bitwise NONE",
+    "precedence": [
+      "P2_SEL_T_INVALID",
+      "P2_SEL_T_TOKEN_GATE_STILL_UNSAFE",
+      "P2_SEL_T_TOKEN_GATE_TOO_CONSERVATIVE",
+      "P2_SEL_T_NO_MATERIAL_GAIN",
+      "P2_SEL_T_TOKEN_GATE_SUPPORTED"
+    ]
+  },
+  "T2": {
+    "requires": [
+      "P2_SEL_T_TOKEN_GATE_SUPPORTED",
+      "P2_SEL_T_AUDIT: PASS (T1)"
+    ],
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "utterances": 100,
+    "dialogues": 20,
+    "systems": [
+      "B0",
+      "OLD_E_1s_D2",
+      "NEW_E_tok_D2"
+    ],
+    "AUTO": "reuse exact cache only; no regeneration",
+    "metrics": [
+      "PIER",
+      "MER",
+      "EN-WER",
+      "ZH-CER",
+      "corrections/corruptions",
+      "EN/ZH retention",
+      "outside harm",
+      "gate/edit coverage",
+      "realized/relative energy",
+      "runtime",
+      "native_lid calls",
+      "D2 autograd calls",
+      "peak VRAM"
+    ],
+    "terminal": "descriptive development only; STOP even favorable; no 300 run"
+  },
+  "audit": {
+    "pre_T0": "PASS_TO_P2_SEL_T_T0",
+    "post_T0": "P2_SEL_T_AUDIT: PASS (T0)",
+    "post_T1": "P2_SEL_T_AUDIT: PASS (T1)",
+    "post_T2": "P2_SEL_T_AUDIT: PASS (T2)",
+    "independent": "no import of primary decision code; independent attention/crop/selection/bootstrap/margin/energy/metric recomputation"
+  },
+  "compute": {
+    "T0_jobs_max": 1,
+    "T1_jobs_max": 1,
+    "T2_conditional_jobs_max": 1,
+    "pending_running_max": 2,
+    "submit": "sbatch",
+    "design_session_scientific_jobs": 0,
+    "T0_native_lid_calls_max": 360,
+    "T0_autograd_calls": 0,
+    "T0_steering_calls": 0
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select",
+      "P2-R/P2-RJ/P2-DIR/P2-SEL/P2-SEL-E artifacts",
+      "existing frozen 100-panel"
+    ],
+    "forbidden": [
+      "router-calib new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "Qwen/other transfer",
+      "fresh validation"
+    ],
+    "evaluator_timing": "existing only, diagnostic only; never E_tok input"
+  },
+  "tests": [
+    "exact 180 keys and historical grouping",
+    "E_1s/CENTER/null exact reuse lineage",
+    "L/C/R boundaries and heard-audio containment",
+    "current query frozen alignment-head attention and frame-overlap integration",
+    "exact earliest L/C/R argmax tie",
+    "E_tok selected E exactly",
+    "contrast diagnostic-only and no reference/future input",
+    "D2/R_B/site/alpha regression",
+    "zero new gate exact no-edit",
+    "exactly one branch, no contrast fallback",
+    "mini-panel identity",
+    "independent decision/uncertainty reproduction"
+  ]
+}

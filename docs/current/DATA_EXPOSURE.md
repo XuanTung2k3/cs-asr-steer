@@ -249,3 +249,9 @@ further development exposure of the same positions; any later stage motivated by
 S1 re-used the already-exposed 180 P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues) for gated
 and energy-matched single pulses. The 100-utterance S2 mini-panel (`P2_SEL_MINI_PANEL.json`) was frozen but not
 decoded. No router-calib, D-dev-confirm, D-test, P3 or transfer data. Further development exposure only.
+
+## P2-SEL-E exposure (2026-10-06)
+
+E0 recomputed local/null/short-window language-ID probabilities on the already-exposed 180 P2-R/P2-RJ
+D-dev-select positions (80 utterances, 20 dialogues) and reused existing P2-R oracle timing diagnostically.
+No steering, no mini-panel decode, no router-calib/D-dev-confirm/D-test/P3/transfer data.

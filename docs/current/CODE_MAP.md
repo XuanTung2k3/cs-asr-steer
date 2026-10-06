@@ -235,3 +235,10 @@ C3 BROAD via unchanged `inference_cf_p2r.solve_scale`; reuses sealed P2-DIR stat
 `inference_cf_p2sel_analyze.py` (frozen family-12/TOST/label precedence; pre-committed S2 rule),
 `inference_cf_p2sel_audit.py` (independent prerun/s1/final), `slurm/inference_cf_p2sel.sbatch`,
 `tests/test_inference_cf_p2sel.py`. Outputs `results/inference_cf/p2sel/`. S2 runner intentionally not implemented.
+
+## P2-SEL-E (2026-10-06; executed through E0)
+
+`experiments/inference_cf_p2sel_e.py` (E0 local/null/short-crop LID extraction with no steering; E1 C_new pulse via the
+P2-SEL gated hook, unused), `inference_cf_p2sel_e_analyze.py` (frozen H_E1–H_E4, precedence, selection artifact,
+E1 family-6/labels), `inference_cf_p2sel_e_audit.py` (independent prerun/e0/pre_e1/e1/final),
+`slurm/inference_cf_p2sel_e.sbatch`, `tests/test_inference_cf_p2sel_e.py`. Outputs `results/inference_cf/p2sel_e/`.

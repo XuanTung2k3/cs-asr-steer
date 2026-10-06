@@ -504,3 +504,11 @@ map/code identity plus current-E reproduction, and activates H_E3 with a fixed g
 `R3: E_new=E*Q`. D2, R_B, site, alpha, localizer, groups, other hypotheses/repairs, E1/E2 rules, panel, firewall,
 and compute bounds remain unchanged. No runner or scientific job is authorized by this status update. Run a new
 pre-E0 audit against the revised freeze before any E0 job; preserve the prior BLOCK artifact.
+
+## P2-SEL-E result (2026-10-06) — terminal: `P2_SEL_E_DIAGNOSIS_AMBIGUOUS`
+
+Revised freeze `b693b8d`; implementation `0703523`; pre-E0 r1 `PASS_TO_P2_SEL_E_E0`; E0 Slurm 57809 (no steering);
+`P2_SEL_E_AUDIT: PASS (E0)`. Groups 42/18/55/5 reproduced, E exact vs P2-R. H_E1 (scale / oracle-FN / short-FN),
+H_E2 (spikes), H_E3 (low Q) and H_E4 (null) all fail their frozen criteria, so no repair and no E1/E2. The 5 ZH FPs
+show strong persistent English LID evidence (ell_local 4.75–7.44, Q ~0.9), so they are not artifacts. P3 HELD.
+Reports `docs/inference_cf/P2_SEL_E_{E0_REPORT,REPORT}.md`. Next: human decision; nothing authorized.

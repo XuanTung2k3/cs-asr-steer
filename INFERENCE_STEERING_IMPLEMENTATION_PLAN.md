@@ -498,3 +498,13 @@ separately frozen pre-registration (none started). Reports `docs/inference_cf/P2
 | P3 | HELD |
 
 Next: requires a new human-authorized, separately frozen stage (none started). Report `docs/inference_cf/P2_SEL_REPORT.md`.
+
+## P2-SEL-E — executed (2026-10-06): `P2_SEL_E_DIAGNOSIS_AMBIGUOUS`
+
+| Stage | Status |
+|---|---|
+| Original freeze / pre-E0 | BLOCKED (`de8d038`, two-token Q premise false); contract repaired at `b693b8d` |
+| Implementation + pre-E0 audit r1 | DONE (`0703523`, `7964adb`, `PASS_TO_P2_SEL_E_E0`) |
+| E0 diagnosis (no steering) | DONE, `P2_SEL_E_AUDIT: PASS (E0)`: all hypotheses fail -> AMBIGUOUS |
+| E1 repair screen / E2 mini decode | NOT RUN (stop rule) |
+| P3 | HELD |

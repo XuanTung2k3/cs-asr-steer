@@ -465,3 +465,14 @@ L16 and exact P2 energy, conditional gate-coupled/free-decoding screens, safety/
 rules. Implementation pending; no GPU jobs launched. Diagnostic program remains ended and
 P3 held. Historical A5 recovered but not reused unchanged; D1 is a new dialogue-cross-fitted
 definition. Next: Claude implementation with required tests and pre-run independent audit.
+
+## P2-DIR result (2026-10-06) — terminal: `P2_DIR_NO_NEW_DIRECTION_SUPPORTED`
+
+Implemented (`1802441`), pre-run audit `PASS_TO_P2_DIR_EXP1` (`00dd8b2`), extraction (Slurm 57789) and
+Exp-1 (Slurm 57792) executed once each; Exp-1 `P2_DIR_AUDIT: PASS`; final session audit PASS. At L16 DG-02,
+matched e*, ungated single pulses on the frozen 180 states: D1 UNIQUE +0.227 nat [0.079, 0.421] (safe,
+below 0.5 materiality); D2 READOUT +4.50 [3.83, 5.17], kappa about 0.80, but ZH-correct margin −2.01
+[−2.47, −1.58] and pooled corruption 0.077 [0.013, 0.163] -> supplementary
+`P2_DIR_CAUSAL_POWER_WITH_DAMAGE:D2`. No selection; Exp-2/Exp-3 NOT run (stop rule). P3 HELD.
+Reports: `docs/inference_cf/P2_DIR_EXP1_REPORT.md`, `P2_DIR_FINAL_REPORT.md`. Next: human decision on
+any new separately pre-registered stage; nothing authorized.

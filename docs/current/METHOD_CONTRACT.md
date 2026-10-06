@@ -503,3 +503,10 @@ The new P2-DIR D1 definition explicitly avoids both discrepancies: top32-only, f
 EN-correct/ZH-correct baseline diagnostic states, leave-one-dialogue-out throughout.
 No unresolved scientific choice is delegated to implementation. Failure of fixed numerical
 guards stops qualification rather than opening a rank/sign/data choice.
+
+## P2-DIR outcome (2026-10-06; separate inference-time development stage)
+
+Terminal `P2_DIR_NO_NEW_DIRECTION_SUPPORTED` (+ `P2_DIR_CAUSAL_POWER_WITH_DAMAGE:D2`), Exp-1 audited PASS;
+no direction selected, Exp-2/Exp-3 not run. Recorded implementation interpretations (corruption = post-edit
+argmax not in Y_ref; dialogue-weighted observed rates; bootstrap universe = 20 population dialogues) are in
+`docs/inference_cf/P2_DIR_PRE_RUN_AUDIT.md`. Does not revise the v6/DG-03R core method. P3 held.

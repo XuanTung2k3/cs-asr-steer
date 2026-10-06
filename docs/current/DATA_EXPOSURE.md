@@ -235,3 +235,11 @@ D1 construction uses correct-stratum baseline representations with evaluated dia
 excluded, including Exp3; CIs are conditional development uncertainty, not independent
 confirmation. Historical A5 D-construct/SEAME outcomes are provenance only; no new extraction
 or transfer use is authorized. Router-calib/D-dev-confirm/D-test/P3 remain forbidden here.
+
+## P2-DIR execution exposure (2026-10-06)
+
+Consumed only the already-exposed 180 P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues):
+unedited B/E states (extraction), D1 leave-one-dialogue-out fits on EN-correct/ZH-correct states, and
+Exp-1 teacher-forced pulses + evaluator margin Jacobians. Exp-3's 300-utterance decoding panel was NOT
+decoded (stop rule). No router-calib, D-dev-confirm, D-test, P3 or transfer data. These outcomes are
+further development exposure of the same positions; any later stage motivated by them is post-hoc.

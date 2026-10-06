@@ -215,3 +215,15 @@ New common direction providers, cross-fit unique/readout implementations and ind
 P2-DIR runner/analysis/audit do not yet exist. P2-RJ evaluator gradients remain forbidden
 in deployable construction. A5 top64/first32 and preceding-position population mismatch
 are explicitly documented, not silently repaired.
+
+## P2-DIR implementation (2026-10-06; executed through Exp-1)
+
+Common providers `src/csasr/inference_cf/directions.py` (D0 `OldDirection` -> `core_p1.direction`,
+D1 `UniqueDirection` sealed fold vector, D2 `ReadoutDirection`); D1 construction
+`src/csasr/inference_cf/unique.py` (`NEW_P2_DIR_CROSSFIT_V1`); D2 reference-free readout
+`src/csasr/inference_cf/readout.py` (own zero probe, scratch cache clone; no P2-RJ import); BROAD budget
+`src/csasr/inference_cf/broad.py` (pre-committed, unused because Exp-3 was not reached). Runner
+`experiments/inference_cf_p2dir.py` (extract / exp1 / exp1-eval), prepare, analyze (Exp-1 + frozen Exp-2/3
+decision functions), independent audit (`prerun`/`spot`/`exp1`/`final`), `slurm/inference_cf_p2dir.sbatch`,
+tests `tests/test_inference_cf_p2dir_{directions,protocol,audit}.py`. Outputs `results/inference_cf/p2dir/`.
+Exp-2/Exp-3 runners were intentionally not implemented (stop rule). `inference_cf_cached.py` unchanged.

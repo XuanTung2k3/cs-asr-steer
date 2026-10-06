@@ -243,3 +243,11 @@ def test_analysis_serialization_wrapper_preserves_values():
     assert y == {"a": True, "b": [0.5, 3], "c": {"d": False}, "e": None}
     assert type(y["a"]) is bool and type(y["b"][1]) is int
     canonical(y)
+
+
+def test_final_audit_contract_on_committed_artifacts():
+    if not Path("results/inference_cf/p2dir/exp1_run1_audit.json").exists():
+        pytest.skip("Exp-1 artifacts not present")
+    r = au.cmd_final(None)
+    assert r["verdict"] == "P2_DIR_AUDIT: PASS", {k: v for k, v in r["checks"].items() if not v}
+    assert r["final_label"] == "P2_DIR_NO_NEW_DIRECTION_SUPPORTED"

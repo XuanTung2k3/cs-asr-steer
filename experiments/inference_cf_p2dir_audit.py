@@ -569,6 +569,57 @@ def cmd_exp1(args) -> dict:
             "independent_qualification": qual, "valid_rate": vr}
 
 
+def cmd_final(args) -> dict:
+    """Session-level contract audit over every executed P2-DIR stage (spec sections 9-11)."""
+    freeze = "3ef654246c05307a6cddd5fe706c089d696cbbee"
+    base = ROOT / "results/inference_cf/p2dir"
+    checks, notes = {}, {}
+    for rel in ("configs/inference_cf/p2_dir_direction_identification.json",
+                "docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md", "docs/inference_cf/P2_DIR_CODEX_DESIGN.md",
+                "src/csasr/inference_cf/core_p1.py", "src/csasr/inference_cf/core_r2.py", "src/csasr/lss/sites.py",
+                "src/csasr/models/hooks.py", "experiments/inference_cf_cached.py", "experiments/inference_cf_p2r.py",
+                "experiments/inference_cf_p2rj.py", "results/inference_cf/p2rj/positions.json",
+                "results/inference_cf/p2r/population.json"):
+        checks[f"unchanged_since_freeze:{rel}"] = fhash(ROOT / rel) == git_blob_hash(freeze, rel)
+    entries = sorted(x.name for x in base.iterdir())
+    notes["p2dir_entries"] = entries
+    allowed = {"construction_population.json", "prerun_audit.json", "extract_run1", "folds_run1", "exp1_run1",
+               "exp1_run1_analysis.json", "exp1_run1_audit.json", "final_audit.json"}
+    checks["no_extra_attempts_or_stages"] = set(entries) <= allowed
+    a1 = json.loads((base / "exp1_run1_audit.json").read_text())
+    an1 = json.loads((base / "exp1_run1_analysis.json").read_text())
+    checks["exp1_audit_pass"] = a1["verdict"] == "P2_DIR_AUDIT: PASS" and a1["label"] == an1["decision"]["label"]
+    label = an1["decision"]["label"]
+    stop = label in ("P2_DIR_NO_NEW_DIRECTION_SUPPORTED", "P2_DIR_INVALID")
+    checks["stop_rule_respected"] = (not stop) or not any(e.startswith(("exp2", "exp3")) for e in entries)
+    checks["at_most_one_new_direction_progressed"] = an1["decision"]["selected"] in (None, "D1", "D2")
+    checks["only_three_directions"] = all(set(r.get("arms", {})) == set(ARMS) for r in an1["per_position"] if r.get("arms"))
+    cfg = json.loads((ROOT / "configs/inference_cf/p2_dir_direction_identification.json").read_text())
+    man = json.loads((base / "exp1_run1/manifest.json").read_text())
+    em = json.loads((base / "extract_run1/manifest.json").read_text())
+    checks["single_layer_16_no_alpha_or_gate_search"] = cfg["layer"] == 16 and an1["e_star"] == cfg["energy"]["e_star"] and \
+        len({r["arms"]["D0"]["edit_norm"] > 0 for r in an1["per_position"]}) == 1
+    for name, m in (("extract", em), ("exp1", man)):
+        checks[f"firewall_{name}"] = m["role"] == "D-dev-select" and m["firewall"]["role"] == "D-dev-select"
+    con = json.loads((ROOT / man["construction"]).read_text())
+    panel = json.loads((ROOT / "results/inference_cf/p0_r2/inference_panel.json").read_text())
+    checks["no_fresh_data"] = set(con["utterances"]) <= {r["utterance_id"] for r in panel["rows"]} and len(con["utterances"]) == 80
+    sealed = json.loads((base / "exp1_run1/directions_sealed.json").read_text())
+    rte = json.loads((base / "exp1_run1/runtime_eval.json").read_text())
+    checks["evaluator_after_seal"] = sealed["sealed_unix"] < rte["start_unix"]
+    checks["construction_reference_free"] = construction_surface_clean()["ok"] and runner_phase1_clean()["ok"]
+    jobs = {"extract": json.loads((base / "extract_run1/runtime.json").read_text())["job_id"],
+            "exp1": json.loads((base / "exp1_run1/runtime.json").read_text())["job_id"]}
+    notes["jobs"] = jobs
+    checks["one_attempt_per_stage"] = len(list((base / "extract_run1").glob("slurm-*.out"))) == 1 and \
+        len(list((base / "exp1_run1").glob("slurm-*.out"))) == 1
+    checks["no_p3"] = not any("p3" in e.lower() for e in entries)
+    verdict = "P2_DIR_AUDIT: PASS" if all(checks.values()) else "P2_DIR_AUDIT: BLOCK"
+    return {"schema": "p2dir_final_audit_v1", "verdict": verdict, "final_label": label,
+            "supplementary": an1["decision"]["supplementary"], "checks": checks, "notes": notes,
+            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -582,15 +633,17 @@ def main() -> None:
     e.add_argument("--analysis", required=True)
     e.add_argument("--spot")
     e.add_argument("--out", required=True)
+    f = sub.add_parser("final")
+    f.add_argument("--out", required=True)
     args = ap.parse_args()
-    res = {"prerun": cmd_prerun, "spot": cmd_spot, "exp1": cmd_exp1}[args.cmd](args)
+    res = {"prerun": cmd_prerun, "spot": cmd_spot, "exp1": cmd_exp1, "final": cmd_final}[args.cmd](args)
     out = ROOT / args.out
     if out.exists():
         raise FileExistsError("audit output exists; never overwrite")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(res, sort_keys=True, indent=1, default=str) + "\n")
-    print(json.dumps({k: res[k] for k in res if k in ("verdict", "label", "selected", "ok", "n")}, indent=1))
-    if args.cmd == "prerun":
+    print(json.dumps({k: res[k] for k in res if k in ("verdict", "label", "selected", "ok", "n", "final_label")}, indent=1))
+    if args.cmd in ("prerun", "final"):
         print(json.dumps({k: v for k, v in res["checks"].items() if not v}, indent=1))
 
 

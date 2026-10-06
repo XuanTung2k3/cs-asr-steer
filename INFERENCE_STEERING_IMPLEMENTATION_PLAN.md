@@ -473,3 +473,17 @@ No scientific GPU run in the design session, no new actuator implemented. Termin
 diagnosis remains accepted, diagnostic program ended, P3 held. This stage does not revise
 DG-03R core-paper authority. Claude must follow frozen tests/thresholds/firewall/audit rules
 and commit/push reviewed implementation before scientific outcomes.
+
+## P2-DIR — executed (2026-10-06): `P2_DIR_NO_NEW_DIRECTION_SUPPORTED`
+
+| Stage | Status |
+|---|---|
+| P2-DIR implementation + pre-run audit | DONE (`1802441`, `00dd8b2`, `PASS_TO_P2_DIR_EXP1`) |
+| P2-DIR Exp-1 (D0/D1/D2 direction-only, matched e*) | DONE, audited PASS: no candidate qualifies; D1 safe but +0.23 nat < 0.5; D2 +4.5 nat with ZH damage (causal power with damage) |
+| P2-DIR Exp-2 (gate coupling) | NOT RUN (stop rule) |
+| P2-DIR Exp-3 (free decoding) | NOT RUN (stop rule) |
+| P3 | HELD |
+
+Checklist: [x] D0 regression (bitwise solver vs P2-R) [x] D1 folds 20/20 [x] D2 spot audit 30/30
+[x] Exp-1 audit PASS [x] final audit PASS [ ] next stage: requires a new human-authorized,
+separately frozen pre-registration (none started). Reports `docs/inference_cf/P2_DIR_{EXP1,FINAL}_REPORT.md`.

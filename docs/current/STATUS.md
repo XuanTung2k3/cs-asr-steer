@@ -487,10 +487,20 @@ lower −1.30 < −0.25. S2 NOT run. R_B does not separate EN-confusion from ZH-
 positives on 5/60 ZH positions carry all residual harm. P3 HELD. Report `docs/inference_cf/P2_SEL_REPORT.md`.
 Next: human decision on any new separately frozen stage; nothing authorized.
 
-## P2-SEL-E (2026-10-06) — BLOCKED before E0 (`BLOCK_BEFORE_P2_SEL_E_E0`)
+## P2-SEL-E original freeze (2026-10-06) — BLOCKED before E0 (`BLOCK_BEFORE_P2_SEL_E_E0`)
 
 IMPLEMENTATION GAP: the frozen contract (`11f4e63`) assumes `native_lid` is a two-token softmax (Q_local = 1) and
 invalidates E0 for Q outside [0.999999, 1.000001]. The frozen provider is a 100-language softmax; already-exposed
 P0-R2 pair-mass values have median 0.957 and min 0.0008, and 100% fall outside the interval. E0 would therefore
 be INVALID by construction, and H_E3's ineligibility rests on a false premise. No job, no outcome. Needs a revised
 freeze. Details: `docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md`. P3 HELD.
+
+### P2-SEL-E Q/H_E3 contract repair (pre-outcome)
+
+The original block narrative and `docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md` are retained as provenance. The audit
+blocked before E0; **no E0 outcome existed**. The pre-outcome contract revision corrects Q to the absolute EN/ZH
+pair mass from the actual 100-language softmax, replaces the invalid Q≈1 integrity condition with frozen provider
+map/code identity plus current-E reproduction, and activates H_E3 with a fixed global P0-R2 q10 cutoff and exact
+`R3: E_new=E*Q`. D2, R_B, site, alpha, localizer, groups, other hypotheses/repairs, E1/E2 rules, panel, firewall,
+and compute bounds remain unchanged. No runner or scientific job is authorized by this status update. Run a new
+pre-E0 audit against the revised freeze before any E0 job; preserve the prior BLOCK artifact.

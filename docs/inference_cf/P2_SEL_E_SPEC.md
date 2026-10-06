@@ -1,6 +1,8 @@
 # P2-SEL-E — Local English Evidence Selectivity Diagnosis and Repair
 
-**Status:** pre-E0 freeze, 2026-10-06. This is a bounded, exposed-development diagnostic after
+**Status:** revised pre-E0 freeze, 2026-10-06. The original freeze was blocked before E0 by
+`docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md`; that audit remains unchanged as provenance. No E0
+outcome existed before this revision. This is a bounded, exposed-development diagnostic after
 P2-DIR/P2-SEL. It is not the active core method in `docs/current/METHOD_CONTRACT.md`, does not
 revise that contract, and cannot support a core-method claim, confirmation result, P3, or test-set
 claim. No P2-SEL-E outcome exists at freeze. Do not start E0 before this spec, config, panel
@@ -40,11 +42,24 @@ float32 logits/leaf, float64 tangent projection and normalization, and existing 
 isolation. No evaluator gradient, transcript, reference token, CTC alignment, or future token may
 construct or orient D2 or `E_new`.
 
-The current native-LID provider softmaxes exactly the two language-token logits (embedded English
-and Mandarin); therefore `Q_local=pi_local(E)+pi_local(M)=1` up to float roundoff. The low-Q
-hypothesis and confidence-weighted repair are structurally unavailable under this frozen provider.
-If the extracted Q is outside `[0.999999,1.000001]`, provider identity has changed and E0 is
-invalid; do not activate a confidence repair.
+The frozen `native_lid` provider softmaxes over the full 100-token Whisper language vocabulary and
+returns selected probabilities from that distribution. Thus `P_E` and `P_M` are absolute
+100-way probabilities, `Q_local=P_E+P_M` is the total mass assigned to the relevant EN/ZH pair,
+and `P_E/P_M` expresses relative EN-vs-ZH preference. Q is allowed anywhere in `[0,1]`; it is not
+expected to equal 1. The already-exposed P0-R2 global pair-mass distribution (5,082 rows) has
+10th percentile `0.21689272671937943`, median `0.957465011626482`, and minimum
+`0.0008186694176401943`; this is the frozen scale reference for H_E3, not a statistic fitted on
+the five ZH false positives.
+
+Provider integrity is checked by: the exact frozen Whisper `generation_config.json` SHA256
+`fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23`; exactly 100 unique
+`lang_to_id` entries; the canonical sorted `(language token, integer ID)` mapping SHA256
+`639cd6d6fbdb9cdf9bc09708371676fbc47f98c35f068399d23b3accd9c06731`; `<|en|>`/`<|zh|>` IDs
+`[50259,50260]`; and unchanged provider implementation/code hashes recorded in the config. The
+returned 100 probabilities must be finite, nonnegative, and sum to 1 within absolute `1e-6`.
+The same zero-waveform null input, current selected window, `epsilon=1e-12`, and `native_lid`
+calls must be used. Independently recomputed current E must match P2-R/P2-SEL E within absolute
+`1e-6`. No integrity check requires Q to be near 1.
 
 ## 2. E0 — diagnostic only, 180 positions
 
@@ -134,9 +149,21 @@ paired difference (EN-TP persistent rate minus ZH-FP persistent rate) is above z
 fixed dialogue universe and seed above. The interval is exploratory support, not a confirmatory
 claim.
 
-**H_E3 — low-confidence ratio artifact.** This hypothesis is not testable under the frozen
-two-token softmax, because `Q_local=1`. It is not eligible for diagnosis or repair. Q outside the
-roundoff interval above invalidates E0 rather than enabling H_E3.
+**H_E3 — low EN/ZH pair-confidence artifact.** Freeze the low-pair-mass cutoff at the already
+exposed P0-R2 global 10th percentile `q_low=0.21689272671937943`. Define a low-Q row as
+`Q_local<=q_low`. H_E3 passes only if (i) at least 4/5 ZH-correct FP rows are low-Q, (ii) no more
+than 10/42 EN-confusion TP rows are low-Q, (iii) the dialogue-equal low-Q prevalence difference
+`rate_ZH_FP-rate_EN_TP` is at least `0.50`, and (iv) the low-Q ZH-FP rows span at least three
+dialogues. In addition, its one-sided 80% dialogue-bootstrap lower bound for that prevalence
+difference must be above zero. For each of 10,000 draws, sample 20 dialogue IDs with replacement
+from the fixed universe using `numpy.random.default_rng(240924)`; reuse each draw for both groups.
+Within each sampled draw, average each group's low-Q proportion equally over represented dialogues,
+omitting a dialogue with no rows in that group. The one-sided 80% lower bound is the 20th
+percentile of the shared paired draw differences; require at least 9,900 valid draws. The fixed
+percentile cutoff comes only from the 5,082 already
+exposed P0-R2 rows; the H_E3 threshold is not recalculated from E0 and is not fitted to these five
+ZH-FP rows. Variation in global Q alone is insufficient: the FP-vs-TP enrichment and dialogue
+support requirements must all pass.
 
 **H_E4 — null-correction pathology.** For each ZH FP, define `null_share=(-ell_null)/A` when `A>0`.
 H_E4 passes only if at least 4/5 ZH FP have `ell_local<=0`, `A>0`, and `null_share>=0.80`, the
@@ -150,7 +177,7 @@ Report all component distributions; do not fit a share threshold.
 2. If H_E1 passes, apply its internal rule above: localizer-primary stop for either FN pattern;
    otherwise static-scale pattern selects R2 and no other repair.
 3. Else if H_E2 passes, select R1 and no other repair.
-4. H_E3 is structurally ineligible. If it is the only apparent pattern, continue to step 5.
+4. Else if H_E3 passes, select R3 and no other repair.
 5. Else if H_E4 passes, select R4 and no other repair.
 6. Else `P2_SEL_E_DIAGNOSIS_AMBIGUOUS`, stop.
 
@@ -162,13 +189,16 @@ following formula is frozen for that branch:
 |---|---|---|
 | H_E1 static scale → R2 | `sqrt(E_long,t * E_short,t)` | Uses only current-query support and the two frozen same-center windows. |
 | H_E2 → R1 | `E_t * max(E_(t-1),E_(t-2))` | Missing causal history is zero; no future evidence. |
-| H_E3 → none | `E*min(1,Q_local)` is recorded as a formal no-op only; H_E3 cannot be selected under this provider. | This is not an eligible repair. |
+| H_E3 → R3 | `E_new,t=E_t*Q_local,t` | Exact reference-free pair-mass weighting; no threshold or fitted coefficient. |
 | H_E4 → R4 | `max(0,tanh((ell_local-0.5*ell_null)/2))` | Fixed 50% shrink of the current null subtraction; no coefficient fitting. |
 | H_E1 FN pattern → R5 | no formula; `P2_SEL_E_LOCALIZER_PRIMARY`, stop | A future localizer stage requires its own freeze. |
 | Ambiguous | no formula; `P2_SEL_E_DIAGNOSIS_AMBIGUOUS`, stop | No fallback repair. |
 
-All `E_new` inputs are reference-free runtime quantities. Oracle timing, strata, references,
-evaluator margins, labels, and outcomes are prohibited from formula construction.
+All `E_new` inputs are reference-free runtime quantities. For R3, `Q_local` is the sum of the
+current 100-way probabilities at the frozen EN/ZH language IDs. Since `0<=Q_local<=1` and
+`0<=E<=1`, require `0<=E_new<=E<=1` within `1e-7`; any violation is an integrity failure. Oracle
+timing, strata, references, evaluator margins, labels, and outcomes are prohibited from formula
+construction.
 
 ## 3. E1 — one repair mechanism screen
 
@@ -264,11 +294,14 @@ mechanics, `experiments/inference_cf_p2dir.py`/sealed P2-DIR direction and evalu
 `experiments/inference_cf_cached.py` B/E/S cache path, and canonical metric functions. Do not fork
 or modify the historical R2 formulas.
 
-Focused test contract: exact old E/D2/R_B regression; decomposition math; two-way Q identity;
-causal-neighbor indexing/no-future access; exact same-center short-window bounds and agreement
-formula; null-shrink formula; reference/oracle inputs absent from every E_new provider; zero E_new
-is exact no-edit; the 180-key identity; deterministic diagnosis and exactly-one/no-fallback branch;
-source/panel hashes; E1 label precedence; reuse compatibility; conditional mini-panel identity.
+Focused test contract: exact old E/D2/R_B regression; decomposition math; frozen 100-way provider
+ID/mapping identity; Q=`P_E+P_M` with values allowed throughout `[0,1]`; current E reproduces
+P2-R/P2-SEL within `1e-6`; exact R3 `E_new=E*Q` and `0<=E_new<=E`; causal-neighbor indexing/no-
+future access; exact same-center short-window bounds and agreement formula; null-shrink formula;
+reference/oracle inputs absent from every E_new provider; zero E_new is exact no-edit; the 180-key
+identity; deterministic H_E3 criterion and diagnosis precedence H_E1→H_E2→H_E3→H_E4; exactly-one/
+no-fallback branch; source/panel hashes; E1 label precedence; reuse compatibility; conditional
+mini-panel identity.
 The independent auditor must not import the primary analysis/decision module. Pre-E0 and pre-E1
 audits verify frozen inputs/hashes/population/firewall before permitting any job. Post-E0 audit
 independently recomputes decomposition, E reproduction, group counts, causal joins, hypotheses,

@@ -1,7 +1,7 @@
 {
   "schema": "p2_sel_e_v1",
-  "status": "PRE_E0_OUTCOME_FREEZE",
-  "design_base_commit": "968135d6956e8aeb35384e231ab099a4a9cb0c5a",
+  "status": "PRE_E0_OUTCOME_FREEZE_Q_SEMANTICS_REPAIRED",
+  "design_base_commit": "de8d038fedda67e059926ebf0008e4ac6be925f6",
   "spec": "docs/inference_cf/P2_SEL_E_SPEC.md",
   "codex_design": "docs/inference_cf/P2_SEL_E_CODEX_DESIGN.md",
   "scope": {
@@ -73,7 +73,17 @@
       "docs/inference_cf/P2_DIR_FINAL_REPORT.md": "83db90895e100b57491808884c46ed241383c8e4d3c3838871cbfc9531145f9d",
       "results/inference_cf/p2dir/exp1_run1_audit.json": "37fbc7b9cb99999e3f72353ccf9dc10505ed1b6f7fbbc9f531b6971a14235457",
       "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
-      "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c"
+      "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+      "docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md": "3063408209dbad7825f2cb1bd233e7ffcae744356e245b1d79e7614c201938cc",
+      "results/inference_cf/p2sel_e/prerun_audit.json": "78daa4c087b951c7595587812e65923f0e7f8cee1c7a22e056a51302bdb07140"
+    },
+    "global_Q_reference": {
+      "source": "results/inference_cf/p2sel_e/prerun_audit.json evidence.already_exposed_local_support_pair_mass",
+      "n": 5082,
+      "files": 67,
+      "q10": 0.21689272671937943,
+      "median": 0.957465011626482,
+      "min": 0.0008186694176401943
     }
   },
   "E0": {
@@ -93,7 +103,7 @@
       "E_positive_rule": "strictly greater than zero"
     },
     "probabilities": {
-      "provider": "existing native_lid, softmax of exactly the two frozen language-token logits",
+      "provider": "existing native_lid; softmax over exactly the frozen 100 Whisper language-token logits, then read the EN/ZH entries",
       "null_input": "exact zero waveform, 30 seconds at 16 kHz",
       "epsilon": 1e-12,
       "ell_local": "log((pi_local_E+epsilon)/(pi_local_M+epsilon))",
@@ -101,11 +111,8 @@
       "A": "ell_local-ell_null",
       "E_old": "max(0,tanh(A/2))",
       "Q_local": "pi_local_E+pi_local_M",
-      "Q_expected_interval": [
-        0.999999,
-        1.000001
-      ],
-      "E_old_abs_tolerance_vs_p2r": 1e-06
+      "E_old_abs_tolerance_vs_p2r": 1e-06,
+      "Q_semantics": "absolute probability mass assigned to the EN/ZH pair; valid range [0,1], not constrained to 1"
     },
     "short_window": {
       "diagnostic_only": true,
@@ -144,7 +151,14 @@
         "median",
         "IQR"
       ],
-      "bootstrap": "10000 shared paired dialogue draws over fixed 20-dialogue universe; seed 240924; percentile 90% interval; resample dialogue clusters and retain all rows; for rates use equal dialogue weighting, omit empty dialogue-stratum cells, require >=9900 valid draws; same draws for H_E2 persistent-rate difference"
+      "bootstrap": "10000 shared paired dialogue draws over fixed 20-dialogue universe; seed 240924; percentile 90% interval; resample dialogue clusters and retain all rows; for rates use equal dialogue weighting, omit empty dialogue-stratum cells, require >=9900 valid draws; same draws for H_E2 persistent-rate difference",
+      "global_Q_reference": {
+        "source": "already-exposed P0-R2 prerun audit pair_mass across 5082 rows in 67 files",
+        "q10": 0.21689272671937943,
+        "median": 0.957465011626482,
+        "minimum": 0.0008186694176401943,
+        "selection_uses_E0_groups": false
+      }
     },
     "hypotheses": {
       "H_E1": {
@@ -160,8 +174,29 @@
         "pass": "at least 4/5 ZH FP isolated across >=3 dialogues; at least 26/42 EN TP persistent across >=3 dialogues; one-sided 80% paired dialogue-bootstrap lower bound for EN-TP persistent rate minus ZH-FP persistent rate >0"
       },
       "H_E3": {
-        "eligibility": "structurally unavailable: current native_lid two-way softmax makes Q_local=1",
-        "Q_outside_interval": "P2_SEL_E_INVALID; do not enable H_E3 or confidence repair"
+        "name": "low EN/ZH pair-confidence artifact",
+        "q_low": 0.21689272671937943,
+        "q_low_source": "already-exposed P0-R2 global pair_mass 10th percentile; frozen before E0",
+        "low_Q_rule": "Q_local <= q_low",
+        "pass_criteria": {
+          "ZH_FP_low_Q_min_count": 4,
+          "ZH_FP_total": 5,
+          "EN_TP_low_Q_max_count": 10,
+          "EN_TP_total": 42,
+          "dialogue_equal_prevalence_difference_min": 0.5,
+          "difference": "rate_ZH_FP_lowQ - rate_EN_TP_lowQ",
+          "low_Q_ZH_FP_min_distinct_dialogues": 3,
+          "one_sided_dialogue_bootstrap_lower_bound_min": 0.0,
+          "bootstrap_confidence": 0.8,
+          "bootstrap_replicates": 10000,
+          "bootstrap_seed": 240924,
+          "minimum_valid_draws": 9900,
+          "bootstrap_rng": "numpy.random.default_rng",
+          "bootstrap_draws": "20 dialogue IDs sampled with replacement; shared between groups",
+          "dialogue_rate": "within each draw, mean group-specific low-Q proportion over represented dialogues equally; omit empty group cells",
+          "one_sided_80_lower_percentile": 20
+        },
+        "not_automatic": "global Q variation alone is insufficient; require FP/TP enrichment, contrast, dialogue support and lower bound"
       },
       "H_E4": {
         "null_share": "(-ell_null)/A when A>0",
@@ -171,7 +206,7 @@
     "repair_formulas": {
       "R1_temporal": "E_new_t=E_t*max(E_lag_1,E_lag_2); missing lags are zero; no future values",
       "R2_multiscale": "E_new=sqrt(E_long*E_short)",
-      "R3_confidence": "formal no-op E_new=E*min(1,Q_local); branch is ineligible because Q_local=1 under current provider",
+      "R3_confidence": "E_new_t=E_t*Q_local_t; no threshold, fitted coefficient, or extra hyperparameter",
       "R4_null_shrink": "E_new=max(0,tanh((ell_local-0.5*ell_null)/2))",
       "R5_localizer_primary": "stop before E1; no formula or steering",
       "ambiguous": "stop before E1; no fallback"
@@ -180,10 +215,34 @@
       "P2_SEL_E_INVALID",
       "H_E1 internal: LOCALIZER_PRIMARY for oracle_FN_pattern or short_only_FN_pattern; else R2 for static_scale_pattern",
       "R1 if H_E2 passes",
-      "H_E3 is not selectable; out-of-interval Q already maps INVALID",
+      "R3 if H_E3 passes",
       "R4 if H_E4 passes",
       "P2_SEL_E_DIAGNOSIS_AMBIGUOUS"
-    ]
+    ],
+    "integrity": {
+      "language_softmax_size": 100,
+      "language_id_source": "model generation_config.lang_to_id; sorted unique integer values",
+      "generation_config_sha256": "fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+      "canonical_mapping_sha256": "639cd6d6fbdb9cdf9bc09708371676fbc47f98c35f068399d23b3accd9c06731",
+      "mapping_digest_encoding": "UTF-8 JSON of sorted [[language_token, integer_id], ...] pairs with separators (\",\", \":\") and no whitespace",
+      "en_zh_token_ids": [
+        50259,
+        50260
+      ],
+      "native_lid_source_sha256": "91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+      "null_provider": "native_lid on an all-zero float32 waveform of 480000 samples at 16 kHz",
+      "localizer": "unchanged current selected 50-frame max-attention window",
+      "epsilon": 1e-12,
+      "recomputed_current_E_abs_tolerance": 1e-06,
+      "Q_range_check": [
+        0.0,
+        1.0
+      ],
+      "Q_near_one_integrity_check": false,
+      "generation_config_path": "/mnt/data/tungnx/whisper-large-v3/generation_config.json",
+      "mapping_digest_algorithm": "sha256(UTF8(json.dumps(sorted((str(language),int(id)) for language,id in lang_to_id.items()), separators=(\",\",\":\"), ensure_ascii=False)))",
+      "full_probability_sum_abs_tolerance": 1e-06
+    }
   },
   "E1": {
     "requires": [
@@ -318,5 +377,23 @@
       "fresh validation"
     ],
     "evaluator_oracle_timing": "diagnostic only in E0; forbidden from E_new runtime inputs"
-  }
+  },
+  "contract_revision": {
+    "revision": 1,
+    "repairs_blocked_parent": "de8d038fedda67e059926ebf0008e4ac6be925f6",
+    "blocked_audit": "docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md",
+    "blocked_audit_sha256": "3063408209dbad7825f2cb1bd233e7ffcae744356e245b1d79e7614c201938cc",
+    "e0_outcome_existed_before_revision": false,
+    "reason": "native_lid uses all 100 Whisper language IDs; Q is EN/ZH pair mass, not a normalized two-way posterior",
+    "revised_pre_run_audit_required": true
+  },
+  "tests": [
+    "100-way provider identity and exact language-ID mapping hash",
+    "Q equals P_E+P_M and accepts valid values in [0,1]",
+    "recomputed current E matches P2-R/P2-SEL E within 1e-6",
+    "R3 exact E_new=E*Q and 0<=E_new<=E",
+    "E_new provider does not accept reference/evaluator features",
+    "H_E3 deterministic fixed-global-q10 decision and dialogue support",
+    "diagnosis precedence H_E1,H_E2,H_E3,H_E4"
+  ]
 }

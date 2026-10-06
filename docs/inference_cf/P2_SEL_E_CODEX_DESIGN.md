@@ -1,18 +1,27 @@
 # P2-SEL-E — codebase-aware implementation handoff
 
-This document maps the frozen contract in `P2_SEL_E_SPEC.md` to the current repository. It does
-not implement an actuator or runner. At freeze the repo is clean at parent `968135d`; the only
-P2-SEL-E work is this pre-outcome design. No E0/E1/E2 job was launched.
+This document maps the revised frozen contract in `P2_SEL_E_SPEC.md` to the current repository.
+It does not implement an actuator or runner. The initial freeze at `11f4e63` was blocked before
+E0 by the preserved audit `P2_SEL_E_PRE_RUN_AUDIT.md`; no E0 outcome existed. This revision fixes
+the full-language-softmax Q semantics before outcomes. No E0/E1/E2 job was launched.
 
 ## Current-state findings
 
 * `src/csasr/inference_cf/core_r2.py` is canonical for the frozen partition, `Window`,
   `max_attention_window` (50-frame maximum-mass current-query window), `local_support`, and
   `conflict_from_logits`. Keep the original functions unchanged.
-* `experiments/inference_cf_p0_r2.py:native_lid` computes the native language posterior by
-  softmaxing only the two frozen language-token logits. Thus `pi_local(E)+pi_local(M)=1` up to
-  float rounding. H_E3 cannot identify a confidence artifact under this provider; Q is an
-  integrity assertion, not a selectable feature.
+* `experiments/inference_cf_p0_r2.py:native_lid` selects `logits[list(language_ids)]` and
+  softmaxes that vector. The R2 caller constructs `language_ids` from all unique values of
+  `generation_config.lang_to_id`; P0-R2 verifies there are exactly 100 and verifies the EN/ZH
+  IDs. P2-R does the same full-map construction; `experiments/inference_cf_cached.py:native_lid`
+  delegates to the R2 implementation, and P2-SEL reuses the P2-R E/R_B trace. Hence `P_E/P_M`
+  are absolute 100-way probabilities and `Q=P_E+P_M` is the EN/ZH pair mass in `[0,1]`, not 1.
+* The frozen model artifact has `generation_config.json` SHA256
+  `fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23`; the sorted token/ID
+  mapping digest is `639cd6d6fbdb9cdf9bc09708371676fbc47f98c35f068399d23b3accd9c06731`.
+  Already-exposed global P0-R2 Q has n=5,082, q10=0.21689272671937943, q50=0.957465011626482.
+  H_E3 tests enrichment of low-Q among the five ZH FP versus 42 EN TP using the fixed global q10,
+  predeclared count/contrast rules, dialogue support, and dialogue-bootstrap lower bound.
 * `experiments/inference_cf_p2r.py:gate_step` calls the frozen current-query localizer, caches
   native LID by utterance and exact audio crop, applies `local_support`, and returns E/R_B/g and
   four current-window coordinates. The P2-R run3 current traces contain all causal per-token
@@ -59,16 +68,18 @@ E0 has no arms and no steering. It joins the same 180 frozen rows and verifies 4
 positives, 18 EN-confusion misses, 55 ZH-correct negatives, and five ZH-correct false positives.
 It recomputes local/null posterior decomposition with epsilon `1e-12`, one short crop, current
 attention scalars, causal previous E values, and only already-stored P2-R oracle diagnostics.
-Provider/Q mismatch, population mismatch, missing rows, or recomputed-current-E difference above
-`1e-6` invalidates E0.
+Provider-map/hash mismatch, population mismatch, missing rows, or recomputed-current-E difference
+above `1e-6` invalidates E0. Q anywhere in `[0,1]` is valid. If and only if H_E3 passes its fixed
+global-q10 enrichment criterion, R3 is exactly `E_new=E*Q` and must satisfy `0<=E_new<=E<=1`
+within `1e-7`.
 
 The classification order and branch formulas are fully specified in the prose spec/config. In
 particular, if E0 supports evaluator-centered or short-only EN-FN recovery, stop with
 `P2_SEL_E_LOCALIZER_PRIMARY`: `sqrt(E_long*E_short)` cannot revive a row where the frozen long E is
 zero. If static short-vs-long FP suppression and TP retention pass, use exactly that geometric
-mean. Temporal repair is exactly `E_t*max(E_(t-1),E_(t-2))`; null repair is exactly a 0.5 shrink
-of the null log-odds subtraction. Q weighting is structurally unavailable, not an outcome-chosen
-fallback.
+mean. Temporal repair is exactly `E_t*max(E_(t-1),E_(t-2))`; pair-confidence repair is exactly
+`E*Q` with no fitted threshold/coefficient; null repair is exactly a 0.5 shrink of the null
+log-odds subtraction. Diagnosis order is H_E1 → H_E2 → H_E3 → H_E4.
 
 E1 has exactly NONE, old-E gated D2, and new-E gated D2. Old rows are reused only if all keys,
 state/direction hashes, site, alpha, repair, and evaluator contracts match. The fixed six-endpoint
@@ -82,8 +93,9 @@ no full 300, P3, or fresh validation role is authorized.
 ## Pre-run and post-run audit
 
 Before E0, CPU audit must verify P2-SEL audit/report terminal status, exact position and source
-hashes, P2-R joins, D2 seal, two-token partition, existing P2-SEL panel hash, E0 zero-outcome
-state, exact constants, and role firewall. Before E1, independently verify E0 audit PASS, exactly
+hashes, P2-R joins, D2 seal, frozen 100-language mapping/hash, EN/ZH token IDs, existing P2-SEL
+panel hash, E0 zero-outcome state, exact constants, and role firewall; it must not constrain Q to
+be near 1. Before E1, independently verify E0 audit PASS, exactly
 one selected branch, formula hash, all E0 rows, and C0/C_old reuse lineage. Before E2, verify E1
 support plus audit PASS and exact panel identity.
 

@@ -1,0 +1,40 @@
+{
+ "action": "stop before E0; no E0/E1/E2 job; contract revision required (not done here: redesign forbidden)",
+ "blocking_issue": "IMPLEMENTATION GAP: frozen premise Q_local=pi_local(E)+pi_local(M)=1 (two-token softmax) is false for the frozen provider",
+ "checks_not_reached": "remaining pre-E0 checks were not needed once a blocking contract-code conflict was established",
+ "consequences": [
+  "E0 Q integrity rule ('Q outside [0.999999,1.000001] -> P2_SEL_E_INVALID') would fire by construction",
+  "H_E3 low-confidence hypothesis is NOT structurally unavailable; its frozen ineligibility and the R3 no-op status rest on a false premise, changing the diagnosis tree"
+ ],
+ "evidence": {
+  "already_exposed_local_support_pair_mass": {
+   "files": 67,
+   "fraction_outside_frozen_interval": 1.0,
+   "max": 0.999918352394161,
+   "median": 0.957465011626482,
+   "min": 0.0008186694176401943,
+   "n": 5082,
+   "q10": 0.21689272671937943,
+   "q90": 0.9970444841310382,
+   "source": "results/inference_cf/p0_r2 rows (local_support.pair_mass = pi_e+pi_m), already exposed; no new inference"
+  },
+  "code_matches_config_anchor": {
+   "experiments/inference_cf_cached.py": true,
+   "experiments/inference_cf_p0_r2.py": true,
+   "experiments/inference_cf_p2r.py": true,
+   "src/csasr/inference_cf/core_r2.py": true
+  },
+  "code_sha256": {
+   "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+   "experiments/inference_cf_p0_r2.py": "91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+   "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+   "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3"
+  },
+  "lang_to_id_size": 100,
+  "language_ids_in_every_runner": "tuple(sorted(set(lang_to_id.values()))) in inference_cf_p0_r2.py:292, inference_cf_p2.py:150, inference_cf_p2r.py:467",
+  "native_lid": "experiments/inference_cf_p0_r2.py:native_lid softmaxes logits[language_ids]"
+ },
+ "git_commit": "11f4e63b21e3ce4a642cb94e8da80cbbd91e3d1a",
+ "schema": "p2_sel_e_prerun_audit_v1",
+ "verdict": "BLOCK_BEFORE_P2_SEL_E_E0"
+}

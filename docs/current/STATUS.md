@@ -486,3 +486,11 @@ D2-GATED (E·R_B, alpha 2, L16): EN-confusion +3.52 [1.91, 4.96] (78% of ungated
 lower −1.30 < −0.25. S2 NOT run. R_B does not separate EN-confusion from ZH-correct (≈1 in both); E false
 positives on 5/60 ZH positions carry all residual harm. P3 HELD. Report `docs/inference_cf/P2_SEL_REPORT.md`.
 Next: human decision on any new separately frozen stage; nothing authorized.
+
+## P2-SEL-E (2026-10-06) — BLOCKED before E0 (`BLOCK_BEFORE_P2_SEL_E_E0`)
+
+IMPLEMENTATION GAP: the frozen contract (`11f4e63`) assumes `native_lid` is a two-token softmax (Q_local = 1) and
+invalidates E0 for Q outside [0.999999, 1.000001]. The frozen provider is a 100-language softmax; already-exposed
+P0-R2 pair-mass values have median 0.957 and min 0.0008, and 100% fall outside the interval. E0 would therefore
+be INVALID by construction, and H_E3's ineligibility rests on a false premise. No job, no outcome. Needs a revised
+freeze. Details: `docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md`. P3 HELD.

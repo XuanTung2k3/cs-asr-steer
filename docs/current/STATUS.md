@@ -456,3 +456,12 @@ representation diagnostics, fixed lambda response, dialogue-disjoint linear prob
 projection summaries, and figures are recorded under `results/basis_frozen_layer_atlas/`. This
 does not reopen DG-00…DG-08, does not validate a final layer, and does not authorize D-dev-confirm,
 D-test, or learned/adaptive basis work.
+
+## Current separate inference-time ticket — P2-DIR (2026-10-06)
+
+Independent local-first design complete; spec/config/handoff frozen before outcomes.
+`docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md` defines OLD/UNIQUE/READOUT at
+L16 and exact P2 energy, conditional gate-coupled/free-decoding screens, safety/selection/audit
+rules. Implementation pending; no GPU jobs launched. Diagnostic program remains ended and
+P3 held. Historical A5 recovered but not reused unchanged; D1 is a new dialogue-cross-fitted
+definition. Next: Claude implementation with required tests and pre-run independent audit.

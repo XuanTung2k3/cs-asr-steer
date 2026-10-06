@@ -460,3 +460,16 @@ Profile on a fixed representative panel during P1/P2 and accumulate timing durin
 - [ ] Config/data/code/provider hashes, manifests and report committed; future sessions can reproduce without re-decoding completed rows.
 
 Once these pass, stop routine experiments and write. Additional GPU work is justified only by a concrete bug, unresolved scientific contradiction, new desired claim, or inadequate statistical precision. Recompute resource projections from measured R2/P1 throughput rather than earlier candidate-continuation estimates.
+
+## P2-DIR — frozen next implementation stage (2026-10-06)
+
+The independent actuator-design pass is complete. Authoritative additive stage spec:
+`docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md`; machine config:
+`configs/inference_cf/p2_dir_direction_identification.json`; actual code map/implementation
+sequence: `docs/inference_cf/P2_DIR_CODEX_DESIGN.md`. Exactly D0 OLD, D1 UNIQUE, D2 READOUT;
+L16/current gate/localizer/alpha2 remain fixed. Exp1 matched-energy pulses selects at most
+one new direction; only audited pass permits Exp2 gate coupling then Exp3 development decoding.
+No scientific GPU run in the design session, no new actuator implemented. Terminal P2-RJ-E
+diagnosis remains accepted, diagnostic program ended, P3 held. This stage does not revise
+DG-03R core-paper authority. Claude must follow frozen tests/thresholds/firewall/audit rules
+and commit/push reviewed implementation before scientific outcomes.

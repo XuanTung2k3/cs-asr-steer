@@ -204,3 +204,14 @@ synthetically (`tests/test_dg02_site.py`) and confirmed on the real model (Slurm
 `experiments/dg02_real_acceptance.py`, artifact `results/dg02_real_acceptance.json`, PASS at L16 &
 L24). Actual beam decoding is validated only synthetically here (state-dependent row-local gate); a
 real beam run is deferred to when beam decoding is scientifically evaluated.
+
+## P2-DIR frozen design (2026-10-06; implementation pending)
+
+Spec `docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md`, config
+`configs/inference_cf/p2_dir_direction_identification.json`, detailed actual-entry-point map
+and planned new files in `docs/inference_cf/P2_DIR_CODEX_DESIGN.md`. Reuse frozen core_p1
+OLD, core_r2 gate/partition, DG-02 hook, cached B/E/S, P2-R pulse/energy and canonical metrics.
+New common direction providers, cross-fit unique/readout implementations and independent
+P2-DIR runner/analysis/audit do not yet exist. P2-RJ evaluator gradients remain forbidden
+in deployable construction. A5 top64/first32 and preceding-position population mismatch
+are explicitly documented, not silently repaired.

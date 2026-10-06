@@ -484,3 +484,22 @@ feature→score aggregation and factorized-gate algebra (`LEGACY DESIGN`, §5–
 
 **Done / not gaps:** DG-01 canonical metrics/result schema/sign convention (§10) and the DG-02 exact
 site + NormPreserve + hook are COMPLETE/FROZEN.
+
+## P2-DIR separate inference-time development design (2026-10-06)
+
+The user authorized a direction-only three-arm development specification in
+`docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md` with matching JSON config and
+`P2_DIR_CODEX_DESIGN.md`. This does not revise the v6/DG-03R core basis/controller/training
+method. P2-RJ-E terminal diagnosis is accepted; P3 stays held. P2-DIR is design-frozen,
+implementation pending; no GPU experiment or actuator implementation occurred in this session.
+
+**IMPLEMENTATION GAP (historical A5; preserved/off P2-DIR path):** production A5 uses
+64-column eigensystems while limiting selected principal modes to32, unlike top-r prose;
+Whisper B extraction uses preceding positions without explicit Mandarin-correct filtering.
+Original A5 L16 vector/moment paths are absent; an A6 copy of the vector is recovered
+and float32 reserialization reproduces its A5 manifest hash. Do not fix or relabel
+historical results here. Stop any attempt to reuse these as contract-equivalent directions.
+The new P2-DIR D1 definition explicitly avoids both discrepancies: top32-only, frozen
+EN-correct/ZH-correct baseline diagnostic states, leave-one-dialogue-out throughout.
+No unresolved scientific choice is delegated to implementation. Failure of fixed numerical
+guards stops qualification rather than opening a rank/sign/data choice.

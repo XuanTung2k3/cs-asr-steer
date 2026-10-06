@@ -224,3 +224,14 @@ the controller / basis builder / damage-aware losses are not yet implemented or 
   obtain a scientific decision that replaces that requirement.
 - ASCEND `test` must never be read for BASIS-A6. Construct only from ASCEND `train`; evaluate only
   on ASCEND `validation`. Do not enter any `validation`/`test` utterance into construction.
+
+## P2-DIR design exposure (2026-10-06)
+
+Design session read existing P2/R/RJ/E reports, frozen diagnostic IDs/states metadata,
+source and historical A5 manifests/atlas scalar outcomes. No new model inference, new split
+content or GPU outcomes. Frozen next stage permits only already-exposed180 P2-R diagnostic
+positions for construction/screens and the same300/20-dialogue D-dev-select decoding panel.
+D1 construction uses correct-stratum baseline representations with evaluated dialogue
+excluded, including Exp3; CIs are conditional development uncertainty, not independent
+confirmation. Historical A5 D-construct/SEAME outcomes are provenance only; no new extraction
+or transfer use is authorized. Router-calib/D-dev-confirm/D-test/P3 remain forbidden here.

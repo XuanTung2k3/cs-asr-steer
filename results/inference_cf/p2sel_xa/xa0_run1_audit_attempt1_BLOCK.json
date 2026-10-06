@@ -1,0 +1,34 @@
+{
+ "checks": {
+  "analysis_manifest": true,
+  "contrast_agrees": true,
+  "counts_agree": true,
+  "fd_agrees": false,
+  "groups": true,
+  "label_agrees": true,
+  "manifest_sources_at_commit": true,
+  "row_reconstruction": true
+ },
+ "independent": {
+  "F_TP_minus_FP": 0.029745516788269324,
+  "fd": {
+   "dialogues": 2,
+   "med": 0.8115473737023889,
+   "n": 4,
+   "ok": false,
+   "rms": 2.559972529208806,
+   "s1": 0.75,
+   "s2": 1.0
+  },
+  "fn_available": 0,
+  "fp_suppressed": 5,
+  "lower80": 0.014463908036129626,
+  "tp_retained": 0,
+  "valid_draws": 9967
+ },
+ "label": "P2_SEL_XA_INVALID",
+ "row_failures": [],
+ "schema": "p2_sel_xa_xa0_audit_v1",
+ "stage": "XA0",
+ "verdict": "P2_SEL_XA_AUDIT: BLOCK"
+}

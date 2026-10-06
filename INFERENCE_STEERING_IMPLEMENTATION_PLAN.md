@@ -508,3 +508,12 @@ Next: requires a new human-authorized, separately frozen stage (none started). R
 | E0 diagnosis (no steering) | DONE, `P2_SEL_E_AUDIT: PASS (E0)`: all hypotheses fail -> AMBIGUOUS |
 | E1 repair screen / E2 mini decode | NOT RUN (stop rule) |
 | P3 | HELD |
+
+## P2-SEL-T — executed (2026-10-06): `P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE`
+
+| Stage | Status |
+|---|---|
+| Implementation + pre-T0 audit | DONE (`d36d7f6`, `50004bd`, `PASS_TO_P2_SEL_T_T0`) |
+| T0 token-local diagnosis (no steering) | DONE, `P2_SEL_T_AUDIT: PASS (T0)`: not discriminative |
+| T1 causal screen / T2 mini decode | NOT RUN (stop rule) |
+| P3 | HELD |

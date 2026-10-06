@@ -242,3 +242,10 @@ C3 BROAD via unchanged `inference_cf_p2r.solve_scale`; reuses sealed P2-DIR stat
 P2-SEL gated hook, unused), `inference_cf_p2sel_e_analyze.py` (frozen H_E1–H_E4, precedence, selection artifact,
 E1 family-6/labels), `inference_cf_p2sel_e_audit.py` (independent prerun/e0/pre_e1/e1/final),
 `slurm/inference_cf_p2sel_e.sbatch`, `tests/test_inference_cf_p2sel_e.py`. Outputs `results/inference_cf/p2sel_e/`.
+
+## P2-SEL-T (2026-10-06; executed through T0)
+
+`experiments/inference_cf_p2sel_t.py` (T0 current-query attention + frozen L/C/R crops, CENTER reused from P2-SEL-E E0,
+L/R-only LID; conditional T1 via `inference_cf_p2sel_e.e1_utterance`, unused), `inference_cf_p2sel_t_analyze.py`
+(frozen predicates/precedence, R_TOK selection artifact, T1 label rule), `inference_cf_p2sel_t_audit.py` (independent
+prerun/t0/final), `slurm/inference_cf_p2sel_t.sbatch`, `tests/test_inference_cf_p2sel_t.py`. Outputs `results/inference_cf/p2sel_t/`.

@@ -1,0 +1,41 @@
+{
+ "checks": {
+  "anchor:docs/inference_cf/P2_SEL_MINI_PANEL.json": true,
+  "anchor:experiments/inference_cf_cached.py": true,
+  "anchor:experiments/inference_cf_p0_r2.py": true,
+  "anchor:experiments/inference_cf_p2r.py": true,
+  "anchor:experiments/inference_cf_p2sel.py": true,
+  "anchor:experiments/inference_cf_p2sel_e.py": true,
+  "anchor:results/inference_cf/p2dir/construction_population.json": true,
+  "anchor:results/inference_cf/p2dir/exp1_run1/directions_sealed.json": true,
+  "anchor:results/inference_cf/p2rj/positions.json": true,
+  "anchor:results/inference_cf/p2sel/s1_run1/manifest.json": true,
+  "anchor:results/inference_cf/p2sel_e/e0_run1/manifest.json": true,
+  "anchor:results/inference_cf/p2sel_e/e0_run1_audit.json": true,
+  "anchor:src/csasr/inference_cf/core_r2.py": true,
+  "anchor:src/csasr/inference_cf/readout.py": true,
+  "firewall": true,
+  "no_p3_full300": true,
+  "runtime_surface_reference_free": true,
+  "single_attempt_t0": true,
+  "t0_audit_pass": true,
+  "t0_lid_cap": true,
+  "t0_no_steering_d2_autograd": true,
+  "t1_only_if_supported": true,
+  "t2_only_if_t1_supported": true,
+  "unchanged:configs/inference_cf/p2_sel_t.json": true,
+  "unchanged:docs/inference_cf/P2_SEL_T_CODEX_DESIGN.md": true,
+  "unchanged:docs/inference_cf/P2_SEL_T_SPEC.md": true
+ },
+ "entries": [
+  "prerun_audit.json",
+  "t0_run1",
+  "t0_run1_analysis.json",
+  "t0_run1_audit.json"
+ ],
+ "git_commit": "040d2819fbaf9435dc56b6c6f9bd8cc3b530d622",
+ "schema": "p2_sel_t_final_audit_v1",
+ "t0_label": "P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE",
+ "t1_run": false,
+ "verdict": "P2_SEL_T_AUDIT: PASS"
+}

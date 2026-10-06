@@ -262,3 +262,9 @@ Read only existing source/contracts and exposed P2-SEL/P2-SEL-E diagnostic artif
 model inference, steering, new panel selection or new role exposure. Conditional T0/T1 reuse the same180
 positions; T2 may use only the already-frozen100-panel after both audited passes. Development-only;
 no router-calib new role, D-dev-confirm, D-test, P3 or transfer. Parent terminal reports unchanged.
+
+## P2-SEL-T exposure (2026-10-06)
+
+T0 computed current-query attention and LEFT/RIGHT 0.5 s native-LID probabilities on the already-exposed 180
+P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues). No steering, no mini-panel decode, no evaluator timing
+used; no router-calib/D-dev-confirm/D-test/P3/transfer data.

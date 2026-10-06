@@ -514,3 +514,10 @@ Revised freeze `b693b8d`; implementation `0703523`; pre-E0 r1 `PASS_TO_P2_SEL_E_
 H_E2 (spikes), H_E3 (low Q) and H_E4 (null) all fail their frozen criteria, so no repair and no E1/E2. The 5 ZH FPs
 show strong persistent English LID evidence (ell_local 4.75–7.44, Q ~0.9), so they are not artifacts. P3 HELD.
 Reports `docs/inference_cf/P2_SEL_E_{E0_REPORT,REPORT}.md`. Next: human decision; nothing authorized.
+
+## P2-SEL-T result (2026-10-06) — terminal: `P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE`
+
+Freeze `fdace84`; implementation `d36d7f6`; pre-T0 PASS (`50004bd`); T0 Slurm 57838 (no steering, 358 L/R LID calls,
+E0 CENTER reused); `P2_SEL_T_AUDIT: PASS (T0)`. Attention-selected 0.5 s E_tok: FP suppression 1/5, TP evidence 36/42,
+E_tok TP−FP +0.010 (lower −0.167); contrast and recall branches also fail. No R_TOK, T1/T2 not run. P3 HELD.
+Reports `docs/inference_cf/P2_SEL_T_{T0_REPORT,REPORT}.md`. Next: human decision (e.g. phonetic/lexical compatibility).

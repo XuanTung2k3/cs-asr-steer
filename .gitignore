@@ -42,3 +42,5 @@ results/inference_cf/p2dir/**/rows/*_logits.npz
 results/inference_cf/p2dir/folds_*/arrays/
 # P2-SEL arm logits stay local; sha256 recorded in committed row JSONs
 results/inference_cf/p2sel/**/rows/*_logits.npz
+# P2-SEL-E E1 C_new logits stay local; sha256 in committed row JSONs
+results/inference_cf/p2sel_e/**/rows/*_logits.npz

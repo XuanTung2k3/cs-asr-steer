@@ -234,3 +234,12 @@ def test_spot_positions_frozen_rule():
     import hashlib
     h = [hashlib.sha256(f"P2DIR-audit-v1|{p['utterance_id']}|{p['t']}".encode()).hexdigest() for p in sp[:10]]
     assert h == sorted(h)
+
+
+def test_analysis_serialization_wrapper_preserves_values():
+    from csasr.inference_cf.core import canonical
+    x = {"a": np.bool_(True), "b": [np.float64(0.5), np.int64(3)], "c": {"d": np.bool_(False)}, "e": None}
+    y = an.jsonable(x)
+    assert y == {"a": True, "b": [0.5, 3], "c": {"d": False}, "e": None}
+    assert type(y["a"]) is bool and type(y["b"][1]) is int
+    canonical(y)

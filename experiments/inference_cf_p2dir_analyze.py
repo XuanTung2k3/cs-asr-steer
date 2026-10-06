@@ -529,13 +529,28 @@ def compact(r: dict) -> dict:
     return keep
 
 
+def jsonable(obj):
+    """Post-hoc serialization only (numpy scalars -> Python); never alters a value or decision."""
+    if isinstance(obj, dict):
+        return {k: jsonable(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [jsonable(v) for v in obj]
+    if isinstance(obj, np.bool_):
+        return bool(obj)
+    if isinstance(obj, np.integer):
+        return int(obj)
+    if isinstance(obj, np.floating):
+        return float(obj)
+    return obj
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=("exp1",))
     ap.add_argument("--run", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-    res = analyze_exp1(ROOT / args.run)
+    res = jsonable(analyze_exp1(ROOT / args.run))
     out = ROOT / args.out
     if out.exists():
         raise FileExistsError("analysis exists; never overwrite")

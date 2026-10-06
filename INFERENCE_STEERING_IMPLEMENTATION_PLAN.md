@@ -526,3 +526,12 @@ Exact180 current-query raw-gradient/source compatibility with fixed0.95 scratch 
 audited diagnosis permits clip(S_src,0,1) × E × R_B with unchanged D2/site/alpha/NormPreserve.
 Conditional existing100 mini decode only after gate support; no full300 or P3. No scientific run
 or runner implementation in design session. Preserve both parents' stops and core-method authority.
+
+## P2-SEL-XA — executed (2026-10-06): `P2_SEL_XA_INVALID`
+
+| Stage | Status |
+|---|---|
+| Implementation + pre-XA0 audit | DONE (`83845ee`, `e6cf957`, `PASS_TO_P2_SEL_XA_XA0`) |
+| XA0 source-compatibility diagnosis | DONE, `P2_SEL_XA_AUDIT: PASS (XA0)`: finite-difference validity failed (4/30 material rows) -> INVALID |
+| XA1 gate screen / XA2 mini decode | NOT RUN (stop rule) |
+| P3 | HELD |

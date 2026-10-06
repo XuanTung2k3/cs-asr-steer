@@ -257,3 +257,10 @@ Spec/design/config: `docs/inference_cf/P2_SEL_XA_SPEC.md`, `P2_SEL_XA_CODEX_DESI
 readout scratch/objective, cached B/P2-SEL pulse/evaluator/auditor and existing100 panel. Additive
 XA runner/analysis/audit/Slurm/tests pending; source-compatibility gate has not been implemented.
 No XA outcome; no historical formula or core-method change.
+
+## P2-SEL-XA (2026-10-06; executed through XA0)
+
+`src/csasr/inference_cf/source_compatibility.py` (S/C/F from raw g_J and u_source), `experiments/inference_cf_p2sel_xa.py`
+(XA0 DG-02 q/u/r capture + isolated λ=0.95 scratch source scaling, sealed raw-gradient reuse), `inference_cf_p2sel_xa_analyze.py`
+(FD validity, frozen precedence, selection artifact, XA1 label rule), `inference_cf_p2sel_xa_audit.py` (independent
+prerun/xa0/final), `slurm/inference_cf_p2sel_xa.sbatch`, `tests/test_inference_cf_p2sel_xa.py`. Outputs `results/inference_cf/p2sel_xa/`.

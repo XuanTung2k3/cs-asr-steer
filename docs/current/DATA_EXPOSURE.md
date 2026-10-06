@@ -275,3 +275,9 @@ Read existing contracts/source/reports and inventory/hash metadata for180 sealed
 No S_src/C_src/XA quantity, new model inference or scientific outcome computed. Conditional XA0/XA1
 use only existing180 exposed positions; XA2 only existing frozen100 panel after audited passes.
 No fresh validation, router-calib new role, confirm/test/P3/transfer; development-only.
+
+## P2-SEL-XA exposure (2026-10-06)
+
+XA0 captured L16 q/u_source/r and one λ=0.95 scratch forward on the already-exposed 180 P2-R/P2-RJ D-dev-select positions
+(80 utterances, 20 dialogues), reusing sealed P2-DIR raw readout gradients. No steering, LID, decode or evaluator signal in
+construction; no router-calib/D-dev-confirm/D-test/P3/transfer data.

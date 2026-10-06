@@ -523,3 +523,10 @@ Freeze `fdace84`; implementation `d36d7f6`; pre-T0 PASS (`50004bd`); T0 Slurm 57
 E0 CENTER reused); `P2_SEL_T_AUDIT: PASS (T0)`. Attention-selected 0.5 s E_tok: FP suppression 1/5, TP evidence 36/42,
 E_tok TP−FP +0.010 (lower −0.167); contrast and recall branches also fail. No R_TOK, T1/T2 not run. P3 HELD.
 Reports `docs/inference_cf/P2_SEL_T_{T0_REPORT,REPORT}.md`. Next: human decision (e.g. phonetic/lexical compatibility).
+
+## P2-SEL-XA result (2026-10-06) — terminal: `P2_SEL_XA_INVALID`
+
+Freeze `595e174`; implementation `83845ee`; pre-XA0 PASS (`e6cf957`); XA0 Slurm 57844 (sealed raw gradients reused;
+0 backward/LID/steering); `P2_SEL_XA_AUDIT: PASS (XA0)` (attempt-1 auditor-tolerance BLOCK preserved, fixed in `02d9128`).
+The frozen λ=0.95 finite-difference material subset holds only 4 rows / 2 dialogues (needs 30 / 10): S_src = g_J·u_source is
+tiny (|cos| ~0.02, max |S| 0.49), so INVALID. No gate; XA1/XA2 not run. P3 HELD. Reports `docs/inference_cf/P2_SEL_XA_{XA0_REPORT,REPORT}.md`.

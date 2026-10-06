@@ -230,3 +230,19 @@ def test_s2_rule():
 def test_auditor_independent_of_analysis():
     src = Path("experiments/inference_cf_p2sel_audit.py").read_text()
     assert re.search(r"^\s*(from|import)\s+\S*(p2sel|p2dir)_analyze", src, re.M) is None
+
+
+def test_auditor_hook_emulation_matches_real_hook_at_tiny_and_normal_gates(monkeypatch):
+    """Audit attempt-1 compared bf16 hook energy to a float64 ideal; at tiny g the bf16 rounding floor
+    dominates. The exact bf16 emulation must reproduce the real hook at tiny and normal gates."""
+    bundle = _bf16_bundle()
+    ctx, toks, vecs, none = _refs(bundle, monkeypatch)
+    for g in (1e-6, 0.7):
+        gates = {1: _gate(g, 4), 2: _gate(g, 5)}
+        with torch.inference_mode():
+            recs, _, _ = run.s1_pass_a(ctx, encoded=_enc(), tokens=toks, ts=[1, 2], gates=gates, ref_vecs=vecs, ref_none=none)
+        for t in (1, 2):
+            for arm, key in (("C1", "D0"), ("C2", "D2")):
+                hook = recs[str(t)]["arms"][arm]["edit_norm"]
+                emu = au.hook_edit_emulation(vecs[f"t{t}_hb"], vecs[f"t{t}_{key}"], g)
+                assert hook == pytest.approx(emu, rel=1e-5, abs=0)

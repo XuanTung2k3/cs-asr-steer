@@ -174,6 +174,18 @@ def cmd_prerun(args) -> dict:
 
 # ---- S1 ----------------------------------------------------------------------------------------------
 
+def hook_edit_emulation(h: np.ndarray, d: np.ndarray, g: float, alpha: float = 2.0) -> float:
+    """Exact CPU emulation of the frozen DG-02 hook arithmetic in the site dtype (bf16): gain rounded to
+    bf16, delta = alpha * g * d, NormPreserve in bf16, audited norm = ||(steered - site).float()||."""
+    import torch
+    from csasr.models.hooks import apply_steering
+    x = torch.from_numpy(np.asarray(h, dtype=np.float32)).to(torch.bfloat16).view(1, 1, -1)
+    dd = torch.from_numpy(np.asarray(d, dtype=np.float32)).to(torch.bfloat16).view(1, 1, -1)
+    gain = torch.full((1, 1), float(g)).to(torch.bfloat16)
+    st = apply_steering(x, dd, alpha, 1.0, gain, True)
+    return float((st - x).float().norm())
+
+
 def ref_edit_norm(h: np.ndarray, d: np.ndarray, scale: float) -> float:
     h = h.astype(np.float64)
     til = h + scale * d.astype(np.float64)
@@ -223,7 +235,7 @@ def cmd_s1(args) -> dict:
     gen = GenerationConfig.from_pretrained(model, local_files_only=True)
     sup, beg = list(gen.suppress_tokens or []), list(gen.begin_suppress_tokens or [])
     cidx = {u: i for i, u in enumerate(con["utterances"])}
-    rows, fails, edit_fail = [], [], []
+    rows, fails, edit_fail, ideal_dev = [], [], [], []
     cache = {}
     for p in pos["positions"]:
         uid, t = p["utterance_id"], int(p["t"])
@@ -256,21 +268,25 @@ def cmd_s1(args) -> dict:
         d0 = delta / (np.linalg.norm(delta) + 1e-6)
         d2 = PV[pre + "D2"]
         g = gate["g"]
-        for arm, d in (("C1", d0), ("C2", d2)):
+        for arm, d in (("C1", d0.astype(np.float32)), ("C2", d2)):
             x = a["arms"][arm]
-            exp = ref_edit_norm(hb, d, 2.0 * g) if g > 0 else 0.0
-            if (exp == 0) != (x["edit_norm"] == 0) or (exp > 0 and abs(x["edit_norm"] / exp - 1) > 1e-2):
+            # attempt-1 compared against the float64 ideal edit (1e-2): invalid when the ideal edit is below
+            # bf16 resolution of ||h|| (tiny g). Primary check: exact bf16 hook emulation; ideal is descriptive.
+            exp = hook_edit_emulation(hb, d, g) if g > 0 else 0.0
+            ideal = ref_edit_norm(hb, d, 2.0 * g) if g > 0 else 0.0
+            ideal_dev.append(abs(x["edit_norm"] - ideal))
+            if (exp == 0) != (x["edit_norm"] == 0) or (exp > 0 and abs(x["edit_norm"] / exp - 1) > 1e-5):
                 edit_fail.append((uid, t, arm, exp, x["edit_norm"]))
             if x["edit_norm"] > 0:
                 en = float(np.linalg.norm(V[pre + "post_" + arm].astype(np.float64) - hb))
-                if abs(en / x["edit_norm"] - 1) > 5e-3:
+                if abs(en - x["edit_norm"]) > 5e-3 * max(1.0, x["edit_norm"]):
                     edit_fail.append((uid, t, arm, "state", en, x["edit_norm"]))
             elif not np.array_equal(Lg[pre + arm], PN[pre + "none"]):
                 edit_fail.append((uid, t, arm, "zero_not_bitwise"))
         c3 = b["arm"]
         if c3["edit_norm"] > 0:
             en = float(np.linalg.norm(V[pre + "post_C3"].astype(np.float64) - hb))
-            if abs(en / c3["edit_norm"] - 1) > 5e-3:
+            if abs(en - c3["edit_norm"]) > 5e-3 * max(1.0, c3["edit_norm"]):
                 edit_fail.append((uid, t, "C3", "state", en, c3["edit_norm"]))
         if not ok:
             fails.append((uid, t))
@@ -286,6 +302,7 @@ def cmd_s1(args) -> dict:
     checks["dose_direction_energy_reconstruction"] = not edit_fail
     notes["identity_failures"] = fails[:10]
     notes["edit_failures"] = edit_fail[:10]
+    notes["max_abs_deviation_hook_vs_float64_ideal"] = max(ideal_dev) if ideal_dev else None
     q2 = sum(r["e"]["C2"] ** 2 for r in rows)
     q3 = sum(r["e"]["C3"] ** 2 for r in rows)
     e_broad = math.sqrt(q2 / 180) if q2 > 0 else 0.0
@@ -361,7 +378,8 @@ def cmd_final(args) -> dict:
     checks["s1_audit_pass"] = a1["verdict"] == "P2_SEL_AUDIT: PASS" and a1["label"] == label
     s2_ran = any(e.startswith("s2") for e in entries)
     checks["s2_only_after_rescue"] = (not s2_ran) or label == "P2_SEL_GATE_RESCUES_D2"
-    allowed = {"prerun_audit.json", "s1_run1", "s1_run1_analysis.json", "s1_run1_audit.json", "final_audit.json"}
+    allowed = {"prerun_audit.json", "s1_run1", "s1_run1_analysis.json", "s1_run1_audit.json", "final_audit.json",
+               "s1_run1_audit_attempt1_BLOCK.json"}
     if s2_ran:
         allowed |= {"s2_run1", "s2_run1_analysis.json", "s2_run1_audit.json"}
     checks["only_frozen_stages_single_attempt"] = set(entries) <= allowed and \

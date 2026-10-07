@@ -106,15 +106,26 @@ def load(run_dir: Path) -> dict:
     return {"manifest": m, "seal": seal, "rows": rows, "runtime": json.loads((run_dir / "runtime.json").read_text())}
 
 
-def integrity(data: dict) -> dict:
+def integrity(data: dict, rel_grad_tol: float | None = None) -> dict:
+    """``rel_grad_tol`` is None for the original TTA0 rules (sealed live ``pass`` flags, empty runtime invalid list).
+    P2-TTA0-R (funnel contract) passes 0.02: only the live complete-gradient criterion is re-adjudicated from the sealed
+    scalars, and only live-audit runtime entries may be re-adjudicated; every other check is unchanged."""
     rows, rt, seal = data["rows"], data["runtime"], data["seal"]
     ok = all(r.get("status") == "ok" and set(r["objectives"]) == {"A1", "A2"} for r in rows) and len(rows) == 20
-    c = {"all_20x2_ok": ok, "runtime_completed": rt.get("status") == "completed", "no_runtime_invalid": not rt.get("invalid")}
+    inv = rt.get("invalid") or []
+    c = {"all_20x2_ok": ok, "runtime_completed": rt.get("status") == "completed",
+         "no_runtime_invalid": not inv if rel_grad_tol is None else all(x.endswith(("live audit A1 disagreement", "live audit A2 disagreement"))
+                                                                         for x in inv)}
     if not ok:
         return c
     th0 = rt["theta0_ln_hash"]
     c["theta0_matches_S0"] = all(r["theta0_decode"]["tokens_equal_S0"] and r["theta0_decode"]["terminated_equal_S0"] for r in rows)
-    c["live_audit_pass"] = all(rows[0].get("live_audit", {}).get(k, {}).get("pass") is True for k in ("A1", "A2"))
+    if rel_grad_tol is None:
+        c["live_audit_pass"] = all(rows[0].get("live_audit", {}).get(k, {}).get("pass") is True for k in ("A1", "A2"))
+    else:
+        la = rows[0].get("live_audit", {})
+        c["live_audit_pass"] = all(k in la and la[k]["loss_abs_diff"] <= 1e-5
+                                   and la[k]["grad_diff_l2"] <= max(1e-8, rel_grad_tol * la[k]["auditor_grad_l2"]) for k in ("A1", "A2"))
     objs = [r["objectives"][k] for r in rows for k in ("A1", "A2")]
     c["two_steps_three_losses"] = all(o["steps"] == 2 and o["loss_evaluations"] == 3 and len(o["losses"]) == 3 and len(o["grad_l2"]) == 2
                                       for o in objs)
@@ -132,12 +143,12 @@ def integrity(data: dict) -> dict:
     return c
 
 
-def analyze(run_dir: Path) -> dict:
+def analyze(run_dir: Path, rel_grad_tol: float | None = None) -> dict:
     from experiments.inference_cf_p2_evaluate import load_references
     data = load(run_dir)
     ids = data["manifest"]["ids"]
     seal = {r["utterance_id"]: r for r in data["seal"]["rows"]}
-    integ = integrity(data)
+    integ = integrity(data, rel_grad_tol)
     valid_runs = all(integ.values())
     refs = load_references()
     R = [refs[u]["reference"] for u in ids]

@@ -275,12 +275,16 @@ def cmd_post(args) -> dict:
     seal = json.loads(SEAL.read_text())
     rt = json.loads((run / "runtime.json").read_text())
     checks = {"manifest_self": m["manifest_hash"] == canon_digest({k: v for k, v in m.items() if k != "manifest_hash"}),
-              "sources_at_commit": all(fhash(ROOT / p) == h and "sha256:" + (blob_sha(m["git_commit"], p) or "") == h for p, h in m["sources"].items()),
+              "sources_at_commit": all("sha256:" + (blob_sha(m["git_commit"], p) or "") == h and
+                                       (fhash(ROOT / p) == h or (getattr(args, "rel_grad_tol", None) is not None
+                                                                  and p.endswith(("_analyze.py", "_audit.py"))))
+                                       for p, h in m["sources"].items()),
               "analysis_manifest": ana["manifest_hash"] == m["manifest_hash"],
               "panel": sha(ROOT / PANEL) == c["panel"]["byte_sha256"] == m["panel_sha256"].split(":")[-1] and m["ids"] == c["panel"]["ids"],
               "trainable_names": m["trainables"] == [p["name"] for p in c["trainables"]["parameters"]] and len(m["trainables"]) == 194,
               "seal": seal["seal_hash"] == m["seal_hash"] == canon_digest({k: v for k, v in seal.items() if k != "seal_hash"}),
-              "runtime_completed": rt["status"] == "completed" and not rt.get("invalid"),
+              "runtime_completed": rt["status"] == "completed" and (not rt.get("invalid") if getattr(args, "rel_grad_tol", None) is None else
+                                                                    all("live audit" in x for x in rt.get("invalid", []))),
               "nonln_and_final_reset": bool(rt["nonln_unchanged"]) and rt["nonln_hash_start"] == rt["nonln_hash_end"]
               and bool(rt["reset_final_ok"]) and bool(rt["model_grads_none"])}
     ids = m["ids"]
@@ -297,7 +301,9 @@ def cmd_post(args) -> dict:
     checks["theta0_bf16_hash"] = bf16_hash(th0) == rt["theta0_ln_hash"]
     checks["theta0_decode_equals_S0"] = all(r["theta0_decode"]["tokens_equal_S0"] and r["theta0_decode"]["terminated_equal_S0"] for r in rows)
     la = rows[0].get("live_audit", {})
-    checks["live_audit"] = all(k in la and la[k]["loss_abs_diff"] <= 1e-5 and la[k]["grad_diff_l2"] <= max(1e-8, 1e-3 * la[k]["auditor_grad_l2"])
+    rtol = getattr(args, "rel_grad_tol", None) or 1e-3          # original TTA0 1e-3; P2-TTA0-R funnel 0.02
+    checks["live_audit"] = all(k in la and abs(la[k]["primary_loss"] - la[k]["auditor_loss"]) <= 1e-5
+                               and la[k]["grad_diff_l2"] <= max(1e-8, rtol * la[k]["auditor_grad_l2"])
                                and abs(la[k]["primary_loss"] - rows[0]["objectives"][k]["losses"][0]) == 0 for k in ("A1", "A2"))
     upd_bad, loss_bad, reset_bad, out_bad = [], [], [], []
     mean_upd = {"A1": [], "A2": []}

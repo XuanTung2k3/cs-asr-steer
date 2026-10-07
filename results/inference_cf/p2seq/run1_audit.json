@@ -1,0 +1,65 @@
+{
+ "checks": {
+  "analysis_manifest": true,
+  "auto_rows_hash": true,
+  "bootstrap_agrees": "True",
+  "divergences_attributed": true,
+  "energy_emulation_and_gate": true,
+  "label_agrees": true,
+  "manifest_self": true,
+  "metrics_agree": true,
+  "panel": true,
+  "retention_outside_agree": true,
+  "rows_ok": true,
+  "runtime": true,
+  "sources_at_commit": true,
+  "step_integrity": true,
+  "transition_identity": true,
+  "valid_draws": true
+ },
+ "failures": {
+  "energy": [],
+  "steps": [],
+  "unattributed": []
+ },
+ "git_commit": "9cb1d759b8a384620679c63a906e2225733bcd4c",
+ "independent": {
+  "caps": {
+   "S0": 1,
+   "S1": 1,
+   "S2": 0
+  },
+  "corrections": 20,
+  "corruptions": 14,
+  "edits": 237,
+  "en_retention": 0.9601139601139601,
+  "metrics": {
+   "S0": {
+    "en_wer": 0.5028735632183908,
+    "mer": 0.2569745278114712,
+    "pier": 0.4956896551724138,
+    "poi_errors": 345,
+    "zh_cer": 0.2192947702060222
+   },
+   "S1": {
+    "en_wer": 0.41522988505747127,
+    "mer": 0.25905389014035696,
+    "pier": 0.40804597701149425,
+    "poi_errors": 284,
+    "zh_cer": 0.23355784469096671
+   },
+   "S2": {
+    "en_wer": 0.4985632183908046,
+    "mer": 0.2852191994455034,
+    "pier": 0.4870689655172414,
+    "poi_errors": 339,
+    "zh_cer": 0.25217908082408874
+   }
+  },
+  "outside_harm_rate": 0.060172626387176326,
+  "zh_retention": 0.9398125308337445
+ },
+ "label": "P2_SEQ_SEQUENCE_DAMAGE",
+ "schema": "p2_seq_post_audit_v1",
+ "verdict": "P2_SEQ_AUDIT: PASS"
+}

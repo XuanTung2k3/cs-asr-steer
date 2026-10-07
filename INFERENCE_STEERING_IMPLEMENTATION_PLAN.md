@@ -615,3 +615,12 @@ P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → co
 | Evaluation + `P2_TTA_A3_AUDIT: PASS` | DONE: gap closed, minimal movement, safety failed -> TEACHER_UNSAFE |
 | A3-on-100 / tuning / full300 / P3 | NOT RUN; new human decision required |
 
+## P2-TTA-A4 — executed (2026-10-07): `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`
+
+| Stage | Status |
+|---|---|
+| Freeze + implementation + `PASS_TO_P2_TTA_A4` | DONE (`37441eb`, `9488a69`, `d32676b`) |
+| A4 24-panel run (Slurm 57937) + seal | DONE (`e506e74`) |
+| Evaluation + `P2_TTA_A4_AUDIT: PASS` | DONE: EN transfer + anchor pass; matrix safety not rescued |
+| A4-on-100 / tuning / full300 / P3 | NOT RUN; new human decision required |
+

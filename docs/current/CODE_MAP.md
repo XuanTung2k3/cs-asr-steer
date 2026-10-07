@@ -340,3 +340,11 @@ repaired-tolerance parameter (defaults unchanged). Outputs `results/inference_cf
 `inference_cf_p2tta_a3_analyze.py` (frozen gap/movement/safety/A2 precedence), `inference_cf_p2tta_a3_audit.py` (independent prerun,
 live KL check, post), `slurm/inference_cf_p2tta_a3.sbatch`, `tests/test_inference_cf_p2tta_a3.py`. Outputs `results/inference_cf/p2tta_a3/`.
 
+## P2-TTA-A4 (2026-10-07; executed, terminal `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`)
+
+`src/csasr/inference_cf/script_safe_tta.py` (canonical V_E/V_M token classes, safe teacher, forward KL, D_E/D_M/D_ANCHOR; reuses
+`soft_auto_tta` + `episodic_tta` unchanged), `experiments/inference_cf_p2tta_a4.py` (prepare/manifest/run/seal),
+`inference_cf_p2tta_a4_analyze.py` (EN transfer, rho_anchor, safety, rescue, A2 benefit, precedence), `inference_cf_p2tta_a4_audit.py`
+(independent prerun, live safe-KL check, post), `slurm/inference_cf_p2tta_a4.sbatch`, `tests/test_inference_cf_p2tta_a4.py`.
+Outputs `results/inference_cf/p2tta_a4/`.
+

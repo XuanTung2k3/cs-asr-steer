@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-TTA-A3 (2026-10-07): terminal `P2_TTA_A3_TEACHER_UNSAFE`
+# Current separate inference-time ticket — P2-TTA-A4 (2026-10-07): terminal `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`
+
+Freeze `37441eb`; implementation `9488a69`; `PASS_TO_P2_TTA_A4` (`d32676b`); manifest `b349f12`; Slurm 57937 (24 rows, 53 s);
+seal `e506e74`; `P2_TTA_A4_AUDIT: PASS`. Script-preserving safe teacher (q_AUTO at V_E positions, q_FORCED elsewhere) on the A3
+24-panel: English transfer passes (11/11, median R_E 0.465), teacher-forced anchor preserved (rho 0.152, D_M2 0.003), but free-decode
+Mandarin safety not rescued (ZH-CER +0.030, ZH retention 0.963, outside harm 0.037; <=19% of A3 gaps closed). POI/MER equal to A2.
+Bottleneck: sequence/free-decoding path selection (AUTO Latin rendering of Mandarin on D rows), not teacher-forced LN interference.
+Report `docs/inference_cf/P2_TTA_A4_REPORT.md`. STOP: no tuning, no A4-on-100, no full300/P3. Core v6 METHOD_CONTRACT unchanged.
+
+<!-- superseded header (P2-TTA-A3 result) -->
+## (Previous header) Current separate inference-time ticket — P2-TTA-A3 (2026-10-07): terminal `P2_TTA_A3_TEACHER_UNSAFE`
 
 Freeze `bd41bc5`; implementation `eab6c64`; `PASS_TO_P2_TTA_A3` (`90dbe96`); manifest `d802297`; Slurm 57876 (24 rows, 57 s);
 seal `0d29d35`; `P2_TTA_A3_AUDIT: PASS`. Enriched reference-free 24-panel (12 AUTO!=FORCED + 12 controls). Soft AUTO forward KL
@@ -630,4 +640,9 @@ Exposed-development evidence only; new human decision required for any confirmat
 Gap closed (12/12, median 0.514), movement passed at the minimum (criterion a; R_dist 0.114), safety failed (ZH-CER,
 matrix-ZH retention, outside harm). A3 = A2 on POI (128) and PIER on the enriched panel; A2 also breaches the same bounds there.
 One GPU job (57876). Exposed development only; new human decision required.
+
+## P2-TTA-A4 result (2026-10-07) — terminal: `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`
+
+EN transfer and anchor preservation pass; full and partial matrix rescue fail; benefit vs A2 retained (equal POI/MER). One GPU job (57937).
+Exposed development only; new human decision required.
 

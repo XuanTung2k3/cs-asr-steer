@@ -343,3 +343,9 @@ No router-calib new role, D-dev-confirm, D-test, P3, full300, transfer corpora o
 equality only). Slurm 57876 ran A3 adaptation, theta0 forced/AUTO replay decodes and forced-ZH final decodes; references opened only
 after the committed output seal. No D-dev-confirm, D-test, router-calib new role, full300, P3, transfer or fresh validation.
 
+## P2-TTA-A4 exposure (2026-10-07)
+
+Same A3 24-utterance reference-free subset of the already-exposed fixed100 D-dev-select panel (no new panel). Slurm 57937 ran A4
+adaptation, theta0 forced decodes and forced-ZH final decodes; references opened only after the committed output seal. No D-dev-confirm,
+D-test, router-calib new role, full100/300, P3, transfer or fresh validation.
+

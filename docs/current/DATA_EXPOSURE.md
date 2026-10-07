@@ -399,3 +399,7 @@ reused, not rerun. No D-dev-confirm, D-test, router-calib (new role), full300, P
 ## P2-PATH4 pre-run design — BLOCKED
 
 Reference-free inspection only: existing fixed100 teacher/output content IDs/termination, source/config/provenance,100 audio byte hashes and final-master archive hashes. Historical aggregate tables read only to freeze count thresholds; no new reference evaluation or row-level A2 outcome labels. Token-only A2_DELTA14/A2_SAME86/outside-DEV24 delta7; four EOS-first blockers. No new adaptation/decoding/GPU outcome, split/role/full300/P3/transfer exposure. NOVEL76 remains TTA1-exposed development, not fresh validation. Any future scientific stage requires separately authorized boundary revision and pushed output seal before references.
+
+## P2-PATH4-R1 — authorized EOS-boundary extension
+
+Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.

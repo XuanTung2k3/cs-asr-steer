@@ -686,3 +686,7 @@ P2-PATH3 pre-outcome design frozen after audited PATH2 BRANCH_CONTROL_SUFFICIENT
 ## P2-PATH4 pre-run design — BLOCKED
 
 Frozen intended unchanged G1 transfer to exact historical A2 on fixed100; no runner/scientific job. Reference-free token inspection reproduces A2_DELTA14 (7 outside DEV24), but four theta0-EOS/A2-content first disagreements violate the inherited EOS-first INVALID rule. No PASS_TO_P2_PATH4 or execution authorization. See docs/inference_cf/P2_PATH4_SPEC.md. A separate authorized boundary revision is required; no row exclusion/fallback/controller tuning. Core v6/history unchanged. P3 HELD.
+
+## P2-PATH4-R1 — authorized EOS-boundary extension
+
+Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.

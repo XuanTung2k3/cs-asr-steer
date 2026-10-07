@@ -725,3 +725,7 @@ Next separate exposed-development ticket: P2-PATH3 design only. Frozen PATH2 G1 
 ## P2-PATH4 pre-run design — BLOCKED
 
 After audited PATH3 SIGNAL_CONCENTRATED, intended G1 transfer to A2 is documented/fingerprinted only. Four sealed first disagreements are EOS-first on theta0: U0027_S0_116, U0086_S0_222, U0091_S0_196, U1004_S0_221. Exact frozen G1 refuses empty content candidates; therefore PASS_TO_P2_PATH4 cannot be issued. No runner/outcome/job. Requires separately authorized contract-boundary decision, not a silent fallback or panel change. See ../inference_cf/P2_PATH4_SPEC.md. P3 HELD.
+
+## P2-PATH4-R1 — authorized EOS-boundary extension
+
+Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.

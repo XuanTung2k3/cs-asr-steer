@@ -1,6 +1,6 @@
 {
   "schema": "p2_path4_v1",
-  "status": "PRE_OUTCOME_FREEZE_R1",
+  "status": "BLOCKED_PRE_RUN_EOS_FIRST",
   "starting_commit": "53a6a62a90a596c65f3bd2dea5f57d0410ef401d",
   "spec": "docs/inference_cf/P2_PATH4_SPEC.md",
   "design": "docs/inference_cf/P2_PATH4_CODEX_DESIGN.md",
@@ -1711,7 +1711,7 @@
       "live theta0 forced-ZH greedy",
       "live A2 forced-ZH greedy"
     ],
-    "effective_H": "CONTENT_G1 unchanged up to3 content tokens, at least1 per branch; EOS_BOUNDARY exactly1 legal next action per candidate, EOS included; cap never EOS",
+    "effective_H": "up to3 content tokens before EOS/cap, at least1 per branch; EOS excluded from score; EOS-first INVALID",
     "score": "mean float32 processed log_softmax token logp at absolute content steps, temperature1, generation-valid vocabulary",
     "weights": [
       0.5,
@@ -1722,19 +1722,7 @@
     "intervention": "commit winner first content token, consume under A2 then immediately resume A2; one event; no handoff",
     "cache": "two independent resident model instances, fresh owner-specific decoder paths; no cross-model KV; frozen detached encoder share allowed",
     "legacy_field_adapter": "unchanged helpers name adapted slot A4/b4; wrapper may map only metadata to A2/b2, with explicit adapted_objective=A2 and actual LN-state hashes; no script_safe_tta/adapt_a4 call",
-    "no_trigger_and_A2_winner_identity": true,
-    "EOS_BOUNDARY": {
-      "dispatch": "first live disagreement iff exactly one legal proposal EOS and other generation-valid content",
-      "H_actions": 1,
-      "score": "same processed float32 log_softmax at identical common prefix; four next-action logp; .5 theta0+.5 A2; temperature1; no rollout",
-      "tie_rule": "theta0 if S_cons(b0)-S_cons(b2)>=-1e-12; else A2",
-      "EOS_winner": "emit EOS and terminate immediately; stored content unchanged",
-      "content_winner": "commit one selected token under A2 then ordinary A2; no second trigger",
-      "both_EOS": "NO_TRIGGER ordinary EOS termination",
-      "invalid_candidate": "INVALID; no fallback",
-      "cap": "original200 output decisions; no reinterpretation as EOS",
-      "ordinary_regression": "all content/content cases bit-identical to original online_g1; engineering-only comparator inside same allocation"
-    }
+    "no_trigger_and_A2_winner_identity": true
   },
   "systems": {
     "reused": [
@@ -1904,16 +1892,14 @@
   ],
   "reference_free_summary": "FULL100/DEV24/NOVEL76/A2_DELTA_OUTSIDE_DEV24: triggers/no-triggers/winners/changes/dialogues; signed theta0-minus-A2 score margin min/median/max and quantiles0,.25,.5,.75,1 among triggers, null if none; sealed token ED to A2/B0/AUTO",
   "audit": {
-    "pre": "PASS_TO_P2_PATH4_R1",
+    "pre": "PASS_TO_P2_PATH4",
     "post": "P2_PATH4_AUDIT: PASS",
     "independent": "own partition/trigger/controller arithmetic/counts/breadth/bootstrap/labels; never import primary decision implementation",
     "primary_phase_before_references": true,
     "live_loss_abs": 1e-05,
     "live_gradient_relative": 0.02,
     "gradient_floor": 1e-08,
-    "known_blockers_preclude_prepass": false,
-    "contract_auditor": "experiments/inference_cf_p2path4_r1_contract_audit.py",
-    "runtime_manifest_independent_prepass_still_required": true
+    "known_blockers_preclude_prepass": true
   },
   "compute": {
     "jobs_max": 1,
@@ -1925,7 +1911,7 @@
     "optimizer_steps": 200,
     "backwards_max_including_independent_live_check": 201,
     "no_resubmit_or_expansion": true,
-    "phase_order": "all100 exact A2 reconstruction barrier before any G1; later execution only after runnable R1 pre-audit; no scientific job in Codex"
+    "phase_order": "all100 A2 reconstruction barrier before G1; current known pre-run block prevents entering either scientific phase"
   },
   "firewall": {
     "allowed": [
@@ -1956,37 +1942,5 @@
     ]
   },
   "github": "checks -> diff -> commit -> push origin HEAD:cs-asr-steer-inf; clean local=remote; no force/merge-main/PR",
-  "stopping": "No scientific run in Codex. Later Claude requires independent runnable pre-audit PASS_TO_P2_PATH4_R1; stop after fixed100 regardless of verdict; supported authorizes separately frozen independent confirmation only.",
-  "contract_revision": "PATH4_R1_EOS_BOUNDARY_V1",
-  "original_blocked_provenance": {
-    "label": "P2_PATH4_BLOCKED_EOS_FIRST_BRANCH",
-    "commit": "29661e972f0ebfd727d228d2f6dbd9b17dd41c5a",
-    "config_archive": "configs/inference_cf/p2_path4_blocked_v0.json",
-    "config_archive_sha256": "8fe0c62a6b1778ccfbb7519838d61d762998a75acb08479751d989c3264a3d0b",
-    "panel_unchanged": true,
-    "no_scientific_run_or_PATH4_reference_outcome_before_amendment": true,
-    "human_authorized_after_block_review": true
-  },
-  "known_pre_run_block_is_historical": true,
-  "EOS_diagnostics": {
-    "pre_reference": [
-      "boundary trigger count/orientation",
-      "EOS/content winner counts",
-      "termination and content length",
-      "length deltas vs A2 and B0"
-    ],
-    "post_seal_only": [
-      "POI/ZH/mixed error deltas G-A2",
-      "new severe truncation under global original rule"
-    ],
-    "new_thresholds": null
-  },
-  "amendment": "docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md",
-  "amendment_source_sha256": {
-    "docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md": "15b020f6ba629d69bf19e42f21067523eac2a2ab2324fe5cd518d85001810472",
-    "src/csasr/inference_cf/eos_boundary.py": "80807bfd0d13914bec5612fa9a0d438fa92e5a9443330676f2fa71dd49f6f04a",
-    "tests/test_inference_cf_p2path4_r1.py": "70167aca4914c93bdcc8514070d6c4cebb82fbcc44cbb44bf5c23f78886bf7c3",
-    "experiments/inference_cf_p2path4_r1_contract_audit.py": "ca0ebebffd2b61b89ff71eb9a60e207a7512298624b6d9d74a5789c41d5c01c2"
-  },
-  "compute_authorization_scope": "authorized_jobs_now=0 refers to Codex session; later Claude may launch at most1 job only after independent runnable-manifest PASS_TO_P2_PATH4_R1"
+  "stopping": "STOP now at reference-free pre-run incompatibility. Later execution requires separately authorized contract revision; terminal supported would authorize only separately frozen independent confirmation."
 }

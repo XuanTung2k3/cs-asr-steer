@@ -404,3 +404,7 @@ Outputs `results/inference_cf/p2path3/` (rows by canonical index 000..099). Repo
 ## P2-PATH4 pre-run design — BLOCKED
 
 Design artifacts: docs/inference_cf/P2_PATH4_SPEC.md, P2_PATH4_CODEX_DESIGN.md, P2_PATH4_PANEL.json; configs/inference_cf/p2_path4.json. Intended reuse: original episodic_tta A2/TTA1, consensus_guard, branch_adjudication, PATH3 online_g1, cached.Branch, canonical evaluator. Actual online_g1 and score_branch refuse EOS-first/empty content candidates; four fixed100 A2 disagreement rows necessarily hit that frozen restriction. No PATH4 runner/analyzer/auditor/sbatch implemented; no scientific run authorized. Exact inheritance is preserved, not patched.
+
+## P2-PATH4-R1 — authorized EOS-boundary extension
+
+Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.

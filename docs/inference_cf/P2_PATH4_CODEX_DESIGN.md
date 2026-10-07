@@ -1,3 +1,15 @@
+# Active revision: PATH4_R1_EOS_BOUNDARY_V1
+
+Human-authorized EOS-boundary scope extension: [P2_PATH4_EOS_AMENDMENT.md](P2_PATH4_EOS_AMENDMENT.md).
+This amendment supersedes ONLY revision0 EOS-first invalidity and its pre-run block.
+CONTENT_G1 and all original scientific settings/thresholds/firewall remain unchanged.
+New contract gate: PASS_TO_P2_PATH4_R1; runnable manifest/code must also be independently audited before GPU.
+No scientific run/outcome/reference evaluation in this Codex session.
+
+The complete blocked revision0 below is preserved verbatim as historical provenance, not current execution status.
+
+---
+
 # P2-PATH4 — codebase-aware transfer handoff (BLOCKED)
 
 **Not an execution authorization.** Read P2_PATH4_SPEC.md, p2_path4.json and P2_PATH4_PANEL.json.

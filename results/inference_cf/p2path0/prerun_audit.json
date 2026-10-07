@@ -1,0 +1,28 @@
+{
+ "checks": {
+  "a4_inherited": true,
+  "a4_rows_sealed": true,
+  "anchors": true,
+  "auditor_independent": true,
+  "barrier_before_clamps": true,
+  "clamp_is_exact_override": true,
+  "compute_plan": true,
+  "forced_tokens_allowed": true,
+  "frozen:configs/inference_cf/p2_path0.json": true,
+  "frozen:docs/inference_cf/P2_PATH0_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_PATH0_SITES.json": true,
+  "frozen:docs/inference_cf/P2_PATH0_SPEC.md": true,
+  "no_interior_controls": true,
+  "no_outcome": true,
+  "plan_committed": true,
+  "population": true,
+  "runner_reference_steering_free": true,
+  "sites_hash": true,
+  "sites_recomputed_independently": true,
+  "tests_present": true,
+  "thresholds": true
+ },
+ "git_commit": "d81c6e749979e81c354c30bd82d970e60e68b9fa",
+ "schema": "p2_path0_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_PATH0"
+}

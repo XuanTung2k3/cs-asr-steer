@@ -395,3 +395,7 @@ diagnostics** (PATH2_12 is a subset). **NOVEL76 was not used in that A3/A4/PATH 
 by TTA1, and its references had been evaluated before. Slurm 58015 ran new A4 + G1 on all 100 rows. References for PATH3 outcomes were
 opened only after the reference-free output seal was pushed and the independent primary-phase audit passed. B0/AUTO/A2 outputs were
 reused, not rerun. No D-dev-confirm, D-test, router-calib (new role), full300, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.
+
+## P2-PATH4 pre-run design — BLOCKED
+
+Reference-free inspection only: existing fixed100 teacher/output content IDs/termination, source/config/provenance,100 audio byte hashes and final-master archive hashes. Historical aggregate tables read only to freeze count thresholds; no new reference evaluation or row-level A2 outcome labels. Token-only A2_DELTA14/A2_SAME86/outside-DEV24 delta7; four EOS-first blockers. No new adaptation/decoding/GPU outcome, split/role/full300/P3/transfer exposure. NOVEL76 remains TTA1-exposed development, not fresh validation. Any future scientific stage requires separately authorized boundary revision and pushed output seal before references.

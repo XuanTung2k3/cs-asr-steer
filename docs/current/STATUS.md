@@ -721,3 +721,7 @@ G2 three-token handoff adds nothing. One GPU job (58013). Exposed development on
 ## P2-PATH3 pre-outcome freeze
 
 Next separate exposed-development ticket: P2-PATH3 design only. Frozen PATH2 G1 fixed100 breadth confirmation, 12-row exact replay barrier then88; authoritative TTA1 safety and NOVEL76 breadth gates. PASS_TO_P2_PATH3 before later run. No outcome/job here; historical stages/core v6 unchanged. NOVEL76 is NOT fresh validation. P3 HELD.
+
+## P2-PATH4 pre-run design — BLOCKED
+
+After audited PATH3 SIGNAL_CONCENTRATED, intended G1 transfer to A2 is documented/fingerprinted only. Four sealed first disagreements are EOS-first on theta0: U0027_S0_116, U0086_S0_222, U0091_S0_196, U1004_S0_221. Exact frozen G1 refuses empty content candidates; therefore PASS_TO_P2_PATH4 cannot be issued. No runner/outcome/job. Requires separately authorized contract-boundary decision, not a silent fallback or panel change. See ../inference_cf/P2_PATH4_SPEC.md. P3 HELD.

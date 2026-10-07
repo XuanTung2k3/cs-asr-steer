@@ -400,3 +400,7 @@ primary; guarded secondary: TTA1 safety, aggregate rescue, POI benefit/retention
 `inference_cf_p2path3_audit.py` (independent prerun/post), `slurm/inference_cf_p2path3.sbatch`, `tests/test_inference_cf_p2path3.py`.
 Reuses byte-identical `consensus_guard` (G1 only; no `g2_forced`), `branch_adjudication`, `script_safe_tta.adapt_a4`, `cached.Branch`.
 Outputs `results/inference_cf/p2path3/` (rows by canonical index 000..099). Report `docs/inference_cf/P2_PATH3_REPORT.md`.
+
+## P2-PATH4 pre-run design — BLOCKED
+
+Design artifacts: docs/inference_cf/P2_PATH4_SPEC.md, P2_PATH4_CODEX_DESIGN.md, P2_PATH4_PANEL.json; configs/inference_cf/p2_path4.json. Intended reuse: original episodic_tta A2/TTA1, consensus_guard, branch_adjudication, PATH3 online_g1, cached.Branch, canonical evaluator. Actual online_g1 and score_branch refuse EOS-first/empty content candidates; four fixed100 A2 disagreement rows necessarily hit that frozen restriction. No PATH4 runner/analyzer/auditor/sbatch implemented; no scientific run authorized. Exact inheritance is preserved, not patched.

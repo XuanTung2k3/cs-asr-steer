@@ -682,3 +682,7 @@ P2-PATH3 pre-outcome design frozen after audited PATH2 BRANCH_CONTROL_SUFFICIENT
 | Reference-free seal + primary audit | DONE (`bceb341`, `77f4ee9`) |
 | Secondary + `P2_PATH3_AUDIT: PASS` | DONE: safety/rescue/gain/retention pass; NOVEL76 breadth fails (A4 inert there: native LID = zh no-op) |
 | Further G1 breadth test | NOT RUN; needs a population where A4 activates, a separately frozen contract and a human data-role decision |
+
+## P2-PATH4 pre-run design — BLOCKED
+
+Frozen intended unchanged G1 transfer to exact historical A2 on fixed100; no runner/scientific job. Reference-free token inspection reproduces A2_DELTA14 (7 outside DEV24), but four theta0-EOS/A2-content first disagreements violate the inherited EOS-first INVALID rule. No PASS_TO_P2_PATH4 or execution authorization. See docs/inference_cf/P2_PATH4_SPEC.md. A separate authorized boundary revision is required; no row exclusion/fallback/controller tuning. Core v6/history unchanged. P3 HELD.

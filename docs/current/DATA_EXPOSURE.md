@@ -349,3 +349,7 @@ Same A3 24-utterance reference-free subset of the already-exposed fixed100 D-dev
 adaptation, theta0 forced decodes and forced-ZH final decodes; references opened only after the committed output seal. No D-dev-confirm,
 D-test, router-calib new role, full100/300, P3, transfer or fresh validation.
 
+
+## P2-PATH0 pre-outcome freeze
+
+P2-PATH0 freeze inspected only sealed A3/A4 D-row token arrays and termination to derive5 rescue/7 induction sites and suffix eligibility. No new reference evaluation, adaptation or GPU outcome. Later PATH0 limited to exact12 already-exposed D-dev-select rows; reference-free primary label sealed/pushed before secondary references. No new validation/full24/100/300/P3/transfer role.

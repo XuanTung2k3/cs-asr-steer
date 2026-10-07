@@ -348,3 +348,7 @@ live KL check, post), `slurm/inference_cf_p2tta_a3.sbatch`, `tests/test_inferenc
 (independent prerun, live safe-KL check, post), `slurm/inference_cf_p2tta_a4.sbatch`, `tests/test_inference_cf_p2tta_a4.py`.
 Outputs `results/inference_cf/p2tta_a4/`.
 
+
+## P2-PATH0 pre-outcome freeze
+
+P2-PATH0 design-only: docs/inference_cf/P2_PATH0_SPEC.md, P2_PATH0_CODEX_DESIGN.md, P2_PATH0_SITES.json and configs/inference_cf/p2_path0.json. Reuse unchanged script_safe_tta.adapt_a4, episodic_tta LNGuard/forced_decode/levenshtein, cached.Branch, suppression and canonical evaluator. Additive clamp runner/auditor/tests are not implemented yet.

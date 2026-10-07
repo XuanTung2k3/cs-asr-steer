@@ -624,3 +624,7 @@ P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → co
 | Evaluation + `P2_TTA_A4_AUDIT: PASS` | DONE: EN transfer + anchor pass; matrix safety not rescued |
 | A4-on-100 / tuning / full300 / P3 | NOT RUN; new human decision required |
 
+
+## P2-PATH0 pre-outcome freeze
+
+P2-PATH0 pre-outcome design frozen: exact12 A3/A4 D rows,5 rescue/7 induction, first-divergence1/3 donor-token clamps under reconstructed unchanged A4. Reference-free released-suffix causal label; secondary ASR after primary seal. One job≤30min later; no run in design session. See docs/inference_cf/P2_PATH0_SPEC.md. A2/A3/A4 remain closed.

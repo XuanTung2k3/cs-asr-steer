@@ -646,3 +646,7 @@ One GPU job (57876). Exposed development only; new human decision required.
 EN transfer and anchor preservation pass; full and partial matrix rescue fail; benefit vs A2 retained (equal POI/MER). One GPU job (57937).
 Exposed development only; new human decision required.
 
+
+## P2-PATH0 pre-outcome freeze
+
+Next authorized separate development design: P2-PATH0, first-divergence rescue/induction causal diagnostic, spec/config/sites frozen only.12 D rows; unchanged A4 reconstruction must reproduce12/12 before clamps. PASS_TO_P2_PATH0 required before later execution. No scientific outcomes in this session; core v6 and historical terminal stages unchanged.

@@ -606,3 +606,12 @@ P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → co
 | TTA1 (A2, fixed100, Slurm 57871) | DONE: `P2_TTA1_SUPPORTED` vs forced-ZH; below AUTO on PIER; `P2_TTA1_AUDIT: PASS` |
 | Full300 / P3 / transfer / fresh validation | NOT RUN; new human decision required |
 
+## P2-TTA-A3 — executed (2026-10-07): `P2_TTA_A3_TEACHER_UNSAFE`
+
+| Stage | Status |
+|---|---|
+| Freeze + implementation + `PASS_TO_P2_TTA_A3` | DONE (`bd41bc5`, `eab6c64`, `90dbe96`) |
+| A3 24-panel run (Slurm 57876) + seal | DONE (`0d29d35`) |
+| Evaluation + `P2_TTA_A3_AUDIT: PASS` | DONE: gap closed, minimal movement, safety failed -> TEACHER_UNSAFE |
+| A3-on-100 / tuning / full300 / P3 | NOT RUN; new human decision required |
+

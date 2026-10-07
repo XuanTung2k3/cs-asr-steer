@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-TTA-FUNNEL (2026-10-07): TTA0-R -> A2 selected -> TTA1 `P2_TTA1_SUPPORTED`
+# Current separate inference-time ticket — P2-TTA-A3 (2026-10-07): terminal `P2_TTA_A3_TEACHER_UNSAFE`
+
+Freeze `bd41bc5`; implementation `eab6c64`; `PASS_TO_P2_TTA_A3` (`90dbe96`); manifest `d802297`; Slurm 57876 (24 rows, 57 s);
+seal `0d29d35`; `P2_TTA_A3_AUDIT: PASS`. Enriched reference-free 24-panel (12 AUTO!=FORCED + 12 controls). Soft AUTO forward KL
+on the inherited A2 actuator closed the gap (D_cond down 12/12, median 51%), moved D transcripts toward AUTO only minimally
+(4 closer / 1 farther; summed distance 149 -> 132), but failed frozen safety vs forced (ZH-CER +0.032, ZH retention 0.962,
+outside harm 0.038); POI/PIER equal to A2. Bottleneck: AUTO is not a Mandarin-safe teacher. Report
+`docs/inference_cf/P2_TTA_A3_REPORT.md`. STOP: no tuning, no A3-on-100, no full300/P3. Core v6 METHOD_CONTRACT unchanged.
+
+<!-- superseded header (P2-TTA-FUNNEL result) -->
+## (Previous header) Current separate inference-time ticket — P2-TTA-FUNNEL (2026-10-07): TTA0-R -> A2 selected -> TTA1 `P2_TTA1_SUPPORTED`
 
 Funnel freeze `ff75e1a`. TTA0-R (CPU, sealed run1, gradient tolerance 2e-2 only): `PASS_TO_P2_TTA0_R_EVALUATION`,
 `P2_TTA0_R_AUDIT: PASS`, A1 `TTA0_EM_CONFIRMATION_BIAS` (1 severe truncation), A2 `TTA0_AC_VIABLE` -> selected; MAP skipped.
@@ -614,4 +624,10 @@ Next separate inference_cf development ticket: P2-TTA-FUNNEL, design frozen only
 Path: TTA0-R `P2_TTA0_R_OBJECTIVE_SELECTED` (A2) -> MAP not run -> TTA1 `P2_TTA1_SUPPORTED` (vs matched forced-ZH; below AUTO
 on PIER). One new GPU job (57871). Preserved engineering attempts: R gate/post-audit attempt 1 (test-file source-scope bug).
 Exposed-development evidence only; new human decision required for any confirmation.
+
+## P2-TTA-A3 result (2026-10-07) — terminal: `P2_TTA_A3_TEACHER_UNSAFE`
+
+Gap closed (12/12, median 0.514), movement passed at the minimum (criterion a; R_dist 0.114), safety failed (ZH-CER,
+matrix-ZH retention, outside harm). A3 = A2 on POI (128) and PIER on the enriched panel; A2 also breaches the same bounds there.
+One GPU job (57876). Exposed development only; new human decision required.
 

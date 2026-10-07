@@ -333,3 +333,10 @@ P2-TTA-FUNNEL design: docs/inference_cf/P2_TTA_FUNNEL_{SPEC,CODEX_DESIGN}.md, co
 repaired-tolerance parameter (defaults unchanged). Outputs `results/inference_cf/p2tta_funnel/{tta0_r,tta1}`. MAP/A3 not implemented
 (branch not reached).
 
+## P2-TTA-A3 (2026-10-07; executed, terminal `P2_TTA_A3_TEACHER_UNSAFE`)
+
+`src/csasr/inference_cf/soft_auto_tta.py` (forward KL(q_AUTO||p_FORCED) on the y_A path; reuses `episodic_tta` actuator unchanged),
+`experiments/inference_cf_p2tta_a3.py` (panel/prepare/manifest/run/seal; historical `detect_language` AUTO prompt + replay check),
+`inference_cf_p2tta_a3_analyze.py` (frozen gap/movement/safety/A2 precedence), `inference_cf_p2tta_a3_audit.py` (independent prerun,
+live KL check, post), `slurm/inference_cf_p2tta_a3.sbatch`, `tests/test_inference_cf_p2tta_a3.py`. Outputs `results/inference_cf/p2tta_a3/`.
+

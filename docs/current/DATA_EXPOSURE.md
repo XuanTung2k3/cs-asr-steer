@@ -337,3 +337,9 @@ TTA1 (Slurm 57871): A2 episodic adaptation + forced-ZH decodes on the already-ex
 (80 new episodes; 20 reused); references opened only after the committed output seal. MAP panel24 not used.
 No router-calib new role, D-dev-confirm, D-test, P3, full300, transfer corpora or fresh validation.
 
+## P2-TTA-A3 exposure (2026-10-07)
+
+24-utterance reference-free subset of the already-exposed fixed100 D-dev-select panel (selected from stored theta0 FORCED/AUTO text
+equality only). Slurm 57876 ran A3 adaptation, theta0 forced/AUTO replay decodes and forced-ZH final decodes; references opened only
+after the committed output seal. No D-dev-confirm, D-test, router-calib new role, full300, P3, transfer or fresh validation.
+

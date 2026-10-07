@@ -1,0 +1,72 @@
+{
+ "checks": {
+  "analysis_bound": true,
+  "bootstrap_agrees": true,
+  "compute_counts": true,
+  "label_agrees": true,
+  "live_audit_2pct": true,
+  "loss_recomputed": true,
+  "manifest_self": true,
+  "metrics_agree": true,
+  "output_recomputed": true,
+  "output_seal_committed_unchanged": true,
+  "plan": true,
+  "points_agree": true,
+  "reset_recomputed": true,
+  "runtime": true,
+  "sources_at_commit": true,
+  "theta0_hash": true,
+  "theta0_recomputed": true,
+  "update_recomputed": true
+ },
+ "failures": {
+  "loss": [],
+  "output": [],
+  "reset": [],
+  "theta0": [],
+  "update": []
+ },
+ "git_commit": "882c8c45beba18f8a19bc5976c02bda96edb3f44",
+ "independent": {
+  "added_caps": 0,
+  "benefit": true,
+  "metrics": {
+   "B0_AUTO": {
+    "en_wer": 0.41522988505747127,
+    "mer": 0.25905389014035696,
+    "pier": 0.40804597701149425,
+    "poi_errors": 284,
+    "zh_cer": 0.23355784469096671
+   },
+   "B0_FORCED": {
+    "en_wer": 0.5028735632183908,
+    "mer": 0.2569745278114712,
+    "pier": 0.4956896551724138,
+    "poi_errors": 345,
+    "zh_cer": 0.2192947702060222
+   },
+   "SELECTED_TTA": {
+    "en_wer": 0.46264367816091956,
+    "mer": 0.2536822041240686,
+    "pier": 0.4540229885057471,
+    "poi_errors": 316,
+    "zh_cer": 0.22107765451664024
+   }
+  },
+  "net_poi": 29,
+  "safety": {
+   "EN_ret": true,
+   "MER": true,
+   "ZH_CER": true,
+   "ZH_ret": true,
+   "caps": true,
+   "corruption": true,
+   "outside": true,
+   "severe": true
+  },
+  "severe": 0
+ },
+ "label": "P2_TTA1_SUPPORTED",
+ "schema": "p2_tta1_post_audit_v1",
+ "verdict": "P2_TTA1_AUDIT: PASS"
+}

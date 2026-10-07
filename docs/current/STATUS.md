@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-TTA0 (2026-10-07): terminal `P2_TTA0_INVALID`
+# Current separate inference-time ticket — P2-TTA-FUNNEL (2026-10-07): TTA0-R -> A2 selected -> TTA1 `P2_TTA1_SUPPORTED`
+
+Funnel freeze `ff75e1a`. TTA0-R (CPU, sealed run1, gradient tolerance 2e-2 only): `PASS_TO_P2_TTA0_R_EVALUATION`,
+`P2_TTA0_R_AUDIT: PASS`, A1 `TTA0_EM_CONFIRMATION_BIAS` (1 severe truncation), A2 `TTA0_AC_VIABLE` -> selected; MAP skipped.
+TTA1 (Slurm 57871, fixed100, A2, 20 reused + 80 new episodes): `PASS_TO_P2_TTA1`, `P2_TTA1_AUDIT: PASS`. vs forced-ZH
+PIER .4957->.4540 (net POI +29), MER .2570->.2537, all safety bounds pass -> SUPPORTED; vs AUTO PIER still +.046 worse
+(MER -.005). 14/100 outputs changed; 2 utterances carry 25/29 net POI. Reports `docs/inference_cf/P2_TTA_FUNNEL_REPORT.md`,
+`P2_TTA0_R_REPORT.md`, `P2_TTA1_REPORT.md`. STOP: no full300/P3/transfer/fresh validation. Core v6 METHOD_CONTRACT unchanged.
+
+<!-- superseded header (P2-TTA0 result) -->
+## (Previous header) Current separate inference-time ticket — P2-TTA0 (2026-10-07): terminal `P2_TTA0_INVALID`
 
 Freeze `eb0da2a`; implementation + pseudo seal `503c874`; `PASS_TO_P2_TTA0` (`6d408d2`); manifest pushed (`6a954f5`);
 Slurm 57868 (20/20 x A1/A2, 68 s); `P2_TTA0_AUDIT: PASS` (INVALID confirmed, `2b57f8a`). Frozen first-row live A1
@@ -598,3 +608,10 @@ A2 changed 3/20 (all where AUTO = forced) and never moved toward AUTO. No refere
 ## P2-TTA-FUNNEL master freeze
 
 Next separate inference_cf development ticket: P2-TTA-FUNNEL, design frozen only. TTA0-R must pass repaired sealed-run audit before reference evaluation; MAP only after audited no-viable; TTA1 only after exactly one audited selection. No outcomes or jobs in this design session. See ../inference_cf/P2_TTA_FUNNEL_SPEC.md. Historical P2_TTA0_INVALID and closed steering diagnostics preserved.
+
+## P2-TTA-FUNNEL result (2026-10-07)
+
+Path: TTA0-R `P2_TTA0_R_OBJECTIVE_SELECTED` (A2) -> MAP not run -> TTA1 `P2_TTA1_SUPPORTED` (vs matched forced-ZH; below AUTO
+on PIER). One new GPU job (57871). Preserved engineering attempts: R gate/post-audit attempt 1 (test-file source-scope bug).
+Exposed-development evidence only; new human decision required for any confirmation.
+

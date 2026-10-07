@@ -596,3 +596,13 @@ handoff for separately frozen TTA1; no automatic100/300/P3. Core authority uncha
 ## P2-TTA-FUNNEL master freeze
 
 P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → conditional MAP → selected-objective TTA1. Historical TTA0 INVALID remains. See docs/inference_cf/P2_TTA_FUNNEL_SPEC.md; no funnel outcomes run. Core v6 unchanged.
+
+## P2-TTA-FUNNEL — executed (2026-10-07)
+
+| Stage | Status |
+|---|---|
+| TTA0-R (repaired audit + sealed evaluation) | DONE: `P2_TTA0_R_OBJECTIVE_SELECTED` (A2), `P2_TTA0_R_AUDIT: PASS` |
+| TTA-MAP | NOT RUN (R selected an objective) |
+| TTA1 (A2, fixed100, Slurm 57871) | DONE: `P2_TTA1_SUPPORTED` vs forced-ZH; below AUTO on PIER; `P2_TTA1_AUDIT: PASS` |
+| Full300 / P3 / transfer / fresh validation | NOT RUN; new human decision required |
+

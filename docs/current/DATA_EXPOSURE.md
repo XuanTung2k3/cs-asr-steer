@@ -329,3 +329,11 @@ transfer corpora or fresh validation.
 ## P2-TTA-FUNNEL master freeze
 
 P2-TTA-FUNNEL freeze: no new adapted reference evaluation or scientific inference. Theta0 stored FORCED/AUTO text equality on fixed100 used only to freeze MAP24 (12 disagreement,12 agreement;20 dialogues). R would evaluate previously sealed20 only after repaired audit; MAP24 and selected TTA1 fixed100 are conditional exposed-development roles, not fresh validation. Full300/P3/confirm/test/transfer remain unauthorized.
+
+## P2-TTA-FUNNEL exposure (2026-10-07)
+
+TTA0-R: references opened for the sealed panel20 run1 (already-exposed D-dev-select) only after the committed repaired gate.
+TTA1 (Slurm 57871): A2 episodic adaptation + forced-ZH decodes on the already-exposed fixed100 D-dev-select panel
+(80 new episodes; 20 reused); references opened only after the committed output seal. MAP panel24 not used.
+No router-calib new role, D-dev-confirm, D-test, P3, full300, transfer corpora or fresh validation.
+

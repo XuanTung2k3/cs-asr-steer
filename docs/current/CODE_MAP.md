@@ -323,3 +323,13 @@ precision diagnostic), `slurm/inference_cf_p2tta0.sbatch`, `tests/test_inference
 ## P2-TTA-FUNNEL master freeze
 
 P2-TTA-FUNNEL design: docs/inference_cf/P2_TTA_FUNNEL_{SPEC,CODEX_DESIGN}.md, configs/inference_cf/p2_tta_funnel.json, P2_TTA_MAP_PANEL24.json/panel-selection contract and P2_TTA1_INHERITANCE_CONTRACT.md. Reuse episodic_tta.py and p2tta0 replay/evaluation/audit; new funnel runner not implemented. Core v6 mappings unchanged.
+
+## P2-TTA-FUNNEL (2026-10-07; executed: TTA0-R -> TTA1)
+
+`experiments/inference_cf_p2tta_funnel.py` (TTA1 prepare/manifest/run/seal; reuses `inference_cf_p2tta0.run_objective`),
+`inference_cf_p2tta_funnel_analyze.py` (guarded `r-evaluate` via original TTA0 analysis with `rel_grad_tol=0.02`;
+`tta1-evaluate`), `inference_cf_p2tta_funnel_audit.py` (independent `r-gate`/`r-post`/`tta1-pre`/`tta1-post`),
+`slurm/inference_cf_p2tta_funnel.sbatch`, `tests/test_inference_cf_p2tta_funnel.py`. TTA0 analysis/auditor gained an explicit
+repaired-tolerance parameter (defaults unchanged). Outputs `results/inference_cf/p2tta_funnel/{tta0_r,tta1}`. MAP/A3 not implemented
+(branch not reached).
+

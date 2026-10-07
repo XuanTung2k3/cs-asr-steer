@@ -81,3 +81,54 @@ def test_repaired_post_audit_source_scope_matches_gate():
     src = Path("experiments/inference_cf_p2tta0_audit.py").read_text()
     assert 'p.endswith(("_analyze.py", "_audit.py")) or p.startswith("tests/")' in src
     assert '"sha256:" + (blob_sha(m["git_commit"], p) or "") == h and' in src
+
+
+# ---- Stage C: TTA1 ----------------------------------------------------------------------------------------------
+
+def test_tta1_selection_inherits_exact_master_settings():
+    sel = json.loads(Path("results/inference_cf/p2tta_funnel/tta0_r/selected_objective.json").read_text())
+    assert sel["objective"]["id"] == "A2" and sel["objective"]["loss"] == T0["objectives"]["A2"]["loss"]
+    assert sel["optimizer"] == {k: C["common"]["optimization"][k] for k in sel["optimizer"]}
+    assert sel["optimizer"]["lr"] == 1e-3 and sel["optimizer"]["steps"] == 2 and sel["optimizer"]["weight_decay"] == 0
+    assert [p["name"] for p in sel["trainables"]["parameters"]] == [p["name"] for p in C["common"]["trainables"]["parameters"]]
+    assert sel["teacher_forcing"] == C["common"]["teacher_forcing"] and sel["decode"] == C["common"]["decode"]
+
+
+def test_tta1_plan_reuse_all_compatible_and_panel100():
+    plan = json.loads(Path("results/inference_cf/p2tta_funnel/tta1/plan_sealed.json").read_text())
+    panel = json.loads(Path(C["TTA1"]["panel"]).read_text())
+    ids = [r["utterance_id"] for r in panel["rows"]]
+    assert hashlib.sha256(Path(C["TTA1"]["panel"]).read_bytes()).hexdigest() == C["TTA1"]["panel_sha256"] and plan["ids"] == ids
+    t0ids = json.loads(Path("results/inference_cf/p2tta0/run1/manifest.json").read_text())["ids"]
+    assert sorted(plan["reuse_ids"]) == sorted(t0ids) and len(plan["new_ids"]) == 80 and set(plan["reuse_ids"]) | set(plan["new_ids"]) == set(ids)
+    assert plan["planned"]["optimizer_steps"] == 160 <= C["compute"]["TTA1_optimizer_steps_max"]
+    assert plan["objective"] == "A2" and plan["references_used"] is False and all(plan["checks"].values())
+
+
+def test_tta1_decision_precedence_and_boundaries():
+    base = {"mer_increase": 0.0, "zh_cer_increase": 0.0, "zh_retention": 0.99, "en_retention": 0.96, "outside_harm_rate": 0.02,
+            "poi_corruption_rate": 0.02, "added_caps": 0, "new_severe_truncations": 0, "net_poi_error_reduction": 5, "pier_gain": 0.005}
+    L = lambda valid=True, **k: fan.tta1_decide(valid, {**base, **k})["label"]
+    assert L() == "P2_TTA1_SUPPORTED"
+    assert L(net_poi_error_reduction=4) == "P2_TTA1_NO_USEFUL_GAIN" and L(pier_gain=0.0049) == "P2_TTA1_NO_USEFUL_GAIN"
+    assert L(mer_increase=0.0101) == "P2_TTA1_SEQUENCE_DAMAGE" and L(new_severe_truncations=1) == "P2_TTA1_SEQUENCE_DAMAGE"
+    assert L(added_caps=2) == "P2_TTA1_SEQUENCE_DAMAGE" and L(zh_retention=0.9799) == "P2_TTA1_SEQUENCE_DAMAGE"
+    assert L(added_caps=1, zh_retention=None) == "P2_TTA1_SUPPORTED"
+    assert L(valid=False) == "P2_TTA1_INVALID" and L(valid=False, mer_increase=1.0) == "P2_TTA1_INVALID"
+
+
+def test_tta1_references_closed_without_seal(monkeypatch):
+    monkeypatch.setattr(fan, "T1", "results/inference_cf/p2tta_funnel/__no_tta1__")
+    called = []
+    monkeypatch.setattr("experiments.inference_cf_p2_evaluate.load_references", lambda: called.append(1))
+    with pytest.raises(PermissionError):
+        fan.tta1_evaluate("results/inference_cf/p2tta_funnel/__no_tta1__/run1")
+    assert not called
+
+
+def test_tta1_runner_single_objective_no_steering():
+    import ast
+    src = Path("experiments/inference_cf_p2tta_funnel.py").read_text()
+    code = "\n".join(ast.get_source_segment(src, n) or "" for n in ast.parse(src).body if isinstance(n, ast.FunctionDef) and n.name.startswith("cmd_tta1"))
+    assert '"A1"' not in code and '"A3"' not in code and "run_objective(bundle, guard, \"A2\"" in code
+    assert not any(f in code for f in ("load_references", "ReadoutDirection", "native_lid", "_edit_hook", "num_beams=", "clip_grad"))

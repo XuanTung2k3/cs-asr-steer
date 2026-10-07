@@ -385,3 +385,8 @@ decision hash), `experiments/inference_cf_p2path2.py` (prepare/manifest/run with
 (reference-free primary; guarded secondary, 29/105/143/0 cutoffs, label), `inference_cf_p2path2_audit.py` (independent prerun/post),
 `slurm/inference_cf_p2path2.sbatch`, `tests/test_inference_cf_p2path2.py`. Outputs `results/inference_cf/p2path2/`.
 
+
+
+## P2-PATH3 pre-outcome freeze
+
+P2-PATH3 design-only: docs/inference_cf/P2_PATH3_SPEC.md, P2_PATH3_CODEX_DESIGN.md, P2_PATH3_PANEL.json; configs/inference_cf/p2_path3.json. Reuse byte-identical consensus_guard G1/branch_adjudication/cached.Branch/A4 actuator and canonical evaluator; additive PATH3 runner/analyzer/independent auditor/tests/sbatch pending, not implemented or run here. No new controller or G2.

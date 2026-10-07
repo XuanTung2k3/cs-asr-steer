@@ -381,3 +381,8 @@ Same 12 PATH0 D rows of the already-exposed fixed100 D-dev-select panel. Slurm 5
 (G0/G1/G2); references for these rows opened only after the committed reference-free seal and primary audit. No fresh validation,
 full24/100/300, P3, transfer or new data role.
 
+
+
+## P2-PATH3 pre-outcome freeze
+
+Design checks read existing contracts/source/reports, sealed token/teacher/provenance metadata,100 audio byte hashes and fixed-ID filtered role ID/dialogue/role columns only. No transcript/reference/error-label columns or per-row evaluation counts loaded; no new adaptation/decoding/reference scoring. Conditional PATH3 exact100 already TTA1-exposed D-dev-select; DEV24/PATH2_12 metadata fixed by IDs. NOVEL76 means unused in A3/A4/PATH chain, NOT fresh validation/unexposed references. New A4/G1 outcomes sealed/pushed and primary-audited before references. No new split/full300/P3/transfer.

@@ -667,3 +667,8 @@ P2-PATH2 design frozen after audited PATH1 MIXED: first online theta0/A4 disagre
 | Secondary + `P2_PATH2_AUDIT: PASS` | DONE: G1 = G2 pass (ZH 21 / POI 101 / mixed 123); no G2 advantage |
 | Broader G1 development test | NOT RUN; separately frozen contract and human decision required |
 
+
+
+## P2-PATH3 pre-outcome freeze
+
+P2-PATH3 pre-outcome design frozen after audited PATH2 BRANCH_CONTROL_SUFFICIENT: exact unchanged A4+G1 on historical fixed100, replay PATH2_12 first before remaining88; NOVEL76 rescue breadth/concentration required. NOVEL76 is already TTA1-exposed D-dev-select, NOT fresh validation. One later job<=30min; no scientific outcomes in design session. See docs/inference_cf/P2_PATH3_SPEC.md. No G2/controller tuning/full300/P3; core v6 unchanged.

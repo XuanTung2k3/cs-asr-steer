@@ -705,3 +705,8 @@ Next separate exposed-development ticket: P2-PATH2 pre-outcome spec/config/finge
 One consensus-selected token at the first theta0/A4 disagreement keeps A4's beneficial switches and rejects the harmful one on this cohort;
 G2 three-token handoff adds nothing. One GPU job (58013). Exposed development only; broader frozen test required.
 
+
+
+## P2-PATH3 pre-outcome freeze
+
+Next separate exposed-development ticket: P2-PATH3 design only. Frozen PATH2 G1 fixed100 breadth confirmation, 12-row exact replay barrier then88; authoritative TTA1 safety and NOVEL76 breadth gates. PASS_TO_P2_PATH3 before later run. No outcome/job here; historical stages/core v6 unchanged. NOVEL76 is NOT fresh validation. P3 HELD.

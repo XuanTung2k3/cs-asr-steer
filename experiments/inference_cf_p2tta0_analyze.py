@@ -253,15 +253,70 @@ def _lev(a, b):
     return levenshtein(a, b)
 
 
+def invalid_record(run_dir: Path) -> dict:
+    """Reference-free terminal record for a technically INVALID run (frozen precedence: INVALID supersedes every
+    label). Loads NO reference and computes NO canonical metric, so sealed adapted outputs stay unevaluated.
+    Reference-free adaptation mechanics (losses, entropy on the common y_B path, update norms, lengths/EOS,
+    token changes vs the sealed baselines) are summarized descriptively."""
+    data = load(run_dir)
+    integ = integrity(data)
+    if all(integ.values()):
+        raise ValueError("run is technically valid; use the full evaluator")
+    rows, seal = data["rows"], {r["utterance_id"]: r for r in data["seal"]["rows"]}
+    ids = data["manifest"]["ids"]
+    mech = {}
+    if integ["all_20x2_ok"]:
+        for k in ("A1", "A2"):
+            objs = [r["objectives"][k] for r in rows]
+            h = {}
+            for th, src in (("theta0", "A1"), ("theta2", k)):
+                items = [r["objectives"][src]["common_y_B"][th] for r in rows]
+                n = sum(x["valid"] for x in items)
+                h[th] = sum(x["entropy_sum"] for x in items) / n if n else None
+            mech[k] = {"loss_mean": [float(np.mean([o["losses"][j] for o in objs])) for j in range(3)],
+                       "loss_decreased_utterances": sum(o["losses"][2] < o["losses"][0] for o in objs),
+                       "grad_l2_mean": [float(np.mean([o["grad_l2"][j] for o in objs])) for j in range(2)],
+                       "master_delta_l2_mean": float(np.mean([o["master_delta_l2"] for o in objs])),
+                       "master_delta_rel_mean": float(np.mean([o["master_delta_rel"] for o in objs])),
+                       "effective_delta_l2_mean": float(np.mean([o["effective_delta_l2"] for o in objs])),
+                       "effective_changed_scalars_mean": float(np.mean([o["effective_changed_scalars"] for o in objs])),
+                       "common_y_B_token_weighted_entropy": h,
+                       "common_y_B_entropy_relative_reduction": (h["theta0"] - h["theta2"]) / h["theta0"] if h["theta0"] else None,
+                       "transcripts_changed_vs_B0_FORCED": sum(not o["vs_B0_FORCED"]["equal"] for o in objs),
+                       "equal_to_B0_AUTO": sum(o["vs_B0_AUTO"]["equal"] for o in objs),
+                       "lev_to_AUTO_sum": sum(o["vs_B0_AUTO"]["levenshtein"] for o in objs),
+                       "lev_B0_to_AUTO_sum": sum(_lev(seal[u]["y_B"], seal[u]["y_A"]) for u in ids),
+                       "closer_to_AUTO_utterances": sum(o["vs_B0_AUTO"]["levenshtein"] < _lev(seal[u]["y_B"], seal[u]["y_A"]) for o, u in zip(objs, ids)),
+                       "farther_from_AUTO_utterances": sum(o["vs_B0_AUTO"]["levenshtein"] > _lev(seal[u]["y_B"], seal[u]["y_A"]) for o, u in zip(objs, ids)),
+                       "mean_length": float(np.mean([o["length"] for o in objs])),
+                       "mean_length_B0_FORCED": float(np.mean([len(seal[u]["y_B"]) for u in ids])),
+                       "eos_terminated": sum(o["terminated"] == "eos" for o in objs), "caps": sum(o["terminated"] == "cap" for o in objs),
+                       "new_severe_truncations": sum(o["severe_truncation"] for o in objs),
+                       "adapt_sec": data["runtime"]["systems"][k]["adapt_sec"], "decode_sec": data["runtime"]["systems"][k]["decode_sec"],
+                       "peak_alloc": data["runtime"]["systems"][k]["peak_alloc"], "peak_reserved": data["runtime"]["systems"][k]["peak_reserved"]}
+    return {"schema": "p2_tta0_invalid_record_v1", "manifest_hash": data["manifest"]["manifest_hash"], "integrity": integ,
+            "failed_checks": [k for k, v in integ.items() if not v], "runtime_invalid": data["runtime"].get("invalid"),
+            "live_audit": rows[0].get("live_audit") if rows and rows[0].get("status") == "ok" else None,
+            "stage_valid": False, "labels": {"A1": "P2_TTA0_INVALID", "A2": "P2_TTA0_INVALID"}, "label": "P2_TTA0_INVALID",
+            "selected": None, "references_loaded": False, "canonical_metrics_computed": False, "mechanics_reference_free": mech,
+            "runtime": data["runtime"]}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--invalid-record", action="store_true", help="reference-free terminal record for a technically INVALID run")
     args = ap.parse_args()
     out = ROOT / args.out
     if out.exists():
         raise FileExistsError("analysis exists; never overwrite")
     from experiments.inference_cf_p2dir_analyze import jsonable
+    if args.invalid_record:
+        res = jsonable(invalid_record(ROOT / args.run))
+        atomic_json(out, res)
+        print(json.dumps({k: res[k] for k in ("label", "failed_checks", "runtime_invalid", "live_audit", "mechanics_reference_free")}, indent=1))
+        return
     res = jsonable(analyze(ROOT / args.run))
     atomic_json(out, res)
     print(json.dumps({"label": res["label"], "selected": res["selected"], "labels": res["labels"], "integrity": res["integrity"],

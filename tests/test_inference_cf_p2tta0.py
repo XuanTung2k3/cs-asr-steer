@@ -265,3 +265,14 @@ def test_runner_reference_steering_free_and_auditor_independent():
         assert hashlib.sha256(Path(rel).read_bytes()).hexdigest() == h, rel
     assert tta.OPTIM == {"lr": 1e-3, "weight_decay": 0.0, "betas": (0.9, 0.999), "eps": 1e-8, "amsgrad": False, "foreach": False,
                          "fused": False, "maximize": False} and tta.STEPS == 2
+
+
+def test_invalid_record_and_invalid_audit_are_reference_free():
+    """INVALID supersedes all labels: the terminal record/audit must not load references or compute metrics."""
+    import ast
+    import inspect
+    for fn in (an.invalid_record, au.cmd_invalid):
+        src = inspect.getsource(fn)
+        calls = {n.func.id if isinstance(n.func, ast.Name) else getattr(n.func, "attr", "") for n in ast.walk(ast.parse(src))
+                 if isinstance(n, ast.Call)}
+        assert not calls & {"load_references", "corpus_metrics", "correction_corruption", "counts", "transitions", "outside"}

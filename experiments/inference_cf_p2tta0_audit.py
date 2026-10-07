@@ -462,6 +462,99 @@ def cmd_post(args) -> dict:
             "git_commit": _git("rev-parse", "HEAD")}
 
 
+def cmd_invalid(args) -> dict:
+    """Reference-free independent confirmation of a technically INVALID run: recomputes the frozen first-row live
+    loss/gradient criterion from stored scalars, theta0 identity, updates and losses from saved terms/masters, resets,
+    output well-formedness, compute counts and source provenance, then derives the stage label itself
+    (frozen precedence: any technical failure => P2_TTA0_INVALID). Loads no reference; computes no metric."""
+    run = ROOT / args.run
+    rec = json.loads((ROOT / args.record).read_text())
+    m = json.loads((run / "manifest.json").read_text())
+    seal = json.loads(SEAL.read_text())
+    rt = json.loads((run / "runtime.json").read_text())
+    c = json.loads((ROOT / CONFIG).read_text())
+    runtime_sources = [p for p in m["sources"] if not p.endswith(("_analyze.py", "_audit.py"))]
+    checks = {"manifest_self": m["manifest_hash"] == canon_digest({k: v for k, v in m.items() if k != "manifest_hash"}),
+              "sources_blobs_at_manifest_commit": all("sha256:" + (blob_sha(m["git_commit"], p) or "") == h for p, h in m["sources"].items()),
+              "runtime_sources_unchanged": all(fhash(ROOT / p) == m["sources"][p] for p in runtime_sources),
+              "record_manifest": rec["manifest_hash"] == m["manifest_hash"] and rec["references_loaded"] is False
+              and rec["canonical_metrics_computed"] is False,
+              "panel": sha(ROOT / PANEL) == c["panel"]["byte_sha256"] and m["ids"] == c["panel"]["ids"],
+              "trainable_names": m["trainables"] == [p["name"] for p in c["trainables"]["parameters"]],
+              "seal": seal["seal_hash"] == m["seal_hash"] == canon_digest({k: v for k, v in seal.items() if k != "seal_hash"})}
+    ids = m["ids"]
+    rows = [json.loads((run / f"rows/{i:02d}.json").read_text()) for i in range(20)]
+    eng = {"rows_complete": all(r["status"] == "ok" and r["identity"] == u and set(r["objectives"]) == {"A1", "A2"} for r, u in zip(rows, ids)),
+           "runtime_completed": rt["status"] == "completed",
+           "nonln_and_final_reset": bool(rt["nonln_unchanged"]) and rt["nonln_hash_start"] == rt["nonln_hash_end"]
+           and bool(rt["reset_final_ok"]) and bool(rt["model_grads_none"]),
+           "theta0_decode_equals_S0": all(r["theta0_decode"]["tokens_equal_S0"] and r["theta0_decode"]["terminated_equal_S0"] for r in rows)}
+    with np.load(run / "theta0_ln_fp32.npz") as z:
+        th0 = [z[f"p{i:03d}"] for i in range(194)]
+    eng["theta0_bf16_hash"] = bf16_hash(th0) == rt["theta0_ln_hash"]
+    S = {s_["utterance_id"]: s_ for s_ in seal["rows"]}
+    from transformers import WhisperProcessor
+    tok = WhisperProcessor.from_pretrained("/mnt/data/tungnx/whisper-large-v3", local_files_only=True).tokenizer
+    sup, beg = seal["suppression"]["suppress"], seal["suppression"]["begin"]
+    bad = {"updates": [], "losses": [], "resets": [], "outputs": []}
+    for i, (r, u) in enumerate(zip(rows, ids)):
+        s_ = S[u]
+        with np.load(run / f"rows/{i:02d}_final_masters_fp32.npz") as z:
+            fm = {k: z[k] for k in z.files}
+        if fhash(run / f"rows/{i:02d}_final_masters_fp32.npz") != r["final_masters_npz_sha256"]:
+            bad["updates"].append((u, "npz"))
+        for kind, y in (("A1", s_["y_B"]), ("A2", s_["y_A"])):
+            o = r["objectives"][kind]
+            mk = own_valid(y, sup, beg, tok)
+            mast = [fm[f"{kind}_p{j:03d}"] for j in range(194)]
+            ml2 = math.sqrt(sum(float(((ma.astype(np.float32) - t0) .astype(np.float64) ** 2).sum()) for ma, t0 in zip(mast, th0)))
+            import torch
+            eff = [torch.from_numpy(ma).to(torch.bfloat16).float().numpy() - t0 for ma, t0 in zip(mast, th0)]
+            el2 = math.sqrt(sum(float((e.astype(np.float64) ** 2).sum()) for e in eff))
+            if abs(ml2 - o["master_delta_l2"]) > 1e-9 * max(1, ml2) or abs(el2 - o["effective_delta_l2"]) > 1e-9 * max(1, el2) \
+                    or int(sum(int((e != 0).sum()) for e in eff)) != o["effective_changed_scalars"]:
+                bad["updates"].append((u, kind))
+            if o["steps"] != 2 or len(o["losses"]) != 3 or len(o["grad_l2"]) != 2 or not all(o["finite"]) or o["valid"] != sum(mk) \
+                    or not all(math.isfinite(x) for x in o["losses"] + o["grad_l2"]):
+                bad["losses"].append((u, kind, "schedule"))
+            for k3 in range(3):
+                pos = o["positions"][k3]
+                v = [e for e, ok in zip(pos["entropy"], mk) if ok] if kind == "A1" else [-t for t, ok in zip(pos["target_logprob"], mk) if ok]
+                L = float(np.mean(np.array(v, dtype=np.float64))) if v else 0.0
+                if abs(L - o["losses"][k3]) > 1e-5:
+                    bad["losses"].append((u, kind, k3))
+            if not (o["reset_ok"] and o["start_hash"] == rt["theta0_ln_hash"] == o["end_hash"] and o["other_versions_unchanged"]):
+                bad["resets"].append((u, kind))
+            if o["length"] != len(o["tokens"]) or (o["terminated"] == "cap") != (len(o["tokens"]) == 200) or \
+                    o["text"] != tok.decode(o["tokens"], skip_special_tokens=True) or o["vs_B0_FORCED"]["levenshtein"] != own_lev(o["tokens"], s_["y_B"]) \
+                    or o["vs_B0_AUTO"]["levenshtein"] != own_lev(o["tokens"], s_["y_A"]):
+                bad["outputs"].append((u, kind))
+    eng.update({f"{k}_recomputed": not v for k, v in bad.items()})
+    cnt = rt["counters"]
+    eng["compute_counts"] = (cnt["A1"]["backwards"] + cnt["A2"]["backwards"] + cnt["audit"]["backwards"] == 82
+                             and cnt["A1"]["optimizer_steps"] + cnt["A2"]["optimizer_steps"] == 80
+                             and cnt["A1"]["teacher_forwards"] + cnt["A2"]["teacher_forwards"] + cnt["audit"]["forwards"] == 142
+                             and cnt["A1"]["final_decodes"] + cnt["A2"]["final_decodes"] == 40 and cnt["theta0_integrity_decodes"] == 20)
+    # frozen first-row live objective/gradient criterion, recomputed from stored scalars
+    la = rows[0]["live_audit"]
+    live = {}
+    for k in ("A1", "A2"):
+        x = la[k]
+        live[k] = {"loss_abs_diff": abs(x["primary_loss"] - x["auditor_loss"]), "loss_ok": abs(x["primary_loss"] - x["auditor_loss"]) <= 1e-5,
+                   "grad_rel": x["grad_diff_l2"] / x["auditor_grad_l2"], "grad_ok": x["grad_diff_l2"] <= max(1e-8, 1e-3 * x["auditor_grad_l2"]),
+                   "primary_loss_is_L0": x["primary_loss"] == rows[0]["objectives"][k]["losses"][0]}
+    eng["live_objective_gradient_check"] = all(v["loss_ok"] and v["grad_ok"] for v in live.values())
+    own_label = "P2_TTA0_INVALID" if not all(eng.values()) else "NOT_INVALID"
+    checks["label_agrees"] = own_label == rec["label"] == "P2_TTA0_INVALID"
+    checks["failed_checks_agree"] = sorted(k for k, v in eng.items() if not v) == ["live_objective_gradient_check"] and \
+        sorted(rec["failed_checks"]) == ["live_audit_pass", "no_runtime_invalid"] and \
+        all("live audit" in x for x in rt.get("invalid", [])) and rec["runtime_invalid"] == rt.get("invalid")
+    verdict = "P2_TTA0_AUDIT: PASS" if all(checks.values()) else "P2_TTA0_AUDIT: BLOCK"
+    return {"schema": "p2_tta0_invalid_audit_v1", "verdict": verdict, "label": own_label, "selected": None, "labels": {"A1": own_label, "A2": own_label},
+            "checks": checks, "engineering": eng, "live": live, "failures": {k: v[:10] for k, v in bad.items()},
+            "references_loaded": False, "git_commit": _git("rev-parse", "HEAD")}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -470,8 +563,12 @@ def main() -> None:
     p.add_argument("--run", required=True)
     p.add_argument("--analysis", required=True)
     p.add_argument("--out", required=True)
+    q = sub.add_parser("invalid")
+    q.add_argument("--run", required=True)
+    q.add_argument("--record", required=True)
+    q.add_argument("--out", required=True)
     args = ap.parse_args()
-    res = {"prerun": cmd_prerun, "post": cmd_post}[args.cmd](args)
+    res = {"prerun": cmd_prerun, "post": cmd_post, "invalid": cmd_invalid}[args.cmd](args)
     out = ROOT / args.out
     if out.exists():
         raise FileExistsError("audit output exists; never overwrite")

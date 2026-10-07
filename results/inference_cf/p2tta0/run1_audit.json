@@ -1,0 +1,58 @@
+{
+ "checks": {
+  "failed_checks_agree": true,
+  "label_agrees": true,
+  "manifest_self": true,
+  "panel": true,
+  "record_manifest": true,
+  "runtime_sources_unchanged": true,
+  "seal": true,
+  "sources_blobs_at_manifest_commit": true,
+  "trainable_names": true
+ },
+ "engineering": {
+  "compute_counts": true,
+  "live_objective_gradient_check": false,
+  "losses_recomputed": true,
+  "nonln_and_final_reset": true,
+  "outputs_recomputed": true,
+  "resets_recomputed": true,
+  "rows_complete": true,
+  "runtime_completed": true,
+  "theta0_bf16_hash": true,
+  "theta0_decode_equals_S0": true,
+  "updates_recomputed": true
+ },
+ "failures": {
+  "losses": [],
+  "outputs": [],
+  "resets": [],
+  "updates": []
+ },
+ "git_commit": "6d408d2ad4f603c30c77cb20261f5c8c953aebe9",
+ "label": "P2_TTA0_INVALID",
+ "labels": {
+  "A1": "P2_TTA0_INVALID",
+  "A2": "P2_TTA0_INVALID"
+ },
+ "live": {
+  "A1": {
+   "grad_ok": false,
+   "grad_rel": 0.010249905316931757,
+   "loss_abs_diff": 7.152557373046875e-07,
+   "loss_ok": true,
+   "primary_loss_is_L0": true
+  },
+  "A2": {
+   "grad_ok": true,
+   "grad_rel": 0.0,
+   "loss_abs_diff": 5.960464477539063e-08,
+   "loss_ok": true,
+   "primary_loss_is_L0": true
+  }
+ },
+ "references_loaded": false,
+ "schema": "p2_tta0_invalid_audit_v1",
+ "selected": null,
+ "verdict": "P2_TTA0_AUDIT: PASS"
+}

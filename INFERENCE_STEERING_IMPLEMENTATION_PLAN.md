@@ -672,3 +672,13 @@ P2-PATH2 design frozen after audited PATH1 MIXED: first online theta0/A4 disagre
 ## P2-PATH3 pre-outcome freeze
 
 P2-PATH3 pre-outcome design frozen after audited PATH2 BRANCH_CONTROL_SUFFICIENT: exact unchanged A4+G1 on historical fixed100, replay PATH2_12 first before remaining88; NOVEL76 rescue breadth/concentration required. NOVEL76 is already TTA1-exposed D-dev-select, NOT fresh validation. One later job<=30min; no scientific outcomes in design session. See docs/inference_cf/P2_PATH3_SPEC.md. No G2/controller tuning/full300/P3; core v6 unchanged.
+
+## P2-PATH3 — executed (2026-10-07): `P2_PATH3_SIGNAL_CONCENTRATED`
+
+| Stage | Status |
+|---|---|
+| Implementation + `PASS_TO_P2_PATH3` | DONE (`ddfa787`, `71a51a1`) |
+| Manifest + run (Slurm 58015) | DONE (`cd93f3d`; replay12 exact barrier, then 88) |
+| Reference-free seal + primary audit | DONE (`bceb341`, `77f4ee9`) |
+| Secondary + `P2_PATH3_AUDIT: PASS` | DONE: safety/rescue/gain/retention pass; NOVEL76 breadth fails (A4 inert there: native LID = zh no-op) |
+| Further G1 breadth test | NOT RUN; needs a population where A4 activates, a separately frozen contract and a human data-role decision |

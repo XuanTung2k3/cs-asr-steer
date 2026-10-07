@@ -386,3 +386,12 @@ full24/100/300, P3, transfer or new data role.
 ## P2-PATH3 pre-outcome freeze
 
 Design checks read existing contracts/source/reports, sealed token/teacher/provenance metadata,100 audio byte hashes and fixed-ID filtered role ID/dialogue/role columns only. No transcript/reference/error-label columns or per-row evaluation counts loaded; no new adaptation/decoding/reference scoring. Conditional PATH3 exact100 already TTA1-exposed D-dev-select; DEV24/PATH2_12 metadata fixed by IDs. NOVEL76 means unused in A3/A4/PATH chain, NOT fresh validation/unexposed references. New A4/G1 outcomes sealed/pushed and primary-audited before references. No new split/full300/P3/transfer.
+
+## P2-PATH3 exposure (2026-10-07)
+
+Exactly the historical fixed100 `D-dev-select` panel (100 utterances, 20 dialogues), which **was already historical development data**
+(TTA1-exposed). PATH3 **does not expose fresh validation** and touched no new split or role. **DEV24 was already used in the A3/A4/PATH
+diagnostics** (PATH2_12 is a subset). **NOVEL76 was not used in that A3/A4/PATH chain but is not fresh validation**: it was already exposed
+by TTA1, and its references had been evaluated before. Slurm 58015 ran new A4 + G1 on all 100 rows. References for PATH3 outcomes were
+opened only after the reference-free output seal was pushed and the independent primary-phase audit passed. B0/AUTO/A2 outputs were
+reused, not rerun. No D-dev-confirm, D-test, router-calib (new role), full300, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.

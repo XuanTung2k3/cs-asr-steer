@@ -390,3 +390,13 @@ decision hash), `experiments/inference_cf_p2path2.py` (prepare/manifest/run with
 ## P2-PATH3 pre-outcome freeze
 
 P2-PATH3 design-only: docs/inference_cf/P2_PATH3_SPEC.md, P2_PATH3_CODEX_DESIGN.md, P2_PATH3_PANEL.json; configs/inference_cf/p2_path3.json. Reuse byte-identical consensus_guard G1/branch_adjudication/cached.Branch/A4 actuator and canonical evaluator; additive PATH3 runner/analyzer/independent auditor/tests/sbatch pending, not implemented or run here. No new controller or G2.
+
+## P2-PATH3 (2026-10-07; executed)
+
+Additive, no new controller module: `experiments/inference_cf_p2path3.py` (prepare: fixed100/partition/order/teacher/comparator verification
+and sealed plan; manifest; run: two resident instances, PATH2 replay12 exact barrier (`replay_mismatches`) then remaining 88; the
+unchanged PATH2 G1 controller is isolated in `online_g1` with no audit inputs; seal), `inference_cf_p2path3_analyze.py` (reference-free
+primary; guarded secondary: TTA1 safety, aggregate rescue, POI benefit/retention, NOVEL76 breadth/concentration, LODO, bootstrap, label),
+`inference_cf_p2path3_audit.py` (independent prerun/post), `slurm/inference_cf_p2path3.sbatch`, `tests/test_inference_cf_p2path3.py`.
+Reuses byte-identical `consensus_guard` (G1 only; no `g2_forced`), `branch_adjudication`, `script_safe_tta.adapt_a4`, `cached.Branch`.
+Outputs `results/inference_cf/p2path3/` (rows by canonical index 000..099). Report `docs/inference_cf/P2_PATH3_REPORT.md`.

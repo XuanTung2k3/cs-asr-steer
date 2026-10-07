@@ -1,4 +1,15 @@
-# Current separate inference-time ticket — P2-PATH2 (2026-10-07): terminal `P2_PATH2_BRANCH_CONTROL_SUFFICIENT`
+# Current separate inference-time ticket — P2-PATH3 (2026-10-07): terminal `P2_PATH3_SIGNAL_CONCENTRATED`
+
+Freeze `5853a8d`; `PASS_TO_P2_PATH3` (`71a51a1`); manifest `cd93f3d`; Slurm 58015 (215 s, two resident instances); seal `bceb341` pushed before
+references; `P2_PATH3_AUDIT: PASS` (primary + full). PATH2 replay barrier 12/12 exact, then the remaining 88. Unchanged A4+G1 on fixed100:
+safety PASS, aggregate rescue PASS (R_ZH 20 >= 12), POI retention 1.0 (I_A4 = I_G1 = 18), useful gain PASS; **NOVEL76 breadth FAIL**:
+0 triggers and 0 rescue, because native LID = zh on all 76 NOVEL76 and 12 other DEV24 rows -> frozen exact A4 no-op (A4 = B0 = G1;
+AUTO = B0 there). All fixed100 rescue = U0023_S0_664 (CSD0012). Exposed development only, NOT fresh validation. Report
+`docs/inference_cf/P2_PATH3_REPORT.md`. STOP; any further G1 test needs a separately frozen contract on rows where A4 activates plus a
+human data-role decision. Core v6 unchanged.
+
+<!-- superseded header (P2-PATH2 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH2 (2026-10-07): terminal `P2_PATH2_BRANCH_CONTROL_SUFFICIENT`
 
 Freeze `e1c6ee7`; `PASS_TO_P2_PATH2` (`155aa40`); manifest `e525ae7`; Slurm 58013 (54 s, two resident instances); seal `e1198aa` before
 references; `P2_PATH2_AUDIT: PASS` (primary + full). Online first-disagreement consensus guard: 5 triggers (historical C sites), 7 exact

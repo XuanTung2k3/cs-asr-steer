@@ -308,3 +308,14 @@ Reuse frozen Whisper encoder, ordinary cached Branch decoder, canonical metrics/
 outside accounting and20 audited pseudo baselines. Additive episodic_tta helper/runner/analysis/
 independent auditor/Slurm/tests pending. All194 decoder-LN names enumerated; fp32 masters with
 bf16 forward casts and exact reset. No steering/provider/core-contract modifications.
+
+## P2-TTA0 (2026-10-07; executed, terminal `P2_TTA0_INVALID`)
+
+`src/csasr/inference_cf/episodic_tta.py` (decoder-LN enumeration, `LNGuard` theta0 snapshot/restore/verify, fp32
+masters via bf16 `functional_call`, teacher-forced `position_terms`, A1/A2 losses, 2-step AdamW `adapt`, ordinary
+`forced_decode`), `experiments/inference_cf_p2tta0.py` (`prepare` reuse proof + pseudo seal, `manifest`, `run`),
+`inference_cf_p2tta0_analyze.py` (frozen labels/selection; `--invalid-record` reference-free), `inference_cf_p2tta0_audit.py`
+(independent prerun / live first-row check / post / reference-free `invalid`), `inference_cf_p2tta0_live_diag.py` (CPU
+precision diagnostic), `slurm/inference_cf_p2tta0.sbatch`, `tests/test_inference_cf_p2tta0.py`. Outputs
+`results/inference_cf/p2tta0/`.
+

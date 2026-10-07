@@ -582,3 +582,13 @@ After audited P2-SEQ sequence damage, local steering line stays closed. See P2_T
 Forced-ZH final decoding; no steering, no sweeps. One allocation target<1h/hard2h, independent
 PASS_TO_P2_TTA0 and post-audit. Design only, no runner/outcome/job. At most1 viable objective
 handoff for separately frozen TTA1; no automatic100/300/P3. Core authority unchanged.
+
+## P2-TTA0 — executed (2026-10-07): `P2_TTA0_INVALID`
+
+| Stage | Status |
+|---|---|
+| Implementation + pseudo seal + pre-run audit + pushed manifest | DONE (`503c874`, `6d408d2` `PASS_TO_P2_TTA0`, `6a954f5`) |
+| TTA0 screen (Slurm 57868, panel20, A1/A2) | RAN; INVALID: frozen live A1 gradient tolerance 1e-3 below bf16 precision (~1e-2); `P2_TTA0_AUDIT: PASS` |
+| Evaluation of sealed adapted outputs | NOT RUN (INVALID supersedes; outputs kept sealed) |
+| TTA1 / full 100 / 300 / P3 | NOT RUN / HELD; new human decision required |
+

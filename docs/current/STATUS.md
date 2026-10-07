@@ -1,3 +1,13 @@
+# Current separate inference-time ticket — P2-TTA0 (2026-10-07): terminal `P2_TTA0_INVALID`
+
+Freeze `eb0da2a`; implementation + pseudo seal `503c874`; `PASS_TO_P2_TTA0` (`6d408d2`); manifest pushed (`6a954f5`);
+Slurm 57868 (20/20 x A1/A2, 68 s); `P2_TTA0_AUDIT: PASS` (INVALID confirmed, `2b57f8a`). Frozen first-row live A1
+gradient check failed (rel 1.02e-2 > 1e-3; loss agrees 7e-7; A2 bitwise). CPU diagnostic: formulas bitwise equal in
+float64, float32/bf16-backward precision ~1e-2 for both objectives -> tolerance unattainable, not a code bug. Sealed
+adapted outputs NOT evaluated. No objective selected, no TTA1 handoff. New human decision required. Report
+`docs/inference_cf/P2_TTA0_REPORT.md`. No TTA1/full100/300/P3/fresh validation. Core v6 METHOD_CONTRACT unchanged.
+
+<!-- superseded header (P2-SEQ result) -->
 # Current separate inference-time ticket — P2-TTA0 (2026-10-07)
 
 Pre-outcome objective viability design frozen: `P2_TTA0_SPEC.md`, `P2_TTA0_CODEX_DESIGN.md`,
@@ -7,7 +17,7 @@ P2-SEQ damage and prior local-selectivity terminals remain closed. Implementatio
 no adaptation outcome/job in design session. One allocation only after pushed PASS_TO_P2_TTA0;
 no100/300/P3/fresh validation. Core v6 method unchanged.
 
-# Current separate inference-time ticket — P2-SEQ (2026-10-07): terminal `P2_SEQ_SEQUENCE_DAMAGE`
+## (Previous header) Current separate inference-time ticket — P2-SEQ (2026-10-07): terminal `P2_SEQ_SEQUENCE_DAMAGE`
 
 Freeze `660a619`; implementation `ed9c355`; AUTO reuse proof `14a2339`; `PASS_TO_P2_SEQ` (`9cb1d75`); Slurm 57867
 (100/100); `P2_SEQ_AUDIT: PASS`. Matched forced-ZH S0 PIER .4957 / MER .2570; AUTO .4080 / .2591; STEER (E*R_B*D2, L16,
@@ -575,3 +585,12 @@ preserved); `PASS_TO_P2_SEQ` (`9cb1d75`); Slurm 57867, one MIG allocation, 607 s
 69/100 utterances; 41 transcripts changed. Damage is mostly deletion/early termination (deletions 1026→1299). Benefit
 rules pass, but MER, ZH-CER, matrix-ZH retention and outside-POI harm fail. STEER is below AUTO. Next: separately frozen
 P2-TTA0 design from the evidence-only handoff. P3 HELD.
+
+## P2-TTA0 result (2026-10-07) — terminal: `P2_TTA0_INVALID`
+
+One allocation (Slurm 57868) completed all 20 x {A1 GREEDY-EM, A2 AUTO-CONSISTENCY} episodes with exact resets and
+theta0 = P2-SEQ S0 20/20, but the frozen first-row independent gradient check failed for A1 (1.02e-2 vs 1e-3). The CPU
+diagnostic shows this is intrinsic float32-logit/bf16-backward precision (~1e-2, A2 too), not an implementation error.
+Reference-free mechanics only: both losses fell 20/20; A1 entropy -53%, 10/20 transcripts changed, 1 severe truncation;
+A2 changed 3/20 (all where AUTO = forced) and never moved toward AUTO. No reference evaluation. P3 HELD.
+

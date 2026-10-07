@@ -316,3 +316,12 @@ Deterministically froze first saved100-panel ID per dialogue (20 IDs); inspected
 parameter layout and synthetic LayerNorm gradients only. No pretrained-model forward, adaptation,
 new outcome or validation-role exposure. Conditional objective screen uses existing D-dev-select20
 only; no full100/300, new router role, confirm/test/P3/transfer/fresh validation.
+
+## P2-TTA0 exposure (2026-10-07)
+
+Slurm 57868 ran episodic decoder-LN adaptation and forced-ZH decodes on the already-exposed D-dev-select panel20
+(first utterance per dialogue of the fixed100 panel). Teachers were sealed model outputs (P2-SEQ S0, historical AUTO);
+no reference entered runtime. Stage INVALID: references were NOT loaded and adapted outputs were NOT evaluated.
+CPU diagnostic used row 0 audio/teachers only. No router-calib new role, D-dev-confirm, D-test, P3, full100/300,
+transfer corpora or fresh validation.
+

@@ -68,6 +68,8 @@ def cmd_prerun(args) -> dict:
     rel = "results/inference_cf/p2seq/reuse_audit.json"
     checks["reuse_seal_committed"] = _git("ls-files", rel) == rel and fhash(ROOT / rel) == git_blob_hash("HEAD", rel) \
         and reuse["reuse_hash"] == canon({k: v for k, v in reuse.items() if k != "reuse_hash"}) and reuse["outcomes_computed"] is False
+    from csasr.utils.hashing import sha256_file
+    hist_start = json.loads((ROOT / "results/inference_cf/p2_A_r1_L16/runtime.json").read_text())["start_unix"]
     sealed = {r["utterance_id"]: r for r in c["reuse"]["rows"]}
     hp = {r["utterance_id"]: r for r in json.loads((ROOT / "results/inference_cf/p2_A_r1_L16/panel.json").read_text())["rows"]}
     rows_ok = True
@@ -75,7 +77,8 @@ def cmd_prerun(args) -> dict:
         s = sealed[u]
         row = json.loads((ROOT / s["path"]).read_text())
         rows_ok &= (sha(ROOT / s["path"]) == s["sha256"] and row["identity"] == u and row["status"] == "ok"
-                    and "B0_AUTO" in row["systems"] and sha(hp[u]["audio_path"]) == hp[u]["audio_sha256"])
+                    and "B0_AUTO" in row["systems"] and sha256_file(hp[u]["audio_path"], max_bytes=65536) == hp[u]["audio_sha256"]
+                    and Path(hp[u]["audio_path"]).stat().st_mtime < hist_start)
     checks["auto_rows_and_audio"] = bool(rows_ok)
     hman = json.loads((ROOT / "results/inference_cf/p2_A_r1_L16/manifest.json").read_text())
     checks["historical_sources_unchanged"] = all("sha256:" + sha(p) == h for p, h in hman["sources"].items())
@@ -96,6 +99,8 @@ def cmd_prerun(args) -> dict:
         checks[k] for k in ("auto_rows_and_audio", "historical_sources_unchanged", "environment", "libraries_predate_historical",
                             "model_predates_historical")) else "COMPUTE_AUTO_ALL_100")
     checks["no_outcome"] = not any(x.name.startswith("run") for x in BASE.iterdir())
+    d_cfg = (ROOT / "configs/data/cs_dialogue.yaml").read_text()
+    checks["audio_fingerprint_definition"] = "audio_hash_bytes: 65536" in d_cfg
     checks["runner_reference_and_tta_free"] = runner_clean()["ok"]
     src = (ROOT / "experiments/inference_cf_p2seq.py").read_text()
     checks["alpha_restricted_0_2"] = 'if alpha not in (0.0, ALPHA_STEER)' in src and "ALPHA_STEER = 2.0" in src and "LAYER = 16" in src \

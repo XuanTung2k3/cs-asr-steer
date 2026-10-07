@@ -193,6 +193,13 @@ def sha_file(p) -> str:
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
+def audio_fingerprint(path) -> str:
+    """The repository's frozen audio identity (role-manifest ``audio_sha256``): csasr.utils.hashing.sha256_file,
+    size-prefixed, first ``audio_hash_bytes`` = 65536 bytes (configs/data/cs_dialogue.yaml)."""
+    from csasr.utils.hashing import sha256_file
+    return sha256_file(path, max_bytes=65536)
+
+
 def cmd_prepare(args) -> None:
     """Pre-outcome AUTO reuse proof (engineering only) + resolved panel inputs; sealed before any decode."""
     import datetime
@@ -217,7 +224,8 @@ def cmd_prepare(args) -> None:
         fine = (sha_file(ROOT / s["path"]) == s["sha256"] and row["identity"] == u and row["status"] == "ok"
                 and row["manifest_hash"] == hman["manifest_hash"] and a is not None and "tokens" in a and "text" in a)
         ok_rows &= fine
-        audio_ok = sha_file(audio[u]["audio_path"]) == audio[u]["audio_sha256"]
+        audio_ok = (audio_fingerprint(audio[u]["audio_path"]) == audio[u]["audio_sha256"]
+                    and Path(audio[u]["audio_path"]).stat().st_mtime < hrt["start_unix"])
         ok_rows &= audio_ok
         rows.append({"utterance_id": u, "row": s["path"], "row_sha256": s["sha256"], "audio_path": audio[u]["audio_path"],
                      "audio_sha256": audio[u]["audio_sha256"], "audio_ok": audio_ok, "auto_terminated": a["terminated"] if a else None})
@@ -346,7 +354,7 @@ def run(args) -> None:
         res = {"systems": {}}
         try:
             path = m["audio"][uid]["path"]
-            if sha_file(path) != m["audio"][uid]["sha256"]:
+            if audio_fingerprint(path) != m["audio"][uid]["sha256"]:
                 raise ValueError("audio bytes changed")
             wav = load_audio(path, bundle.sample_rate)
             inputs = batch_model_inputs(bundle, [path])

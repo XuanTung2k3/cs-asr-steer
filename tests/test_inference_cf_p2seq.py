@@ -170,3 +170,11 @@ def test_runner_reference_tta_free_and_auditor_independent():
     assert re.search(r"^\s*(from|import)\s+\S*_analyze", src, re.M) is None
     for rel, h in CFG["source_sha256"].items():
         assert hashlib.sha256(Path(rel).read_bytes()).hexdigest() == h, rel
+
+
+def test_audio_fingerprint_is_frozen_manifest_definition():
+    """Attempt-1 reuse proof wrongly used a raw full-file sha256; the role manifest's audio_sha256 is the
+    size-prefixed 64 KiB csasr.utils.hashing.sha256_file fingerprint (configs/data/cs_dialogue.yaml)."""
+    row = json.loads(Path("results/inference_cf/p2_A_r1_L16/panel.json").read_text())["rows"][0]
+    assert run.audio_fingerprint(row["audio_path"]) == row["audio_sha256"]
+    assert "audio_hash_bytes: 65536" in Path("configs/data/cs_dialogue.yaml").read_text()

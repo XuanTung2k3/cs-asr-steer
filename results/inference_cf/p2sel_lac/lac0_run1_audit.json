@@ -1,0 +1,25 @@
+{
+ "checks": {
+  "analysis_manifest": true,
+  "counts_agree": true,
+  "groups": true,
+  "label_agrees": true,
+  "manifest_sources_at_commit": true,
+  "row_reconstruction": true,
+  "seal_unchanged": true,
+  "statistics_agree": true
+ },
+ "independent": {
+  "S_TP_minus_FP": 0.947705078125,
+  "fn_strong": 4,
+  "fp_weak": 4,
+  "lower80": -0.022097387566137595,
+  "tp_strong": 6,
+  "valid_draws": 9967
+ },
+ "label": "P2_SEL_LAC_NOT_DISCRIMINATIVE",
+ "row_failures": [],
+ "schema": "p2_sel_lac_lac0_audit_v1",
+ "stage": "LAC0",
+ "verdict": "P2_SEL_LAC_AUDIT: PASS"
+}

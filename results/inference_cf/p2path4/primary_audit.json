@@ -1,0 +1,67 @@
+{
+ "checks": {
+  "counts": true,
+  "exactly_100_rows": true,
+  "live_audit_2pct": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "rows_reconstruction_dispatch_controller_recomputed": true,
+  "runtime": true,
+  "sources_at_commit": true,
+  "summaries_agree": true
+ },
+ "failures": [],
+ "git_commit": "4781605cb29c2710ad267a3b7795404eca1ab76b",
+ "independent": {
+  "boundary": [
+   {
+    "A2_len": 85,
+    "B0_len": 75,
+    "G_len": 85,
+    "action": "content",
+    "orientation": "theta0_EOS",
+    "utterance_id": "ZH-CN_U0027_S0_116",
+    "winner": "A2"
+   },
+   {
+    "A2_len": 36,
+    "B0_len": 35,
+    "G_len": 36,
+    "action": "content",
+    "orientation": "theta0_EOS",
+    "utterance_id": "ZH-CN_U0086_S0_222",
+    "winner": "A2"
+   },
+   {
+    "A2_len": 86,
+    "B0_len": 84,
+    "G_len": 84,
+    "action": "EOS",
+    "orientation": "theta0_EOS",
+    "utterance_id": "ZH-CN_U0091_S0_196",
+    "winner": "theta0"
+   },
+   {
+    "A2_len": 84,
+    "B0_len": 50,
+    "G_len": 50,
+    "action": "EOS",
+    "orientation": "theta0_EOS",
+    "utterance_id": "ZH-CN_U1004_S0_221",
+    "winner": "theta0"
+   }
+  ],
+  "counts": {
+   "boundary": 4,
+   "changed": 6,
+   "content": 10,
+   "t0w": 6,
+   "trig": 14
+  }
+ },
+ "label": null,
+ "phase": "primary",
+ "schema": "p2_path4_post_audit_v1",
+ "verdict": "P2_PATH4_AUDIT: PASS"
+}

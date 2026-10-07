@@ -1,0 +1,24 @@
+P2-PATH2 phase1 1/12 ZH-CN_U0021_S0_513 G0==A4 True ckpt True
+P2-PATH2 phase1 2/12 ZH-CN_U0023_S0_666 G0==A4 True ckpt True
+P2-PATH2 phase1 3/12 ZH-CN_U0023_S0_87 G0==A4 True ckpt True
+P2-PATH2 phase1 4/12 ZH-CN_U0023_S0_664 G0==A4 True ckpt True
+P2-PATH2 phase1 5/12 ZH-CN_U0029_S0_472 G0==A4 True ckpt True
+P2-PATH2 phase1 6/12 ZH-CN_U0039_S0_80 G0==A4 True ckpt True
+P2-PATH2 phase1 7/12 ZH-CN_U0091_S0_68 G0==A4 True ckpt True
+P2-PATH2 phase1 8/12 ZH-CN_U0092_S0_101 G0==A4 True ckpt True
+P2-PATH2 phase1 9/12 ZH-CN_U0102_S0_80 G0==A4 True ckpt True
+P2-PATH2 phase1 10/12 ZH-CN_U1003_S0_61 G0==A4 True ckpt True
+P2-PATH2 phase1 11/12 ZH-CN_U1079_S0_23 G0==A4 True ckpt True
+P2-PATH2 phase1 12/12 ZH-CN_U2004_S0_104 G0==A4 True ckpt True
+P2-PATH2 phase2 1/12 ZH-CN_U0021_S0_513 trigger True k 0 winner A4 margin -1.236
+P2-PATH2 phase2 2/12 ZH-CN_U0023_S0_666 trigger True k 5 winner A4 margin -0.114
+P2-PATH2 phase2 3/12 ZH-CN_U0023_S0_87 trigger True k 15 winner theta0 margin 0.000
+P2-PATH2 phase2 4/12 ZH-CN_U0023_S0_664 trigger True k 0 winner theta0 margin 0.985
+P2-PATH2 phase2 5/12 ZH-CN_U0029_S0_472 trigger False
+P2-PATH2 phase2 6/12 ZH-CN_U0039_S0_80 trigger False
+P2-PATH2 phase2 7/12 ZH-CN_U0091_S0_68 trigger False
+P2-PATH2 phase2 8/12 ZH-CN_U0092_S0_101 trigger True k 10 winner theta0 margin 0.042
+P2-PATH2 phase2 9/12 ZH-CN_U0102_S0_80 trigger False
+P2-PATH2 phase2 10/12 ZH-CN_U1003_S0_61 trigger False
+P2-PATH2 phase2 11/12 ZH-CN_U1079_S0_23 trigger False
+P2-PATH2 phase2 12/12 ZH-CN_U2004_S0_104 trigger False

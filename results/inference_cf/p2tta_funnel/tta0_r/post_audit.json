@@ -1,0 +1,118 @@
+{
+ "checks": {
+  "analysis_after_gate": true,
+  "gate_passed_and_committed": true,
+  "r_label_agrees": true,
+  "sealed_bytes_unchanged": true,
+  "selected_agrees": true,
+  "tta0_post:A1_points_agree": true,
+  "tta0_post:A2_points_agree": true,
+  "tta0_post:analysis_manifest": true,
+  "tta0_post:bootstrap_agrees": true,
+  "tta0_post:compute_counts": true,
+  "tta0_post:dialogues": true,
+  "tta0_post:entropy_agree": true,
+  "tta0_post:labels_agree": true,
+  "tta0_post:live_audit": true,
+  "tta0_post:losses_recomputed": true,
+  "tta0_post:manifest_self": true,
+  "tta0_post:metrics_agree": true,
+  "tta0_post:nonln_and_final_reset": true,
+  "tta0_post:outputs": true,
+  "tta0_post:panel": true,
+  "tta0_post:populations_nonempty": true,
+  "tta0_post:resets": true,
+  "tta0_post:rows_ok": true,
+  "tta0_post:runtime_completed": true,
+  "tta0_post:seal": true,
+  "tta0_post:selection_agrees": true,
+  "tta0_post:sources_at_commit": true,
+  "tta0_post:theta0_bf16_hash": true,
+  "tta0_post:theta0_decode_equals_S0": true,
+  "tta0_post:theta0_npz_hash": true,
+  "tta0_post:trainable_names": true,
+  "tta0_post:updates_recomputed": true
+ },
+ "failures": {
+  "losses": [],
+  "outputs": [],
+  "resets": [],
+  "updates": []
+ },
+ "git_commit": "f7d98780b23a71ec282584538064590ab256ccd8",
+ "independent": {
+  "confirmation_bias": {
+   "flag": true,
+   "theta0": 0.6273325914592689,
+   "theta2": 0.29371721324765815
+  },
+  "mean_master_update_l2": {
+   "A1": 0.9024558564423024,
+   "A2": 0.8958035115686312
+  },
+  "metrics": {
+   "A1": {
+    "en_wer": 0.39106145251396646,
+    "mer": 0.22436459246275198,
+    "pier": 0.3743016759776536,
+    "poi_errors": 67,
+    "zh_cer": 0.18997912317327767
+   },
+   "A2": {
+    "en_wer": 0.43575418994413406,
+    "mer": 0.30148992112182293,
+    "pier": 0.41899441340782123,
+    "poi_errors": 75,
+    "zh_cer": 0.27348643006263046
+   },
+   "B0_AUTO": {
+    "en_wer": 0.3575418994413408,
+    "mer": 0.2988606485539001,
+    "pier": 0.3407821229050279,
+    "poi_errors": 61,
+    "zh_cer": 0.2849686847599165
+   },
+   "B0_FORCED": {
+    "en_wer": 0.44692737430167595,
+    "mer": 0.31200701139351444,
+    "pier": 0.4301675977653631,
+    "poi_errors": 77,
+    "zh_cer": 0.2839248434237996
+   }
+  },
+  "safety": {
+   "A1": {
+    "EN_ret": true,
+    "MER": true,
+    "ZH_CER": true,
+    "ZH_ret": true,
+    "caps": true,
+    "corruption": true,
+    "outside": true,
+    "severe": false
+   },
+   "A2": {
+    "EN_ret": true,
+    "MER": true,
+    "ZH_CER": true,
+    "ZH_ret": true,
+    "caps": true,
+    "corruption": true,
+    "outside": true,
+    "severe": true
+   }
+  },
+  "useful": {
+   "A1": true,
+   "A2": true
+  }
+ },
+ "labels": {
+  "A1": "TTA0_EM_CONFIRMATION_BIAS",
+  "A2": "TTA0_AC_VIABLE"
+ },
+ "r_label": "P2_TTA0_R_OBJECTIVE_SELECTED",
+ "schema": "p2_tta0_r_post_audit_v1",
+ "selected": "A2",
+ "verdict": "P2_TTA0_R_AUDIT: PASS"
+}

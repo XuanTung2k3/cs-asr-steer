@@ -72,3 +72,12 @@ def test_r_gate_runtime_code_scope_excludes_tests_only():
     assert {"experiments/inference_cf_p2tta0.py", "src/csasr/inference_cf/episodic_tta.py", "experiments/inference_cf_cached.py"} <= set(runtime)
     for p in runtime:
         assert "sha256:" + hashlib.sha256(Path(p).read_bytes()).hexdigest() == man["sources"][p], p
+
+
+def test_repaired_post_audit_source_scope_matches_gate():
+    """R post-audit attempt 1 (preserved) failed sources_at_commit only on the post-run-extended TTA0 test file; in
+    repaired mode current bytes may differ only for post-run analysis/audit extensions and tests, and every manifest
+    source must still equal its blob at the run's manifest commit."""
+    src = Path("experiments/inference_cf_p2tta0_audit.py").read_text()
+    assert 'p.endswith(("_analyze.py", "_audit.py")) or p.startswith("tests/")' in src
+    assert '"sha256:" + (blob_sha(m["git_commit"], p) or "") == h and' in src

@@ -277,7 +277,7 @@ def cmd_post(args) -> dict:
     checks = {"manifest_self": m["manifest_hash"] == canon_digest({k: v for k, v in m.items() if k != "manifest_hash"}),
               "sources_at_commit": all("sha256:" + (blob_sha(m["git_commit"], p) or "") == h and
                                        (fhash(ROOT / p) == h or (getattr(args, "rel_grad_tol", None) is not None
-                                                                  and p.endswith(("_analyze.py", "_audit.py"))))
+                                                                  and (p.endswith(("_analyze.py", "_audit.py")) or p.startswith("tests/"))))
                                        for p, h in m["sources"].items()),
               "analysis_manifest": ana["manifest_hash"] == m["manifest_hash"],
               "panel": sha(ROOT / PANEL) == c["panel"]["byte_sha256"] == m["panel_sha256"].split(":")[-1] and m["ids"] == c["panel"]["ids"],

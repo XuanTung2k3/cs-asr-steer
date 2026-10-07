@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-PATH0 (2026-10-07): terminal `P2_PATH0_ASYMMETRIC`
+# Current separate inference-time ticket — P2-PATH1 (2026-10-07): terminal `P2_PATH1_MIXED`
+
+Freeze `5a159f2`; `PASS_TO_P2_PATH1` (`cea9410`); manifest `30a6dfb`; Slurm 58011 (43 s); seal `2bf92bc` before references;
+`P2_PATH1_AUDIT: PASS` (primary + full; one mechanical auditor crash fixed with test, no output change). Clean 2x2 state x branch
+factorial (fresh state-owned caches): T0A (AUTO token then theta0) passes inherited INDUCE_1 (I 0.354), A4A 0.771, Delta_state +0.417
+(U0102/U2004 amplified, U0029 boundary). CONSENSUS_REJECTS_AUTO PASS (B0 chosen 7/7 U, 6/6 strict). ASR_STATE_ALIGNMENT MIXED (ZH +6
+theta0 vs +10 A4; full POI gain already from the token). Report `docs/inference_cf/P2_PATH1_REPORT.md`. STOP; next class: separately
+frozen guarded-switch diagnostic (branch adjudication + temporary A4 rollback). Core v6 unchanged.
+
+<!-- superseded header (P2-PATH0 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH0 (2026-10-07): terminal `P2_PATH0_ASYMMETRIC`
 
 Freeze `fc3602d`; `PASS_TO_P2_PATH0` (`ce9ff03`); manifest `a15a8c8`; Slurm 58004 (45 s); output seal `ca4a92e` before references;
 `P2_PATH0_AUDIT: PASS` (primary + full). A4 reconstructed exactly 12/12, SELF==FREE 12/12. INDUCE_1/3 pass (pooled 0.77/0.875: forcing
@@ -669,3 +679,9 @@ One GPU job (58004). Exposed development only; new human decision required.
 ## P2-PATH1 pre-outcome freeze
 
 Next separate exposed-development diagnostic: P2-PATH1 pre-outcome spec/config/fingerprinted sites frozen only. New theta0-A counterfactual separates prefix from persistent A4 state; exact parent criterion and reproduction required. Fixed3-content-token consensus score is secondary only. PASS_TO_P2_PATH1 before later run; no scientific outcomes here. Core v6 unchanged.
+
+## P2-PATH1 result (2026-10-07) — terminal: `P2_PATH1_MIXED`
+
+AUTO-token history alone establishes the basin on this cohort; persistent A4 state amplifies it in some rows (required only for U2004).
+Short-horizon theta0/A4 consensus rejects the AUTO branch at all U sites. One GPU job (58011). Exposed development only.
+

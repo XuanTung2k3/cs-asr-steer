@@ -642,3 +642,13 @@ P2-PATH0 pre-outcome design frozen: exact12 A3/A4 D rows,5 rescue/7 induction, f
 ## P2-PATH1 pre-outcome freeze
 
 P2-PATH1 design frozen after PATH0 ASYMMETRIC: U7 state×first-token factorial (six suffix-eligible), exact inherited INDUCE1, fresh same-state caches; fixed H=3 consensus scoring on PATH0 U7/C5. No outcomes in design session. One job≤30min later; see docs/inference_cf/P2_PATH1_SPEC.md. Historical A2/A3/A4/PATH0 unchanged.
+
+## P2-PATH1 — executed (2026-10-07): `P2_PATH1_MIXED`
+
+| Stage | Status |
+|---|---|
+| Implementation + `PASS_TO_P2_PATH1` | DONE (`cea9410`) |
+| Run (Slurm 58011) + reference-free seal | DONE (`2bf92bc`) |
+| Secondary + `P2_PATH1_AUDIT: PASS` | DONE: MIXED; CONSENSUS_REJECTS_AUTO PASS; ASR_STATE_ALIGNMENT MIXED |
+| Guarded-switch controller / any follow-on | NOT RUN; new human decision required |
+

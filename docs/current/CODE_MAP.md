@@ -364,3 +364,11 @@ P2-PATH0 design-only: docs/inference_cf/P2_PATH0_SPEC.md, P2_PATH0_CODEX_DESIGN.
 ## P2-PATH1 pre-outcome freeze
 
 P2-PATH1 design: docs/inference_cf/P2_PATH1_SPEC.md, P2_PATH1_CODEX_DESIGN.md, P2_PATH1_SITES.json; configs/inference_cf/p2_path1.json. Reuse unchanged path_decode clamp/streams, cached.Branch, A4 reconstruction/reset and canonical evaluators. Additive state-owned score/factorial runner/auditor/tests not yet implemented.
+
+## P2-PATH1 (2026-10-07; executed, terminal `P2_PATH1_MIXED`)
+
+`src/csasr/inference_cf/branch_adjudication.py` (state-owned fresh-cache H=3 scoring at absolute indices, owned_clamp LN-hash lock,
+0.5/0.5 consensus tie->B), `experiments/inference_cf_p2path1.py` (prepare/manifest/run/seal), `inference_cf_p2path1_analyze.py`
+(reference-free primary; guarded secondary + ASR_STATE_ALIGNMENT), `inference_cf_p2path1_audit.py` (independent prerun/post),
+`slurm/inference_cf_p2path1.sbatch`, `tests/test_inference_cf_p2path1.py`. Outputs `results/inference_cf/p2path1/`.
+

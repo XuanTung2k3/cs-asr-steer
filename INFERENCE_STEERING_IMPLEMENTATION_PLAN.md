@@ -690,3 +690,15 @@ Frozen intended unchanged G1 transfer to exact historical A2 on fixed100; no run
 ## P2-PATH4-R1 — authorized EOS-boundary extension
 
 Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.
+
+## P2-PATH4-R1 — executed (2026-10-07): `P2_PATH4_OVERCONSERVATIVE`
+
+| Stage | Status |
+|---|---|
+| Revision-0 freeze | BLOCKED_PRE_RUN_EOS_FIRST (`29661e9`, preserved) |
+| R1 amendment + freeze audit | DONE (`490ec20`, `PASS_TO_P2_PATH4_R1` freeze scope) |
+| Implementation + runnable `PASS_TO_P2_PATH4_R1` | DONE (`bd5db02`, `316b727`) |
+| Manifest + run (Slurm 58035) | DONE (`c57936a`; all-100 A2 barrier exact, then R1 G1) |
+| Reference-free seal + primary audit | DONE (`4781605`, `fcf000f`) |
+| Secondary + `P2_PATH4_AUDIT: PASS` | DONE: safety/rescue pass; benefit retention fails (0.724, PIER +0.0115); breadth fails |
+| Any EOS-boundary redesign | NOT RUN; needs a separately frozen contract and human decision |

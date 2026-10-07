@@ -408,3 +408,13 @@ Design artifacts: docs/inference_cf/P2_PATH4_SPEC.md, P2_PATH4_CODEX_DESIGN.md, 
 ## P2-PATH4-R1 — authorized EOS-boundary extension
 
 Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.
+
+## P2-PATH4-R1 (2026-10-07; executed)
+
+Additive: `experiments/inference_cf_p2path4.py` (prepare: fixed100/seven token-only partitions/first divergences/fingerprints and sealed
+plan; manifest; run: two resident instances, all-100 A2 reconstruction barrier via unchanged `inference_cf_p2tta0.run_objective`, then
+`online_g1_r1` (one logical `lockstep_detect`; CONTENT_G1 -> original PATH3 `online_g1`; EOS_BOUNDARY -> `eos_boundary.score_boundary` +
+`execute_boundary`), engineering-only direct-original comparator; seal), `inference_cf_p2path4_analyze.py` (reference-free primary incl.
+EOS-boundary diagnostics; guarded secondary with PATH4 gates/precedence), `inference_cf_p2path4_audit.py` (independent runnable prerun /
+post), `slurm/inference_cf_p2path4.sbatch`, `tests/test_inference_cf_p2path4.py`. Outputs `results/inference_cf/p2path4/` (rows by
+canonical index 000..099). Report `docs/inference_cf/P2_PATH4_REPORT.md`.

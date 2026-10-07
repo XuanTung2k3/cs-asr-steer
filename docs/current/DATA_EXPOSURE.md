@@ -403,3 +403,12 @@ Reference-free inspection only: existing fixed100 teacher/output content IDs/ter
 ## P2-PATH4-R1 — authorized EOS-boundary extension
 
 Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.
+
+## P2-PATH4-R1 exposure (2026-10-07)
+
+Exactly the historical fixed100 `D-dev-select` panel (100 utterances, 20 dialogues), already historical development data (TTA1-exposed);
+no fresh validation and no new split or role. DEV24 was already used in the A3/A4/PATH diagnostics; NOVEL76 (incl. the 7 A2_DELTA rows
+outside DEV24) was not used in that chain but is not fresh validation. Slurm 58035 reconstructed A2 and ran A2+G1 (R1) on all 100 rows.
+References for PATH4 outcomes were opened only after the reference-free output seal was pushed and the independent primary-phase audit
+passed. B0/AUTO/A2 outputs and sealed PATH3 A4+G1 (display only) were reused, not rerun. No D-dev-confirm, D-test, router-calib (new role),
+full300, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.

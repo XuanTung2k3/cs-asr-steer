@@ -1,4 +1,15 @@
-# Current separate inference-time ticket — P2-PATH3 (2026-10-07): terminal `P2_PATH3_SIGNAL_CONCENTRATED`
+# Current separate inference-time ticket — P2-PATH4-R1 (2026-10-07): terminal `P2_PATH4_OVERCONSERVATIVE`
+
+Revision `PATH4_R1_EOS_BOUNDARY_V1` (freeze `490ec20`; original `P2_PATH4_BLOCKED_EOS_FIRST_BRANCH` `29661e9` preserved). Runnable
+`PASS_TO_P2_PATH4_R1` (`316b727`); manifest `c57936a`; Slurm 58035 (7.5 min); seal `4781605` pushed before references;
+`P2_PATH4_AUDIT: PASS` (primary + full). All-100 A2 reconstruction exact; 14 triggers = A2_DELTA (10 CONTENT_G1 bit-identical to original
+G1, 4 EOS_BOUNDARY H=1: 2 EOS wins, 2 content wins). A2+G vs B0: safety PASS; aggregate rescue PASS (R_ZH 8 >= 5, Z_G 1108);
+**benefit retention FAIL** (I_G 21/29 = 0.724; PIER_G - PIER_A2 = +0.0115 > 0.01; POI 324 > 322); breadth also fails (NOVEL76 net -15).
+The decisive loss is one EOS-boundary theta0 win (U1004_S0_221: G = B0, +14 ZH/+10 POI vs A2). Exposed development only, NOT fresh
+validation. Report `docs/inference_cf/P2_PATH4_REPORT.md`. STOP; no EOS-rule/threshold change without a new frozen contract. Core v6 unchanged.
+
+<!-- superseded header (P2-PATH3 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH3 (2026-10-07): terminal `P2_PATH3_SIGNAL_CONCENTRATED`
 
 Freeze `5853a8d`; `PASS_TO_P2_PATH3` (`71a51a1`); manifest `cd93f3d`; Slurm 58015 (215 s, two resident instances); seal `bceb341` pushed before
 references; `P2_PATH3_AUDIT: PASS` (primary + full). PATH2 replay barrier 12/12 exact, then the remaining 88. Unchanged A4+G1 on fixed100:

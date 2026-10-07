@@ -300,3 +300,11 @@ alpha 0 = bitwise clean B, alpha 2 = E*R_B*D2 at L16 DG-02 with pre-step snapsho
 `tests/test_inference_cf_p2seq.py`. Outputs `results/inference_cf/p2seq/`. Docs `P2_SEQ_REPORT.md`,
 `P2_SEQ_TTA_HANDOFF.md` (evidence only; no TTA code exists).
 
+
+## P2-TTA0 design freeze (2026-10-07; not implemented)
+
+Spec/design/config/panel20 in `docs/inference_cf/P2_TTA0_*` and `configs/inference_cf/p2_tta0.json`.
+Reuse frozen Whisper encoder, ordinary cached Branch decoder, canonical metrics/P2-SEQ lexical
+outside accounting and20 audited pseudo baselines. Additive episodic_tta helper/runner/analysis/
+independent auditor/Slurm/tests pending. All194 decoder-LN names enumerated; fp32 masters with
+bf16 forward casts and exact reset. No steering/provider/core-contract modifications.

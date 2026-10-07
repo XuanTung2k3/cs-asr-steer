@@ -1,3 +1,12 @@
+# Current separate inference-time ticket — P2-TTA0 (2026-10-07)
+
+Pre-outcome objective viability design frozen: `P2_TTA0_SPEC.md`, `P2_TTA0_CODEX_DESIGN.md`,
+`configs/inference_cf/p2_tta0.json`, `P2_TTA0_PANEL20.json`. First saved ID/dialogue from fixed100;
+20 episodic utterances, decoder-LN-only,2 AdamW steps, A1 entropy/A2 AUTO consistency, no steering.
+P2-SEQ damage and prior local-selectivity terminals remain closed. Implementation/preaudit pending;
+no adaptation outcome/job in design session. One allocation only after pushed PASS_TO_P2_TTA0;
+no100/300/P3/fresh validation. Core v6 method unchanged.
+
 # Current separate inference-time ticket — P2-SEQ (2026-10-07): terminal `P2_SEQ_SEQUENCE_DAMAGE`
 
 Freeze `660a619`; implementation `ed9c355`; AUTO reuse proof `14a2339`; `PASS_TO_P2_SEQ` (`9cb1d75`); Slurm 57867

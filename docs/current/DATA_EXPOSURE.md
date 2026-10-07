@@ -309,3 +309,10 @@ alpha 0 and STEER alpha 2. AUTO was reused from the historical rows (not recompu
 post-hoc analysis/auditor. No new utterances, refill, full300, router-calib new role, D-dev-confirm, D-test, P3,
 transfer corpora or fresh validation. No TTA.
 
+
+## P2-TTA0 design freeze (2026-10-07)
+
+Deterministically froze first saved100-panel ID per dialogue (20 IDs); inspected meta-device model
+parameter layout and synthetic LayerNorm gradients only. No pretrained-model forward, adaptation,
+new outcome or validation-role exposure. Conditional objective screen uses existing D-dev-select20
+only; no full100/300, new router role, confirm/test/P3/transfer/fresh validation.

@@ -573,3 +573,12 @@ evidence-only fresh P2-TTA0 design, never implementation or adaptation here. P3 
 | P2-TTA0 | evidence-only handoff `docs/inference_cf/P2_SEQ_TTA_HANDOFF.md`; design NOT frozen, nothing run |
 | Full 300 / P3 | NOT RUN / HELD |
 
+
+## P2-TTA0 — pre-outcome episodic objective viability freeze (2026-10-07)
+
+After audited P2-SEQ sequence damage, local steering line stays closed. See P2_TTA0_SPEC/DESIGN,
+`configs/inference_cf/p2_tta0.json`, fixed P2_TTA0_PANEL20.json.20 first-in-panel IDs/dialogue,
+194 decoder-LN affines only, episodic reset,2 AdamW steps at1e-3, A1 Greedy-EM/A2 AUTO consistency.
+Forced-ZH final decoding; no steering, no sweeps. One allocation target<1h/hard2h, independent
+PASS_TO_P2_TTA0 and post-audit. Design only, no runner/outcome/job. At most1 viable objective
+handoff for separately frozen TTA1; no automatic100/300/P3. Core authority unchanged.

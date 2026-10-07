@@ -281,3 +281,12 @@ No LAC outcome; historical formulas/reports and core method unchanged.
 `inference_cf_p2sel_lac_analyze.py` (frozen precedence, selection artifact, LAC1 rule), `inference_cf_p2sel_lac_audit.py`
 (independent prerun/lac0/final), `slurm/inference_cf_p2sel_lac.sbatch`, `tests/test_inference_cf_p2sel_lac.py`.
 Outputs `results/inference_cf/p2sel_lac/`.
+
+## P2-SEQ design freeze (2026-10-07; not implemented)
+
+Spec/design/config: `docs/inference_cf/P2_SEQ_SPEC.md`, `P2_SEQ_CODEX_DESIGN.md`,
+`configs/inference_cf/p2_seq.json`. Reuse cached Branch/DG-02 hook, unchanged R2 E/R_B and D2
+readout, canonical metrics and fixed100 panel. Additive D2 sequence/analysis/independent-audit/
+Slurm/tests pending. Historical cached_decode remains D0; do not relabel its outputs. New S0
+matched zero-dose required; historical AUTO reuse subject to pre-outcome semantic/hash audit.
+No outcomes, core-method change, or TTA implementation.

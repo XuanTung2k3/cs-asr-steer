@@ -294,3 +294,10 @@ passes. Development-only; no router-calib new role, confirm/test/P3/transfer/fre
 LAC0 ran 180 forward-only masked-waveform counterfactuals (hard zero on the P2-SEL-T W*) on the already-exposed 180
 P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues); candidates sealed from existing unmasked logits.
 No steering, decode, LID or gradient; no router-calib/D-dev-confirm/D-test/P3/transfer data.
+
+## P2-SEQ design freeze (2026-10-07)
+
+Read existing contracts/source/reports and metadata/hash inventory of the fixed100 panel and
+historical baseline outputs only. No new mini decoding, model inference, scientific metrics or
+role exposure in this design session. Conditional execution limited to existing D-dev-select100;
+no refill/full300/router-calib new role/confirm/test/P3/transfer/fresh validation. No TTA.

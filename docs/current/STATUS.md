@@ -1,3 +1,12 @@
+# Current separate inference-time ticket — P2-SEQ (2026-10-07)
+
+Pre-outcome design freeze in `docs/inference_cf/P2_SEQ_SPEC.md`, `P2_SEQ_CODEX_DESIGN.md` and
+`configs/inference_cf/p2_seq.json`. One fixed100 sequence screen, exactly matched forced-ZH/AUTO/
+E*R_B*D2 at L16 alpha2. E/T/XA/LAC terminal labels preserved. Runner pending; no scientific job
+in this design session. Next: additive implementation, focused tests, independent PASS_TO_P2_SEQ
+and pushed resolved reuse/manifest before one GPU allocation. No300/P3/TTA/fresh validation.
+Core v6 METHOD_CONTRACT unchanged.
+
 # STATUS
 
 **Newest bounded inference-time stage (2026-10-06): P2-SEL-LAC design frozen; implementation/pre-LAC0 audit pending.** Accept terminal E ambiguous, T token-LID-not-discriminative and XA INVALID. Contract: `docs/inference_cf/P2_SEL_LAC_SPEC.md`, `P2_SEL_LAC_CODEX_DESIGN.md`, `configs/inference_cf/p2_sel_lac.json`. Unmasked candidate seal + exact T-window waveform-zero counterfactual, whole masked encoder/prefix replay; only conditional tanh(S_lex/2) precision factor. No candidate extraction/masked outcome/job in design; core method unchanged, P3 HELD.

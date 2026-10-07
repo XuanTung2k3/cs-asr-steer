@@ -553,3 +553,13 @@ scientific masked outcome or runner implementation in this design session; core 
 | LAC0 forward-only counterfactual | DONE, `P2_SEL_LAC_AUDIT: PASS (LAC0)`: not discriminative |
 | LAC1 gate screen / LAC2 mini decode | NOT RUN (stop rule) |
 | P3 | HELD |
+
+## P2-SEQ — pre-outcome sequence viability freeze (2026-10-07)
+
+After terminal E/T/XA/LAC, test existing E*R_B*D2 only on the already-frozen100 panel. See
+`docs/inference_cf/P2_SEQ_SPEC.md`, `P2_SEQ_CODEX_DESIGN.md`, `configs/inference_cf/p2_seq.json`.
+Exactly forced matched no-edit/AUTO/STEER, one allocation max3h. New matched zero-dose required;
+AUTO reused after pre-run semantic/hash audit. Development point safety/materiality rules and
+independent PASS_TO_P2_SEQ/P2_SEQ_AUDIT frozen. No scientific job or runner in design session.
+Stop after100: promising recommends separately frozen confirmation; no gain/damage recommends
+evidence-only fresh P2-TTA0 design, never implementation or adaptation here. P3 held; core unchanged.

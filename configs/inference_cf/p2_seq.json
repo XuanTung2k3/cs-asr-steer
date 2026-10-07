@@ -1,0 +1,866 @@
+{
+  "schema": "p2_seq_v1",
+  "status": "PRE_OUTCOME_DESIGN_FREEZE",
+  "base_commit": "42af08631700329d7402ad33ceedbc157a775d43",
+  "role": "already-exposed D-dev-select",
+  "spec": "docs/inference_cf/P2_SEQ_SPEC.md",
+  "design": "docs/inference_cf/P2_SEQ_CODEX_DESIGN.md",
+  "scope": "one sequence-level mini development screen, separate legacy inference-time program; core v6 method unchanged",
+  "source_sha256": {
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "results/inference_cf/p2_A_r1_L16/manifest.json": "0ed2b5cbd1822c9b7da87b915917f1633eef1daeb32ef1787348ed3af37bc4f8",
+    "results/inference_cf/p2_A_r1_L16/panel.json": "a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+    "results/inference_cf/p0_r2/manifest.json": "29228ed026db4a7df912e5d3c4d20930e325e0f837b547a631bfdc1bd49b22e1",
+    "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+    "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2.py": "45b1aefd158c6ff5b5a936b11ad37b14e65cba61030ab91f05e6d1715f49657d",
+    "experiments/inference_cf_p2_evaluate.py": "774dec71f17b00220fae524a9f787db2e03878a84b185e617909edfb76e9f851",
+    "experiments/inference_cf_p2_audit.py": "eb0f3612bd7c7c69f97b02399dc07e9c3ae13a7d6a3239094f17c817d8ad81ff",
+    "src/csasr/models/whisper.py": "24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/lss/sites.py": "d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "src/csasr/evaluation/canonical.py": "2b56f63456c2f71dc8e220a970a07525ae6f6d026a29daf9b2a695be0af20404",
+    "src/csasr/evaluation/pier.py": "33607492838ea35ba3b10463e8de0e96d419d4d5b9573ddefb7af7c4f405eacc",
+    "src/csasr/evaluation/mer.py": "ab91fe565d51dc14018dbbd9ba86f731f30c90d01fbdf279b0f5ac158aa0342d",
+    "src/csasr/evaluation/retention.py": "44b0c004ffd2fd75c5c07f3db11a22ecc8c5fa98687ef58bafcc7d23f4361dde",
+    "src/csasr/evaluation/normalization.py": "6efa741edf898c08d25e9cb8ae7db098f145c76aaa665be8ecfae88c8a6c96f1"
+  },
+  "parents": [
+    "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+    "P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE",
+    "P2_SEL_XA_INVALID",
+    "P2_SEL_LAC_NOT_DISCRIMINATIVE"
+  ],
+  "panel": {
+    "path": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "utterances": 100,
+    "dialogues": 20,
+    "per_dialogue": 5,
+    "order": "exact existing rows order; no reselection/refill/drop",
+    "ids": [
+      "ZH-CN_U0011_S0_111",
+      "ZH-CN_U0011_S0_54",
+      "ZH-CN_U0012_S0_103",
+      "ZH-CN_U0011_S0_503",
+      "ZH-CN_U0011_S0_103",
+      "ZH-CN_U0022_S0_91",
+      "ZH-CN_U0021_S0_225",
+      "ZH-CN_U0022_S0_228",
+      "ZH-CN_U0022_S0_305",
+      "ZH-CN_U0021_S0_513",
+      "ZH-CN_U0023_S0_111",
+      "ZH-CN_U0023_S0_666",
+      "ZH-CN_U0024_S0_283",
+      "ZH-CN_U0023_S0_87",
+      "ZH-CN_U0023_S0_664",
+      "ZH-CN_U0027_S0_116",
+      "ZH-CN_U0028_S0_37",
+      "ZH-CN_U0027_S0_163",
+      "ZH-CN_U0027_S0_144",
+      "ZH-CN_U0028_S0_120",
+      "ZH-CN_U0029_S0_472",
+      "ZH-CN_U0029_S0_204",
+      "ZH-CN_U0029_S0_456",
+      "ZH-CN_U0030_S0_81",
+      "ZH-CN_U0029_S0_651",
+      "ZH-CN_U0039_S0_380",
+      "ZH-CN_U0040_S0_141",
+      "ZH-CN_U0040_S0_105",
+      "ZH-CN_U0039_S0_315",
+      "ZH-CN_U0039_S0_80",
+      "ZH-CN_U0085_S0_185",
+      "ZH-CN_U0086_S0_185",
+      "ZH-CN_U0086_S0_2",
+      "ZH-CN_U0086_S0_222",
+      "ZH-CN_U0086_S0_183",
+      "ZH-CN_U0091_S0_196",
+      "ZH-CN_U0091_S0_62",
+      "ZH-CN_U0091_S0_68",
+      "ZH-CN_U0091_S0_241",
+      "ZH-CN_U0092_S0_101",
+      "ZH-CN_U0102_S0_80",
+      "ZH-CN_U0101_S0_71",
+      "ZH-CN_U0102_S0_64",
+      "ZH-CN_U0101_S0_190",
+      "ZH-CN_U0102_S0_44",
+      "ZH-CN_U1001_S0_402",
+      "ZH-CN_U1002_S0_488",
+      "ZH-CN_U1001_S0_482",
+      "ZH-CN_U1002_S0_284",
+      "ZH-CN_U1001_S0_44",
+      "ZH-CN_U1003_S0_141",
+      "ZH-CN_U1004_S0_221",
+      "ZH-CN_U1003_S0_61",
+      "ZH-CN_U1003_S0_63",
+      "ZH-CN_U1003_S0_94",
+      "ZH-CN_U1022_S0_71",
+      "ZH-CN_U1022_S0_66",
+      "ZH-CN_U1021_S0_195",
+      "ZH-CN_U1021_S0_68",
+      "ZH-CN_U1021_S0_173",
+      "ZH-CN_U1027_S0_199",
+      "ZH-CN_U1028_S0_184",
+      "ZH-CN_U1028_S0_38",
+      "ZH-CN_U1028_S0_40",
+      "ZH-CN_U1028_S0_176",
+      "ZH-CN_U1034_S0_53",
+      "ZH-CN_U1033_S0_199",
+      "ZH-CN_U1033_S0_191",
+      "ZH-CN_U1034_S0_177",
+      "ZH-CN_U1034_S0_173",
+      "ZH-CN_U1064_S0_110",
+      "ZH-CN_U1064_S0_26",
+      "ZH-CN_U1064_S0_95",
+      "ZH-CN_U1064_S0_100",
+      "ZH-CN_U1063_S0_54",
+      "ZH-CN_U1076_S0_24",
+      "ZH-CN_U1076_S0_35",
+      "ZH-CN_U1076_S0_154",
+      "ZH-CN_U1076_S0_178",
+      "ZH-CN_U1076_S0_26",
+      "ZH-CN_U1079_S0_23",
+      "ZH-CN_U1080_S0_43",
+      "ZH-CN_U1080_S0_64",
+      "ZH-CN_U1079_S0_54",
+      "ZH-CN_U1079_S0_68",
+      "ZH-CN_U1081_S0_131",
+      "ZH-CN_U1081_S0_76",
+      "ZH-CN_U1082_S0_67",
+      "ZH-CN_U1081_S0_172",
+      "ZH-CN_U1081_S0_65",
+      "ZH-CN_U2004_S0_266",
+      "ZH-CN_U2004_S0_154",
+      "ZH-CN_U2004_S0_150",
+      "ZH-CN_U2004_S0_104",
+      "ZH-CN_U2004_S0_287",
+      "ZH-CN_U2012_S0_24",
+      "ZH-CN_U2011_S0_22",
+      "ZH-CN_U2011_S0_99",
+      "ZH-CN_U2011_S0_36",
+      "ZH-CN_U2011_S0_108"
+    ]
+  },
+  "systems": [
+    "S0_B0_FORCED",
+    "S1_B0_AUTO",
+    "S2_STEER"
+  ],
+  "frozen": {
+    "model_config": "configs/model/whisper_large_v3.yaml",
+    "model_files_anchor": "results/inference_cf/p2dir/exp1_run1/manifest.json:model.files",
+    "weights_sha256": "a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "dtype": "bfloat16",
+    "attention": "eager",
+    "model_eval": true,
+    "batch_size": 1,
+    "greedy": true,
+    "num_beams": 1,
+    "do_sample": false,
+    "max_new_tokens": 200,
+    "cB": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "cE": [
+      50258,
+      50259,
+      50360,
+      50364
+    ],
+    "language_ids": [
+      50259,
+      50260
+    ],
+    "forced_prefix_length": 4,
+    "EOS": "tokenizer.eos_token_id",
+    "argmax": "core_p1.processed_argmax; first/lowest-ID tie; never topk choice",
+    "suppression": "generation_config.suppress_tokens every step, begin_suppress_tokens at step0 only, same cached._processed; no other new processors",
+    "partition": "whisper_han_ascii_v1",
+    "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+    "direction": "p2dir_readout_v1 unchanged",
+    "objective": "log(P_E+1e-12)-log(P_M+1e-12), generate-suppressed float32 probabilities, temperature1",
+    "gradient": "unchanged zero leaf at B DG-02; autograd.grad; float64 tangent geometry; float32 direction; parameter and scratch cache isolation",
+    "layer": 16,
+    "site": "DG-02 decoder post-cross-attention residual, pre-FFN",
+    "gate": "E*R_B",
+    "R_B": "core_r2.conflict_from_logits on RAW B logits, max(0,P_M-P_E)",
+    "E": "core_r2.local_support, 100-language native_lid EN/ZH masses, unchanged zero-waveform null correction/epsilon1e-12",
+    "localizer": "unchanged current-query frozen alignment-head max_attention_window, 50 frames/1s, earliest tie",
+    "alpha": 2,
+    "phi": "identity",
+    "norm_preserve": true,
+    "depth_rescale": false,
+    "prefix_edit": false
+  },
+  "decode": {
+    "S0": "same sequence driver as S2, alpha=0; B/E/S branch topology and S attention/hook/argmax/cache path identical; no D2 calls needed at zero dose",
+    "S2": "B/E/S independent caches on same emitted S content; B/E unsteered, S steered; no forced reference tokens",
+    "D2_lazy": "at t>=1 snapshot B PRE-step cache with clone_scratch before clean B step; after frozen gate evaluation call readout_direction on snapshot only for eligible positive-dose step; verify scratch site/logits bitwise against clean B; discard snapshot each step",
+    "first_query": "absolute query3 at t0: no edit/D2; first eligible query4 at t1",
+    "S1_auto": "exact historical model.generate(**batch_model_inputs,task=transcribe,language=None,do_sample=False,num_beams=1,max_new_tokens=200,condition_on_prev_tokens=False); library defaults unchanged",
+    "auto_postprocess": "historical first-EOS truncation then tokenizer.decode(skip_special_tokens=True); preserve raw returned IDs and language/prompt IDs, classify termination by EOS presence, do not retokenize text",
+    "cap": "forced systems: 200 emitted content tokens without EOS; AUTO: historical emitted content result/available EOS metadata; cached ambiguous termination at 200 without raw EOS evidence conservatively cap",
+    "fallback": "existing structural/D2 tiny/nonfinite fallback => no edit, logged; site/logit/cache/parameter leakage mismatch INVALID; no alternate direction or repair"
+  },
+  "reuse": {
+    "historical_dir": "results/inference_cf/p2_A_r1_L16",
+    "rows": [
+      {
+        "utterance_id": "ZH-CN_U0011_S0_103",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/000.json",
+        "sha256": "2021a1a8c2517811efb7fb582482bccb55cfb5680fffb09a1c014fbe659ffe19"
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_111",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/001.json",
+        "sha256": "febe425f40a6590596abbd28c3b132bfbf2fd9f34743b23350a21db10b25bb5b"
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_503",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/005.json",
+        "sha256": "c6fef3c6bab7cfe18eb0fb3713e73fe5fe36baea4ba38949245bd089837cfbcf"
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_54",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/006.json",
+        "sha256": "39a2f6782c68fc72e527c01208a02d3bac9062d4dacf1395d7a9b3075160f3bc"
+      },
+      {
+        "utterance_id": "ZH-CN_U0012_S0_103",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/011.json",
+        "sha256": "4f7892c8f30f83aa5412ba76b99d488bdc448fc53d68a6addcda29bc88c397f2"
+      },
+      {
+        "utterance_id": "ZH-CN_U0021_S0_225",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/016.json",
+        "sha256": "db1a2d63892b3e8833fc189f01204de4d453c1a0da95de76f4c768545c7168fc"
+      },
+      {
+        "utterance_id": "ZH-CN_U0021_S0_513",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/019.json",
+        "sha256": "4f8e538e87e8751b2fddf23fdc3b6c510f5079c74ab1574d1d387227b0793e5f"
+      },
+      {
+        "utterance_id": "ZH-CN_U0022_S0_228",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/022.json",
+        "sha256": "aa6b27b535fdad7cbf52071b1cdbba0a6f69994fe3cf042df348c015e6675ace"
+      },
+      {
+        "utterance_id": "ZH-CN_U0022_S0_305",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/025.json",
+        "sha256": "0a3dc433556415c76f436d28f5c67515a659a1a872f259854b56304d0c73b67b"
+      },
+      {
+        "utterance_id": "ZH-CN_U0022_S0_91",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/029.json",
+        "sha256": "7b9ff149f2578080b08dc56fb87e39841c0e5d677210e2b0d4990443fee83a82"
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_111",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/032.json",
+        "sha256": "e60cf929f1929e05a7c4acf4b9b0f1edba1189ec7477d153160b81def3a9c170"
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_664",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/037.json",
+        "sha256": "920d714e44034a8456a7c0beba7509de4cf53e17e24a7ee6e40a61f3d6a9d1cc"
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_666",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/038.json",
+        "sha256": "18eafa258e95ece4c160d1ac1ddfb9cba4201c50acd5953f446f17732780badc"
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_87",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/041.json",
+        "sha256": "93aab1e0564630a266f96ec5c998aefef20a8372ad6869c036e5251bdc8b182a"
+      },
+      {
+        "utterance_id": "ZH-CN_U0024_S0_283",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/043.json",
+        "sha256": "157d237293ba21de0552abf3b81e1a0f78a0579f4dc53c65f6086210e1fb1a3f"
+      },
+      {
+        "utterance_id": "ZH-CN_U0027_S0_116",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/046.json",
+        "sha256": "af415cfd437fe18c3da5240539f935e5c71b6caf051b4d850b867ecc9a32a664"
+      },
+      {
+        "utterance_id": "ZH-CN_U0027_S0_144",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/047.json",
+        "sha256": "6d9c5d93b405a0565b88640ec208a651854049593a9a121e7f7f0e562ab545a4"
+      },
+      {
+        "utterance_id": "ZH-CN_U0027_S0_163",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/049.json",
+        "sha256": "14e9620934d01aa07be620b862a8617762a5e9c141af32b66a649dbe29541821"
+      },
+      {
+        "utterance_id": "ZH-CN_U0028_S0_120",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/054.json",
+        "sha256": "5b9f5765b92c81b1ca6a4479856491f51c682ad3538456dfa74163afaba76818"
+      },
+      {
+        "utterance_id": "ZH-CN_U0028_S0_37",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/059.json",
+        "sha256": "6ba9dacad12cc13c7e8361dfd947266f253523939d927d118b00509504ed2d38"
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_204",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/062.json",
+        "sha256": "9ab0a33d906afac23325d95a526be8d671a7557daa78e5c50669d3a96036adc6"
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_456",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/066.json",
+        "sha256": "74d53b433fe0d77dd42d994a6becd5bc8789eae73aff97ade1b24d3973c108b2"
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_472",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/067.json",
+        "sha256": "cfeb5156c582f612814171118492acb4f2b5d66634d340f9f6f59ffac93eb68f"
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_651",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/068.json",
+        "sha256": "4bb22070837ba614a6fcc70ea5118ef6fddf1b3c0139bb5ac3d385daf95e50e1"
+      },
+      {
+        "utterance_id": "ZH-CN_U0030_S0_81",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/074.json",
+        "sha256": "44e9792ded3eab47631e1c8f81242b15a5cd21e3f479f50c019da2e7b3c2e6b7"
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_315",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/076.json",
+        "sha256": "5d445b582b99365f75c044d82c75b810bdd634e878a68039a372432ef1a89bad"
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_380",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/077.json",
+        "sha256": "0da4bf3e34622211abfe84b2770af3ebeb7d86a622d64286f3db925c0652f0e5"
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_80",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/079.json",
+        "sha256": "7d6dd135bec6b00300845e5ff5644a9825111188bde98fcfb724ddb81f6c57ba"
+      },
+      {
+        "utterance_id": "ZH-CN_U0040_S0_105",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/081.json",
+        "sha256": "2b66266522c2f0082b6d40e0678dc06ea90b9f5f401ebb99d26d3954b5767d33"
+      },
+      {
+        "utterance_id": "ZH-CN_U0040_S0_141",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/082.json",
+        "sha256": "ced1509e80138bfbadb0aad6be2530e4428301d09f44c80f2c999147549ecb42"
+      },
+      {
+        "utterance_id": "ZH-CN_U0085_S0_185",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/094.json",
+        "sha256": "1e333f9d45940ffe32daee4a5ccf6d365f7e04aaed9ec7aeba61357db1f311ef"
+      },
+      {
+        "utterance_id": "ZH-CN_U0086_S0_183",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/097.json",
+        "sha256": "3aeaf8388a11fc405dbef3872c4735b8b24a6b9f30cbcd634ef79137e5ed917f"
+      },
+      {
+        "utterance_id": "ZH-CN_U0086_S0_185",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/098.json",
+        "sha256": "756b0019e48373bf9358e9d70ebb78b150a66a97563a525a3c0f709a03cff010"
+      },
+      {
+        "utterance_id": "ZH-CN_U0086_S0_2",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/099.json",
+        "sha256": "3a75596f92a080fa902b363304ab5ec89ce59b43b38603956998a7e5f3ce4a58"
+      },
+      {
+        "utterance_id": "ZH-CN_U0086_S0_222",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/101.json",
+        "sha256": "0a84e8d53fb7d054777acfcc01bf21ef6551436a8c5f2710c1935aefd98b5add"
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_196",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/106.json",
+        "sha256": "b2f07b13769fc37de54fd083a7d0504743f7f71a40a8a7e9ab31b2a13e61c170"
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_241",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/110.json",
+        "sha256": "6d0f2749a236cae2988164618355b0a0f24ad6744a33cbaa699455950b35073f"
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_62",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/111.json",
+        "sha256": "5527eeb1e262be11bd1cf887b8412d33c56e3c1eec685713fefc771eedae165a"
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_68",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/112.json",
+        "sha256": "3b9345e4f6991b9978147c86ef6c29a40a1c19bd804a168ac21f71c8003295ec"
+      },
+      {
+        "utterance_id": "ZH-CN_U0092_S0_101",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/115.json",
+        "sha256": "16a5fa15c91cc5d8959d3f98ecaea8d6f98cf526905ef18613d2bb67c44b1bb8"
+      },
+      {
+        "utterance_id": "ZH-CN_U0101_S0_190",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/122.json",
+        "sha256": "4c8c8e2f0b4c53da2854fb646508da81641a1ba3d763aca4a63ac8842ae64d2c"
+      },
+      {
+        "utterance_id": "ZH-CN_U0101_S0_71",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/128.json",
+        "sha256": "3b1aeb073f516f19d5ad22fc2298b4f465aac17253852bdb00c2c74175681247"
+      },
+      {
+        "utterance_id": "ZH-CN_U0102_S0_44",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/130.json",
+        "sha256": "060e06318069faf3dfc21fba26cd05128575b5e70778c12cf4393390fb64bd6d"
+      },
+      {
+        "utterance_id": "ZH-CN_U0102_S0_64",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/132.json",
+        "sha256": "179e146bef8f7e67a73b51a25a7d0bbce32d31b928b9f918ef1a345efff99e16"
+      },
+      {
+        "utterance_id": "ZH-CN_U0102_S0_80",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/134.json",
+        "sha256": "f7360dc59fa185869fae067870dcdf7ed677695aa01d09a2ca4c9f9bc060ab9f"
+      },
+      {
+        "utterance_id": "ZH-CN_U1001_S0_402",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/140.json",
+        "sha256": "178d4a08daea9ab42d955eae2c2e27ee11ed16219721aff79fecc17b90d1ab25"
+      },
+      {
+        "utterance_id": "ZH-CN_U1001_S0_44",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/142.json",
+        "sha256": "d34beffe9455b34ff8c59ba2019fd294baf634d3f8464758a775d11adc64f01e"
+      },
+      {
+        "utterance_id": "ZH-CN_U1001_S0_482",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/144.json",
+        "sha256": "72b77237d57b612dfb4b6b1dbdad572a31a5cff4aa8eb5f9be4e4eaf1c5396a0"
+      },
+      {
+        "utterance_id": "ZH-CN_U1002_S0_284",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/146.json",
+        "sha256": "eef702c236320cc341087b71d74ce0cf3cc499cd3eb38aa615c9aa89081c6972"
+      },
+      {
+        "utterance_id": "ZH-CN_U1002_S0_488",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/149.json",
+        "sha256": "93c461977c69c62a7367b2c846dc9abde9fa7421061da2c30e3fda5bd75435ce"
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_141",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/152.json",
+        "sha256": "7dc6217fcadd60b290e52da68e0caf43812c8fd3d23db2e6206926663cdb8f35"
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_61",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/157.json",
+        "sha256": "e26a9dcbea4588900dc6f01bae06b8954184bd3bf1a5c7c44d77b7baf811e41f"
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_63",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/158.json",
+        "sha256": "f7cfcc97ce232057f0d2be3f69af519dbc8b1e7058aee0c9143c09588eff46b7"
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_94",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/159.json",
+        "sha256": "88784bc6c3925ff8499540fc8fb2fb5ca0ba1b4d4a944f493daf358d1ffebb4f"
+      },
+      {
+        "utterance_id": "ZH-CN_U1004_S0_221",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/160.json",
+        "sha256": "cf1c2eb4aec6f11f3d86b15028fb8fb63cfeaba77fa9c396d68b8db8eed07fdd"
+      },
+      {
+        "utterance_id": "ZH-CN_U1021_S0_173",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/165.json",
+        "sha256": "27d62acb52d30fef392f3a0230c0baa6a734f5809040a969a22f6542dcc969ad"
+      },
+      {
+        "utterance_id": "ZH-CN_U1021_S0_195",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/166.json",
+        "sha256": "fec83011f18609b49e259a3e59ac978bba4d09fb952f3a81d539f3f88a4b2391"
+      },
+      {
+        "utterance_id": "ZH-CN_U1021_S0_68",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/172.json",
+        "sha256": "0c2831a67045df7153e0efc2796702b30fb4745fd8f3383ffa3c79c0b62f56ab"
+      },
+      {
+        "utterance_id": "ZH-CN_U1022_S0_66",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/178.json",
+        "sha256": "11d8d2a9d13ec682ca4fac7210db679d17cd5ae30cde1991452ba88012db1b5c"
+      },
+      {
+        "utterance_id": "ZH-CN_U1022_S0_71",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/179.json",
+        "sha256": "c945edef5b3c6537e556e7709147518f3f333b80d9b63c31bf1fd071e539f3ca"
+      },
+      {
+        "utterance_id": "ZH-CN_U1027_S0_199",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/180.json",
+        "sha256": "0e29777fbb1cd83644748d4e0bdc8a69ffc210e3c33eb128c188d1cfa6f9056d"
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_176",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/189.json",
+        "sha256": "1b2514ad89c6d5dee4ab13ee1b56886d7c26fe5531a78c844c581250e849d12e"
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_184",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/190.json",
+        "sha256": "377462c1a03b738a5366fa87c96f25910c0345bc854d149d4b8271951b261c89"
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_38",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/192.json",
+        "sha256": "7f092e99f76eca2ced6e2a239c52e357f2e0aff4d6362df4d1e1d61d153fcb7e"
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_40",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/193.json",
+        "sha256": "b9baca56bec4c4bccb0bc0a66ef3ce391e4043d02e60e61535f04a9e1f876cd3"
+      },
+      {
+        "utterance_id": "ZH-CN_U1033_S0_191",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/196.json",
+        "sha256": "7e8ed8684dad149e6f5d19991f5ce43f6390099ddd11c74a684378c8ec37dccc"
+      },
+      {
+        "utterance_id": "ZH-CN_U1033_S0_199",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/197.json",
+        "sha256": "e08958b7f4b8b0a74120343ef3a58ad48876f4023fb265dd95fb31ae8615b628"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_173",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/201.json",
+        "sha256": "bbd92d33524317a89b13c04bd207caa7764bc79234886d1f909b577f19da0770"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_177",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/202.json",
+        "sha256": "f9981e545fd41b9fcab56fd264d94c635c4cb80b853484eb26f9c0b109b43f0a"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_53",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/206.json",
+        "sha256": "f83b96cb905a28a50c5375ce8d7a46588cd5a5414fd5e5757ff87c12d575e6d3"
+      },
+      {
+        "utterance_id": "ZH-CN_U1063_S0_54",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/214.json",
+        "sha256": "38065df09ddee857eccecffb41ef9a64f7d6d98a4ef77a12a7e3e59e4a5964db"
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_100",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/217.json",
+        "sha256": "1f7b5f18fcedcfab79df53ecf2bb6652541a6b48e05bd0f2334d054197e68197"
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_110",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/219.json",
+        "sha256": "061b6fe5a7eecfd2eb3b57431daf988ec8e7f3525383808fa6e32d2a72b11a7a"
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_26",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/220.json",
+        "sha256": "c841f689d62cb9496e3c618752ed5b4cee539439998c3018cc08908557384717"
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_95",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/224.json",
+        "sha256": "70f2f6b26c27a0de7c3954702ff50859cd433db5c9b7fa753ef5fee7a119a3b3"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_154",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/229.json",
+        "sha256": "5e693b3b52153ddebd4f9de1104736d2ab651ecab7612c821d79e17911093283"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_178",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/232.json",
+        "sha256": "a8161ca152bc3575a04684e29b501d15c346d4a5f5ac26d45cf249281390e423"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_24",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/234.json",
+        "sha256": "424e6f8da798fc26eba4c3827abfd3beb0ab0bf314a23b4cd02fa34a22d155ee"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_26",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/236.json",
+        "sha256": "ec45bf27d56b0b215d8cc75866352a7a8f0eb2ffa0228a4880d710129005c1ff"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_35",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/238.json",
+        "sha256": "3ead5db619f8cf190b00268773f0bb72bb28e3cab3d3e83bd7b324d08d19fb81"
+      },
+      {
+        "utterance_id": "ZH-CN_U1079_S0_23",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/241.json",
+        "sha256": "e6e79005ca2224f72eb508d592b6994d601b011442ae8d273d4833a3156a79a2"
+      },
+      {
+        "utterance_id": "ZH-CN_U1079_S0_54",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/242.json",
+        "sha256": "b05b2071b3164dddd872589ebe8bc70fcec703a758a6d2ca13dad46fa04e08e1"
+      },
+      {
+        "utterance_id": "ZH-CN_U1079_S0_68",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/244.json",
+        "sha256": "56b9ff035ecc232d559f5f1fd1ef24ca0a76fe3f23f051bdd59513c8654bf0fc"
+      },
+      {
+        "utterance_id": "ZH-CN_U1080_S0_43",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/250.json",
+        "sha256": "43ccf9d8949de9ddd6817e26418792d0a997f24cbe1e3de9c45fbdf2a5531821"
+      },
+      {
+        "utterance_id": "ZH-CN_U1080_S0_64",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/252.json",
+        "sha256": "65120fa7a4890ea4aca159440e5908e8bcf3f8fa531615d8a89615bbf0c0640b"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_131",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/255.json",
+        "sha256": "8a9109aef16e16eec03633f16687a9046ad458e292914c4a08e3adbb34b2fda5"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_172",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/256.json",
+        "sha256": "50e720cf748531794dbd31f9cdd5ac42b32cbbec85d1829646455f21a4e4d829"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_65",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/260.json",
+        "sha256": "d5fb3b5a1592d3a84cacd2896c5e59f9fe0df3f7dd95a25512f4da3388c1acb9"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_76",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/261.json",
+        "sha256": "70bbf842bdb44938dd93797b7d200f13bd08636bb286eb42b08d40da24e19f78"
+      },
+      {
+        "utterance_id": "ZH-CN_U1082_S0_67",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/269.json",
+        "sha256": "035ee365623244449145c2f64029477c5a0d96172336d741ccb50414fb598183"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_104",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/274.json",
+        "sha256": "c15514c9cdd5a1d53a8f94584c7eaec2eca8d4285b13eb6bb977ffa3032646c1"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_150",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/279.json",
+        "sha256": "fb46c36ea59128461dafb6488f9f16a037350b33045d267d33fc67c626537a5b"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_154",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/280.json",
+        "sha256": "3abe09d49d5a298eeab44dee284a44a223cf5a8fea724654a28ecd8893c5d624"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_266",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/281.json",
+        "sha256": "752706463edad1f24d02f5fc40fda5a0ff5219d09f02a6bd37004ec04bba6516"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_287",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/284.json",
+        "sha256": "a2423c5894eafe1f91ee876edec22fc5544b77a01bdbe97139087ee36b14a594"
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_108",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/285.json",
+        "sha256": "b79fc27116d00b1c8dc527273a234663d4f4e6acab8d9a6686cdd512f822ce5f"
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_22",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/286.json",
+        "sha256": "3140efa773742953f17faab196e279be1d5f88d6c3f22877cbaf5506107a2164"
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_36",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/289.json",
+        "sha256": "219a80a1d7af56c7cf73262da15cb9272adabca4e5055881a9e19596ddb7b0f6"
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_99",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/293.json",
+        "sha256": "1caa2cd0f6e82483613f23f6f76b2e6a6d816176c81773499fa3692553fbac9c"
+      },
+      {
+        "utterance_id": "ZH-CN_U2012_S0_24",
+        "path": "results/inference_cf/p2_A_r1_L16/rows/297.json",
+        "sha256": "798112c6e44b61dd7f92061824b43f97db4351f67f0bd6ccaaf47565de4c6263"
+      }
+    ],
+    "S0": "new matched zero-dose sequence driver required; historical B0M_L16 is diagnostic identity anchor only because no existing D2-runtime zero-dose loop audited; never substitute cached_greedy",
+    "S1": "reuse historical B0_AUTO for all100 only after independent pre-run semantic/model/environment/input/row/manifest hash audit; seal decision before outcomes; if proof fails compute AUTO for all100 in SAME allocation",
+    "S2": "all100 newly decoded; no teacher-forced outputs substitution",
+    "environment": {
+      "python": "3.11.9",
+      "torch": "2.10.0+cu128",
+      "transformers": "4.57.6"
+    },
+    "historical_timing": "no fabricated per-system time/VRAM for reused AUTO; report unavailable, historical job-level separately"
+  },
+  "metrics": [
+    "canonical PIER/MER/EN-WER/ZH-CER with per-utterance counts",
+    "POI corrections/corruptions and identity",
+    "matrix ZH retention/embedded EN retention, counts/rates",
+    "lexical outside-POI edits and correct-to-incorrect harm, separate from acoustic outside-candidate harm",
+    "token cap count",
+    "utterances any actual edit/count/fraction",
+    "eligible decoder steps/positive gate/valid direction/actual edit",
+    "sum realized squared edit norm/relative edit energy",
+    "mean/max gate",
+    "D2 provider/scratch/autograd counts and LID calls/cache hits",
+    "wall time/utterances per second/peak allocated and reserved VRAM"
+  ],
+  "outside": {
+    "population": "all reference unit indices outside canonical English POI indices; reference text evaluator-only, not acoustic timing",
+    "edits": "two reference-anchored projections from canonical align_tokens; compare surfaces plus insertion lists at each outside index; leading insertions assigned -1 and counted separately",
+    "harm": "unit_status baseline-correct -> STEER-wrong outside POIs; denominator baseline-correct outside units; report raw counts, same corpus rate",
+    "acoustic_outside_candidate_harm": "N/A: no new timing alignment; lexical outside-POI proxy explicitly distinct"
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 240924,
+    "unit": "20 sorted dialogue IDs with replacement, retain5utterances per sampled dialogue",
+    "rng": "numpy.random.default_rng",
+    "statistic": "corpus count sums then ratios, paired shared draws for STEER-minus-FORCED and STEER-minus-AUTO",
+    "interval": [
+      0.025,
+      0.975
+    ],
+    "empty_draw_denominator": "omit endpoint draw, report valid count; require>=1980 valid per primary error endpoint; empty retention/corruption population =>None, rule vacuously passes with explicit not-assessable note",
+    "role": "95% pointwise descriptive only; no CI sign gate/no multiplicity claim"
+  },
+  "decision": {
+    "delta_sign": "STEER minus comparator, positive error delta means worse; canonical *_gain separately baseline-minus-method",
+    "thresholds": {
+      "min_net_POI_error_reduction": 5,
+      "min_PIER_gain_abs": 0.005,
+      "max_MER_increase_abs": 0.005,
+      "max_ZH_CER_increase_abs": 0.005,
+      "min_matrix_ZH_retention": 0.99,
+      "min_embedded_EN_retention": 0.95,
+      "max_POI_corruption_rate": 0.05,
+      "max_lexical_outside_harm_rate": 0.01,
+      "max_cap_increase_count": 1,
+      "float_guard": 1e-12
+    },
+    "promising": "all integrity/audit, all point safety bounds, >=5 fewer POI errors AND PIER gain>=0.005; no CI proof required",
+    "sequence_damage": "any point safety bound fails; overrides English gain",
+    "no_useful_gain": "safety passes but one or both benefit thresholds fail; zero edit/gain is valid NO_USEFUL_GAIN",
+    "invalid": "panel/output/input/model/path/provider/evaluator/manifest/cache/autograd/hash mismatch, missing100 complete rows per system, unattributed divergence or failed independent audit",
+    "precedence": [
+      "P2_SEQ_INVALID",
+      "P2_SEQ_SEQUENCE_DAMAGE",
+      "P2_SEQ_PROMISING",
+      "P2_SEQ_NO_USEFUL_GAIN"
+    ]
+  },
+  "auto_interpretation": {
+    "always_report": [
+      "PIER(STEER)-PIER(AUTO)",
+      "MER(STEER)-MER(AUTO)",
+      "ZH-CER(STEER)-ZH-CER(AUTO)"
+    ],
+    "no_label_override": true,
+    "practically_below_auto": "PIER STEER-AUTO>=0.005 point => below AUTO on primary practical metric; 95%CI lower>0 strengthens clearly worse wording; conflicting safety tradeoffs reported",
+    "claim": "no SOTA/deployment claim even if promising relative forced"
+  },
+  "audit": {
+    "pre": "PASS_TO_P2_SEQ",
+    "post": "P2_SEQ_AUDIT: PASS",
+    "independent": "no import primary evaluator/decision/bootstrap; may share locked canonical primitives, independently aggregate counts/draws/rules",
+    "checks": [
+      "panel100/hash/order20x5",
+      "pre-outcome reuse proof",
+      "resolved model/tokenizer/preprocessing/env/generation hashes",
+      "runtime current-prefix gate/direction and no reference inputs",
+      "S0 alpha0 B/S logits bitwise at every step",
+      "B/E/S isolated cache lineage",
+      "all first transcript divergences preceded by actual edit",
+      "D2 clean B site/logit identity and no parameter/persistent cache gradient contamination",
+      "hook actual energy/zero gate behavior",
+      "canonical counts/POI transition identity/outside harm",
+      "bootstrap and exact label recomputation",
+      "no TTA/search/full300/P3"
+    ]
+  },
+  "compute": {
+    "new_jobs_max": 1,
+    "pending_running_max": 1,
+    "submit": "sbatch",
+    "allocation": "one mig nvidia_h100_80gb_hbm3_3g.40gb,4CPU,48G",
+    "hard_ceiling_minutes": 180,
+    "expected_new_system_utterance_passes": 200,
+    "if_auto_reuse_invalid_passes": 300,
+    "logical_systems_max": 3,
+    "exhaustion": "preserve partial rows, INVALID, STOP; no second scientific job automatically",
+    "design_session_scientific_jobs": 0
+  },
+  "next": {
+    "promising": "STOP recommend separately frozen larger development confirmation, never launch300 automatically",
+    "no_gain_or_damage": "STOP close further local gate repair for now; evidence-only P2_SEQ_TTA_HANDOFF.md recommends separately designed P2-TTA0, no adaptation objective/hyperparameters/code/outcomes",
+    "invalid": "STOP engineering-only repair, preserve attempts; no threshold relaxation, no new scientific family"
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select fixed100",
+      "existing P2/P2-R/P2-DIR/P2-SEL/P2-SEL-E/P2-SEL-T/P2-SEL-XA/P2-SEL-LAC artifacts"
+    ],
+    "forbidden": [
+      "router-calib new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "transfer corpora",
+      "fresh validation",
+      "TTA"
+    ]
+  },
+  "files": {
+    "add": [
+      "experiments/inference_cf_p2seq.py",
+      "experiments/inference_cf_p2seq_analyze.py",
+      "experiments/inference_cf_p2seq_audit.py",
+      "slurm/inference_cf_p2seq.sbatch",
+      "tests/test_inference_cf_p2seq.py"
+    ],
+    "preserve": [
+      "historical outcome reports/results",
+      "readout.py",
+      "core_r2.py",
+      "DG-02 site",
+      "core METHOD_CONTRACT",
+      "existing mini-panel"
+    ],
+    "outputs": "results/inference_cf/p2seq/run1; report docs/inference_cf/P2_SEQ_REPORT.md"
+  },
+  "github": "tests/check -> inspect diff -> commit -> push origin HEAD:cs-asr-steer-inf; pre-run audit, reuse seal and resolved manifest must be pushed before outcomes; no force/merge-main/PR"
+}

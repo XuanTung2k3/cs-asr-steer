@@ -48,3 +48,5 @@ results/inference_cf/p2sel_e/**/rows/*_logits.npz
 results/inference_cf/p2sel_t/t1_run*/rows/*_logits.npz
 # P2-SEL-XA raw logits (r1 / r0.95) stay local; sha256 in committed row JSONs
 results/inference_cf/p2sel_xa/**/rows/*_logits.npz
+# P2-SEL-LAC masked raw logits stay local; sha256 in committed row JSONs
+results/inference_cf/p2sel_lac/**/rows/*_logits.npz

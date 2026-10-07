@@ -628,3 +628,13 @@ P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → co
 ## P2-PATH0 pre-outcome freeze
 
 P2-PATH0 pre-outcome design frozen: exact12 A3/A4 D rows,5 rescue/7 induction, first-divergence1/3 donor-token clamps under reconstructed unchanged A4. Reference-free released-suffix causal label; secondary ASR after primary seal. One job≤30min later; no run in design session. See docs/inference_cf/P2_PATH0_SPEC.md. A2/A3/A4 remain closed.
+
+## P2-PATH0 — executed (2026-10-07): `P2_PATH0_ASYMMETRIC`
+
+| Stage | Status |
+|---|---|
+| Implementation + `PASS_TO_P2_PATH0` | DONE (`ce9ff03`) |
+| Run (Slurm 58004) + reference-free seal | DONE (`ca4a92e`) |
+| Secondary + `P2_PATH0_AUDIT: PASS` | DONE: INDUCE_1/3 pass, RESCUE fail; ASR_HARM_ALIGNMENT INDUCTION_ONLY |
+| Branch-aware path control / any follow-on | NOT RUN; new human decision required |
+

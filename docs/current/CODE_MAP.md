@@ -352,3 +352,11 @@ Outputs `results/inference_cf/p2tta_a4/`.
 ## P2-PATH0 pre-outcome freeze
 
 P2-PATH0 design-only: docs/inference_cf/P2_PATH0_SPEC.md, P2_PATH0_CODEX_DESIGN.md, P2_PATH0_SITES.json and configs/inference_cf/p2_path0.json. Reuse unchanged script_safe_tta.adapt_a4, episodic_tta LNGuard/forced_decode/levenshtein, cached.Branch, suppression and canonical evaluator. Additive clamp runner/auditor/tests are not implemented yet.
+
+## P2-PATH0 (2026-10-07; executed, terminal `P2_PATH0_ASYMMETRIC`)
+
+`src/csasr/inference_cf/path_decode.py` (exact forced_decode loop with frozen token overrides, streams/suffix ED, branch diagnostics),
+`experiments/inference_cf_p2path0.py` (prepare/manifest/two-phase run with A4 reconstruction barrier/seal), `inference_cf_p2path0_analyze.py`
+(reference-free primary; guarded secondary + ASR_HARM_ALIGNMENT), `inference_cf_p2path0_audit.py` (independent prerun/post),
+`slurm/inference_cf_p2path0.sbatch`, `tests/test_inference_cf_p2path0.py`. Outputs `results/inference_cf/p2path0/`.
+

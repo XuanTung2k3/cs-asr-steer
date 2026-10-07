@@ -1,4 +1,13 @@
-# Current separate inference-time ticket — P2-TTA-A4 (2026-10-07): terminal `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`
+# Current separate inference-time ticket — P2-PATH0 (2026-10-07): terminal `P2_PATH0_ASYMMETRIC`
+
+Freeze `fc3602d`; `PASS_TO_P2_PATH0` (`ce9ff03`); manifest `a15a8c8`; Slurm 58004 (45 s); output seal `ca4a92e` before references;
+`P2_PATH0_AUDIT: PASS` (primary + full). A4 reconstructed exactly 12/12, SELF==FREE 12/12. INDUCE_1/3 pass (pooled 0.77/0.875: forcing
+AUTO's first token sends the suffix into the AUTO basin), RESCUE_1/3 fail (2 successes in one dialogue). ASR_HARM_ALIGNMENT INDUCTION_ONLY
+(induced rows reproduce AUTO's errors: ZH +10, POI -15); rescue removes most ZH damage (27->7/4) at a POI cost. Report
+`docs/inference_cf/P2_PATH0_REPORT.md`. STOP; next class: separately frozen branch-aware path-control diagnostic. Core v6 unchanged.
+
+<!-- superseded header (P2-TTA-A4 result) -->
+## (Previous header) Current separate inference-time ticket — P2-TTA-A4 (2026-10-07): terminal `P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED`
 
 Freeze `37441eb`; implementation `9488a69`; `PASS_TO_P2_TTA_A4` (`d32676b`); manifest `b349f12`; Slurm 57937 (24 rows, 53 s);
 seal `e506e74`; `P2_TTA_A4_AUDIT: PASS`. Script-preserving safe teacher (q_AUTO at V_E positions, q_FORCED elsewhere) on the A3
@@ -650,3 +659,9 @@ Exposed development only; new human decision required.
 ## P2-PATH0 pre-outcome freeze
 
 Next authorized separate development design: P2-PATH0, first-divergence rescue/induction causal diagnostic, spec/config/sites frozen only.12 D rows; unchanged A4 reconstruction must reproduce12/12 before clamps. PASS_TO_P2_PATH0 required before later execution. No scientific outcomes in this session; core v6 and historical terminal stages unchanged.
+
+## P2-PATH0 result (2026-10-07) — terminal: `P2_PATH0_ASYMMETRIC`
+
+Induction (single and three-token) is causal for the AUTO basin under fixed A4 weights; rescue is not established (one dialogue).
+One GPU job (58004). Exposed development only; new human decision required.
+

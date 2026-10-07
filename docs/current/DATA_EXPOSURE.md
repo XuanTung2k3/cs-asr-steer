@@ -353,3 +353,9 @@ D-test, router-calib new role, full100/300, P3, transfer or fresh validation.
 ## P2-PATH0 pre-outcome freeze
 
 P2-PATH0 freeze inspected only sealed A3/A4 D-row token arrays and termination to derive5 rescue/7 induction sites and suffix eligibility. No new reference evaluation, adaptation or GPU outcome. Later PATH0 limited to exact12 already-exposed D-dev-select rows; reference-free primary label sealed/pushed before secondary references. No new validation/full24/100/300/P3/transfer role.
+
+## P2-PATH0 exposure (2026-10-07)
+
+12 A3/A4 D rows of the already-exposed fixed100 D-dev-select panel. Slurm 58004 reconstructed A4 and ran clamp decodes; references for these
+12 rows opened only after the committed reference-free output seal. No fresh validation, full24/100/300, P3, transfer or new data role.
+

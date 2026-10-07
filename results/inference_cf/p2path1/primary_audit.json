@@ -1,0 +1,35 @@
+{
+ "ASR_STATE_ALIGNMENT": null,
+ "checks": {
+  "A4A_inherited_pass": true,
+  "inherited_agree": true,
+  "label_agrees": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "rows_factorial_cache_scores": true,
+  "runtime": true,
+  "scores_agree": true,
+  "sites": true,
+  "sources_at_commit": true,
+  "state_agree": true
+ },
+ "failures": [],
+ "git_commit": "8fd56ce1ce46e1dc2a96d6b1bb74eb28881ea040",
+ "independent": {
+  "A4A_pass": true,
+  "CONSENSUS_REJECTS_AUTO": true,
+  "Delta": 0.41666666666666674,
+  "I_A4": 0.7708333333333334,
+  "I_theta0": 0.35416666666666663,
+  "T0A_pass": true,
+  "material": [
+   "ZH-CN_U0029_S0_472",
+   "ZH-CN_U0102_S0_80",
+   "ZH-CN_U2004_S0_104"
+  ]
+ },
+ "label": "P2_PATH1_MIXED",
+ "phase": "primary",
+ "schema": "p2_path1_post_audit_v1",
+ "verdict": "P2_PATH1_AUDIT: PASS"
+}

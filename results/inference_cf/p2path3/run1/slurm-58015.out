@@ -1,0 +1,112 @@
+P2-PATH3 replay phase1 1/12 ZH-CN_U0021_S0_513 G0==A4 True ckpt True
+P2-PATH3 replay phase1 2/12 ZH-CN_U0023_S0_666 G0==A4 True ckpt True
+P2-PATH3 replay phase1 3/12 ZH-CN_U0023_S0_87 G0==A4 True ckpt True
+P2-PATH3 replay phase1 4/12 ZH-CN_U0023_S0_664 G0==A4 True ckpt True
+P2-PATH3 replay phase1 5/12 ZH-CN_U0029_S0_472 G0==A4 True ckpt True
+P2-PATH3 replay phase1 6/12 ZH-CN_U0039_S0_80 G0==A4 True ckpt True
+P2-PATH3 replay phase1 7/12 ZH-CN_U0091_S0_68 G0==A4 True ckpt True
+P2-PATH3 replay phase1 8/12 ZH-CN_U0092_S0_101 G0==A4 True ckpt True
+P2-PATH3 replay phase1 9/12 ZH-CN_U0102_S0_80 G0==A4 True ckpt True
+P2-PATH3 replay phase1 10/12 ZH-CN_U1003_S0_61 G0==A4 True ckpt True
+P2-PATH3 replay phase1 11/12 ZH-CN_U1079_S0_23 G0==A4 True ckpt True
+P2-PATH3 replay phase1 12/12 ZH-CN_U2004_S0_104 G0==A4 True ckpt True
+P2-PATH3 replay G1 ZH-CN_U0021_S0_513 trigger True exact True k 0 winner A4 margin -1.2356
+P2-PATH3 replay G1 ZH-CN_U0023_S0_666 trigger True exact True k 5 winner A4 margin -0.1137
+P2-PATH3 replay G1 ZH-CN_U0023_S0_87 trigger True exact True k 15 winner theta0 margin 0.0005
+P2-PATH3 replay G1 ZH-CN_U0023_S0_664 trigger True exact True k 0 winner theta0 margin 0.9855
+P2-PATH3 replay G1 ZH-CN_U0029_S0_472 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U0039_S0_80 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U0091_S0_68 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U0092_S0_101 trigger True exact True k 10 winner theta0 margin 0.0421
+P2-PATH3 replay G1 ZH-CN_U0102_S0_80 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U1003_S0_61 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U1079_S0_23 trigger False exact True
+P2-PATH3 replay G1 ZH-CN_U2004_S0_104 trigger False exact True
+P2-PATH3 13/100 ZH-CN_U0011_S0_111 DEV24_OTHER noop True trigger False
+P2-PATH3 14/100 ZH-CN_U0011_S0_54 NOVEL76 noop True trigger False
+P2-PATH3 15/100 ZH-CN_U0012_S0_103 NOVEL76 noop True trigger False
+P2-PATH3 16/100 ZH-CN_U0011_S0_503 NOVEL76 noop True trigger False
+P2-PATH3 17/100 ZH-CN_U0011_S0_103 NOVEL76 noop True trigger False
+P2-PATH3 18/100 ZH-CN_U0022_S0_91 DEV24_OTHER noop True trigger False
+P2-PATH3 19/100 ZH-CN_U0021_S0_225 NOVEL76 noop True trigger False
+P2-PATH3 20/100 ZH-CN_U0022_S0_228 NOVEL76 noop True trigger False
+P2-PATH3 21/100 ZH-CN_U0022_S0_305 NOVEL76 noop True trigger False
+P2-PATH3 22/100 ZH-CN_U0023_S0_111 NOVEL76 noop True trigger False
+P2-PATH3 23/100 ZH-CN_U0024_S0_283 NOVEL76 noop True trigger False
+P2-PATH3 24/100 ZH-CN_U0027_S0_116 DEV24_OTHER noop True trigger False
+P2-PATH3 25/100 ZH-CN_U0028_S0_37 NOVEL76 noop True trigger False
+P2-PATH3 26/100 ZH-CN_U0027_S0_163 NOVEL76 noop True trigger False
+P2-PATH3 27/100 ZH-CN_U0027_S0_144 NOVEL76 noop True trigger False
+P2-PATH3 28/100 ZH-CN_U0028_S0_120 NOVEL76 noop True trigger False
+P2-PATH3 29/100 ZH-CN_U0029_S0_204 NOVEL76 noop True trigger False
+P2-PATH3 30/100 ZH-CN_U0029_S0_456 NOVEL76 noop True trigger False
+P2-PATH3 31/100 ZH-CN_U0030_S0_81 NOVEL76 noop True trigger False
+P2-PATH3 32/100 ZH-CN_U0029_S0_651 NOVEL76 noop True trigger False
+P2-PATH3 33/100 ZH-CN_U0039_S0_380 NOVEL76 noop True trigger False
+P2-PATH3 34/100 ZH-CN_U0040_S0_141 NOVEL76 noop True trigger False
+P2-PATH3 35/100 ZH-CN_U0040_S0_105 NOVEL76 noop True trigger False
+P2-PATH3 36/100 ZH-CN_U0039_S0_315 NOVEL76 noop True trigger False
+P2-PATH3 37/100 ZH-CN_U0085_S0_185 DEV24_OTHER noop True trigger False
+P2-PATH3 38/100 ZH-CN_U0086_S0_185 NOVEL76 noop True trigger False
+P2-PATH3 39/100 ZH-CN_U0086_S0_2 NOVEL76 noop True trigger False
+P2-PATH3 40/100 ZH-CN_U0086_S0_222 NOVEL76 noop True trigger False
+P2-PATH3 41/100 ZH-CN_U0086_S0_183 NOVEL76 noop True trigger False
+P2-PATH3 42/100 ZH-CN_U0091_S0_196 NOVEL76 noop True trigger False
+P2-PATH3 43/100 ZH-CN_U0091_S0_62 NOVEL76 noop True trigger False
+P2-PATH3 44/100 ZH-CN_U0091_S0_241 NOVEL76 noop True trigger False
+P2-PATH3 45/100 ZH-CN_U0101_S0_71 NOVEL76 noop True trigger False
+P2-PATH3 46/100 ZH-CN_U0102_S0_64 NOVEL76 noop True trigger False
+P2-PATH3 47/100 ZH-CN_U0101_S0_190 NOVEL76 noop True trigger False
+P2-PATH3 48/100 ZH-CN_U0102_S0_44 NOVEL76 noop True trigger False
+P2-PATH3 49/100 ZH-CN_U1001_S0_402 DEV24_OTHER noop True trigger False
+P2-PATH3 50/100 ZH-CN_U1002_S0_488 NOVEL76 noop True trigger False
+P2-PATH3 51/100 ZH-CN_U1001_S0_482 NOVEL76 noop True trigger False
+P2-PATH3 52/100 ZH-CN_U1002_S0_284 NOVEL76 noop True trigger False
+P2-PATH3 53/100 ZH-CN_U1001_S0_44 NOVEL76 noop True trigger False
+P2-PATH3 54/100 ZH-CN_U1003_S0_141 NOVEL76 noop True trigger False
+P2-PATH3 55/100 ZH-CN_U1004_S0_221 NOVEL76 noop True trigger False
+P2-PATH3 56/100 ZH-CN_U1003_S0_63 NOVEL76 noop True trigger False
+P2-PATH3 57/100 ZH-CN_U1003_S0_94 NOVEL76 noop True trigger False
+P2-PATH3 58/100 ZH-CN_U1022_S0_71 DEV24_OTHER noop True trigger False
+P2-PATH3 59/100 ZH-CN_U1022_S0_66 NOVEL76 noop True trigger False
+P2-PATH3 60/100 ZH-CN_U1021_S0_195 NOVEL76 noop True trigger False
+P2-PATH3 61/100 ZH-CN_U1021_S0_68 NOVEL76 noop True trigger False
+P2-PATH3 62/100 ZH-CN_U1021_S0_173 NOVEL76 noop True trigger False
+P2-PATH3 63/100 ZH-CN_U1027_S0_199 DEV24_OTHER noop True trigger False
+P2-PATH3 64/100 ZH-CN_U1028_S0_184 NOVEL76 noop True trigger False
+P2-PATH3 65/100 ZH-CN_U1028_S0_38 NOVEL76 noop True trigger False
+P2-PATH3 66/100 ZH-CN_U1028_S0_40 NOVEL76 noop True trigger False
+P2-PATH3 67/100 ZH-CN_U1028_S0_176 NOVEL76 noop True trigger False
+P2-PATH3 68/100 ZH-CN_U1034_S0_53 DEV24_OTHER noop True trigger False
+P2-PATH3 69/100 ZH-CN_U1033_S0_199 NOVEL76 noop True trigger False
+P2-PATH3 70/100 ZH-CN_U1033_S0_191 NOVEL76 noop True trigger False
+P2-PATH3 71/100 ZH-CN_U1034_S0_177 NOVEL76 noop True trigger False
+P2-PATH3 72/100 ZH-CN_U1034_S0_173 NOVEL76 noop True trigger False
+P2-PATH3 73/100 ZH-CN_U1064_S0_110 DEV24_OTHER noop True trigger False
+P2-PATH3 74/100 ZH-CN_U1064_S0_26 NOVEL76 noop True trigger False
+P2-PATH3 75/100 ZH-CN_U1064_S0_95 NOVEL76 noop True trigger False
+P2-PATH3 76/100 ZH-CN_U1064_S0_100 NOVEL76 noop True trigger False
+P2-PATH3 77/100 ZH-CN_U1063_S0_54 NOVEL76 noop True trigger False
+P2-PATH3 78/100 ZH-CN_U1076_S0_24 DEV24_OTHER noop True trigger False
+P2-PATH3 79/100 ZH-CN_U1076_S0_35 NOVEL76 noop True trigger False
+P2-PATH3 80/100 ZH-CN_U1076_S0_154 NOVEL76 noop True trigger False
+P2-PATH3 81/100 ZH-CN_U1076_S0_178 NOVEL76 noop True trigger False
+P2-PATH3 82/100 ZH-CN_U1076_S0_26 NOVEL76 noop True trigger False
+P2-PATH3 83/100 ZH-CN_U1080_S0_43 NOVEL76 noop True trigger False
+P2-PATH3 84/100 ZH-CN_U1080_S0_64 NOVEL76 noop True trigger False
+P2-PATH3 85/100 ZH-CN_U1079_S0_54 NOVEL76 noop True trigger False
+P2-PATH3 86/100 ZH-CN_U1079_S0_68 NOVEL76 noop True trigger False
+P2-PATH3 87/100 ZH-CN_U1081_S0_131 DEV24_OTHER noop True trigger False
+P2-PATH3 88/100 ZH-CN_U1081_S0_76 NOVEL76 noop True trigger False
+P2-PATH3 89/100 ZH-CN_U1082_S0_67 NOVEL76 noop True trigger False
+P2-PATH3 90/100 ZH-CN_U1081_S0_172 NOVEL76 noop True trigger False
+P2-PATH3 91/100 ZH-CN_U1081_S0_65 NOVEL76 noop True trigger False
+P2-PATH3 92/100 ZH-CN_U2004_S0_266 NOVEL76 noop True trigger False
+P2-PATH3 93/100 ZH-CN_U2004_S0_154 NOVEL76 noop True trigger False
+P2-PATH3 94/100 ZH-CN_U2004_S0_150 NOVEL76 noop True trigger False
+P2-PATH3 95/100 ZH-CN_U2004_S0_287 NOVEL76 noop True trigger False
+P2-PATH3 96/100 ZH-CN_U2012_S0_24 DEV24_OTHER noop True trigger False
+P2-PATH3 97/100 ZH-CN_U2011_S0_22 NOVEL76 noop True trigger False
+P2-PATH3 98/100 ZH-CN_U2011_S0_99 NOVEL76 noop True trigger False
+P2-PATH3 99/100 ZH-CN_U2011_S0_36 NOVEL76 noop True trigger False
+P2-PATH3 100/100 ZH-CN_U2011_S0_108 NOVEL76 noop True trigger False

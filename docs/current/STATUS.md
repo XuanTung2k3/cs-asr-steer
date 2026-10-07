@@ -1,4 +1,13 @@
-# Current separate inference-time ticket — P2-PATH1 (2026-10-07): terminal `P2_PATH1_MIXED`
+# Current separate inference-time ticket — P2-PATH2 (2026-10-07): terminal `P2_PATH2_BRANCH_CONTROL_SUFFICIENT`
+
+Freeze `e1c6ee7`; `PASS_TO_P2_PATH2` (`155aa40`); manifest `e525ae7`; Slurm 58013 (54 s, two resident instances); seal `e1198aa` before
+references; `P2_PATH2_AUDIT: PASS` (primary + full). Online first-disagreement consensus guard: 5 triggers (historical C sites), 7 exact
+no-op U rows, PATH1 scores/winners reproduced. G1 (one consensus token, then A4) on all 12: ZH 21 / POI 101 / mixed 123 (A4 41/101/143,
+B0 18/119/137) -> passes 29/105/143/0; G2 identical to G1 (no material advantage). Mandarin rescue rests on one utterance (U0023_S0_664).
+Report `docs/inference_cf/P2_PATH2_REPORT.md`. STOP; next: separately frozen broader development test of G1. Core v6 unchanged.
+
+<!-- superseded header (P2-PATH1 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH1 (2026-10-07): terminal `P2_PATH1_MIXED`
 
 Freeze `5a159f2`; `PASS_TO_P2_PATH1` (`cea9410`); manifest `30a6dfb`; Slurm 58011 (43 s); seal `2bf92bc` before references;
 `P2_PATH1_AUDIT: PASS` (primary + full; one mechanical auditor crash fixed with test, no output change). Clean 2x2 state x branch
@@ -690,3 +699,9 @@ Short-horizon theta0/A4 consensus rejects the AUTO branch at all U sites. One GP
 ## P2-PATH2 pre-outcome freeze
 
 Next separate exposed-development ticket: P2-PATH2 pre-outcome spec/config/fingerprinted panel frozen only. Online one-event guard, G1 versus G2; audited reconstruction/PATH1-score/no-trigger identity required. PASS_TO_P2_PATH2 before later job; no scientific job/outcome here. Core v6 and historical terminal results unchanged. P3 HELD.
+
+## P2-PATH2 result (2026-10-07) — terminal: `P2_PATH2_BRANCH_CONTROL_SUFFICIENT`
+
+One consensus-selected token at the first theta0/A4 disagreement keeps A4's beneficial switches and rejects the harmful one on this cohort;
+G2 three-token handoff adds nothing. One GPU job (58013). Exposed development only; broader frozen test required.
+

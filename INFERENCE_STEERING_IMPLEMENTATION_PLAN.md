@@ -657,3 +657,13 @@ P2-PATH1 design frozen after PATH0 ASYMMETRIC: U7 state×first-token factorial (
 ## P2-PATH2 pre-outcome freeze
 
 P2-PATH2 design frozen after audited PATH1 MIXED: first online theta0/A4 disagreement, fixed H=3 consensus, G1 one-token branch choice versus G2 short theta0 three-token handoff with clean A4 replay. Exact PATH0 D12; one later job<=30min; no outcome in this design session. See docs/inference_cf/P2_PATH2_SPEC.md. Historical objectives/stages and core v6 unchanged; no automatic follow-on.
+
+## P2-PATH2 — executed (2026-10-07): `P2_PATH2_BRANCH_CONTROL_SUFFICIENT`
+
+| Stage | Status |
+|---|---|
+| Implementation + `PASS_TO_P2_PATH2` | DONE (`155aa40`) |
+| Run (Slurm 58013) + reference-free seal | DONE (`e1198aa`) |
+| Secondary + `P2_PATH2_AUDIT: PASS` | DONE: G1 = G2 pass (ZH 21 / POI 101 / mixed 123); no G2 advantage |
+| Broader G1 development test | NOT RUN; separately frozen contract and human decision required |
+

@@ -544,3 +544,12 @@ next-token candidates; zero exact T-selected waveform W*, re-encode and cold-rep
 Only audited support permits E*R_B*max(0,tanh(S_lex/2)) with unchanged D2/site/alpha/NormPreserve;
 conditional existing100 mini decode only after gate support. No300/P3. No candidate extraction,
 scientific masked outcome or runner implementation in this design session; core authority unchanged.
+
+## P2-SEL-LAC — executed (2026-10-07): `P2_SEL_LAC_NOT_DISCRIMINATIVE`
+
+| Stage | Status |
+|---|---|
+| Implementation + candidate seal + pre-LAC0 audit | DONE (`4e6062c`, seal, `92b81c6`, `PASS_TO_P2_SEL_LAC_LAC0`) |
+| LAC0 forward-only counterfactual | DONE, `P2_SEL_LAC_AUDIT: PASS (LAC0)`: not discriminative |
+| LAC1 gate screen / LAC2 mini decode | NOT RUN (stop rule) |
+| P3 | HELD |

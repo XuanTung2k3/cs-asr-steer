@@ -273,3 +273,11 @@ load_audio/feature-extractor/encoder, isolated cached B prefix replay, original 
 auditor and100 panel. Additive lexical-compatibility helper/runner/analysis/audit/Slurm/tests pending.
 Masked acoustic prefix must be rebuilt from empty KV cache, never hot-swap original encoder/cache.
 No LAC outcome; historical formulas/reports and core method unchanged.
+
+## P2-SEL-LAC (2026-10-07; executed through LAC0)
+
+`src/csasr/inference_cf/lexical_compatibility.py` (unmasked candidates, hard-zero mask, S/F, in-memory feature adapter),
+`experiments/inference_cf_p2sel_lac.py` (CPU candidate seal; LAC0 masked encoder + fresh prefix replay, exact-prefix LRU-2),
+`inference_cf_p2sel_lac_analyze.py` (frozen precedence, selection artifact, LAC1 rule), `inference_cf_p2sel_lac_audit.py`
+(independent prerun/lac0/final), `slurm/inference_cf_p2sel_lac.sbatch`, `tests/test_inference_cf_p2sel_lac.py`.
+Outputs `results/inference_cf/p2sel_lac/`.

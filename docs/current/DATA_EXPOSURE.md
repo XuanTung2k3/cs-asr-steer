@@ -288,3 +288,9 @@ Read existing source/contracts/reports, T compact-window metadata and canonical 
 metadata. No new candidate pairs, S_lex, masked audio inference or scientific outcome computed.
 Conditional LAC0/LAC1 use same180 exposed positions; LAC2 only existing frozen100 panel after audited
 passes. Development-only; no router-calib new role, confirm/test/P3/transfer/fresh validation.
+
+## P2-SEL-LAC exposure (2026-10-07)
+
+LAC0 ran 180 forward-only masked-waveform counterfactuals (hard zero on the P2-SEL-T W*) on the already-exposed 180
+P2-R/P2-RJ D-dev-select positions (80 utterances, 20 dialogues); candidates sealed from existing unmasked logits.
+No steering, decode, LID or gradient; no router-calib/D-dev-confirm/D-test/P3/transfer data.

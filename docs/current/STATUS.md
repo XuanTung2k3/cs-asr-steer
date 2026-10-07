@@ -532,3 +532,10 @@ Freeze `595e174`; implementation `83845ee`; pre-XA0 PASS (`e6cf957`); XA0 Slurm 
 0 backward/LID/steering); `P2_SEL_XA_AUDIT: PASS (XA0)` (attempt-1 auditor-tolerance BLOCK preserved, fixed in `02d9128`).
 The frozen λ=0.95 finite-difference material subset holds only 4 rows / 2 dialogues (needs 30 / 10): S_src = g_J·u_source is
 tiny (|cos| ~0.02, max |S| 0.49), so INVALID. No gate; XA1/XA2 not run. P3 HELD. Reports `docs/inference_cf/P2_SEL_XA_{XA0_REPORT,REPORT}.md`.
+
+## P2-SEL-LAC result (2026-10-07) — terminal: `P2_SEL_LAC_NOT_DISCRIMINATIVE`
+
+Freeze `be460ce`; implementation `4e6062c`; candidate seal pushed before masking; pre-LAC0 PASS (`92b81c6`); LAC0 Slurm
+57866 (forward-only, 180 counterfactuals); `P2_SEL_LAC_AUDIT: PASS (LAC0)`. EN-TP strong 6/42 (< 34), ZH-FP weak 4/5 (pass),
+S TP−FP +0.95 with lower80 −0.022; recall 4/18. No F_lex; LAC1/LAC2 not run. Occlusion is strong on correct states
+(ZH −4.0, EN +2.3) but ≈0 on EN-confusion TP and FP. P3 HELD. Reports `docs/inference_cf/P2_SEL_LAC_{LAC0_REPORT,REPORT}.md`.

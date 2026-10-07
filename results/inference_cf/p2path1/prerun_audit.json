@@ -1,0 +1,28 @@
+{
+ "checks": {
+  "a4_inherited": true,
+  "anchors": true,
+  "auditor_independent": true,
+  "barrier_before_factorial": true,
+  "compute_plan": true,
+  "forced_once_release_k1": true,
+  "frozen:configs/inference_cf/p2_path1.json": true,
+  "frozen:docs/inference_cf/P2_PATH1_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_PATH1_SITES.json": true,
+  "frozen:docs/inference_cf/P2_PATH1_SPEC.md": true,
+  "inherited_criterion_exact": true,
+  "no_cross_state_cache": true,
+  "no_outcome": true,
+  "path0_sources_unchanged": true,
+  "plan_committed": true,
+  "population": true,
+  "runner_reference_and_cache_free": true,
+  "sites_hash": true,
+  "sites_recomputed_independently": true,
+  "tests_present": true,
+  "thresholds": true
+ },
+ "git_commit": "3f378bec2a4b293564f3d311e8ef0949726f3097",
+ "schema": "p2_path1_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_PATH1"
+}

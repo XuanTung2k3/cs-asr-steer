@@ -154,3 +154,12 @@ def test_reference_firewall_and_auditor_independence(monkeypatch):
     src = Path("experiments/inference_cf_p2path1_audit.py").read_text()
     assert re.search(r"^\s*(from|import)\s+\S*(p2path1_analyze|p2path0_analyze|branch_adjudication|path_decode|inference_cf_p2path[01]\b)", src, re.M) is None
     assert "load_references" not in Path("experiments/inference_cf_p2path1.py").read_text()
+
+
+def test_auditor_owner_check_handles_path_and_score_records():
+    """Primary-audit attempt 1 crashed (KeyError) on factorial path records, which carry owner+state_locked only."""
+    assert au.owner_ok({"owner": {"state_hash": "h"}, "state_locked": True}, "h")
+    assert not au.owner_ok({"owner": {"state_hash": "h"}, "state_locked": False}, "h")
+    assert not au.owner_ok({"owner": {"state_hash": "x"}, "state_locked": True}, "h")
+    assert au.owner_ok({"owner": {"state_hash": "h"}, "state_locked": True, "state_hash_before": "h", "state_hash_after": "h"}, "h")
+    assert not au.owner_ok({"owner": {"state_hash": "h"}, "state_locked": True, "state_hash_before": "h", "state_hash_after": "z"}, "h")

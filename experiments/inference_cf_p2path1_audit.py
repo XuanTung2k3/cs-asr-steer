@@ -138,6 +138,15 @@ def cmd_prerun(args) -> dict:
     return {"schema": "p2_path1_prerun_audit_v1", "verdict": v, "checks": checks, "git_commit": _git("rev-parse", "HEAD")}
 
 
+def owner_ok(v: dict, exp: str) -> bool:
+    """Factorial path records store owner + state_locked (runner checks hash before/after); score records also store
+    both hashes. Attempt 1 of the primary audit crashed reading state_hash_before from path records (no output written)."""
+    ok = v["owner"]["state_hash"] == exp and v["state_locked"] is True
+    if "state_hash_before" in v:
+        ok &= v["state_hash_before"] == exp == v["state_hash_after"]
+    return bool(ok)
+
+
 def own_induce(rows):
     el = [r for r in rows if r["d0"] > 0]
     n = len(el)
@@ -171,8 +180,7 @@ def cmd_post(args) -> dict:
              and r["FREE"]["tokens"] + ([EOS] if r["FREE"]["terminated"] == "eos" else []) == x["F"] and r["reset_ok_phase1"])
         own_t0 = rt["theta0_ln_hash"]
         for k_, v in list(r.get("paths", {}).items()) + list(r["scores"].items()):
-            exp = own_t0 if k_.startswith("T0") or k_.startswith("score_T0") or k_.split("_")[0] == "T0" else r["A4_state_hash"]
-            g &= v["owner"]["state_hash"] == exp and v["state_hash_before"] == exp and v["state_hash_after"] == exp
+            g &= owner_ok(v, own_t0 if k_.startswith("T0") else r["A4_state_hash"])
         sc = {}
         for mdl in ("T0", "A4"):
             for b, don in (("B", x["donB"]), ("ALT", x["donA"])):

@@ -665,3 +665,7 @@ Next authorized separate development design: P2-PATH0, first-divergence rescue/i
 Induction (single and three-token) is causal for the AUTO basin under fixed A4 weights; rescue is not established (one dialogue).
 One GPU job (58004). Exposed development only; new human decision required.
 
+
+## P2-PATH1 pre-outcome freeze
+
+Next separate exposed-development diagnostic: P2-PATH1 pre-outcome spec/config/fingerprinted sites frozen only. New theta0-A counterfactual separates prefix from persistent A4 state; exact parent criterion and reproduction required. Fixed3-content-token consensus score is secondary only. PASS_TO_P2_PATH1 before later run; no scientific outcomes here. Core v6 unchanged.

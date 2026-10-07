@@ -359,3 +359,7 @@ P2-PATH0 freeze inspected only sealed A3/A4 D-row token arrays and termination t
 12 A3/A4 D rows of the already-exposed fixed100 D-dev-select panel. Slurm 58004 reconstructed A4 and ran clamp decodes; references for these
 12 rows opened only after the committed reference-free output seal. No fresh validation, full24/100/300, P3, transfer or new data role.
 
+
+## P2-PATH1 pre-outcome freeze
+
+P2-PATH1 freeze derives only reference-free fingerprints and H=3 content donors from sealed PATH0 twelve-row sites/sources. Primary U7 (six eligible), secondary C5 score-only. No PATH1 inference/adaptation/new reference scoring in design session. Later primary label and branch scores sealed/pushed before secondary exposed references; no fresh validation/full24/100/300/P3/transfer role.

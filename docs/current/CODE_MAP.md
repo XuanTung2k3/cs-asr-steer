@@ -360,3 +360,7 @@ P2-PATH0 design-only: docs/inference_cf/P2_PATH0_SPEC.md, P2_PATH0_CODEX_DESIGN.
 (reference-free primary; guarded secondary + ASR_HARM_ALIGNMENT), `inference_cf_p2path0_audit.py` (independent prerun/post),
 `slurm/inference_cf_p2path0.sbatch`, `tests/test_inference_cf_p2path0.py`. Outputs `results/inference_cf/p2path0/`.
 
+
+## P2-PATH1 pre-outcome freeze
+
+P2-PATH1 design: docs/inference_cf/P2_PATH1_SPEC.md, P2_PATH1_CODEX_DESIGN.md, P2_PATH1_SITES.json; configs/inference_cf/p2_path1.json. Reuse unchanged path_decode clamp/streams, cached.Branch, A4 reconstruction/reset and canonical evaluators. Additive state-owned score/factorial runner/auditor/tests not yet implemented.

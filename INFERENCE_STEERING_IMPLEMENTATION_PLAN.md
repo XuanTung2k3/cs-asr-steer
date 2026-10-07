@@ -638,3 +638,7 @@ P2-PATH0 pre-outcome design frozen: exact12 A3/A4 D rows,5 rescue/7 induction, f
 | Secondary + `P2_PATH0_AUDIT: PASS` | DONE: INDUCE_1/3 pass, RESCUE fail; ASR_HARM_ALIGNMENT INDUCTION_ONLY |
 | Branch-aware path control / any follow-on | NOT RUN; new human decision required |
 
+
+## P2-PATH1 pre-outcome freeze
+
+P2-PATH1 design frozen after PATH0 ASYMMETRIC: U7 state×first-token factorial (six suffix-eligible), exact inherited INDUCE1, fresh same-state caches; fixed H=3 consensus scoring on PATH0 U7/C5. No outcomes in design session. One job≤30min later; see docs/inference_cf/P2_PATH1_SPEC.md. Historical A2/A3/A4/PATH0 unchanged.

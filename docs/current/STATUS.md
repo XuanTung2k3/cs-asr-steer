@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-SEQ (2026-10-07)
+# Current separate inference-time ticket — P2-SEQ (2026-10-07): terminal `P2_SEQ_SEQUENCE_DAMAGE`
+
+Freeze `660a619`; implementation `ed9c355`; AUTO reuse proof `14a2339`; `PASS_TO_P2_SEQ` (`9cb1d75`); Slurm 57867
+(100/100); `P2_SEQ_AUDIT: PASS`. Matched forced-ZH S0 PIER .4957 / MER .2570; AUTO .4080 / .2591; STEER (E*R_B*D2, L16,
+alpha2) .4871 / .2852. Benefit passes (net POI +6, PIER gain .0086, CI spans 0) but safety fails (MER +.028, ZH-CER +.033,
+ZH retention .940, outside harm .060). STEER is clearly worse than AUTO on PIER (+.079, lower95 +.0125). Evidence-only
+handoff `docs/inference_cf/P2_SEQ_TTA_HANDOFF.md` (no TTA designed/run). Report `docs/inference_cf/P2_SEQ_REPORT.md`.
+No300/P3/TTA/fresh validation. Core v6 METHOD_CONTRACT unchanged.
+
+<!-- superseded header (P2-SEQ design freeze) -->
+## (Previous header) Current separate inference-time ticket — P2-SEQ (2026-10-07)
 
 Pre-outcome design freeze in `docs/inference_cf/P2_SEQ_SPEC.md`, `P2_SEQ_CODEX_DESIGN.md` and
 `configs/inference_cf/p2_seq.json`. One fixed100 sequence screen, exactly matched forced-ZH/AUTO/
@@ -548,3 +558,11 @@ Freeze `be460ce`; implementation `4e6062c`; candidate seal pushed before masking
 57866 (forward-only, 180 counterfactuals); `P2_SEL_LAC_AUDIT: PASS (LAC0)`. EN-TP strong 6/42 (< 34), ZH-FP weak 4/5 (pass),
 S TP−FP +0.95 with lower80 −0.022; recall 4/18. No F_lex; LAC1/LAC2 not run. Occlusion is strong on correct states
 (ZH −4.0, EN +2.3) but ≈0 on EN-confusion TP and FP. P3 HELD. Reports `docs/inference_cf/P2_SEL_LAC_{LAC0_REPORT,REPORT}.md`.
+
+## P2-SEQ result (2026-10-07) — terminal: `P2_SEQ_SEQUENCE_DAMAGE`
+
+Freeze `660a619`; implementation `ed9c355`; AUTO reuse 100/100 sealed (`14a2339`, attempt-1 hash-definition seal
+preserved); `PASS_TO_P2_SEQ` (`9cb1d75`); Slurm 57867, one MIG allocation, 607 s; `P2_SEQ_AUDIT: PASS`. 237 edits across
+69/100 utterances; 41 transcripts changed. Damage is mostly deletion/early termination (deletions 1026→1299). Benefit
+rules pass, but MER, ZH-CER, matrix-ZH retention and outside-POI harm fail. STEER is below AUTO. Next: separately frozen
+P2-TTA0 design from the evidence-only handoff. P3 HELD.

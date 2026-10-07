@@ -290,3 +290,13 @@ readout, canonical metrics and fixed100 panel. Additive D2 sequence/analysis/ind
 Slurm/tests pending. Historical cached_decode remains D0; do not relabel its outputs. New S0
 matched zero-dose required; historical AUTO reuse subject to pre-outcome semantic/hash audit.
 No outcomes, core-method change, or TTA implementation.
+
+## P2-SEQ (2026-10-07; executed, terminal `P2_SEQ_SEQUENCE_DAMAGE`)
+
+`experiments/inference_cf_p2seq.py` (reuse proof `prepare`, `manifest`, `run`; `seq_decode` matched forced-ZH driver:
+alpha 0 = bitwise clean B, alpha 2 = E*R_B*D2 at L16 DG-02 with pre-step snapshot), `inference_cf_p2seq_analyze.py`
+(canonical metrics, POI transitions, retention, outside-POI harm, dialogue count bootstrap, frozen label),
+`inference_cf_p2seq_audit.py` (independent prerun/post), `slurm/inference_cf_p2seq.sbatch`,
+`tests/test_inference_cf_p2seq.py`. Outputs `results/inference_cf/p2seq/`. Docs `P2_SEQ_REPORT.md`,
+`P2_SEQ_TTA_HANDOFF.md` (evidence only; no TTA code exists).
+

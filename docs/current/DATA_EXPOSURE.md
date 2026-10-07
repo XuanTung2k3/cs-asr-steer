@@ -301,3 +301,11 @@ Read existing contracts/source/reports and metadata/hash inventory of the fixed1
 historical baseline outputs only. No new mini decoding, model inference, scientific metrics or
 role exposure in this design session. Conditional execution limited to existing D-dev-select100;
 no refill/full300/router-calib new role/confirm/test/P3/transfer/fresh validation. No TTA.
+
+## P2-SEQ exposure (2026-10-07)
+
+Slurm 57867 decoded the fixed100 D-dev-select panel (`P2_SEL_MINI_PANEL.json`, already exposed) twice: forced-ZH
+alpha 0 and STEER alpha 2. AUTO was reused from the historical rows (not recomputed). References were used only by the
+post-hoc analysis/auditor. No new utterances, refill, full300, router-calib new role, D-dev-confirm, D-test, P3,
+transfer corpora or fresh validation. No TTA.
+

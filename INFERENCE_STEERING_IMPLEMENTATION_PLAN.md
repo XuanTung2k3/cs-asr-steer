@@ -563,3 +563,13 @@ AUTO reused after pre-run semantic/hash audit. Development point safety/material
 independent PASS_TO_P2_SEQ/P2_SEQ_AUDIT frozen. No scientific job or runner in design session.
 Stop after100: promising recommends separately frozen confirmation; no gain/damage recommends
 evidence-only fresh P2-TTA0 design, never implementation or adaptation here. P3 held; core unchanged.
+
+## P2-SEQ — executed (2026-10-07): `P2_SEQ_SEQUENCE_DAMAGE`
+
+| Stage | Status |
+|---|---|
+| Implementation + AUTO reuse proof + pre-run audit | DONE (`ed9c355`, `14a2339`, `9cb1d75`, `PASS_TO_P2_SEQ`) |
+| Sequence screen (Slurm 57867, 100 utts) | DONE, `P2_SEQ_AUDIT: PASS`: sequence damage; below AUTO |
+| P2-TTA0 | evidence-only handoff `docs/inference_cf/P2_SEQ_TTA_HANDOFF.md`; design NOT frozen, nothing run |
+| Full 300 / P3 | NOT RUN / HELD |
+

@@ -60,3 +60,15 @@ def test_r_path_has_no_adaptation_and_auditor_is_independent():
     src = Path("experiments/inference_cf_p2tta_funnel_audit.py").read_text()
     assert re.search(r"^\s*(from|import)\s+\S*(_analyze|episodic_tta|inference_cf_p2tta_funnel\b)", src, re.M) is None
     assert fau.R_MAP == fan.R_MAP
+
+
+def test_r_gate_runtime_code_scope_excludes_tests_only():
+    """Gate attempt 1 (preserved) treated the post-run-extended TTA0 test file as runtime code; runtime code must still
+    include the runner and episodic module and be byte-identical to the run1 manifest."""
+    src = Path("experiments/inference_cf_p2tta_funnel_audit.py").read_text()
+    assert 'not p.startswith("tests/")' in src and '"runtime_sources_unchanged"' in src
+    man = json.loads(Path("results/inference_cf/p2tta0/run1/manifest.json").read_text())
+    runtime = [p for p in man["sources"] if not p.endswith(("_analyze.py", "_audit.py")) and not p.startswith("tests/")]
+    assert {"experiments/inference_cf_p2tta0.py", "src/csasr/inference_cf/episodic_tta.py", "experiments/inference_cf_cached.py"} <= set(runtime)
+    for p in runtime:
+        assert "sha256:" + hashlib.sha256(Path(p).read_bytes()).hexdigest() == man["sources"][p], p

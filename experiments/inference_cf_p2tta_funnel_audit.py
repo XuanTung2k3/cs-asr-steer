@@ -83,8 +83,14 @@ def cmd_r_gate(args) -> dict:
     inv = tau.cmd_invalid(SimpleNamespace(run="results/inference_cf/p2tta0/run1", record="results/inference_cf/p2tta0/run1_invalid_record.json"))
     eng = inv["engineering"]
     for k, v in inv["checks"].items():
-        if k not in ("label_agrees", "failed_checks_agree"):
+        if k not in ("label_agrees", "failed_checks_agree", "runtime_sources_unchanged"):
             checks[f"sealed:{k}"] = bool(v)
+    # runtime code = manifest sources other than post-run analysis/audit extensions and tests (attempt 1 wrongly
+    # required the post-run-extended test file to match; tests are neither sealed inputs nor executed in run1)
+    man = json.loads((TTA0 / "run1/manifest.json").read_text())
+    runtime = [p for p in man["sources"] if not p.endswith(("_analyze.py", "_audit.py")) and not p.startswith("tests/")]
+    checks["sealed:runtime_code_unchanged"] = all("sha256:" + sha(ROOT / p) == man["sources"][p] for p in runtime) and \
+        "experiments/inference_cf_p2tta0.py" in runtime and "src/csasr/inference_cf/episodic_tta.py" in runtime
     for k, v in eng.items():
         if k != "live_objective_gradient_check":
             checks[f"mechanics:{k}"] = bool(v)          # trainable/reset identities, theta0, updates, losses, outputs, counts

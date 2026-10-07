@@ -685,3 +685,8 @@ Next separate exposed-development diagnostic: P2-PATH1 pre-outcome spec/config/f
 AUTO-token history alone establishes the basin on this cohort; persistent A4 state amplifies it in some rows (required only for U2004).
 Short-horizon theta0/A4 consensus rejects the AUTO branch at all U sites. One GPU job (58011). Exposed development only.
 
+
+
+## P2-PATH2 pre-outcome freeze
+
+Next separate exposed-development ticket: P2-PATH2 pre-outcome spec/config/fingerprinted panel frozen only. Online one-event guard, G1 versus G2; audited reconstruction/PATH1-score/no-trigger identity required. PASS_TO_P2_PATH2 before later job; no scientific job/outcome here. Core v6 and historical terminal results unchanged. P3 HELD.

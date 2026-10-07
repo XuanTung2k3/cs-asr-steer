@@ -652,3 +652,8 @@ P2-PATH1 design frozen after PATH0 ASYMMETRIC: U7 state×first-token factorial (
 | Secondary + `P2_PATH1_AUDIT: PASS` | DONE: MIXED; CONSENSUS_REJECTS_AUTO PASS; ASR_STATE_ALIGNMENT MIXED |
 | Guarded-switch controller / any follow-on | NOT RUN; new human decision required |
 
+
+
+## P2-PATH2 pre-outcome freeze
+
+P2-PATH2 design frozen after audited PATH1 MIXED: first online theta0/A4 disagreement, fixed H=3 consensus, G1 one-token branch choice versus G2 short theta0 three-token handoff with clean A4 replay. Exact PATH0 D12; one later job<=30min; no outcome in this design session. See docs/inference_cf/P2_PATH2_SPEC.md. Historical objectives/stages and core v6 unchanged; no automatic follow-on.

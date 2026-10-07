@@ -369,3 +369,8 @@ P2-PATH1 freeze derives only reference-free fingerprints and H=3 content donors 
 Same 12 PATH0 D rows of the already-exposed fixed100 D-dev-select panel (7 U factorial, 5 C score-only). References for these rows opened
 only after the committed reference-free seal. No fresh validation, full24/100/300, P3, transfer or new data role.
 
+
+
+## P2-PATH2 pre-outcome freeze
+
+Read existing source/contracts/sealed PATH0/PATH1 token arrays and original exposed per-row canonical count vectors; independently summed historical B0/A4 cutoffs only. No PATH2 inference/adaptation/new outputs or new reference evaluation. Conditional PATH2 uses exact12 exposed PATH0 D rows; C/U/sites are audit/analysis-only, never runtime features. New PATH2 references only after pushed output seal and independent primary audit. No fresh validation/new role/full24/100/300/P3/transfer.

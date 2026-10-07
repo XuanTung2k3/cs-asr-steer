@@ -372,3 +372,8 @@ P2-PATH1 design: docs/inference_cf/P2_PATH1_SPEC.md, P2_PATH1_CODEX_DESIGN.md, P
 (reference-free primary; guarded secondary + ASR_STATE_ALIGNMENT), `inference_cf_p2path1_audit.py` (independent prerun/post),
 `slurm/inference_cf_p2path1.sbatch`, `tests/test_inference_cf_p2path1.py`. Outputs `results/inference_cf/p2path1/`.
 
+
+
+## P2-PATH2 pre-outcome freeze
+
+P2-PATH2 design-only artifacts: docs/inference_cf/P2_PATH2_SPEC.md, P2_PATH2_CODEX_DESIGN.md, P2_PATH2_PANEL.json; configs/inference_cf/p2_path2.json. Reuse branch_adjudication/path_decode/cached.Branch and unchanged A4 reconstruction/canonical evaluation. New consensus_guard + PATH2 runner/analyzer/independent auditor/tests/sbatch are implementation obligations, NOT implemented or run here. Two independent resident models, model-owned fresh decoder KV, clean A4 full-history replay.

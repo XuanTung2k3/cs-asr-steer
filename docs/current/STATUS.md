@@ -594,3 +594,7 @@ diagnostic shows this is intrinsic float32-logit/bf16-backward precision (~1e-2,
 Reference-free mechanics only: both losses fell 20/20; A1 entropy -53%, 10/20 transcripts changed, 1 severe truncation;
 A2 changed 3/20 (all where AUTO = forced) and never moved toward AUTO. No reference evaluation. P3 HELD.
 
+
+## P2-TTA-FUNNEL master freeze
+
+Next separate inference_cf development ticket: P2-TTA-FUNNEL, design frozen only. TTA0-R must pass repaired sealed-run audit before reference evaluation; MAP only after audited no-viable; TTA1 only after exactly one audited selection. No outcomes or jobs in this design session. See ../inference_cf/P2_TTA_FUNNEL_SPEC.md. Historical P2_TTA0_INVALID and closed steering diagnostics preserved.

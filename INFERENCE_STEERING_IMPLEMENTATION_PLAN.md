@@ -592,3 +592,7 @@ handoff for separately frozen TTA1; no automatic100/300/P3. Core authority uncha
 | Evaluation of sealed adapted outputs | NOT RUN (INVALID supersedes; outputs kept sealed) |
 | TTA1 / full 100 / 300 / P3 | NOT RUN / HELD; new human decision required |
 
+
+## P2-TTA-FUNNEL master freeze
+
+P2-TTA-FUNNEL master pre-outcome freeze now defines numerical-only TTA0-R → conditional MAP → selected-objective TTA1. Historical TTA0 INVALID remains. See docs/inference_cf/P2_TTA_FUNNEL_SPEC.md; no funnel outcomes run. Core v6 unchanged.

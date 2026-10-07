@@ -325,3 +325,7 @@ no reference entered runtime. Stage INVALID: references were NOT loaded and adap
 CPU diagnostic used row 0 audio/teachers only. No router-calib new role, D-dev-confirm, D-test, P3, full100/300,
 transfer corpora or fresh validation.
 
+
+## P2-TTA-FUNNEL master freeze
+
+P2-TTA-FUNNEL freeze: no new adapted reference evaluation or scientific inference. Theta0 stored FORCED/AUTO text equality on fixed100 used only to freeze MAP24 (12 disagreement,12 agreement;20 dialogues). R would evaluate previously sealed20 only after repaired audit; MAP24 and selected TTA1 fixed100 are conditional exposed-development roles, not fresh validation. Full300/P3/confirm/test/transfer remain unauthorized.

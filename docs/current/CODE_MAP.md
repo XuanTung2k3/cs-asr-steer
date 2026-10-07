@@ -319,3 +319,7 @@ masters via bf16 `functional_call`, teacher-forced `position_terms`, A1/A2 losse
 precision diagnostic), `slurm/inference_cf_p2tta0.sbatch`, `tests/test_inference_cf_p2tta0.py`. Outputs
 `results/inference_cf/p2tta0/`.
 
+
+## P2-TTA-FUNNEL master freeze
+
+P2-TTA-FUNNEL design: docs/inference_cf/P2_TTA_FUNNEL_{SPEC,CODEX_DESIGN}.md, configs/inference_cf/p2_tta_funnel.json, P2_TTA_MAP_PANEL24.json/panel-selection contract and P2_TTA1_INHERITANCE_CONTRACT.md. Reuse episodic_tta.py and p2tta0 replay/evaluation/audit; new funnel runner not implemented. Core v6 mappings unchanged.

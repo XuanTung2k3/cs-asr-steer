@@ -1,0 +1,40 @@
+{
+ "checks": {
+  "counts": true,
+  "exactly_100_rows": true,
+  "live_audit_2pct": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "rows_episodes_controller_replay_recomputed": true,
+  "runtime": true,
+  "sources_at_commit": true,
+  "summaries_agree": true
+ },
+ "failures": [],
+ "git_commit": "bceb34147e374c0edc90208bba40e6ab9cdf198f",
+ "independent": {
+  "changed": {
+   "DEV24": 3,
+   "FULL100": 3,
+   "NOVEL76": 0,
+   "PATH2_12": 3
+  },
+  "theta0_winners": {
+   "DEV24": 3,
+   "FULL100": 3,
+   "NOVEL76": 0,
+   "PATH2_12": 3
+  },
+  "triggers": {
+   "DEV24": 5,
+   "FULL100": 5,
+   "NOVEL76": 0,
+   "PATH2_12": 5
+  }
+ },
+ "label": null,
+ "phase": "primary",
+ "schema": "p2_path3_post_audit_v1",
+ "verdict": "P2_PATH3_AUDIT: PASS"
+}

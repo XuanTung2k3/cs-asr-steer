@@ -149,7 +149,9 @@ def cmd_prerun(args) -> dict:
         all(set(x["runtime"]) == {"utterance_id", "audio_path", "audio_fingerprint_64k_sizeprefixed", "audio_full_sha256", "y_A", "y_A_valid_mask"} for x in plan["rows"])
     rsrc = (ROOT / RUNNER).read_text()
     run_code = _fn_source(RUNNER, "cmd_run")
-    obs = _fn_source(RUNNER, "step_observer")
+    obs_node = next(n for n in ast.parse(rsrc).body if isinstance(n, ast.FunctionDef) and n.name == "step_observer")
+    body = [b for b in obs_node.body if not (isinstance(b, ast.Expr) and isinstance(getattr(b, "value", None), ast.Constant))]
+    obs = "\n".join(ast.unparse(b) for b in body)                    # executable code only (docstring excluded)
     checks["observer_pure"] = ("register_optimizer_step_post_hook" in obs and "h.remove()" in obs and "detach()" in obs and "no_grad" in obs
                                and not any(t in obs for t in ("backward", "model(", "zero_grad", ".step(", "random", "manual_seed", "add_", "copy_(")))
     checks["exact_A2_path"] = ('t0run.run_objective(b, g, "A2"' in run_code and "with step_observer() as snaps" in run_code and "len(snaps) != 2" in run_code
@@ -167,11 +169,11 @@ def cmd_prerun(args) -> dict:
     asrc = (ROOT / "experiments/inference_cf_p2a2_mech0_audit.py").read_text()
     checks["auditor_independent"] = re.search(r"^\s*(from|import)\s+\S*(p2a2_mech0|consensus_guard|branch_adjudication|path_decode|eos_boundary)", asrc, re.M) is None
     checks["tests_present"] = (ROOT / "tests/test_inference_cf_p2a2_mech0.py").exists()
-    e = {"rows": 12, "dlg": 10}
+    e = {"rows": 12, "dlg": 10, "zh": 0, "mx": 0, "prow": 0, "pdlg": 0}
     n0 = {"zh": 10, "mx": 10, "prow": 5, "pdlg": 5}
     tt = [own_mech(True, e, n0, 0.5, 0.5, 0.1, 0.75) == "P2_A2_MECH0_TERMINATION_DOMINANT", own_mech(True, e, n0, 0.5, 0.49, 0.1, 0.75) != "P2_A2_MECH0_TERMINATION_DOMINANT",
           own_mech(True, e, n0, 0.6, 0.6, 0.0, 0.9) != "P2_A2_MECH0_TERMINATION_DOMINANT", own_mech(True, e, n0, 0.6, 0.6, 0.1, 0.74) != "P2_A2_MECH0_TERMINATION_DOMINANT",
-          own_mech(True, {"rows": 2, "dlg": 2}, n0, 0.9, 0.9, 1, 1) != "P2_A2_MECH0_TERMINATION_DOMINANT",
+          own_mech(True, {"rows": 2, "dlg": 2, "zh": 0, "mx": 0, "prow": 0, "pdlg": 0}, n0, 0.9, 0.9, 1, 1) != "P2_A2_MECH0_TERMINATION_DOMINANT",
           own_mech(True, {"rows": 3, "dlg": 3, "zh": 0, "mx": 0, "prow": 0, "pdlg": 0}, n0, 0.2, 0.2, 1, 1) == "P2_A2_MECH0_NONTERMINATION_DOMINANT",
           own_mech(True, {"rows": 3, "dlg": 3, "zh": 0, "mx": 0, "prow": 0, "pdlg": 0}, n0, 0.25, 0.2, 1, 1) != "P2_A2_MECH0_NONTERMINATION_DOMINANT",
           own_mech(True, {"rows": 3, "dlg": 3, "zh": 1, "mx": 0, "prow": 1, "pdlg": 1}, {"zh": 1, "mx": 0, "prow": 1, "pdlg": 1}, 0.3, 0.6, 1, 1) == "P2_A2_MECH0_MIXED",

@@ -1,4 +1,14 @@
-# Current supporting inference_cf ticket — R0 (2026-10-08): terminal `R0_ORACLE_CONSTRUCTION_INSUFFICIENT` (no R1)
+# Current supporting inference_cf ticket — ST-PROMPT-R1 (2026-10-08): R1-A `ST_PROMPT_R1_A_MARGIN_ONLY`; R1-B NOT RUN (not authorized)
+
+Freeze `e965a7f`; `PASS_TO_ST_PROMPT_R1_A` (`0bc533b`); manifest `b8a82e2`; Slurm 58158 (6.3 min); user-authorized pre-reference
+amendment A1 (`03a2289`: non-frozen norm-preservation flag on 189/6480 cells, max 0.68% bf16, made diagnostic); seal `3072361`;
+`ST_PROMPT_R1_A_AUDIT: PASS (PRIMARY)` then `(FULL)`. Historical L16 apparatus bitwise (B0/D0/ST-LOC0 +/- and D2 at e*, zero at
+L3/8/16/24). 24 v_prompt arms x eta .15/.30/.45 all 60/60/60 valid. Margin rises with dose (minus sign; L24 up to +1.48 nat), only L16
+eta.45- and L24 eta.30- beat matched random with adjusted evidence, but max 1 correction/arm and a 2-position union; damage grows with
+dose. No CAUSAL_PROMISE -> no R1-B, no R2. Reports `docs/inference_cf/ST_PROMPT_R1_A_REPORT.md`, `ST_PROMPT_R1_FINAL_REPORT.md`.
+
+<!-- superseded header (R0 result) -->
+## (Previous header) Current supporting inference_cf ticket — R0 (2026-10-08): terminal `R0_ORACLE_CONSTRUCTION_INSUFFICIENT` (no R1)
 
 Freeze `a5929c6`; `PASS_TO_R0` (`9a33d01`); manifest `9e05252`; Slurm 58150 (11.9 min, 300/300 rows); reference-free output seal `df75622`
 before oracle access; `R0_AUDIT: PASS (PRIMARY)` (`3929b42`, 27,600 constructions independently recomputed) and `R0_AUDIT: PASS (FULL)`
@@ -819,3 +829,9 @@ prediction or SVD stability. R1 NOT authorized. See `../inference_cf/R0_REGION_V
 ## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
 
 ST-PROMPT-R1 DESIGN_FROZEN_IMPLEMENTATION_PENDING. Independent PASS_TO_ST_PROMPT_R1_A required; L3/L8 passive paired geometry remains mandatory before pulses. Conditional B only audited A_CAUSAL_PROMISE, immutable selection/schedule. No GPU outcome in freeze; current ST-LOC0/R0 stops remain unchanged.
+
+## ST-PROMPT-R1 — executed (2026-10-08): R1-A `ST_PROMPT_R1_A_MARGIN_ONLY`; R1-B NOT RUN
+
+One A job (Slurm 58158); seal pushed and independently audited before references; full audit PASS. Margin-only causal lever (minus
+sign, dose-monotone, L24 strongest; random matched-energy also large at L24 eta .45); no arm >= 3 corrections / 3 dialogues. R1-B
+precondition (A_CAUSAL_PROMISE) not met; no R2. See `../inference_cf/ST_PROMPT_R1_FINAL_REPORT.md`.

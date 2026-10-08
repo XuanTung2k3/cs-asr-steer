@@ -480,3 +480,12 @@ Outputs `results/inference_cf/r0/`. Report `docs/inference_cf/R0_REGION_VECTOR_R
 ## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
 
 ST-PROMPT-R1 supporting design: docs/inference_cf/ST_PROMPT_R1_{SPEC,CODEX_DESIGN,FIREWALL,PANEL}; configs/inference_cf/st_prompt_r1.json. experiments/inference_cf_st_prompt_r1_preflight.py is CPU sealed-state geometry only; science runner/analysis/schedule/audit/Slurm paths are proposed in design, not implemented. Reuses core_p1.direction, p2r solver and canonical DG-02 hooks without modification.
+
+## ST-PROMPT-R1 (2026-10-08; R1-A executed, R1-B not run)
+
+`src/csasr/inference_cf/prompt_r1.py` (runtime projection, 24+12 arm table, PCG64 random controls, relative-dose action over the
+unchanged `loc0_sites.pulse_action` / P2-R solver, cell energy checks, CPU geometry ledger cell), `experiments/inference_cf_st_prompt_r1.py`
+(prepare/manifest/capture/pulses/seal), `inference_cf_st_prompt_r1_geometry.py` (separate-process pre-pulse coverage gate),
+`inference_cf_st_prompt_r1_analyze.py` (reference-free primary; seal+primary-audit-gated secondary; family-48 decision/selection;
+amendment A1 frozen-criteria validity), `inference_cf_st_prompt_r1_audit.py` (independent prerun/primary/full),
+`slurm/inference_cf_st_prompt_r1.sbatch`, `tests/test_st_prompt_r1_impl.py`. Outputs `results/inference_cf/st_prompt_r1/`. No R1-B code.

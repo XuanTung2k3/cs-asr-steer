@@ -472,3 +472,10 @@ No D-dev-confirm, D-test, router-calib new role, new split, P3 or transfer data;
 ## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
 
 ST-PROMPT-R1 freeze uses only already-exposed historical180-position/80-utterance D-dev-select membership and sealed unedited paired states for CPU geometry. No new split, reference outcomes, GPU science, confirmation/test/transfer access. Future A and conditional oracle B are exposed-development, not fresh validation; oracle query locations evaluator-only and selection bias disclosed.
+
+## ST-PROMPT-R1 exposure (2026-10-08)
+
+Slurm 58158 (R1-A) replayed only the already-exposed D-dev-select 180 positions / 80 utterances / 20 dialogues (ST-LOC0 panel) with
+single relative-dose pulses. Offline strata were read only by the separate geometry-coverage gate process (counts, no targets). P2-RJ
+reference sets/competitors (previously exposed) were opened only after the reference-free seal was pushed and the independent primary
+audit passed. R1-B (80-utterance oracle-scheduled decoding) was NOT run. No D-dev-confirm, D-test, router-calib new role, P3 or transfer.

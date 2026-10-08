@@ -774,3 +774,15 @@ Next separately authorized construction-feasibility study: R0 spec/config/panel/
 ## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
 
 ST-PROMPT-R1 separately authorized layer/dose/sign feasibility: exact dynamic prompt contrast, DG-02 L3/8/16/24, relative eta .15/.30/.45,24 primary/12 random. Conditional oracle80-utterance continuation entirely frozen. No job/outcome in design session; no automatic R2. See ST_PROMPT_R1_SPEC.md. Core v6 and prior terminal stops unchanged.
+
+## ST-PROMPT-R1 — executed (2026-10-08): R1-A `ST_PROMPT_R1_A_MARGIN_ONLY`; R1-B NOT RUN
+
+| Step | Status |
+|---|---|
+| Freeze | DONE (`e965a7f`) |
+| Implementation + `PASS_TO_ST_PROMPT_R1_A` | DONE (`0ad5374`, `0bc533b`; regression 131/131) |
+| Manifest + R1-A run (Slurm 58158) | DONE (`b8a82e2`; 6480/6480 cells, historical barrier bitwise) |
+| Amendment A1 (user-authorized, pre-reference) | DONE (`03a2289`) |
+| Seal + PRIMARY audit + evaluation + FULL audit | DONE (`3072361`, `9ff9e74`, `343ebac`, `69fdbd6`): MARGIN_ONLY |
+| R1-B | NOT RUN (requires A_CAUSAL_PROMISE) |
+| Next | No R2 / location optimization; any new direction/dose/layer needs a separate human-authorized freeze |

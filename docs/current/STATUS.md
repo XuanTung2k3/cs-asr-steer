@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-PATH4-R1 (2026-10-07): terminal `P2_PATH4_OVERCONSERVATIVE`
+# Current separate inference-time ticket — P2-PATH5 (2026-10-08): terminal `P2_PATH5_SAFE_NO_ADDED_VALUE` — G1 controller line CLOSED; main candidate A2
+
+OPP0 (no GPU): derived A2+G1A on fixed100 ZH 1093 / POI 314 / mixed 1439 (EOS harm removed; rescue only PATH2_12). PATH5 freeze `d1d057d`;
+`PASS_TO_P2_PATH5` (`01d57b8`); manifest `48f0ace`; Slurm 58074 (13.9 min); seal `101ca00` pushed before NEW200 references; `P2_PATH5_AUDIT:
+PASS` (primary + full). FIXED100 barrier exact (A2 100/100, G1A == derived 100/100). NEW200 (FULL300 - fixed100, already-exposed, not fresh):
+30 disagreements (22 content, 8 EOS abstain), 7 G1A-changed rows / 6 dialogues -> gate open; safety PASS, retention 1.00, but R_plus 0,
+R_net -2 -> SAFE_NO_ADDED_VALUE. Hard stop: no further controller revision; main adaptation candidate returns to A2 (A2 vs B0 on NEW200:
+ZH 2202 -> 1921, MER 0.269 -> 0.241, mostly from 8 early-EOS rows that A2 continues). Report `docs/inference_cf/P2_PATH5_REPORT.md`. Core v6 unchanged.
+
+<!-- superseded header (P2-PATH4-R1 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH4-R1 (2026-10-07): terminal `P2_PATH4_OVERCONSERVATIVE`
 
 Revision `PATH4_R1_EOS_BOUNDARY_V1` (freeze `490ec20`; original `P2_PATH4_BLOCKED_EOS_FIRST_BRANCH` `29661e9` preserved). Runnable
 `PASS_TO_P2_PATH4_R1` (`316b727`); manifest `c57936a`; Slurm 58035 (7.5 min); seal `4781605` pushed before references;

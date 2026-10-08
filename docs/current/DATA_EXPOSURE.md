@@ -484,3 +484,12 @@ audit passed. R1-B (80-utterance oracle-scheduled decoding) was NOT run. No D-de
 ## S1 acoustic evidence pre-outcome freeze (2026-10-08)
 
 Only historical reports/contracts/source and sealed180-position/80-utterance metadata, audio file hashes, R0 primary array hashes and LAC masked-prefix/archive hashes inspected. No new pretrained-model forward, top-K candidate outcome, masking outcome or reference evaluation. Exact same exposed D-dev-select180/80/20; no sampling or new split/role. Future original candidates sealed/pushed before acoustic rescoring; full output seal plus PRIMARY audit before evaluator targets. No oracle timing/regions, vectors, edits, TTA, confirm/test/router-calib new role/P3/transfer. This is enriched development first-token evidence, not ASR recovery or fresh validation.
+
+
+## S1 acoustic evidence execution (2026-10-08)
+
+Slurm 58176/58177 ran frozen Whisper forwards on the already-exposed D-dev-select 180 positions / 80 utterances / 20 dialogues only (original
+and hard-zero masked audio; same-prefix M/E/native-AUTO readouts; 0 LID, 0 new LAC). Reference-free outputs sealed and pushed (`7ffb21b`) and
+PRIMARY-audited before the evaluator opened the exposed P2-RJ acceptable first-token sets, strata and the P2-R structural ledger. No
+D-dev-confirm, D-test, router-calib new role, P3, transfer, oracle timing/regions, vectors, edits or training. Conditional (headroom-enriched)
+development evidence only.

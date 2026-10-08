@@ -840,3 +840,14 @@ precondition (A_CAUSAL_PROMISE) not met; no R2. See `../inference_cf/ST_PROMPT_R
 ## S1 acoustic evidence — separately authorized design freeze (2026-10-08)
 
 S1 DESIGN_FROZEN_IMPLEMENTATION_PENDING: exact historical180/80/20; original-audio same-prefix M/E/native-detected AUTO Top5/20 unions, then R0-predicted EN hard-zero counterfactual and matched off-target scoring. Candidate seal pushed before masks; final seal and independent PRIMARY before exposed references. Both headroom and acoustic discrimination gates required; no new inference/outcome/job in Codex, no vectors/steering/TTA or core-v6 change. PASS_TO_S1 required after implementation; see ../inference_cf/S1_ACOUSTIC_EVIDENCE_SPEC.md. Prior R0/ST-PROMPT/LAC terminal outcomes remain closed.
+
+
+## S1 acoustic evidence — executed (2026-10-08): terminal `S1_CANDIDATE_HEADROOM_INSUFFICIENT` (no S2)
+
+Freeze `a89067b`; `PASS_TO_S1` (`686df02`, after preserved attempt-1 static false positive); Slurm 58176 candidates (1.8 min) -> pushed
+candidate seal `f6c73bb` -> `S1_AUDIT: PASS (CANDIDATES)` (`5714583`, after preserved attempt-1 open-log rule fix) -> Slurm 58177 acoustic
+(1.1 min) -> output seal `7ffb21b` -> `PASS (PRIMARY)` (`6055fcd`) -> evaluation (`9483d40`) -> `PASS (FULL)` (`d5dd94e`). M raw logits
+bitwise = historical NONE 180/180; native AUTO detected zh 65 / en 15 (always aliases M/E). EN-confusion first-token availability: union@20
+11/60 (9 dialogues; M 8, E 10), union-minus-M@20 3 (3 dialogues) -> Gate H fails (needs 12 and 5). Descriptive D: only 4 paired-accessible rows;
+predicted-EN masking raises the reference rank on all 4 (MRR +.15 vs M/off-target/shuffle) but 0 top-1 corrections. Report
+`docs/inference_cf/S1_ACOUSTIC_EVIDENCE_REPORT.md`. Core v6 unchanged; no steering, vectors or S2.

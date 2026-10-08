@@ -494,3 +494,14 @@ amendment A1 frozen-criteria validity), `inference_cf_st_prompt_r1_audit.py` (in
 ## S1 acoustic evidence — design only (2026-10-08)
 
 Frozen docs/inference_cf/S1_{ACOUSTIC_EVIDENCE_SPEC,CODEX_DESIGN,REFERENCE_FIREWALL,PANEL} and configs/inference_cf/s1_acoustic_evidence.json; CPU tests tests/test_s1_freeze_contract.py. Reuse cached.Branch/_processed, native Whisper detect_language, R0 primary region intervals/query_mapping and lexical_compatibility.hard_mask/waveform_model_inputs. Proposed s1_evidence.py/acoustic_s1 runner/evaluator/independent auditor/Slurm are pending, not existing infrastructure. No historical code modified, steering vectors or core-v6 change.
+
+
+## S1 acoustic evidence — implemented and executed (2026-10-08)
+
+`src/csasr/inference_cf/s1_evidence.py` (label-free runtime projection, Top-K/unions with origin bits and action types, exact heard-attention
+crop integrals, predicted-EN target + matched off-target selection, fixed lambda=1 scores, PCG64 shuffled support);
+`experiments/acoustic_s1.py` (prepare / manifest / candidates / candidate-seal / acoustic / seal / primary / CPU synthetic smoke; reuses
+cached.Branch/_processed, native `_retrieve_init_tokens`/`detect_language`, r0_regions.query_mapping, lexical_compatibility.hard_mask /
+waveform_model_inputs; opened-path audit log); `experiments/acoustic_s1_evaluate.py` (post-seal only: Gate H/D, family-8 dialogue bootstrap,
+`decide`); `experiments/acoustic_s1_audit.py` (independent prerun/candidates/primary/full; exact Fraction region route, no primary imports);
+`slurm/acoustic_s1.sbatch` (PHASE=candidates|acoustic); `tests/test_s1_impl.py`. Outputs `results/inference_cf/s1/`.

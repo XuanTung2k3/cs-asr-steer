@@ -1,0 +1,34 @@
+{
+ "A2_CONFIRMATION_READY": null,
+ "checks": {
+  "M_stop_summary_agrees": true,
+  "counts": true,
+  "exactly_300_rows": true,
+  "geometry_margins_actions_recomputed": true,
+  "live_audit_2pct": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "reconstruction_states_norms_recomputed": true,
+  "retention_sensitivity_recomputed": true,
+  "runtime": true,
+  "seal_committed_unchanged": true,
+  "severe_agrees": true,
+  "sources_at_commit": true
+ },
+ "failures": {
+  "geometry": [],
+  "retention": [],
+  "rows": []
+ },
+ "git_commit": "ae69635fe4ad35af0cfeca819c83ffbd90ada531",
+ "independent": {
+  "dM2_median": 0.6250000298023224,
+  "dM2_pos_rate": 1.0,
+  "missed_severe": []
+ },
+ "label": null,
+ "phase": "primary",
+ "schema": "p2_a2_mech0_post_audit_v1",
+ "verdict": "P2_A2_MECH0_AUDIT: PASS"
+}

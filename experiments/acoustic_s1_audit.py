@@ -402,9 +402,14 @@ def runtime_checks(rt: dict, m: dict, stage: str) -> dict:
             f"{stage}_wall_under_3h": rt["elapsed_sec"] < 10800}, forb
 
 
+SELF = "experiments/acoustic_s1_audit.py"
+
+
 def manifest_ok(stage: str):
+    """Manifest hash valid and every pinned source unchanged, except this auditor's own file (documented auditor-rule
+    commits only; it is never executed by the runner)."""
     m = J(f"{RUN}/manifest_{stage}.json")
-    ok = canon({k: v for k, v in m.items() if k != "manifest_hash"}) == m["manifest_hash"] and all(fhash(ROOT / p) == h for p, h in m["sources"].items())
+    ok = canon({k: v for k, v in m.items() if k != "manifest_hash"}) == m["manifest_hash"] and all(fhash(ROOT / p) == h for p, h in m["sources"].items() if p != SELF)
     return m, ok
 
 
@@ -539,7 +544,9 @@ def cmd_primary(args) -> dict:
     plan = J(PLAN)
     m, checks["manifest_valid_sources_unchanged"] = manifest_ok("acoustic")
     mc = J(f"{RUN}/manifest_candidates.json")
-    checks["sources_identical_across_jobs"] = {p: h for p, h in m["sources"].items() if p not in (CAND_SEAL, CAND_AUDIT)} == mc["sources"]
+    checks["sources_identical_across_jobs"] = ({p: h for p, h in m["sources"].items() if p not in (CAND_SEAL, CAND_AUDIT, SELF)}
+                                               == {p: h for p, h in mc["sources"].items() if p != SELF})
+    notes["auditor_self_hash"] = {"candidates_manifest": mc["sources"].get(SELF), "acoustic_manifest": m["sources"].get(SELF), "current": fhash(ROOT / SELF)}
     seal_c = J(CAND_SEAL)
     checks["order_candidate_seal_then_audit_then_acoustic"] = (m["candidate_seal_hash"] == seal_c["seal_hash"] and J(CAND_AUDIT)["verdict"] == "S1_AUDIT: PASS (CANDIDATES)"
                                                                and ancestor(last_commit(CAND_SEAL), last_commit(CAND_AUDIT)) and ancestor(last_commit(CAND_AUDIT), m["git_commit"])

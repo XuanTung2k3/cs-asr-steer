@@ -835,3 +835,8 @@ ST-PROMPT-R1 DESIGN_FROZEN_IMPLEMENTATION_PENDING. Independent PASS_TO_ST_PROMPT
 One A job (Slurm 58158); seal pushed and independently audited before references; full audit PASS. Margin-only causal lever (minus
 sign, dose-monotone, L24 strongest; random matched-energy also large at L24 eta .45); no arm >= 3 corrections / 3 dialogues. R1-B
 precondition (A_CAUSAL_PROMISE) not met; no R2. See `../inference_cf/ST_PROMPT_R1_FINAL_REPORT.md`.
+
+
+## S1 acoustic evidence — separately authorized design freeze (2026-10-08)
+
+S1 DESIGN_FROZEN_IMPLEMENTATION_PENDING: exact historical180/80/20; original-audio same-prefix M/E/native-detected AUTO Top5/20 unions, then R0-predicted EN hard-zero counterfactual and matched off-target scoring. Candidate seal pushed before masks; final seal and independent PRIMARY before exposed references. Both headroom and acoustic discrimination gates required; no new inference/outcome/job in Codex, no vectors/steering/TTA or core-v6 change. PASS_TO_S1 required after implementation; see ../inference_cf/S1_ACOUSTIC_EVIDENCE_SPEC.md. Prior R0/ST-PROMPT/LAC terminal outcomes remain closed.

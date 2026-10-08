@@ -489,3 +489,8 @@ unchanged `loc0_sites.pulse_action` / P2-R solver, cell energy checks, CPU geome
 `inference_cf_st_prompt_r1_analyze.py` (reference-free primary; seal+primary-audit-gated secondary; family-48 decision/selection;
 amendment A1 frozen-criteria validity), `inference_cf_st_prompt_r1_audit.py` (independent prerun/primary/full),
 `slurm/inference_cf_st_prompt_r1.sbatch`, `tests/test_st_prompt_r1_impl.py`. Outputs `results/inference_cf/st_prompt_r1/`. No R1-B code.
+
+
+## S1 acoustic evidence — design only (2026-10-08)
+
+Frozen docs/inference_cf/S1_{ACOUSTIC_EVIDENCE_SPEC,CODEX_DESIGN,REFERENCE_FIREWALL,PANEL} and configs/inference_cf/s1_acoustic_evidence.json; CPU tests tests/test_s1_freeze_contract.py. Reuse cached.Branch/_processed, native Whisper detect_language, R0 primary region intervals/query_mapping and lexical_compatibility.hard_mask/waveform_model_inputs. Proposed s1_evidence.py/acoustic_s1 runner/evaluator/independent auditor/Slurm are pending, not existing infrastructure. No historical code modified, steering vectors or core-v6 change.

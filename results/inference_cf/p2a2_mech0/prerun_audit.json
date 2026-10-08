@@ -1,0 +1,33 @@
+{
+ "checks": {
+  "A2_code_unmodified": true,
+  "anchors": true,
+  "auditor_independent": true,
+  "barrier_before_phase2": true,
+  "compute_plan": true,
+  "drop_no_reoptimization": true,
+  "exact_A2_path": true,
+  "family_partition": true,
+  "freeze_pushed": true,
+  "frozen:configs/inference_cf/p2_a2_mech0.json": true,
+  "frozen:docs/inference_cf/P2_A2_MECH0_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_A2_MECH0_PANEL.json": true,
+  "frozen:docs/inference_cf/P2_A2_MECH0_SPEC.md": true,
+  "geometry_teacher_forced": true,
+  "no_forbidden_paths": true,
+  "no_outcome": true,
+  "observer_pure": true,
+  "own_label_truth_table": true,
+  "panel_hash": true,
+  "plan_committed": true,
+  "reference_barrier": true,
+  "runtime_inputs_equal_PATH5": true,
+  "sbatch": true,
+  "strata_independent": true,
+  "tests_present": true
+ },
+ "git_commit": "fdc8630c1d5a3570c3e0adeb1b4553c7bdbeed7c",
+ "instrumentation_note": "STEP snapshots via global torch optimizer step post-hook; episodic_tta.py and inference_cf_p2tta0.py unmodified (baseline hashes)",
+ "schema": "p2_a2_mech0_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_A2_MECH0"
+}

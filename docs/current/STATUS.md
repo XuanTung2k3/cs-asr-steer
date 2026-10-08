@@ -770,3 +770,8 @@ dialogues), opportunity gate, 0.90 retention, hard stop rule. Implementation/run
 ## P2-A2-MECH0 pre-outcome freeze
 
 P2-PATH5 audited SAFE_NO_ADDED_VALUE closes the G1/controller line; candidate returns to exact A2. Next separate development ticket P2-A2-MECH0 is pre-outcome design only: all300 reconstruction; changed44/controls40 state-dynamics/termination/family-ablation diagnostics. No runner/scientific job or confirmation/test exposure. PASS_TO_P2_A2_MECH0 required before later job; see ../inference_cf/P2_A2_MECH0_SPEC.md. No A2 redesign; P3 HELD.
+
+
+## ST-LOC0 — design frozen, implementation/audit pending (2026-10-08)
+
+Next supporting inference_cf ticket: **Frozen-Direction, Multi-Site Causal Feasibility**. Exact historical 180-position panel; dynamic same-prefix v_prompt and clean dialogue-crossfit v_unq; 16 primary arms at L16/L24 post-self and post-cross/pre-FFN with both signs. Same fixed P2-R chord budget; random/site and historical D2 controls. CPU provenance reproduces 20 D1 folds and 180 D0 vectors exactly; new self-site residual route verified synthetically. Artifacts: `ST_LOC0_SPEC.md`, `ST_LOC0_CODEX_DESIGN.md`, `ST_LOC0_PANEL.json`, `st_loc0.json`. No scientific outcome/GPU/runner or location optimizer added. Future execution requires PASS_TO_ST_LOC0 and the historical replay barrier; no held-out data. Human-authorized diagnostic expansion does not alter METHOD_CONTRACT/v6; prior sequence damage and separate A2 termination findings remain authoritative.

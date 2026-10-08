@@ -737,3 +737,8 @@ P2-A2-MECH0 frozen design after audited PATH5 SAFE_NO_ADDED_VALUE (G1 line CLOSE
 | Seal + primary audit | DONE (`ae69635`, `9ed40e7`) |
 | Secondary + `P2_A2_MECH0_AUDIT: PASS` | DONE: termination-dominant (F_ZH_EOS 0.965, F_DEL_EOS 0.971); SELF family sensitive |
 | Next | separately frozen exact-A2 confirmation (not run; no A2 changes) |
+
+
+## ST-LOC0 supporting feasibility freeze (2026-10-08)
+
+Human-authorized exposed-development diagnostic: v_prompt / clean P2-DIR v_unq, L16/L24, post-self residual and DG-02 post-cross/pre-FFN, signs +/− (16 arms), one historical matched-energy pulse. Contract: `docs/inference_cf/ST_LOC0_SPEC.md`, design/panel alongside it, `configs/inference_cf/st_loc0.json`. Historical D0/D1 provenance recovered by CPU-only refit. No runner or GPU/outcome in this freeze; independent PASS_TO_ST_LOC0 required before one bounded future job. This stage does not revise core v6/DG-02 or reopen closed P2/TTA/PATH conclusions. LOC1 requires a separate freeze after SITE_FEASIBLE; no sequence/safety claim follows from lexical feasibility.

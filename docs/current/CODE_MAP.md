@@ -445,3 +445,8 @@ fp32 masters after each original AdamW step, no change to `episodic_tta.py`/`inf
 decomposition, F fractions, robustness, mechanism label, readiness), `inference_cf_p2a2_mech0_audit.py` (independent prerun/post),
 `slurm/inference_cf_p2a2_mech0.sbatch`, `tests/test_inference_cf_p2a2_mech0.py`. Outputs `results/inference_cf/p2a2_mech0/` (rows 000..299,
 `run1/states/` LN snapshot archives). Report `docs/inference_cf/P2_A2_MECH0_REPORT.md`.
+
+
+## ST-LOC0 freeze / planned adapter (2026-10-08)
+
+Design only: `docs/inference_cf/ST_LOC0_SPEC.md`, `ST_LOC0_CODEX_DESIGN.md`, `ST_LOC0_PANEL.json` and `configs/inference_cf/st_loc0.json`; CPU contract tests `tests/test_st_loc0_contract.py`. Reuse `inference_cf/core_p1.direction`, `directions.OldDirection/UniqueDirection`, `unique.fit_fold`, P2-R `DiagBranch/solve_scale`, P2-DIR extract/pulse/evaluator/auditor, `lss/sites.py` DG-02 and `models/hooks.apply_steering`. Post-self production adapter is pending: edit the self-attention output so BOTH following cross-LN and residual bypass consume edited q; an encoder-LN argument-only edit is invalid. This is supporting diagnostic infrastructure, not a new core hook/runner or optimizer. Historical A5 Add-Unique is distinct from the clean D1 construction and is not used.

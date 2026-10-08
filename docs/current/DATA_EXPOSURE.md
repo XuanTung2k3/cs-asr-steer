@@ -441,3 +441,8 @@ family-ablation decodes and first-divergence scoring on MECH_PANEL84. Strata/con
 columns. FULL300 references (already exposed; previously used in DG-04/06/07, P0-R2, P2 selection, TTA1, PATH5) were opened only after the
 reference-free seal (including LN archives) was pushed and the independent primary audit passed. Not fresh validation. No D-dev-confirm,
 D-test, router-calib new role, new split, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.
+
+
+## ST-LOC0 pre-outcome design freeze (2026-10-08)
+
+Reuses only the already-exposed P2-R/P2-DIR D-dev-select 180 positions / 80 utterances / 20 dialogues (60 EN-confusion, 60 EN-correct, 60 ZH-correct). No resampling/new split/role. Sealed EN-/ZH-correct labels are permitted only for clean D1 offline, whole-dialogue-excluded calibration; runtime V1/pulse/provider sees baseline-generated prefixes/audio/sealed vectors only. Evaluator targets/oracle remain post-seal. CPU historical provenance refit does not expose new outcomes. No scientific GPU/model outcome or fresh reference evaluation in this freeze. D-dev-confirm, D-test, router-calib new role, P3 and transfer data remain forbidden; lexical feasibility is not full ASR/fresh validation.

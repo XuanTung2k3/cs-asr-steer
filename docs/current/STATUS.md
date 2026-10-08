@@ -756,3 +756,7 @@ Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized
 OPP0 derived diagnostic (no GPU): A2+G1A fixed100 ZH 1093 / POI 314 / mixed 1439; abstention removes the PATH4 EOS harm; rescue still only
 PATH2_12. PATH5 contract frozen (spec/design/panel/config) before any NEW200 decode or reference: frozen A2+G1A on NEW200 (200 rows, 20
 dialogues), opportunity gate, 0.90 retention, hard stop rule. Implementation/run pending `PASS_TO_P2_PATH5`.
+
+## P2-A2-MECH0 pre-outcome freeze
+
+P2-PATH5 audited SAFE_NO_ADDED_VALUE closes the G1/controller line; candidate returns to exact A2. Next separate development ticket P2-A2-MECH0 is pre-outcome design only: all300 reconstruction; changed44/controls40 state-dynamics/termination/family-ablation diagnostics. No runner/scientific job or confirmation/test exposure. PASS_TO_P2_A2_MECH0 required before later job; see ../inference_cf/P2_A2_MECH0_SPEC.md. No A2 redesign; P3 HELD.

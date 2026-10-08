@@ -722,3 +722,7 @@ anything but G1A_SUPPORTED closes the controller line and returns to A2. See `do
 | Seal + primary audit | DONE (`101ca00`, `e1086f2`; opportunity gate open 7/6) |
 | Secondary + `P2_PATH5_AUDIT: PASS` | DONE: safety + retention pass, R_net -2 -> SAFE_NO_ADDED_VALUE |
 | Decision | G1/controller line CLOSED; main adaptation candidate = A2; next = upstream adaptation/objective (separately frozen) |
+
+## P2-A2-MECH0 pre-outcome freeze
+
+P2-A2-MECH0 frozen design after audited PATH5 SAFE_NO_ADDED_VALUE (G1 line CLOSED). Exact A2 all300 barrier; step0/1/2 dynamics, historical first-divergence geometry, one-family state resets on changed44 plus controls40. No optimizer/objective/teacher/subset/LR/step change or controller; no job/outcome in design session. Later one job<=3h, pre/primary/post independent audits, reference seal. Readiness only recommends separately frozen exact-A2 confirmation, never launches it. See docs/inference_cf/P2_A2_MECH0_SPEC.md; core v6/history unchanged.

@@ -432,3 +432,7 @@ canonical index 000..099). Report `docs/inference_cf/P2_PATH4_REPORT.md`.
 (primary + opportunity gate, `terminal_sparse`, guarded secondary), `inference_cf_p2path5_audit.py` (independent prerun/post),
 `slurm/inference_cf_p2path5.sbatch`, `tests/test_inference_cf_p2path5.py`. Outputs `results/inference_cf/p2path5/` (rows by FULL300 index).
 Report `docs/inference_cf/P2_PATH5_REPORT.md`.
+
+## P2-A2-MECH0 pre-outcome freeze
+
+P2-A2-MECH0 design: docs/inference_cf/P2_A2_MECH0_SPEC.md, P2_A2_MECH0_CODEX_DESIGN.md, P2_A2_MECH0_PANEL.json; configs/inference_cf/p2_a2_mech0.json. Reuse original episodic_tta A2/run_objective, PATH5 canonical B0/A2/teachers/state hashes, cached.Branch/processed logits/canonical evaluator. Future opt-in detached post-update snapshot observer is non-scientific instrumentation; default A2 unchanged. No MECH0 runner/analyzer/auditor/sbatch implemented here. STEP1 geometry forces historical prefix and must not inherit PATH score_branch greedy-prefix rejection.

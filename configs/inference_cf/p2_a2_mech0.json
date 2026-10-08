@@ -1,0 +1,2059 @@
+{
+  "schema": "p2_a2_mech0_v1",
+  "status": "PRE_OUTCOME_FREEZE",
+  "starting_commit": "fb302dc875c1cbc0749381f810e1cdc272999f1b",
+  "spec": "docs/inference_cf/P2_A2_MECH0_SPEC.md",
+  "design": "docs/inference_cf/P2_A2_MECH0_CODEX_DESIGN.md",
+  "panel": "docs/inference_cf/P2_A2_MECH0_PANEL.json",
+  "panel_byte_sha256": "ac3cb886f6dd87415e7e064a316debc3711a2cfbfd7391d5160267dfa422dab2",
+  "FULL300_parent_byte_sha256": "a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+  "source_sha256": {
+    "docs/inference_cf/P2_PATH5_PANEL.json": "4386b1fcb272e1892c8d3766a4c305e4ae8700d0b5cf63f74bbc67a7b0adc5a2",
+    "configs/inference_cf/p2_path5.json": "90a6514b44ac6d58c279062d89d6b1cded80077207f515e9f0d170476afeb43e",
+    "docs/inference_cf/P2_PATH5_REPORT.md": "2fc550376f2f1c0c80e5618c256850ee0384b4a7b2b9a34e1a9ffde47cd8f370",
+    "docs/inference_cf/P2_PATH4_REPORT.md": "7a47f594d76a949b1dcb4b56251d25c5e401ebd53f0d96a93ca8a7b00c329e95",
+    "docs/inference_cf/P2_PATH3_REPORT.md": "68e8145c3c63a1c2408a25413ebd939a6679642fb66886c644245c3cba8179d5",
+    "docs/inference_cf/P2_TTA1_REPORT.md": "f6080b555bc36d37f25cbc5bc020941d9787858ba3afad0a0313306819ca705c",
+    "docs/inference_cf/P2_TTA_FUNNEL_REPORT.md": "8fe392eaac941ccacae2c89ceedd660bb086b997ec6a4245e6863cb222581bd4",
+    "configs/inference_cf/p2_tta_funnel.json": "a037995a2402e8d072d08efc52b8ae8683cedad04b2f919ab4671cd9fe4781ce",
+    "results/inference_cf/p2path5/plan_sealed.json": "a5bcdf9281663d938920ca7243cc1c2a852d491198b06ebf03c15535d0e9a81f",
+    "results/inference_cf/p2path5/output_seal.json": "ca4d5bf865adbc673434cc325d5d44712cd9d55e8b3a78f395f0181f0f204aad",
+    "results/inference_cf/p2path5/post_audit.json": "981cd00a74e5e443e6dff07073b6d5db0cf1513742f35559fec2433e0c9339ef",
+    "results/inference_cf/p2path5/run1/manifest.json": "d2c0fa71f09010ac5eb8370cb3f6b848b9b6eef66366a5dd4387dd2e44d64bc7",
+    "src/csasr/inference_cf/episodic_tta.py": "eee4f8ee816351e09ab572211bb4f0adb014a3c843b34b0592c795a67097be29",
+    "src/csasr/inference_cf/path_decode.py": "bec0f2828777c9bccdeb352723bac5ff0bac1d29cd2884f94c2c341050e79f22",
+    "src/csasr/inference_cf/branch_adjudication.py": "3d4056a7287e54c1d117700fe608a7b3b7f1b89dde6118a6feeb64657252c338",
+    "experiments/inference_cf_p2path5.py": "bb749203f76d852d49141b2b53d947584251fb770a2e9f9f48e01371134c269a",
+    "experiments/inference_cf_p2path5_analyze.py": "afa9ac53c3c348c699573fdba15c3db5038680ade11b23304871687f57103bc3",
+    "experiments/inference_cf_p2tta0.py": "fe68e1aa4f69ec2ae33594c09bbebc09465e07fad38530210f085f1ec4d4a694",
+    "experiments/inference_cf_p2tta0_audit.py": "003fb65196d8a49e2ca7a22b3ddd089c5b642e4e9adbb3e63796922a2e245708",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/models/whisper.py": "24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c"
+  },
+  "counts": {
+    "A2_SAME": 256,
+    "AUTO_SAME": 264,
+    "AUTO_SAME__A2_SAME": 247,
+    "A2_DELTA": 44,
+    "AUTO_DELTA": 36,
+    "AUTO_DELTA__A2_DELTA": 27,
+    "CONTENT_DIVERGENCE": 32,
+    "AUTO_DELTA__A2_SAME": 9,
+    "AUTO_SAME__A2_DELTA": 17,
+    "EOS_RECOVERY": 12,
+    "FULL300": 300,
+    "FIXED100": 100,
+    "NEW200": 200,
+    "MECH_CHANGED": 44,
+    "CONTROL40": 40,
+    "MECH_PANEL": 84,
+    "EOS_REGRESSION": 0,
+    "OTHER_INVALID": 0
+  },
+  "partition_sha256": {
+    "A2_SAME": "da502d6e8f0abbd0501adc5f80a708a93632ff427a3cd3302c8c8bf419621439",
+    "AUTO_SAME": "b2a45d5709bb8618466ab8c081cbb0b8414b35eab4f5307b985567cb031ee88d",
+    "AUTO_SAME__A2_SAME": "94d078f08500185577ad2c88977e84bdb07e6d25ccfce700773da9ebac635785",
+    "A2_DELTA": "222aed222690be221908f26c8846389067133f04a60debf6d1fd4d94855312be",
+    "AUTO_DELTA": "8cc1ed9769529c5108918b0a69860a8da3b11615194acecab8f72f4e1a9a0a65",
+    "AUTO_DELTA__A2_DELTA": "8c111dfb93559c786d6171c4d83aba06a48e666a7c81a1aae135057f5dff5e24",
+    "CONTENT_DIVERGENCE": "509bc3de2070c098e8d70440b9287bd669743e76948f157bd6856e67ed0deb8f",
+    "AUTO_DELTA__A2_SAME": "02ee282ec4119c0d70535f2874b0075bf144adc6f7cbccded00da819477e636c",
+    "AUTO_SAME__A2_DELTA": "f148632b6af5e17658e8f6a973f29d6f33a119db61eff78957a30e22365b3f58",
+    "EOS_RECOVERY": "186783687560fb1d76160b878734fa5ac48180f5f17edc5d11247a5664ee78b9",
+    "FULL300": "bc8062390705cf133cbd42813d01b65f7ff3d5db836c5b94d9fc602275db6c5c",
+    "FIXED100": "15c0c82e1a4285f85a9ac51d395d4e26549b34a218f48ddbde75a3d91657e94d",
+    "NEW200": "e23a8ce549820a8aa4287eceb3bce71ea2d8aae1af52b9a50bab6a228a9b2b40",
+    "MECH_CHANGED": "dd1a19aef8d4228e04333d0f60c3e656602f4528e77d90418961c73b7a251267",
+    "CONTROL40": "a26bcb86479cfa0a1e2e243ecf0f6c4a9176d6b25ad64f9f87ee7b91d3be10db",
+    "MECH_PANEL": "760bc3d7e69dc7c167937ec820417ad8d5050b22868e865fe35da5818036c8bf",
+    "EOS_REGRESSION": "05a1310321f1cfc8b1697baa1cd13c7b626cc112a5cae3ecf6c3d79ce09f00f8",
+    "OTHER_INVALID": "a8ac5ddfa57fa2e87b07c53c502778b45f04727d6303b518ca291cb4112e258d"
+  },
+  "A2_inherited": {
+    "trainables": {
+      "module_family": "decoder torch.nn.LayerNorm affine weight/bias ONLY",
+      "parameters": [
+        {
+          "name": "model.decoder.layers.0.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        }
+      ],
+      "tensor_count": 194,
+      "scalar_count": 248320,
+      "total_unique_model_scalars": 1543490560,
+      "fraction": 0.00016088209830062065,
+      "forward_dtype": "bfloat16",
+      "masters_dtype": "float32",
+      "implementation": "torch.func.functional_call(model,{name:master.to(bfloat16)},strict=False,tie_weights=True); all actual model parameters requires_grad False; only enumerated fp32 masters require grad",
+      "final_decode": "copy masters rounded bf16 into exact LN names only; decode ordinary frozen-model path; restore original bf16 bytes in finally"
+    },
+    "optimization": {
+      "optimizer": "torch.optim.AdamW",
+      "lr": 0.001,
+      "weight_decay": 0,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "amsgrad": false,
+      "foreach": false,
+      "fused": false,
+      "maximize": false,
+      "steps": 2,
+      "scheduler": null,
+      "gradient_accumulation": false,
+      "gradient_clipping": null,
+      "grad_scaler": null,
+      "autocast": false,
+      "eval_mode": true,
+      "seed": 240924,
+      "reset": "new masters and optimizer from exact theta0 each objective/utterance; no optimizer/cache/gradient state transfer; reset actual bf16 LN, verify exact hash and flags; all other parameters immutable"
+    },
+    "teacher_forcing": {
+      "input": "cB+y; no appended EOS; explicit IDs (no labels auto-shift), use_cache=False, no past KV; ordinary detached non-inference encoder outputs reused",
+      "target_query": "content token t predicted by raw logits at absolute decoder index3+t for t=0..T-1; final query3+T reports EOS probability only",
+      "cB": [
+        50258,
+        50260,
+        50360,
+        50364
+      ],
+      "suppression": "generation_config.suppress_tokens all content positions, begin_suppress_tokens at t0 only; float32 log_softmax on finite allowed vocabulary, no 0*(-inf)",
+      "temperature": 1,
+      "forced_prefix_loss": false,
+      "EOS_loss": false,
+      "EOS_in_predictive_vocabulary": true,
+      "teacher_special_handling": "preserve generated content IDs including UTF8 fragments; strip only verified initial AUTO prompt/terminal EOS if present; unexpected interior control IDs INVALID; no text retokenization",
+      "valid_positions": "fixed from theta0 teacher: non-special content ID AND target not suppressed at t; log exclusions/counts; same loss mask for both steps",
+      "cap": "use complete frozen prefix up to200 generated content IDs even if capped; do not invent EOS target",
+      "empty": "exactly2 no-op AdamW steps with scalar zero connected to masters and zero gradients; log no_valid_content, loss0; final baseline identity; no drop/refill",
+      "encoder": "one original frozen encoder per utterance, detached clone outside inference_mode; no encoder recomputation during objectives; no encoder grads/cache carry"
+    },
+    "decode": {
+      "model_anchor": "results/inference_cf/p2dir/exp1_run1/manifest.json:model.files",
+      "model_config": "configs/model/whisper_large_v3.yaml",
+      "precision": "bf16/eager eval batch1",
+      "forced_path": "existing cached.Branch.step(cB then one token), capture_layer=16 PASSIVE recorder, attention=True, processed_argmax, no action hook; audit theta0 token equality vs P2SEQ S0",
+      "auto_path": "exact historical generate(task=transcribe,language=None,do_sample=False,num_beams=1,max_new_tokens=200,condition_on_prev_tokens=False)",
+      "max_new_tokens": 200,
+      "greedy": true,
+      "sampling": false,
+      "beam": 1,
+      "steering": false,
+      "D2_calls": 0,
+      "LID_calls": 0,
+      "final_condition": "forced-ZH only",
+      "runtime_failure": "nonfinite loss/grad/master/effective params/logits or reset/provider/path mismatch =>INVALID and STOP; do not change clipping/LR/precision"
+    }
+  },
+  "A2_objective": {
+    "teacher": "sealed theta0 AUTO greedy y_A, original TTA1 plan/mask, detached; do not regenerate",
+    "student_condition": "forced-ZH cB",
+    "loss": "mean over fixed valid t of -log p_theta(y_A[t]|x,cB,y_A[:t]); exact episodic_tta.objective_loss A2",
+    "steps": 2,
+    "no_A4_noop_rule": true
+  },
+  "suppression": {
+    "begin": [
+      220,
+      50257
+    ],
+    "suppress": [
+      1,
+      2,
+      7,
+      8,
+      9,
+      10,
+      14,
+      25,
+      26,
+      27,
+      28,
+      29,
+      31,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      90,
+      91,
+      92,
+      93,
+      359,
+      503,
+      522,
+      542,
+      873,
+      893,
+      902,
+      918,
+      922,
+      931,
+      1350,
+      1853,
+      1982,
+      2460,
+      2627,
+      3246,
+      3253,
+      3268,
+      3536,
+      3846,
+      3961,
+      4183,
+      4667,
+      6585,
+      6647,
+      7273,
+      9061,
+      9383,
+      10428,
+      10929,
+      11938,
+      12033,
+      12331,
+      12562,
+      13793,
+      14157,
+      14635,
+      15265,
+      15618,
+      16553,
+      16604,
+      18362,
+      18956,
+      20075,
+      21675,
+      22520,
+      26130,
+      26161,
+      26435,
+      28279,
+      29464,
+      31650,
+      32302,
+      32470,
+      36865,
+      42863,
+      47425,
+      49870,
+      50254,
+      50258,
+      50359,
+      50360,
+      50361,
+      50362,
+      50363
+    ]
+  },
+  "decode_inherited": {
+    "prompt": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "eos": 50257,
+    "max_new_tokens": 200,
+    "precision": "bf16/eager/eval/batch1",
+    "greedy": true,
+    "sampling": false,
+    "beam": 1,
+    "cached_path": "cached.Branch; prompt once then one token per step; passive capture_layer16, attention=True; processed_argmax absolute content step",
+    "stream": "stored content excludes prompt/EOS; ED appends one logical EOS iff terminated=eos",
+    "steering": false
+  },
+  "families": {
+    "SELF": [
+      "model.decoder.layers.0.self_attn_layer_norm.weight",
+      "model.decoder.layers.0.self_attn_layer_norm.bias",
+      "model.decoder.layers.1.self_attn_layer_norm.weight",
+      "model.decoder.layers.1.self_attn_layer_norm.bias",
+      "model.decoder.layers.2.self_attn_layer_norm.weight",
+      "model.decoder.layers.2.self_attn_layer_norm.bias",
+      "model.decoder.layers.3.self_attn_layer_norm.weight",
+      "model.decoder.layers.3.self_attn_layer_norm.bias",
+      "model.decoder.layers.4.self_attn_layer_norm.weight",
+      "model.decoder.layers.4.self_attn_layer_norm.bias",
+      "model.decoder.layers.5.self_attn_layer_norm.weight",
+      "model.decoder.layers.5.self_attn_layer_norm.bias",
+      "model.decoder.layers.6.self_attn_layer_norm.weight",
+      "model.decoder.layers.6.self_attn_layer_norm.bias",
+      "model.decoder.layers.7.self_attn_layer_norm.weight",
+      "model.decoder.layers.7.self_attn_layer_norm.bias",
+      "model.decoder.layers.8.self_attn_layer_norm.weight",
+      "model.decoder.layers.8.self_attn_layer_norm.bias",
+      "model.decoder.layers.9.self_attn_layer_norm.weight",
+      "model.decoder.layers.9.self_attn_layer_norm.bias",
+      "model.decoder.layers.10.self_attn_layer_norm.weight",
+      "model.decoder.layers.10.self_attn_layer_norm.bias",
+      "model.decoder.layers.11.self_attn_layer_norm.weight",
+      "model.decoder.layers.11.self_attn_layer_norm.bias",
+      "model.decoder.layers.12.self_attn_layer_norm.weight",
+      "model.decoder.layers.12.self_attn_layer_norm.bias",
+      "model.decoder.layers.13.self_attn_layer_norm.weight",
+      "model.decoder.layers.13.self_attn_layer_norm.bias",
+      "model.decoder.layers.14.self_attn_layer_norm.weight",
+      "model.decoder.layers.14.self_attn_layer_norm.bias",
+      "model.decoder.layers.15.self_attn_layer_norm.weight",
+      "model.decoder.layers.15.self_attn_layer_norm.bias",
+      "model.decoder.layers.16.self_attn_layer_norm.weight",
+      "model.decoder.layers.16.self_attn_layer_norm.bias",
+      "model.decoder.layers.17.self_attn_layer_norm.weight",
+      "model.decoder.layers.17.self_attn_layer_norm.bias",
+      "model.decoder.layers.18.self_attn_layer_norm.weight",
+      "model.decoder.layers.18.self_attn_layer_norm.bias",
+      "model.decoder.layers.19.self_attn_layer_norm.weight",
+      "model.decoder.layers.19.self_attn_layer_norm.bias",
+      "model.decoder.layers.20.self_attn_layer_norm.weight",
+      "model.decoder.layers.20.self_attn_layer_norm.bias",
+      "model.decoder.layers.21.self_attn_layer_norm.weight",
+      "model.decoder.layers.21.self_attn_layer_norm.bias",
+      "model.decoder.layers.22.self_attn_layer_norm.weight",
+      "model.decoder.layers.22.self_attn_layer_norm.bias",
+      "model.decoder.layers.23.self_attn_layer_norm.weight",
+      "model.decoder.layers.23.self_attn_layer_norm.bias",
+      "model.decoder.layers.24.self_attn_layer_norm.weight",
+      "model.decoder.layers.24.self_attn_layer_norm.bias",
+      "model.decoder.layers.25.self_attn_layer_norm.weight",
+      "model.decoder.layers.25.self_attn_layer_norm.bias",
+      "model.decoder.layers.26.self_attn_layer_norm.weight",
+      "model.decoder.layers.26.self_attn_layer_norm.bias",
+      "model.decoder.layers.27.self_attn_layer_norm.weight",
+      "model.decoder.layers.27.self_attn_layer_norm.bias",
+      "model.decoder.layers.28.self_attn_layer_norm.weight",
+      "model.decoder.layers.28.self_attn_layer_norm.bias",
+      "model.decoder.layers.29.self_attn_layer_norm.weight",
+      "model.decoder.layers.29.self_attn_layer_norm.bias",
+      "model.decoder.layers.30.self_attn_layer_norm.weight",
+      "model.decoder.layers.30.self_attn_layer_norm.bias",
+      "model.decoder.layers.31.self_attn_layer_norm.weight",
+      "model.decoder.layers.31.self_attn_layer_norm.bias"
+    ],
+    "CROSS": [
+      "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.0.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.1.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.2.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.3.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.4.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.5.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.6.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.7.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.8.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.8.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.9.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.9.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.10.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.10.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.11.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.11.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.12.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.12.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.13.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.13.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.14.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.14.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.15.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.15.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.16.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.16.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.17.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.17.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.18.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.18.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.19.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.19.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.20.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.20.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.21.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.21.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.22.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.22.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.23.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.23.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.24.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.24.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.25.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.25.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.26.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.26.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.27.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.27.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.28.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.28.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.29.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.29.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.30.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.30.encoder_attn_layer_norm.bias",
+      "model.decoder.layers.31.encoder_attn_layer_norm.weight",
+      "model.decoder.layers.31.encoder_attn_layer_norm.bias"
+    ],
+    "POST": [
+      "model.decoder.layers.0.final_layer_norm.weight",
+      "model.decoder.layers.0.final_layer_norm.bias",
+      "model.decoder.layers.1.final_layer_norm.weight",
+      "model.decoder.layers.1.final_layer_norm.bias",
+      "model.decoder.layers.2.final_layer_norm.weight",
+      "model.decoder.layers.2.final_layer_norm.bias",
+      "model.decoder.layers.3.final_layer_norm.weight",
+      "model.decoder.layers.3.final_layer_norm.bias",
+      "model.decoder.layers.4.final_layer_norm.weight",
+      "model.decoder.layers.4.final_layer_norm.bias",
+      "model.decoder.layers.5.final_layer_norm.weight",
+      "model.decoder.layers.5.final_layer_norm.bias",
+      "model.decoder.layers.6.final_layer_norm.weight",
+      "model.decoder.layers.6.final_layer_norm.bias",
+      "model.decoder.layers.7.final_layer_norm.weight",
+      "model.decoder.layers.7.final_layer_norm.bias",
+      "model.decoder.layers.8.final_layer_norm.weight",
+      "model.decoder.layers.8.final_layer_norm.bias",
+      "model.decoder.layers.9.final_layer_norm.weight",
+      "model.decoder.layers.9.final_layer_norm.bias",
+      "model.decoder.layers.10.final_layer_norm.weight",
+      "model.decoder.layers.10.final_layer_norm.bias",
+      "model.decoder.layers.11.final_layer_norm.weight",
+      "model.decoder.layers.11.final_layer_norm.bias",
+      "model.decoder.layers.12.final_layer_norm.weight",
+      "model.decoder.layers.12.final_layer_norm.bias",
+      "model.decoder.layers.13.final_layer_norm.weight",
+      "model.decoder.layers.13.final_layer_norm.bias",
+      "model.decoder.layers.14.final_layer_norm.weight",
+      "model.decoder.layers.14.final_layer_norm.bias",
+      "model.decoder.layers.15.final_layer_norm.weight",
+      "model.decoder.layers.15.final_layer_norm.bias",
+      "model.decoder.layers.16.final_layer_norm.weight",
+      "model.decoder.layers.16.final_layer_norm.bias",
+      "model.decoder.layers.17.final_layer_norm.weight",
+      "model.decoder.layers.17.final_layer_norm.bias",
+      "model.decoder.layers.18.final_layer_norm.weight",
+      "model.decoder.layers.18.final_layer_norm.bias",
+      "model.decoder.layers.19.final_layer_norm.weight",
+      "model.decoder.layers.19.final_layer_norm.bias",
+      "model.decoder.layers.20.final_layer_norm.weight",
+      "model.decoder.layers.20.final_layer_norm.bias",
+      "model.decoder.layers.21.final_layer_norm.weight",
+      "model.decoder.layers.21.final_layer_norm.bias",
+      "model.decoder.layers.22.final_layer_norm.weight",
+      "model.decoder.layers.22.final_layer_norm.bias",
+      "model.decoder.layers.23.final_layer_norm.weight",
+      "model.decoder.layers.23.final_layer_norm.bias",
+      "model.decoder.layers.24.final_layer_norm.weight",
+      "model.decoder.layers.24.final_layer_norm.bias",
+      "model.decoder.layers.25.final_layer_norm.weight",
+      "model.decoder.layers.25.final_layer_norm.bias",
+      "model.decoder.layers.26.final_layer_norm.weight",
+      "model.decoder.layers.26.final_layer_norm.bias",
+      "model.decoder.layers.27.final_layer_norm.weight",
+      "model.decoder.layers.27.final_layer_norm.bias",
+      "model.decoder.layers.28.final_layer_norm.weight",
+      "model.decoder.layers.28.final_layer_norm.bias",
+      "model.decoder.layers.29.final_layer_norm.weight",
+      "model.decoder.layers.29.final_layer_norm.bias",
+      "model.decoder.layers.30.final_layer_norm.weight",
+      "model.decoder.layers.30.final_layer_norm.bias",
+      "model.decoder.layers.31.final_layer_norm.weight",
+      "model.decoder.layers.31.final_layer_norm.bias",
+      "model.decoder.layer_norm.weight",
+      "model.decoder.layer_norm.bias"
+    ]
+  },
+  "family_tensor_counts": {
+    "SELF": 64,
+    "CROSS": 64,
+    "POST": 66
+  },
+  "family_scalar_counts": {
+    "SELF": 81920,
+    "CROSS": 81920,
+    "POST": 84480
+  },
+  "reconstruction": {
+    "population": "FULL300",
+    "required": 300,
+    "tokens_termination_text_exact": true,
+    "theta0_equals_sealed_canonical_B0_exact": true,
+    "A2_effective_state_hash_exact_all300": true,
+    "historical_fp32_master_arrays_exact_when_available": 100,
+    "barrier_before_any_step1_decode_or_ablation": true,
+    "failure": "P2_A2_MECH0_INVALID STOP; no matching by changing precision/caps/teacher/A2"
+  },
+  "dynamics": {
+    "steps": [
+      0,
+      1,
+      2
+    ],
+    "losses": "original A2 L0,L1,L2 on sealed y_A/mask, no EOS loss",
+    "snapshot_rule": "optional pure detached CPU clone observer immediately after each original AdamW step; no RNG/resident changes/forward/gradient; uninterrupted original2-step trajectory; regression default observer-off/on exact",
+    "master_delta": "float64 reduction of fp32 snapshot minus theta0 LN.float; L2 sum all squares; relative /(theta0_L2+1e-12)",
+    "effective_delta": "bf16 snapshot values compared as float32 to theta0 bf16; float64 L2 reduction",
+    "aggregation": "per tensor, per LayerNorm module (weight+bias), per decoder layer plus final decoder LN separate, per SELF/CROSS/POST; sqrt(sum squared member norms), never sum norms",
+    "snapshots": "compressed fp32 LN arrays step1 all300 and step2 NEW200, reuse sealed historical final archives FIXED100; hashes for all effective states; no model/hidden/KV/logit-vocab tensor dumps"
+  },
+  "step1": "free decode on MECH_PANEL84 only; diagnostic, never select one-step method; FULL_A2 reused phase1",
+  "logit_geometry": {
+    "population": "A2_DELTA44",
+    "states": [
+      "STEP0",
+      "STEP1",
+      "STEP2"
+    ],
+    "prefix": "identical sealed B0/A2 common forced-ZH prompt+content prefix; STEP1 prefix need not be greedy; replay token-by-token with fresh state-owned cache",
+    "processed": "canonical float32 processed_log_probs; suppression all steps, begin only0, full valid vocabulary; temperature1",
+    "candidates": [
+      "EOS",
+      "B0 first action",
+      "A2 first action",
+      "sealed AUTO at same k if available/valid"
+    ],
+    "invalid_or_suppressed_optional": "record null/allowed=False, not -inf arithmetic; mandatory B0/A2 candidates finite; EOS mass at suppressed t0 recorded unavailable",
+    "entropy": "over finite allowed logp only; top1-top2 gap of processed logits in nat",
+    "M_stop": "logp(c_A2)-logp(EOS), EOS_RECOVERY only",
+    "M_branch": "logp(c2)-logp(c0), CONTENT_DIVERGENCE only",
+    "delta": "state1/state2 margin minus state0",
+    "continuation_H": 3,
+    "continuation": "final A2 content[k:k+3] fixed; mean processed logp per state, absolute k+j; no EOS scored; empty content =>None with H_eff0, not INVALID",
+    "AUTO_alignment": "sealed AUTO content/EOS action at absolute k; compare to B0/A2 actions and exact-length H_eff A2 segment; record AUTO prefix equality and only claim conditional proposal agreement on prefix-matched subset; positional agreement otherwise descriptive"
+  },
+  "ablations": {
+    "population": "MECH_PANEL84",
+    "conditions": [
+      "B0",
+      "FULL_A2",
+      "A2_STEP1",
+      "DROP_SELF",
+      "DROP_CROSS",
+      "DROP_POST"
+    ],
+    "construct": "start from fresh complete final effective bf16 A2 snapshot; replace exactly one family with exact theta0 bf16 bytes; others untouched; no optimization",
+    "decode": "same ordinary forced-ZH greedy cached path; fresh KV after materialization; reset theta0 in finally",
+    "first_action": "at historical fixed common prefix classify B0/FULL_A2/third action; controls no divergence =>not assessable",
+    "retention": "count action==FULL_A2 action / number changed rows in group, FULL retention1; all44, EOS12, content32; empty group None",
+    "sensitivity": "1-RET_DROP>=.25 in overall OR EOS group; multiple families allowed; content sensitivity descriptive only; no trainable selection",
+    "free_endpoints": "tokens/text/termination; EOS decision-stream ED to A2/B0; STEP1 vsSTEP2 identity rates by changed/controls/EOS/content"
+  },
+  "reference_analysis": {
+    "differences": "B0-A2 per row ZH/POI/mixed/S/D/I, positive=improvement",
+    "groups": [
+      "EOS_RECOVERY",
+      "EOS_REGRESSION",
+      "CONTENT_DIVERGENCE",
+      "A2_SAME",
+      "AUTO_SAME",
+      "AUTO_DELTA",
+      "cross categories",
+      "dialogue",
+      "FIXED100/NEW200 supporting"
+    ],
+    "F_ZH_EOS": "sum EOS_RECOVERY max(deltaZH,0) / sum FULL300 max(deltaZH,0); zero denominator None",
+    "F_DEL_EOS": "sum EOS_RECOVERY max(B0_D-A2_D,0) / sum FULL300 max(B0_D-A2_D,0); zero denominator None",
+    "net_required_also_report": true,
+    "ablations": "post-seal canonical metrics on identical MECH_PANEL; diagnostic reference associations only; do not redefine family sensitivity or select methods",
+    "concentration": "positive rescue max utterance/dialogue shares for ZH and deletions; zero denominator None",
+    "LODO": "all20 dialogue leave-one-out net ZH/mixed/POI/deletion rescue, min/median/max/count>0; no label override"
+  },
+  "bootstrap": {
+    "reps": 2000,
+    "seed": 240924,
+    "rng": "numpy default_rng PCG64",
+    "clusters": "sorted20 dialogues, sample20 with replacement; paired count sums preserving canonical order",
+    "ci": "percentile2.5/97.5; omit and report zero-denominator draws",
+    "metrics": [
+      "A2-B0 PIER/MER/EN-WER/ZH-CER",
+      "net ZH/POI/mixed/deletion improvement",
+      "F_ZH_EOS/F_DEL_EOS"
+    ],
+    "descriptive_only": true
+  },
+  "mechanism": {
+    "termination": {
+      "EOS_rows_min": 3,
+      "EOS_dialogues_min": 3,
+      "F_ZH_min": 0.5,
+      "F_DEL_min": 0.5,
+      "median_deltaM2_strict_positive": true,
+      "fraction_deltaM2_strict_positive_min": 0.75
+    },
+    "nontermination": {
+      "F_ZH_strict_below": 0.25,
+      "F_DEL_strict_below": 0.25,
+      "population": "CONTENT_DIVERGENCE union EOS_REGRESSION",
+      "positive_row": "deltaZH>0 OR deltaMixed>0",
+      "positive_rows_min": 3,
+      "positive_dialogues_min": 3,
+      "aggregate_condition": "nonEOS changed net ZH>0 OR net mixed>0"
+    },
+    "mixed": {
+      "fractions_both_defined": true,
+      "material_group": "net ZH>=5 OR net mixed>=5, positive-row count>=2 and positive-dialogue count>=2",
+      "both_groups": "EOS_RECOVERY and nonEOS changed each satisfy material_group",
+      "intermediate_alternative": "(.25<=F_ZH_EOS<.50 OR .25<=F_DEL_EOS<.50) AND each group has (netZH>0 OR netMixed>0)",
+      "rule": "both_groups OR intermediate_alternative; after dominance branches only"
+    },
+    "undefined_fractions": "dominance/MIXED do not pass; no undefined fraction coerced0"
+  },
+  "decision_precedence": [
+    {
+      "label": "P2_A2_MECH0_INVALID",
+      "if": "any panel/stratum/state/method/reconstruction/reset/cache/firewall/evaluator/audit/budget failure"
+    },
+    {
+      "label": "P2_A2_MECH0_TERMINATION_DOMINANT",
+      "if": "all termination criteria"
+    },
+    {
+      "label": "P2_A2_MECH0_NONTERMINATION_DOMINANT",
+      "if": "all nontermination criteria"
+    },
+    {
+      "label": "P2_A2_MECH0_MIXED",
+      "if": "defined fractions AND frozen mixed rule"
+    },
+    {
+      "label": "P2_A2_MECH0_NO_CLEAR_MECHANISM",
+      "if": "valid and none above"
+    }
+  ],
+  "confirmation_readiness": {
+    "YES": "complete exact reconstruction/teacher/source reproducibility, primary+post-audit PASS, no FULL_A2 new severe truncation vsB0 under original rule",
+    "NO": "reconstruction instability, non-reproducible required artifact, audit/integrity failure, or at least1 missed FULL_A2 severe truncation",
+    "severe_rule": "B0 length>=10 AND A2 ends EOS AND A2 length<=floor(.5*B0 length); original cached decision cap unchanged",
+    "diagnostic_states_excluded": "STEP1/DROP family safety failures do not alone invalidate unchanged A2",
+    "mechanism_concentration_not_disqualifying": true,
+    "authorization": "recommend separately frozen exact A2 confirmation only; never run confirmation/test here"
+  },
+  "reference_barrier": "no references/POI/error labels before all300 reconstruction and all planned diagnostics/ablation outputs plus state snapshots are sealed and PUSHED; independent primary audit PASS before evaluator",
+  "audit": {
+    "pre": "PASS_TO_P2_A2_MECH0",
+    "post": "P2_A2_MECH0_AUDIT: PASS",
+    "independent": "no primary decision import; own strata/family/state/norms/logp/margins/scoring/retention/evaluation/decomposition/labels/bootstrap; canonical metric primitives permitted",
+    "loss_abs": 1e-05,
+    "gradient_relative": 0.02,
+    "gradient_floor": 1e-08
+  },
+  "compute": {
+    "jobs_max": 1,
+    "pending_running_max": 1,
+    "rows_reconstruct": 300,
+    "updates_exact": 600,
+    "backward_max_including_live_audit": 601,
+    "step1_decodes": 84,
+    "DROP_decodes": 252,
+    "ordinary_reconstruction_decodes": 600,
+    "total_free_decodes": 936,
+    "geometry_paths": 132,
+    "target_minutes": 30,
+    "hard_minutes": 180,
+    "GPU": "single MIG/H100 allocation via sbatch; one resident mutable model with fresh state-owned paths; no G1/autograd diagnostic scoring",
+    "stop": "timeout/partial/nonfinite =>INVALID; no resubmission or scope expansion",
+    "ablation_current_query_paths": 132
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select exact PATH5 FULL300",
+      "sealed historical B0/AUTO/A2 and inference_cf artifacts"
+    ],
+    "forbidden": [
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "router-calib new role",
+      "new panel/split",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "transfer",
+      "A2 objective/teacher/LR/steps/trainables/precision tuning",
+      "EOS loss",
+      "A3/A4",
+      "G1/G1A/G2",
+      "router/controller",
+      "automatic confirmation"
+    ]
+  },
+  "github": "checks -> diff -> commit -> push origin HEAD:cs-asr-steer-inf; clean local=remote; no force/merge-main/PR",
+  "claim": "exposed-development mechanism diagnosis; no causal claim from observational positive rescue fractions; ablations causal for frozen state family only; no method selection",
+  "teacher_source_all300": "PATH5 plan rows.runtime y_A/y_A_valid_mask; FIXED100 identical TTA1 ancestors, NEW200 original PATH5 cleaned sealed theta0 AUTO; no regeneration; historical A2_objective wording about TTA1 is provenance not a100-row lookup",
+  "instrumentation_provenance": {
+    "allowed_files": [
+      "src/csasr/inference_cf/episodic_tta.py",
+      "experiments/inference_cf_p2tta0.py"
+    ],
+    "original_source_baseline_sha256": {
+      "src/csasr/inference_cf/episodic_tta.py": "eee4f8ee816351e09ab572211bb4f0adb014a3c843b34b0592c795a67097be29",
+      "experiments/inference_cf_p2tta0.py": "fe68e1aa4f69ec2ae33594c09bbebc09465e07fad38530210f085f1ec4d4a694"
+    },
+    "allowed_delta": "opt-in detached post-opt.step snapshot observer and argument forwarding only; original A2 numerical body unchanged",
+    "source_sha256_semantics": "allowed files are original baseline fingerprints, not the future modified runtime hashes; all other source anchors immutable",
+    "runtime_gate": "independent baseline-vs-new AST/source diff plus off/on regression; resolved runtime hashes in committed implementation manifest before GPU; no scientific config change"
+  }
+}

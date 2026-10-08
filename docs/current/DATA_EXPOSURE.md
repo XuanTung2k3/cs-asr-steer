@@ -429,3 +429,7 @@ NEW200 (reconstructed on fixed100) and A2+G1A on all 300. NEW200 references were
 the independent primary audit passed and the frozen opportunity gate opened. NEW200 was never used in the TTA/A2/PATH chain before but its
 references were previously used (DG-04/06/07, P0-R2, P2 selection) — not fresh validation. No D-dev-confirm, D-test, router-calib new role,
 new split, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.
+
+## P2-A2-MECH0 pre-outcome freeze
+
+Design inspection only: existing source/contracts/reports and sealed FULL300 token/text/termination/teacher/provenance metadata, audio bytes, FIXED100 final-master archive hashes, fixed-ID filtered role ID/dialogue/role columns. No row-level error labels/reference columns or new reference evaluation. Token-only A2_SAME256/DELTA44/EOS_RECOVERY12/content32; deterministic controls40. Future diagnostics only already PATH5-exposed D-dev-select FULL300; output/state seal pushed before references. No fresh validation/new role/D-dev-confirm/D-test/P3/transfer. Controller line closed, exact A2 unchanged.

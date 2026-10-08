@@ -459,3 +459,11 @@ router-calib new role, new split, P3 or transfer data.
 ## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
 
 Reuses exact exposed D-dev-select FULL300,300 utterances/20 dialogues. Design inspected audio/source/baseline token hashes and timing schema/UID/validity/provider metadata only, not reference surfaces/boundaries/language memberships or new R0 outcomes. Native windows cover full original audio; decoder mapping limited to historical30s heard horizon (27 long rows preserved). Gold-derived CTC timing is post-seal evaluator-only proxy; no gold prefix/state construction. No new role/split, confirm/test/router-calib/P3/transfer exposure; no GPU/steering/training.
+
+## R0 exposure (2026-10-08)
+
+Slurm 58150 ran frozen Whisper (native LID windows + forced-ZH/EN full replays of the sealed PATH5 theta0 content) on the already-exposed
+D-dev-select FULL300 only. The runner opened audio/model/repo files only (logged). After the reference-free seal was pushed and the
+independent PRIMARY audit passed, the evaluator opened the existing MMS-FA CTC timing proxy (filtered to the 300 IDs before column
+materialization) and the D-dev-select role transcripts (300 IDs; unit consistency + English-omission diagnosis). Not fresh validation.
+No D-dev-confirm, D-test, router-calib new role, new split, P3 or transfer data; no new alignment.

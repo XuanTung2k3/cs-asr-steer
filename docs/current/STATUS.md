@@ -1,4 +1,15 @@
-# Current supporting inference_cf ticket — ST-LOC0 (2026-10-08): terminal `ST_LOC0_LOCAL_EFFECT_ONLY` (no LOC1)
+# Current supporting inference_cf ticket — R0 (2026-10-08): terminal `R0_ORACLE_CONSTRUCTION_INSUFFICIENT` (no R1)
+
+Freeze `a5929c6`; `PASS_TO_R0` (`9a33d01`); manifest `9e05252`; Slurm 58150 (11.9 min, 300/300 rows); reference-free output seal `df75622`
+before oracle access; `R0_AUDIT: PASS (PRIMARY)` (`3929b42`, 27,600 constructions independently recomputed) and `R0_AUDIT: PASS (FULL)`
+(`24388cf`). Predicted native-LID regions pass the frozen quality gate vs the MMS-FA timing proxy (EN P/R .967/.584, ZH .981/.725, coverage
+.70), but per-utterance construction is state-starved: predicted-valid vectors 30-32/300 per layer, oracle-valid only 16-17 (< 60) at all of
+L3/8/16/24 -> gate O fails everywhere. Few baseline decoder queries map into English acoustic regions (predicted EN group >=6 in 48 rows; oracle
+29). Descriptive: on 9-12 paired rows pred-oracle signed cos ~0.8 and beats shuffles. No R1, no new predictor/vector/rank/threshold. Report
+`docs/inference_cf/R0_REGION_VECTOR_REPORT.md`. Core v6 unchanged.
+
+<!-- superseded header (ST-LOC0 result) -->
+## (Previous header) Current supporting inference_cf ticket — ST-LOC0 (2026-10-08): terminal `ST_LOC0_LOCAL_EFFECT_ONLY` (no LOC1)
 
 Freeze `39ff5e9`; `PASS_TO_ST_LOC0` (`58dc232`); manifest `ac735c4`; calibration seal `9998e5c` pushed before pulses; Slurm 58109 (6.5 min);
 output seal `48638ce` before references; `ST_LOC0_AUDIT: PASS` (primary + full). Historical L16 DG-02 barrier bitwise (B0/D0/D1/D2, zero,
@@ -797,3 +808,9 @@ lexical correction power; LOC1 NOT authorized; no LOC0 expansion. See `../infere
 ## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
 
 Latest authorized supporting ticket: **R0 design frozen only** (not ST-LOC1). Exact exposed FULL300, acoustic native-LID segmentation, own-baseline DG-02 states at observational layers3/8/16/24, guarded per-utterance unique vectors. No scientific job/outcome or oracle boundaries inspected here. Future execution requires PASS_TO_R0 and pushed reference-free seal plus independent PRIMARY audit before oracle. Historical ST_LOC0_LOCAL_EFFECT_ONLY/no LOC1, closed controllers and A2 confirmation-ready result remain unchanged.
+
+## R0 — executed (2026-10-08): `R0_ORACLE_CONSTRUCTION_INSUFFICIENT`
+
+One job (Slurm 58150); reference-free seal pushed and independently audited before the oracle proxy was opened; full audit PASS. No layer
+reaches 60 oracle-valid utterances (16-17). Bottleneck = per-utterance decoder-state availability inside English regions, not region
+prediction or SVD stability. R1 NOT authorized. See `../inference_cf/R0_REGION_VECTOR_REPORT.md`.

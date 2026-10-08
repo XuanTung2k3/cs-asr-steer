@@ -758,3 +758,14 @@ Human-authorized exposed-development diagnostic: v_prompt / clean P2-DIR v_unq, 
 ## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
 
 Next separately authorized construction-feasibility study: R0 spec/config/panel/firewall frozen before outcomes; baseline-own-prefix state extraction and reference-free per-utterance rank policy,20 shuffle controls/two fixed boundary controls, nested coverage/stability/signal gates. Future Claude implementation -> CPU preflight -> PASS_TO_R0 -> one bounded job -> pushed primary seal/audit -> CPU oracle proxy evaluation/full audit -> STOP. READY only recommends a separately frozen R1; no automatic steering/location optimization. Historical conclusions/core v6 unchanged.
+
+## R0 — executed (2026-10-08): `R0_ORACLE_CONSTRUCTION_INSUFFICIENT`
+
+| Step | Status |
+|---|---|
+| Freeze | DONE (`a5929c6`) |
+| Implementation + `PASS_TO_R0` | DONE (`1519f9d`, `9a33d01`; regression 120/120) |
+| Manifest + run (Slurm 58150) | DONE (`9e05252`; 300/300 rows, 11.9 min) |
+| Seal + `R0_AUDIT: PASS (PRIMARY)` | DONE (`df75622`, `3929b42`) |
+| Oracle + `R0_AUDIT: PASS (FULL)` | DONE (`c670386`, `24388cf`): oracle-valid 16-17/300 per layer < 60 |
+| Next | R1 NOT authorized; no further R0 extension. Main line unchanged (exact-A2 confirmation, separate freeze, not run) |

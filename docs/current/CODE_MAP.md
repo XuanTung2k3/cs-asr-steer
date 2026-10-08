@@ -466,3 +466,12 @@ cross-LN and residual both consume the edited q; `pulse_action` = P2-R pulse act
 ## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
 
 Separate supporting study, design only: `docs/inference_cf/R0_REGION_VECTOR_SPEC.md`, `R0_CODEX_DESIGN.md`, `R0_REFERENCE_FIREWALL.md`, `R0_PANEL.json`, `configs/inference_cf/r0_region_vector.json`; contract tests `tests/test_r0_freeze_contract.py`. Reuse native100-way LID/full replay, DG-02 passive recorder and unique numerical concepts; new per-utterance rank[2,4,8] provider/runner/auditor remain future implementation. A5/D1/R0 are distinct; no steering or core-v6 change.
+
+## R0 (2026-10-08; executed)
+
+`src/csasr/inference_cf/r0_regions.py` (window grid, frozen EN/ZH/U window rule, sample sweep, frame masks, attention mapping/assignment,
+shuffle offsets, ERODE/DILATE), `src/csasr/inference_cf/r0_unique.py` (per-utterance small-rank thin-SVD unique constructor, no fallback),
+`experiments/inference_cf_r0.py` (prepare/manifest/run/seal; reuses `p0_r2.native_lid`/`full_replay`, `DecoderPostCrossAttnRecorder`,
+`core_p1.direction`; runtime file-open log), `inference_cf_r0_analyze.py` (reference-free primary; seal+PRIMARY-gated oracle phase),
+`inference_cf_r0_audit.py` (independent prerun/primary/full; Gram-route constructor), `slurm/inference_cf_r0.sbatch`, `tests/test_r0_impl.py`.
+Outputs `results/inference_cf/r0/`. Report `docs/inference_cf/R0_REGION_VECTOR_REPORT.md`.

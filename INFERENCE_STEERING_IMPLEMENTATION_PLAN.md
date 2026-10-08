@@ -742,3 +742,14 @@ P2-A2-MECH0 frozen design after audited PATH5 SAFE_NO_ADDED_VALUE (G1 line CLOSE
 ## ST-LOC0 supporting feasibility freeze (2026-10-08)
 
 Human-authorized exposed-development diagnostic: v_prompt / clean P2-DIR v_unq, L16/L24, post-self residual and DG-02 post-cross/pre-FFN, signs +/− (16 arms), one historical matched-energy pulse. Contract: `docs/inference_cf/ST_LOC0_SPEC.md`, design/panel alongside it, `configs/inference_cf/st_loc0.json`. Historical D0/D1 provenance recovered by CPU-only refit. No runner or GPU/outcome in this freeze; independent PASS_TO_ST_LOC0 required before one bounded future job. This stage does not revise core v6/DG-02 or reopen closed P2/TTA/PATH conclusions. LOC1 requires a separate freeze after SITE_FEASIBLE; no sequence/safety claim follows from lexical feasibility.
+
+## ST-LOC0 — executed (2026-10-08): `ST_LOC0_LOCAL_EFFECT_ONLY`
+
+| Step | Status |
+|---|---|
+| Freeze | DONE (`39ff5e9`) |
+| Implementation + `PASS_TO_ST_LOC0` | DONE (`cd28f06`, `58dc232`; regression 138/138) |
+| Manifest + calibration seal + run (Slurm 58109) | DONE (`ac735c4`, `9998e5c`; barrier bitwise; 3780/3780 valid) |
+| Output seal + primary audit | DONE (`48638ce`, `25b31d0`) |
+| Secondary + full `ST_LOC0_AUDIT: PASS` | DONE: 8/16 adjusted-positive; v_unq L24 plus +0.57/+0.56 nat but 1 correction; oracle 1/60 |
+| Next | LOC1 NOT authorized (LOCAL_EFFECT_ONLY); no LOC0 expansion. Main line unchanged: exact-A2 confirmation (separate freeze, not run) |

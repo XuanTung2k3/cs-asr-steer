@@ -446,3 +446,11 @@ D-test, router-calib new role, new split, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND
 ## ST-LOC0 pre-outcome design freeze (2026-10-08)
 
 Reuses only the already-exposed P2-R/P2-DIR D-dev-select 180 positions / 80 utterances / 20 dialogues (60 EN-confusion, 60 EN-correct, 60 ZH-correct). No resampling/new split/role. Sealed EN-/ZH-correct labels are permitted only for clean D1 offline, whole-dialogue-excluded calibration; runtime V1/pulse/provider sees baseline-generated prefixes/audio/sealed vectors only. Evaluator targets/oracle remain post-seal. CPU historical provenance refit does not expose new outcomes. No scientific GPU/model outcome or fresh reference evaluation in this freeze. D-dev-confirm, D-test, router-calib new role, P3 and transfer data remain forbidden; lexical feasibility is not full ASR/fresh validation.
+
+## ST-LOC0 exposure (2026-10-08)
+
+Slurm 58109 replayed only the already-exposed D-dev-select 180 positions / 80 utterances / 20 dialogues (P2-R/P2-RJ/P2-DIR panel) with
+single matched-energy pulses. Runner read the runtime projection only; EN-/ZH-correct construction labels were used solely by the offline
+whole-dialogue-excluded V2 builder. Evaluator targets/competitors (`p2rj/positions.json`, previously exposed) were opened only after the
+reference-free output seal was pushed and the independent primary audit passed. Not fresh validation. No D-dev-confirm, D-test,
+router-calib new role, new split, P3 or transfer data.

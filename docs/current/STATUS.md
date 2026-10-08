@@ -1,4 +1,15 @@
-# Current separate inference-time ticket — P2-A2-MECH0 (2026-10-08): `P2_A2_MECH0_TERMINATION_DOMINANT`; A2_CONFIRMATION_READY = YES
+# Current supporting inference_cf ticket — ST-LOC0 (2026-10-08): terminal `ST_LOC0_LOCAL_EFFECT_ONLY` (no LOC1)
+
+Freeze `39ff5e9`; `PASS_TO_ST_LOC0` (`58dc232`); manifest `ac735c4`; calibration seal `9998e5c` pushed before pulses; Slurm 58109 (6.5 min);
+output seal `48638ce` before references; `ST_LOC0_AUDIT: PASS` (primary + full). Historical L16 DG-02 barrier bitwise (B0/D0/D1/D2, zero,
+restore). 3780/3780 valid matched-energy pulses; all 16 V1/V2 arms eligible. 8/16 arms adjusted-positive on the EN-confusion margin; only
+v_unq L24 self/cross plus reach +0.50 nat (+0.57/+0.56, ~+0.48 beyond same-site random) but 1 correction (1 dialogue) vs gate 3/3; oracle
+union 1/60 (REFERENCE-DEPENDENT, NOT DEPLOYABLE); D2 control +4.50 / 5 corrections. "Partial causal evidence; insufficient lexical correction
+power for automatic progression." No LOC1/LOC0 expansion/new direction. Report `docs/inference_cf/ST_LOC0_REPORT.md`. Core v6 unchanged; the
+main-line next step remains the separately frozen exact-A2 confirmation (P2-A2-MECH0, below; not run).
+
+<!-- superseded header (P2-A2-MECH0 result) -->
+## (Previous header) Current separate inference-time ticket — P2-A2-MECH0 (2026-10-08): `P2_A2_MECH0_TERMINATION_DOMINANT`; A2_CONFIRMATION_READY = YES
 
 Freeze `9d89640`; `PASS_TO_P2_A2_MECH0` (`ff3141b`); manifest `5c2e9e4`; Slurm 58084 (12.2 min); seal `ae69635` (LN archives pushed first)
 before references; `P2_A2_MECH0_AUDIT: PASS` (primary + full). Exact A2 reconstruction 300/300 (unchanged A2 code; global step post-hook
@@ -775,3 +786,9 @@ P2-PATH5 audited SAFE_NO_ADDED_VALUE closes the G1/controller line; candidate re
 ## ST-LOC0 — design frozen, implementation/audit pending (2026-10-08)
 
 Next supporting inference_cf ticket: **Frozen-Direction, Multi-Site Causal Feasibility**. Exact historical 180-position panel; dynamic same-prefix v_prompt and clean dialogue-crossfit v_unq; 16 primary arms at L16/L24 post-self and post-cross/pre-FFN with both signs. Same fixed P2-R chord budget; random/site and historical D2 controls. CPU provenance reproduces 20 D1 folds and 180 D0 vectors exactly; new self-site residual route verified synthetically. Artifacts: `ST_LOC0_SPEC.md`, `ST_LOC0_CODEX_DESIGN.md`, `ST_LOC0_PANEL.json`, `st_loc0.json`. No scientific outcome/GPU/runner or location optimizer added. Future execution requires PASS_TO_ST_LOC0 and the historical replay barrier; no held-out data. Human-authorized diagnostic expansion does not alter METHOD_CONTRACT/v6; prior sequence damage and separate A2 termination findings remain authoritative.
+
+## ST-LOC0 — executed (2026-10-08): `ST_LOC0_LOCAL_EFFECT_ONLY`
+
+One job (Slurm 58109); historical barrier PASS; 3780/3780 valid pulses; `ST_LOC0_AUDIT: PASS`. Adjusted-positive arms exist (8/16) but no
+arm meets the +0.50-nat AND >=3 corrections / >=3 dialogues gates together (max 1 correction). Decision: partial causal evidence, insufficient
+lexical correction power; LOC1 NOT authorized; no LOC0 expansion. See `../inference_cf/ST_LOC0_REPORT.md`.

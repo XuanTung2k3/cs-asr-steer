@@ -450,3 +450,14 @@ decomposition, F fractions, robustness, mechanism label, readiness), `inference_
 ## ST-LOC0 freeze / planned adapter (2026-10-08)
 
 Design only: `docs/inference_cf/ST_LOC0_SPEC.md`, `ST_LOC0_CODEX_DESIGN.md`, `ST_LOC0_PANEL.json` and `configs/inference_cf/st_loc0.json`; CPU contract tests `tests/test_st_loc0_contract.py`. Reuse `inference_cf/core_p1.direction`, `directions.OldDirection/UniqueDirection`, `unique.fit_fold`, P2-R `DiagBranch/solve_scale`, P2-DIR extract/pulse/evaluator/auditor, `lss/sites.py` DG-02 and `models/hooks.apply_steering`. Post-self production adapter is pending: edit the self-attention output so BOTH following cross-LN and residual bypass consume edited q; an encoder-LN argument-only edit is invalid. This is supporting diagnostic infrastructure, not a new core hook/runner or optimizer. Historical A5 Add-Unique is distinct from the clean D1 construction and is not used.
+
+## ST-LOC0 (2026-10-08; executed)
+
+`src/csasr/inference_cf/loc0_sites.py` (`SelfAttnResidualInterventionHook` post-self residual adapter returning `u_self + (q' - q)` so the
+cross-LN and residual both consume the edited q; `pulse_action` = P2-R pulse action + frozen solver-unattainable no-edit; `cross_pulse_hook`
+= unchanged DG-02 hook; `Composite`; `assert_no_any_site_hooks`; `cache_fingerprint`). `experiments/inference_cf_st_loc0.py`
+(prepare/manifest/run/seal; 4-site passive B/E replay, calibration seal + GO gate, L16 DG-02 historical barrier, 21-arm single pulses),
+`inference_cf_st_loc0_calibrate.py` (per-site `unique.fit_fold` folds from the allowlisted panel keys only),
+`inference_cf_st_loc0_analyze.py` (reference-free primary; seal/audit-gated secondary reusing `p2dir_analyze.logit_metrics/boot_stat`),
+`inference_cf_st_loc0_audit.py` (independent prerun/primary/full; reuses only the P2-DIR auditor primitives), `slurm/inference_cf_st_loc0.sbatch`,
+`tests/test_st_loc0_impl.py`. Outputs `results/inference_cf/st_loc0/`. Report `docs/inference_cf/ST_LOC0_REPORT.md`.

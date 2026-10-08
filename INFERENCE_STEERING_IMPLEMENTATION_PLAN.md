@@ -726,3 +726,14 @@ anything but G1A_SUPPORTED closes the controller line and returns to A2. See `do
 ## P2-A2-MECH0 pre-outcome freeze
 
 P2-A2-MECH0 frozen design after audited PATH5 SAFE_NO_ADDED_VALUE (G1 line CLOSED). Exact A2 all300 barrier; step0/1/2 dynamics, historical first-divergence geometry, one-family state resets on changed44 plus controls40. No optimizer/objective/teacher/subset/LR/step change or controller; no job/outcome in design session. Later one job<=3h, pre/primary/post independent audits, reference seal. Readiness only recommends separately frozen exact-A2 confirmation, never launches it. See docs/inference_cf/P2_A2_MECH0_SPEC.md; core v6/history unchanged.
+
+## P2-A2-MECH0 — executed (2026-10-08): `P2_A2_MECH0_TERMINATION_DOMINANT`, A2_CONFIRMATION_READY = YES
+
+| Stage | Status |
+|---|---|
+| Freeze | DONE (`9d89640`) |
+| Implementation + `PASS_TO_P2_A2_MECH0` | DONE (`ab40674`, `ff3141b`; regression 47/47) |
+| Manifest + run (Slurm 58084) | DONE (`5c2e9e4`; FULL300 exact reconstruction, MECH_PANEL diagnostics) |
+| Seal + primary audit | DONE (`ae69635`, `9ed40e7`) |
+| Secondary + `P2_A2_MECH0_AUDIT: PASS` | DONE: termination-dominant (F_ZH_EOS 0.965, F_DEL_EOS 0.971); SELF family sensitive |
+| Next | separately frozen exact-A2 confirmation (not run; no A2 changes) |

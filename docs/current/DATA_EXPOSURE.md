@@ -433,3 +433,11 @@ new split, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.
 ## P2-A2-MECH0 pre-outcome freeze
 
 Design inspection only: existing source/contracts/reports and sealed FULL300 token/text/termination/teacher/provenance metadata, audio bytes, FIXED100 final-master archive hashes, fixed-ID filtered role ID/dialogue/role columns. No row-level error labels/reference columns or new reference evaluation. Token-only A2_SAME256/DELTA44/EOS_RECOVERY12/content32; deterministic controls40. Future diagnostics only already PATH5-exposed D-dev-select FULL300; output/state seal pushed before references. No fresh validation/new role/D-dev-confirm/D-test/P3/transfer. Controller line closed, exact A2 unchanged.
+
+## P2-A2-MECH0 exposure (2026-10-08)
+
+Slurm 58084 re-ran exact A2 on the already-exposed D-dev-select FULL300 (same 300 as PATH5; 20 dialogues) with step snapshots, STEP1/
+family-ablation decodes and first-divergence scoring on MECH_PANEL84. Strata/controls used only sealed token arrays and ID/dialogue/role
+columns. FULL300 references (already exposed; previously used in DG-04/06/07, P0-R2, P2 selection, TTA1, PATH5) were opened only after the
+reference-free seal (including LN archives) was pushed and the independent primary audit passed. Not fresh validation. No D-dev-confirm,
+D-test, router-calib new role, new split, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.

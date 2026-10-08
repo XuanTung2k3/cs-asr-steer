@@ -1,4 +1,14 @@
-# Current separate inference-time ticket — P2-PATH5 (2026-10-08): terminal `P2_PATH5_SAFE_NO_ADDED_VALUE` — G1 controller line CLOSED; main candidate A2
+# Current separate inference-time ticket — P2-A2-MECH0 (2026-10-08): `P2_A2_MECH0_TERMINATION_DOMINANT`; A2_CONFIRMATION_READY = YES
+
+Freeze `9d89640`; `PASS_TO_P2_A2_MECH0` (`ff3141b`); manifest `5c2e9e4`; Slurm 58084 (12.2 min); seal `ae69635` (LN archives pushed first)
+before references; `P2_A2_MECH0_AUDIT: PASS` (primary + full). Exact A2 reconstruction 300/300 (unchanged A2 code; global step post-hook
+observer). F_ZH_EOS 0.965 / F_DEL_EOS 0.971 (12 EOS_RECOVERY rows, 10 dialogues; median dM2 +0.63, 12/12 positive, already after step1);
+content-divergence rows net ZH -28 but POI +39; AUTO stops with B0 on every EOS row (A2 is not imitating AUTO); SELF LN family is the only
+mechanism-sensitive family; 0 FULL_A2 severe truncations. A2 unchanged; NEXT: separately frozen exact-A2 confirmation (not run).
+Report `docs/inference_cf/P2_A2_MECH0_REPORT.md`. Core v6 unchanged.
+
+<!-- superseded header (P2-PATH5 result) -->
+## (Previous header) Current separate inference-time ticket — P2-PATH5 (2026-10-08): terminal `P2_PATH5_SAFE_NO_ADDED_VALUE` — G1 controller line CLOSED; main candidate A2
 
 OPP0 (no GPU): derived A2+G1A on fixed100 ZH 1093 / POI 314 / mixed 1439 (EOS harm removed; rescue only PATH2_12). PATH5 freeze `d1d057d`;
 `PASS_TO_P2_PATH5` (`01d57b8`); manifest `48f0ace`; Slurm 58074 (13.9 min); seal `101ca00` pushed before NEW200 references; `P2_PATH5_AUDIT:

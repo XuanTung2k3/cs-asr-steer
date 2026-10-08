@@ -436,3 +436,12 @@ Report `docs/inference_cf/P2_PATH5_REPORT.md`.
 ## P2-A2-MECH0 pre-outcome freeze
 
 P2-A2-MECH0 design: docs/inference_cf/P2_A2_MECH0_SPEC.md, P2_A2_MECH0_CODEX_DESIGN.md, P2_A2_MECH0_PANEL.json; configs/inference_cf/p2_a2_mech0.json. Reuse original episodic_tta A2/run_objective, PATH5 canonical B0/A2/teachers/state hashes, cached.Branch/processed logits/canonical evaluator. Future opt-in detached post-update snapshot observer is non-scientific instrumentation; default A2 unchanged. No MECH0 runner/analyzer/auditor/sbatch implemented here. STEP1 geometry forces historical prefix and must not inherit PATH score_branch greedy-prefix rejection.
+
+## P2-A2-MECH0 (2026-10-08; executed)
+
+`experiments/inference_cf_p2a2_mech0.py` (prepare/manifest/run/seal; `step_observer` = global torch optimizer step post-hook cloning detached
+fp32 masters after each original AdamW step, no change to `episodic_tta.py`/`inference_cf_p2tta0.py`; `strata`, `family_partition`,
+`delta_norms`, `drop_family`, `geometry_path`), `inference_cf_p2a2_mech0_analyze.py` (primary dynamics/geometry/ablations; guarded secondary
+decomposition, F fractions, robustness, mechanism label, readiness), `inference_cf_p2a2_mech0_audit.py` (independent prerun/post),
+`slurm/inference_cf_p2a2_mech0.sbatch`, `tests/test_inference_cf_p2a2_mech0.py`. Outputs `results/inference_cf/p2a2_mech0/` (rows 000..299,
+`run1/states/` LN snapshot archives). Report `docs/inference_cf/P2_A2_MECH0_REPORT.md`.

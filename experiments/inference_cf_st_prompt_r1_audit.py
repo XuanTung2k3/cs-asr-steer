@@ -205,7 +205,10 @@ def cmd_primary(args) -> dict:
     checks["manifest_hash"] = canon({k: v for k, v in man.items() if k != "manifest_hash"}) == man["manifest_hash"]
     checks["manifest_sources_at_commit"] = all(git_blob_hash(man["git_commit"], p) == h for p, h in man["sources"].items())
     rt = json.loads((run / "runtime.json").read_text())
-    checks["runtime_completed"] = rt["status"] == "completed" and rt["n_failures"] == 0
+    # Amendment A1 (user-authorized, pre-reference): the runner's non-frozen `norm_preserved` flag is diagnostic only
+    diag_only = len(rt.get("failures", [])) == rt["n_failures"] and all(f.startswith("pulses:") and f.endswith("['norm_preserved']") for f in rt.get("failures", []))
+    checks["runtime_completed"] = (rt["status"] == "completed" and rt["n_failures"] == 0) or diag_only
+    notes["runtime_diagnostic_only_failures"] = rt["n_failures"] if diag_only else None
     checks["frozen_model"] = rt["model_grads_none"] and not rt["requires_grad_any"] and rt["weights_unchanged_sample"]
     checks["no_autograd_LID"] = rt["counters"]["autograd_calls"] == 0 and rt["counters"]["LID_calls"] == 0
     checks["rows_present"] = rows is not None
@@ -275,6 +278,8 @@ def cmd_primary(args) -> dict:
     joint = defaultdict(lambda: defaultdict(int))
     jdl = defaultdict(lambda: defaultdict(set))
     ncell = 0
+    mvalid: dict = {}
+    diag_norm: list = []
     for i in range(80):
         r, lg, ar = rows[("pulses", i)]
         for t, pr in r["positions"].items():
@@ -291,7 +296,7 @@ def cmd_primary(args) -> dict:
                 l = a["layer"]
                 before = S[l][0][j].astype(np.float64)
                 rn = float(np.linalg.norm(before))
-                if x["valid"]:
+                if x["steered"]:
                     cons = ar[f"q{j:03d}_{aid}_consumed"].astype(np.float64)
                     prop = ar[f"q{j:03d}_{aid}_proposed"].astype(np.float64)
                     dc, dp = float(np.linalg.norm(cons - before)), float(np.linalg.norm(prop - before))
@@ -299,7 +304,6 @@ def cmd_primary(args) -> dict:
                     ok = (abs(dc / target - 1) <= e["max_relative_norm_error"] + e["consumed_vs_proposed_relative_norm_tolerance"]
                           and abs(dp / target - 1) <= e["max_relative_norm_error"] and abs(dp ** 2 / target ** 2 - 1) <= e["max_relative_squared_error"]
                           and abs(dc - dp) <= e["consumed_vs_proposed_relative_norm_tolerance"] * dp
-                          and abs(float(np.linalg.norm(cons)) - rn) <= e["consumed_vs_proposed_relative_norm_tolerance"] * rn
                           and abs(x["actual_eta"] - x["realized_edit_norm"] / rn) <= 1e-9)
                     vsrc = rv[aid] if a["family"] == "random" else (a["sign"] * V[f"q{j:03d}_L{l}"]).astype(np.float32)
                     # direction + sign: float64 NormPreserve reconstruction with the recorded solver scale
@@ -307,8 +311,11 @@ def cmd_primary(args) -> dict:
                     ex = ex * rn / (np.linalg.norm(ex) + e["repair_epsilon"])
                     de, dpv = ex - before, prop - before
                     ok &= float(de @ dpv / (np.linalg.norm(de) * np.linalg.norm(dpv))) >= 0.99
+                    ndev = abs(float(np.linalg.norm(cons)) / rn - 1)
+                    diag_norm.append(ndev)
                     if not ok:
                         bad["energy_direction"].append((j, aid))
+                    mvalid[(j, aid)] = bool(ok)
                     en[(l, a["eta"])].append(x["realized_edit_norm"] ** 2)
                     valid[aid][s] += 1
                     vdl[aid][s].add(dl)
@@ -317,7 +324,7 @@ def cmd_primary(args) -> dict:
                         bad["no_edit"].append((j, aid, x.get("no_edit_reason")))
                     if a["family"] == "prompt" and f"q{j:03d}_L{l}" not in V and x.get("no_edit_reason") != "tiny_or_nonfinite_direction":
                         bad["no_edit_reason"].append((j, aid))
-                if x["integrity_failures"] or not (x["cache_prefix_unchanged"] and x["cache_positions_ok"]):
+                if [f for f in x["integrity_failures"] if f != "norm_preserved"] or not (x["cache_prefix_unchanged"] and x["cache_positions_ok"]):
                     bad["cell_integrity"].append((j, aid))
             for k, v in en.items():
                 if max(v) / min(v) - 1 > e["max_pairwise_relative_squared_error"]:
@@ -325,10 +332,13 @@ def cmd_primary(args) -> dict:
             for aid, a in arms.items():
                 if a["family"] == "prompt":
                     ra = f"random_L{a['layer']:02d}_eta{a['eta']:.2f}"
-                    if pr["cells"][aid]["valid"] and pr["cells"][ra]["valid"]:
+                    if mvalid.get((j, aid)) and mvalid.get((j, ra)):
                         joint[aid][s] += 1
                         jdl[aid][s].add(dl)
     checks["matrix_complete_6480"] = ncell == 6480 and not bad["arm_set"]
+    dn = np.array(diag_norm)
+    notes["diagnostic_norm_deviation"] = {"steered": int(dn.size), "gt_0.005": int((dn > 0.005).sum()), "max": float(dn.max()) if dn.size else None,
+                                          "median": float(np.median(dn)) if dn.size else None}
     for k in ("lineage", "energy_direction", "no_edit", "no_edit_reason", "cell_integrity", "pairwise"):
         checks[f"independent:{k}"] = not bad[k]
     notes["failures"] = {k: [str(x) for x in v[:15]] for k, v in bad.items() if v}
@@ -387,7 +397,7 @@ def cmd_full(args) -> dict:
             p = pos[j]
             Y, cc, tt = [int(x) for x in p["target_ids"]], int(p["competitor"]), int(p["t"])
             n = metrics(bf16(none[f"q{j:03d}"]), tt, sup, beg, part, Y, cc)
-            R[j] = {"n": n, "a": {aid: metrics(bf16(lg[f"q{j:03d}_{aid}"]), tt, sup, beg, part, Y, cc) for aid in arms}, "valid": {aid: pr["cells"][aid]["valid"] for aid in arms}}
+            R[j] = {"n": n, "a": {aid: metrics(bf16(lg[f"q{j:03d}_{aid}"]), tt, sup, beg, part, Y, cc) for aid in arms}, "valid": {aid: bool(pr["cells"][aid]["steered"]) and all(v for k, v in pr["cells"][aid].get("checks", {}).items() if k != "norm_preserved") for aid in arms}}
     keys = sorted({q["dialogue_id"] for q in mem})
     idx = np.random.default_rng(c["bootstrap"]["seed"]).integers(0, len(keys), size=(c["bootstrap"]["replicates"], len(keys)))
     W = np.stack([(idx == k).sum(axis=1) for k in range(len(keys))], axis=1).astype(float)
@@ -454,7 +464,7 @@ def cmd_full(args) -> dict:
     checks["oracle_union_agrees"] = union == sec["oracle_union"]["union_corrected_positions"]
     entries = sorted(p.name for p in (ROOT / BASE).iterdir())
     checks["scope_no_B_outputs"] = set(entries) <= {"plan_sealed.json", "prerun_audit_A.json", "runA", "primary_analysis_A.json", "output_seal_A.json",
-                                                    "primary_audit_A.json", "secondary_analysis_A.json", "final_audit_A.json"}
+                                                    "primary_audit_A.json", "secondary_analysis_A.json", "final_audit_A.json", "amendment_A1.json"}
     checks["one_job"] = len(list(run.glob("slurm-*.out"))) == 1
     v = c["audit"]["post_A"] + " (FULL)" if all(checks.values()) else "ST_PROMPT_R1_A_AUDIT: FAIL (FULL)"
     return {"schema": "st_prompt_r1_full_A_audit_v1", "verdict": v, "label": label if all(checks.values()) else "ST_PROMPT_R1_A_INVALID",

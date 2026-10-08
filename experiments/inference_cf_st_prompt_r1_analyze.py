@@ -45,6 +45,20 @@ def committed(rel: str) -> bool:
     return tracked and "sha256:" + hashlib.sha256(blob).hexdigest() == file_hash(ROOT / rel)
 
 
+# Amendment A1 (user-authorized 2026-10-08, after job 58158, BEFORE any reference access): `norm_preserved` (a runner
+# check with a NON-frozen 0.5% tolerance on ||r'|| vs ||r||, failing on 189/6480 cells at <= 0.68% = bf16 precision of the
+# frozen apply_steering NormPreserve output) is a recorded DIAGNOSTIC. Cell validity = steered AND every FROZEN check.
+DIAGNOSTIC = ("norm_preserved",)
+
+
+def fvalid(x: dict) -> bool:
+    return bool(x.get("steered")) and all(v for k, v in (x.get("checks") or {}).items() if k not in DIAGNOSTIC)
+
+
+def frozen_failures(x: dict) -> list:
+    return [f for f in x.get("integrity_failures", []) if f not in DIAGNOSTIC]
+
+
 def random_of(arm: dict) -> str:
     return f"random_L{arm['layer']:02d}_eta{arm['eta']:.2f}"
 
@@ -113,7 +127,10 @@ def primary(run_rel: str) -> dict:
     arm_ids = [a["id"] for a in plan["arms"]]
     arms = {a["id"]: a for a in plan["arms"]}
     integ = {"capture_identity": bool(cap["identity_ok"]), "geometry_gate_pass": gate["verdict"] == "GEOMETRY_COVERAGE_PASS",
-             "runtime_completed": rt.get("status") == "completed" and not rt.get("n_failures"), "rows_present": not d["missing"],
+             "runtime_completed": (rt.get("status") == "completed" and not rt.get("n_failures")) or (
+                 rt.get("n_failures", 0) <= 200 and len(rt.get("failures", [])) == rt.get("n_failures")
+                 and all(f.startswith("pulses:") and f.endswith("['norm_preserved']") for f in rt.get("failures", []))),
+             "rows_present": not d["missing"],
              "barrier_pass": bool((rt.get("barrier") or {}).get("pass")), "frozen_model": bool(rt.get("model_grads_none")) and not rt.get("requires_grad_any") and bool(rt.get("weights_unchanged_sample"))}
     complete = sum(1 for j in range(180) if j in d["cells"] and set(d["cells"][j]["cells"]) == set(arm_ids))
     integ["matrix_complete_180x36"] = complete == 180
@@ -121,12 +138,21 @@ def primary(run_rel: str) -> dict:
                                                                 and all(all(v for v in x["barrier"].values() if v is not None) for x in b["cells"].values())
                                                                 for b in d["barrier"].values())
     fails = []
+    diag = defaultdict(int)
     for j, pr in d["cells"].items():
-        if not (pr["clean_replay_bitwise"] and pr["restore_bitwise"] and all(pr["pairwise"].values())):
-            fails.append((j, "lineage/pairwise"))
+        if not (pr["clean_replay_bitwise"] and pr["restore_bitwise"]):
+            fails.append((j, "lineage"))
+        groups = defaultdict(list)
         for a, x in pr["cells"].items():
-            if x["integrity_failures"]:
-                fails.append((j, a, x["integrity_failures"]))
+            if frozen_failures(x):
+                fails.append((j, a, frozen_failures(x)))
+            if fvalid(x):
+                groups[(x["layer"], x["eta"])].append(x["realized_edit_norm"] ** 2)
+            if "norm_preserved" in x.get("integrity_failures", []):
+                diag[a] += 1
+        for k, en in groups.items():
+            if max(en) / min(en) - 1 > c["energy"]["max_pairwise_relative_squared_error"]:
+                fails.append((j, "pairwise", k))
     integ["cell_integrity"] = not fails
     valid = {a: {s: 0 for s in STRATA} for a in arm_ids}
     vdl = {a: {s: set() for s in STRATA} for a in arm_ids}
@@ -137,14 +163,14 @@ def primary(run_rel: str) -> dict:
     for j, pr in d["cells"].items():
         s, dl = mem[j]["stratum"], mem[j]["dialogue_id"]
         for a, x in pr["cells"].items():
-            if x["valid"]:
+            if fvalid(x):
                 valid[a][s] += 1
                 vdl[a][s].add(dl)
                 eta_act[a].append(x["actual_eta"])
             else:
                 reasons[a][x.get("no_edit_reason")] += 1
         for a in joint:
-            if pr["cells"][a]["valid"] and pr["cells"][random_of(arms[a])]["valid"]:
+            if fvalid(pr["cells"][a]) and fvalid(pr["cells"][random_of(arms[a])]):
                 joint[a][s] += 1
                 jdl[a][s].add(dl)
     e = c["eligibility"]
@@ -161,6 +187,8 @@ def primary(run_rel: str) -> dict:
             out_arms[a]["eligible"] = ok(valid[a], vdl[a]) and ok(joint[a], jdl[a])
     return {"schema": "st_prompt_r1_A_primary_v1", "manifest_hash": d["manifest"]["manifest_hash"], "references_used": False, "valid": all(integ.values()),
             "integrity": integ, "failures": [str(x) for x in fails[:50]], "arms": out_arms,
+            "amendment_A1_norm_preserved_diagnostic": {"cells_flagged": sum(diag.values()), "by_arm": dict(diag),
+                                                       "rule": "diagnostic only; validity = frozen criteria (user-authorized, pre-reference)"},
             "runtime": {k: rt.get(k) for k in ("job_id", "elapsed_sec", "peak_alloc", "peak_reserved", "counters", "barrier", "pulses_sec")},
             "capture": {k: cap.get(k) for k in ("elapsed_sec", "counters", "peak_alloc", "job_id")}}
 
@@ -221,7 +249,7 @@ def secondary(run_rel: str) -> dict:
             z_ = unpack_bf16(lg[f"q{j:03d}_{a}"])
             am = logit_metrics(z_, t, sup, beg, part, Y, cc)
             x = pr["cells"][a]
-            r["arms"][a] = {"valid": x["valid"], "d_m": am["m"] - nm["m"], "top1": am["top1"], "in_ref": am["top1_in_ref"], "changed": am["top1"] != nm["top1"],
+            r["arms"][a] = {"valid": fvalid(x), "d_m": am["m"] - nm["m"], "top1": am["top1"], "in_ref": am["top1_in_ref"], "changed": am["top1"] != nm["top1"],
                             "d_rank": am["rank_ref"] - nm["rank_ref"], "d_logp_ref": am["logp_ref"] - nm["logp_ref"], "d_P_E": am["P_E"] - nm["P_E"],
                             "d_P_M": am["P_M"] - nm["P_M"], "kl": kl_edit_none(z_, none[j], t, sup, beg)}
         rows.append(r)

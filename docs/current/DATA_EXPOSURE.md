@@ -412,3 +412,12 @@ outside DEV24) was not used in that chain but is not fresh validation. Slurm 580
 References for PATH4 outcomes were opened only after the reference-free output seal was pushed and the independent primary-phase audit
 passed. B0/AUTO/A2 outputs and sealed PATH3 A4+G1 (display only) were reused, not rerun. No D-dev-confirm, D-test, router-calib (new role),
 full300, P3, SEAME, CS-FLEURS, ViMedCSS, ASCEND or transfer data.
+
+## P2-OPP0-ABSTAIN and P2-PATH5 freeze exposure (2026-10-08)
+
+OPP0 re-evaluated already-exposed fixed100 references for a derived (no-GPU) A2+G1A after committing the derived outputs. PATH5 freeze read
+only FULL300 IDs/dialogue/role columns (role manifest), audio bytes, sealed P2-A r1 AUTO/B0 token arrays and sealed PATH4/OPP0 outputs; no
+NEW200 reference, error count, POI/language label or duration. PATH5 population: FULL300 = the same 300 already-exposed DG-04 B0
+D-dev-select utterances (references previously used in DG-04/06/07 selection, P0-R2, P2 selection, P2-R/RJ/RJ-E); fixed100 already TTA1/
+PATH-exposed; NEW200 = FULL300 - fixed100 never used in the TTA/A2/A3/A4/PATH chain but NOT fresh validation. No D-dev-confirm, D-test,
+router-calib new role, new split, P3 or transfer.

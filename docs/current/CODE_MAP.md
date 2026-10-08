@@ -418,3 +418,9 @@ plan; manifest; run: two resident instances, all-100 A2 reconstruction barrier v
 EOS-boundary diagnostics; guarded secondary with PATH4 gates/precedence), `inference_cf_p2path4_audit.py` (independent runnable prerun /
 post), `slurm/inference_cf_p2path4.sbatch`, `tests/test_inference_cf_p2path4.py`. Outputs `results/inference_cf/p2path4/` (rows by
 canonical index 000..099). Report `docs/inference_cf/P2_PATH4_REPORT.md`.
+
+## P2-OPP0-ABSTAIN + P2-PATH5 freeze (2026-10-08)
+
+`experiments/inference_cf_p2opp0_abstain.py` (derive G1A from sealed PATH4 rows; gated fixed100 evaluation) -> `results/inference_cf/p2opp0/`.
+`experiments/inference_cf_p2path5_panel.py` builds the reference-free `docs/inference_cf/P2_PATH5_PANEL.json`. PATH5 contract:
+`docs/inference_cf/P2_PATH5_SPEC.md`, `P2_PATH5_CLAUDE_DESIGN.md`, `configs/inference_cf/p2_path5.json`; runner/analyzer/auditor pending.

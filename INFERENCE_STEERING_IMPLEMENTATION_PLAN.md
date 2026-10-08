@@ -702,3 +702,11 @@ Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized
 | Reference-free seal + primary audit | DONE (`4781605`, `fcf000f`) |
 | Secondary + `P2_PATH4_AUDIT: PASS` | DONE: safety/rescue pass; benefit retention fails (0.724, PIER +0.0115); breadth fails |
 | Any EOS-boundary redesign | NOT RUN; needs a separately frozen contract and human decision |
+
+## P2-OPP0-ABSTAIN + P2-PATH5 freeze (2026-10-08)
+
+OPP0 (no GPU): derived A2+G1A on fixed100 from sealed PATH4 rows: ZH 1093 / POI 314 / mixed 1439 (A2 1116/316/1464); EOS harm removed,
+content G1 preserved, rescue still only PATH2_12 (`docs/inference_cf/P2_OPP0_ABSTAIN_REPORT.md`). PATH5 frozen pre-outcome: A2+G1A
+(content/content original G1; EOS boundary -> abstain to A2) on NEW200 = FULL300 - fixed100 (already-exposed D-dev-select, not fresh),
+fixed100 live barrier first, reference-free opportunity gate (>=3 changed rows and dialogues), 0.90 strong retention, breadth; hard stop:
+anything but G1A_SUPPORTED closes the controller line and returns to A2. See `docs/inference_cf/P2_PATH5_SPEC.md`.

@@ -740,3 +740,9 @@ After audited PATH3 SIGNAL_CONCENTRATED, intended G1 transfer to A2 is documente
 ## P2-PATH4-R1 — authorized EOS-boundary extension
 
 Original P2_PATH4_BLOCKED_EOS_FIRST_BRANCH (29661e9) preserved. Human authorized PATH4_R1_EOS_BOUNDARY_V1 before any scientific run/PATH4 reference outcome. Content/content G1 unchanged; first EOS/content disagreement uses equal-horizon1 next-action .5/.5 consensus, inherited tie and one-action A2 execution. Fixed100/A2/thresholds/firewall unchanged. Additive eos_boundary helper, CPU tests and independent freeze auditor; no runner/scientific outcomes/GPU. See docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md. PASS_TO_P2_PATH4_R1 required before later execution; runnable manifest/code audit remains mandatory. P3 HELD.
+
+## P2-OPP0-ABSTAIN + P2-PATH5 pre-outcome freeze (2026-10-08)
+
+OPP0 derived diagnostic (no GPU): A2+G1A fixed100 ZH 1093 / POI 314 / mixed 1439; abstention removes the PATH4 EOS harm; rescue still only
+PATH2_12. PATH5 contract frozen (spec/design/panel/config) before any NEW200 decode or reference: frozen A2+G1A on NEW200 (200 rows, 20
+dialogues), opportunity gate, 0.90 retention, hard stop rule. Implementation/run pending `PASS_TO_P2_PATH5`.

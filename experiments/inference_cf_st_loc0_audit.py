@@ -205,7 +205,8 @@ def cmd_prerun(args) -> dict:
     run_src = (ROOT / RUNNER).read_text()
     checks["runner_calibration_uses_allowlist"] = "calib_in = {k: Pfull[k] for k in calib.ALLOWED}" in run_src and \
         re.search(r"ALLOWED = \(\"construction_positions\", \"calibration_membership\"\)", (ROOT / CALIB).read_text()) is not None
-    notes["forbidden:primary_analysis"] = forbidden_hits(ANALYZE, "primary", extra=("POSITIONS", "HIST_ANALYSIS"), allow=("stratum",))
+    notes["forbidden:primary_analysis"] = forbidden_hits(ANALYZE, "primary", allow=("stratum",)) + \
+        sorted({"POSITIONS", "HIST_ANALYSIS"} & names_in(ANALYZE, "primary"))       # module constants: exact-name match
     checks["primary_analysis_reference_free"] = not notes["forbidden:primary_analysis"]
     sec = (ROOT / ANALYZE).read_text()
     checks["secondary_gated_on_seal_and_primary_audit"] = "committed(SEAL)" in sec and "committed(PRIMARY_AUDIT)" in sec

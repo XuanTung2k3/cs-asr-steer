@@ -753,3 +753,8 @@ Human-authorized exposed-development diagnostic: v_prompt / clean P2-DIR v_unq, 
 | Output seal + primary audit | DONE (`48638ce`, `25b31d0`) |
 | Secondary + full `ST_LOC0_AUDIT: PASS` | DONE: 8/16 adjusted-positive; v_unq L24 plus +0.57/+0.56 nat but 1 correction; oracle 1/60 |
 | Next | LOC1 NOT authorized (LOCAL_EFFECT_ONLY); no LOC0 expansion. Main line unchanged: exact-A2 confirmation (separate freeze, not run) |
+
+
+## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
+
+Next separately authorized construction-feasibility study: R0 spec/config/panel/firewall frozen before outcomes; baseline-own-prefix state extraction and reference-free per-utterance rank policy,20 shuffle controls/two fixed boundary controls, nested coverage/stability/signal gates. Future Claude implementation -> CPU preflight -> PASS_TO_R0 -> one bounded job -> pushed primary seal/audit -> CPU oracle proxy evaluation/full audit -> STOP. READY only recommends a separately frozen R1; no automatic steering/location optimization. Historical conclusions/core v6 unchanged.

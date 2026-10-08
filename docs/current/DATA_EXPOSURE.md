@@ -454,3 +454,8 @@ single matched-energy pulses. Runner read the runtime projection only; EN-/ZH-co
 whole-dialogue-excluded V2 builder. Evaluator targets/competitors (`p2rj/positions.json`, previously exposed) were opened only after the
 reference-free output seal was pushed and the independent primary audit passed. Not fresh validation. No D-dev-confirm, D-test,
 router-calib new role, new split, P3 or transfer data.
+
+
+## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
+
+Reuses exact exposed D-dev-select FULL300,300 utterances/20 dialogues. Design inspected audio/source/baseline token hashes and timing schema/UID/validity/provider metadata only, not reference surfaces/boundaries/language memberships or new R0 outcomes. Native windows cover full original audio; decoder mapping limited to historical30s heard horizon (27 long rows preserved). Gold-derived CTC timing is post-seal evaluator-only proxy; no gold prefix/state construction. No new role/split, confirm/test/router-calib/P3/transfer exposure; no GPU/steering/training.

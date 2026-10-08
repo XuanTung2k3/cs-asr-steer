@@ -792,3 +792,8 @@ Next supporting inference_cf ticket: **Frozen-Direction, Multi-Site Causal Feasi
 One job (Slurm 58109); historical barrier PASS; 3780/3780 valid pulses; `ST_LOC0_AUDIT: PASS`. Adjusted-positive arms exist (8/16) but no
 arm meets the +0.50-nat AND >=3 corrections / >=3 dialogues gates together (max 1 correction). Decision: partial causal evidence, insufficient
 lexical correction power; LOC1 NOT authorized; no LOC0 expansion. See `../inference_cf/ST_LOC0_REPORT.md`.
+
+
+## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
+
+Latest authorized supporting ticket: **R0 design frozen only** (not ST-LOC1). Exact exposed FULL300, acoustic native-LID segmentation, own-baseline DG-02 states at observational layers3/8/16/24, guarded per-utterance unique vectors. No scientific job/outcome or oracle boundaries inspected here. Future execution requires PASS_TO_R0 and pushed reference-free seal plus independent PRIMARY audit before oracle. Historical ST_LOC0_LOCAL_EFFECT_ONLY/no LOC1, closed controllers and A2 confirmation-ready result remain unchanged.

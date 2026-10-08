@@ -461,3 +461,8 @@ cross-LN and residual both consume the edited q; `pulse_action` = P2-R pulse act
 `inference_cf_st_loc0_analyze.py` (reference-free primary; seal/audit-gated secondary reusing `p2dir_analyze.logit_metrics/boot_stat`),
 `inference_cf_st_loc0_audit.py` (independent prerun/primary/full; reuses only the P2-DIR auditor primitives), `slurm/inference_cf_st_loc0.sbatch`,
 `tests/test_st_loc0_impl.py`. Outputs `results/inference_cf/st_loc0/`. Report `docs/inference_cf/ST_LOC0_REPORT.md`.
+
+
+## R0 predicted-region / per-utterance unique-direction freeze (2026-10-08)
+
+Separate supporting study, design only: `docs/inference_cf/R0_REGION_VECTOR_SPEC.md`, `R0_CODEX_DESIGN.md`, `R0_REFERENCE_FIREWALL.md`, `R0_PANEL.json`, `configs/inference_cf/r0_region_vector.json`; contract tests `tests/test_r0_freeze_contract.py`. Reuse native100-way LID/full replay, DG-02 passive recorder and unique numerical concepts; new per-utterance rank[2,4,8] provider/runner/auditor remain future implementation. A5/D1/R0 are distinct; no steering or core-v6 change.

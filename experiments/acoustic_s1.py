@@ -141,10 +141,10 @@ def auto_generation_config(mdir: str):
 
 
 def cmd_prepare(args) -> None:
-    import importlib
     import soundfile as sf
     import transformers
     from transformers import GenerationConfig, WhisperProcessor
+    from transformers.models.whisper import generation_whisper
     from csasr.inference_cf.core_r2 import tokenizer_partition
     from csasr.inference_cf.s1_evidence import runtime_projection
     from csasr.models.whisper import load_audio
@@ -159,8 +159,7 @@ def cmd_prepare(args) -> None:
               "sources": all(file_hash(ROOT / p) == h for p, h in cfg["source_sha256"].items()),
               "model_files": all(file_hash(Path(mdir) / n) == h for n, h in cfg["model"]["files"].items()),
               "installed_generation_source": file_hash(cfg["conditions"]["installed_generation_source"]) == cfg["conditions"]["installed_generation_file_sha256"]
-              and Path(importlib.import_module("transformers.models.whisper.generation_whisper").__file__).resolve()
-              == Path(cfg["conditions"]["installed_generation_source"]).resolve()}
+              and Path(generation_whisper.__file__).resolve() == Path(cfg["conditions"]["installed_generation_source"]).resolve()}
     proc = WhisperProcessor.from_pretrained(mdir, local_files_only=True)
     tok = proc.tokenizer
     gen = GenerationConfig.from_pretrained(mdir, local_files_only=True)

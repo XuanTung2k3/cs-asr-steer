@@ -429,7 +429,7 @@ def cmd_primary(args) -> dict:
     checks["primary_reference_free"] = prim["references_used"] is False and not (ROOT / BASE / "secondary_analysis.json").exists()
     seal = json.loads((ROOT / BASE / "output_seal.json").read_text())
     checks["output_seal_committed_pushed"] = git_blob_hash("HEAD", f"{BASE}/output_seal.json") == fhash(ROOT / BASE / "output_seal.json") and \
-        subprocess.run(["git", "merge-base", "--is-ancestor", "HEAD", "origin/" + git("rev-parse", "--abbrev-ref", "HEAD")], cwd=ROOT).returncode == 0
+        subprocess.run(["git", "merge-base", "--is-ancestor", "HEAD", git("rev-parse", "--abbrev-ref", "@{u}")], cwd=ROOT).returncode == 0
     checks["output_seal_files"] = all(fhash(ROOT / p) == h for p, h in seal["files"].items()) and seal["manifest_hash"] == man["manifest_hash"]
     notes["stage_valid_independent"] = my_valid
     verdict = "ST_LOC0_AUDIT: PASS" if all(checks.values()) else "ST_LOC0_AUDIT: FAIL"

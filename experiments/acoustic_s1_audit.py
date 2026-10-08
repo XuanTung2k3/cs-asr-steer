@@ -388,7 +388,12 @@ def cmd_prerun(args) -> dict:
 # ---- candidates -------------------------------------------------------------------------------------------------------
 
 def runtime_checks(rt: dict, m: dict, stage: str) -> dict:
-    forb = [p for p in rt.get("opened_paths", []) if any(f.lower() in p.lower() for f in FORBIDDEN_RUNTIME)]
+    """Opened-path firewall. Byte reads of the manifest-PINNED source files are the runner's own source-hash verification
+    (load_run) and are allowed; any other forbidden path, and any bytecode (__pycache__) of the evaluator / auditor
+    (evidence of an import), fails."""
+    pinned = {str(ROOT / p) for p in m["sources"]}
+    forb = [p for p in rt.get("opened_paths", []) if p not in pinned and any(f.lower() in p.lower() for f in FORBIDDEN_RUNTIME)]
+    forb += [p for p in rt.get("opened_paths", []) if "__pycache__" in p and ("acoustic_s1_evaluate" in p or "acoustic_s1_audit" in p)]
     return {f"{stage}_runtime_completed": rt["status"] == "completed" and rt["manifest_hash"] == m["manifest_hash"],
             f"{stage}_frozen_model": rt["model_grads_none"] and not rt["requires_grad_any"] and not rt["training_mode"] and rt["weights_unchanged_probe"],
             f"{stage}_no_hooks_left": rt["top_forward_hooks"] == 0,
@@ -545,7 +550,7 @@ def cmd_primary(args) -> dict:
     crt = J(f"{RUN}/candidates_runtime.json")
     allopen = rt.get("opened_paths", []) + crt.get("opened_paths", [])
     checks["no_reference_file_opened_by_any_job"] = not [p for p in allopen if any(f in p for f in ("p2rj", "positions.json", "ST_PROMPT_R1_PANEL", "population.json"))]
-    checks["runner_never_opened_evaluator"] = not [p for p in allopen if "acoustic_s1_evaluate" in p]
+    checks["runner_never_imported_evaluator"] = not [p for p in allopen if "acoustic_s1_evaluate" in p and (p.endswith(".pyc") or str(ROOT / EVALUATOR) != p)]
     checks["acoustic_no_detection_no_candidate_regeneration"] = rt["counters"]["auto_detection_queries"] == 0 and rt["counters"]["candidate_regenerations"] == 0 and rt["counters"]["encoder_calls"] == 0
     notes["forbidden_opened"] = forb
     seal = J(OUTPUT_SEAL)

@@ -1,0 +1,172 @@
+{
+ "checks": {
+  "L16_CROSS_states_equal_historical": true,
+  "L16_CROSS_uses_historical_vectors": true,
+  "V1_independent_all_sites": true,
+  "V2_independent_refit_all_sites": true,
+  "calibration_files_in_GO_commit": true,
+  "calibration_files_unchanged": true,
+  "calibration_seal_hash": true,
+  "calibration_seal_in_GO_remote_commit": true,
+  "energy_and_direction_selection": true,
+  "historical_barrier_bitwise": true,
+  "historical_baseline_logits_bitwise": true,
+  "lineage_zero_restore": true,
+  "manifest_hash": true,
+  "manifest_sources_at_commit": true,
+  "matrix_complete_3780": true,
+  "no_autograd_no_LID": true,
+  "no_edit_exact_and_predetermined": true,
+  "output_seal_committed_pushed": true,
+  "output_seal_files": true,
+  "pairwise_energy": true,
+  "primary_analysis_agrees": true,
+  "primary_reference_free": true,
+  "primary_valid_agrees": true,
+  "row_hashes": true,
+  "runtime_completed": true
+ },
+ "git_commit": "b589a449562c896f5efd547a78b47b108660b4b7",
+ "notes": {
+  "V1_invalid": 0,
+  "V2_invalid_folds": {},
+  "V2_refit_maxabs": 0.0,
+  "eligibility": {
+   "D2_L16_POST_CROSS_ATTENTION_PRE_FFN": true,
+   "RANDOM_L16_POST_CROSS_ATTENTION_PRE_FFN": true,
+   "RANDOM_L16_POST_SELF_ATTENTION": true,
+   "RANDOM_L24_POST_CROSS_ATTENTION_PRE_FFN": true,
+   "RANDOM_L24_POST_SELF_ATTENTION": true,
+   "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_minus": true,
+   "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_plus": true,
+   "v_prompt_L16_POST_SELF_ATTENTION_minus": true,
+   "v_prompt_L16_POST_SELF_ATTENTION_plus": true,
+   "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_minus": true,
+   "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_plus": true,
+   "v_prompt_L24_POST_SELF_ATTENTION_minus": true,
+   "v_prompt_L24_POST_SELF_ATTENTION_plus": true,
+   "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_minus": true,
+   "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_plus": true,
+   "v_unq_L16_POST_SELF_ATTENTION_minus": true,
+   "v_unq_L16_POST_SELF_ATTENTION_plus": true,
+   "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_minus": true,
+   "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_plus": true,
+   "v_unq_L24_POST_SELF_ATTENTION_minus": true,
+   "v_unq_L24_POST_SELF_ATTENTION_plus": true
+  },
+  "failures": {},
+  "pairwise_energy_bad": [],
+  "stage_valid_independent": true,
+  "valid_counts": {
+   "D2_L16_POST_CROSS_ATTENTION_PRE_FFN": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "RANDOM_L16_POST_CROSS_ATTENTION_PRE_FFN": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "RANDOM_L16_POST_SELF_ATTENTION": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "RANDOM_L24_POST_CROSS_ATTENTION_PRE_FFN": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "RANDOM_L24_POST_SELF_ATTENTION": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L16_POST_SELF_ATTENTION_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L16_POST_SELF_ATTENTION_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L24_POST_SELF_ATTENTION_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_prompt_L24_POST_SELF_ATTENTION_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L16_POST_SELF_ATTENTION_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L16_POST_SELF_ATTENTION_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L24_POST_SELF_ATTENTION_minus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   },
+   "v_unq_L24_POST_SELF_ATTENTION_plus": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+   }
+  }
+ },
+ "phase": "primary (reference-free)",
+ "schema": "st_loc0_primary_audit_v1",
+ "stage_valid": true,
+ "verdict": "ST_LOC0_AUDIT: PASS"
+}

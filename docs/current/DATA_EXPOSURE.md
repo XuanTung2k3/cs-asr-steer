@@ -467,3 +467,8 @@ D-dev-select FULL300 only. The runner opened audio/model/repo files only (logged
 independent PRIMARY audit passed, the evaluator opened the existing MMS-FA CTC timing proxy (filtered to the 300 IDs before column
 materialization) and the D-dev-select role transcripts (300 IDs; unit consistency + English-omission diagnosis). Not fresh validation.
 No D-dev-confirm, D-test, router-calib new role, new split, P3 or transfer data; no new alignment.
+
+
+## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
+
+ST-PROMPT-R1 freeze uses only already-exposed historical180-position/80-utterance D-dev-select membership and sealed unedited paired states for CPU geometry. No new split, reference outcomes, GPU science, confirmation/test/transfer access. Future A and conditional oracle B are exposed-development, not fresh validation; oracle query locations evaluator-only and selection bias disclosed.

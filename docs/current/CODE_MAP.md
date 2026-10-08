@@ -475,3 +475,8 @@ shuffle offsets, ERODE/DILATE), `src/csasr/inference_cf/r0_unique.py` (per-utter
 `core_p1.direction`; runtime file-open log), `inference_cf_r0_analyze.py` (reference-free primary; seal+PRIMARY-gated oracle phase),
 `inference_cf_r0_audit.py` (independent prerun/primary/full; Gram-route constructor), `slurm/inference_cf_r0.sbatch`, `tests/test_r0_impl.py`.
 Outputs `results/inference_cf/r0/`. Report `docs/inference_cf/R0_REGION_VECTOR_REPORT.md`.
+
+
+## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
+
+ST-PROMPT-R1 supporting design: docs/inference_cf/ST_PROMPT_R1_{SPEC,CODEX_DESIGN,FIREWALL,PANEL}; configs/inference_cf/st_prompt_r1.json. experiments/inference_cf_st_prompt_r1_preflight.py is CPU sealed-state geometry only; science runner/analysis/schedule/audit/Slurm paths are proposed in design, not implemented. Reuses core_p1.direction, p2r solver and canonical DG-02 hooks without modification.

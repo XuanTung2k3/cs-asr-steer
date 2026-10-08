@@ -814,3 +814,8 @@ Latest authorized supporting ticket: **R0 design frozen only** (not ST-LOC1). Ex
 One job (Slurm 58150); reference-free seal pushed and independently audited before the oracle proxy was opened; full audit PASS. No layer
 reaches 60 oracle-valid utterances (16-17). Bottleneck = per-utterance decoder-state availability inside English regions, not region
 prediction or SVD stability. R1 NOT authorized. See `../inference_cf/R0_REGION_VECTOR_REPORT.md`.
+
+
+## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
+
+ST-PROMPT-R1 DESIGN_FROZEN_IMPLEMENTATION_PENDING. Independent PASS_TO_ST_PROMPT_R1_A required; L3/L8 passive paired geometry remains mandatory before pulses. Conditional B only audited A_CAUSAL_PROMISE, immutable selection/schedule. No GPU outcome in freeze; current ST-LOC0/R0 stops remain unchanged.

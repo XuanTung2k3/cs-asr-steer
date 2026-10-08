@@ -769,3 +769,8 @@ Next separately authorized construction-feasibility study: R0 spec/config/panel/
 | Seal + `R0_AUDIT: PASS (PRIMARY)` | DONE (`df75622`, `3929b42`) |
 | Oracle + `R0_AUDIT: PASS (FULL)` | DONE (`c670386`, `24388cf`): oracle-valid 16-17/300 per layer < 60 |
 | Next | R1 NOT authorized; no further R0 extension. Main line unchanged (exact-A2 confirmation, separate freeze, not run) |
+
+
+## ST-PROMPT-R1 separately authorized freeze (2026-10-08)
+
+ST-PROMPT-R1 separately authorized layer/dose/sign feasibility: exact dynamic prompt contrast, DG-02 L3/8/16/24, relative eta .15/.30/.45,24 primary/12 random. Conditional oracle80-utterance continuation entirely frozen. No job/outcome in design session; no automatic R2. See ST_PROMPT_R1_SPEC.md. Core v6 and prior terminal stops unchanged.

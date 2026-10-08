@@ -1,0 +1,74 @@
+{
+ "checks": {
+  "bootstrap_agree_L16": true,
+  "bootstrap_agree_L24": true,
+  "bootstrap_agree_L3": true,
+  "bootstrap_agree_L8": true,
+  "gates_agree_L16": true,
+  "gates_agree_L24": true,
+  "gates_agree_L3": true,
+  "gates_agree_L8": true,
+  "label_agrees": true,
+  "one_job": true,
+  "oracle_after_seal": true,
+  "oracle_constructions_agree": true,
+  "oracle_source_bytes": true,
+  "primary_audit_pass_committed": true,
+  "region_quality_agrees": true,
+  "scope_no_extra_stages": true,
+  "seal_unchanged": true
+ },
+ "git_commit": "c670386b7e932be0faeefab0865f7e76eeb1b405",
+ "label": "R0_ORACLE_CONSTRUCTION_INSUFFICIENT",
+ "notes": {
+  "gates": {
+   "16": {
+    "I": false,
+    "O": false,
+    "P": false,
+    "S": false,
+    "adv": 0.36277381315151314,
+    "adv_lo": 0.29951863229406556,
+    "signed": 0.8201739240233946,
+    "signed_lo": 0.665145409465232
+   },
+   "24": {
+    "I": false,
+    "O": false,
+    "P": false,
+    "S": false,
+    "adv": 0.2727498042759123,
+    "adv_lo": 0.1023064416381495,
+    "signed": 0.8334154660339834,
+    "signed_lo": 0.7582614603226864
+   },
+   "3": {
+    "I": false,
+    "O": false,
+    "P": false,
+    "S": false,
+    "adv": 0.4051325438767115,
+    "adv_lo": 0.09608087395536863,
+    "signed": 0.7262848395352555,
+    "signed_lo": 0.4279829759929135
+   },
+   "8": {
+    "I": false,
+    "O": false,
+    "P": false,
+    "S": false,
+    "adv": 0.4011160195495845,
+    "adv_lo": 0.306065694354273,
+    "signed": 0.8561055927663833,
+    "signed_lo": 0.7121455734666018
+   }
+  },
+  "independent_label": "R0_ORACLE_CONSTRUCTION_INSUFFICIENT",
+  "oracle_construction_disagreements": [],
+  "oracle_records_used": {
+   "true": 16766
+  }
+ },
+ "schema": "r0_full_audit_v1",
+ "verdict": "R0_AUDIT: PASS (FULL)"
+}

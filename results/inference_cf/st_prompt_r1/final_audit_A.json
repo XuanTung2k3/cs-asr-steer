@@ -1,0 +1,24 @@
+{
+ "checks": {
+  "R1_B_authorization_consistent": true,
+  "adjusted_bounds_agree_1e-9": true,
+  "counts_agree": true,
+  "estimates_agree_1e-9": true,
+  "label_agrees": true,
+  "one_job": true,
+  "oracle_union_agrees": true,
+  "primary_audit_committed_pass": true,
+  "scope_no_B_outputs": true,
+  "seal_unchanged_and_before_eval": true,
+  "selection_agrees": true
+ },
+ "git_commit": "343ebacdd36bb23f4c39ab3c53118b5e0fff1535",
+ "label": "ST_PROMPT_R1_A_MARGIN_ONLY",
+ "notes": {
+  "independent_label": "ST_PROMPT_R1_A_MARGIN_ONLY",
+  "independent_selection": []
+ },
+ "schema": "st_prompt_r1_full_A_audit_v1",
+ "selection": [],
+ "verdict": "ST_PROMPT_R1_A_AUDIT: PASS (FULL)"
+}

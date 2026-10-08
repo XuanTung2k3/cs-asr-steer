@@ -1,0 +1,39 @@
+{
+ "checks": {
+  "D2_random_never_selectable": true,
+  "bootstrap_intervals_agree": true,
+  "counts_agree": true,
+  "eligibility_agrees_primary_audit": true,
+  "evaluator_and_macro_agree_1e-8": true,
+  "historical_evaluator_reproduced_1e-8": true,
+  "label_agrees": true,
+  "one_job": true,
+  "oracle_agrees": true,
+  "primary_audit_pass_committed": true,
+  "scope_no_extra_stages": true,
+  "seal_unchanged": true,
+  "winner_agrees": true
+ },
+ "git_commit": "19f8d37fd2f6852ea73835aa83413108e3249451",
+ "label": "ST_LOC0_LOCAL_EFFECT_ONLY",
+ "notes": {
+  "ci_max_abs": 3.469446951953614e-16,
+  "entries": [
+   "output_seal.json",
+   "plan_sealed.json",
+   "prerun_audit.json",
+   "primary_analysis.json",
+   "primary_audit.json",
+   "run1",
+   "secondary_analysis.json"
+  ],
+  "historical_evaluator_max_abs": 1.7763568394002505e-15,
+  "independent_label": "ST_LOC0_LOCAL_EFFECT_ONLY",
+  "independent_winner": null,
+  "macro_max_abs": 1.942890293094024e-16
+ },
+ "phase": "full (post-seal)",
+ "schema": "st_loc0_full_audit_v1",
+ "verdict": "ST_LOC0_AUDIT: PASS",
+ "winner": null
+}

@@ -1,0 +1,43 @@
+{
+ "checks": {
+  "counts": true,
+  "exactly_300_rows": true,
+  "live_audit_2pct": true,
+  "manifest_self": true,
+  "opportunity_gate_agrees": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "rows_barrier_dispatch_controller_recomputed": true,
+  "runtime": true,
+  "seal_committed_unchanged": true,
+  "sources_at_commit": true
+ },
+ "failures": [],
+ "git_commit": "101ca00561b2f7a96573c0b2a5fad10cf1187eb5",
+ "independent": {
+  "changed": {
+   "FIXED100": [
+    "ZH-CN_U0023_S0_664",
+    "ZH-CN_U0039_S0_380",
+    "ZH-CN_U0091_S0_68",
+    "ZH-CN_U0092_S0_101"
+   ],
+   "NEW200": [
+    "ZH-CN_U0011_S0_265",
+    "ZH-CN_U0021_S0_118",
+    "ZH-CN_U0023_S0_91",
+    "ZH-CN_U0085_S0_108",
+    "ZH-CN_U0085_S0_99",
+    "ZH-CN_U1063_S0_56",
+    "ZH-CN_U2004_S0_118"
+   ]
+  },
+  "content": 32,
+  "eos_abstain": 12,
+  "gate_open": true
+ },
+ "label": null,
+ "phase": "primary",
+ "schema": "p2_path5_post_audit_v1",
+ "verdict": "P2_PATH5_AUDIT: PASS"
+}

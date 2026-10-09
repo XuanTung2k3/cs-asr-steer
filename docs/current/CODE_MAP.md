@@ -505,3 +505,16 @@ cached.Branch/_processed, native `_retrieve_init_tokens`/`detect_language`, r0_r
 waveform_model_inputs; opened-path audit log); `experiments/acoustic_s1_evaluate.py` (post-seal only: Gate H/D, family-8 dialogue bootstrap,
 `decide`); `experiments/acoustic_s1_audit.py` (independent prerun/candidates/primary/full; exact Fraction region route, no primary imports);
 `slurm/acoustic_s1.sbatch` (PHASE=candidates|acoustic); `tests/test_s1_impl.py`. Outputs `results/inference_cf/s1/`.
+
+
+## SRC-CF0-P separately authorized pilot freeze (2026-10-09)
+
+Design/config/firewall/handoff: docs/inference_cf/SRC_CF0_PILOT_{SPEC,DESIGN,FIREWALL}.md,
+SRC_CF0_FULL300_SAFETY_PLAN.md, SRC_CF0_CLAUDE_HANDOFF.md, configs/inference_cf/src_cf0_pilot.json.
+Existing SRC_CF0_PANEL reused by hash; original blocked artifacts remain disabled and unchanged.
+New CPU-only src/csasr/inference_cf/cf_pilot_contract.py (paired-state numerical formula, deterministic
+random vector, aggregate frozen gate predicates), experiments/inference_cf_src_cf0_safety_inventory.py
+(existing PRIMARY R0/S1 metadata bounds, no inference), tests/test_src_cf0_pilot_contract.py.
+The science runner/evaluator/independent auditor/sbatch in PILOT_DESIGN are PROPOSED interfaces, not implemented.
+Reuse unchanged S1 crop/mask, cached.Branch, DG-02 recorder/hook, P2-R native solver/NormPreserve.
+No S1 reranking, model-adapter implementation, new controller or core-v6 change.

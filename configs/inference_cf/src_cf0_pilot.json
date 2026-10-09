@@ -1,0 +1,526 @@
+{
+  "schema": "SRC_CF0_PILOT_FROZEN_V1",
+  "study": "SRC-CF0-P",
+  "status": "DESIGN_FROZEN_IMPLEMENTATION_PENDING",
+  "initial_head": "20cd36824822c356f910f42c9b5ca3a5fd5f56b6",
+  "human_scope_revision": "Preliminary lexical correction power; comprehensive Mandarin safety explicitly unresolved. Original SRC_CF0_DESIGN_BLOCKED preserved.",
+  "scientific_gates_frozen": true,
+  "execution_requires": "implemented independent PASS_TO_SRC_CF0_PILOT; no GPU execution in Codex",
+  "model": {
+    "dir": "/mnt/data/tungnx/whisper-large-v3",
+    "files": {
+      "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+      "config.json": "sha256:ad0e8d1e46f4d01f7861a21509e5d0f977d6cc1f367a370603c92541d819807b",
+      "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+      "merges.txt": "sha256:2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "model.safetensors": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+      "normalizer.json": "sha256:bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "preprocessor_config.json": "sha256:7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "special_tokens_map.json": "sha256:1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87",
+      "tokenizer.json": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+      "tokenizer_config.json": "sha256:844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+      "vocab.json": "sha256:e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+    }
+  },
+  "panel": {
+    "path": "docs/inference_cf/SRC_CF0_PANEL.json",
+    "file_sha256": "sha256:909e683c74acb86505e40f47843af6c3d90bf4776c6b1205f3c7527ceb46edca",
+    "identity_hash": "sha256:2f66af05f61a73ff8dd7df825f86c6a7dc69389f3be807f312399a242464d371",
+    "parent": "docs/inference_cf/S1_PANEL.json",
+    "parent_sha256": "sha256:7009017745ab112eca14a71663eff41ed27a8c395623afe6c97a58534e3159b6",
+    "runtime_membership_hash": "sha256:1bbaaa1c665c13335fc329ef1cb93fe061d176cdc6129988b37e454c21763236",
+    "audio_membership_hash": "sha256:46368ee2e9004845546c5cf91e6fe04feb6a4b2ce2102878fed7dc0291e4509f",
+    "positions": 180,
+    "utterances": 80,
+    "dialogues": 20,
+    "stratum_denominator": 60,
+    "runtime_projection_required": true
+  },
+  "pins": {
+    "src/csasr/inference_cf/core_p1.py": "sha256:2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/s1_evidence.py": "sha256:aee717f72afdfa6758903f87b85d53ff09f661426e1db681ba8ac6f15837ba1e",
+    "src/csasr/inference_cf/r0_regions.py": "sha256:a30de91bc6d38a6a5b7f90ed80b4869b004aa292e8ec6e3fc12709347c5ee80d",
+    "src/csasr/inference_cf/lexical_compatibility.py": "sha256:2ece3498492ffd948a6d7f68d1536df5a04ed8bc1668f9885e607abfeb8d5427",
+    "src/csasr/inference_cf/loc0_sites.py": "sha256:17968cac6f5e7d3e5008db7e0aceaf8629112872d1c9f017318d002b13c1e9fc",
+    "src/csasr/models/hooks.py": "sha256:4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+    "src/csasr/lss/sites.py": "sha256:d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "experiments/inference_cf_cached.py": "sha256:7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2r.py": "sha256:ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/acoustic_s1.py": "sha256:92b58f7eb7023b77b872547f2e4144e5786f2bf87ca908fea29d4fb7ec06fbfb",
+    "experiments/acoustic_s1_audit.py": "sha256:eec16031fd9e22770361b0055df9ffd04da3ff96ec2918f056dfab9d653b2f8f",
+    "src/csasr/utils/provenance.py": "sha256:bed06aaf4b192da0a99fb2877e617cd4bf890f4cef73d1f74fee810301ebede0",
+    "src/csasr/lss/specfreeze.py": "sha256:e92017fe8ed17209d8bddf6fed448d539cfc71b3be8d3b5f27e65377a7fef3c0",
+    "src/csasr/inference_cf/cf_pilot_contract.py": "sha256:a2a1c34b951662398b6e414a58342c9f9add456ca639d7d8487b5da2848ea799",
+    "experiments/inference_cf_src_cf0_safety_inventory.py": "sha256:136dbad80f112e6eef2c5ea684195baa2274d7590c1bf973c8173731bac3bc10"
+  },
+  "historical_inputs": {
+    "configs/inference_cf/src_cf0.json": "sha256:c5097f42274d614e8953620de44e5c5d281f61e53198b031ff0f96eb625c3cae",
+    "configs/inference_cf/s1_acoustic_evidence.json": "sha256:cd030a315b47f1b27da93fe4c4327c58d696fe0f84f8d0b1d84ab5a945364675",
+    "configs/inference_cf/st_prompt_r1.json": "sha256:368d70d98284d391fe829c07ba8561fe6c5c4c4d351b87a470084e50265bf33d",
+    "docs/inference_cf/ST_PROMPT_R1_PANEL.json": "sha256:89e2784bda828d16aa9352c88f1b9c879f8cfed21aca4b40bdf96834c0f5347e",
+    "results/inference_cf/s1/run1/candidates_sealed.json": "sha256:39ee860346bcf26a4758fb6589253a0ee97714420700ddfffd3da74f1cb8fae1",
+    "results/inference_cf/s1/output_seal.json": "sha256:b6cdd38ce54f536cfc3084a664bef60583df462f34b5954e7dd751e77bad43d3",
+    "results/inference_cf/r0/output_seal.json": "sha256:94d09c04636f9a4456a4812369dab2e0120d645e11c459f0efc611083d94610c"
+  },
+  "region_policy": {
+    "source": "R0 run1 primary windows and track_heard_intervals only; no oracle/script/SVD groups",
+    "source_config": {
+      "provider": "experiments.inference_cf_p0_r2.native_lid",
+      "softmax_size": 100,
+      "language_ids": [
+        50259,
+        50260,
+        50261,
+        50262,
+        50263,
+        50264,
+        50265,
+        50266,
+        50267,
+        50268,
+        50269,
+        50270,
+        50271,
+        50272,
+        50273,
+        50274,
+        50275,
+        50276,
+        50277,
+        50278,
+        50279,
+        50280,
+        50281,
+        50282,
+        50283,
+        50284,
+        50285,
+        50286,
+        50287,
+        50288,
+        50289,
+        50290,
+        50291,
+        50292,
+        50293,
+        50294,
+        50295,
+        50296,
+        50297,
+        50298,
+        50299,
+        50300,
+        50301,
+        50302,
+        50303,
+        50304,
+        50305,
+        50306,
+        50307,
+        50308,
+        50309,
+        50310,
+        50311,
+        50312,
+        50313,
+        50314,
+        50315,
+        50316,
+        50317,
+        50318,
+        50319,
+        50320,
+        50321,
+        50322,
+        50323,
+        50324,
+        50325,
+        50326,
+        50327,
+        50328,
+        50329,
+        50330,
+        50331,
+        50332,
+        50333,
+        50334,
+        50335,
+        50336,
+        50337,
+        50338,
+        50339,
+        50340,
+        50341,
+        50342,
+        50343,
+        50344,
+        50345,
+        50346,
+        50347,
+        50348,
+        50349,
+        50350,
+        50351,
+        50352,
+        50353,
+        50354,
+        50355,
+        50356,
+        50357,
+        50358
+      ],
+      "language_map_hash": "sha256:09b0f7fc1c3501b7df005d9c9dbf6423d766004e5545043b4af3114dae73a324",
+      "en_id": 50259,
+      "zh_id": 50260,
+      "sample_rate": 16000,
+      "window_samples": 16000,
+      "stride_samples": 8000,
+      "end_rule": "regular full windows plus unique right-anchored final full window; if N<16000 use [0,N)",
+      "padding": "native _features pads each raw crop to 30s; no energy normalization",
+      "minimum_crop_samples": 8000,
+      "minimum_rms": 0.0001,
+      "pair_mass_min": 0.5,
+      "conditional_language_mass_min": 0.8,
+      "probability_tolerance": 1e-06,
+      "epsilon": 1e-12,
+      "null_correction_in_primary": false,
+      "sample_vote_fraction_min": 0.75,
+      "uncertain_votes_in_denominator": true,
+      "merge": "maximal adjacent identical sample labels, no gap filling/minimum-span deletion"
+    },
+    "heard_samples": "min(resampled full waveform samples,480000)",
+    "alignment_heads": [
+      [
+        7,
+        0
+      ],
+      [
+        10,
+        17
+      ],
+      [
+        12,
+        18
+      ],
+      [
+        13,
+        12
+      ],
+      [
+        16,
+        1
+      ],
+      [
+        17,
+        14
+      ],
+      [
+        19,
+        11
+      ],
+      [
+        21,
+        4
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        6
+      ]
+    ],
+    "frame_samples": 320,
+    "attention": "fresh matched M cached-query attention; mean frozen heads then restrict real heard frames; require raw heard mass >=0.5; normalize heard mass in float64",
+    "minimum_target_samples": 4000,
+    "maximum_target_samples": 32000,
+    "association": "each maximal EN interval clipped to heard horizon; discard <4000 samples; length=min(interval length,32000); candidate starts interval-left+n*320 plus unique right anchored last start; greatest normalized query-attention integral over fractional frame overlaps, then earliest start/end",
+    "associated_mass_min": 0.1,
+    "target_minimum_rms": 0.0001,
+    "absent": "NO_EN_REGION / LOW_HEARD_MASS / LOW_ASSOCIATION / LOW_ENERGY; retain row, fallback M ranking"
+  },
+  "counterfactual": {
+    "transform": "positive float32 hard zero, half-open [a,b), no taper",
+    "outside": "byte-identical original resampled waveform outside target; no modification beyond heard horizon",
+    "features": "lexical_compatibility.waveform_model_inputs; same feature extractor padding/truncation/attention mask; whole encoder recomputed",
+    "replay": "cold M owner cache prompt plus identical prefix; attention=True; no original/cross-counterfactual decoder KV reuse",
+    "off_target": {
+      "duration": "exact target sample count",
+      "starts": "0+n*320 plus unique right-anchored heard-length start",
+      "disjoint_target": true,
+      "predicted_EN_fraction_max": 0.1,
+      "attention_mass_max": "min(0.10,target_mass/2)",
+      "rms_min": 0.0001,
+      "energy_ratio_range": [
+        0.5,
+        2.0
+      ],
+      "selection": "lowest query attention integral, then smallest abs(log(energy/target_energy)), then earliest start",
+      "failure": "NO_MATCHED_OFFTARGET; no replacement, paired scorer abstention"
+    }
+  },
+  "direction": {
+    "formula": "float32((float64(h_clean)-float64(h_mask))/(norm(float64(h_clean)-float64(h_mask))+1e-6))",
+    "epsilon": 1e-06,
+    "minimum_raw_norm": 0.0001,
+    "nonfinite": "INVALID",
+    "degenerate": "ABSTAIN_NO_EDIT",
+    "site": "DG02_POST_CROSS_ATTENTION_RESIDUAL_PRE_FFN",
+    "layers": [
+      16,
+      24
+    ],
+    "dimensions": 1280,
+    "native_dtype": "bfloat16",
+    "prefix": "same forced-ZH [50258,50260,50360,50364] + historical generated content[:t]",
+    "absolute_query": "4+t-1",
+    "dynamic_gold_free": true
+  },
+  "matrix": {
+    "layers": [
+      16,
+      24
+    ],
+    "eta": [
+      0.15,
+      0.3
+    ],
+    "signs": [
+      1,
+      -1
+    ],
+    "primary_arms": 8,
+    "off_target_arms": 8,
+    "random_arms": 8,
+    "complete_positions_per_arm": 180,
+    "none": true,
+    "zero_identity": true,
+    "no_continuation": true,
+    "no_training": true,
+    "no_autograd": true
+  },
+  "energy": {
+    "solver": "experiments.inference_cf_p2r.solve_scale",
+    "target": "eta*norm(float64(native_bf16_h_clean))",
+    "maximum_evaluations": 8,
+    "relative_chord_error_max": 0.02,
+    "relative_squared_energy_error_max": 0.02,
+    "paired_relative_squared_energy_difference_max": 0.02,
+    "consumed_vs_proposed_relative_error_max": 0.005,
+    "solver_vs_hook_absolute_error_factor": 1e-06,
+    "minimum_state_norm": 1e-08,
+    "norm_preserve": true,
+    "depth_scaling": false,
+    "native_norm_rounding": "DESCRIPTIVE_ONLY",
+    "unreachable": "ABSTAIN_NO_EDIT; retain original denominators"
+  },
+  "random": {
+    "generator": "numpy.PCG64",
+    "seed_key": "SRC_CF0_P-random-v1|240924|UID|t|layer",
+    "seed_derivation": "integer first 16 hex digits SHA256 UTF8 key",
+    "draw": "1280 iid standard_normal float64; normalize then serialize float32; no projection or redraw",
+    "reuse": "same vector for both signs and doses; paired comparisons only"
+  },
+  "gate_a": {
+    "critical": "identity/model/cache/site/reference/repeat mismatch -> INVALID",
+    "repeat": "two independently recomputed cold encoder/cache forwards per clean/target/off input; native residual and raw logits bitwise identical",
+    "coverage_counts": "historical strata joined only after direction seal",
+    "per_layer": {
+      "numerically_valid_target_fraction_min": 0.9,
+      "numerically_valid_off_target_pair_fraction_min": 0.9,
+      "EN_confusion_target_min": 20,
+      "EN_confusion_target_dialogues_min": 8,
+      "EN_confusion_joint_reachable_min": 15,
+      "EN_confusion_joint_dialogues_min": 6,
+      "EN_correct_joint_reachable_min": 20,
+      "EN_correct_joint_dialogues_min": 10,
+      "ZH_correct_minimum": "NONE; safety unresolved",
+      "tangent_ratio_min": 0.25,
+      "joint": "target,off-target,random valid/reachable for both signs at both doses; all energy consistency guards pass",
+      "specificity_pair_min": 12,
+      "specificity_dialogues_min": 6,
+      "median_absolute_target_off_cosine_max": 0.9,
+      "median_raw_tangent_target_off_norm_ratio_min": 1.25
+    },
+    "advance": "at least one layer passes coverage AND geometry AND specificity; execute complete 8-arm matrix; only prequalified layers may supply a selected arm",
+    "specificity_interpretation": "construction distinction only; no lexical-grounding claim",
+    "no_post_gate_direction_revision": true,
+    "fraction_denominators": {
+      "target": 73,
+      "paired": 59,
+      "minimum_valid_target_all_strata": 66,
+      "minimum_valid_off_target_all_strata": 54
+    },
+    "specificity_cohort": "all numerically valid target/off EN-confusion pairs for a layer, before energy eligibility filtering; off raw tangent norm must be positive; zero denominator abstains, never infinity"
+  },
+  "gate_b": {
+    "comparisons": "identical reference-free joint-valid cohort for target/random/off of each arm; no correct-target accessibility filtering",
+    "eligible_layer": "gate_a per-layer qualification frozen before pulses",
+    "paired_EN_confusion_min": 15,
+    "paired_EN_confusion_dialogues_min": 6,
+    "actual_edit_valid_fraction_of_sealed_prediction_min": 0.9,
+    "paired_corrections_min": 3,
+    "corrected_dialogues_min": 3,
+    "net_corrections_over_each_control_min": 2,
+    "net_positive_dialogues_over_each_control_min": 2,
+    "dialogue_macro_accuracy_advantage_over_each_control_min": 0.1,
+    "leave_one_eligible_dialogue_out_net_advantage_over_each_control": "strictly >0 for every removal",
+    "selected_arm_EN_correct_corruptions_max": 3,
+    "selected_arm_ZH_correct_corruptions_max": 0,
+    "selected_arm_correct_state_EOS_promotions_max": 0,
+    "correction": "clean processed top1 outside evaluator-only acceptable first-token set, edited top1 in set",
+    "corruption": "clean top1 in acceptable set, edited top1 outside set",
+    "EOS_promotion": "correct-state clean top1 != EOS and edited top1 == EOS",
+    "ineligible": "mandatory zero-edit; keep all 60 rows in unconditional stratum denominators"
+  },
+  "adverse_damage": {
+    "global_any_primary_EN_correct_corruptions_at_least": 12,
+    "global_any_primary_ZH_correct_corruptions_at_least": 3,
+    "global_any_primary_correct_state_EOS_promotions_at_least": 2,
+    "action": "OBSERVED_DAMAGE; stop progression after sealed evaluation; no reference-triggered mid-run change"
+  },
+  "statistics": {
+    "seed": 240924,
+    "bootstrap_draws": 10000,
+    "unit": "paired resampling of 20 dialogues with replacement; same draw indices across arms/controls",
+    "macro": "equal mean of represented cohort dialogues; each dialogue mean over its cohort queries",
+    "primary_family": 16,
+    "primary_family_definition": "8 arms x 2 paired correction-indicator comparisons (random/off)",
+    "adjusted_CI": "Bonferroni two-sided simultaneous 95%; quantiles .0015625/.9984375",
+    "CI_gates_advancement": false,
+    "reason": "small pilot: prespecified integer effect, dialogue breadth and LODO consistency gates; adjusted CIs descriptive, no significance claim",
+    "minimum_finite_bootstrap_draws": 9900,
+    "empty_cohort": "undefined; cannot pass",
+    "margin_diagnostic_family": 8,
+    "margin_adjusted_CI_quantiles": [
+      0.003125,
+      0.996875
+    ],
+    "margin_only_mean_nat_min": 0.5,
+    "margin_only_lower_adjusted_CI": "strictly >0",
+    "active_safety": "dialogue-cluster descriptive interval plus counts; zero-event bootstrap is not a harm upper bound"
+  },
+  "selection_order": [
+    "more paired corrections",
+    "more corrected dialogues",
+    "larger minimum net advantage across controls",
+    "fewer ZH-correct corruptions",
+    "fewer EN-correct corruptions",
+    "lower eta",
+    "lower layer",
+    "lexicographic arm ID"
+  ],
+  "labels": {
+    "precedence": [
+      "SRC_CF0_PILOT_INVALID",
+      "SRC_CF0_PILOT_CONSTRUCTION_INSUFFICIENT",
+      "SRC_CF0_PILOT_DIRECTION_NONSPECIFIC",
+      "SRC_CF0_PILOT_OBSERVED_DAMAGE_GLOBAL",
+      "SRC_CF0_PILOT_SIGNAL_SAFETY_UNRESOLVED",
+      "SRC_CF0_PILOT_OBSERVED_DAMAGE_QUALIFYING",
+      "SRC_CF0_PILOT_MARGIN_ONLY",
+      "SRC_CF0_PILOT_CAUSAL_INSUFFICIENT"
+    ],
+    "terminal_emission": {
+      "SRC_CF0_PILOT_OBSERVED_DAMAGE_GLOBAL": "SRC_CF0_PILOT_OBSERVED_DAMAGE",
+      "SRC_CF0_PILOT_OBSERVED_DAMAGE_QUALIFYING": "SRC_CF0_PILOT_OBSERVED_DAMAGE"
+    },
+    "signal_authorizes": "propose separately frozen expanded-development safety study ONLY; no CF1/TTO/confirmation/full-sequence/transfer"
+  },
+  "compute": {
+    "scientific_jobs_max": 2,
+    "construction_jobs_max": 1,
+    "conditional_pulse_jobs_max": 1,
+    "hours_per_job_max": 3,
+    "construction_target_minutes": [
+      5,
+      20
+    ],
+    "pulse_target_minutes": [
+      5,
+      20
+    ],
+    "gpu": "single H100 or compatible MIG; project acl1 interpreter",
+    "smoke_in_Codex": "CPU synthetic only; no model forward",
+    "exceed_forecast": "STOP for human compute revision; no matrix reduction",
+    "construction_forward_bound": {
+      "encoder_calls": 408,
+      "cached_decoder_steps": 13318,
+      "basis": "2 independent repetitions x (80 clean +124 distinct S1 mask inputs); both layers recorded simultaneously; caches reused only for identical audio/prefix",
+      "extra_apparatus": "reuse historical exact outputs, live L16 replay controls bounded separately"
+    },
+    "pulse_forward_bound": {
+      "primary_control_query_forwards": 4320,
+      "none_and_zero_query_forwards_max": 540,
+      "clean_encoder_calls_max": 80,
+      "clean_prefix_steps_max": 3159,
+      "ineligible": "skip actual forward but materialize mandatory no-edit output",
+      "native_cache_snapshot": "same-model pristine snapshot per query; no modified-query cache reused"
+    }
+  },
+  "full300_plan": {
+    "inventory": "docs/inference_cf/SRC_CF0_FULL300_INVENTORY.json",
+    "inventory_sha256": "sha256:a3946ebbe8b9beda0751ee16da50e1421356afb649ab55059e73a25bf5d45f31",
+    "new_census_authorized": false,
+    "correct_Mandarin_count": "UNKNOWN; no evaluator census in this task"
+  },
+  "firewall": {
+    "runtime_query_keys": [
+      "utterance_id",
+      "dialogue_id",
+      "t",
+      "absolute_query",
+      "content_prefix_sha256",
+      "forced_zh_query_input_sha256"
+    ],
+    "runtime_utterance_keys": [
+      "utterance_id",
+      "dialogue_id",
+      "audio_path",
+      "audio_full_file_sha256",
+      "audio_geometry",
+      "content_prefix_tokens",
+      "max_t"
+    ],
+    "region_keys": [
+      "target",
+      "off_target",
+      "paired_available"
+    ],
+    "primary_region_array_allowlist": [
+      "track_heard_intervals"
+    ],
+    "authorization_keys": [
+      "schema",
+      "config_sha256",
+      "direction_seal_sha256",
+      "construction_audit_sha256",
+      "gate_pass",
+      "qualified_layers",
+      "created_utc",
+      "authorization_hash"
+    ],
+    "forbidden": [
+      "references",
+      "strata",
+      "acceptable_tokens",
+      "competitors",
+      "oracle_masks",
+      "gold_timings",
+      "per_row_goodness"
+    ],
+    "remote_seals_required": true
+  },
+  "historical_reproduction": {
+    "clean_raw_logits": "bitwise historical S1 M and ST-LOC0 NONE,180/180",
+    "clean_native_residual": "bitwise matching ST-LOC0 post-cross native state at both layers wherever archived; capture-only instrumentation preserves input consumption",
+    "zero": "bitwise logits/residual at all180 queries x both layers; consumed pre-FFN native tensor verified",
+    "old_L16_apparatus": "D0 +/- and sealed D2 at e*=1.1260757575454359 on ALL180; bitwise logits/consumed states matching old pipeline; old vector/solver tolerances inherited",
+    "D0_vector_absolute_tolerance": 1e-06,
+    "D2_vector_absolute_tolerance": 2e-06,
+    "D0_solver_scale_absolute_tolerance": "1e-9*max(1,scale)",
+    "model_weights": "unchanged before/after; no autograd; hook/cache restoration exact",
+    "no_reference_margin_gradient": "reuse sealed D2 vector; never differentiate evaluator margin"
+  }
+}

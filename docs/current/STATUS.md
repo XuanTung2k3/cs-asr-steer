@@ -860,3 +860,14 @@ queries cannot establish active actuator safety. See `docs/inference_cf/SRC_CF0_
 blocked records only, scientific gates not frozen, execution_authorized=false; no PASS, model forward,
 direction/pulse outcome or new lexical evaluation. Needs a human scope decision before a defensible complete
 freeze; no guard relaxation, resampling, held-out access or core-v6/historical-verdict change.
+
+
+## SRC-CF0-P pilot freeze + FULL300 opportunity planning (2026-10-09)
+
+Human-authorized narrower construction/preliminary lexical-correction pilot: DESIGN_FROZEN_IMPLEMENTATION_PENDING.
+See ../inference_cf/SRC_CF0_PILOT_SPEC.md and SRC_CF0_CLAUDE_HANDOFF.md; original SRC_CF0_DESIGN_BLOCKED preserved unchanged.
+Eight L16/L24 relative-dose/sign arms, unchanged S1 masks; conditional P-A/P-B, independent audits and pushed seals.
+Strongest result SIGNAL_SAFETY_UNRESOLVED recommends only a separately frozen expanded-development safety study;
+no CF1/TTO/sequence/confirmation/transfer authorization. CPU FULL300 source/prefix inventory gives target/pair lower
+bounds73/59, loose region-only upper bound10,334; exact cached-attention/reachable/correct-Mandarin census UNKNOWN.
+No new model forward, scientific outcome, reference-target analysis or job in Codex. Core v6 and historical verdicts unchanged.

@@ -493,3 +493,16 @@ and hard-zero masked audio; same-prefix M/E/native-AUTO readouts; 0 LID, 0 new L
 PRIMARY-audited before the evaluator opened the exposed P2-RJ acceptable first-token sets, strata and the P2-R structural ledger. No
 D-dev-confirm, D-test, router-calib new role, P3, transfer, oracle timing/regions, vectors, edits or training. Conditional (headroom-enriched)
 development evidence only.
+
+
+## SRC-CF0-P pre-outcome freeze and CPU FULL300 planning (2026-10-09)
+
+Human authorized a narrower preliminary correction-power pilot on the unchanged exposed D-dev-select180/80/20.
+Original blocked SRC-CF0 preserved. Reviewed historical reports/source, sealed S1 region eligibility and existing
+stratum membership for coverage only; no new direction/pulse outcomes or lexical-reference scoring. CPU inventory
+verified existing R0 PRIMARY300 JSON/NPZ hashes/audio bytes, generated prefixes/structural query metadata and
+PRIMARY heard-region intervals, plus S1 exact-prefix overlap; no oracle regions/full-replay attention substitution.
+No new Whisper/LID forward, Slurm job, gold timing, new references, split/role, confirmation/test/P3/transfer.
+FULL300 exact intervention/correct-Mandarin opportunities remain unknown; proposed future census is not authorized.
+Future pilot direction and pulse seals must be pushed/audited before separate coverage and lexical evaluators.
+Mandatory Mandarin no-edits cannot establish active safety; positive pilot label leaves safety unresolved.

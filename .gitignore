@@ -50,3 +50,9 @@ results/inference_cf/p2sel_t/t1_run*/rows/*_logits.npz
 results/inference_cf/p2sel_xa/**/rows/*_logits.npz
 # P2-SEL-LAC masked raw logits stay local; sha256 in committed row JSONs
 results/inference_cf/p2sel_lac/**/rows/*_logits.npz
+# SRD2-G0 lossless raw arrays stay local + immutable content-addressed archive under
+# /mnt/data/tungnx/cs-asr-steer/archives/srd2_g0/; sha256 in committed row JSONs and phase seals
+results/inference_cf/srd2_g0/**/gate/*.npz
+results/inference_cf/srd2_g0/**/pulses/*.npz
+# SRD2-G0 evaluator unit ledger contains reference-derived surfaces (hash recorded in evaluation.json)
+results/inference_cf/srd2_g0/**/evaluation_units.json

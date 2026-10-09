@@ -30,7 +30,7 @@ case "$PHASE" in
   pulse)
     test -f "$R/manifest_pulse.json"
     grep -q '"verdict": "SRC_CF0_PILOT_AUDIT: PASS (CONSTRUCTION)"' "$R/construction_audit.json"
-    grep -q '"gate_pass": true' "$R/PB_authorization.json"
+    grep -Eq '"gate_pass": ?true' "$R/PB_authorization.json"
     "$PY" experiments/inference_cf_src_cf0_pilot.py pulse ;;
   *) echo "unknown PHASE $PHASE"; exit 2 ;;
 esac

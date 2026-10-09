@@ -1,0 +1,6 @@
+{"schema": "src_cf0_pilot_launch_failure_v1", "slurm_job": "58238", "sacct": {"state": "FAILED", "exit_code": "1:0", "elapsed": "00:00:01"},
+ "stdout_bytes": 0, "stderr_bytes": 0, "python_started": false, "model_loaded": false, "model_forwards": 0, "outputs_written": [],
+ "cause": "slurm/inference_cf_src_cf0_pilot.sbatch precondition grep -q '\"gate_pass\": true' (with a space) under set -e; PB_authorization.json is compact canonical JSON ('\"gate_pass\":true'), so the grep exited 1 before the runner was invoked",
+ "fix": "launcher-only: grep -Eq '\"gate_pass\": ?true'; no runner / helper / evaluator / auditor / config / authorization change",
+ "preserved": ["manifest_pulse_attempt1_LAUNCH_FAIL.json (pinned the pre-fix sbatch hash)", "slurm-58238.out", "slurm-58238.err"],
+ "scientific_execution": "NONE; the subsequent pulse allocation is the single P-B scientific job"}

@@ -1,0 +1,99 @@
+{
+ "audit_hash": "sha256:cc25436510a740f6dc5aa0bdf8febe7d71914dc7770522d1def03662278139d9",
+ "checks": {
+  "authorization_minimal_valid": true,
+  "complete_180x24": true,
+  "construction_audit_pass": true,
+  "counters": true,
+  "independent:apparatus": true,
+  "independent:arm_id": true,
+  "independent:direction_used": true,
+  "independent:eligibility": true,
+  "independent:energy_recompute": true,
+  "independent:files": true,
+  "independent:integrity": true,
+  "independent:matrix": true,
+  "independent:no_edit": true,
+  "independent:none_top1": true,
+  "independent:none_zero_restore": true,
+  "independent:paired_energy": true,
+  "independent:top1": true,
+  "manifest_pulse": true,
+  "pulse_completed_same_manifest": true,
+  "pulse_file_open_firewall": true,
+  "pulse_frozen_model": true,
+  "pulse_no_autograd_optimizer_lid": true,
+  "pulse_no_failures": true,
+  "pulse_no_hooks_left": true,
+  "pulse_seal_pushed_unchanged": true,
+  "pulse_wall_under_3h": true
+ },
+ "created_unix": 1791520712.7008407,
+ "failed": [],
+ "manifest_hash": "sha256:344bfb94879d95aca097c295740d61626b61805328da61bf5923a71a3841618e",
+ "notes": {
+  "cells": 4320,
+  "counters": {
+   "apparatus_forwards": 540,
+   "autograd_calls": 0,
+   "cache_fingerprints": 1640,
+   "decoder_forwards": 5699,
+   "decoder_steps": 3159,
+   "encoder_calls": 80,
+   "lid_calls": 0,
+   "matrix_forwards": 1640,
+   "none_forwards": 180,
+   "optimizer_steps": 0,
+   "pulse_forwards": 2540,
+   "zero_dose_forwards": 360
+  },
+  "failures": {},
+  "forbidden_opened": [],
+  "retention_reference_free": {
+   "L16_eta0.15_minus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L16_eta0.15_plus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L16_eta0.30_minus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L16_eta0.30_plus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L24_eta0.15_minus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L24_eta0.15_plus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L24_eta0.30_minus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   },
+   "L24_eta0.30_plus": {
+    "paired_cohort": 59,
+    "retention": 1.0,
+    "sealed_joint_prediction": 59
+   }
+  },
+  "steered": 1640
+ },
+ "pulse_seal_hash": "sha256:a3249e9e701caad3bfe4c511ec95916c117aa356438834840b84481f1457de79",
+ "schema": "src_cf0_pilot_audit_primary_v1",
+ "verdict": "SRC_CF0_PILOT_AUDIT: PASS (PRIMARY)"
+}

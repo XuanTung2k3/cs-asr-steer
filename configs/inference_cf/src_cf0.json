@@ -1,0 +1,51 @@
+{
+  "schema": "SRC_CF0_BLOCKED_DESIGN_V1",
+  "status": "SRC_CF0_DESIGN_BLOCKED",
+  "execution_authorized": false,
+  "scientific_gates_frozen": false,
+  "blocker": "Insufficient exposed correct-Mandarin intervention opportunities: target 6/60, paired 4/60; zero-edit remainder cannot establish actuator safety.",
+  "panel": "docs/inference_cf/SRC_CF0_PANEL.json",
+  "panel_identity_hash": "sha256:2f66af05f61a73ff8dd7df825f86c6a7dc69389f3be807f312399a242464d371",
+  "model": {
+    "dir": "/mnt/data/tungnx/whisper-large-v3",
+    "files": {
+      "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+      "config.json": "sha256:ad0e8d1e46f4d01f7861a21509e5d0f977d6cc1f367a370603c92541d819807b",
+      "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+      "merges.txt": "sha256:2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "model.safetensors": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+      "normalizer.json": "sha256:bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "preprocessor_config.json": "sha256:7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "special_tokens_map.json": "sha256:1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87",
+      "tokenizer.json": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+      "tokenizer_config.json": "sha256:844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+      "vocab.json": "sha256:e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+    }
+  },
+  "requested_constraints": {
+    "direction": "float64(h_clean)-float64(h_target_mask)",
+    "site": "decoder_post_cross_attn_residual",
+    "layers": [
+      16,
+      24
+    ],
+    "eta": [
+      0.15,
+      0.3
+    ],
+    "signs": [
+      1,
+      -1
+    ],
+    "primary_arms": 8,
+    "region_policy": "unchanged S1",
+    "mask": "unchanged S1 hard positive float32 zero",
+    "no_training": true,
+    "no_autograd": true,
+    "no_free_continuation": true,
+    "maximum_future_jobs_if_reauthorized_and_frozen": 2,
+    "maximum_job_hours": 3
+  },
+  "open_decision": "Human decision on adequate Mandarin active-intervention coverage / a separately authorized scope revision; no automatic guard relaxation or safety-claim reduction.",
+  "next_authorized_scientific_action": null
+}

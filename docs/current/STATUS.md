@@ -851,3 +851,12 @@ bitwise = historical NONE 180/180; native AUTO detected zh 65 / en 15 (always al
 11/60 (9 dialogues; M 8, E 10), union-minus-M@20 3 (3 dialogues) -> Gate H fails (needs 12 and 5). Descriptive D: only 4 paired-accessible rows;
 predicted-EN masking raises the reference rank on all 4 (MRR +.15 vs M/off-target/shuffle) but 0 top-1 corrections. Report
 `docs/inference_cf/S1_ACOUSTIC_EVIDENCE_REPORT.md`. Core v6 unchanged; no steering, vectors or S2.
+
+## SRC-CF0 design review (2026-10-09) — `SRC_CF0_DESIGN_BLOCKED`
+
+Same180 scope and unchanged S1 masks independently give target/paired opportunities: EN-confusion28/20,
+EN-correct39/35, ZH-correct6/4 (paired Mandarin four dialogues). Mandatory no-edits on54/60 correct-Mandarin
+queries cannot establish active actuator safety. See `docs/inference_cf/SRC_CF0_SPEC.md` and design/panel/firewall:
+blocked records only, scientific gates not frozen, execution_authorized=false; no PASS, model forward,
+direction/pulse outcome or new lexical evaluation. Needs a human scope decision before a defensible complete
+freeze; no guard relaxation, resampling, held-out access or core-v6/historical-verdict change.

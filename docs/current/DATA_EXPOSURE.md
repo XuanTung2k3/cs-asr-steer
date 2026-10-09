@@ -506,3 +506,12 @@ No new Whisper/LID forward, Slurm job, gold timing, new references, split/role, 
 FULL300 exact intervention/correct-Mandarin opportunities remain unknown; proposed future census is not authorized.
 Future pilot direction and pulse seals must be pushed/audited before separate coverage and lexical evaluators.
 Mandatory Mandarin no-edits cannot establish active safety; positive pilot label leaves safety unresolved.
+
+
+## SRC-CF0-P execution (2026-10-09)
+
+Only the already-exposed D-dev-select 180/80/20 panel. Runner (GPU 58236 / 58239) read the allowlisted runtime
+projection, panel audio and sealed reference-free S1 / ST-LOC0 / ST-PROMPT-R1 archives only (open-file logs audited,
+0 forbidden). Strata membership (ST_PROMPT_R1_PANEL evaluation_membership) opened only after the pushed direction seal +
+CONSTRUCTION PASS; P2-RJ acceptable sets / competitors / strata opened only after the pushed pulse seal + PRIMARY PASS.
+No D-dev-confirm, D-test, router-calib, P3, transfer, oracle timing/regions, gradients, training or FULL300 census.

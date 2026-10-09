@@ -871,3 +871,15 @@ Strongest result SIGNAL_SAFETY_UNRESOLVED recommends only a separately frozen ex
 no CF1/TTO/sequence/confirmation/transfer authorization. CPU FULL300 source/prefix inventory gives target/pair lower
 bounds73/59, loose region-only upper bound10,334; exact cached-attention/reachable/correct-Mandarin census UNKNOWN.
 No new model forward, scientific outcome, reference-target analysis or job in Codex. Core v6 and historical verdicts unchanged.
+
+
+## SRC-CF0-P executed — terminal SRC_CF0_PILOT_CAUSAL_INSUFFICIENT (2026-10-09)
+
+Implementation f0300f5; PASS_TO_SRC_CF0_PILOT f91d256; P-A Slurm 58236 (184 s): 73/73 targets, 59/59 pairs valid at
+L16/L24, bitwise repeats + historical identities, median |cos(target,off)| .12/.11, raw tangent ratio 6.0/8.2; direction
+seal fe25502; CONSTRUCTION audit PASS; Gate P-A PASS (layers 16, 24). P-B launch 58238 failed at the sbatch grep (no
+Python/forward; preserved); P-B Slurm 58239 (109 s): complete 180x24 matrix, NONE/zero/apparatus bitwise, 0 integrity
+failures; pulse seal f32e7e5; PRIMARY PASS. Evaluation: 0 actual English corrections in all 8 arms (controls 0), best
+margin L24 eta.30+ +0.47 nat (< 0.50), max damage 3 EN / 2 ZH, no global stop. FULL audit PASS (025af48), identical label.
+No expanded-safety study recommended; no SRC-CF1 / TTO-CF. FULL300 stays FULL300_SAFETY_FEASIBILITY_UNKNOWN.
+Report docs/inference_cf/SRC_CF0_PILOT_FINAL_REPORT.md. Core v6 and historical verdicts unchanged.

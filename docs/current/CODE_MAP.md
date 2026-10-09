@@ -518,3 +518,15 @@ random vector, aggregate frozen gate predicates), experiments/inference_cf_src_c
 The science runner/evaluator/independent auditor/sbatch in PILOT_DESIGN are PROPOSED interfaces, not implemented.
 Reuse unchanged S1 crop/mask, cached.Branch, DG-02 recorder/hook, P2-R native solver/NormPreserve.
 No S1 reranking, model-adapter implementation, new controller or core-v6 change.
+
+
+## SRC-CF0-P implementation (2026-10-09)
+
+`src/csasr/inference_cf/src_cf0_pilot.py` (allowlisted runtime projection, v_AC = contract formula, geometry, random
+controls, native-BF16 reach ledger, frozen pulse checks, pre-FFN probe); `experiments/inference_cf_src_cf0_pilot.py`
+(prepare / manifest / construct / seal-a / pulse / seal-b / CPU smoke; reuses S1 masks, P2-R DiagBranch + solver,
+ST-LOC0 pulse_action + Composite, ST-PROMPT-R1 relative_action / cell_checks, DG-02 recorder);
+`experiments/inference_cf_src_cf0_pilot_evaluate.py` (gate-a strata-only, evaluate-b post PRIMARY; cf_pilot_contract
+predicates); `experiments/inference_cf_src_cf0_pilot_audit.py` (independent pre / construction / primary / full);
+`slurm/inference_cf_src_cf0_pilot.sbatch` (PHASE=construct|pulse); `tests/test_src_cf0_pilot_impl.py`.
+Notes docs/inference_cf/SRC_CF0_PILOT_IMPLEMENTATION_NOTES.md. Outputs results/inference_cf/src_cf0_pilot/run1/.

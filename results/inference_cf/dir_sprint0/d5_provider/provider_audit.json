@@ -1,0 +1,134 @@
+{
+ "checks": {
+  "acl1_has_no_panphon": true,
+  "acl1_unchanged": true,
+  "adapter_text_free": true,
+  "addendum_srd2_400": true,
+  "builder_inputs_only_vocab_and_panphon": true,
+  "contrasts_panphon": true,
+  "engineering_checks_all_pass": true,
+  "engineering_opened_no_forbidden": true,
+  "every_symbol_one_status": true,
+  "frame_geometry": true,
+  "golden_normalization": true,
+  "inventory_is_phonetic": true,
+  "manifest_digest": true,
+  "model_files_match_manifest": true,
+  "no_slurm_jobs": true,
+  "only_new_files": true,
+  "phonemizer_absent": true,
+  "pinned_ledger_unchanged": true,
+  "posteriors_reproduced_independently": true,
+  "source_hashes_current": true,
+  "table_digest": true,
+  "table_features_recomputed_exactly": true,
+  "table_matches_vocab": true,
+  "tones_independent": true,
+  "venv_packages_pinned": true,
+  "weights_match_published_lfs": true,
+  "wheels_match_pypi": true,
+  "whisper_files_unchanged": true
+ },
+ "elapsed_sec": 18.523142337799072,
+ "failed": [],
+ "imports_adapter": false,
+ "manifest_digest": "sha256:93ae874c09b89c3595e61c978b06d3f94a78f395b2b6688799652ab8e98a885e",
+ "notes": {
+  "frame_geometry": {
+   "1040": [
+    3,
+    3,
+    3
+   ],
+   "16000": [
+    49,
+    49,
+    49
+   ],
+   "16001": [
+    49,
+    49,
+    49
+   ],
+   "400": [
+    1,
+    1,
+    1
+   ],
+   "401": [
+    1,
+    1,
+    1
+   ],
+   "48000": [
+    149,
+    149,
+    149
+   ],
+   "719": [
+    1,
+    1,
+    1
+   ],
+   "720": [
+    2,
+    2,
+    2
+   ]
+  },
+  "git": {
+   "diff_vs_base": [],
+   "head": "72727f347ae72e575019339d4bfb226c03875919",
+   "porcelain": [
+    "?? docs/current/DATA_EXPOSURE_ADDENDA.json",
+    "?? experiments/inference_cf_dir_sprint0_d5_feature_table.py",
+    "?? experiments/inference_cf_dir_sprint0_d5_provider.py",
+    "?? experiments/inference_cf_dir_sprint0_d5_provider_audit.py",
+    "?? results/inference_cf/dir_sprint0/d5_provider/",
+    "?? src/csasr/inference_cf/exposure_registry.py",
+    "?? src/csasr/inference_cf/phone_provider.py",
+    "?? tests/test_dir_sprint0_d5_provider.py"
+   ]
+  },
+  "golden": {
+   "bad": [],
+   "leftover_mnemonics": []
+  },
+  "hf_api": {
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "sha": "2c733782da5604684829819a5eb744c193fe9398"
+  },
+  "inventory": {
+   "ipa_specific": 274,
+   "mms_fa_ipa_specific": 0,
+   "symbols": 388
+  },
+  "posteriors": {
+   "aishell_example_mandarin.wav": {
+    "bitwise_equal_sealed": true,
+    "frames": 107
+   },
+   "noise_3s": {
+    "bitwise_equal_sealed": true
+   },
+   "sample1.flac": {
+    "bitwise_equal_sealed": true,
+    "frames": 684
+   },
+   "sample2.flac": {
+    "bitwise_equal_sealed": true,
+    "frames": 710
+   }
+  },
+  "pypi_panphon": "verified",
+  "pypi_unicodecsv": "verified",
+  "table_recompute": {
+   "feature_mismatch": [],
+   "segment_mismatch": []
+  }
+ },
+ "schema": "dir_sprint0_d5_provider_audit_v1",
+ "verdict": "DIR_SPRINT0_D5_PROVIDER_AUDIT: PASS"
+}

@@ -1,0 +1,13 @@
+{
+ "python": "/home/tungnx/miniconda3/envs/acl1/bin/python",
+ "pip_freeze_sha256": "sha256:3ee48ab0387f7405a6828151e4c13020aa749fab6cb6f5b621af2a1c5ee0149a",
+ "pip_freeze_lines": 347,
+ "captured": "2026-10-09, before the dir_sprint0_d5 venv was created",
+ "pip_check_preexisting": [
+  "opencv-python 4.13.0.92 has requirement numpy>=2; python_version >= \"3.9\", but you have numpy 1.26.4.",
+  "opencv-python-headless 4.12.0.88 has requirement numpy<2.3.0,>=2; python_version >= \"3.9\", but you have numpy 1.26.4.",
+  "rerun-sdk 0.26.2 has requirement numpy>=2, but you have numpy 1.26.4.",
+  "torch 2.10.0+cu128 has requirement nvidia-nccl-cu12==2.27.5; platform_system == \"Linux\", but you have nvidia-nccl-cu12 2.27.3.",
+  "torch 2.10.0+cu128 has requirement triton==3.6.0; platform_system == \"Linux\", but you have triton 3.4.0."
+ ]
+}

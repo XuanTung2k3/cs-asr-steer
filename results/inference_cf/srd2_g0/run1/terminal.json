@@ -1,0 +1,1 @@
+{"audit_FULL":"SRD2_G0_AUDIT_FULL: PASS","audit_FULL_sha256":"sha256:08e0e54f5513a5ab0eb626690ae3d52e543da098cfc3f4bfdefff3f401098d75","created_unix":1791560476.8583436,"flags":{"critical_failure":false,"independent_FULL_audit_PASS":true},"label":"SRD2_G0_OBSERVED_DAMAGE","schema":"srd2_g0_terminal_v1"}

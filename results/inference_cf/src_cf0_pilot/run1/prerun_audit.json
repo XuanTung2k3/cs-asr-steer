@@ -1,0 +1,74 @@
+{
+ "audit_hash": "sha256:268e60c0a9ade0a781b55c31694abf3d49e3a559a3161481ced676e03273eeb0",
+ "checks": {
+  "config_sha_handoff": true,
+  "construct_bound_exact": true,
+  "engineering_smoke_committed_clean": true,
+  "frozen_unchanged_since_freeze": true,
+  "manifest_construct": true,
+  "mask_bytes_independent": true,
+  "model_files": true,
+  "panel_identity": true,
+  "pilot_tests_pass": true,
+  "pins": true,
+  "projection_counts": true,
+  "projection_equals_independent_allowlist": true,
+  "projection_no_forbidden_keys_or_text": true,
+  "regions_73_59": true,
+  "regions_independently_rederived": true,
+  "runtime_committed_hash": true,
+  "static:auditor_independent": true,
+  "static:construct_phase_no_steering": true,
+  "static:evaluator_b_order": true,
+  "static:evaluator_gate_a_no_token_sets": true,
+  "static:evaluator_gate_a_order": true,
+  "static:helper_no_reference_identifiers": true,
+  "static:no_training_or_gradients": true,
+  "static:panel_opened_only_by_prepare": true,
+  "static:runner_does_not_import_evaluator_or_auditor": true,
+  "static:runner_gpu_phases_no_reference_identifiers": true,
+  "static:runner_records_open_log": true,
+  "synthetic_helper_vs_independent": true,
+  "waveform_bytes": true
+ },
+ "created_unix": 1791519861.970104,
+ "failed": [],
+ "manifest_hash": "sha256:0c52dc14d033a1539ac3720116355a07d9f9bc39dd92c3c4205face582a396c0",
+ "notes": {
+  "region_disagreements": [],
+  "smoke_cells": {
+   "checks_all": {
+    "consumed_vs_proposed": true,
+    "eta_rel": true,
+    "solver_matches_hook": true,
+    "sq_energy_rel": true
+   },
+   "forward": 40,
+   "integrity_failures": [],
+   "max_norm_rounding_rel": 0.005568137114437225,
+   "no_edit_reasons": [
+    "INELIGIBLE_NO_MATCHED_OFFTARGET"
+   ],
+   "predicted_vs_actual_mismatch": 0,
+   "steered": 40,
+   "total": 48,
+   "valid": 40
+  },
+  "synthetic": {
+   "cases": 60,
+   "disagreements": [],
+   "random_vectors_agree": true,
+   "reach_cells_checked": 176,
+   "statuses": [
+    "ABSTAIN_DEGENERATE",
+    "OK"
+   ]
+  },
+  "tests_tail": [
+   "...................................................                      [100%]"
+  ]
+ },
+ "runtime_hash": "sha256:63d62e8a3a8bc26fcecd9e783da88bff25aec1f7d560faf9512b449726332fb8",
+ "schema": "src_cf0_pilot_audit_pre_v1",
+ "verdict": "PASS_TO_SRC_CF0_PILOT"
+}

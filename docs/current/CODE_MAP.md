@@ -530,3 +530,16 @@ ST-LOC0 pulse_action + Composite, ST-PROMPT-R1 relative_action / cell_checks, DG
 predicates); `experiments/inference_cf_src_cf0_pilot_audit.py` (independent pre / construction / primary / full);
 `slurm/inference_cf_src_cf0_pilot.sbatch` (PHASE=construct|pulse); `tests/test_src_cf0_pilot_impl.py`.
 Notes docs/inference_cf/SRC_CF0_PILOT_IMPLEMENTATION_NOTES.md. Outputs results/inference_cf/src_cf0_pilot/run1/.
+
+
+## SRD2-G0 (executed 2026-10-09; terminal SRD2_G0_OBSERVED_DAMAGE)
+
+src/csasr/inference_cf/srd2_g0.py (four-key runtime projection/allowlist, query inventory/identity, unchanged R2 g_old wrapper,
+hash-ordered within-utterance gate permutation, chord guards, native DG-02 + FFN-input observer, native preview, cached
+one-solve solver), experiments/inference_cf_srd2_g0.py (prepare/manifest/capture/seal-a/permutation/authorize-b/pulses/seal-b),
+experiments/inference_cf_srd2_g0_evaluate.py (post-seal reference mapping, events, predicates, bootstrap),
+experiments/inference_cf_srd2_g0_audit.py (independent pre/a/primary/full; manifest-pinned attempt-1 version) and the auditor
+of record results/inference_cf/srd2_g0/run1/audit_r1/inference_cf_srd2_g0_audit_r1.py (amendment A1),
+experiments/inference_cf_srd2_g0_describe.py (post-terminal descriptive tables), slurm/inference_cf_srd2_g0.sbatch,
+tests/test_inference_cf_srd2_g0.py. Results results/inference_cf/srd2_g0/run1 (raw arrays archived content-addressed under
+/mnt/data/tungnx/cs-asr-steer/archives/srd2_g0/run1). Not imported by any deployable path.

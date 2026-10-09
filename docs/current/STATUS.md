@@ -883,3 +883,22 @@ failures; pulse seal f32e7e5; PRIMARY PASS. Evaluation: 0 actual English correct
 margin L24 eta.30+ +0.47 nat (< 0.50), max damage 3 EN / 2 ZH, no global stop. FULL audit PASS (025af48), identical label.
 No expanded-safety study recommended; no SRC-CF1 / TTO-CF. FULL300 stays FULL300_SAFETY_FEASIBILITY_UNKNOWN.
 Report docs/inference_cf/SRC_CF0_PILOT_FINAL_REPORT.md. Core v6 and historical verdicts unchanged.
+
+
+## SRD2-G0 executed — terminal SRD2_G0_OBSERVED_DAMAGE (2026-10-09)
+
+Design freeze 3168508; implementation 42705ed; PASS_TO_SRD2_G0 70b8e04; Job A Slurm 58300 (17.3 min) 400/400, seal fc23d25
+(10,267 structural queries, 1,968 nonzero g_old, all compatibility bounds PASS); audit A attempt 1 BLOCK preserved (auditor
+float64-vs-float32 script-mass precision + pinned-source name screen; amendment A1, auditor r1 in run1/audit_r1, runner
+unchanged) then SRD2_G0_AUDIT_A: PASS; B3 permutation ba12923; recost 2,648 s; authorization a88f3d3; Job B Slurm 58314
+(15.8 min) old30 apparatus 30/30 bitwise, 400/400, B1 matched 1.000; PRIMARY PASS b818051; evaluator + FULL PASS 211d1c2.
+Counts C/H_ZH/H_EN: B1 4/446/1, B2 1/9/0, B3 1/4/0. Gate exposure is selective (g>0 on 88.6% EN-confusion vs 2.2% ZH-correct)
+but D2 at e* corrects almost nothing (B1 606 top-1 changes at confusion queries, 519 to other Han tokens) and harms ~10% of
+edited Mandarin states with or without gating; B2 is not better than the matched-dose shuffle. Label: first-match severe-damage
+disjunct new_EOS_proxy_events_B2 = 1 (next applicable label would be CAUSAL_POWER_INSUFFICIENT). STOP: no SRD2-G1/gate/dose/
+direction variant; advisory next = the separately frozen main-line exact-A2 confirmation (needs human authorization).
+**DATA EXPOSURE (to be carried into DATA_EXPOSURE.md at the next authorized freeze; that file is byte-pinned by the frozen
+SRD2-G0 contract test):** the 400 SRD2-G0 D-dev-select utterances (20 dialogues; selected-ID hash sha256:ff2e3054…) now have
+references opened for lexical evaluation (post-seal, filtered to the 400 IDs) and are exposed development data; the old30
+P2-DIR apparatus queries (already-exposed FULL300) were used for engineering reproduction only. No D-dev-confirm, D-test,
+router-calib, P3 or transfer use. Report docs/inference_cf/SRD2_G0_FINAL_REPORT.md. Core v6 and historical verdicts unchanged.

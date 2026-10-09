@@ -1,0 +1,1206 @@
+{
+  "schema": "srd2_g0_design_v1",
+  "status": "DESIGN_FROZEN_IMPLEMENTATION_PENDING",
+  "initial_head": "b7e7b659b9ba06c305dbb422a0e8ecafa7fd6861",
+  "scientific_execution_in_codex": false,
+  "authority": "separately human-authorized supporting development diagnostic; core-v6 and historical verdicts unchanged",
+  "population": {
+    "manifest": "docs/inference_cf/SRD2_G0_POPULATION.json",
+    "file_sha256": "sha256:ab76b61c890138e176804b81b60316d7ea0aaf067f281f08c6534717e7dd65b6",
+    "manifest_hash": "sha256:341b8cd5e00f483c16bccf4a7458ccb49270a7a8baf5af42897bd91a09eaa57b",
+    "selected_hash": "sha256:9a58ef115adb63924bb621557e348264f8273832941efbd0ef554cf5b2a276e5",
+    "selected_ids_hash": "sha256:ff2e3054ed25ecf6ffc944552a98f368878568125cdb2ef446f64763408137ae",
+    "roster_hash": "sha256:28aa458ba2bbbc03b69087952075595d14ca2c655e1712ef3691930ccd29a566",
+    "role": "D-dev-select",
+    "utterances": 400,
+    "dialogues": 20,
+    "utterances_per_dialogue": 20,
+    "excluded_FULL300": 300,
+    "known_intervention_overlap": 0,
+    "seed": 240924,
+    "new_utterance_development_only": true,
+    "independent_dialogue_confirmation": false
+  },
+  "model": {
+    "dir": "/mnt/data/tungnx/whisper-large-v3",
+    "files": {
+      "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+      "config.json": "sha256:ad0e8d1e46f4d01f7861a21509e5d0f977d6cc1f367a370603c92541d819807b",
+      "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+      "merges.txt": "sha256:2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "model.safetensors": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+      "normalizer.json": "sha256:bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "preprocessor_config.json": "sha256:7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "special_tokens_map.json": "sha256:1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87",
+      "tokenizer.json": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+      "tokenizer_config.json": "sha256:844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+      "vocab.json": "sha256:e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+    },
+    "precision": "bfloat16",
+    "attention_implementation": "eager",
+    "eval": true,
+    "parameter_requires_grad": false,
+    "parameter_updates": 0,
+    "layer_zero_based": 16,
+    "site": "DG-02 decoder_post_cross_attn_residual pre-FFN",
+    "norm_preserve": true,
+    "depth_rescale": false,
+    "temperature_readout": 1.0,
+    "suppression_hash": "sha256:e93e88ef310ed47a78a9932f3d2d5ffd02d7bc3d59bca0e2e90524e34b2ef8e8"
+  },
+  "environment": {
+    "interpreter": "/home/tungnx/miniconda3/envs/acl1/bin/python",
+    "torch": "2.10.0+cu128",
+    "transformers": "4.57.6",
+    "threads": 1,
+    "historical_gpu": "NVIDIA H100 80GB HBM3 MIG 3g.40gb",
+    "transformers_forward_source": "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/modeling_whisper.py",
+    "transformers_forward_sha256": "sha256:851c78f1aa62f84ed0d0a4dfded478a05c98f43d26732b56fea2d4acc79728b8"
+  },
+  "baseline": {
+    "provider": "cached.Branch + cached._processed + core_p1.processed_argmax; cached_greedy is replay-loop reference only",
+    "prompt": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "eos_id": 50257,
+    "task": "transcribe",
+    "language": "zh",
+    "num_beams": 1,
+    "sampling": false,
+    "max_new_tokens": 200,
+    "condition_on_prev_tokens": false,
+    "timestamps": false,
+    "heard_seconds_max": 30,
+    "sample_rate": 16000,
+    "same_encoder_in_all_paths": true,
+    "argmax_tie": "lowest token ID; explicit argmax (not topk tie order)",
+    "tie_implementation_note": "cached_greedy uses topk for its next ID; new canonical baseline uses the existing processed_argmax explicitly to preserve the R2/D2 lowest-ID tie convention, not topk tie order"
+  },
+  "queries": {
+    "inventory": "all t=0..T-1; t=T only if cached baseline terminated=eos",
+    "absolute_query": "4+t-1",
+    "prefix": "baseline content[:t]",
+    "prestep_cache": "prompt + content[:t-1] for t>=1; feed content[t-1]",
+    "pulse_structural_eligibility": "t>=1 AND complete UTF8 prefix AND no unexpected special content token AND finite native site/raw logits",
+    "t0": "inventory/gate row retained; frozen forced-prefix no-edit exclusion",
+    "EOS": "real EOS prediction query eligible if other structural checks pass; EOS not a veto",
+    "cap": "no invented t=T EOS query after 200-token cap",
+    "gate_provider_failure": "g=0 with original reason; does not remove a structurally valid D2 query from the permutation pool",
+    "invalid_direction": "all intervention arms no-edit; keep query and original shuffle assignment"
+  },
+  "gate": {
+    "version": "R2 g_old, unchanged",
+    "epsilon": 1e-12,
+    "formula": "g = E * max(0,P_M_B-P_E_B)",
+    "E": "max(0,tanh((log((pi_EN+eps)/(pi_ZH+eps))-log((pi_null_EN+eps)/(pi_null_ZH+eps)))/2))",
+    "conflict_logits": "raw model logits BEFORE generation processors; float32 full-vocabulary log_softmax",
+    "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+    "partition_counts": {
+      "matrix": 1667,
+      "embedded": 37858,
+      "ambiguous": 12341
+    },
+    "attention_source": "original R2 full_replay(use_cache=False, attention=True) on canonical cached B0 content, query 4+t-1",
+    "alignment_heads": [
+      [
+        7,
+        0
+      ],
+      [
+        10,
+        17
+      ],
+      [
+        12,
+        18
+      ],
+      [
+        13,
+        12
+      ],
+      [
+        16,
+        1
+      ],
+      [
+        17,
+        14
+      ],
+      [
+        19,
+        11
+      ],
+      [
+        21,
+        4
+      ],
+      [
+        24,
+        1
+      ],
+      [
+        25,
+        6
+      ]
+    ],
+    "window_frames": 50,
+    "frame_samples": 320,
+    "max_frames": 1500,
+    "window_tie": "earliest maximum valid-frame attention mass",
+    "partial_terminal_crop": "original R2 left shift <=319 samples",
+    "local_lid": "native_lid; SOT-only; softmax over full 100 language-token vocabulary; actual PCM crop padded to30s",
+    "null": "recompute one all-zero 30s float32 waveform through same native provider; pin probabilities and waveform/model hashes",
+    "null_EN_historical": 0.3173545002937317,
+    "null_ZH_historical": 0.01905861869454384,
+    "null_probability_abs_tolerance": 1e-06,
+    "fallback_precedence": [
+      "mid_character",
+      "localizer_fail",
+      "local_support_fail",
+      "baseline_provider_fail",
+      "nonfinite_signal"
+    ],
+    "no_low_mass_or_confidence_veto": true,
+    "ecf_dependency": false,
+    "cropped_lid_cache": "within utterance, exact audio/model/preprocess/start/end hashes only"
+  },
+  "compatibility": {
+    "input_and_query_identity_fraction": 1.0,
+    "cached_replay_equals_cached_baseline": "bitwise raw logits/site, processed argmax, tokens/termination",
+    "full_vs_cached_raw_TV_median_max": 0.01,
+    "full_vs_cached_raw_TV_p99_max": 0.05,
+    "full_vs_cached_raw_TV_max": 0.1,
+    "full_vs_cached_raw_script_mass_abs_diff_p99_max": 0.02,
+    "full_vs_cached_processed_argmax_agreement_min": 0.995,
+    "full_vs_cached_site_relative_L2_p99_max": 0.02,
+    "full_vs_cached_site_relative_L2_max": 0.05,
+    "full_vs_cached_site_cosine_min": 0.999,
+    "quantiles": "numpy linear quantiles over all structurally eligible queries; no favorable subset",
+    "causality_probe_queries": "per utterance first eligible, median eligible, last eligible; deduplicate",
+    "prefix_only_vs_full_TV_max": 0.05,
+    "prefix_only_vs_full_attention_L1_max": 0.02,
+    "cross_path_bitwise_required": false,
+    "recompute_gate_from_saved_full_path_inputs": true,
+    "fail_action": "INVALID and STOP; never replace full-replay gate with cached-attention gate",
+    "decoder_self_attention_future_mass_max": 1e-07,
+    "TV_definition": "0.5*sum(abs(softmax(raw_full.float32)-softmax(raw_cached.float32))) over full vocabulary",
+    "site_relative_L2_definition": "norm64(r_full-r_cached)/norm64(r_cached); same native site, zero norm invalid",
+    "probe_attention_definition": "L1 between heard-masked, renormalized ten-head mean cross-attention distributions at the same query"
+  },
+  "D2": {
+    "provider": "ReadoutDirection -> readout.readout_direction",
+    "J": "log(P_E+1e-12)-log(P_M+1e-12)",
+    "gradient": "one native-BF16 scratch query with zero float32 probe, torch.autograd.grad(J, probe); no backward/weight update",
+    "probabilities": "generation-suppressed float32 full-vocabulary softmax, temperature1",
+    "tangent": "float64 g-h*dot(h,g)/dot(h,h); normalize with historical epsilon; serialize float32",
+    "tiny_state": 1e-08,
+    "tiny_tangent": 1e-08,
+    "unit_tolerance": 2e-06,
+    "radial_tolerance": 1e-06,
+    "epsilon": 1e-12,
+    "scratch_clean_identity": "bitwise site/raw logits against ordinary cached query",
+    "construct_once_per_structural_query": true,
+    "shared_direction_all_arms": true,
+    "sign": 1
+  },
+  "arms": {
+    "B0": {
+      "name": "NONE",
+      "desired_norm": "0"
+    },
+    "B1": {
+      "name": "D2_UNGATED",
+      "desired_norm": "e_star"
+    },
+    "B2": {
+      "name": "D2_R2_GATE",
+      "desired_norm": "e_star*g_t"
+    },
+    "B3": {
+      "name": "D2_SHUFFLED_GATE",
+      "desired_norm": "e_star*g_shuffled_t"
+    }
+  },
+  "shuffle": {
+    "seed": 240924,
+    "tag": "SRD2-G0-gate-permutation-v1",
+    "method": "sort structurally eligible donor query t by SHA256(tag|seed|UID|t), then t; assign their gates to structurally eligible recipient t in ascending t",
+    "within_utterance_only": true,
+    "zero_gates_in_pool": true,
+    "structurally_ineligible": "excluded from pool, four arms exact no-edit",
+    "singleton_or_identity_or_constant": "retain, flag uninformative; never reroll or drop",
+    "seal_after_job_A_before_job_B": true,
+    "assignment_not_changed_by_D2_invalidity": true,
+    "planned_total_aggregation": "compare sorted gate-value bit multiset, then math.fsum of sorted desired squared norms per utterance and globally"
+  },
+  "dose": {
+    "e_star": 1.1260757575454359,
+    "solver": "experiments.inference_cf_p2r.solve_scale + scaled_direction; loc0_sites.pulse_action",
+    "max_evaluations": 8,
+    "native_bf16_emulation": true,
+    "CPU_float64_geometry": true,
+    "relative_squared_energy_error_max": 0.02,
+    "relative_chord_error_max": 0.02,
+    "solver_vs_hook_abs_error_factor": 1e-06,
+    "consumed_vs_proposed_relative_error_max": 0.005,
+    "zero_target": "bypass solver/hook edit; bitwise NONE",
+    "unreachable_or_out_of_tolerance": "explicit exact no-edit; retain planned dose and denominator; no rescaling/floor",
+    "new_norm_rounding_threshold": false,
+    "gated_vs_shuffle_total_realized_squared_energy_ratio_range": [
+      0.9,
+      1.1
+    ],
+    "each_gated_arm_fraction_planned_squared_energy_lost_max": 0.1,
+    "energy_comparison_zero_total": "INCONCLUSIVE, never divide by zero",
+    "B1_nonzero_requests_matched_fraction_min": 0.95,
+    "repair_epsilon": 1e-06,
+    "consumed_vs_proposed_error_definition": "abs(consumed_chord_norm/proposed_chord_norm-1); norm ratio, NOT vector relative L2",
+    "native_consumption_preview": "record pristine native q,u,r=q+u; preview q+(u+(proposed_r-r)) on same native site device/dtype/order; never inspect FFN/logits",
+    "preview_guard_failure": "native_consumption_unattainable: exact no-edit with planned dose retained; no coefficient refinement, gate floor or alternative energy",
+    "solver_calls_per_arm": "one original solve_scale, max8 emulations; pulse_action may use hash-verified cached solver result, never solve a second time",
+    "actual_consumption_preview_check": "bitwise predicted/actual FFN input for edited cells; otherwise INVALID; exact no-edit output=B0 for abstentions"
+  },
+  "job_A_gate": {
+    "rows_complete": 400,
+    "dialogues_complete": 20,
+    "inventory_complete_fraction": 1.0,
+    "pulse_structural_queries_min": 1000,
+    "pulse_structural_dialogues_min": 20,
+    "nonzero_old_gate_queries_min": 20,
+    "nonzero_old_gate_dialogues_min": 5,
+    "finite_provider_fraction_on_complete_prefix_min": 0.99,
+    "source_or_identity_violations_max": 0,
+    "compatibility": "ALL frozen compatibility predicates pass",
+    "no_lexical_labels_for_authorization": true
+  },
+  "evaluation": {
+    "alignment": "post-seal normalize/segment_units, align_tokens and R2 unit_to_token_positions; no timings needed",
+    "English_targets": "historical p2r_population.target_set with raw/lower/capitalized/UPPER and optional leading space, exact prefix-ID stability, distinguishing prefix >=min(2,len(word))",
+    "Mandarin_targets": "historical correct-state singleton baseline first-token ID",
+    "collisions": "different strata or multiple English reference units at one query -> primary unalignable; Mandarin same-category deduplicated to unique query",
+    "primary_confusions": "wrong-language substitution or script/transliteration; exclude deletions/same-language substitutions into separate descriptive ledgers",
+    "correction": "B0 argmax notin Y and arm argmax in Y",
+    "corruption": "B0 argmax in Y and arm argmax notin Y",
+    "primary_unit": "unique (UID,t), not reference-unit multiplicity",
+    "structural_fallbacks": "count as no-edit, stay in mapped stratum denominator",
+    "ambiguous_offsets_or_targets": "explicit unalignable ledger; never repair using oracle timings",
+    "EOS_deletions": "secondary only; no missing-word recovery claim",
+    "utility": "U_a=C_EN_a-H_ZH_a-H_EN_a (equal predeclared event cost)",
+    "full_population_reporting": "all400 utterances/all inventory rows; mapping/structural/active denominators separately",
+    "long_audio_without_heard_scope_timing": "all400 query outputs retained; duration>30s whole-reference lexical attribution marked unalignable:heard_scope for primary metrics; no new timing inference or arbitrary alignment repair"
+  },
+  "opportunities": {
+    "mapped_EN_confusion_min": 30,
+    "mapped_EN_confusion_dialogues_min": 10,
+    "mapped_EN_correct_min": 30,
+    "mapped_EN_correct_dialogues_min": 10,
+    "mapped_ZH_correct_min": 100,
+    "mapped_ZH_correct_dialogues_min": 10,
+    "actively_edited_B2_ZH_correct_min": 40,
+    "actively_edited_B2_ZH_dialogues_min": 10,
+    "English_unit_mapping_fraction_min": 0.8,
+    "English_unit_mapping_fraction_denominator": "all normalized Latin reference units on400; unique query/gap mapping before target-set and stratum-collision filters; unheard-scope rows count unmapped"
+  },
+  "causal_power": {
+    "B2_corrections_min": 5,
+    "B2_corrected_dialogues_min": 3
+  },
+  "control_opportunities": {
+    "B1_corrections_min": 5,
+    "B1_ZH_corruptions_min": 4,
+    "B1_ZH_harmed_dialogues_min": 3,
+    "gated_shuffle_energy_matching": "ALL dose comparison predicates pass",
+    "uninformative_shuffle_fraction_max": 0.5,
+    "uninformative_denominator": "all structurally eligible queries in identity/constant/singleton utterance permutations"
+  },
+  "acceptance": {
+    "B2_B1_correction_retention_min": 0.6,
+    "B2_B1_ZH_corruption_ratio_max": 0.5,
+    "B2_ZH_corruptions_max": 10,
+    "B2_unconditional_ZH_corruption_rate_max": 0.01,
+    "B2_active_ZH_corruption_rate_max": 0.1,
+    "B2_EN_corruptions_max": 3,
+    "B2_unconditional_EN_corruption_rate_max": 0.02,
+    "B2_minus_B3_corrections_min": 2,
+    "B2_minus_B3_utility_min": 3,
+    "B2_ZH_corruptions_no_more_than_B3": true,
+    "positive_paired_correction_gain_dialogues_min": 2,
+    "positive_paired_utility_gain_dialogues_min": 3,
+    "max_positive_utility_gain_dialogue_share": 0.6,
+    "adjusted_CI_significance_required": false,
+    "interpretation": "effect-size and breadth feasibility only; adjusted uncertainty fully reported, no significance or broad safety claim",
+    "B2_utility_min": 1
+  },
+  "severe_damage": {
+    "B2_ZH_events_min": 10,
+    "AND_B2_unconditional_ZH_rate_strict_gt": 0.03,
+    "OR_any_dialogue_B2_ZH_events_min": 3,
+    "AND_that_dialogue_active_ZH_rate_strict_gt": 0.2,
+    "OR_B2_EN_events_min": 5,
+    "AND_B2_unconditional_EN_rate_strict_gt": 0.05,
+    "OR_B2_new_EOS_with_baseline_remaining_content_min": 10,
+    "new_EOS_events_min": 1,
+    "EOS_note": "reference-free single-query early-stop risk proxy, not measured free-sequence truncation"
+  },
+  "statistics": {
+    "seed": 240924,
+    "bootstrap_replicates": 10000,
+    "cluster": "paired resample20 sorted dialogues with replacement; retain all utterances and queries, same draw for allarms",
+    "primary_reporting": "pooled counts/rates plus equal-dialogue macro rates",
+    "CI": "percentile95 descriptive; primary family4 Bonferroni98.75 marginal intervals",
+    "family_size": 4,
+    "family": [
+      "C_B2-C_B3",
+      "U_B2-U_B3",
+      "H_ZH_B3-H_ZH_B2",
+      "H_ZH_B1-H_ZH_B2"
+    ],
+    "family_quantiles": [
+      0.00625,
+      0.99375
+    ],
+    "small_denominators": "undefined, explicit opportunity failure; no pseudocount success",
+    "undefined_bootstrap_replicates": "report valid count; rate CI NOT_ESTIMABLE if <9500 valid draws",
+    "no_query_independence_claim": true,
+    "no_significance_gate": true
+  },
+  "terminal_precedence": [
+    "SRD2_G0_INVALID",
+    "SRD2_G0_COMPUTE_BLOCKED",
+    "SRD2_G0_OBSERVED_DAMAGE",
+    "SRD2_G0_OPPORTUNITY_INSUFFICIENT",
+    "SRD2_G0_CAUSAL_POWER_INSUFFICIENT",
+    "SRD2_G0_CONTROL_COMPARISON_INCONCLUSIVE",
+    "SRD2_G0_NONSELECTIVE",
+    "SRD2_G0_SELECTIVE_FEASIBILITY"
+  ],
+  "terminal_definitions": {
+    "SRD2_G0_INVALID": "any critical source/input/causal/cache/site/model/firewall/seal/evaluator/audit failure or compatibility failure",
+    "SRD2_G0_COMPUTE_BLOCKED": "reference-free pre-job resource projection >9000 seconds or hard job ceiling; no extra job/subset",
+    "SRD2_G0_OBSERVED_DAMAGE": "any severe_damage disjunct true on B2",
+    "SRD2_G0_OPPORTUNITY_INSUFFICIENT": "Job A gate coverage or evaluator opportunities fails; no safety/selectivity claim",
+    "SRD2_G0_CAUSAL_POWER_INSUFFICIENT": "B2 causal_power predicate fails",
+    "SRD2_G0_CONTROL_COMPARISON_INCONCLUSIVE": "control_opportunities or realized-energy distribution check fails",
+    "SRD2_G0_NONSELECTIVE": "any acceptance predicate fails after previous checks pass",
+    "SRD2_G0_SELECTIVE_FEASIBILITY": "all integrity/audit, opportunities, causal_power, control_opportunities, acceptance pass and no severe damage"
+  },
+  "firewall": {
+    "runtime_input_allowlist": [
+      "canonical_index",
+      "utterance_id",
+      "audio_path",
+      "audio_full_sha256"
+    ],
+    "dialogue_metadata": "aggregation/audit only, not gate feature",
+    "forbidden_roles": [
+      "D-dev-confirm",
+      "D-test",
+      "router-calib",
+      "P3",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "transfer"
+    ],
+    "runners_forbidden": [
+      "reference",
+      "target_ids",
+      "stratum",
+      "CTC",
+      "MMS-FA",
+      "oracle_region",
+      "evaluator_gradient"
+    ],
+    "barriers": [
+      "PASS_TO_SRD2_G0",
+      "job_A_seal_push",
+      "SRD2_G0_AUDIT_A_PASS",
+      "B3_permutation_seal_push",
+      "global_authorization_B",
+      "job_B_seal_push",
+      "SRD2_G0_AUDIT_PRIMARY_PASS",
+      "evaluator",
+      "SRD2_G0_AUDIT_FULL_PASS"
+    ],
+    "authorization_B_fields": [
+      "schema",
+      "job_A_seal_hash",
+      "config_hash",
+      "population_hash",
+      "permutation_hash",
+      "audit_hash",
+      "resource_forecast_hash",
+      "authorized"
+    ],
+    "authorization_contains_per_row_correctness": false
+  },
+  "compute": {
+    "max_scientific_jobs": 2,
+    "seconds_max_each": 10800,
+    "pre_job_forecast_max_seconds": 9000,
+    "selected_heard_seconds": 4027.444,
+    "historical_R2_heard_seconds": 4908.1760625,
+    "historical_R2_queries": 13561,
+    "historical_R2_real_LID_calls": 11855,
+    "historical_R2_control_LID_calls": 8750,
+    "historical_R2_elapsed_sec": 1428.4165995121002,
+    "historical_D2_median_sec": 0.03889770060777664,
+    "historical_D2_p95_sec": 0.043459897860884666,
+    "historical_pulse_p95_sec": 0.017702704295516014,
+    "forecast_typical_queries": 11128,
+    "forecast_conservative_queries": 22256,
+    "job_A_conservative_seconds": 3200,
+    "job_B_cost_seconds_per_query": 0.18,
+    "job_B_fixed_seconds": 800,
+    "job_B_conservative_seconds": 4807,
+    "post_A_recost": "0.18*actual_structural_queries+800; >9000 => STOP for human compute revision",
+    "worst_case_query_inventory_bound": 80000,
+    "worst_case_B_seconds": 15200,
+    "worst_case_is_not_claimed_to_fit": true,
+    "automatic_population_reduction": false,
+    "one_null_forward_in_A": true,
+    "GPU_in_codex": false,
+    "selected_audio_longer_than_30s": 23,
+    "vocabulary_size": 51866,
+    "observed_component_per_query": "max(0.18, 0.043459897860884666 + 3*0.017702704295516014 + 2*A_p95_cached_query_seconds + 0.04 + (4*51866*2 + 4*3*1280*2 + 32768)/A_durable_archive_bytes_per_second)",
+    "observed_component_fixed": "max(800, A_model_load_seconds + 400*A_p95_original_encoder_seconds + A_total_audio_IO_seconds + 60 + 120)",
+    "observed_component_forecast": "actual_structural_queries * observed_component_per_query + observed_component_fixed",
+    "cost_inputs": "CUDA-synchronized original encode/cached-query timing; actual durable bytes/write seconds; no labels. Missing or nonpositive throughput => resource cannot pass."
+  },
+  "outputs": {
+    "root": "results/inference_cf/srd2_g0/run1",
+    "overwrite_existing_attempts": false,
+    "job_A": [
+      "manifest.json",
+      "runtime_panel.json",
+      "gate/UID.json",
+      "gate/UID.npz",
+      "gate_seal.json",
+      "permutation.json",
+      "permutation_seal.json",
+      "audit_A.json",
+      "authorization_B.json"
+    ],
+    "job_B": [
+      "pulses/UID.json",
+      "pulses/UID.npz",
+      "pulses/UID_logits.npz",
+      "pulse_seal.json",
+      "audit_PRIMARY.json"
+    ],
+    "post_reference": [
+      "evaluation.json",
+      "evaluation_units.json",
+      "audit_FULL.json",
+      "terminal.json"
+    ],
+    "logit_storage": "lossless native BF16 bits full vocabulary per query/arm; raw + pinned processors, not topK-only",
+    "seals": "commit/push immutable manifests and complete content-addressed artifact hashes; pin durable raw archive locations; remote seal verification before next phase"
+  },
+  "source_sha256": {
+    "experiments/inference_cf_srd2_g0_inventory.py": "sha256:7eafed3229d107ee8e6cf08b84a413f99e53ec8c93cc22b9b77da20f69e3de55",
+    "experiments/inference_cf_p0_r2.py": "sha256:91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+    "experiments/inference_cf_cached.py": "sha256:7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2dir.py": "sha256:ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+    "experiments/inference_cf_p2dir_audit.py": "sha256:9b43346e3dd72fbe97a7733c0792363bf99055b2b3f9189ae909ee1528c34c4f",
+    "experiments/inference_cf_p2r.py": "sha256:ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p0_r2_evaluate.py": "sha256:625f6ce31c6985f54aa3887ff671d58e1977b2664b2c04a23974c4fee7d7110b",
+    "experiments/inference_cf_p2r_population.py": "sha256:0c0fd96a80da45fc305348fab6295113b4271a20a662d65289fe0cd5831c9b1f",
+    "src/csasr/inference_cf/core.py": "sha256:32e208a74ec5d32476b89c69fa7c8e33449a67445e5bf48d6e61afaad43ef5f4",
+    "src/csasr/inference_cf/core_r2.py": "sha256:93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/core_p1.py": "sha256:2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/directions.py": "sha256:72a51a2d9c4c54db3525f13035a1d799509ba632234888c43e717c42eafd0cd7",
+    "src/csasr/inference_cf/readout.py": "sha256:9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/inference_cf/loc0_sites.py": "sha256:17968cac6f5e7d3e5008db7e0aceaf8629112872d1c9f017318d002b13c1e9fc",
+    "src/csasr/lss/sites.py": "sha256:d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "src/csasr/models/hooks.py": "sha256:4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+    "src/csasr/models/whisper.py": "sha256:24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c",
+    "src/csasr/data/normalize.py": "sha256:ba67a6741393355faa9bcad2f31a683034499665b2d49cf4bd0a1c24b319020f",
+    "src/csasr/evaluation/mer.py": "sha256:ab91fe565d51dc14018dbbd9ba86f731f30c90d01fbdf279b0f5ac158aa0342d",
+    "src/csasr/evaluation/pier.py": "sha256:33607492838ea35ba3b10463e8de0e96d419d4d5b9573ddefb7af7c4f405eacc",
+    "src/csasr/utils/provenance.py": "sha256:bed06aaf4b192da0a99fb2877e617cd4bf890f4cef73d1f74fee810301ebede0",
+    "src/csasr/lss/specfreeze.py": "sha256:e92017fe8ed17209d8bddf6fed448d539cfc71b3be8d3b5f27e65377a7fef3c0",
+    "docs/inference_cf/MECH_LANG0_REPORT.md": "sha256:65055ae09d480d5b61ffe85c22dd4c38b9e0abaca0934b5f8ab5cbaa91ce2dca",
+    "docs/inference_cf/MECH_LANG0_PROTOCOL.md": "sha256:fd8cb6c4ae8e08665a4d7c74fa4103955d463b54c1147b1829dc463ed22fc0d5",
+    "docs/inference_cf/P0_R2_REPAIRABILITY_SPEC.md": "sha256:dea2ace6064c6b55594dbf7466662a0e5f4279fd27687a01ae73e03622330fe6",
+    "docs/inference_cf/P0_R2_REPORT.md": "sha256:3133466154c5b0ba0f367f5e8853e6d9036c128a8bacd6d7ff9d9f4fa5c4e6b2",
+    "docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md": "sha256:4237d226e40d0ef594332daa1b38211b2457ec81cc1cc70507f9ad2f63ddded0",
+    "docs/inference_cf/P2_DIR_EXP1_REPORT.md": "sha256:bad9f413adbb15879c90b376c646048a9e3de88ebe1802ebe9bf44fad6a54963",
+    "docs/inference_cf/P2_DIR_FINAL_REPORT.md": "sha256:83db90895e100b57491808884c46ed241383c8e4d3c3838871cbfc9531145f9d",
+    "docs/inference_cf/SRC_CF0_PILOT_FINAL_REPORT.md": "sha256:e858d0fc218671b923554d5132c1378f36c3b71d388bbf3727e09b406862e4b1",
+    "docs/current/METHOD_CONTRACT.md": "sha256:183c778d8fe4665af6fabf4ce29dbda8ceaec5a9aa4f86b7f6a5727d689be940",
+    "docs/current/DATA_EXPOSURE.md": "sha256:9ac2eb4ba625d5c2ec3e2487972bd8e762789a012d3e748819df1695d7c79ee4",
+    "configs/inference_cf/p0_r2_repairability.json": "sha256:a465959ea4946f0af6f97a042c20e4225362443b67d97f8b4d7540fa3af1ab2b",
+    "configs/inference_cf/p2_dir_direction_identification.json": "sha256:b6f07ddaefd70ca212eb021cbeb41636eedcd0b5b967a8d3a7aa15e280e41485",
+    "results/inference_cf/p0_r2/runtime.json": "sha256:2c35ab101ad1f77937c7723450d4a3ecdf31d45d55e99a917e382e9c2178c4d0",
+    "results/inference_cf/p2dir/exp1_run1/runtime.json": "sha256:be15273746114eba0668a283158adea1a5e2fcefca6fdb46a96095a9962e8ed8",
+    "results/inference_cf/p2dir/exp1_run1/audit_spot.json": "sha256:6a03f6f0ae6e93bc86adada057eb41c56d4909171b27e2bcbacb2f3ee33b1d73",
+    "configs/model/whisper_large_v3.yaml": "sha256:52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+    "configs/inference_cf/st_loc0.json": "sha256:75f479075ec7415a65b486182000b1e27644ca74a7b652ef9327eb9299061f4d",
+    "docs/inference_cf/ST_LOC0_SPEC.md": "sha256:ac66bbd533b5db6bba2636f6689ef3f224681c657cff10442f5362a019e749f0"
+  },
+  "historical_apparatus": {
+    "source": "results/inference_cf/p2dir/exp1_run1/audit_spot.json",
+    "source_sha256": "sha256:6a03f6f0ae6e93bc86adada057eb41c56d4909171b27e2bcbacb2f3ee33b1d73",
+    "queries": [
+      {
+        "utterance_id": "ZH-CN_U0023_S0_253",
+        "t": 1
+      },
+      {
+        "utterance_id": "ZH-CN_U1027_S0_3",
+        "t": 9
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_172",
+        "t": 1
+      },
+      {
+        "utterance_id": "ZH-CN_U1027_S0_57",
+        "t": 3
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_265",
+        "t": 18
+      },
+      {
+        "utterance_id": "ZH-CN_U1080_S0_1",
+        "t": 183
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_100",
+        "t": 98
+      },
+      {
+        "utterance_id": "ZH-CN_U1080_S0_181",
+        "t": 21
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_265",
+        "t": 3
+      },
+      {
+        "utterance_id": "ZH-CN_U0030_S0_61",
+        "t": 3
+      },
+      {
+        "utterance_id": "ZH-CN_U2012_S0_108",
+        "t": 19
+      },
+      {
+        "utterance_id": "ZH-CN_U0101_S0_205",
+        "t": 38
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_380",
+        "t": 75
+      },
+      {
+        "utterance_id": "ZH-CN_U1063_S0_26",
+        "t": 55
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_103",
+        "t": 2
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_108",
+        "t": 40
+      },
+      {
+        "utterance_id": "ZH-CN_U2003_S0_280",
+        "t": 35
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_1",
+        "t": 87
+      },
+      {
+        "utterance_id": "ZH-CN_U1033_S0_199",
+        "t": 45
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_87",
+        "t": 17
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_141",
+        "t": 18
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_95",
+        "t": 2
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_173",
+        "t": 64
+      },
+      {
+        "utterance_id": "ZH-CN_U1063_S0_26",
+        "t": 84
+      },
+      {
+        "utterance_id": "ZH-CN_U0085_S0_99",
+        "t": 16
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_209",
+        "t": 53
+      },
+      {
+        "utterance_id": "ZH-CN_U0011_S0_103",
+        "t": 9
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_380",
+        "t": 116
+      },
+      {
+        "utterance_id": "ZH-CN_U2003_S0_280",
+        "t": 20
+      },
+      {
+        "utterance_id": "ZH-CN_U0028_S0_37",
+        "t": 6
+      }
+    ],
+    "new_outcome_denominator_inclusion": false,
+    "runner_receives_stratum": false,
+    "clean_state_and_logits_bitwise": true,
+    "saved_D2_direction_max_abs_error": 0.0,
+    "objective_abs_tolerance": 1e-06,
+    "pulse_numerics": "unchanged original P2-DIR guards; no relaxed reproduction tolerance",
+    "zero_dose_bitwise": true
+  },
+  "future_execution_requires_independent_pre_run_audit": true,
+  "metrics_conventions": {
+    "rates": "corruptions/unique mapped queries; active rate uses actually nonzero achieved edits, not g>0",
+    "retention": "C_B2/C_B1; zero denominator undefined",
+    "energy_ratio": "sum(actual_edit_norm_B2^2)/sum(actual_edit_norm_B3^2); zero undefined",
+    "lost_energy": "sum(target_norm^2 on no-edit unreachable/invalid requests)/sum(planned_target_norm^2), not counts",
+    "uninformative_query_fraction": "queries in utterances whose permuted gate values exactly equal original values / all structural queries (includes partial donor identity only as descriptive)",
+    "utility_dialogue_share": "max positive per-dialogue (U_B2-U_B3) / sum positive per-dialogue differences; no positive total =>1",
+    "beyond_heard_scope": "23 long-audio rows primary-unalignable; still executed and in all400/mapping coverage",
+    "count_predicates": "integer events; rates computed full precision, no rounded table thresholding",
+    "numeric_missing": "undefined is never a passing comparison; integrity metrics missing =>INVALID; lexical opportunity/ratio missing=>INCONCLUSIVE",
+    "no_gold_in_global_B_authorization": true,
+    "critical_failure_flag": "any required completed integrity/audit failure; a failed FULL audit sets this flag true. Pending conditional phases are not treated as failed matrices."
+  },
+  "gate_predicates": {
+    "job_A_coverage": {
+      "all": [
+        {
+          "metric": "rows_complete",
+          "op": "==",
+          "value": 400
+        },
+        {
+          "metric": "dialogues_complete",
+          "op": "==",
+          "value": 20
+        },
+        {
+          "metric": "inventory_complete_fraction",
+          "op": "==",
+          "value": 1.0
+        },
+        {
+          "metric": "structural_queries",
+          "op": ">=",
+          "value": 1000
+        },
+        {
+          "metric": "structural_dialogues",
+          "op": ">=",
+          "value": 20
+        },
+        {
+          "metric": "nonzero_gates",
+          "op": ">=",
+          "value": 20
+        },
+        {
+          "metric": "nonzero_gate_dialogues",
+          "op": ">=",
+          "value": 5
+        },
+        {
+          "metric": "finite_provider_fraction",
+          "op": ">=",
+          "value": 0.99
+        }
+      ]
+    },
+    "opportunities": {
+      "all": [
+        {
+          "metric": "mapped_EN_confusion",
+          "op": ">=",
+          "value": 30
+        },
+        {
+          "metric": "mapped_EN_confusion_dialogues",
+          "op": ">=",
+          "value": 10
+        },
+        {
+          "metric": "mapped_EN_correct",
+          "op": ">=",
+          "value": 30
+        },
+        {
+          "metric": "mapped_EN_correct_dialogues",
+          "op": ">=",
+          "value": 10
+        },
+        {
+          "metric": "mapped_ZH_correct",
+          "op": ">=",
+          "value": 100
+        },
+        {
+          "metric": "mapped_ZH_correct_dialogues",
+          "op": ">=",
+          "value": 10
+        },
+        {
+          "metric": "active_B2_ZH_correct",
+          "op": ">=",
+          "value": 40
+        },
+        {
+          "metric": "active_B2_ZH_dialogues",
+          "op": ">=",
+          "value": 10
+        },
+        {
+          "metric": "English_mapping_fraction",
+          "op": ">=",
+          "value": 0.8
+        }
+      ]
+    },
+    "causal_power": {
+      "all": [
+        {
+          "metric": "C_B2",
+          "op": ">=",
+          "value": 5
+        },
+        {
+          "metric": "corrected_dialogues_B2",
+          "op": ">=",
+          "value": 3
+        }
+      ]
+    },
+    "control_opportunities": {
+      "all": [
+        {
+          "metric": "C_B1",
+          "op": ">=",
+          "value": 5
+        },
+        {
+          "metric": "H_ZH_B1",
+          "op": ">=",
+          "value": 4
+        },
+        {
+          "metric": "ZH_harmed_dialogues_B1",
+          "op": ">=",
+          "value": 3
+        },
+        {
+          "metric": "uninformative_query_fraction",
+          "op": "<=",
+          "value": 0.5
+        }
+      ]
+    },
+    "dose_comparison": {
+      "all": [
+        {
+          "metric": "planned_B2_B3_multisets_equal",
+          "op": "==",
+          "value": true
+        },
+        {
+          "metric": "energy_ratio_B2_B3",
+          "op": ">=",
+          "value": 0.9
+        },
+        {
+          "metric": "energy_ratio_B2_B3",
+          "op": "<=",
+          "value": 1.1
+        },
+        {
+          "metric": "lost_planned_energy_B2",
+          "op": "<=",
+          "value": 0.1
+        },
+        {
+          "metric": "lost_planned_energy_B3",
+          "op": "<=",
+          "value": 0.1
+        }
+      ]
+    },
+    "acceptance": {
+      "all": [
+        {
+          "metric": "correction_retention_B2_B1",
+          "op": ">=",
+          "value": 0.6
+        },
+        {
+          "metric": "ZH_harm_ratio_B2_B1",
+          "op": "<=",
+          "value": 0.5
+        },
+        {
+          "metric": "H_ZH_B2",
+          "op": "<=",
+          "value": 10
+        },
+        {
+          "metric": "ZH_corruption_rate_B2",
+          "op": "<=",
+          "value": 0.01
+        },
+        {
+          "metric": "ZH_active_corruption_rate_B2",
+          "op": "<=",
+          "value": 0.1
+        },
+        {
+          "metric": "H_EN_B2",
+          "op": "<=",
+          "value": 3
+        },
+        {
+          "metric": "EN_corruption_rate_B2",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "C_B2_minus_B3",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "metric": "U_B2_minus_B3",
+          "op": ">=",
+          "value": 3
+        },
+        {
+          "metric": "H_ZH_B2_minus_B3",
+          "op": "<=",
+          "value": 0
+        },
+        {
+          "metric": "positive_correction_gain_dialogues",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "metric": "positive_utility_gain_dialogues",
+          "op": ">=",
+          "value": 3
+        },
+        {
+          "metric": "max_positive_utility_dialogue_share",
+          "op": "<=",
+          "value": 0.6
+        },
+        {
+          "metric": "U_B2",
+          "op": ">=",
+          "value": 1
+        }
+      ]
+    },
+    "severe_damage": {
+      "any": [
+        {
+          "all": [
+            {
+              "metric": "H_ZH_B2",
+              "op": ">=",
+              "value": 10
+            },
+            {
+              "metric": "ZH_corruption_rate_B2",
+              "op": ">",
+              "value": 0.03
+            }
+          ]
+        },
+        {
+          "metric": "any_dialogue_ZH_damage_events_ge3_AND_active_rate_gt020",
+          "op": "==",
+          "value": true
+        },
+        {
+          "all": [
+            {
+              "metric": "H_EN_B2",
+              "op": ">=",
+              "value": 5
+            },
+            {
+              "metric": "EN_corruption_rate_B2",
+              "op": ">",
+              "value": 0.05
+            }
+          ]
+        },
+        {
+          "metric": "new_EOS_proxy_events_B2",
+          "op": ">=",
+          "value": 1
+        }
+      ]
+    },
+    "energy_execution": {
+      "all": [
+        {
+          "metric": "executed_relative_squared_energy_error_max",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "executed_relative_chord_error_max",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "consumed_proposed_relative_error_max",
+          "op": "<=",
+          "value": 0.005
+        },
+        {
+          "metric": "solver_hook_identity_pass",
+          "op": "==",
+          "value": true
+        },
+        {
+          "metric": "zero_no_edit_restore_bitwise",
+          "op": "==",
+          "value": true
+        },
+        {
+          "metric": "B1_matched_fraction",
+          "op": ">=",
+          "value": 0.95
+        }
+      ]
+    },
+    "compatibility": {
+      "all": [
+        {
+          "metric": "identity_fraction",
+          "op": "==",
+          "value": 1.0
+        },
+        {
+          "metric": "cached_baseline_identity_bitwise",
+          "op": "==",
+          "value": true
+        },
+        {
+          "metric": "raw_TV_median",
+          "op": "<=",
+          "value": 0.01
+        },
+        {
+          "metric": "raw_TV_p99",
+          "op": "<=",
+          "value": 0.05
+        },
+        {
+          "metric": "raw_TV_max",
+          "op": "<=",
+          "value": 0.1
+        },
+        {
+          "metric": "PE_abs_diff_p99",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "PM_abs_diff_p99",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "processed_argmax_agreement",
+          "op": ">=",
+          "value": 0.995
+        },
+        {
+          "metric": "site_rel_L2_p99",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "site_rel_L2_max",
+          "op": "<=",
+          "value": 0.05
+        },
+        {
+          "metric": "site_cosine_min",
+          "op": ">=",
+          "value": 0.999
+        },
+        {
+          "metric": "causal_probe_TV_max",
+          "op": "<=",
+          "value": 0.05
+        },
+        {
+          "metric": "causal_probe_attention_L1_max",
+          "op": "<=",
+          "value": 0.02
+        },
+        {
+          "metric": "future_self_attention_mass_max",
+          "op": "<=",
+          "value": 1e-07
+        },
+        {
+          "metric": "null_EN_abs_error",
+          "op": "<=",
+          "value": 1e-06
+        },
+        {
+          "metric": "null_ZH_abs_error",
+          "op": "<=",
+          "value": 1e-06
+        }
+      ]
+    },
+    "resource": {
+      "all": [
+        {
+          "metric": "formula_forecast_seconds",
+          "op": "<=",
+          "value": 9000
+        },
+        {
+          "metric": "observed_component_forecast_seconds",
+          "op": "<=",
+          "value": 9000
+        },
+        {
+          "metric": "scientific_jobs_planned",
+          "op": "<=",
+          "value": 2
+        },
+        {
+          "metric": "walltime_per_job_seconds",
+          "op": "<=",
+          "value": 10800
+        }
+      ]
+    }
+  },
+  "terminal_rules": [
+    {
+      "label": "SRD2_G0_INVALID",
+      "when": {
+        "any": [
+          {
+            "flag": "critical_failure"
+          },
+          {
+            "gate": "compatibility",
+            "is": false
+          },
+          {
+            "gate": "energy_execution",
+            "is": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "SRD2_G0_COMPUTE_BLOCKED",
+      "when": {
+        "gate": "resource",
+        "is": false
+      }
+    },
+    {
+      "label": "SRD2_G0_OBSERVED_DAMAGE",
+      "when": {
+        "gate": "severe_damage",
+        "is": true
+      }
+    },
+    {
+      "label": "SRD2_G0_OPPORTUNITY_INSUFFICIENT",
+      "when": {
+        "any": [
+          {
+            "gate": "job_A_coverage",
+            "is": false
+          },
+          {
+            "gate": "opportunities",
+            "is": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "SRD2_G0_CAUSAL_POWER_INSUFFICIENT",
+      "when": {
+        "gate": "causal_power",
+        "is": false
+      }
+    },
+    {
+      "label": "SRD2_G0_CONTROL_COMPARISON_INCONCLUSIVE",
+      "when": {
+        "any": [
+          {
+            "gate": "control_opportunities",
+            "is": false
+          },
+          {
+            "gate": "dose_comparison",
+            "is": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "SRD2_G0_NONSELECTIVE",
+      "when": {
+        "gate": "acceptance",
+        "is": false
+      }
+    },
+    {
+      "label": "SRD2_G0_SELECTIVE_FEASIBILITY",
+      "when": {
+        "all": [
+          {
+            "flag": "independent_FULL_audit_PASS"
+          },
+          {
+            "gate": "acceptance",
+            "is": true
+          }
+        ]
+      }
+    }
+  ],
+  "stage_aware_rule_evaluation": "before Job B apply only available integrity/resource/Job-A predicates; pending energy/evaluation/audit predicates are NOT evaluated as failures. At final evaluation every rule input must be present; missing critical evidence =>INVALID."
+}

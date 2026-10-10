@@ -22,6 +22,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -538,7 +539,10 @@ def cmd_pre(args) -> dict:
     checks["runner_imports_no_reference_code"] = not any(i.startswith(b) for i in run_s["imports"] + mech_s["imports"] for b in bad_imports)
     bad_const = (".parquet", "transcript", "/roles/", "evaluation_units", "target_ids", "target_set", "stratum", "ctc", "Y_ref",
                  "EN-confusion", "ZH-correct", "EN-correct")
-    hits = sorted({c for c in run_s["constants"] + mech_s["constants"] for b in bad_const if b in c})
+    # exact Whisper special-token strings (e.g. "<|startoftranscript|>") are prompt identities, not reference content
+    # (amendment PRE-1: attempt 1 flagged this constant by substring; preserved as audit_PRE_attempt1_BLOCK.json)
+    hits = sorted({c for c in run_s["constants"] + mech_s["constants"] for b in bad_const
+                   if b in c and not re.fullmatch(r"<\|[a-z_]+\|>", c)})
     notes["runner_suspicious_constants"] = hits
     checks["runner_has_no_reference_constants"] = not hits
     rsrc, msrc = run_s["src"], mech_s["src"]

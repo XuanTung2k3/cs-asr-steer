@@ -71,3 +71,22 @@ def test_proposed_ratio_repair_zero_identity_and_gradient():
         assert torch.equal(out,h)
         out[...,0].sum().backward()
         assert z.grad is not None and torch.isfinite(z.grad).all() and z.grad.norm()>0
+
+def test_completed_replay_matches_primary_but_zero_control_fails():
+    p=ROOT/'results/inference_cf/ttls_r1_independent_audit/replay/summary.json'
+    d=json.loads(p.read_text())
+    assert len(d['zero_controls'])==24
+    assert all(c.get('tokens_equal',True) and c.get('termination_equal',True) and c.get('equal',True) for c in d['comparisons'])
+    assert all(c.get('loss_max_abs',0)==0 and c.get('gradient_max_abs',0)==0 and c.get('z_max_abs',0)==0 for c in d['comparisons'])
+    assert all(c['effective_archive_equal'] for c in d['ce_reconstruction'])
+    assert d['reset_final'] and d['nonln_unchanged'] and d['model_grads_none']
+    assert sum(not c['tokens_equal_B0'] for c in d['zero_controls'])==3
+
+def test_zero_census_materially_changes_baseline_without_adaptation():
+    d=json.loads((ROOT/'results/inference_cf/ttls_r1_independent_audit/audit_summary.json').read_text())
+    assert d['zero_census']['gpu']['rows']==100
+    assert len(d['zero_census']['gpu']['mismatches'])==6
+    assert len(d['zero_census']['normalized_nonidentity'])==4
+    assert d['zero_census']['delta_counts_vs_B0'][2]==-89
+    assert d['zero_census']['delta_counts_vs_B0'][0]==0
+    assert d['audit_verdict']=='AUDIT_FAIL_INVALID_RESULTS'

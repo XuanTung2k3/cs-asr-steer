@@ -1,0 +1,24 @@
+{
+  "test_groups": [
+    {
+      "command": "python -m pytest -q tests/test_ttls_independent_audit.py tests/test_ttls_r1.py",
+      "passed": 24,
+      "failed": 0
+    },
+    {
+      "command": "python -m pytest -q tests/test_mer.py tests/test_pier.py tests/test_retention.py tests/test_canonical_metrics.py tests/test_inference_cf_p2tta0.py",
+      "passed": 47,
+      "failed": 0
+    }
+  ],
+  "passed": 71,
+  "failed": 0,
+  "warnings": [
+    "joblib serial fallback because /dev/shm is full",
+    "existing requires-grad scalar conversion warning"
+  ],
+  "original_revision": "800fee26a55651c307a1a33b066fdb47ece22b05",
+  "original_tracked_files_unchanged": true,
+  "existing_audit_changes_all_additive": true,
+  "audit_report_sha256": "faebe1a7d06788a6d46b1883df06992bdaf4d0dd5c5669ac60462c4b720e1902"
+}

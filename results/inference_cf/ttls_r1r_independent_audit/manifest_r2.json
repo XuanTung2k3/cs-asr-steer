@@ -1,0 +1,31 @@
+{
+  "schema": "ttls_r1r_independent_audit_manifest_v1",
+  "source_commit": "4de9257d38002a44c2db513ec217d518d0e12be4",
+  "completed_experiment_commit": "f1573198866cdb3edd2b3b1acf3a3b08b627be82",
+  "sources": {
+    "experiments/ttls_r1r_independent_analysis.py": "4b166df77ed6afd47ea5cbfa49dade9f9c7624047cf14acb59b465aa7f7b5528",
+    "experiments/ttls_r1r_independent_replay.py": "d7be8967da8a6b635a4b1a7c582d30849effef4c84df215576f59c3bc0780048",
+    "tests/test_ttls_r1r_independent_audit.py": "3dd5c6e519a65222491a26f4adb5e5cc645298a6933e7808f1bc93e311434105",
+    "slurm/ttls_r1r_independent_replay.sbatch": "5bc9509eb4be7b45125aca0b97e2ce78d31af442d9a7215cb8117cc628f85a44",
+    "results/inference_cf/ttls_r1r_independent_audit/replay_selection.json": "409dca1ae71cfedafadb84eed90ed0e89c71b4e4f400c886bcf2ad9fc3ddd4eb",
+    "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742"
+  },
+  "model_manifest": "results/inference_cf/ttls_r1r/run1/manifest.json",
+  "scope": "one compact24 repaired adaptation replay; all100 zero-only identity census; no full100 adaptation rerun; no new method",
+  "gradient_comparison_tolerance": {
+    "float64_analytic_rtol": 1e-12,
+    "float64_directional_finite_difference_abs": 1e-07,
+    "native_full_decoder_relative_difference_max": 0.02,
+    "native_full_decoder_cosine_min": 0.999
+  },
+  "resource": {
+    "partition": "mig",
+    "max_minutes": 30,
+    "gpu": "H100 MIG 3g40gb"
+  },
+  "references_used_by_gpu_runner": false,
+  "created": 1791641380.1411498,
+  "manifest_hash": "64cbd6ea18711cf5987639457871971982a29d1e002e5951ebe84fe57254913d",
+  "preserved_attempt": "58392: independent gradient wrapper missing params; originals unchanged",
+  "output": "replay_r2"
+}

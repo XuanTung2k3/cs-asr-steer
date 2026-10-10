@@ -1,0 +1,13 @@
+........................................................................ [ 73%]
+..........................                                               [100%]
+=============================== warnings summary ===============================
+tests/test_ttls_r1r_independent_audit.py::test_independent_complete_site_gradient_includes_ffn_residual_skip
+  /home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode
+    warnings.warn("%s.  joblib will operate in serial mode" % (e,))
+
+tests/test_ttls_r1r.py::test_episode_fresh_nonzero_grad_at_zero_and_reset
+  /home/tungnx/cs-asr-steer-ttls-r1r-audit/src/csasr/inference_cf/ttls.py:206: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+    if not math.isfinite(float(loss)):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

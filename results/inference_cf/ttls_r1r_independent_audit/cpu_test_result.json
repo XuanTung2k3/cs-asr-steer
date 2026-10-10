@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "passed": 98,
+  "focused": 51,
+  "historical": 47,
+  "environment": {
+    "python": "/home/tungnx/miniconda3/envs/acl1/bin/python",
+    "LD_LIBRARY_PATH": "/home/tungnx/miniconda3/envs/acl1/lib",
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1
+  },
+  "files": [
+    "tests/test_ttls_r1r_independent_audit.py",
+    "tests/test_ttls_r1r.py",
+    "tests/test_ttls_r1.py",
+    "tests/test_ttls_independent_audit.py",
+    "tests/test_mer.py",
+    "tests/test_pier.py",
+    "tests/test_retention.py",
+    "tests/test_canonical_metrics.py",
+    "tests/test_inference_cf_p2tta0.py"
+  ],
+  "raw_log": "results/inference_cf/ttls_r1r_independent_audit/cpu_tests.log",
+  "preserved_environment_failure": "results/inference_cf/ttls_r1r_independent_audit/cpu_tests_missing_library_path.log"
+}

@@ -1,0 +1,205 @@
+{
+  "config_sha256": "d4f378eac13d883e41df49d128269641e41278e268e410c9b83b795efe861f83",
+  "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+  "source_diff_vs_original": [
+    "M\tdocs/current/CODE_MAP.md",
+    "M\tdocs/current/STATUS.md"
+  ],
+  "first_token": {
+    "B1": {
+      "changed_rows": 12,
+      "corrections_on_changed_rows": 63,
+      "lexical_on_changed_rows": 37
+    },
+    "B2": {
+      "changed_rows": 3,
+      "corrections_on_changed_rows": 15,
+      "lexical_on_changed_rows": 15
+    },
+    "T2A": {
+      "changed_rows": 2,
+      "corrections_on_changed_rows": 15,
+      "lexical_on_changed_rows": 15
+    },
+    "T1": {
+      "changed_rows": 0,
+      "corrections_on_changed_rows": 0,
+      "lexical_on_changed_rows": 0
+    },
+    "T2": {
+      "changed_rows": 0,
+      "corrections_on_changed_rows": 0,
+      "lexical_on_changed_rows": 0
+    },
+    "T4": {
+      "changed_rows": 0,
+      "corrections_on_changed_rows": 0,
+      "lexical_on_changed_rows": 0
+    },
+    "T6": {
+      "changed_rows": 0,
+      "corrections_on_changed_rows": 0,
+      "lexical_on_changed_rows": 0
+    }
+  },
+  "EOS": {
+    "B1": {
+      "rows": 0,
+      "delta_counts_B0_minus_system": []
+    },
+    "B2": {
+      "rows": 4,
+      "delta_counts_B0_minus_system": [
+        12,
+        0,
+        38,
+        0,
+        26,
+        0,
+        12,
+        0,
+        -4,
+        42,
+        0
+      ]
+    },
+    "T2A": {
+      "rows": 4,
+      "delta_counts_B0_minus_system": [
+        12,
+        0,
+        38,
+        0,
+        26,
+        0,
+        12,
+        0,
+        -4,
+        42,
+        0
+      ]
+    },
+    "T1": {
+      "rows": 4,
+      "delta_counts_B0_minus_system": [
+        2,
+        0,
+        14,
+        0,
+        12,
+        0,
+        2,
+        0,
+        0,
+        14,
+        0
+      ]
+    },
+    "T2": {
+      "rows": 4,
+      "delta_counts_B0_minus_system": [
+        2,
+        0,
+        14,
+        0,
+        12,
+        0,
+        2,
+        0,
+        0,
+        14,
+        0
+      ]
+    },
+    "T4": {
+      "rows": 0,
+      "delta_counts_B0_minus_system": []
+    },
+    "T6": {
+      "rows": 0,
+      "delta_counts_B0_minus_system": []
+    }
+  },
+  "loss_dynamics": {
+    "T1": {
+      "active": 100,
+      "loss_mean": [
+        0.4130723886378109,
+        0.34324553260579704,
+        0.2936378913000226
+      ],
+      "grad_mean": [
+        0.1825809455687142,
+        0.14297826812864967
+      ],
+      "max_chord": 1.0942158699035645,
+      "max_norm_error": 0.00751365814357996,
+      "initial_KL_max": 0,
+      "projection_count": 0,
+      "adapt_seconds": 9.8484468460083
+    },
+    "T2": {
+      "active": 100,
+      "loss_mean": [
+        0.4130723886378109,
+        0.3497074192389846,
+        0.3091350407712162
+      ],
+      "grad_mean": [
+        0.18258432546863296,
+        0.13260142639535066
+      ],
+      "max_chord": 1.0816529989242554,
+      "max_norm_error": 0.008401690982282162,
+      "initial_KL_max": 0.0,
+      "projection_count": 0,
+      "adapt_seconds": 10.747633457183838
+    },
+    "T4": {
+      "active": 6,
+      "loss_mean": [
+        1.8739435772101085,
+        1.1158243815104167,
+        0.680517204105854
+      ],
+      "grad_mean": [
+        2.0638616794561657,
+        1.3277137248202024
+      ],
+      "max_chord": 1.083370566368103,
+      "max_norm_error": 0.0029682712629437447,
+      "initial_KL_max": 0,
+      "projection_count": 0,
+      "adapt_seconds": 0.5451874732971191
+    },
+    "T6": {
+      "active": 6,
+      "loss_mean": [
+        1.8739435772101085,
+        1.1104641060034435,
+        0.6810930296778679
+      ],
+      "grad_mean": [
+        2.064835646885518,
+        1.3206717534579273
+      ],
+      "max_chord": 1.0847994089126587,
+      "max_norm_error": 0.003159198211506009,
+      "initial_KL_max": 0.0,
+      "projection_count": 0,
+      "adapt_seconds": 0.5686445236206055
+    }
+  },
+  "gradient0_difference": {
+    "T1_T2": {
+      "different_count": 83,
+      "max_abs": 0.0002523728577458195,
+      "max_relative": 0.0018509088306815139
+    },
+    "T4_T6": {
+      "different_count": 5,
+      "max_abs": 0.0035835898214848783,
+      "max_relative": 0.0016623726921894044
+    }
+  }
+}

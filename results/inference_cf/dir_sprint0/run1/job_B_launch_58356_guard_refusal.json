@@ -1,0 +1,23 @@
+{
+ "schema": "dir_sprint0_launch_record_v1",
+ "slurm_job": 58356,
+ "phase": "pulses",
+ "result": "refused by the runner's reference-free authorization guard after 4 s",
+ "message": "authorization B absent, malformed or not authorized",
+ "cause": "cmd_authorize_b wrote authorization_B.json through atomic_json (keys sorted) while load_run('pulses') requires the frozen field order (the same serialization mismatch recorded in SRD2-G0)",
+ "before_model_load": true,
+ "pulses_directory_created": false,
+ "model_forward": false,
+ "references_used": false,
+ "data_read": "config, manifest, runtime panel and sealed Job-A JSON/seal only",
+ "counts_as_scientific_job": false,
+ "precedent": "SRC-CF0-P launch 58238 failed before any Python forward, preserved, then relaunched as 58239",
+ "fix": "runner output preserved verbatim as authorization_B_runner_sorted.json; identical content re-serialized in the frozen field order as authorization_B.json (content equality verified); runner unchanged",
+ "runner_sorted_sha256": "sha256:e433931b52276fcc22a0db422a0465f227d461751f3f8e28073fa5b1b4ca349a",
+ "authorization_B_sha256": "sha256:4ebe747c302f7e4acfaa70253c7447033726b17e2a45b18043487d09dc96258b",
+ "slurm_logs": [
+  "results/inference_cf/dir_sprint0/run1/slurm-B-58356.out",
+  "results/inference_cf/dir_sprint0/run1/slurm-B-58356.err"
+ ],
+ "created_unix": 1791600871.4945555
+}

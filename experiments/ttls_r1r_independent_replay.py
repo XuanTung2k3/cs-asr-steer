@@ -26,7 +26,7 @@ def independent_repair(h,z,g):
     return torch.where(gain>0,out,h)
 def main():
     assert not (OUT/'summary.json').exists(),'preserve prior attempt'
-    sel=json.loads((OUT.parent/'replay_selection.json').read_text());plan=json.loads((ROOT/'results/inference_cf/ttls_r1/plan_sealed.json').read_text());man=json.loads((ROOT/'results/inference_cf/ttls_r1r/run1/manifest.json').read_text());auditman=json.loads((OUT.parent/'manifest.json').read_text())
+    sel=json.loads((OUT.parent/'replay_selection.json').read_text());plan=json.loads((ROOT/'results/inference_cf/ttls_r1/plan_sealed.json').read_text());man=json.loads((ROOT/'results/inference_cf/ttls_r1r/run1/manifest.json').read_text());auditman=json.loads((OUT.parent/'manifest_r2.json').read_text())
     for p,h in {**man['sources'],**auditman['sources']}.items():assert sha(ROOT/p)==h.removeprefix('sha256:')
     for p,h in man['model']['files'].items():assert sha(Path(man['model']['dir'])/p)==h.removeprefix('sha256:')
     torch.manual_seed(240924);torch.set_num_threads(1);bundle=load_whisper(load_config(ROOT/'configs/model/whisper_large_v3.yaml'));model=bundle.model;model.eval();model.requires_grad_(False)

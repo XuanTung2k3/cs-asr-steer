@@ -1,0 +1,387 @@
+{
+  "job": "58400",
+  "selection": {
+    "indices": [
+      0,
+      1,
+      3,
+      11,
+      24,
+      31,
+      40,
+      49,
+      53,
+      58,
+      61,
+      70,
+      80,
+      94,
+      100,
+      110,
+      122,
+      139,
+      140,
+      150,
+      163,
+      179,
+      182,
+      190
+    ],
+    "ids": [
+      "ZH-CN_U0011_S0_166",
+      "ZH-CN_U0011_S0_249",
+      "ZH-CN_U0011_S0_758",
+      "ZH-CN_U0021_S0_285",
+      "ZH-CN_U0023_S0_469",
+      "ZH-CN_U0027_S0_157",
+      "ZH-CN_U0029_S0_1085",
+      "ZH-CN_U0030_S0_61",
+      "ZH-CN_U0040_S0_149",
+      "ZH-CN_U0040_S0_454",
+      "ZH-CN_U0085_S0_108",
+      "ZH-CN_U0091_S0_104",
+      "ZH-CN_U0101_S0_106",
+      "ZH-CN_U1001_S0_388",
+      "ZH-CN_U1003_S0_119",
+      "ZH-CN_U1021_S0_197",
+      "ZH-CN_U1027_S0_3",
+      "ZH-CN_U1034_S0_77",
+      "ZH-CN_U1063_S0_15",
+      "ZH-CN_U1075_S0_175",
+      "ZH-CN_U1080_S0_1",
+      "ZH-CN_U1082_S0_63",
+      "ZH-CN_U2003_S0_150",
+      "ZH-CN_U2011_S0_28"
+    ],
+    "dialogues": 20,
+    "rule": "union all B3-vs-A2 changes, all genuine-recovery utterances, all B3 Mandarin-harm rows, all EOS recoveries; then first canonical unchanged control per unrepresented dialogue until24, then canonical unchanged controls",
+    "audit_only_outcome_stratified": true,
+    "categories_absent": {
+      "entirely_correct_baseline": false
+    }
+  },
+  "manifest": {
+    "schema": "a2p_dev200_independent_replay_v1",
+    "audited_revision": "4bbc0f83bd8f440a196c62a64a65025b9fc07420",
+    "audit_source_commit": "95c7729a29f520721f76c30e8c51e4277f92af4d",
+    "sources": {
+      "experiments/a2p_dev200_independent_replay.py": "dc5773ad52e75207ffa17280cab9a06981e003af0c70f00d29046f71d882f847",
+      "experiments/a2p_dev200_independent_analysis.py": "ef2ed712b50087970db2df939067285406e7106dc77e370e69566db20bb4d691",
+      "tests/test_a2p_dev200_independent_audit.py": "1b3b8ae1b82435f5f8941042eb24ea16270642235c8ec6f5d3267f86bcba8556",
+      "experiments/ttls_r1_independent_analysis.py": "3f93e74de73601cfb8b8773dd872054da40b6ab01f45469efcd704579b225bcc",
+      "experiments/ttls_r1r_independent_analysis.py": "4b166df77ed6afd47ea5cbfa49dade9f9c7624047cf14acb59b465aa7f7b5528",
+      "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+      "slurm/a2p_dev200_independent_replay.sbatch": "90c658301e8d8b27b1d700e1aa6e9bc92d06f06fa07a2e1c3fdb606ba6b79d17",
+      "results/inference_cf/a2p_dev200_independent_audit/replay_selection.json": "df0954d883c9576f84229c58c3e28e2130801033d8b95376c56a1a90003161f7"
+    },
+    "seed": 240924,
+    "selected_rows": 24,
+    "selected_dialogues": 20,
+    "max_jobs": 1,
+    "max_minutes": 30,
+    "reference_access": false,
+    "independent_calculations": [
+      "M before acoustic acceptance",
+      "S valid and p0>=.5 and not M",
+      "allowed-vocabulary CE",
+      "forward theta0-to-student KL"
+    ],
+    "baseline_and_B3_equality": [
+      "tokens",
+      "text",
+      "termination",
+      "effective_LN_bytes",
+      "three_losses",
+      "parts",
+      "two_grad_norms",
+      "master_delta_norms",
+      "effective_delta_norms"
+    ],
+    "optimizer_new_hashes": "Original B3 full fp32 masters/optimizer tensors were not archived. New hashes verify this audit only; effective bf16 hashes and trajectories are compared to original.",
+    "tests": {
+      "historical": 73,
+      "focused": 3,
+      "note": "Initial independent test compared adapt_sec and failed solely on elapsed time; fixed before GPU freeze; all numerical histories and gradients identical."
+    },
+    "known_limitations": [
+      "Outcome-stratified audit subset is not a representative estimate",
+      "Model revision is local files rather than an upstream HF revision",
+      "Resets/frozen model bytes verified across audit episodes; original raw gates inspected all200"
+    ],
+    "manifest_sha256": "52cc93d8e5230d1a8a3c75d26c9745148cb7543f4d75f5a61bac2233c5a5ec86",
+    "manifest_hash": "sha256:17a9f63d4e60afcd168d0bdc746b74f8b0cfbb23806fed03536966ea2d4b81c9"
+  },
+  "rows": [
+    {
+      "index": 0,
+      "id": "ZH-CN_U0011_S0_166",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 1,
+      "id": "ZH-CN_U0011_S0_249",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 3,
+      "id": "ZH-CN_U0011_S0_758",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 11,
+      "id": "ZH-CN_U0021_S0_285",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 24,
+      "id": "ZH-CN_U0023_S0_469",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 31,
+      "id": "ZH-CN_U0027_S0_157",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 40,
+      "id": "ZH-CN_U0029_S0_1085",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 49,
+      "id": "ZH-CN_U0030_S0_61",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 53,
+      "id": "ZH-CN_U0040_S0_149",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 58,
+      "id": "ZH-CN_U0040_S0_454",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 61,
+      "id": "ZH-CN_U0085_S0_108",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 70,
+      "id": "ZH-CN_U0091_S0_104",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 80,
+      "id": "ZH-CN_U0101_S0_106",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 94,
+      "id": "ZH-CN_U1001_S0_388",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 100,
+      "id": "ZH-CN_U1003_S0_119",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 110,
+      "id": "ZH-CN_U1021_S0_197",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 122,
+      "id": "ZH-CN_U1027_S0_3",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 139,
+      "id": "ZH-CN_U1034_S0_77",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 140,
+      "id": "ZH-CN_U1063_S0_15",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 150,
+      "id": "ZH-CN_U1075_S0_175",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 163,
+      "id": "ZH-CN_U1080_S0_1",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 179,
+      "id": "ZH-CN_U1082_S0_63",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 182,
+      "id": "ZH-CN_U2003_S0_150",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    },
+    {
+      "index": 190,
+      "id": "ZH-CN_U2011_S0_28",
+      "baseline_exact": true,
+      "loss_gradient_crosscheck_exact": true,
+      "B3_loss_diff": 0.0,
+      "B3_grad_diff": 0.0,
+      "A2_state_exact": true,
+      "reset_exact": true
+    }
+  ],
+  "model": {
+    "model_id": "openai/whisper-large-v3",
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "tokenizer_revision": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+    "dtype": "torch.bfloat16",
+    "device": "cuda",
+    "encoder_step_sec": 0.02,
+    "max_encoder_frames": 1500,
+    "num_encoder_layers": 32,
+    "num_decoder_layers": 32,
+    "d_model": 1280,
+    "sample_rate": 16000,
+    "chunk_sec": 30.0,
+    "modules": {
+      "encoder_layer_module_path": "model.model.encoder.layers[l]",
+      "encoder_layer_class": "WhisperEncoderLayer",
+      "encoder_hook_location": "residual stream output of encoder block l (before block l+1)",
+      "encoder_output_is_tuple": true,
+      "encoder_layer_indexing": "zero-indexed",
+      "decoder_layer_module_path": "model.model.decoder.layers[k]",
+      "decoder_layer_class": "WhisperDecoderLayer",
+      "decoder_hook_location": "residual stream output of decoder block k",
+      "encoder_final_layer_norm": "model.model.encoder.layer_norm (applied after last block)",
+      "num_encoder_layers": 32,
+      "num_decoder_layers": 32
+    }
+  },
+  "elapsed_sec": 65.13714408874512,
+  "all_parameters_unchanged": true,
+  "reset_exact": true,
+  "model_grad_free": true
+}

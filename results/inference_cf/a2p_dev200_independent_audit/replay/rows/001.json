@@ -1,0 +1,91 @@
+{
+  "index": 1,
+  "id": "ZH-CN_U0011_S0_249",
+  "baseline_exact": true,
+  "candidates": {
+    "M": [],
+    "accepted": [],
+    "t_star": null,
+    "c_star": null,
+    "S": [
+      2
+    ],
+    "p0_top": [
+      0.39871112845382334,
+      0.3138430580464105,
+      0.6932180983577889
+    ],
+    "T": 3
+  },
+  "loss_gradient_crosscheck_exact": true,
+  "B3": {
+    "tokens": [
+      7239,
+      2166,
+      5620
+    ],
+    "terminated": "eos",
+    "length": 3,
+    "steps": 4,
+    "text": "所以你就是",
+    "log": {
+      "variable": "LN",
+      "trainable_scalars": 248320,
+      "losses": [
+        0.8149291276931763,
+        0.46432939171791077,
+        0.31775328516960144
+      ],
+      "parts": [
+        {
+          "CE": 0.8149291276931763,
+          "P": 0.0
+        },
+        {
+          "CE": 0.427334725856781,
+          "P": 0.03699466213583946
+        },
+        {
+          "CE": 0.2951924204826355,
+          "P": 0.022560875862836838
+        }
+      ],
+      "grad_l2": [
+        1.5924995074490433,
+        0.9061406810493536
+      ],
+      "finite": [
+        true,
+        true
+      ],
+      "projected": [
+        false,
+        false
+      ],
+      "z_norm": [],
+      "adapt_sec": 0.17909502983093262,
+      "master_delta_l2": 0.882414910895714,
+      "effective_delta_l2": 0.9122714276280557,
+      "steps": 2
+    },
+    "state_hash": "sha256:adf4d59d7b206fe59ae428a86ca14ec47c6478b9938e9dff71295a6e5843b319",
+    "fp32_masters_hash": "sha256:e52658450906a7f06cac6f7b5cce30fd296404c0c1d8b62b60209de663a249b6",
+    "optimizer_states_hash": "sha256:dc73a59eb89040d864ce0931dbc30e6dd82a5f8eb3a0b042047c766a7963bfcd"
+  },
+  "B2": {
+    "tokens": [
+      7239,
+      2166,
+      5620
+    ],
+    "terminated": "eos",
+    "length": 3,
+    "steps": 4,
+    "text": "所以你就是",
+    "state_hash": "sha256:d93b8cbcb9609d90e66d4fd32697e6c8c450019279020ef945491352d32cb046"
+  },
+  "B3_loss_diff": 0.0,
+  "B3_grad_diff": 0.0,
+  "A2_state_exact": true,
+  "reset_exact": true
+}

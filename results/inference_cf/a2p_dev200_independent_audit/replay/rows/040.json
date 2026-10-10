@@ -1,0 +1,122 @@
+{
+  "index": 40,
+  "id": "ZH-CN_U0029_S0_1085",
+  "baseline_exact": true,
+  "candidates": {
+    "M": [
+      1,
+      4,
+      5
+    ],
+    "accepted": [
+      1,
+      4
+    ],
+    "t_star": 1,
+    "c_star": 2077,
+    "S": [
+      0,
+      7
+    ],
+    "p0_top": [
+      0.6778739953326324,
+      0.4071626332788691,
+      0.08805418682840431,
+      0.18636778723278272,
+      0.2333107516257513,
+      0.351062057639213,
+      0.1302942333572617,
+      0.6349164842612609
+    ],
+    "T": 8
+  },
+  "loss_gradient_crosscheck_exact": true,
+  "B3": {
+    "tokens": [
+      3446,
+      2077,
+      2232,
+      12,
+      18710,
+      445,
+      445,
+      1954,
+      1338,
+      445,
+      2964,
+      2614
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "steps": 13,
+    "text": "30 minutes uh-huh just just oh yeah just slow running",
+    "log": {
+      "variable": "LN",
+      "trainable_scalars": 248320,
+      "losses": [
+        0.9800759553909302,
+        0.6139781475067139,
+        0.4623333811759949
+      ],
+      "parts": [
+        {
+          "CE": 0.9800759553909302,
+          "P": 0.0
+        },
+        {
+          "CE": 0.6063452363014221,
+          "P": 0.007632925175130367
+        },
+        {
+          "CE": 0.4514704644680023,
+          "P": 0.010862923227250576
+        }
+      ],
+      "grad_l2": [
+        1.7586457234959878,
+        1.0139399778932965
+      ],
+      "finite": [
+        true,
+        true
+      ],
+      "projected": [
+        false,
+        false
+      ],
+      "z_norm": [],
+      "adapt_sec": 0.26144981384277344,
+      "master_delta_l2": 0.8710865744304808,
+      "effective_delta_l2": 0.9046850941772008,
+      "steps": 2
+    },
+    "state_hash": "sha256:25001b305f45ea1997af365d884edc07984041897192046472d47beb3557bf55",
+    "fp32_masters_hash": "sha256:23ade4814f4063d8817f121c55586e48b97c46199b89465f3c2aac82d99fcf6e",
+    "optimizer_states_hash": "sha256:e90109fa3f7adad68dc12574aa9eb33b68756400534dd862bae88dd081b16de7"
+  },
+  "B2": {
+    "tokens": [
+      3446,
+      2077,
+      2232,
+      12,
+      18710,
+      445,
+      445,
+      1954,
+      1338,
+      445,
+      2964,
+      2614
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "steps": 13,
+    "text": "30 minutes uh-huh just just oh yeah just slow running",
+    "state_hash": "sha256:8215f9706655f35527a01ff60441789ef68528ca7d3a0c4fbfd89093227edd87"
+  },
+  "B3_loss_diff": 0.0,
+  "B3_grad_diff": 0.0,
+  "A2_state_exact": true,
+  "reset_exact": true
+}

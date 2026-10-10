@@ -1,0 +1,118 @@
+{
+  "index": 58,
+  "id": "ZH-CN_U0040_S0_454",
+  "baseline_exact": true,
+  "candidates": {
+    "M": [],
+    "accepted": [],
+    "t_star": null,
+    "c_star": null,
+    "S": [
+      0,
+      3,
+      5,
+      8,
+      9,
+      10
+    ],
+    "p0_top": [
+      0.5383170834421982,
+      0.03975880912981056,
+      0.05931899145052768,
+      0.8518296523016461,
+      0.30783659324512175,
+      0.9995001669603568,
+      0.32985468050665046,
+      0.48193638438662456,
+      0.9990795985408742,
+      0.9786120864082815,
+      0.6918787569985914
+    ],
+    "T": 11
+  },
+  "loss_gradient_crosscheck_exact": true,
+  "B3": {
+    "tokens": [
+      4184,
+      11,
+      663,
+      28004,
+      307,
+      588,
+      12873,
+      337,
+      291,
+      13
+    ],
+    "terminated": "eos",
+    "length": 10,
+    "steps": 11,
+    "text": "那, That Iceland is very suitable for you.",
+    "log": {
+      "variable": "LN",
+      "trainable_scalars": 248320,
+      "losses": [
+        1.2898510694503784,
+        0.9972022175788879,
+        0.7680936455726624
+      ],
+      "parts": [
+        {
+          "CE": 1.2898510694503784,
+          "P": 0.0
+        },
+        {
+          "CE": 0.9920265674591064,
+          "P": 0.00517565943300724
+        },
+        {
+          "CE": 0.7458391189575195,
+          "P": 0.022254524752497673
+        }
+      ],
+      "grad_l2": [
+        1.0472863011199092,
+        1.0934497990401162
+      ],
+      "finite": [
+        true,
+        true
+      ],
+      "projected": [
+        false,
+        false
+      ],
+      "z_norm": [],
+      "adapt_sec": 0.2895984649658203,
+      "master_delta_l2": 0.9222093091143282,
+      "effective_delta_l2": 0.959107488523071,
+      "steps": 2
+    },
+    "state_hash": "sha256:6c33b3c592f29d20c973dcc8e0248b0eb9c4053698f4a0c7b7d2e7e49b6b1ac4",
+    "fp32_masters_hash": "sha256:fc459820aad95938c5b35ec651cce31ccf094f25e8e1c9e88a36d95f1bada411",
+    "optimizer_states_hash": "sha256:74958ba3b5eb0fb99453258e2c94e8e22b0d89a90796f3c32effa8f32cf6bd2a"
+  },
+  "B2": {
+    "tokens": [
+      4184,
+      11,
+      663,
+      28004,
+      307,
+      588,
+      12873,
+      337,
+      291,
+      13
+    ],
+    "terminated": "eos",
+    "length": 10,
+    "steps": 11,
+    "text": "那, That Iceland is very suitable for you.",
+    "state_hash": "sha256:f132ae2f8bd2e1f9c298f0063319d7ce67bac4fb66f5e4ca50deabaa6d3d8f68"
+  },
+  "B3_loss_diff": 0.0,
+  "B3_grad_diff": 0.0,
+  "A2_state_exact": true,
+  "reset_exact": true
+}

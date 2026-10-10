@@ -56,3 +56,8 @@ results/inference_cf/srd2_g0/**/gate/*.npz
 results/inference_cf/srd2_g0/**/pulses/*.npz
 # SRD2-G0 evaluator unit ledger contains reference-derived surfaces (hash recorded in evaluation.json)
 results/inference_cf/srd2_g0/**/evaluation_units.json
+# DIR-SPRINT0 lossless raw arrays stay local + immutable content-addressed archive under
+# /mnt/data/tungnx/cs-asr-steer/archives/dir_sprint0/; sha256 in committed row JSONs and phase seals
+results/inference_cf/dir_sprint0/run1/**/*.npz
+# DIR-SPRINT0 evaluator unit ledger contains reference-derived surfaces (hash recorded in evaluation.json)
+results/inference_cf/dir_sprint0/run1/evaluation_units.json

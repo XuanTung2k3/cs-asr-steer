@@ -1,0 +1,2411 @@
+{
+  "count": 300,
+  "data_role": "D-dev-select",
+  "dataset": "cs_dialogue",
+  "fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+  "rows": [
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_103.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 9.363,
+      "reference": "就是那一个 period 在时间，我觉得还是挺挺挺幸运的，因为对 high school 在国外比较简单。",
+      "utterance_id": "ZH-CN_U0011_S0_103"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_111.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 6.695,
+      "reference": "Okay，所以所以你用什用什么样的这个 transportation 去学校？",
+      "utterance_id": "ZH-CN_U0011_S0_111"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_166.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 10.065,
+      "reference": "哦，我看现在这种舞蹈工作室还挺多的，我看呢就是我就我健身房旁边有那个什么 G style， 还有啊。",
+      "utterance_id": "ZH-CN_U0011_S0_166"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_249.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 2.975,
+      "reference": "Okay 所以所以你就是。",
+      "utterance_id": "ZH-CN_U0011_S0_249"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_265.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 15.43,
+      "reference": "Cause uh when when when I was kids like a lot of my friends, actually, they went to uh 阳朔 a lot, but I I never been to 阳朔。 But I heard it's like it's really 阳朔 is like lovely and a beautiful place to be。",
+      "utterance_id": "ZH-CN_U0011_S0_265"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_503.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 7.215,
+      "reference": "所以所以你觉得这个对你的这种 social skills 有没有那种 improving？",
+      "utterance_id": "ZH-CN_U0011_S0_503"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_54.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 7.795,
+      "reference": "Okay ，所以所以你有不是有有什么问题想问我，或者就比较好奇的吗 <SPK/> ？",
+      "utterance_id": "ZH-CN_U0011_S0_54"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_758.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 10.425,
+      "reference": "Exercise your strength yeah，就是因为它 generally 就是会很时间会比较长。",
+      "utterance_id": "ZH-CN_U0011_S0_758"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_766.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 14.16,
+      "reference": "所以说我我还我还我还挺喜欢的，所以所以所以所以就是 in in the future，你有没有想就是 development，你的新的这个 sports 的这个这个项目。",
+      "utterance_id": "ZH-CN_U0011_S0_766"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_780.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 7.705,
+      "reference": "我我还我还没有试过，but 我我我我觉得 near the future，我可以试一试。",
+      "utterance_id": "ZH-CN_U0011_S0_780"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0011_S0/ZH-CN_U0011_S0_91.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 7.925,
+      "reference": "那真的就是非一个人非常就是 tough 的一个过程。",
+      "utterance_id": "ZH-CN_U0011_S0_91"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0012_S0/ZH-CN_U0012_S0_103.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 8.875,
+      "reference": "还行吧， I think 应该没有没有很难，就是可能 homework 比较多。",
+      "utterance_id": "ZH-CN_U0012_S0_103"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0012_S0/ZH-CN_U0012_S0_366.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 13.815,
+      "reference": "我其实不太了解，因为我平时也不怎么研究这些，我只是说知道，比如说像知道华为，苹果，小米， vivo 这些牌子，但是不太了解。",
+      "utterance_id": "ZH-CN_U0012_S0_366"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0012_S0/ZH-CN_U0012_S0_598.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 35.415,
+      "reference": "有，肯定是有的。因为其实我之前一直上上大时学之前从来没有这种 dormitory 的经历，所以肯定是让我在协调和就是在包容别人的这个程度上，是让我有一些提升的。因为我之前我感觉其实我我也挺 selfish，就是别人跟我不一样就可能别人是错的，但是经历了这种八人间这种训练以后， 确实就是让我还这个容忍他人的这个心确实是磨的挺挺好的。",
+      "utterance_id": "ZH-CN_U0012_S0_598"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0012_S0/ZH-CN_U0012_S0_600.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0006",
+      "duration_sec": 48.79,
+      "reference": "就我觉得幽默是一个非常重要的一个因素，就是因为在宿舍不是像在班级那样的严肃，或者说还有一点儿 就是竞争的关系吧。在宿舍的话我们就可以比较 ** relax 就是一个轻松诙谐的氛围，就是跟别人 enhance relationship 的话， 你可能你就跟他开个玩笑啊，或者说 just share something。 比如说分享一些信息，或者说分享一些 美食，或者说互相关心一下，我觉得都是可以 enhance 我们的 relationship 的。",
+      "utterance_id": "ZH-CN_U0012_S0_600"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0021_S0/ZH-CN_U0021_S0_118.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 2.777,
+      "reference": "对对，yeah definitely。",
+      "utterance_id": "ZH-CN_U0021_S0_118"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0021_S0/ZH-CN_U0021_S0_225.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 14.925,
+      "reference": "Redemption，我觉得就是有点双向奔赴，然后救赎的那种吧，<FIL/>而且我觉得嗯他整本书的就是 atmosphere 都营造的很好。",
+      "utterance_id": "ZH-CN_U0021_S0_225"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0021_S0/ZH-CN_U0021_S0_285.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 29.125,
+      "reference": "没有，没有，其实我觉得和我的很多朋友比，我就是用的很少。对，可能我还没有适应，就是我还在熟悉的阶段。嗯，就比如说他们有人就是写论文的时候，比如说可能会用这些嗯 A I 的，嗯 A I 的软件直接去翻译，就是觉得可能会比其他一些软件翻译的更好。",
+      "utterance_id": "ZH-CN_U0021_S0_285"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0021_S0/ZH-CN_U0021_S0_324.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 20.895,
+      "reference": "嗯确实确实我觉得还是 quite dangerous <FIL/> from some aspects yeah，就是我们的有时候我们的一些哦善良吧什么的，可能就是会被有心之人利用。",
+      "utterance_id": "ZH-CN_U0021_S0_324"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0021_S0/ZH-CN_U0021_S0_513.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 19.032,
+      "reference": "That do not need getting up very early。 因为我现在的工作就是起的蛮早的，就是通勤大概是<FIL/>五十分钟左右，然后是九点开始工作，所以嗯 I have to get up quite early。",
+      "utterance_id": "ZH-CN_U0021_S0_513"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_135.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 58.004,
+      "reference": "对，像现在可能大家都只是拿一台 ipad 或者拿一个，拿一个笔记本电脑，直接就去上课了。你像嗯因为我们的话，我基本上在上专业课的时候，基基本没有使用过纸质书。因为我们专业课的纸质书，有的可能大几百页四五百页，然后有的可能就上千页，那巨厚一本书，我真的很不想要去把它拿到教室里。而且<FIL/>因为我们这个专业吧，就是稍微有一些特殊，它使用一些教材都是外国的一些教材。他们那些教材，一方面儿你可能没有一个渠道去购买，另一方面它也比较贵。而且像我刚刚说它<FIL/>又厚又重，所以我还是不太愿意带这些课本去上课的。 只是书，<FIL/>，电子书确实确实有它的方便之处。你想查找一些资料。",
+      "utterance_id": "ZH-CN_U0022_S0_135"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_170.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 39.675,
+      "reference": "对，I think 就是在这些书里边，嗯，它虽然是发生在比如说<FIL/> in the history, 发生在很长时间之前的一些事情。但是嗯有时候你在读这些事的时候，它里边的一些经历，或者说它这个事情，一些 plot，它映射的一些哲理。它其实可以用到你平时的一些生活当中。我觉得它<FIL/>很能让我印象比较深刻。就是非常 move 的就读到某一些情节的时候，或者某一段对话会让我非常感到触动。就我还是。",
+      "utterance_id": "ZH-CN_U0022_S0_170"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_228.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 58.177,
+      "reference": "这些 A I 助手的话， 它主要是一种交互嘛，你给它一个指令，然后它给你一个<FIL/>一个反馈。然后你给它指令越清晰，因为我有时候可能你在使用 A I 工具的时候，你会发现，嗯，可能自己觉得自己已经把意图表达的比较清楚了，但是它返回的内容总是不那么尽如人意吧，这可能还是跟现在 A I 的一个发展程度是有关系的，它并不能很好的识别一些，<FIL/>，人类的那平常的一些日常的语言。它可能需要你去把这个是语言规范化，让它能够更好地理解，它就可以反馈给你个比较好的答案。你像这个可能是对于我们个人来说一些作用，你像对于企业来说这些 A I 助手就可以帮助客户去<FIL/>，去查询些资料，去<FIL/>自动化处理一些比较重复的任务。",
+      "utterance_id": "ZH-CN_U0022_S0_228"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_231.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 22.613,
+      "reference": "对，像那些非常重复的工作，甚至说这个重复的次数要比较多的话，A I 工具还是能很好地帮我们省时省力的。嗯嗯，对。你觉得现在，嗯，现在一些社交媒体的一个发展趋势是怎样的呢？",
+      "utterance_id": "ZH-CN_U0022_S0_231"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_302.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 13.165,
+      "reference": "明白 ，ok 呃，so in this class， 你们经常会呃就是花费一节课去看电影吗？就是关于这个国家。",
+      "utterance_id": "ZH-CN_U0022_S0_302"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_305.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 16.173,
+      "reference": "So have you ever used the tutoring services to help you with your studies？你会找一些其他的辅导机构或者老师来帮你学习这个语言吗？",
+      "utterance_id": "ZH-CN_U0022_S0_305"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_359.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 27.317,
+      "reference": "In in the past few years，之前确实还挺好的，但是近几年可能大家都比较卷嘛，然后<FIL/>加上这个 economy condition 吧，现在大环境并不是特别好，然后这个专业的就业其实是受到挺大影响的，不管是它的一些岗位，岗位的一些充足，还有一些 salary。",
+      "utterance_id": "ZH-CN_U0022_S0_359"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_379.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 43.452,
+      "reference": "因为就是可能有一些，可能更 prefer work at night， 或者其实整个寝室里边儿一个作息就是这样子。所以早上我是不喜欢，<FIL/>，就是起的太早的。就是对于工作这个其实也一样的。就我的话可能，嗯，你像九点的话，确实还是有一点太早，可能我 prefer 九点半，或者直接十点上班，然后到下午可能五六点下班，对我来说可能是比较<FIL/> suitable schedule。 当然我需要在嗯中午有一些午休的时间。",
+      "utterance_id": "ZH-CN_U0022_S0_379"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_77.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 9.355,
+      "reference": "对。okay uh， tell me something interesting about you that not many people might know.",
+      "utterance_id": "ZH-CN_U0022_S0_77"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0022_S0/ZH-CN_U0022_S0_91.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0011",
+      "duration_sec": 12.978,
+      "reference": "就是这个过程其实像一种，嗯，creation ， 我比较喜欢这种感觉，就是 you never know what your next drink is like 。",
+      "utterance_id": "ZH-CN_U0022_S0_91"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_102.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 5.675,
+      "reference": "Yeah， that's pretty normal， 但是也没有办法。",
+      "utterance_id": "ZH-CN_U0023_S0_102"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_106.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 16.535,
+      "reference": "我感觉没有那种所谓的 moment you feel fully prepared， 但是等你上台，然后开始<FIL/> your speech 你就会感觉，其实也没有那么可怕。",
+      "utterance_id": "ZH-CN_U0023_S0_106"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_111.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 4.785,
+      "reference": "对，这才是我们的一个 common goal。",
+      "utterance_id": "ZH-CN_U0023_S0_111"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_246.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 4.935,
+      "reference": "Right that one is also really great，我非常喜欢。",
+      "utterance_id": "ZH-CN_U0023_S0_246"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_253.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 14.902,
+      "reference": "They don't really 区别就是区分开来，就是哪国人，哪国人他们只会觉得自己都是<FIL/>苏联人这样的，并不会有这么大的隔阂，像现在。",
+      "utterance_id": "ZH-CN_U0023_S0_253"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_469.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 7.988,
+      "reference": "and it's just really amazing feelings，就看到你自己的学生，已经开始有自己的学生。",
+      "utterance_id": "ZH-CN_U0023_S0_469"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_560.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 14.505,
+      "reference": "Yes, but 如果你单纯只是 spontaneously go out at nights，然后直接开始 running on the streets, random streets，这个其实还挺 dangerous 的。",
+      "utterance_id": "ZH-CN_U0023_S0_560"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_664.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 16.015,
+      "reference": "或者说只讲他就是理想的一面，或者说向往的那一面。 Because we just can't really change it immediately, and we have to learn to live in It 。",
+      "utterance_id": "ZH-CN_U0023_S0_664"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_666.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 10.782,
+      "reference": "对，就是 many people, they are actually born with <FIL/> <SPK/> privilege 。",
+      "utterance_id": "ZH-CN_U0023_S0_666"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_671.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 14.295,
+      "reference": "然后对这个价值体系和这种的<FIL/> socisaedy 没有办法去融入进去，这也会导致一些社会问题。",
+      "utterance_id": "ZH-CN_U0023_S0_671"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_80.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 11.077,
+      "reference": "非常的没有办法，Fully express myself in the way i want，但是就没有办法，还得硬着头皮把它写下去。",
+      "utterance_id": "ZH-CN_U0023_S0_80"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_87.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 16.357,
+      "reference": "the teacher also don't really know 你到底在学什么。但是 she also has to like stick to it and just work it out somehow，就是没有办法，大家都很为难的感觉。",
+      "utterance_id": "ZH-CN_U0023_S0_87"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0023_S0/ZH-CN_U0023_S0_91.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 15.425,
+      "reference": "But it's not gonna feel like so easy too. So 我的导师他会更注重一些 structure 方面的东西，而不是说 what you're actually writing about。",
+      "utterance_id": "ZH-CN_U0023_S0_91"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0024_S0/ZH-CN_U0024_S0_283.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 2.735,
+      "reference": "OK <SPK/> 好。",
+      "utterance_id": "ZH-CN_U0024_S0_283"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0024_S0/ZH-CN_U0024_S0_97.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0012",
+      "duration_sec": 18.747,
+      "reference": "嗯 actually i don't know about the situation of the country， but 但是我就是一定要把那个问题给分析清楚，但其实 i have never been to uh never been to the country。",
+      "utterance_id": "ZH-CN_U0024_S0_97"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_114.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 27.315,
+      "reference": "对，我觉得其实每个人他都会有自己的 choice，关于是否使用 social media 或者怎样使用 social media，我觉得保持在自己的这个 habits，但同时又能保证自己的这个 rights，包括自己的这些 privacy 不被侵犯的情况下，其实正常的去按照自己的 habit 使用就可以了。",
+      "utterance_id": "ZH-CN_U0027_S0_114"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_116.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 53.718,
+      "reference": "我觉得 hash tax 这个东西可能是为了博得更多的 awareness，或者更多的 views 会使用 hash tax，包括可能像微博它有一个<FIL/>特殊功能叫 super topic。也就是说可能不管是你是喜欢一个人还是喜欢一本书，一个电影，它都可以成为一个 super topic，然后你挂在那个 super topic 之下发布的话，你的 views 就会增加很多。这个也可以帮助你找到跟你 share same interest 的人一起去 interact。我觉得这是一个很 interesting 的事情。但是我觉得有的时候你只 share 你自己的心情或者一些想法的时候，没必要每条你的 post 都加一个 hash tag。",
+      "utterance_id": "ZH-CN_U0027_S0_116"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_144.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 47.496,
+      "reference": "嗯，我觉得可能还是看你的工作岗位是什么。比如说像我们做媒体行业，有一些<FIL/>摄像师和剪辑师，对于他们来说，其实单干是非常普遍的。因为他们其实做的是一个纯技术类的活，就是不管你做什么行业的<FIL/>宣传和嗯节目，你都需要有人去拍东西，有人去剪东西。所以这个东西对于他们来说，他给 A 客户干也是干，给 B 客户干也是干。但是可能我是更偏重于<FIL/>策划呀和导演方向的这种<FIL/>工作者。所以可能对于我来说，这个领域还是会有一定的限制。",
+      "utterance_id": "ZH-CN_U0027_S0_144"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_157.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 38.515,
+      "reference": "对，但是我觉得好像现在的整个职场，其实<FIL/>我对国内不是很了解，<FIL/>，对国外不是很了解，但是我觉得 domestic market 里面，其实职场还是有很多 toxic 东西存在，就是可能对于我们 common people 来说，这些东西我们无法 tolerant，或者说会很难帮助我们 get promoted 或有一些 hidden rules，或者一些其他的 unknown deal trade，我们会。",
+      "utterance_id": "ZH-CN_U0027_S0_157"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_163.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 33.46,
+      "reference": "是的，但是我觉得现在在 China 更有一种 lie flight 的文化，就是大家更希望<FIL/>是就这样吧，大家差不多行了的这种心态，因为可能觉得<FIL/> competition 非常的严重，即使我们在 work hard，可能这个东西也不会 give it to me。所以可能很多人会有一种所谓的这种 relatively negative 的心态。",
+      "utterance_id": "ZH-CN_U0027_S0_163"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_4.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 5.405,
+      "reference": "啊，我叫 Karen， 你最近假期在忙什么？",
+      "utterance_id": "ZH-CN_U0027_S0_4"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0027_S0/ZH-CN_U0027_S0_98.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 7.915,
+      "reference": "<FIL/>我想问您您觉得 A I 这个东西真的对我们日常的生活有很大帮助吗？",
+      "utterance_id": "ZH-CN_U0027_S0_98"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_103.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 59.478,
+      "reference": "嗯，对，所以呢，我们在<FIL/>就是上网或者使用这个 A I 的时候，就是要<FIL/>要确保自己的这个隐私，或者数据嗯是安全的，尽量去做一些<FIL/>措施。嗯，比如说能<FIL/>自己的在网上的账户要经常<FIL/>就定期的修改一下密码呀。然后在网上你发布的一些消息或者发的朋友圈儿，这些信息可能自己要先筛选一下哪些信息能发，哪些信息不能发。就是<FIL/>有个别信息有可能会被不法分子给给利用，就是对我们造成一些伤害。对，然后可能还有就是我看朋友圈，好多人他可能嗯会发布一些自己的动态，然后会<FIL/>显示出来自己所在的位置。",
+      "utterance_id": "ZH-CN_U0028_S0_103"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_112.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 51.535,
+      "reference": "对，那可能这个习惯可能就跟您的这个<FIL/> major 有关。可能你们你们会对这个 social media 会嗯会比较<FIL/>就是用的比较顺手，可能有一些习惯就是已经养成了 <SPK/> 。所以或者说出于职业习惯，就觉得遇到<FIL/>这种 social media 的一些一些事情，你们可能就是要评论一下呀，或者是发一下自己的观点呀这些。但是像我能跟这个 social media 没有<FIL/> <FIL/> is not not really <FIL/> not related， 嗯 so 那我可能就是<FIL/>会忍住 <SPK/> to does not post anything 关于我自己的。",
+      "utterance_id": "ZH-CN_U0028_S0_112"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_120.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 23.065,
+      "reference": "嗯，我一般，我一般是用的<FIL/> link <FIL/> link king， 然后这个呢<FIL/> link king 是现在在国内是用不了了，是吧？得那个用 V P N 去去登录才行。对，基本上发布在上边的可能会<FIL/> foreign foreign company 能看到的会多一些。",
+      "utterance_id": "ZH-CN_U0028_S0_120"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_155.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 13.57,
+      "reference": "啊，对，可能<FIL/>有一部分人，他会嗯有一种躺平躺平的嗯这种<FIL/> idea。",
+      "utterance_id": "ZH-CN_U0028_S0_155"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_158.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 12.095,
+      "reference": "所以他们一般不会去 work very hard 。他们正他们追求的就是<FIL/> no mistake , 在工作上边就可以了。",
+      "utterance_id": "ZH-CN_U0028_S0_158"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_194.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 24.45,
+      "reference": "那嗯，那除了像<FIL/>公司<FIL/> team building 这种，那平时嗯你们公司有没有一些其他的这个嗯 benefit， 就是让员工可以去<FIL/>参加 for free 就像，像一些俱 club 那些。",
+      "utterance_id": "ZH-CN_U0028_S0_194"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_237.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 39.005,
+      "reference": "嗯，对，是的，所以可能现在有一些<FIL/> career planner， 那他们可能会帮助一些孩子，就是提前 learn 嗯<FIL/> what's their potential 嗯 advantage ，嗯，让他们更好的去了解自己，然后自己去可能<FIL/> contrast <FIL/>去 make decision， 他将来想想成为什么样的人，那就是帮助他们在自己的嗯这个嗯 root 上边能走得更<FIL/> smoother 一些。",
+      "utterance_id": "ZH-CN_U0028_S0_237"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0028_S0/ZH-CN_U0028_S0_37.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0014",
+      "duration_sec": 14.035,
+      "reference": "嗯那是非常<FIL/> great，嗯那像你们这种专业的人，是不是毕业之后就是做 news reporter 的会比较多一些？",
+      "utterance_id": "ZH-CN_U0028_S0_37"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_1085.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 7.405,
+      "reference": "Thirty minutes. 嗯哼 just just 就哦，yeah, just slow running。",
+      "utterance_id": "ZH-CN_U0029_S0_1085"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_1093.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 4.245,
+      "reference": "啊，why why。",
+      "utterance_id": "ZH-CN_U0029_S0_1093"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_204.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 4.215,
+      "reference": "啊 <SPK/> Twilight 暮光之城，是不是？",
+      "utterance_id": "ZH-CN_U0029_S0_204"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_294.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 21.295,
+      "reference": "有两个都非常的 <SPK/> 有，其实挺好的，就是我觉得 you have <FIL/>嗯 boyfriend <FIL/>可以就是 read together。 <FIL/>，if we work together，那真的是一件非常好的事情就可以互相学习成长嘛 <SPK/> 。",
+      "utterance_id": "ZH-CN_U0029_S0_294"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_300.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 10.555,
+      "reference": "哦，哦，哦，不错不错，我觉得嗯 great <SPK/> 嗯。",
+      "utterance_id": "ZH-CN_U0029_S0_300"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_340.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 16.956,
+      "reference": "嗯 Okay。 So the 这 you you the book is about communication currently you need. So maybe we can exchange uh my uh recommend book uh by WeChat later。",
+      "utterance_id": "ZH-CN_U0029_S0_340"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_456.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 22.806,
+      "reference": "哎呀 <SPK/> uh uh 可能就是外企会比较 free, 但是否 data data 这块还有 security, 他们会非常的看重，尤其是这种 uh 美资 American tact uh company, 他们非常的在意这些。",
+      "utterance_id": "ZH-CN_U0029_S0_456"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_472.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 2.597,
+      "reference": "嗯，ok 。",
+      "utterance_id": "ZH-CN_U0029_S0_472"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_651.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 7.735,
+      "reference": "他我觉得我们彼此互相享受吧，因为毕竟呃 I人是E人的玩物 <SPK/> 。",
+      "utterance_id": "ZH-CN_U0029_S0_651"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0029_S0/ZH-CN_U0029_S0_95.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 17.33,
+      "reference": "oh err I'm English major student 在大学的时候 <SPK/> ， 但是err it's a long time ago，my school life。 <SPK/> 因为我现在已经就是工作很久。",
+      "utterance_id": "ZH-CN_U0029_S0_95"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0030_S0/ZH-CN_U0030_S0_262.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 6.715,
+      "reference": "我之前还有用过一个好像是他们外资用的 skype 啊。",
+      "utterance_id": "ZH-CN_U0030_S0_262"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0030_S0/ZH-CN_U0030_S0_288.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 6.825,
+      "reference": "你觉得这个怎么样？这个是的话会比你的另一些 app 更好用吗？",
+      "utterance_id": "ZH-CN_U0030_S0_288"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0030_S0/ZH-CN_U0030_S0_365.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 12.735,
+      "reference": "是的，我听说就是中间两个字母是一样的，然后旁边两个字母是相反的，这种的人格就是比较 match 的。然后你这个应该跟 E F P 也是比较 match 的嘛。",
+      "utterance_id": "ZH-CN_U0030_S0_365"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0030_S0/ZH-CN_U0030_S0_61.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 10.855,
+      "reference": "wow that's so amazing. <SPK/> 我觉得这个真的非常的吸引我，特别的 atract me <SPK/> 。",
+      "utterance_id": "ZH-CN_U0030_S0_61"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0030_S0/ZH-CN_U0030_S0_81.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0015",
+      "duration_sec": 58.355,
+      "reference": "我有想过就是嗯我之前也 join 了一些 internal ships， 就是像在一些外资的企业里面，比如说嗯 S M P global， 我在里面去进行了一些<FIL/>信用分析的实习工作。但是那个时候的感觉就是领导真的非常的 freedom 啊，他们会<FIL/>非常的平等的看待每一个人。每个人都有 <NON/> 嗯非常公平的机会去进行提问哪，还有<FIL/>跟他们的一些 communication。 不会有像一些，嗯可能比较垂直化企业的那种压力。他们是比较嗯就是水平管理的那种，让我感觉其实氛围是非常的嗯 good 的。",
+      "utterance_id": "ZH-CN_U0030_S0_81"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_150.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 4.915,
+      "reference": "我觉得你说的非常有道理，就是去这个找寻求一个balance。",
+      "utterance_id": "ZH-CN_U0039_S0_150"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_315.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 14.615,
+      "reference": "那我想问一下姐姐，就是你除了这个 badminton，还有什么其他的，就是不说擅长或者什么感兴趣的这个运动，就是比较的 interested， 或者说想要去学习，就某一天去学习去做这些运动，有没有这种类型的？",
+      "utterance_id": "ZH-CN_U0039_S0_315"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_380.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 29.484,
+      "reference": "Yeah yeah yeah <FIL/> ，就是他把那个，后来他把这个就发了这个视频嘛，后来还有很多就自称是这个秦朗的，like Qin Lang's uncle or Qin Lang's 什么什么什么 mother 什么去去联系他什么什么样，但发现全都是 <FIL/> 。Yeah, 然后最后的新闻， the news came out <FIL/> to be that they're all fake and they're all fake news。 And just 猫一杯 she made up this <FIL/> ，他把这个新闻就是编出来，然后就为了去博取这个流量，就差不多这个样子。",
+      "utterance_id": "ZH-CN_U0039_S0_380"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_42.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 15.365,
+      "reference": "然后就是可能这个孩子是一种，是姐姐的一种 <FIL/> like ，一种精神，一种 support，一种支柱，或者说是什么，就是给姐姐就是继续坚持下去的这种动力，这种motivation 或者是怎么。",
+      "utterance_id": "ZH-CN_U0039_S0_42"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_80.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 30.21,
+      "reference": "哦，我想问一下，嗯，哦，yeah。 I used to really <FIL/> dream about going abroad to study because I'm really <FIL/> <SPK/> interested in different cultures and different cultural backgrounds and how people are different if they are like from different countries. And I'm really really <FIL/> interested in to experiencing these stuffs. But how <SPK/> but.",
+      "utterance_id": "ZH-CN_U0039_S0_80"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0039_S0/ZH-CN_U0039_S0_81.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 37.105,
+      "reference": "就是但是我可能就是听说比如说国外可能会有一些比较 like discrimination against Asian people, especially Chinese. 就他们会有一些歧视或者说就 bias 这种偏见。想问一下姐姐，就是在留学的经历中，会不会就是有有比如说遭受过一些 <FIL/> 来自这个别别的国家的这种 discrimination, 或者是一些这样经历。然后姐姐有没有就是是怎么处理到这些可能就是一些 <FIL/> unfriendly 的这种 <FIL/> 话语啊，或者是一些行为。想问一下姐姐是怎么 <NON/> 有没有经历过或怎么处理的这些事情。",
+      "utterance_id": "ZH-CN_U0039_S0_81"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_105.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 7.405,
+      "reference": "啊，你们那种社区，就是什么各种 cosplay 什么的，可能我感觉就是我们那会儿没有的。",
+      "utterance_id": "ZH-CN_U0040_S0_105"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_141.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 34.588,
+      "reference": "<FIL/> 所以呢,就是有些问题我觉得不是对错，这也是我在国外留学收获最大的一点。我认为哈 <FIL/> 就是有些比如说是 <FIL/> between different cultures, 就是不同的 prison 啊，不是不同的那个 goals, 就是大家的目标不同, 立场不同，文化不同，只是只是不同而已，没有对错。So I I learn to tolerate. <SPK/> 所以就可能是为什么现在变得更加容易理解别人。",
+      "utterance_id": "ZH-CN_U0040_S0_141"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_149.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 39.085,
+      "reference": "<FIL/> Some of my classmates 他们经历过，但是我只碰到一个非常小的事件，就是 <FIL/> foreign guy asked me for cigarette, <SPK/> 所以呢 I said I have no, then 他就走了。就是我运气比较好啊，就是因为有这个问题，包括一些种, racsist 种族歧视啊，还有一些 <FIL/> 就欺负。因为他们觉得中国人普遍比较 <SPK/> 没有，就是反抗的意识， <FIL/> 所以他会更强势一点。",
+      "utterance_id": "ZH-CN_U0040_S0_149"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_287.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 16.902,
+      "reference": "So <FIL/> that 所以就是 <FIL/> 为什么父母会建议女生找一些就更 suitable 的工作，就比如说 teacher <FIL/> 或者是一些。",
+      "utterance_id": "ZH-CN_U0040_S0_287"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_298.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 12.668,
+      "reference": "其实父母一个在，对，一个在那个国企，一个当老师，已经是中等偏上的家庭了，not poor not poor at all。",
+      "utterance_id": "ZH-CN_U0040_S0_298"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_310.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 38.355,
+      "reference": "嗯，I think you are right in your age，就是在你这个年纪我觉得这是非常正确的，因为我觉得从一个人就是成年的标志。I think the the sign is you can finance yourself，就是你可以就挣钱养活自己，这才是一个成年的标志，就是你身上的这些责任感什么的。但是你谈到 when you see a stable work，你不能只是看它的 salary，就它意味着你有更多的时间做自己喜欢的事情，照顾家庭，时间也是一一部分 <SPK/> 。",
+      "utterance_id": "ZH-CN_U0040_S0_310"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_407.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 4.655,
+      "reference": "How how to say the the 纪录片。",
+      "utterance_id": "ZH-CN_U0040_S0_407"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_454.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 4.298,
+      "reference": "那 then Iceland is very suitable for you。",
+      "utterance_id": "ZH-CN_U0040_S0_454"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0040_S0/ZH-CN_U0040_S0_914.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0020",
+      "duration_sec": 6.555,
+      "reference": "对的，我我非常认同你的看法 <SPK/> 。但是 I don't think it's right。",
+      "utterance_id": "ZH-CN_U0040_S0_914"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_1.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 2.675,
+      "reference": "Hello， 早呀。",
+      "utterance_id": "ZH-CN_U0085_S0_1"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_108.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 17.007,
+      "reference": "Yeah, I would <FIL/> I would , really uh give credits to that. And I think a lot of physical stores from Apple are really unique, because, for example, in Beijing, <FIL/> in 三里屯 or in 王府井。",
+      "utterance_id": "ZH-CN_U0085_S0_108"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_167.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 17.069,
+      "reference": "就是你不仅需要在学校去获得一定的 credits 才能够 graduate，同时你也需要在日常生活中去不断的积累的 working experience，然后这样相结合，它会有一个 general 的一个 average routing and ranking，然后 <FIL/> 最终大家会进行评分。",
+      "utterance_id": "ZH-CN_U0085_S0_167"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_175.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 20.262,
+      "reference": "然后所以说你才会需要去有一 个 gap， 或者说才需要去中断。Stop your normal <FIL/> study physics。 但其实我觉得在外国人他们的思想中来说，可能他们会觉得这个 gap 非常适合你去 <FIL/> prepare yourself for better <FIL/> achievements 或者 better challenges。",
+      "utterance_id": "ZH-CN_U0085_S0_175"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_185.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 22.13,
+      "reference": "因为德国的军事体制和教学体制是完全 separated。 所以如果说你决定了去军校，或者是你决定了去 have normal college or university life， 那你的人生路径就不会有一种交叉，就是完全 parallel。所以 <FIL/> 确实这也是非常有趣的一个现象。我觉得我们之后可以 do more research about that， 对吧？",
+      "utterance_id": "ZH-CN_U0085_S0_185"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_85.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 11.233,
+      "reference": "<FIL/> 比如说像苹果前段时间出的那个 Apple vision pro, 对吧？ 它肯定它肯定是第一时间去 catch in feeling。",
+      "utterance_id": "ZH-CN_U0085_S0_85"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0085_S0/ZH-CN_U0085_S0_99.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 14.305,
+      "reference": "Yeah. That's right. That's right. 看上海静安新开的那个苹果 Apple store 里面的装潢 furniture and whole decorating, 真的是非常非常的 remarkable。",
+      "utterance_id": "ZH-CN_U0085_S0_99"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_183.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 18.798,
+      "reference": "对，对，我觉得是的，就是包括韩国，韩国其实我觉得和中国的这个 <FIL/> education 的这个 system 是非常的这个相似的。包括比如有一些专业，可能他们的这些 university students， 他们只是更多的是会去上课。",
+      "utterance_id": "ZH-CN_U0086_S0_183"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_185.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 25.265,
+      "reference": "然后在休学完成之后呢，他们会重新 go back to school， 然后去继续他们的这个 <FIL/> 学业。然后可能更相比于中国来说， <FIL/> 他们可能会更多一个这个 <FIL/> 休学的这样的一个 process， 可能会些，比我们来讲能获得更多的一些 <FIL/> practical experience，我觉得这个还是可以参考的。",
+      "utterance_id": "ZH-CN_U0086_S0_185"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_2.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 4.598,
+      "reference": "Hello，早上好， <FIL/> 今天很高兴能和你一起录音。",
+      "utterance_id": "ZH-CN_U0086_S0_2"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_201.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 27.691,
+      "reference": "<FIL/> Yeah，I agree with that。 然后 <FIL/> 包括我在韩国的话，可能 <FIL/> 会有这样的一种很特殊的情况。 <FIL/> 有一个人可能他已经就是将近 thirty 了。就是可能他有些时候包括从 army 退役回来之后，然后再加上各种的休学。可能到他最后毕业的时候，他可能已经是一个 <FIL/> 一个可以可以被叫做 uncle 的年纪了。",
+      "utterance_id": "ZH-CN_U0086_S0_201"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_222.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 15.378,
+      "reference": "<FIL/> 这个这个方面我还我还挺 professional。 因为我的 roommate, 他在他把自己的桌子布置的非常的温馨，他会放一对，他会放一些这个 <FIL/> fragrance。 然后。",
+      "utterance_id": "ZH-CN_U0086_S0_222"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_75.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 18.96,
+      "reference": "<FIL/> 我有在关注过一个博主叫大耳朵，不知道你有没有看过，他 base 是在在首尔，然后他有时候也会去，他有时候也会去这个比如 Tokyo 或者是 Bangkok 或者是 <FIL/> Ali 去 <FIL/> 买一些 Apple 的产品。",
+      "utterance_id": "ZH-CN_U0086_S0_75"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_76.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 18.0,
+      "reference": "然后感觉 <FIL/> 也从也能从他的这个 <FIL/> flog 里面获得到很多就是关于 tourist 这样的一个 tourist 的这样的视角去看。 <FIL/> 就是在国外线下的 Apple 专营店去提货是一种什么样的 feeling 感觉还是 <FIL/> 很不错的。",
+      "utterance_id": "ZH-CN_U0086_S0_76"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0086_S0/ZH-CN_U0086_S0_97.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0043",
+      "duration_sec": 7.963,
+      "reference": "然后也会有很多的 tourist 去那里就是 check in，然后包括可能他们不一定会去 purchase 什么东西。",
+      "utterance_id": "ZH-CN_U0086_S0_97"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_104.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 19.715,
+      "reference": "So it's quite a historical place, right? It just reminds me of a, <FIL/> you know, the ancient novel, the ford greatest novels of China. They have a three-kingdom history, and there are especially located for <FIL/> I mean for the 蜀 ** 蜀 country they are just located in Jinzhou, right?",
+      "utterance_id": "ZH-CN_U0091_S0_104"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_196.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 23.876,
+      "reference": "也可能甚至会去直接改写一些。我们认为 irrational standard 差不多是这样的。对，然后我们还会去负责一些 packaging 的一些商品货位，把这 sloppy 里填上满足条件的商品，然后会去对一些定期的有 risky 的商品，会进行上下架。这样，对。",
+      "utterance_id": "ZH-CN_U0091_S0_196"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_209.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 21.776,
+      "reference": "所以在这个情况下，你可能因为 marketing 的话，他不需要什么 specific knowledge in some certain area，它只需要是你现学你现在他们的 human resource space 里面有人带你，然后也能学的会。所以我觉得其实这个蛮好的，也不太需要纠结。 <FIL/> 你继续讲，我想听一下你这段 experience。",
+      "utterance_id": "ZH-CN_U0091_S0_209"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_220.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 12.265,
+      "reference": "Because <FIL/> London 的本地人，他们可能不太会去 put the trust on the foreign company 尤其是这种可能不是特别特别大的 foreign company 是吧？",
+      "utterance_id": "ZH-CN_U0091_S0_220"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_228.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 11.655,
+      "reference": "就是他们觉得 necessary 的一个地方可能我们会直接 slip through。但是我们可能认为重要的地方，他们会觉得 why are you going to take this so serious 是这样。",
+      "utterance_id": "ZH-CN_U0091_S0_228"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_241.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 8.892,
+      "reference": "那这家公司它是一个 goods export 的公司吗？还是他们会直接 set factory in in Britain？",
+      "utterance_id": "ZH-CN_U0091_S0_241"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_62.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 6.595,
+      "reference": "<FIL/> 我的 hometown 是威海，是在中国的 eastern part。",
+      "utterance_id": "ZH-CN_U0091_S0_62"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_68.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 2.525,
+      "reference": "没事，after you。",
+      "utterance_id": "ZH-CN_U0091_S0_68"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_72.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 3.965,
+      "reference": "没事，after you after you now take it easy。",
+      "utterance_id": "ZH-CN_U0091_S0_72"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0091_S0/ZH-CN_U0091_S0_89.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 20.864,
+      "reference": "过了这一段时间可能就影响力就没那么大。但你肯定也看到一些新闻，比如说有很多的淄博 barbecue restaurant, 他们现在的运营其实并不是特别好。然后这比如说最近的五一的旅行，其实去淄博的人也没有那么多，大家会去更多的 explore 一些 unvisited places 。",
+      "utterance_id": "ZH-CN_U0091_S0_89"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0092_S0/ZH-CN_U0092_S0_101.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 8.805,
+      "reference": "<FIL/> Of course, I think <FIL/> like a 热干面. it's pretty pop more popular than than before yeah。",
+      "utterance_id": "ZH-CN_U0092_S0_101"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0092_S0/ZH-CN_U0092_S0_170.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 15.345,
+      "reference": "嗯，你让我想到我在 <FIL/> graduate 之后去外国有实习过一段时间， <FIL/> 那边是一个。",
+      "utterance_id": "ZH-CN_U0092_S0_170"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0092_S0/ZH-CN_U0092_S0_179.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 29.622,
+      "reference": "嗯， <FIL/> 所以大概 morning 的时候，我们就在跑 marketing 这方面， <FIL/> 去了很多的这种协会，然后 organic organization， 然后下午的话我们就会做这种 technical 的 <FIL/> 访问，就是去到工厂，然后去看他们的这个技术，还有就是这种 organic process。",
+      "utterance_id": "ZH-CN_U0092_S0_179"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0092_S0/ZH-CN_U0092_S0_57.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 16.745,
+      "reference": "Sounds good. <FIL/> 我其实刚才有一个 question。就是淄博 barbecue，它是一直都有的，还是在某一个 moment，然后变得火起来的？",
+      "utterance_id": "ZH-CN_U0092_S0_57"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0092_S0/ZH-CN_U0092_S0_85.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0046",
+      "duration_sec": 9.78,
+      "reference": "<FIL/> Like rice wine and 热干 new yeah, 热干面 <FIL/> like rice wine。",
+      "utterance_id": "ZH-CN_U0092_S0_85"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_106.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 5.565,
+      "reference": "<FIL/> A shooting game 一个这种类似于射击。 <FIL/>",
+      "utterance_id": "ZH-CN_U0101_S0_106"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_187.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 28.23,
+      "reference": "And I maybe at school take out your phone 再点一下，maybe click，然后才能下班。然后就是会觉得 <FIL/> 整个的一天，maybe you are confused and maybe <FIL/> 就是感觉被什么东西包裹起来，就是要严格遵守这样的一个时间的 rules，这是其一。然后另外呢，像很多的在管理学生啊 <FIL/> 等等的一些 <FIL/> 情况的时候，会有这种 maybe <FIL/> 很棘手的情况。",
+      "utterance_id": "ZH-CN_U0101_S0_187"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_190.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 22.31,
+      "reference": "Yes yes, so maybe <FIL/> 有一句话嘛，叫做 practice makes perfect。我觉得这句话真的就是 it's very true <FIL/> 就是一个我觉得可以作为一个真理这样子，就是可能很多事情，尤其像对于这种 <FIL/> translator maybe practice practice and practice 不断地去尝试 <FIL/> 可能最终你收获到的这样的一个效果，包括可能你需要合作。",
+      "utterance_id": "ZH-CN_U0101_S0_190"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_191.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 29.94,
+      "reference": "So maybe you will get more money and you will have more experience <FIL/> ，through the working <FIL/> 。可能才会有更好的一个成长和收获。所以我觉得也是一个，就我觉得两个咱们两个的职业，they are have some a little saying 还是有共通之处，我觉得都是需要 experience。And maybe the age。Yes, maybe I have heard that 也听到啊孩子们去说，可能这个老师 is she she is very old she is very experience 的。",
+      "utterance_id": "ZH-CN_U0101_S0_191"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_192.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 7.65,
+      "reference": "<FIL/> 所以孩子们可能会更 obey 一下 <FIL/> 去遵守他的一些要求。But for I am very young， so <FIL/> 。",
+      "utterance_id": "ZH-CN_U0101_S0_192"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_203.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 26.412,
+      "reference": "<FIL/> 针对这种，我觉得每个人都是有自己的。Maybe some secret <FIL/> 所以我们要在就是因为学校也谈及到 <FIL/> 禁止，有时候会 forbidden forbidden some pictures， photos and some videos of the student。有时候也会就是禁止去拍摄一些他们的可能啊面部的一些信息。家长也会可能 worried about the <FIL/> information <FIL/> 可能会担心这样孩子个人的一些隐私 secret。",
+      "utterance_id": "ZH-CN_U0101_S0_203"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_205.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 13.627,
+      "reference": "所以在某些场景的时候呢，还是不被允许去拍照孩子的这个面部的一些东西。所以还是很担心的。I am so <FIL/> so worried about this，yes <FIL/> 。",
+      "utterance_id": "ZH-CN_U0101_S0_205"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_65.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 14.373,
+      "reference": "<FIL/> 然后在，如果比如说方便的时候啊， <FIL/> 可能会 play some games <FIL/> to <FIL/> enrich my life <FIL/> 去丰富我的这种业余的时间 <FIL/> 这样子嗯。",
+      "utterance_id": "ZH-CN_U0101_S0_65"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_71.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 21.2,
+      "reference": "<FIL/> I have heard it. <FIL/> 听说过这个，然后最有名的我觉得就是吃鸡这个 <FIL/> if you win the game <FIL/> you may <FIL/> cheers with it <FIL/> 可能会小小的庆祝一下，或者是 <FIL/> 怎么样这样子。然后我觉得还是比较 <FIL/> 模仿这个战场的一些 <FIL/> 环境的 <FIL/> 。",
+      "utterance_id": "ZH-CN_U0101_S0_71"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0101_S0/ZH-CN_U0101_S0_85.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 9.665,
+      "reference": "<FIL/> Yes, I have heard it <FIL/> 听耳闻过，但是可能了解不是那么详细。对， <FIL/> 可以详细的 introduce。",
+      "utterance_id": "ZH-CN_U0101_S0_85"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0102_S0/ZH-CN_U0102_S0_44.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 7.655,
+      "reference": "他中文名字就是绝地求生 PUBG play unknown's ground，你应该了解过吧？吃鸡。",
+      "utterance_id": "ZH-CN_U0102_S0_44"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0102_S0/ZH-CN_U0102_S0_52.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 21.82,
+      "reference": "<FIL/> 那好像是没有，主要是就是它会在那个 screen 上显示一个 <FIL/> winner winner chicken ** dinner 这个这样一个 line <NON/> 。",
+      "utterance_id": "ZH-CN_U0102_S0_52"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0102_S0/ZH-CN_U0102_S0_64.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 16.425,
+      "reference": "<FIL/> 聊是是是，聊到 Russia 你知道就是最近中国的这个 anime 在 Russia 是非常的火的。就是比如说像那个斗破苍穹在 Russia，就是 very popular very popular <FIL/> 。",
+      "utterance_id": "ZH-CN_U0102_S0_64"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0102_S0/ZH-CN_U0102_S0_76.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 20.765,
+      "reference": "<FIL/> It is <FIL/> it's a 动作 game。 <FIL/> and 它目前还没有正式地发售。但是就是它大概是在二零二零年进行的，这个一个 release <FIL/> 一个 information 的 release。and最近听说在 <FIL/> 七月份就要进行一个 final release 了。",
+      "utterance_id": "ZH-CN_U0102_S0_76"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U0102_S0/ZH-CN_U0102_S0_80.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0051",
+      "duration_sec": 13.215,
+      "reference": "Yeah, <FIL/> you know? <FIL/> since we are from Hunan, and 衡阳 is really popular for its 湘菜 cuisine。 <FIL/> Have you tried any 湘菜 cuisine?",
+      "utterance_id": "ZH-CN_U0102_S0_80"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_164.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 7.465,
+      "reference": "里面也有那个沈沈腾 and 贾玲，我觉得他们两个也特别的 humorous。",
+      "utterance_id": "ZH-CN_U1001_S0_164"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_168.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 6.975,
+      "reference": "嗯，但是感觉现在那个那个 drama 里面的那些 children 都已经长大了。",
+      "utterance_id": "ZH-CN_U1001_S0_168"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_270.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 20.445,
+      "reference": "对， <NON/> 而且有的时候我看我的 friends， 在上面还可以看到他就是刷刷那个 Tik Tok， 刷了多久，可以看到他的时间，就是在线几个 hours， 然后我看到他如果在看的话，我就会去跟他打招呼，然后 share 我最喜欢的 videos 给他。",
+      "utterance_id": "ZH-CN_U1001_S0_270"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_344.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 28.005,
+      "reference": "嗯，但是美图秀秀有一个地方我很喜欢，就是它如果假如说你 P 图的时候，你想消除一些东西，可能有些 A P P 你就只能有些那个 P 图的 A P P 你就只能去打马赛克，或者是怎么把它弄掉，或者是弄一个贴纸把它遮住。但是美图秀秀的话，它有一个功能就是你可以点消除笔，然后你把它消除掉，而且还还可以消除的毫无痕迹就特别完美，我我特别喜欢它的那个功能。",
+      "utterance_id": "ZH-CN_U1001_S0_344"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_388.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 40.475,
+      "reference": "嗯，我们这边也是，就是我们那边就是其实是不允许老师在外面去补课的。但是我们老师就是在 after class 的时候就对我们很好。有些时候会请我们去喝饮料，然后吃吃 ice cream。 在夏天的时候很热嘛，然后在他家我们都过得很开心，然后上课的时候就认真的 <FIL/> study ，下课的时候就认真的 play。 然后因为我们那边也是不允许补课，所以后来就遭到了一些家长的 <FIL/> 举报。然后后面他就把我们的 <FIL/> money 都退给我们了，然后就没有补了。",
+      "utterance_id": "ZH-CN_U1001_S0_388"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_402.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 14.925,
+      "reference": "嗯，我在因为我是来自丽江嘛，我在我们丽江的一个 <FIL/> 重点重点高中，就是 important high school。 叫丽江六中，Lijiang six high school。",
+      "utterance_id": "ZH-CN_U1001_S0_402"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_406.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 7.385,
+      "reference": "哦，我知道我好像经过你们学校，看起来非常的 beautiful。",
+      "utterance_id": "ZH-CN_U1001_S0_406"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_44.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 9.875,
+      "reference": "<FIL/> 那你那个你的家乡有什么 <FIL/> 特色的 food 吗？",
+      "utterance_id": "ZH-CN_U1001_S0_44"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_476.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 19.015,
+      "reference": "对我之前也尝试过 running，就是每天晚上 every evening。 但是呢我们学校我感觉有特别多的 classmates，他们都喜欢夜跑，就是晚上去 running，然后有的时候我就很怕会撞到 others。",
+      "utterance_id": "ZH-CN_U1001_S0_476"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_482.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 9.555,
+      "reference": "嗯，对，但是感觉每次拉伸我的 leg muscle，我都会觉得 <SPK/> 很痛 very sore。",
+      "utterance_id": "ZH-CN_U1001_S0_482"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1001_S0/ZH-CN_U1001_S0_53.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 8.205,
+      "reference": "对，那你一般是在 home 还是去 go out eat out 去外面吃呢？",
+      "utterance_id": "ZH-CN_U1001_S0_53"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1002_S0/ZH-CN_U1002_S0_284.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 2.875,
+      "reference": "你用的是什么 phone 呢？",
+      "utterance_id": "ZH-CN_U1002_S0_284"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1002_S0/ZH-CN_U1002_S0_288.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 3.505,
+      "reference": "我用的是 iPhone 十三。",
+      "utterance_id": "ZH-CN_U1002_S0_288"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1002_S0/ZH-CN_U1002_S0_337.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 13.185,
+      "reference": "我没有用过这个。 <FIL/> 我还是我觉得我还是下一个美图秀秀吧，感觉还挺好用的。因为这些功能的话，在醒图上它还要付费，要开个 V I P。",
+      "utterance_id": "ZH-CN_U1002_S0_337"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1002_S0/ZH-CN_U1002_S0_488.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0501",
+      "duration_sec": 20.045,
+      "reference": "<FIL/> 因为很多 woman 他们就是说比较那种 <FIL/> 就是有自己 idea 想法的那种女生，她的一个她是不会想着生孩子的，也更不会想着 getting married。",
+      "utterance_id": "ZH-CN_U1002_S0_488"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_119.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 33.775,
+      "reference": "也是其实换个角度来想，我们自己也可以就是从中就是去开发研究一下。你像我们学校这个体测，你知道吧？我们每年体测呢，像之前我问了好多年前，就是学生拿个表，从从这个地方一直转到最后个地方去。现在我们直接就是扫码扫码，到最后就是成绩全部都在那个提升的 A P P 里边。这个我觉得其实也是我们就人类是主动开发利用这个也是一个好处吧，也是能从中得到一些比益的。",
+      "utterance_id": "ZH-CN_U1003_S0_119"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_135.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 40.365,
+      "reference": "Yes, yes。 <FIL/> 除了就是 read many books 看，就很多的书之外呢， <FIL/> 我其实有时候也是会要求就是 do some activities out of school。比如说去visit many museums <FIL/> or libraries， <FIL/> 有时候呢也会去在街上进行一些这个 service，或者是一些采访 report reports。 <FIL/> 所以我就也想问一下，你对我们专业就是除了就是要看很多书之外，还有哪些就是 opinions or feelings。I want to know。",
+      "utterance_id": "ZH-CN_U1003_S0_135"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_141.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 37.916,
+      "reference": "哦，that's amazing。那确实我感觉有点 <FIL/> 就是 interesting, 但是 <SPK/> 就是有点遗憾吧。毕竟 <SPK/> 之前也是一直就是文科相关的学习嘛。我对，就是这个 architecture 相关的 <FIL/> 相关的这些 knowledge 啊，还有 information 啊， <SPK/> 还有 ** 了解的确实不是很多。所以就是我想请你就是 please give us some introduction of your major。 可以吗？就就是简单介绍一下相关的课程，或者是一些就是你的就业前景啊，都可以。",
+      "utterance_id": "ZH-CN_U1003_S0_141"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_19.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 27.515,
+      "reference": "Yes. 嗯，就像你刚才说的，嗯，我曾去过天津，然后那边给我就是感觉非常的 depression and <FIL/> impression <FIL/> 我在天津的海边呢就是也是和朋友一起 and take many photos，you know? <FIL/> ，除此之外呢，我还是很想去一下我们国家其他的沿海城市 <FIL/> 。",
+      "utterance_id": "ZH-CN_U1003_S0_19"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_201.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 11.335,
+      "reference": "而且而且我觉得这个团体呢也可以让我们交到更多的朋友。Make more different friends， It's quite interesting you know。",
+      "utterance_id": "ZH-CN_U1003_S0_201"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_22.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 28.325,
+      "reference": "I see。 <FIL/> 像你这样说的话，那确实还是 <FIL/> 有很多的 different different cranes。 <FIL/> 那我就是也是想了解一下，就是我如果啊要去这个 south say cities 去旅行的话，就是我有一些哪些需要注意的，或者是需要去提前 make prepare make preparations for that。",
+      "utterance_id": "ZH-CN_U1003_S0_22"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_56.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 35.83,
+      "reference": "<FIL/> 确实像你说的，actually 这些 <FIL/> movies，就是不仅是我觉得不仅是有这个质感，然后它也可以就是就是 in a different way，就让我们了解了这些历史人物。因为我个人就是比较喜欢看这些 <SPK/> 人物传记。 <FIL/> 这个电影的话呢，我还是更倾向于看这些 new movies。 <FIL/> 这个人物传记，我就想问一下，包括这些 old old books， <FIL/> 你有没有什么了解或者是相关的 opinions 呢？",
+      "utterance_id": "ZH-CN_U1003_S0_56"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_61.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 2.715,
+      "reference": "去。Yes。",
+      "utterance_id": "ZH-CN_U1003_S0_61"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_63.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 41.955,
+      "reference": "Yes yes, <FIL/> 我觉得不只是这个搜索，就是有时候你 <SPK/> 就感觉有些 information 就是从这些新出的这些 movies or novels 出来的，就感觉好像 disagree ** society now 就是和这个社会不太符合，不太契合。 <FIL/> 那么 <FIL/> 我就想就是也是说这个纸媒，纸媒的话呢也是 <SPK/> 咱们国家比较重视的一个方面。但是就是目前有很多人，就是说这些纸媒消亡论，这个观点我不知道你认可吗？",
+      "utterance_id": "ZH-CN_U1003_S0_63"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1003_S0/ZH-CN_U1003_S0_94.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 11.605,
+      "reference": "<FIL/> Discomfort，所以就是我想问一下 <FIL/> 就是你经常就是 spend a lot of time 在这个社交媒体上吗？",
+      "utterance_id": "ZH-CN_U1003_S0_94"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1004_S0/ZH-CN_U1004_S0_221.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 52.345,
+      "reference": "<FIL/> 其实我我其实这对你们专业不是那么理解，主要是因我自己有兴趣读过一些书，也有一些朋友。但是我最最了解的就是除了说要读很多书，many books and you need to sign up many assignment in the forms of essay。就是课程作业基本上都是交那个论文嘛。And comparing with my my major <FIL/> 我的 project 都是这个 essay 就很少了，我基本上都是 <FIL/> you know finishing the project by <FIL/> 就是画以画图纸为主这些，不知道你有没有了解过我们我们的专业。",
+      "utterance_id": "ZH-CN_U1004_S0_221"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1004_S0/ZH-CN_U1004_S0_224.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 11.65,
+      "reference": "还有学习学习一些，还要学习一些物理的课。所以 we have a different types of courses，So。",
+      "utterance_id": "ZH-CN_U1004_S0_224"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1004_S0/ZH-CN_U1004_S0_267.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 26.845,
+      "reference": "哦，so so 就是你现在就是也会就是除了学中文的话，其实你在你的 practice 实践里面，其实也有一些涉及到跨专业的东西。比如说涉及到 <FIL/> 政治内容或者是涉及到传播的内容，you know。 For for better better getting a job，就是为了更好地去工作，这样。",
+      "utterance_id": "ZH-CN_U1004_S0_267"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1004_S0/ZH-CN_U1004_S0_28.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 23.448,
+      "reference": "拜访家里其他长辈的时候会遇到的。所以我平时 as a single child in my family，我平时自己在家里就没有什么要和 <SPK/> 就是和同龄人相处的问题。但是平时呢我还是就是在拜访 <FIL/> 我同龄的亲戚的时候。",
+      "utterance_id": "ZH-CN_U1004_S0_28"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1004_S0/ZH-CN_U1004_S0_310.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0502",
+      "duration_sec": 44.075,
+      "reference": "对，yes， yes，那其实有时候，有时候我们方可能不是 ** you know。You know, team sporting with our own friends. You know, we we could make friend new friends by by doing sport, you know where 比如说我们在篮球场上或者去乒乓球场的时候，有时候会遇到就是要和陌生人一起运动的这种场景嘛。所以有很多时候，其实朋友是 you know make new friends are made made from this way。 就是新朋友就这样交好的好的，就是朋友就是这样子 <FIL/> 交到了。",
+      "utterance_id": "ZH-CN_U1004_S0_310"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_173.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 21.01,
+      "reference": "So <FIL/> I when I when I saw the price, <FIL/> it's it's very <FIL/> shocked cause it's really <FIL/> low price. <FIL/> 然后你就可以以一个很便宜的价格买到一辆 <FIL/> 类似于 <FIL/> 高贵的车。",
+      "utterance_id": "ZH-CN_U1021_S0_173"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_195.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 24.305,
+      "reference": "是的， <FIL/> 现在很多人都买了手环，这个 Apple 的 Apple watch, 就是 <FIL/> 戴在手上一种一种装饰，同时又可以有很多的功能做 <FIL/> 心心率的监听啊，就是各方面的，感觉还还挺实用的。",
+      "utterance_id": "ZH-CN_U1021_S0_195"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_197.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 21.505,
+      "reference": "是的，就是现在的手机 <FIL/> 国产的手机，价格也上来了，就像华为和小米的，很多价格都跟苹果价格差不多了。以前我记得就 two thousand <FIL/> 就就差不多了，现在都差不多跟苹果一个价了，五六千，然后这个。",
+      "utterance_id": "ZH-CN_U1021_S0_197"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_205.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 19.405,
+      "reference": "Yeah， I I agree with you. <FIL/> 就是现在的电子产品的话，基本上就是每个人都是必须要的，也是离不开的。就像就算我们工作电脑，然后平时生活就是手机，平板儿，就基本上是离不开的。",
+      "utterance_id": "ZH-CN_U1021_S0_205"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_52.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 11.715,
+      "reference": "你有没有去过一些比较有趣的 places <FIL/> cities or <FIL/> 一些大的 <FIL/> 景点？",
+      "utterance_id": "ZH-CN_U1021_S0_52"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_61.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 19.265,
+      "reference": "<FIL/> 应该比川西的话可能还要更偏 <SPK/> 藏族人民更多一点。它的这种饮食习惯啊，可能会 <FIL/> 应该也 almost the same, 就是还是有一些 <FIL/> 不同吧，可能藏族人民更多一些。",
+      "utterance_id": "ZH-CN_U1021_S0_61"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_67.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 13.512,
+      "reference": "<FIL/> 一般不是很长时间， <FIL/> because the time is limited. <FIL/> 所以一般就是几天，然后 <FIL/> for me。",
+      "utterance_id": "ZH-CN_U1021_S0_67"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1021_S0/ZH-CN_U1021_S0_68.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 20.133,
+      "reference": "这个最重要的主要还是饮食，吃，就是去不同的城市，主要去吃它的一些 <FIL/> 比较有特色的当地的食物。就比如说 <FIL/> 如果说到了 <FIL/> 到了北京，那就肯定是要去吃一下它的这个Beijing Duck <FIL/> 烤鸭。",
+      "utterance_id": "ZH-CN_U1021_S0_68"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_155.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 24.475,
+      "reference": "我前段时间看过像 <FIL/> 像北京车展上 <FIL/> many you know many <FIL/> many foreign brands and local brands，就是很多外国品牌跟本土品牌 <FIL/> 好像 <FIL/> 都参展了。但是感觉好像 <FIL/> 国产的一些新能源的汽车，它的 <FIL/> 它的那个试驾的人数包括人气会更旺一些。",
+      "utterance_id": "ZH-CN_U1022_S0_155"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_157.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 16.458,
+      "reference": "<FIL/> 对，确实， <FIL/> 然后 this may Tesla 就是也让特斯拉也是跟着降价，包括我说他们有一些 <FIL/> 车是车载的一些 A I 啊，或者说是辅助驾驶这些东西，感觉都是在逐步的 <FIL/> 升级。",
+      "utterance_id": "ZH-CN_U1022_S0_157"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_159.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 12.663,
+      "reference": "大部分都是 <FIL/> really shocking and really <FIL/> jealous 就是有一点嫉妒或者说羡慕这个中国的用户有这么多选择，有这么 <FIL/> 优质的产品， <FIL/> 然后。",
+      "utterance_id": "ZH-CN_U1022_S0_159"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_181.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 11.475,
+      "reference": "在追赶美国，就是在这个舆论啊，包括说就是这个社交软件方面 <FIL/> . Maybe the Americans they are shocked, and they are afraid of of our products.",
+      "utterance_id": "ZH-CN_U1022_S0_181"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_187.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 23.625,
+      "reference": "<FIL/> 现在像比如说我们刷的小红书什么的， <FIL/> the the red book 或者说什么 <FIL/> ，其实我感觉他跟早期的微博可能感觉是差不多，但是感觉小红书可能算法更好一些，就是刷起来更好刷一些。 <FIL/> It's more interesting than the other the the other app。",
+      "utterance_id": "ZH-CN_U1022_S0_187"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_66.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 10.567,
+      "reference": "<FIL/> And when you are <FIL/> ，就是比如说和你和你在旅行的时候， <FIL/> 像我是 <FIL/> 你是比较喜欢。",
+      "utterance_id": "ZH-CN_U1022_S0_66"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1022_S0/ZH-CN_U1022_S0_71.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0511",
+      "duration_sec": 22.545,
+      "reference": "那对，我我也是差不多，我像我上次的话，我可能是去上次旅行，上次 travel 我可能是去到就是乐山那边，然后 <FIL/> 也挨着峨眉山比较近嘛。当时候也有一些也尝了一些他的 local food，比如说 <FIL/> 甜皮鸭呀，或者说是翘脚牛肉啊这些，然后也去也去爬了爬山，就是。",
+      "utterance_id": "ZH-CN_U1022_S0_71"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_199.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 15.925,
+      "reference": "Yes, <FIL/> 对我有 <FIL/> 很多朋友吧可以这么说， <FIL/> 因为我觉得朋友还是多一点比较好，而且每一个朋友他都是不一样的。有些朋友。",
+      "utterance_id": "ZH-CN_U1027_S0_199"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_207.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 14.1,
+      "reference": "对，是的，但是我还是比起搭子，我还是更 prefer <FIL/> 一些只可以深层次交流朋友吧 <FIL/> 。",
+      "utterance_id": "ZH-CN_U1027_S0_207"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_250.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 28.431,
+      "reference": "但是其实我们不俩，我们不是因为什么小事 <FIL/> ，一些小事而渐行渐远，而是我觉得是因为大家现在彼此的轨迹。 <FIL/> different you know 不同。然后现在不在一起，他继续读博了，然后很远，我我们俩离得很远，然后不经常见面，所以平时没有太多交流。",
+      "utterance_id": "ZH-CN_U1027_S0_250"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_3.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 8.932,
+      "reference": "I my name is ** I'm twenty-four years old, and I come from 江苏 province。",
+      "utterance_id": "ZH-CN_U1027_S0_3"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_33.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 19.385,
+      "reference": "对的 <FIL/> ，我印象比较深刻的是，其实我之前一直觉得 <FIL/> 我的学生不是非常的听话，然后他们学习就是说没有因为我的努力而 change something。",
+      "utterance_id": "ZH-CN_U1027_S0_33"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_39.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 3.044,
+      "reference": "Okay，嗯。",
+      "utterance_id": "ZH-CN_U1027_S0_39"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1027_S0/ZH-CN_U1027_S0_57.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 4.305,
+      "reference": "Yeah 是的，太 too nervous。",
+      "utterance_id": "ZH-CN_U1027_S0_57"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_1.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 27.748,
+      "reference": "Hi, my name's Hanley. I'm from 四川农业 university。I like I have a lot of interests. I like to swim, I like to play the play badminton and also go shopping with my friends and family. And now, twenty one years old, and my I'm from Sichuan province, Ya'an city. My major is English because I love English a lot. When I was a freshman, and in fact, I'm not an English major student.",
+      "utterance_id": "ZH-CN_U1028_S0_1"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_174.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 8.801,
+      "reference": "When I was freshman，我有两个非常 close 的 friends， 一个是男生，一个是女生，都是我们班上的。",
+      "utterance_id": "ZH-CN_U1028_S0_174"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_176.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 18.702,
+      "reference": "<FIL/> 到底是友情还是爱情那种感觉 <FIL/> 但是后面自从他有了一个 boyfriend 之后，他就越来越疏远我了。虽然说我对他很 good 嘛，我对他很 nice，我对他很好啊，但是比不上他 boyfriend 的万分万分之一。",
+      "utterance_id": "ZH-CN_U1028_S0_176"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_184.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 5.663,
+      "reference": "那怎么这样呢？道歉的方式很多的对吧？只是看她 want 还是不还是不想。",
+      "utterance_id": "ZH-CN_U1028_S0_184"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_22.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 27.595,
+      "reference": "这学生都不是 actors，他们就是不会说非常的配合你。但是呢 <FIL/> 但是这是他们真实的表现，所以说我很 cherish 他们，很 cherish 这种就是 <FIL/> 在这种真实课堂中他们的一些表现，还有很 cherish 这些 <FIL/> 。",
+      "utterance_id": "ZH-CN_U1028_S0_22"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_38.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 12.225,
+      "reference": "想说 any volunteer wants to <FIL/> answer the question，然后我扫眼一看一个人都没有举手，全部都是怂的。然后我就走下讲台，我就去要 pick 人嘛，必须要抽人。",
+      "utterance_id": "ZH-CN_U1028_S0_38"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_40.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 27.157,
+      "reference": "You really you wanna come，right？然后他就使劲的摇头，还挺搞笑的。然后后来我问他们的，就是本来那个 English teacher 嘛，我就问他这个男孩子不是挺积极的吗？他说是的，但是不知道为啥，可能今天后面听课的听课的那个 internship teacher 比较多嘛，就实习老师比较多，他就怂了，就不敢回答问题了 <SPK/> ，还是挺interesting 的。嗯。",
+      "utterance_id": "ZH-CN_U1028_S0_40"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1028_S0/ZH-CN_U1028_S0_48.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0514",
+      "duration_sec": 4.595,
+      "reference": "<FIL/> 对，你是小学 education，嗯。",
+      "utterance_id": "ZH-CN_U1028_S0_48"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_159.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 7.998,
+      "reference": "然后 uh then it's uh directed by Jia Lin， do you know？",
+      "utterance_id": "ZH-CN_U1033_S0_159"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_191.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 16.785,
+      "reference": "哦 <FIL/> 我的 friends 他们也去过龙泉，就是我最近也在想，我什么时候找个时间去看一下，但是他们说就是龙泉山，一会儿就爬上去了，我就叫我不要去太早。",
+      "utterance_id": "ZH-CN_U1033_S0_191"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_199.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 19.905,
+      "reference": "哇，我感觉你去过好多地方，就是我一直都想去海边看看，但是一直碍于 money 和 time 的限制，就没有时没有时间没有机会去。但是我想 <FIL/> 就 save money and go out 。",
+      "utterance_id": "ZH-CN_U1033_S0_199"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_205.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 17.746,
+      "reference": "就 <FIL/> yesterday 就我和我的朋友就就蹲在 <FIL/> 我们寝室看他们的直播，就就只有看那英能不能守住国门，就很好笑我觉得，就她已经上升到另一个级别不，对。",
+      "utterance_id": "ZH-CN_U1033_S0_205"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_212.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 12.345,
+      "reference": "yes， 然后然后我 <FIL/> 对，最近我觉得最近就是很多综艺它的也就是没有之前的好看了，不知道为什么。",
+      "utterance_id": "ZH-CN_U1033_S0_212"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1033_S0/ZH-CN_U1033_S0_61.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 15.675,
+      "reference": "<FIL/> 我也有一个 sister，然后她 <FIL/> 她总是对我很好，她会把自己的零花钱省下来给我买零食吃。就我很我非常我非常非常 love her。",
+      "utterance_id": "ZH-CN_U1033_S0_61"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_173.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 27.755,
+      "reference": "<FIL/> 我很喜欢出去旅行。那在国内的话，我去 travel 大理，我三月份去了大理，然后觉得那个地方非常的美丽。那很适合我们去旅行，那里有很多美食，并且那里的人文环境我觉得是很友好的，不会排外。你呢？",
+      "utterance_id": "ZH-CN_U1034_S0_173"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_177.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 7.575,
+      "reference": "<FIL/> 那你可以尝试去，比如说 the night 夜市。",
+      "utterance_id": "ZH-CN_U1034_S0_177"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_187.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 2.565,
+      "reference": "time，嗯。",
+      "utterance_id": "ZH-CN_U1034_S0_187"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_191.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 12.054,
+      "reference": "看啦。我很喜欢看那些 singer，然后相关的一些综艺，我觉得又可以听觉上的享受，然后也有视觉上的我觉得很好。",
+      "utterance_id": "ZH-CN_U1034_S0_191"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_49.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 6.248,
+      "reference": "和我的父母一起 go hiking。",
+      "utterance_id": "ZH-CN_U1034_S0_49"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_53.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 3.08,
+      "reference": "在家里一起 cooking。",
+      "utterance_id": "ZH-CN_U1034_S0_53"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_57.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 5.805,
+      "reference": "Yes，我有一个 brother but。",
+      "utterance_id": "ZH-CN_U1034_S0_57"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_70.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 15.205,
+      "reference": "嗯确实，因为每个人都会有自己需要 <FIL/> working or studying 等一些要紧的一些事情，紧急的事情要去忙，这也是一件好事。",
+      "utterance_id": "ZH-CN_U1034_S0_70"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1034_S0/ZH-CN_U1034_S0_77.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0517",
+      "duration_sec": 17.623,
+      "reference": "<FIL/> 我很赞同，因为感同身受，我也有过这样的一些经历和体验。确实我们会尝试一些很 fresh 一些很新鲜的一些东西，会有不一样的 experience。",
+      "utterance_id": "ZH-CN_U1034_S0_77"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_15.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 16.065,
+      "reference": "哎呀，我觉得去健身也还挺 okay 的啊。你像我这种就不是很喜欢 go to gym 的，就有点点 lazy 嘛，所以 lazy lazy 就要找一点事情去 <FIL/> make me more dynamic。可能吧。",
+      "utterance_id": "ZH-CN_U1063_S0_15"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_17.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 22.18,
+      "reference": "是的，你像我现在天天就很 lazy 嘛，just lay on the bed and then do 不晓得要干什么。你像我有些时候就 lay flat 嘛，但是lay flat lay lay 归 lay 啊，但是还是想做点事儿嘛。你所以我觉得就去 go to gym 啊，或者跑一下啊，或者是去玩一点什么东西啊，都 Okay 的啦。就是人一懒他就不想做事儿。",
+      "utterance_id": "ZH-CN_U1063_S0_17"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_23.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 11.345,
+      "reference": "And <FIL/> I want to make the world much more 就是更加漂亮嘛，更加美嘛，更加 <FIL/> easy for people 去住嘛，所以这就是我的一点点 <FIL/> perspective。",
+      "utterance_id": "ZH-CN_U1063_S0_23"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_26.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 22.615,
+      "reference": "Easy。你像我们现在就是有些时候就太在乎某一些环节了。但是其实生活还有很多 wonderful things。就是你不管怎么样呢，不管怎么说，都是要要让这些世世界变得更美好嘛，让这个 world much more bright for and we can make 这些事情就是越来越好，然后 <SPK/> 要这个世界变得更加多元，更加美好吧。",
+      "utterance_id": "ZH-CN_U1063_S0_26"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_54.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 25.24,
+      "reference": "<FIL/> 有有有我有一个老师啊，他是我的 neighbor, 然后他带我做了很多那种 project, 因为他是湖南 university 的嘛，然后他有一些那种 resource 或者一些就是 <FIL/> miss some have some relationship 嘛，所以我们去了那个长沙海关啊，还有去了一些很多各种各样 different kind of places, 然后我们做那种 survey, 然后我们就了解他们需要什么样的 language program。",
+      "utterance_id": "ZH-CN_U1063_S0_54"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_56.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 3.065,
+      "reference": "你呢，你有没有这种的 experience?",
+      "utterance_id": "ZH-CN_U1063_S0_56"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1063_S0/ZH-CN_U1063_S0_58.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 25.81,
+      "reference": "哎呀，就是我觉得生活就有很多的那种 something you can not expected. 然后你就是和这些人做了一些 activity 嘛。你像我当时就认识了我一个很好的friend, 你像我们现在都还有联系嘛。我们因为做这其实我们之前不是很熟，但是因为做了这种事儿之后，我们就变得越来越熟悉了，这还蛮有意思的。你像 if I didn't do this kind of job， maybe 我就不能认识那些人哪或者是什么的。",
+      "utterance_id": "ZH-CN_U1063_S0_58"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_100.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 29.322,
+      "reference": "<FIL/> 你说的对， <FIL/> 我大学里的话 <FIL/> 比较难忘的，或者说之前没有做过一件事，就是我跟许多来自不同学校的学生进行了一些 <FIL/> 学习学业跟友情上的交流， <FIL/> 是这样子的，因为当时我参加了一个培训班，然后我会发现 <FIL/> 这个培训班里它是一个校外的机构嘛，然后它我它许多的 students 它是 from .",
+      "utterance_id": "ZH-CN_U1064_S0_100"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_102.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 10.123,
+      "reference": "我发现这是一个非常 meaningful and interesting 的一件事情，所以我也非常的珍惜这段回忆，非常的难忘，是的。",
+      "utterance_id": "ZH-CN_U1064_S0_102"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_110.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 18.265,
+      "reference": "<FIL/> 我因为我发现自从我来了大学之后，我比我的高中还 gain 了 <FIL/> a little weight，我就发现这是一个非常 <FIL/> 幸福又比较痛苦的事情吧，这就是所谓的痛并快乐着，你知道能吃是福，但是吃太吃太多也是不太好的。",
+      "utterance_id": "ZH-CN_U1064_S0_110"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_26.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 21.86,
+      "reference": "是的，包括我总发现我们就是 <SPK/> 在一个状态处于久了之后，我们就会对这个环境产生依赖感。因为 <FIL/> 你在一个 environment 的待久了之后，你就会发现 <FIL/> ，你会跟这个环境同化掉了。那举个例子，我们就经常说近朱者赤，近墨者黑嘛。那所以如果你跟一群勤奋的人站在一起，你也会变得非常 hard working。",
+      "utterance_id": "ZH-CN_U1064_S0_26"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_34.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 23.579,
+      "reference": "<FIL/> 然后关注一下自己身边的，比如说 <FIL/> 这个亲戚朋友啊，或者当的当地的这个 <FIL/> 有没有一些突出的问题啊，比如说我们有时候我们经常会听到有一些地方，它会有一些比如 <FIL/> 这个环境污染的问题。我说这个时候我们就可以 write a letter to the government。",
+      "utterance_id": "ZH-CN_U1064_S0_34"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_35.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 12.416,
+      "reference": "就告诫 <FIL/> 建 <FIL/> 这个建议，我们的 government 去做一些 manage to solve the problems 我觉得这是非常 <FIL/> 值得注意和 <FIL/> 值得我们去做的事情。",
+      "utterance_id": "ZH-CN_U1064_S0_35"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_47.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 28.82,
+      "reference": "这对有些人来讲就感觉 <FIL/> 这个经历的事情实在是太快了，就犹如像过山车一样，就是 roller coaster 一样，我发现这个 <FIL/> 怎么说呢？是有点奇妙的，但我发现如果 <FIL/> 每个人都这样子过的话，可能 <SPK/> 他们对于这个世界的体验感还不是很够，所以我觉得我们有必要去采取一些不一样的建议，或者去改善当代的这个现状吧。",
+      "utterance_id": "ZH-CN_U1064_S0_47"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1064_S0/ZH-CN_U1064_S0_95.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0532",
+      "duration_sec": 19.013,
+      "reference": "我们不能够做自己。所以当我们进入校园大学的校园之后，我们发现，哇我们发现了一个新的天地，就是有一个新的 world 在等着我。所以你在大学的时候，你会发现，哎，有时候我可以做我之前从未想过的事情。 你有过这样的经历吗？",
+      "utterance_id": "ZH-CN_U1064_S0_95"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1075_S0/ZH-CN_U1075_S0_175.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 20.917,
+      "reference": "然后他趁那个女生当时在听政治课时不是特别注意，然后他就闲得没事，到桌子底下把那个拿绳子，把那个女生的腿 <FIL/> 脚和那个凳子绑到一块了啊。然后这时候老师就叫她，叫这个学生。Stand up answer my question，这个女同学就一下子站不起来了，你知道吧？",
+      "utterance_id": "ZH-CN_U1075_S0_175"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1075_S0/ZH-CN_U1075_S0_49.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 23.165,
+      "reference": "<FIL/> Especially a lot Chinese, you know, the difference between <FIL/> western and eastern people. 就是他们这个发音啊，这些怎么处理，完全的美式 <FIL/> ，卷舌，还有就是 <SPK/> 等等吧，后后鼻腔就是这种复式发音啊，怎么去转换呢？ 怎么去练呢，这个。",
+      "utterance_id": "ZH-CN_U1075_S0_49"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1075_S0/ZH-CN_U1075_S0_88.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 21.528,
+      "reference": "他如果能达到这个阶段的话，那他说明就真正的进入英语这个王国了。你呢？Come into the real english kingdom, 就是 very if effect effective input then 它就有这个output 嘛，你说是不是嘛？我不知道您那时候当时的学习经历是怎么样，因为我在此之前我也背过不少的英语，肯定是要背诵的嘛，对吧啊？",
+      "utterance_id": "ZH-CN_U1075_S0_88"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_140.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 16.525,
+      "reference": "<SPK/> 所以就是某种程度上回忆一些 <FIL/> 曾经曾经小时候儿的那些青青涩岁月吧。 <FIL/> 现在想问一下，您和 <FIL/> 是否还和之前的同学们有 any contact 吗？这种感觉。",
+      "utterance_id": "ZH-CN_U1076_S0_140"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_154.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 23.187,
+      "reference": "<FIL/> 其实我就是有一件事儿还是挺难忘的吧。我记得当时是，因为像刚才我所说的，我第一次 <FIL/> 台打台球的时候，还是在我差不多十四岁的时候， <FIL/> 那一次和我的 <FIL/> classmate。 然后后来没想到在 high school 的时候成为了我们 <FIL/> one of my best body。",
+      "utterance_id": "ZH-CN_U1076_S0_154"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_156.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 26.625,
+      "reference": "而那个时候我一天的早点早点费用，也就才三块钱，就迷上了这个运动吧。后来影响学习，我爸呢，就是有一次接我放学，就就正好是抓到我和我那个classmate， 我们一块儿去打台球 <FIL/> 这人生中第一次大厅广众之下丢脸吧，就是在那一刻，十四岁的秋天，我记得特别清楚，九月十七号的下午五点三十二。",
+      "utterance_id": "ZH-CN_U1076_S0_156"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_159.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 17.612,
+      "reference": "然后在那一刻就是 <FIL/> 没有哭，真的没有哭。那一刻那一刻，感觉自己可能至少是在我 classmate 的嘴中， <FIL/> 像是 tough guy。但实际上等自己真正一静下来的时候，那眼泪就一直在掉。",
+      "utterance_id": "ZH-CN_U1076_S0_159"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_178.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 25.22,
+      "reference": "我们这边 <FIL/> 怎么说呢，北京这边的学校吧尤其是初中和高中，那个时候还不像现在这样所谓的 <FIL/> evolution 就内卷嘛，不不会像现在这样，那个时候还是相对大家就是嘻嘻哈哈 naughty girls naughty boys. <FIL/> 然后那个时候大家就是 <FIL/> 都不是写作业，都是在抄作业。",
+      "utterance_id": "ZH-CN_U1076_S0_178"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_180.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 13.845,
+      "reference": "那那时候怎么办呢，就是 <FIL/> try to find any excuses I could, <FIL/> 然后是什么？然后就是到时候就跟她说， <FIL/> 就抄她的作业，抄，对。",
+      "utterance_id": "ZH-CN_U1076_S0_180"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_24.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 27.89,
+      "reference": "<FIL/> 我是在一 <FIL/> ，我记得我是在一七年的一月，然后抵达的迈阿密。然后那个时候的话，我当时是 international exhibition organizer 所以那个时候的话，我的主要内容吧 <FIL/> ，主要工作重心其实是更多的以那种 <FIL/> home and abroad <FIL/> ，this kind of corporation between drama and T V and T V shows documentary something like that。",
+      "utterance_id": "ZH-CN_U1076_S0_24"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_25.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 27.49,
+      "reference": "所以说那个时候的话 <FIL/> ，那个时候其实大学学的是翻译类专业，然后二外学的是日语。所以在那个时候的话 <FIL/> ，尽管在 university 中学的有了一定的基础，但是等真正刚一开始到了美国的时候 <FIL/> ， I I can I couldn't say that I couldn't you know， I couldn't manipulate or at least master this language， like the native speaker so I get you know， just get used to it。",
+      "utterance_id": "ZH-CN_U1076_S0_25"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_26.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 20.42,
+      "reference": "然后慢慢的就跟那句歌词似的，stand up feeling 就慢慢去适应嘛。当时反正是 <FIL/> 在美国的第八第八个月左右吧，基本上他们的俚语，包括语音习惯，也就 <FIL/> 说的说话的风格和他们一样了，再加上我的工作可能更多的就是偏涉外。",
+      "utterance_id": "ZH-CN_U1076_S0_26"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_34.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 27.5990625,
+      "reference": "这个如果学一门不是本国语言的一门语言，那它肯定会或多或少有口音的。然后当时他们就说 it is okay as long as long as you can accurately express your true meaning。就是只要你能够准确的表达出内心所想的一个想法就可以。但如果真的就是想强调一下 accent 或者 pronunciation <FIL/> ，那这一块的话就是更多的可以去感受一下他们的一个 <FIL/> 特殊语音技巧。",
+      "utterance_id": "ZH-CN_U1076_S0_34"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_35.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 24.26,
+      "reference": "比如说爆破音的吞音呀连读啊这些 <FIL/> ，然后怎么说呢？尽可能的不要去拽尾音。因为他当时我们也在聊，那边有很多中国的客户啊，我那时候给他们顺便也做一些 translator <FIL/> ，中国的客户这边也会带一些 <FIL/> 会英语的一些同事吧。他们过去的时候就是中国人的发音普遍就是尾音拉的比较长。",
+      "utterance_id": "ZH-CN_U1076_S0_35"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1076_S0/ZH-CN_U1076_S0_51.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0538",
+      "duration_sec": 14.275,
+      "reference": "<FIL/> 就等于说就是给他一些相应的 examples， <FIL/> 让他去模仿，从中让他去感受到一些成就感， <FIL/> 让他内心得到一种 sense of contentment。",
+      "utterance_id": "ZH-CN_U1076_S0_51"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_175.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 5.037,
+      "reference": "对。 <FIL/> 但是但是 iPhone 十五的话。",
+      "utterance_id": "ZH-CN_U1079_S0_175"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_23.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 6.235,
+      "reference": "I will go to 厦门 in the in this summer vacation。",
+      "utterance_id": "ZH-CN_U1079_S0_23"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_54.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 4.785,
+      "reference": "I don't know。 <FIL/> 你喜欢吃 K F C 的什么呢？",
+      "utterance_id": "ZH-CN_U1079_S0_54"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_58.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 11.015,
+      "reference": "<FIL/> 我最喜欢的 favor 是番茄酱，然后然后最不喜欢的 favor 是那个 <FIL/> 就相当于海椒面。",
+      "utterance_id": "ZH-CN_U1079_S0_58"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_68.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 12.595,
+      "reference": "然后我觉得哆啦 A 梦里面的每个角色都很 friendly。 然后要不然我在我的 iphone 上买两张 tickets 吧，然后方便我们先过去看。",
+      "utterance_id": "ZH-CN_U1079_S0_68"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1079_S0/ZH-CN_U1079_S0_70.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 21.955,
+      "reference": "嗯，I prefer to <FIL/> 喜茶吧，hi tea. 我选它的一些 pineapple 的，还有一些 apple 的, 还有一些 strawberry 的一些饮品。 然后我觉得里面加了很多 tea 的话，就喝起来就会感觉到很 fresh， 你觉得呢？",
+      "utterance_id": "ZH-CN_U1079_S0_70"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_1.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 14.975,
+      "reference": "My name is ** I was born and brought up in 成都. Right now I am a fresh man in Southwest Petroleum University. My major is business administration, and I hope to study more in this field.",
+      "utterance_id": "ZH-CN_U1080_S0_1"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_163.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 12.325,
+      "reference": "<FIL/> 我记得就是如果要读外国的大学，好像是国内，然后去 D I Y application。 <FIL/> the other countries 是是真的吗？",
+      "utterance_id": "ZH-CN_U1080_S0_163"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_181.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 21.795,
+      "reference": "对我还蛮喜欢，就是南昌的一个大学，就是那个南昌大学。 <FIL/> 因为 because <FIL/> 因为 <FIL/> 武汉 is very beautiful, 然后 <FIL/> 我认为它的地理位置比较的好。",
+      "utterance_id": "ZH-CN_U1080_S0_181"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_193.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 9.63,
+      "reference": "<FIL/> 你在北京读的大学，我在成都锦城 university。",
+      "utterance_id": "ZH-CN_U1080_S0_193"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_43.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 29.325,
+      "reference": "<FIL/> 因为最近上架了一个新的 movie， 就是哆啦 A 梦，因为哆啦 A 梦它之前有很多 series， 然后但它这个 series 它的名字叫地球交响乐， <FIL/> 也是在全国上映 <FIL/> And that it be famous around the word. <FIL/> 所以我们要不要吃完 K F C 之后去 take subway 去看哆啦 A 梦呢？",
+      "utterance_id": "ZH-CN_U1080_S0_43"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_57.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 27.685,
+      "reference": "<FIL/> 我也喜欢碱水 bread，那我们可以一起去采购。然后 <FIL/> you can purchase two tickets， <FIL/> 然后我可以去买一些面包啊，然后还有就是 pineapple 的 drinking 啊，然后我们在电影院门口集合，你看怎么样，然后我们相当于都能够 save time。",
+      "utterance_id": "ZH-CN_U1080_S0_57"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_64.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 25.493,
+      "reference": "<FIL/> 我也觉得因为我其实最开始看的哆啦 a 梦是零六年的那个，大雄的恐龙，就是大雄的 dinosaur，我觉得那个电影给我的感觉 <FIL/> 小的时候，我觉得这部电影这部动漫非常地 <FIL/> 有趣，然后也比较喜欢大雄，因为觉得大雄他长得就有挺憨憨的，然后人物的形象也不错。",
+      "utterance_id": "ZH-CN_U1080_S0_64"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_88.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 12.345,
+      "reference": "对，那个 <SPK/> Kathy 我想问一下，就是你觉得比如说六级考试中它的那个听力应该怎么去练习呢？因为我认为你是英专生更有发言权。",
+      "utterance_id": "ZH-CN_U1080_S0_88"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1080_S0/ZH-CN_U1080_S0_90.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0540",
+      "duration_sec": 22.615,
+      "reference": "<FIL/> 我也非常赞同你的说法， <FIL/> 那我接下来备考六级的时候，我也会听你的刚刚给我的那些建议，然后去尝试一下，看就是如何提高我的英语听力， <FIL/> 那你觉得 <SPK/> 你是 <FIL/> 最近不是有一个那个 M B T I 很火吗，那你觉得你是 E 人还是 I 人呢？",
+      "utterance_id": "ZH-CN_U1080_S0_90"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_131.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 9.475,
+      "reference": "I, my college is 四川旅游学院 <FIL/> in 龙泉成都。",
+      "utterance_id": "ZH-CN_U1081_S0_131"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_172.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 13.864,
+      "reference": "<FIL/> The first one 是因为感觉那个性格不太合适，处到了后面觉得各自不太有那种共同的 topic 了。对。",
+      "utterance_id": "ZH-CN_U1081_S0_172"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_184.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 24.085,
+      "reference": "<FIL/> 毕业以后 <FIL/> 毕业以后，肯定 teacher 是不会再管你了。因为已经毕业，但是在毕业之前会给到我们一些指导。对，在我们 graduate 之前会给我们一些指导，就是讲 <FIL/> 我们要怎么样去 <FIL/> make 我们这个简历啊，怎么样去找找对。",
+      "utterance_id": "ZH-CN_U1081_S0_184"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_190.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 13.715,
+      "reference": "比较好的一个 work 就是说它我希望它不要是那种太让我感到 tired work ，我觉得我不需要太多的 money 我我比较喜欢过躺平的人生。",
+      "utterance_id": "ZH-CN_U1081_S0_190"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_192.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 24.975,
+      "reference": "<FIL/> 对呀，我的朋友我感觉因为这个 people 就是人以群分嘛，所以我的朋友我的 friends 跟我都差不多，他们也不是那种 <FIL/> 在这个 society 里面感觉不是那种特别上进的人，我们都比较佛系， 对。",
+      "utterance_id": "ZH-CN_U1081_S0_192"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_65.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 12.495,
+      "reference": "对呀， 夏天就会觉得很 cool。 就是在 summer 的时候，你吃那个 watermelon， 就是感觉非常的 nice。",
+      "utterance_id": "ZH-CN_U1081_S0_65"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_76.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 7.563,
+      "reference": "感觉感觉很很想 eat 很想吃一下，听起来就非常的 delicious。",
+      "utterance_id": "ZH-CN_U1081_S0_76"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1081_S0/ZH-CN_U1081_S0_84.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 10.535,
+      "reference": "有啊，我经常出门儿都会听见，有很多 children 他们在说这个，他们就在唱那个钵钵鸡呀，钵呀，钵钵鸡。",
+      "utterance_id": "ZH-CN_U1081_S0_84"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_132.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 11.215,
+      "reference": "<FIL/> 在我还在大学的时候，我有一段 relationship，那你呢你有 <FIL/> 一什么 <FIL/> girlfriend 吗？",
+      "utterance_id": "ZH-CN_U1082_S0_132"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_134.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 12.135,
+      "reference": "<FIL/> 是什么原因让你们 broke up 了呀？是一些 personal 的原因吗？还是说一些现实原因导致的？",
+      "utterance_id": "ZH-CN_U1082_S0_134"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_144.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 16.352,
+      "reference": "那你们毕业以后，毕业以后，会有学校安排一些 <FIL/> 比如说 future job 的一些 guidance 吗？指导你们怎么去 choose your suitable 职业的呢？",
+      "utterance_id": "ZH-CN_U1082_S0_144"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_36.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 5.715,
+      "reference": "哦，snacks， like what? 比如说什么 snacks 呢？",
+      "utterance_id": "ZH-CN_U1082_S0_36"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_60.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 22.582,
+      "reference": "<FIL/> 我认为 the most famous one 应该叫做温州瘦肉丸。It's very popular。 在浙江 province 就是你在很多的 school 或者 college 在里面的食堂， dining hall 里面都可以看到有温州瘦肉丸的牌子。",
+      "utterance_id": "ZH-CN_U1082_S0_60"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_63.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 7.175,
+      "reference": "在成都的话，你觉得最值得尝试的小吃是 what？",
+      "utterance_id": "ZH-CN_U1082_S0_63"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U1082_S0/ZH-CN_U1082_S0_67.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD0541",
+      "duration_sec": 19.055,
+      "reference": "<FIL/> 那有机会我一定要去试一下。不过说起钵钵鸡，我就想起前段时间在抖音那个 TikTok 上面很火，就很多小朋友都会唱一元一串的钵钵鸡。你有你身边有小朋友在说这个吗？",
+      "utterance_id": "ZH-CN_U1082_S0_67"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2003_S0/ZH-CN_U2003_S0_128.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 6.255,
+      "reference": "那下次我可以去你的 dormitory 找你看这个 T V 吗？",
+      "utterance_id": "ZH-CN_U2003_S0_128"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2003_S0/ZH-CN_U2003_S0_132.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 11.375,
+      "reference": "<FIL/> 确实高二，高二会有很多的 lesson， 我们高三也会有非常多的 lesson and tests。 我我每天都非常的 nervous。",
+      "utterance_id": "ZH-CN_U2003_S0_132"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2003_S0/ZH-CN_U2003_S0_150.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 6.455,
+      "reference": "<FIL/> 确实，如果我的弟弟 don't talk with me，我也会非常的 sad 的。",
+      "utterance_id": "ZH-CN_U2003_S0_150"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2003_S0/ZH-CN_U2003_S0_280.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 28.86,
+      "reference": "天哪，看来还是你看的电影比较 more 因为我之前了解到的电影，我看到的电影，他们都是 about two hours，and sometimes it is only one hour and a half，我 never heard three hours or four more hours，非常的让我震惊。谢谢你的推荐。我觉得我应该会去看霸王别姬这一部电影的，不仅仅是因为。",
+      "utterance_id": "ZH-CN_U2003_S0_280"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_104.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 4.96,
+      "reference": "比如说哆啦 A 梦就很 Q。",
+      "utterance_id": "ZH-CN_U2004_S0_104"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_118.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 10.025,
+      "reference": "哦，我在我的 dormitory 里面的话，我一般会 watch some <FIL/> American T Vs.",
+      "utterance_id": "ZH-CN_U2004_S0_118"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_122.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 18.695,
+      "reference": "我很喜欢这一系列的 <FIL/> TVS. 因为我觉得 the character in this theory <FIL/> 都非常的他们的性格都非常的。",
+      "utterance_id": "ZH-CN_U2004_S0_122"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_138.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 9.955,
+      "reference": "Six people， ok ，那那比如呢你的爸爸妈妈还有一些。",
+      "utterance_id": "ZH-CN_U2004_S0_138"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_144.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 7.855,
+      "reference": "因为我觉得他太沉迷于游戏了，他都不怎么 talk with me。",
+      "utterance_id": "ZH-CN_U2004_S0_144"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_150.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 8.485,
+      "reference": "会呀，有时候她会给我买一些 <FIL/> skirts with flowers。",
+      "utterance_id": "ZH-CN_U2004_S0_150"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_154.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 23.085,
+      "reference": "不会有很多的 money 因为我高二的话，我的 <FIL/> 生活费 are very little so <FIL/> 我的妈妈经常就是给我 several hundreds for eating，没有其他可以存的 money 了。",
+      "utterance_id": "ZH-CN_U2004_S0_154"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_266.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 7.705,
+      "reference": "Us 看的比较 more 的是一些 <FIL/> 。",
+      "utterance_id": "ZH-CN_U2004_S0_266"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_272.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 17.7,
+      "reference": "比如我最近有看到一部是霸王别姬这样的 movies, <FIL/> it is made of China。我觉得它是比较 <FIL/> 有深意的一个 movie。Because err.",
+      "utterance_id": "ZH-CN_U2004_S0_272"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_281.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 22.503,
+      "reference": "对的，然后这部电影呢，就是用霸王别姬这个故事去 <FIL/> 为线索做一个 clue， 去 <FIL/> 展开这整一个 story。 但是呢霸王别姬在这里面只是一个 symbol， 不是说 <FIL/> 这个电影就是讲霸王别姬这个故事 event 本身。",
+      "utterance_id": "ZH-CN_U2004_S0_281"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2004_S0/ZH-CN_U2004_S0_287.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1002",
+      "duration_sec": 8.805,
+      "reference": "因为霸王别姬它好像有 four hours or three hours and a half， you know？",
+      "utterance_id": "ZH-CN_U2004_S0_287"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_108.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 22.002,
+      "reference": "哦，这个去日本的这个 trip，我觉得非常值得期待。因为我之前有了解到就是这个日本的他们这个 cherry blossom 和这个 delicious food very famous。 <FIL/> 我觉得这是一，这将会是一个非常 enjoyable 和 pleasant 的一个 trip。",
+      "utterance_id": "ZH-CN_U2011_S0_108"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_22.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 20.995,
+      "reference": "<FIL/> 好的， <FIL/> 嗨维维 <FIL/> ，我听说 <FIL/> 这个生活大学的生活非常的 colourful， <FIL/> 你可不可以讲一些你自己的一些 experience， 你我想对大学生活有更多的这个 <FIL/> 了解。",
+      "utterance_id": "ZH-CN_U2011_S0_22"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_28.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 13.995,
+      "reference": "Wow sounds great. <FIL/> 那这个 exam 和这个 homework 会不会 very difficult 啊？ <FIL/> 我我有点担心我的水平能不能 handle 这个任务。",
+      "utterance_id": "ZH-CN_U2011_S0_28"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_32.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 16.085,
+      "reference": "哦，那 <FIL/> what about 这个 <FIL/> dormitory life? 因为我听说这个 <FIL/> 大学的 dormitory，just like as a small <FIL/> a society。 <FIL/> 我想问一下这个是真的存在的吗？",
+      "utterance_id": "ZH-CN_U2011_S0_32"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_36.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 22.175,
+      "reference": "哦， <FIL/> what about 这个 <FIL/> food in the college? 就是这个食堂饭菜怎么样呀？ <FIL/> Because 我觉得这个大学的同学来自五湖四海， <FIL/> 这个食堂的口味能不能满足大家的这个 needs 他们的需要呢？",
+      "utterance_id": "ZH-CN_U2011_S0_36"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_65.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 14.665,
+      "reference": "哦，我最近听了一个叫那个 <FIL/> Justin Bieber 的的这个歌手， <FIL/> 他的歌曲的话旋律很优美，然后歌词很感人。 <FIL/> 你呢那你听了什么 K Pop 的歌曲啊？",
+      "utterance_id": "ZH-CN_U2011_S0_65"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_89.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 28.32,
+      "reference": "好吧，我那个 novel 它是一个 scientific <FIL/> scientific fiction <FIL/> 叫做三体，英文，是 the three body。 <FIL/> 我觉得这本书里面的那个科学理论，还有一些 <FIL/> 哲学思考吧。这些观点我觉得非常的就是 <FIL/> 深刻，就是可以激发你的这个 deep thinking， 我觉得就是超级棒，very good。",
+      "utterance_id": "ZH-CN_U2011_S0_89"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_93.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 18.205,
+      "reference": "Yes yes yes, 这个韩剧的这个编剧 <FIL/> 我觉得特别的厉害，超厉害。 <FIL/> 就是 <FIL/> 不过说到音乐， <SPK/> 我最近也发现了一些 new singers 和 ban bans 超激动。",
+      "utterance_id": "ZH-CN_U2011_S0_93"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2011_S0/ZH-CN_U2011_S0_99.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 9.955,
+      "reference": "哦，当然 of course，我一直都很想去这个 <FIL/> B T S 的演唱会。",
+      "utterance_id": "ZH-CN_U2011_S0_99"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_100.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 9.095,
+      "reference": "对对对， <FIL/> 说到音乐，你有没有想过 go to the side 去看一下，看一场 concert。",
+      "utterance_id": "ZH-CN_U2012_S0_100"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_104.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 8.935,
+      "reference": "<FIL/> 说到 dreams，你有没有想过旅行 trouble after your graduations？",
+      "utterance_id": "ZH-CN_U2012_S0_104"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_108.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 5.73,
+      "reference": "对对对，哎，不说了，不说了，我要走了。去图书馆了。See you。",
+      "utterance_id": "ZH-CN_U2012_S0_108"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_24.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 15.335,
+      "reference": "<FIL/> 当然可以。 <FIL/> 首先 college life 与高中生活是非常 different， 你必须要学会 balance 你的学业和各种 activities。",
+      "utterance_id": "ZH-CN_U2012_S0_24"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_31.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 11.313,
+      "reference": "<FIL/> 按时去完成你的 Howard 和完成老师布置的 task. Well prepare 一般这个 exam 应该不会很难的。",
+      "utterance_id": "ZH-CN_U2012_S0_31"
+    },
+    {
+      "audio_path": "/mnt/data/tungnx/CS-Dialogue/data/short_wav/extracted/short_wav/WAVE/C0/ZH-CN_U2012_S0/ZH-CN_U2012_S0_42.wav",
+      "data_role": "D-dev-select",
+      "dialogue_id": "CSD1006",
+      "duration_sec": 21.955,
+      "reference": "哦，不用担心。因为 <FIL/> 我们体育课它是可以根据你的 interests 去选择的。比如说你非常喜欢 basketball。那你就可以选 basketball lessons。如果你想选择体操，你也可以选择 yoga 等等，而且也不用像中考那样有体测，所以不用担心。",
+      "utterance_id": "ZH-CN_U2012_S0_42"
+    }
+  ],
+  "schema_version": "basis_a3_panel_v1",
+  "selection": "exact prior DG-03–DG-07 300-ID key set",
+  "source_baseline": "results/dg04/results/B0.json:texts"
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "a6_ott_phase_a_completion_v1",
+  "status": "PASS",
+  "phase": "A",
+  "manifest": "results/a6_ott_upper_bound/manifests/v2/SEARCH_FREEZE.json",
+  "manifest_freeze_hash": "sha256:4f011145b4613e4fe9f9931e5223bfb43ea6b05bc94ca433376679cd4e39895c",
+  "logical": {
+    "whisper": 11520,
+    "qwen3_asr_1p7b": 12800
+  },
+  "resolved": {
+    "whisper": 11520,
+    "qwen3_asr_1p7b": 12800
+  },
+  "exact_reused": {
+    "whisper": 72,
+    "qwen3_asr_1p7b": 96
+  },
+  "computed_new": {
+    "whisper": 11448,
+    "qwen3_asr_1p7b": 12704
+  },
+  "preserved_out_of_scope_rows": 63,
+  "validation": {
+    "missing": 0,
+    "invalid": 0,
+    "expected_key_hash": "sha256:41ac6c4a6a86f21d3f5564bf7cdac9f5d8afd974e446bd2c9b005e0a9f7ec0d0",
+    "accepted_key_hash": "sha256:41ac6c4a6a86f21d3f5564bf7cdac9f5d8afd974e446bd2c9b005e0a9f7ec0d0",
+    "confirmation_and_seame_outcomes_loaded": false
+  },
+  "jobs": [
+    53470,
+    53471
+  ],
+  "gpu_seconds_including_failed_pre_fix_attempts": {
+    "whisper": 5382,
+    "qwen3_asr_1p7b": 5461
+  },
+  "gpu_hours_including_failed_pre_fix_attempts": {
+    "whisper": 1.495,
+    "qwen3_asr_1p7b": 1.5169444444444444
+  },
+  "created_utc": "2026-09-21T14:08:24.032448+00:00"
+}

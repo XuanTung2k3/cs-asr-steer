@@ -1,0 +1,158 @@
+{
+  "freeze_hash": "sha256:4f011145b4613e4fe9f9931e5223bfb43ea6b05bc94ca433376679cd4e39895c",
+  "ids": {
+    "ascend": [
+      "ascend/validation/00005",
+      "ascend/validation/00028",
+      "ascend/validation/00062",
+      "ascend/validation/00195",
+      "ascend/validation/00293",
+      "ascend/validation/00298",
+      "ascend/validation/00391",
+      "ascend/validation/00443",
+      "ascend/validation/00451",
+      "ascend/validation/00454",
+      "ascend/validation/00566",
+      "ascend/validation/00570",
+      "ascend/validation/00575",
+      "ascend/validation/00581",
+      "ascend/validation/00850",
+      "ascend/validation/00861",
+      "ascend/validation/00874",
+      "ascend/validation/00900",
+      "ascend/validation/01086",
+      "ascend/validation/01110"
+    ],
+    "cs_dialogue": [
+      "ZH-CN_U2003_S0_132",
+      "ZH-CN_U1076_S0_154",
+      "ZH-CN_U1064_S0_102",
+      "ZH-CN_U1004_S0_28",
+      "ZH-CN_U0039_S0_315",
+      "ZH-CN_U1002_S0_288",
+      "ZH-CN_U1001_S0_53",
+      "ZH-CN_U0029_S0_300",
+      "ZH-CN_U2011_S0_89",
+      "ZH-CN_U1081_S0_192",
+      "ZH-CN_U0023_S0_106",
+      "ZH-CN_U0023_S0_560",
+      "ZH-CN_U1033_S0_199",
+      "ZH-CN_U0028_S0_37",
+      "ZH-CN_U1034_S0_70",
+      "ZH-CN_U1028_S0_48",
+      "ZH-CN_U0011_S0_91",
+      "ZH-CN_U0085_S0_175",
+      "ZH-CN_U1033_S0_61",
+      "ZH-CN_U2012_S0_104"
+    ]
+  },
+  "phase": "A",
+  "prior_manifest": "results/a6_ott_upper_bound/manifests/SEARCH_FREEZE.json",
+  "prior_manifest_sha256": "sha256:1b01f7f1c68981f12f933dd80e4bbf0e719a4ee936c1ebfadfc4a92ca4187787",
+  "replacements": [
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U0011_S0_758",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U1033_S0_199",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U0024_S0_97",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U0028_S0_37",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U0086_S0_201",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U1034_S0_70",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U0091_S0_68",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U1028_S0_48",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U1001_S0_388",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U0011_S0_91",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U1021_S0_205",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U0085_S0_175",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U1034_S0_173",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U1033_S0_61",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    },
+    {
+      "reason": "ORACLE_ALIGNMENT_INELIGIBLE",
+      "removed_id": "ZH-CN_U2004_S0_138",
+      "removed_status": "STRUCTURALLY_INELIGIBLE",
+      "replacement_id": "ZH-CN_U2012_S0_104",
+      "replacement_status": "FULLY_ELIGIBLE",
+      "steering_outcomes_consulted": false
+    }
+  ],
+  "schema_version": "a6_ott_search_freeze_v2",
+  "seed": 42,
+  "selection_rule": "sha256(seed,dataset,utterance_id), first 20 FULLY_ELIGIBLE",
+  "source": {
+    "ascend_alignment": {
+      "accepted_id_count": 220,
+      "path": "results/basis_a6_expanded/ascend/ASCEND_EVAL_ALIGNMENT.json",
+      "sha256": "sha256:b531a3958dbff3505ef1a6075797641ce1cf1ffb0317f117eb9d9d249a6210c2"
+    },
+    "ascend_manifest": {
+      "path": "results/basis_a6_expanded/ascend/ASCEND_EVAL_MANIFEST.json",
+      "pool_count": 220,
+      "sha256": "sha256:88d25b9a16b88e9d0db23b7f1c18671faabe605c3d3f14f4e35df68de4fea64f"
+    },
+    "cs_accepted_alignment_procedure": {
+      "accepted_id_count": 148,
+      "inputs": [
+        {
+          "path": "artifacts_lss/alignments/candidates_all.parquet",
+          "sha256": "sha256:b6e6d68327a005e827f161b4a292ccbb8f9d961b7195541042fba64ada4ba50c"
+        },
+        {
+          "path": "artifacts_lss/manifests/roles/role_D-dev-select.parquet",
+          "sha256": "sha256:266b06a52e1ea425a11d6a84386191d32de4739f61a960564be8ed1ad0bd2474"
+        },
+        {
+          "path": "artifacts/manifests/poi_dev_select.parquet",
+          "sha256": "sha256:c88b3d85c4830a1919e189e23a1183cef4a96582db4e4ce8195f61da81c2099a"
+        }
+      ],
+      "procedure": "experiments.basis_a4_qwen._load_cs_eval_spans"
+    },
+    "cs_panel": {
+      "path": "results/basis_a4/panels/cs_dialogue_300.json",
+      "pool_count": 300,
+      "sha256": "sha256:68296819a8fea23fae557919300d5c29db2830126e9d6e8f8bc6b9736ad95fed"
+    }
+  },
+  "steering_outcomes_consulted": false,
+  "target_per_dataset": 20
+}

@@ -1,0 +1,50 @@
+{
+ "checks": {
+  "forecast_within_allocation": true,
+  "frozen_unchanged_since_freeze": true,
+  "installed_auto_prompt_semantics": true,
+  "installed_detect_language_lowest_id_argmax": true,
+  "installed_generation_file": true,
+  "model_files": true,
+  "panel_identity": true,
+  "plan_checks_all_true": true,
+  "plan_committed": true,
+  "plan_hash": true,
+  "projection_label_free": true,
+  "projection_prefix_only": true,
+  "s1_tests_pass": true,
+  "sources_pinned": true,
+  "static:auditor_independent": true,
+  "static:evaluator_gated_on_seal_and_primary_audit": true,
+  "static:no_masked_regeneration": true,
+  "static:provider_no_reference_identifiers": true,
+  "static:runner_does_not_import_evaluator_or_auditor": true,
+  "static:runner_no_reference_identifiers": true,
+  "static:runner_no_steering_or_training": true,
+  "static:runner_r0_only_heard_track": true,
+  "static:runner_records_open_log": true,
+  "suppression_matches_installed_generation_config": true,
+  "synthetic_primary_vs_independent": true
+ },
+ "created_unix": 1791473422.8696687,
+ "failed": [],
+ "git_head": "6c6917fd911fc293005d3beb81f60bade304212b",
+ "notes": {
+  "synthetic": {
+   "cases": 40,
+   "disagreements": [],
+   "status_mix": {
+    "LOW_ASSOCIATION/NO_TARGET": 5,
+    "LOW_ENERGY/NO_TARGET": 9,
+    "LOW_HEARD_MASS/NO_TARGET": 1,
+    "NO_EN_REGION/NO_TARGET": 6,
+    "OK/NO_MATCHED_OFFTARGET": 19
+   }
+  },
+  "tests_tail": [
+   "........................................                                 [100%]"
+  ]
+ },
+ "schema": "s1_audit_prerun_v1",
+ "verdict": "PASS_TO_S1"
+}

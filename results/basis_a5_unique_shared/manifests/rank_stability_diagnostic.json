@@ -1,0 +1,874 @@
+{
+  "blocking": false,
+  "counts": {
+    "NOT_TESTED": 105,
+    "STABLE": 7,
+    "UNSTABLE": 4
+  },
+  "layers": [
+    {
+      "layer": 0,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 1,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 2,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 3,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 4,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 5,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 6,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 7,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 8,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 9,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 10,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 11,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 12,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 13,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 14,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 15,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 16,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 17,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 18,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 19,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 20,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 21,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 22,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 23,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 8.673617379884035e-18,
+      "layer": 24,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "preserved_rank_stability.json",
+      "status": "UNSTABLE"
+    },
+    {
+      "layer": 25,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 2.0469737016526324e-16,
+      "cos_abs_unique_64_vs_32": 3.642919299551295e-16,
+      "layer": 26,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "preserved_rank_stability.json",
+      "status": "UNSTABLE"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 3.608224830031759e-16,
+      "cos_abs_unique_64_vs_32": 1.7694179454963432e-16,
+      "layer": 27,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "preserved_rank_stability.json",
+      "status": "UNSTABLE"
+    },
+    {
+      "layer": 28,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 29,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 30,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0000000000000002,
+      "cos_abs_shared_64_vs_32": 1.0000000000000002,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 3.8163916471489756e-17,
+      "layer": 31,
+      "model": "whisper",
+      "side": "encoder",
+      "source": "preserved_rank_stability.json",
+      "status": "UNSTABLE"
+    },
+    {
+      "layer": 0,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 1,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 2,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 3,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 4,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 5,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 6,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 7,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 8,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 9,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 10,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 11,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 12,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 13,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 14,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 15,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 16,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 17,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 18,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 19,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 20,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 21,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 22,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 23,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 0.9999999999999999,
+      "cos_abs_unique_64_vs_32": 0.9999999999999999,
+      "layer": 24,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "layer": 25,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 0.9999999999999999,
+      "cos_abs_unique_64_vs_32": 0.9999999999999999,
+      "layer": 26,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 1.0,
+      "cos_abs_unique_64_vs_32": 1.0,
+      "layer": 27,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "layer": 28,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 29,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 30,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0000000000000002,
+      "cos_abs_shared_64_vs_32": 1.0000000000000002,
+      "cos_abs_unique_16_vs_32": 1.0000000000000004,
+      "cos_abs_unique_64_vs_32": 1.0000000000000004,
+      "layer": 31,
+      "model": "whisper",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "layer": 0,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 1,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 2,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 3,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 4,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 5,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 6,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 7,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 8,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 9,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 10,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 11,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 12,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 13,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 14,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 15,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 16,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 17,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 18,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 19,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 20,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 21,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 22,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 23,
+      "model": "qwen3_asr_1p7b",
+      "side": "encoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 0,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 1,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 2,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 3,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 4,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 5,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 6,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 7,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 8,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 9,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 10,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 11,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 12,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 13,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 14,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 15,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 16,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 17,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 18,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 19,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 20,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 21,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 22,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "layer": 23,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999999,
+      "cos_abs_shared_64_vs_32": 0.9999999999999999,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 1.0000000000000002,
+      "layer": 24,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "layer": 25,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "not_tested_by_preserved_gate",
+      "status": "NOT_TESTED"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 0.9999999999999998,
+      "cos_abs_shared_64_vs_32": 0.9999999999999998,
+      "cos_abs_unique_16_vs_32": 1.0000000000000002,
+      "cos_abs_unique_64_vs_32": 1.0000000000000002,
+      "layer": 26,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    },
+    {
+      "cos_abs_shared_16_vs_32": 1.0,
+      "cos_abs_shared_64_vs_32": 1.0,
+      "cos_abs_unique_16_vs_32": 1.0,
+      "cos_abs_unique_64_vs_32": 1.0,
+      "layer": 27,
+      "model": "qwen3_asr_1p7b",
+      "side": "decoder",
+      "source": "preserved_rank_stability.json",
+      "status": "STABLE"
+    }
+  ],
+  "mer_pier_never_select_rank": true,
+  "preserved_gate_sha256": "sha256:9610c7d2f57aa051a729a038dba57b8525b98cd95d1fa2e3fa6ac192e5ee817c",
+  "preserved_gate_status": "FAIL",
+  "primary_rank": 32,
+  "protocol_hash": "sha256:39c3f62c162ab0fe10acb5bc2b0c17040b2744ecee5fb9d4dd08a2d12c78dfb2",
+  "rank_fixed_before_downstream_outcomes": true,
+  "schema_version": "basis_a5_rank_stability_diagnostic_v1",
+  "status": "DIAGNOSTIC_ONLY"
+}

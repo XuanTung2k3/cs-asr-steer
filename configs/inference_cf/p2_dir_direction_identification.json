@@ -1,0 +1,158 @@
+{
+  "schema": "p2_dir_direction_identification_v1",
+  "stage": "P2-DIR",
+  "status": "DESIGN_FROZEN_IMPLEMENTATION_PENDING",
+  "design_base_commit": "ae6d10b9f7194a7e090b52f95dc49ab63a407a18",
+  "spec": "docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md",
+  "source_sha256": {
+    "results/inference_cf/p2r/population.json": "2ae92b626fa540d464446ab9b2b7ad85e479820fe98b45872ad803538fc12020",
+    "results/inference_cf/p2rj/positions.json": "8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2rj/run1/manifest.json": "6b4c82a1d41f7cce30b716f183fbfc496533543701cccaaaf90d5d4bfc28580a",
+    "results/inference_cf/p2_frozen_configuration.json": "7fc4312369085078f07ba6437732bd2c6f89d6d409cb5d1466ee886c0d2e037c",
+    "results/inference_cf/p2_final_summary.json": "2ede76fbc07667c732ebc85d425810c19ea50fd3986951b0a5f60c5b75f4dba2",
+    "results/basis_a5_unique_shared/directions/whisper/manifest.json": "283119b08357050b3dd0cf7990ab790147e9ca94428eceee8bc58e3eaa2a575e",
+    "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2r.py": "ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p2rj.py": "eb4aee15b61315590dcbf277dd3d42a8785fef9d3234c77a2ad4f7c89da3e137",
+    "src/csasr/experiments/basis_a5_unique_shared.py": "959ed31c32281695390a5a059eff1d5111598787cd8f93793ecd7b226c6664ac",
+    "src/csasr/basis_a6/directions.py": "245388d8ba37f696f7d6a3d5ed48727c12e11b0a3260e45b2476e317f41e8042",
+    "src/csasr/basis_a6/fixed.py": "524995fff3e144e01bbd51632ad601d6b9648f2b7ca8e002b5d22444ff4a0959",
+    "results/basis_a6_expanded/fixed/cs_dialogue/directions/whisper/decoder/L16/add_unique.npy": "93d681722d8831460ef241e27a77377036d7dc179be9e13893ffe1be376e9830",
+    "results/basis_a6_expanded/manifests/FIXED_DIRECTION_INVENTORY.json": "fbbcb4f9291445671fd84b5a0b51cab05682c79d4e663a5e14cf3d7ee25fa513"
+  },
+  "candidates": [
+    "D0",
+    "D1",
+    "D2"
+  ],
+  "layer": 16,
+  "site": "decoder_post_cross_attn_residual",
+  "dtype": "bfloat16",
+  "attention": "eager",
+  "norm_preserve": true,
+  "depth_rescale": false,
+  "population": "results/inference_cf/p2rj/positions.json",
+  "strata_counts": {
+    "EN-confusion": 60,
+    "EN-correct": 60,
+    "ZH-correct": 60
+  },
+  "energy": {
+    "e_star": 1.1260757575454359,
+    "max_relative_squared_error": 0.02,
+    "max_pairwise_relative_squared_error": 0.02,
+    "solver_max_evaluations": 8
+  },
+  "D0": {
+    "function": "csasr.inference_cf.core_p1.direction",
+    "epsilon": 1e-06,
+    "tiny_norm": 0.0001
+  },
+  "D1": {
+    "definition": "NEW_P2_DIR_CROSSFIT_V1",
+    "A": "frozen EN-correct positions excluding evaluated dialogue",
+    "B": "frozen ZH-correct positions excluding evaluated dialogue",
+    "cross_fit": "leave_one_dialogue_out for all three experiments",
+    "center": false,
+    "rank_A": 32,
+    "rank_B": 32,
+    "minimum_count_per_group": 32,
+    "dtype_math": "float64 CPU",
+    "sign": "toward mean_A-minus-mean_B",
+    "degeneracy_relative_tolerance": 1e-10,
+    "fallback": "invalid; no alternate vector"
+  },
+  "D2": {
+    "partition_function": "csasr.inference_cf.core_r2.tokenizer_partition",
+    "partition_version": "whisper_han_ascii_v1",
+    "epsilon": 1e-12,
+    "temperature": 1,
+    "objective": "log(P_E+eps)-log(P_M+eps)",
+    "logits": "suppression-processed",
+    "probe_dtype": "float32",
+    "forward_dtype": "bfloat16",
+    "geometry_dtype": "float64 CPU",
+    "tiny_tangent_norm": 1e-08,
+    "fallback": "no-edit with reason"
+  },
+  "bootstrap": {
+    "unit": "dialogue",
+    "aggregation": "mean positions within dialogue then mean dialogues",
+    "replicates": 10000,
+    "seed": 240924,
+    "family_size_exp1": 10,
+    "family_size_exp2": 5,
+    "family_size_exp3": 10,
+    "method": "paired percentile Bonferroni two-sided familywise 95%"
+  },
+  "exp1": {
+    "material_margin_nats": 0.5,
+    "paired_D0_lower_bound_nats": 0,
+    "correct_margin_lower_bound_nats": -0.25,
+    "corruption_upper_bound": 0.05,
+    "candidate_valid_rate_min": 0.95,
+    "matched_min_positions_per_stratum": 40,
+    "matched_min_dialogues_per_stratum": 12,
+    "tie_rule": "D1 unless paired D2-minus-D1 CI lower bound > 0.25 nat"
+  },
+  "exp2": {
+    "alpha": 2,
+    "gate": "E*R_B",
+    "phi": "id",
+    "material_margin_nats": 0.1,
+    "minimum_retained_exp1_benefit_fraction": 0.2,
+    "paired_D0_lower_bound_nats": 0,
+    "correct_margin_lower_bound_nats": -0.25,
+    "corruption_upper_bound": 0.05
+  },
+  "exp3": {
+    "systems": [
+      "B0",
+      "OLD",
+      "NEW",
+      "BROAD",
+      "AUTO"
+    ],
+    "role": "D-dev-select",
+    "utterances": 300,
+    "dialogues": 20,
+    "max_new_tokens": 200,
+    "greedy": true,
+    "material_PIER_gain": 0.005,
+    "MER_damage_upper_bound": 0.005,
+    "ZH_CER_damage_upper_bound": 0.005,
+    "EN_WER_damage_upper_bound": 0.01,
+    "retention_loss_upper_bound": 0.01,
+    "outside_target_harm_upper_bound": 0.005,
+    "broad_energy_tolerance": 0.02
+  },
+  "compute": {
+    "partition": "mig",
+    "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1",
+    "batch_size": 1,
+    "maximum_active_or_pending_jobs": 2,
+    "target_gpu_hours": 4,
+    "exp1_time_limit": "01:00:00",
+    "exp2_time_limit": "01:00:00",
+    "exp3_time_limit": "02:00:00"
+  },
+  "allowed_roles": [
+    "D-dev-select",
+    "historical artifacts only"
+  ],
+  "forbidden_roles": [
+    "router-calib",
+    "D-dev-confirm",
+    "D-test",
+    "P3",
+    "SEAME",
+    "CS-FLEURS",
+    "ViMedCSS",
+    "ASCEND",
+    "Qwen transfer"
+  ],
+  "p2r_parent_population_hash": "sha256:6a880d2b20049200dbd7e58ab6d34c55238a772e7be616fac337c7fff8b743bb",
+  "positions_hash": "sha256:c1e016c0fd5c6c4544a806194541ce4fb1b0b94a5aa3660d07807a3d870a54d4"
+}

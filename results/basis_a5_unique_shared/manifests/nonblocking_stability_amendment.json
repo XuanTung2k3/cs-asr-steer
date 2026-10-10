@@ -1,0 +1,18 @@
+{
+  "amendment_sha256": "sha256:a25e8a6dd1d7ae782af20cd8d3d2fae51df03bbb592bcc62f6a4ebb7e38dcdf2",
+  "mer_pier_never_select_rank": true,
+  "policy": "diagnostic_nonblocking",
+  "previous_commits": [
+    "de3a3e0",
+    "9d31b10"
+  ],
+  "previous_gate": "results/basis_a5_unique_shared/manifests/rank_stability.json",
+  "previous_gate_sha256": "sha256:9610c7d2f57aa051a729a038dba57b8525b98cd95d1fa2e3fa6ac192e5ee817c",
+  "previous_gate_status": "FAIL",
+  "previous_slurm_job": "53047",
+  "primary_rank": 32,
+  "rank_fixed_before_downstream_outcomes": true,
+  "schema_version": "basis_a5_nonblocking_stability_amendment_v1",
+  "status": "ACTIVE",
+  "unstable_layers_labeled": true
+}

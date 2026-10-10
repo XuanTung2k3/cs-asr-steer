@@ -1,0 +1,30 @@
+{
+  "pipeline_max": {
+    "expected_wall_hours_at_2_gpus": 21.935146893051634,
+    "qwen_gpu_hours": 14.158092292354539,
+    "slack_adjusted_gpu_hours": 43.87029378610327,
+    "total_gpu_hours": 38.14808155313328,
+    "whisper_gpu_hours": 23.989989260778746
+  },
+  "qwen3_asr_1p7b": {
+    "exact_reused": 0,
+    "logical_total": 12800,
+    "remaining_physical": 12800
+  },
+  "qwen_standard_equivalence": "PASS",
+  "reusable_percentage": {
+    "exact_search_rows": 0.0,
+    "validated_direction_construction": {
+      "note": "construction reuse only; no Phase-A decoded row is exact-reused",
+      "percentage": 0.17045454545454544,
+      "reusable_direction_constructions": 12,
+      "total_direction_constructions": 7040
+    }
+  },
+  "schema_version": "a6_ott_dry_run_v1",
+  "whisper": {
+    "exact_reused": 0,
+    "logical_total": 11520,
+    "remaining_physical": 11520
+  }
+}

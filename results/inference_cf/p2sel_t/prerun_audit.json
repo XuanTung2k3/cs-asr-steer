@@ -1,0 +1,82 @@
+{
+ "checks": {
+  "alignment_heads_present": true,
+  "anchor:docs/inference_cf/P2_SEL_MINI_PANEL.json": true,
+  "anchor:experiments/inference_cf_cached.py": true,
+  "anchor:experiments/inference_cf_p0_r2.py": true,
+  "anchor:experiments/inference_cf_p2r.py": true,
+  "anchor:experiments/inference_cf_p2sel.py": true,
+  "anchor:experiments/inference_cf_p2sel_e.py": true,
+  "anchor:results/inference_cf/p2dir/construction_population.json": true,
+  "anchor:results/inference_cf/p2dir/exp1_run1/directions_sealed.json": true,
+  "anchor:results/inference_cf/p2rj/positions.json": true,
+  "anchor:results/inference_cf/p2sel/s1_run1/manifest.json": true,
+  "anchor:results/inference_cf/p2sel_e/e0_run1/manifest.json": true,
+  "anchor:results/inference_cf/p2sel_e/e0_run1_audit.json": true,
+  "anchor:src/csasr/inference_cf/core_r2.py": true,
+  "anchor:src/csasr/inference_cf/readout.py": true,
+  "auditor_independent": true,
+  "center_equals_e0_short_180": true,
+  "compute_caps": true,
+  "d2_sealed": true,
+  "frozen:configs/inference_cf/p2_sel_t.json": true,
+  "frozen:docs/inference_cf/P2_SEL_T_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_SEL_T_SPEC.md": true,
+  "historical_groups": true,
+  "mini_panel": true,
+  "no_T_outcome": true,
+  "null_reuse": true,
+  "parent_terminal_pass": true,
+  "population": true,
+  "provider_identity": true,
+  "runtime_surface_reference_free": true,
+  "tests_present": true
+ },
+ "git_commit": "d36d7f65c8ecdc455ebeaa9c1ec22b1ffa6d735d",
+ "notes": {
+  "alignment_heads": [
+   [
+    7,
+    0
+   ],
+   [
+    10,
+    17
+   ],
+   [
+    12,
+    18
+   ],
+   [
+    13,
+    12
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    17,
+    14
+   ],
+   [
+    19,
+    11
+   ],
+   [
+    21,
+    4
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    25,
+    6
+   ]
+  ]
+ },
+ "schema": "p2_sel_t_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_SEL_T_T0"
+}

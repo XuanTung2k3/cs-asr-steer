@@ -1,0 +1,26 @@
+{
+  "schema_version": "a6_ott_execution_attempt_v2",
+  "status": "PHASE_A_COMPLETE",
+  "phase_completed": "A",
+  "phase_b_started": false,
+  "phase_c_started": false,
+  "search_manifest": "results/a6_ott_upper_bound/manifests/v2/SEARCH_FREEZE.json",
+  "search_manifest_freeze_hash": "sha256:4f011145b4613e4fe9f9931e5223bfb43ea6b05bc94ca433376679cd4e39895c",
+  "jobs": [53470, 53471],
+  "failed_pre_fix_attempts": [
+    {"job": "53470_1", "cause": "A6 dynamic-rank-1 Add-Unique path absent", "requeued": true},
+    {"job": "53471_1", "cause": "A6 dynamic-rank-1 Add-Unique path absent", "requeued": true},
+    {"job": "53471_2", "cause": "A6 dynamic-rank-1 Add-Unique path absent", "requeued": true}
+  ],
+  "logical_completion": {
+    "whisper": {"expected": 11520, "resolved": 11520, "exact_reused": 72, "computed_new": 11448},
+    "qwen3_asr_1p7b": {"expected": 12800, "resolved": 12800, "exact_reused": 96, "computed_new": 12704}
+  },
+  "selection": {
+    "whisper": "results/a6_ott_upper_bound/search/WHISPER_SELECTION.json",
+    "qwen": "results/a6_ott_upper_bound/search/QWEN_SELECTION.json",
+    "qwen_diagnosis": "results/a6_ott_upper_bound/search/QWEN_PHASE_A_DIAGNOSIS.json",
+    "qwen_rescue": "NOT_TRIGGERED"
+  },
+  "outcomes_loaded_out_of_phase": false
+}

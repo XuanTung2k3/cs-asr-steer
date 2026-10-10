@@ -1,0 +1,126 @@
+{
+  "GPU_calls": 0,
+  "arms": {
+    "prompt_L16_eta0.15_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0018496949101012294,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.6508344111710107,
+      "phi_min": 1.2188850163735188
+    },
+    "prompt_L16_eta0.15_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.004003052898750803,
+      "max_solver_evaluations": 8,
+      "phi_max": 1.9227076372162746,
+      "phi_min": 1.4907582424187826
+    },
+    "prompt_L16_eta0.30_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0013309526312514919,
+      "max_solver_evaluations": 2,
+      "phi_max": 1.6508344111710107,
+      "phi_min": 1.2188850163735188
+    },
+    "prompt_L16_eta0.30_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0017315643816634418,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.9227076372162746,
+      "phi_min": 1.4907582424187826
+    },
+    "prompt_L16_eta0.45_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0013037970727350912,
+      "max_solver_evaluations": 2,
+      "phi_max": 1.6508344111710107,
+      "phi_min": 1.2188850163735188
+    },
+    "prompt_L16_eta0.45_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0012604164475764623,
+      "max_solver_evaluations": 2,
+      "phi_max": 1.9227076372162746,
+      "phi_min": 1.4907582424187826
+    },
+    "prompt_L24_eta0.15_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.001914229026100056,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.6035940640774153,
+      "phi_min": 1.1848195206848553
+    },
+    "prompt_L24_eta0.15_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.0019528709408169753,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.9567731329049378,
+      "phi_min": 1.5379985895123778
+    },
+    "prompt_L24_eta0.30_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.001900389301581873,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.6035940640774153,
+      "phi_min": 1.1848195206848553
+    },
+    "prompt_L24_eta0.30_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.001756289161596425,
+      "max_solver_evaluations": 2,
+      "phi_max": 1.9567731329049378,
+      "phi_min": 1.5379985895123778
+    },
+    "prompt_L24_eta0.45_minus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.001313551197969387,
+      "max_solver_evaluations": 2,
+      "phi_max": 1.6035940640774153,
+      "phi_min": 1.1848195206848553
+    },
+    "prompt_L24_eta0.45_plus": {
+      "cases": 180,
+      "failure_indices": [],
+      "max_relative_squared_error": 0.001944340633081909,
+      "max_solver_evaluations": 3,
+      "phi_max": 1.9567731329049378,
+      "phi_min": 1.5379985895123778
+    }
+  },
+  "cases": 2160,
+  "complete_four_layer_preflight": false,
+  "config_sha256": "sha256:368d70d98284d391fe829c07ba8561fe6c5c4c4d351b87a470084e50265bf33d",
+  "device": "cpu",
+  "dtype": "native bf16 repair, float64 geometry",
+  "elapsed_seconds": 0.5435449201613665,
+  "evaluator_access": false,
+  "forward_source_sha256": "sha256:78267a125c841f9bb589b85a34ab524f98d13c7c05345145928ec3055dc74aa6",
+  "inputs": {
+    "results/inference_cf/st_loc0/run1/calibration/states_L16_CROSS.npz": "sha256:3c812246076164aaf461b37b09531225ceb7296c5b3a525db5647be4a147f801",
+    "results/inference_cf/st_loc0/run1/calibration/states_L24_CROSS.npz": "sha256:b1d248879c86928624de4344d89a8db9c7222b88fe018fe3f5374c861dac1b04"
+  },
+  "new_edited_logits": 0,
+  "new_model_forwards": 0,
+  "panel_identity_hash": "sha256:41168f57a2ef443ab73c2979e3e95f16b1a57b3cf6f4ee93aed4d968cc088b6d",
+  "pending_layers": [
+    3,
+    8
+  ],
+  "pending_reason": "sealed R0 archives retain only mean prompt vectors, not query-paired E states",
+  "reviewed_layers": [
+    16,
+    24
+  ],
+  "schema": "st_prompt_r1_cpu_geometry_v1"
+}

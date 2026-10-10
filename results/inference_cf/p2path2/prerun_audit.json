@@ -1,0 +1,26 @@
+{
+ "checks": {
+  "anchors": true,
+  "auditor_independent": true,
+  "barrier_before_controller": true,
+  "compute_plan": true,
+  "controller_input_allowlist": true,
+  "frozen:configs/inference_cf/p2_path2.json": true,
+  "frozen:docs/inference_cf/P2_PATH2_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_PATH2_PANEL.json": true,
+  "frozen:docs/inference_cf/P2_PATH2_SPEC.md": true,
+  "historical_counts_and_cutoffs": true,
+  "label_truth_table": true,
+  "no_cross_model_cache": true,
+  "no_outcome": true,
+  "one_trigger_shared_decision": true,
+  "panel_hash": true,
+  "plan_committed": true,
+  "population_independent": true,
+  "tests_present": true,
+  "two_instances_no_alias": true
+ },
+ "git_commit": "5fa259d58be577622ec0f91cb1391477f7387661",
+ "schema": "p2_path2_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_PATH2"
+}

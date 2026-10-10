@@ -1,0 +1,1 @@
+{"elapsed_sec":122.48864483833313,"end_unix":1790412034.696356,"gpu":"NVIDIA H100 80GB HBM3 MIG 3g.40gb","job_id":"55002","node":"worker-mig-3g40gb-0","passes":{"bf16":{"elapsed_sec":65.76056957244873},"fp32":{"elapsed_sec":56.68647575378418}},"peak_vram_bytes":8054667776,"start_unix":1790411912.2077112,"status":"completed"}

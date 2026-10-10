@@ -1,0 +1,91 @@
+{
+  "schema_version": "basis_a6_runtime_estimates_v1",
+  "status": "MEASURED",
+  "atlas_execution": "NOT_STARTED",
+  "models": {
+    "whisper": {
+      "job_id": "53326",
+      "model_load_sec": 7.777388885617256,
+      "seconds_per_utterance": 1.3534560594707727,
+      "peak_allocated_vram_bytes": 4984075264,
+      "peak_reserved_vram_bytes": 5337251840,
+      "direction_cache_bytes_observed": 440317,
+      "hidden_state_temporary_bytes": 2560000,
+      "measured_end_to_end_job_sec": 277,
+      "measured_tt_overhead_factor": 2.6324236145412905,
+      "estimated_a6_f_cs_source_hours": 745.9046727750036,
+      "estimated_a6_f_ascend_source_hours": 745.9046727750036,
+      "estimated_a6_f_both_sources_hours": 1491.8093455500073,
+      "estimated_a6_tt_hours": 1963.5370748096136,
+      "decode_modes": {
+        "greedy": "measured",
+        "official_standard": "measured"
+      }
+    },
+    "qwen3_asr_1p7b": {
+      "job_id": "53321",
+      "model_load_sec": 10.21860533207655,
+      "seconds_per_utterance": 1.0674074717405204,
+      "peak_allocated_vram_bytes": 4698449408,
+      "peak_reserved_vram_bytes": 4779409408,
+      "direction_cache_bytes_observed": 555331,
+      "hidden_state_temporary_bytes": 1736704,
+      "measured_end_to_end_job_sec": 217,
+      "measured_tt_overhead_factor": 2.4921919941402595,
+      "estimated_a6_f_cs_source_hours": 485.3145971513566,
+      "estimated_a6_f_ascend_source_hours": 485.3145971513566,
+      "estimated_a6_f_both_sources_hours": 970.6291943027132,
+      "estimated_a6_tt_hours": 1209.4971536600162,
+      "decode_modes": {
+        "greedy": "measured",
+        "official_standard": "measured"
+      }
+    }
+  },
+  "policy": {
+    "target_job_hours": 2.5,
+    "hard_job_hours": 3.0,
+    "max_concurrent_gpu_jobs": 2,
+    "preferred_gpu": "H100 MIG 3g.40GB"
+  },
+  "shard_policy": {
+    "whisper": {
+      "fixed_encoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 1
+      },
+      "fixed_decoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 2
+      },
+      "oracle_tt_encoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 3
+      },
+      "oracle_tt_decoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 3
+      }
+    },
+    "qwen3_asr_1p7b": {
+      "fixed_encoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 1
+      },
+      "fixed_decoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 2
+      },
+      "oracle_tt_encoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 3
+      },
+      "oracle_tt_decoder": {
+        "contiguous_layers": 1,
+        "large_panel_chunks": 3
+      }
+    },
+    "inside_shard": "model resident; sweep methods and rho={0.5,1,2,4,6}; split only large panels when needed",
+    "authorization": "preflight only; atlas not started"
+  }
+}

@@ -1,0 +1,4821 @@
+{
+  "common_ids": [
+    "dev_man_00040",
+    "dev_man_00085",
+    "dev_man_00116",
+    "dev_man_00128",
+    "dev_man_00135",
+    "dev_man_00141",
+    "dev_man_00342",
+    "dev_man_00365",
+    "dev_man_00411",
+    "dev_man_00413",
+    "dev_man_00475",
+    "dev_man_00498",
+    "dev_man_00515",
+    "dev_man_00533",
+    "dev_man_00573",
+    "dev_man_00590",
+    "dev_man_00603",
+    "dev_man_01015",
+    "dev_man_01016",
+    "dev_man_01036",
+    "dev_man_01055",
+    "dev_man_01273",
+    "dev_man_01275",
+    "dev_man_01283",
+    "dev_man_01303",
+    "dev_man_01313",
+    "dev_man_01433",
+    "dev_man_01435",
+    "dev_man_01508",
+    "dev_man_01533",
+    "dev_man_01635",
+    "dev_man_01639",
+    "dev_man_01646",
+    "dev_man_01665",
+    "dev_man_01678",
+    "dev_man_01747",
+    "dev_man_01804",
+    "dev_man_01808",
+    "dev_man_01809",
+    "dev_man_01844",
+    "dev_man_01854",
+    "dev_man_01900",
+    "dev_man_01984",
+    "dev_man_02085",
+    "dev_man_02093",
+    "dev_man_02414",
+    "dev_man_02439",
+    "dev_man_02473",
+    "dev_man_02545"
+  ],
+  "counts": {
+    "FULLY_ELIGIBLE": 49,
+    "acoustic_fully_eligible": 50,
+    "structurally_ineligible_acoustic": 0,
+    "structurally_ineligible_transcript": 1,
+    "transcript_fully_eligible": 49
+  },
+  "dataset": "SEAME-man",
+  "entries": {
+    "dev_man_00040": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.9306666666666668,
+          "start_sec": 2.7253333333333334,
+          "unit_indices": [
+            14,
+            15
+          ],
+          "utterance_id": "dev_man_00040"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14,
+            15
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            21
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            24,
+            25
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00040"
+    },
+    "dev_man_00085": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 21.49866666666667,
+          "start_sec": 19.22666666666667,
+          "unit_indices": [
+            57,
+            58
+          ],
+          "utterance_id": "dev_man_00085"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            16,
+            17
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            57,
+            58
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            66
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            73
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00085"
+    },
+    "dev_man_00116": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.9733333333333336,
+          "start_sec": 1.84,
+          "unit_indices": [
+            8
+          ],
+          "utterance_id": "dev_man_00116"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            8
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00116"
+    },
+    "dev_man_00128": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.176,
+          "start_sec": 5.024,
+          "unit_indices": [
+            22,
+            23
+          ],
+          "utterance_id": "dev_man_00128"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22,
+            23
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00128"
+    },
+    "dev_man_00135": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.1706666666666665,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_man_00135"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00135"
+    },
+    "dev_man_00141": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.528,
+          "start_sec": 3.376,
+          "unit_indices": [
+            13
+          ],
+          "utterance_id": "dev_man_00141"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00141"
+    },
+    "dev_man_00342": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.8533333333333335,
+          "start_sec": 3.514666666666667,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_00342"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00342"
+    },
+    "dev_man_00365": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.432,
+          "start_sec": 3.0453333333333332,
+          "unit_indices": [
+            7,
+            8
+          ],
+          "utterance_id": "dev_man_00365"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7,
+            8
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00365"
+    },
+    "dev_man_00411": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.2693333333333334,
+          "start_sec": 2.3946666666666667,
+          "unit_indices": [
+            8
+          ],
+          "utterance_id": "dev_man_00411"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            8
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00411"
+    },
+    "dev_man_00413": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.3840000000000003,
+          "start_sec": 1.5093333333333334,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_00413"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00413"
+    },
+    "dev_man_00475": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.8346666666666667,
+          "start_sec": 2.448,
+          "unit_indices": [
+            8
+          ],
+          "utterance_id": "dev_man_00475"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            8
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00475"
+    },
+    "dev_man_00498": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.9306666666666668,
+          "start_sec": 1.9360000000000002,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_00498"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00498"
+    },
+    "dev_man_00515": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.5999999999999996,
+          "start_sec": 2.448,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_00515"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            18
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            32
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00515"
+    },
+    "dev_man_00533": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 1.6053333333333333,
+          "start_sec": 0.9119999999999999,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_00533"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00533"
+    },
+    "dev_man_00573": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.642666666666667,
+          "start_sec": 2.9066666666666667,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_00573"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            19
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            30,
+            31,
+            32
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00573"
+    },
+    "dev_man_00590": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.52,
+          "start_sec": 6.410666666666667,
+          "unit_indices": [
+            20
+          ],
+          "utterance_id": "dev_man_00590"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            20
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            23,
+            24
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00590"
+    },
+    "dev_man_00603": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.226666666666667,
+          "start_sec": 3.514666666666667,
+          "unit_indices": [
+            8
+          ],
+          "utterance_id": "dev_man_00603"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            8
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            29
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_00603"
+    },
+    "dev_man_01015": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.781333333333333,
+          "start_sec": 1.4240000000000002,
+          "unit_indices": [
+            1,
+            2
+          ],
+          "utterance_id": "dev_man_01015"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            1,
+            2
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01015"
+    },
+    "dev_man_01016": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.5999999999999996,
+          "start_sec": 2.352,
+          "unit_indices": [
+            6,
+            7
+          ],
+          "utterance_id": "dev_man_01016"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6,
+            7
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22,
+            23
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01016"
+    },
+    "dev_man_01036": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.576,
+          "start_sec": 1.4240000000000002,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_man_01036"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01036"
+    },
+    "dev_man_01055": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.976,
+          "start_sec": 1.9093333333333333,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_01055"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01055"
+    },
+    "dev_man_01273": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.666666666666667,
+          "start_sec": 3.696,
+          "unit_indices": [
+            14
+          ],
+          "utterance_id": "dev_man_01273"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01273"
+    },
+    "dev_man_01275": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.237333333333333,
+          "start_sec": 6.1706666666666665,
+          "unit_indices": [
+            20
+          ],
+          "utterance_id": "dev_man_01275"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            10
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            20
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01275"
+    },
+    "dev_man_01283": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 1.8826666666666667,
+          "start_sec": 1.0506666666666666,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_01283"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01283"
+    },
+    "dev_man_01303": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.104,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_man_01303"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01303"
+    },
+    "dev_man_01313": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.8906666666666667,
+          "start_sec": 2.1973333333333334,
+          "unit_indices": [
+            7
+          ],
+          "utterance_id": "dev_man_01313"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            7
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01313"
+    },
+    "dev_man_01433": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.9493333333333336,
+          "start_sec": 1.2853333333333334,
+          "unit_indices": [
+            4,
+            5
+          ],
+          "utterance_id": "dev_man_01433"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4,
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01433"
+    },
+    "dev_man_01435": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.2986666666666666,
+          "start_sec": 1.5626666666666666,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_man_01435"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01435"
+    },
+    "dev_man_01508": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.9706666666666667,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_man_01508"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01508"
+    },
+    "dev_man_01533": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.368,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_man_01533"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01533"
+    },
+    "dev_man_01635": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 0.736,
+          "start_sec": 0.0,
+          "unit_indices": [
+            0
+          ],
+          "utterance_id": "dev_man_01635"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01635"
+    },
+    "dev_man_01639": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.864,
+          "start_sec": 2.0746666666666664,
+          "unit_indices": [
+            9
+          ],
+          "utterance_id": "dev_man_01639"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01639"
+    },
+    "dev_man_01646": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.16,
+          "start_sec": 1.3706666666666667,
+          "unit_indices": [
+            5
+          ],
+          "utterance_id": "dev_man_01646"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01646"
+    },
+    "dev_man_01665": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.3946666666666667,
+          "start_sec": 1.328,
+          "unit_indices": [
+            5,
+            6
+          ],
+          "utterance_id": "dev_man_01665"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            5,
+            6
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01665"
+    },
+    "dev_man_01678": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.2560000000000002,
+          "start_sec": 1.008,
+          "unit_indices": [
+            3,
+            4
+          ],
+          "utterance_id": "dev_man_01678"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3,
+            4
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            18
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01678"
+    },
+    "dev_man_01747": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 1.6480000000000001,
+          "start_sec": 0.9546666666666667,
+          "unit_indices": [
+            2
+          ],
+          "utterance_id": "dev_man_01747"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            2
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01747"
+    },
+    "dev_man_01804": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 2.064,
+          "start_sec": 1.328,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_man_01804"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01804"
+    },
+    "dev_man_01808": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 23.888,
+          "start_sec": 5.317333333333333,
+          "unit_indices": [
+            22,
+            23
+          ],
+          "utterance_id": "dev_man_01808"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            22,
+            23
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01808"
+    },
+    "dev_man_01809": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.189333333333334,
+          "start_sec": 3.9413333333333336,
+          "unit_indices": [
+            13,
+            14
+          ],
+          "utterance_id": "dev_man_01809"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            6
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13,
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01809"
+    },
+    "dev_man_01844": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.413333333333333,
+          "start_sec": 4.72,
+          "unit_indices": [
+            14
+          ],
+          "utterance_id": "dev_man_01844"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            14
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01844"
+    },
+    "dev_man_01854": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.92,
+          "start_sec": 7.088,
+          "unit_indices": [
+            27
+          ],
+          "utterance_id": "dev_man_01854"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            27
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01854"
+    },
+    "dev_man_01875": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.029333333333334,
+          "start_sec": 3.088,
+          "unit_indices": [
+            10
+          ],
+          "utterance_id": "dev_man_01875"
+        }
+      ],
+      "oracle_transcript_spans": [],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "STRUCTURALLY_INELIGIBLE",
+      "utterance_id": "dev_man_01875"
+    },
+    "dev_man_01900": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.6080000000000005,
+          "start_sec": 3.5413333333333337,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_01900"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            0
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01900"
+    },
+    "dev_man_01984": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 22.624,
+          "start_sec": 13.344,
+          "unit_indices": [
+            12,
+            13
+          ],
+          "utterance_id": "dev_man_01984"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            12,
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_01984"
+    },
+    "dev_man_02085": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 7.642666666666667,
+          "start_sec": 4.442666666666667,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_02085"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02085"
+    },
+    "dev_man_02093": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 3.0453333333333337,
+          "start_sec": 1.1466666666666667,
+          "unit_indices": [
+            3
+          ],
+          "utterance_id": "dev_man_02093"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            3
+          ]
+        },
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            12
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02093"
+    },
+    "dev_man_02414": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 4.944,
+          "start_sec": 1.328,
+          "unit_indices": [
+            4
+          ],
+          "utterance_id": "dev_man_02414"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            4
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02414"
+    },
+    "dev_man_02439": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 5.8293333333333335,
+          "start_sec": 4.9013333333333335,
+          "unit_indices": [
+            9
+          ],
+          "utterance_id": "dev_man_02439"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            9
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02439"
+    },
+    "dev_man_02473": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.48,
+          "start_sec": 5.466666666666667,
+          "unit_indices": [
+            11
+          ],
+          "utterance_id": "dev_man_02473"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            11
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02473"
+    },
+    "dev_man_02545": {
+      "acoustic_source": "accepted_D-dev-select_alignment_loader",
+      "acoustic_status": "FULLY_ELIGIBLE",
+      "oracle_spans": [
+        {
+          "all_correct": true,
+          "end_sec": 6.053333333333333,
+          "start_sec": 3.6,
+          "unit_indices": [
+            13
+          ],
+          "utterance_id": "dev_man_02545"
+        }
+      ],
+      "oracle_transcript_spans": [
+        {
+          "language": "EN",
+          "source": "frozen_reference_language_region",
+          "unit_indices": [
+            13
+          ]
+        }
+      ],
+      "steering_outcomes_consulted": false,
+      "transcript_source": "frozen_reference_language_region",
+      "transcript_status": "FULLY_ELIGIBLE",
+      "utterance_id": "dev_man_02545"
+    }
+  },
+  "methods": {
+    "add_unique_decoder": {
+      "eligible_ids": [
+        "dev_man_00040",
+        "dev_man_00085",
+        "dev_man_00116",
+        "dev_man_00128",
+        "dev_man_00135",
+        "dev_man_00141",
+        "dev_man_00342",
+        "dev_man_00365",
+        "dev_man_00411",
+        "dev_man_00413",
+        "dev_man_00475",
+        "dev_man_00498",
+        "dev_man_00515",
+        "dev_man_00533",
+        "dev_man_00573",
+        "dev_man_00590",
+        "dev_man_00603",
+        "dev_man_01015",
+        "dev_man_01016",
+        "dev_man_01036",
+        "dev_man_01055",
+        "dev_man_01273",
+        "dev_man_01275",
+        "dev_man_01283",
+        "dev_man_01303",
+        "dev_man_01313",
+        "dev_man_01433",
+        "dev_man_01435",
+        "dev_man_01508",
+        "dev_man_01533",
+        "dev_man_01635",
+        "dev_man_01639",
+        "dev_man_01646",
+        "dev_man_01665",
+        "dev_man_01678",
+        "dev_man_01747",
+        "dev_man_01804",
+        "dev_man_01808",
+        "dev_man_01809",
+        "dev_man_01844",
+        "dev_man_01854",
+        "dev_man_01900",
+        "dev_man_01984",
+        "dev_man_02085",
+        "dev_man_02093",
+        "dev_man_02414",
+        "dev_man_02439",
+        "dev_man_02473",
+        "dev_man_02545"
+      ],
+      "ineligible_ids": [
+        "dev_man_01875"
+      ],
+      "requires": "accepted_transcript_oracle_region"
+    },
+    "add_unique_encoder": {
+      "eligible_ids": [
+        "dev_man_00040",
+        "dev_man_00085",
+        "dev_man_00116",
+        "dev_man_00128",
+        "dev_man_00135",
+        "dev_man_00141",
+        "dev_man_00342",
+        "dev_man_00365",
+        "dev_man_00411",
+        "dev_man_00413",
+        "dev_man_00475",
+        "dev_man_00498",
+        "dev_man_00515",
+        "dev_man_00533",
+        "dev_man_00573",
+        "dev_man_00590",
+        "dev_man_00603",
+        "dev_man_01015",
+        "dev_man_01016",
+        "dev_man_01036",
+        "dev_man_01055",
+        "dev_man_01273",
+        "dev_man_01275",
+        "dev_man_01283",
+        "dev_man_01303",
+        "dev_man_01313",
+        "dev_man_01433",
+        "dev_man_01435",
+        "dev_man_01508",
+        "dev_man_01533",
+        "dev_man_01635",
+        "dev_man_01639",
+        "dev_man_01646",
+        "dev_man_01665",
+        "dev_man_01678",
+        "dev_man_01747",
+        "dev_man_01804",
+        "dev_man_01808",
+        "dev_man_01809",
+        "dev_man_01844",
+        "dev_man_01854",
+        "dev_man_01875",
+        "dev_man_01900",
+        "dev_man_01984",
+        "dev_man_02085",
+        "dev_man_02093",
+        "dev_man_02414",
+        "dev_man_02439",
+        "dev_man_02473",
+        "dev_man_02545"
+      ],
+      "ineligible_ids": [],
+      "requires": "accepted_acoustic_oracle_span"
+    },
+    "conditioning_cs_decoder": {
+      "eligible_ids": [
+        "dev_man_00040",
+        "dev_man_00085",
+        "dev_man_00116",
+        "dev_man_00128",
+        "dev_man_00135",
+        "dev_man_00141",
+        "dev_man_00342",
+        "dev_man_00365",
+        "dev_man_00411",
+        "dev_man_00413",
+        "dev_man_00475",
+        "dev_man_00498",
+        "dev_man_00515",
+        "dev_man_00533",
+        "dev_man_00573",
+        "dev_man_00590",
+        "dev_man_00603",
+        "dev_man_01015",
+        "dev_man_01016",
+        "dev_man_01036",
+        "dev_man_01055",
+        "dev_man_01273",
+        "dev_man_01275",
+        "dev_man_01283",
+        "dev_man_01303",
+        "dev_man_01313",
+        "dev_man_01433",
+        "dev_man_01435",
+        "dev_man_01508",
+        "dev_man_01533",
+        "dev_man_01635",
+        "dev_man_01639",
+        "dev_man_01646",
+        "dev_man_01665",
+        "dev_man_01678",
+        "dev_man_01747",
+        "dev_man_01804",
+        "dev_man_01808",
+        "dev_man_01809",
+        "dev_man_01844",
+        "dev_man_01854",
+        "dev_man_01900",
+        "dev_man_01984",
+        "dev_man_02085",
+        "dev_man_02093",
+        "dev_man_02414",
+        "dev_man_02439",
+        "dev_man_02473",
+        "dev_man_02545"
+      ],
+      "ineligible_ids": [
+        "dev_man_01875"
+      ],
+      "requires": "accepted_transcript_oracle_region"
+    }
+  },
+  "model_specific_decoder_eligibility": {
+    "qwen3_asr_1p7b": {
+      "baseline_artifact": "/home/tungnx/cs-asr-steer/results/basis_a6_expanded/baselines/qwen3_asr_1p7b/seame_dev_man/greedy.json",
+      "baseline_hash": "sha256:adf24470c86646d263e81dce43d99308866eacb0283ac21d4302a361dbbb20b5",
+      "details": {
+        "dev_man_00040": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            16,
+            17,
+            25,
+            28,
+            29,
+            30,
+            31
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00085": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            20,
+            21,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            80,
+            81,
+            82,
+            95,
+            103
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00116": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                8
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00128": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            34,
+            35
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00135": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00141": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            12
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00342": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00365": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00411": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00413": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            2
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00475": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            14,
+            15
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00498": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00515": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            18,
+            27,
+            48
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00533": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00573": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            16,
+            31,
+            52,
+            53,
+            54
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00590": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            28,
+            33,
+            34
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00603": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            12,
+            46
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01015": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1,
+            2,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01016": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            9,
+            31,
+            32
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01036": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01055": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            4,
+            31
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01273": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01275": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            17,
+            33
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01283": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01303": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01313": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01433": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7,
+            8,
+            9
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01435": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01508": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01533": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01635": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            18
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01639": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            15
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01646": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01665": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01678": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4,
+            28
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01747": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            23
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01804": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01808": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            41,
+            42
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01809": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            21,
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01844": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                17
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            24
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01854": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                29,
+                30
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            44
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01875": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01900": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            21
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01984": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                11,
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            15,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02085": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                13,
+                14
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02093": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5,
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02414": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02439": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            13
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02473": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            19
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02545": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            20
+          ],
+          "status": "FULLY_ELIGIBLE"
+        }
+      },
+      "eligible_ids": [
+        "dev_man_00040",
+        "dev_man_00085",
+        "dev_man_00116",
+        "dev_man_00128",
+        "dev_man_00135",
+        "dev_man_00141",
+        "dev_man_00342",
+        "dev_man_00365",
+        "dev_man_00411",
+        "dev_man_00413",
+        "dev_man_00475",
+        "dev_man_00498",
+        "dev_man_00515",
+        "dev_man_00533",
+        "dev_man_00573",
+        "dev_man_00590",
+        "dev_man_00603",
+        "dev_man_01015",
+        "dev_man_01016",
+        "dev_man_01036",
+        "dev_man_01055",
+        "dev_man_01273",
+        "dev_man_01275",
+        "dev_man_01283",
+        "dev_man_01313",
+        "dev_man_01433",
+        "dev_man_01435",
+        "dev_man_01635",
+        "dev_man_01639",
+        "dev_man_01646",
+        "dev_man_01665",
+        "dev_man_01678",
+        "dev_man_01747",
+        "dev_man_01804",
+        "dev_man_01808",
+        "dev_man_01809",
+        "dev_man_01844",
+        "dev_man_01854",
+        "dev_man_01900",
+        "dev_man_01984",
+        "dev_man_02085",
+        "dev_man_02093",
+        "dev_man_02414",
+        "dev_man_02439",
+        "dev_man_02473",
+        "dev_man_02545"
+      ],
+      "ineligible_ids": [
+        "dev_man_01303",
+        "dev_man_01508",
+        "dev_man_01533",
+        "dev_man_01875"
+      ],
+      "modes_checked": [
+        "greedy"
+      ]
+    },
+    "whisper": {
+      "baseline_artifact": "/home/tungnx/cs-asr-steer/results/basis_a6_expanded/baselines/whisper/seame_dev_man/greedy.json",
+      "baseline_hash": "sha256:82eb78a26f40d4fb8c3e93b78980278a06feb3a5740efd9cd55844b3c1561876",
+      "details": {
+        "dev_man_00040": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            10,
+            11,
+            17,
+            20,
+            21,
+            22,
+            23
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00085": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            15,
+            16,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            63,
+            64,
+            65,
+            66,
+            74,
+            83
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00116": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9,
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00128": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            26,
+            27
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00135": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_00141": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                16,
+                17
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                16,
+                17
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            14
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00342": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                10,
+                11
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            12
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00365": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00411": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                7,
+                8
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                7,
+                8
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            10
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00413": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                1,
+                2
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            2
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00475": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            9,
+            10,
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00498": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                2
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00515": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            12,
+            20,
+            36
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00533": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00573": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            13,
+            26,
+            44,
+            45,
+            46
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00590": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            24,
+            27,
+            28
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_00603": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11,
+            44
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01015": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            1,
+            2,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01016": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            8,
+            9,
+            27,
+            28
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01036": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01055": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            3,
+            25
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01273": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                15,
+                16
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                16,
+                17
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01275": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            14,
+            27,
+            28
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01283": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                2,
+                3
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01303": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01313": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                7,
+                8
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            7
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01433": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            7,
+            8
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01435": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01508": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            1
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01533": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [
+            0
+          ],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01635": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            17
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01639": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                11
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01646": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01665": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                5,
+                6,
+                7,
+                8
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                6,
+                7,
+                8,
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01678": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            4,
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01747": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            3,
+            22
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01804": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                3
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01808": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                26,
+                27
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                28,
+                29
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            34,
+            35
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01809": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            6,
+            15,
+            16
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01844": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                15
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                15
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            15
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01854": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                22,
+                23
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                22,
+                23
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            35
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01875": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0
+              ],
+              "valid": false
+            }
+          },
+          "reference_token_indices": [],
+          "status": "DECODER_CAUSAL_POSITION_INELIGIBLE"
+        },
+        "dev_man_01900": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            0,
+            19
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_01984": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9,
+                10
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9,
+                10
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            10,
+            11
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02085": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                9
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                9
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            12
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02093": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            4,
+            14
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02414": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                4
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                4
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            5
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02439": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                13
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                13
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            13
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02473": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                14
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            18
+          ],
+          "status": "FULLY_ELIGIBLE"
+        },
+        "dev_man_02545": {
+          "modes": {
+            "greedy": {
+              "hypothesis_token_indices": [
+                12
+              ],
+              "valid": true
+            },
+            "official_standard": {
+              "hypothesis_token_indices": [
+                12
+              ],
+              "valid": true
+            }
+          },
+          "reference_token_indices": [
+            15
+          ],
+          "status": "FULLY_ELIGIBLE"
+        }
+      },
+      "eligible_ids": [
+        "dev_man_00040",
+        "dev_man_00085",
+        "dev_man_00116",
+        "dev_man_00128",
+        "dev_man_00141",
+        "dev_man_00342",
+        "dev_man_00365",
+        "dev_man_00411",
+        "dev_man_00413",
+        "dev_man_00475",
+        "dev_man_00498",
+        "dev_man_00515",
+        "dev_man_00533",
+        "dev_man_00573",
+        "dev_man_00590",
+        "dev_man_00603",
+        "dev_man_01015",
+        "dev_man_01016",
+        "dev_man_01036",
+        "dev_man_01055",
+        "dev_man_01273",
+        "dev_man_01275",
+        "dev_man_01283",
+        "dev_man_01313",
+        "dev_man_01433",
+        "dev_man_01435",
+        "dev_man_01508",
+        "dev_man_01635",
+        "dev_man_01639",
+        "dev_man_01646",
+        "dev_man_01665",
+        "dev_man_01678",
+        "dev_man_01747",
+        "dev_man_01804",
+        "dev_man_01808",
+        "dev_man_01809",
+        "dev_man_01844",
+        "dev_man_01854",
+        "dev_man_01900",
+        "dev_man_01984",
+        "dev_man_02085",
+        "dev_man_02093",
+        "dev_man_02414",
+        "dev_man_02439",
+        "dev_man_02473",
+        "dev_man_02545"
+      ],
+      "ineligible_ids": [
+        "dev_man_00135",
+        "dev_man_01303",
+        "dev_man_01533",
+        "dev_man_01875"
+      ],
+      "modes_checked": [
+        "greedy",
+        "official_standard"
+      ]
+    }
+  },
+  "panel": "seame_dev_man",
+  "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "phase": "C",
+  "schema_version": "a6_ott_method_eligibility_v1",
+  "source": {
+    "accepted_cs_loader": "experiments.basis_a4_qwen._load_cs_eval_spans",
+    "accepted_cs_span_map_hash": "sha256:813e4fb8bf3fded5d9ef307b26aaf4318d30d71f4b605453e46c3024fb4ede30",
+    "outcome_artifacts_loaded": false,
+    "phase_b_manifest": "sha256:b2887043bd183fbab7d44ed16a75a4d45ae8ad0d8e730e5a8ab803c79f9a665b"
+  },
+  "status": "PASS",
+  "steering_outcomes_consulted": false,
+  "total": 50
+}

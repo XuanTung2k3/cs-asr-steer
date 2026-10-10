@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "encoder_local_mask.json": "PASS",
+    "encoder_no_grad.json": "PASS",
+    "encoder_normpreserve.json": "PASS",
+    "encoder_padding_exclusion.json": "PASS",
+    "encoder_rho0_identity.json": "PASS"
+  },
+  "status": "PASS"
+}

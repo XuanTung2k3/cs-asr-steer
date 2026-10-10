@@ -1,0 +1,17 @@
+{
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive utility -> PIER gain -> matrix retention -> lower energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg07/A1_LOCAL_ONLY/checkpoint_epoch1.pt",
+  "selected_checkpoint_sha256": "sha256:e8cb9ae9fb01b55fc27a331df9e4c694a2b883409a84b9d43f8e5cf6b794e076",
+  "selected_epoch": 1,
+  "variant": "A1_LOCAL_ONLY"
+}

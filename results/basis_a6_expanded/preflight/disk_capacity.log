@@ -1,0 +1,29 @@
+{
+  "schema_version": "basis_a6_disk_capacity_v1",
+  "status": "MEASURED",
+  "filesystem": "/home/tungnx/cs-asr-steer",
+  "free_bytes": 815987163136,
+  "used_bytes": 10179129114624,
+  "total_bytes": 10995116277760,
+  "current_fixed_result_bytes": 14552893,
+  "current_preflight_bytes": 9452000,
+  "current_tt_cache_bytes": {
+    "whisper": 440317,
+    "qwen3_asr_1p7b": 555331
+  },
+  "estimated_tt_cache_uncompressed_float64_bytes": {
+    "whisper": 4367944640,
+    "qwen3_asr_1p7b": 4544828904
+  },
+  "estimated_tt_cache_planned_float32_bytes": {
+    "whisper": 2183972320,
+    "qwen3_asr_1p7b": 2272414452
+  },
+  "estimated_oracle_tt_direction_cache_bytes": 4456386772,
+  "estimated_transcript_logit_diagnostics_bytes": 165677330,
+  "estimated_fixed_result_storage_bytes": 14552893,
+  "estimated_total_required_bytes": 4636616995,
+  "free_after_estimate_bytes": 811350546141,
+  "capacity_policy": "float32 persisted vectors with canonical float64 hashes; no hidden states persisted",
+  "atlas_execution": "NOT_STARTED"
+}

@@ -1,0 +1,227 @@
+{
+ "schema": "dir_sprint0_engineering_smoke_v1",
+ "scope": "CPU (BF16 Whisper on CPU) engineering smoke on public engineering clips only (AISHELL-1 example, 4-s crop of LibriSpeech sample1) posing as two prospective rows and two bank rows; scratch root; no CS-Dialogue audio, reference or outcome; smoke-only relaxed bank minima (prototype code path) -- the frozen thresholds apply to the real run",
+ "commit_tested_working_tree_parent": "c54d50271857fb802b9576bcda6a22b81cf85be8",
+ "capture": {
+  "SMOKE_P0": {
+   "status": "ok",
+   "T": 5,
+   "terminated": "eos",
+   "replay_bitwise": true,
+   "structural": 5,
+   "D3": {
+    "baseline_is_candidate": 4,
+    "candidate": 1
+   },
+   "VAC_target": {
+    "NO_EN_REGION": 5
+   },
+   "masks": [],
+   "branch_identity_all": true,
+   "elapsed_sec": 422.0009021759033
+  },
+  "SMOKE_P1": {
+   "status": "ok",
+   "T": 18,
+   "terminated": "eos",
+   "replay_bitwise": true,
+   "structural": 14,
+   "D3": {
+    "baseline_is_candidate": 8,
+    "candidate": 6
+   },
+   "VAC_target": {
+    "LOW_HEARD_MASS": 11,
+    "OK": 3
+   },
+   "masks": [
+    [
+     [
+      0,
+      32000
+     ],
+     "ok",
+     true,
+     true
+    ],
+    [
+     [
+      21440,
+      53440
+     ],
+     "ok",
+     true,
+     true
+    ],
+    [
+     [
+      32000,
+      64000
+     ],
+     "ok",
+     true,
+     true
+    ]
+   ],
+   "branch_identity_all": true,
+   "elapsed_sec": 2150.3101506233215
+  }
+ },
+ "capture_runtime": {
+  "status": "completed",
+  "weights_unchanged": true,
+  "parameters_with_grad": 0,
+  "phone_children_returncodes": {
+   "bank": 0,
+   "prospective": 0
+  },
+  "elapsed_sec": 2780.67339015007
+ },
+ "null_pins": {
+  "EN": 0.31687548756599426,
+  "EN_abs_error": 0.00047901272773742676,
+  "ZH": 0.020257171243429184,
+  "ZH_abs_error": 0.0011985525488853455,
+  "probs_sha256": "sha256:4dba1fa364d2b3ce155d80cf1446858c3ffbf73f84e6018633ce45047d18344c"
+ },
+ "phone_children": {
+  "prospective": {
+   "status": "completed",
+   "apparatus": {
+    "aishell_example_mandarin.wav": {
+     "argmax_agreement": 1.0,
+     "max_abs_logprob_diff": 0.0,
+     "pass": true,
+     "repeat_bitwise": true,
+     "sealed_hash_equal": true
+    },
+    "sample1.flac": {
+     "argmax_agreement": 1.0,
+     "max_abs_logprob_diff": 0.0,
+     "pass": true,
+     "repeat_bitwise": true,
+     "sealed_hash_equal": true
+    }
+   },
+   "elapsed_sec": 34.91440415382385,
+   "threads": 4
+  },
+  "bank": {
+   "status": "completed",
+   "apparatus": {
+    "aishell_example_mandarin.wav": {
+     "argmax_agreement": 1.0,
+     "max_abs_logprob_diff": 0.0,
+     "pass": true,
+     "repeat_bitwise": true,
+     "sealed_hash_equal": true
+    },
+    "sample1.flac": {
+     "argmax_agreement": 1.0,
+     "max_abs_logprob_diff": 0.0,
+     "pass": true,
+     "repeat_bitwise": true,
+     "sealed_hash_equal": true
+    }
+   },
+   "elapsed_sec": 35.441572189331055,
+   "threads": 4
+  }
+ },
+ "construct": {
+  "D0": {
+   "invalid": {},
+   "valid": 19
+  },
+  "D1": {
+   "invalid": {},
+   "valid": 19
+  },
+  "D3": {
+   "baseline_is_candidate": 12,
+   "candidate": 7,
+   "no_plausible_legal_candidate": 0,
+   "nonfinite_branch": 0
+  },
+  "D4": {
+   "invalid": {},
+   "valid": 19
+  },
+  "D5": {
+   "invalid": {},
+   "valid": 19
+  },
+  "D5SH": {
+   "invalid": {},
+   "valid": 19
+  },
+  "RND": {
+   "invalid": {},
+   "valid": 19
+  },
+  "VAC": {
+   "invalid": {
+    "target_LOW_HEARD_MASS": 11,
+    "target_NO_EN_REGION": 5
+   },
+   "valid": 3
+  },
+  "D5_blocked_reasons": []
+ },
+ "pulses": {
+  "status": "completed",
+  "weights_unchanged": true,
+  "autograd_calls": {
+   "D2": 19,
+   "D3": 7
+  },
+  "parameters_with_grad": 0,
+  "arm_status": {
+   "D0|executed": 19,
+   "D1|executed": 19,
+   "D2|executed": 19,
+   "D2G|executed": 14,
+   "D2G|zero_target": 5,
+   "D3|executed": 7,
+   "D3|invalid_direction": 12,
+   "D3G|executed": 6,
+   "D3G|invalid_direction": 8,
+   "D3G|zero_target": 5,
+   "D4|executed": 19,
+   "D4G|executed": 14,
+   "D4G|zero_target": 5,
+   "D5|executed": 19,
+   "D5G|executed": 14,
+   "D5G|zero_target": 5,
+   "D5SH|executed": 19,
+   "D5SHG|executed": 14,
+   "D5SHG|zero_target": 5,
+   "RND|executed": 19,
+   "RNDG|executed": 14,
+   "RNDG|zero_target": 5,
+   "VAC|executed": 3,
+   "VAC|invalid_direction": 16
+  },
+  "integrity_all": true,
+  "clean_bitwise_all": true,
+  "restore_bitwise_all": true
+ },
+ "independent_auditor_on_smoke": {
+  "gate_recomputation_errors": 0,
+  "construction_errors": 0,
+  "max_direction_abs_error": {
+   "D4": 0.0,
+   "D5": 0.0
+  },
+  "prototype_max_abs_diff": 0.0,
+  "primary_recompute_errors": 0,
+  "primary_flags": "restore/clean/scratch2/scratch3/integrity all true",
+  "max_rel_sq_err": 0.006001031083499142,
+  "max_chord_err": 0.003005030646342277,
+  "max_consumed_vs_proposed": 0.0033595732447455617
+ },
+ "notes": [
+  "D3 arm status 'invalid_direction' covers the exact no-edit when c_AP == b_t (decision status baseline_is_candidate) and any failed direction; the D3 decision status distinguishes them",
+  "CPU timings are not GPU throughput and are not used for the forecast"
+ ]
+}

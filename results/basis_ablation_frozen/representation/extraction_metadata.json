@@ -1,0 +1,31 @@
+{
+  "batch_size": 1,
+  "decoder": {
+    "condition_on_prev_tokens": false,
+    "do_sample": false,
+    "language": "zh",
+    "max_new_tokens": 200,
+    "num_beams": 1,
+    "task": "transcribe",
+    "temperature": 0.0
+  },
+  "dimension": 1280,
+  "elapsed_seconds": 12.557895947247744,
+  "frozen_backbone": true,
+  "gpu_name": "NVIDIA H100 80GB HBM3",
+  "layer": 24,
+  "n_vectors_extracted": 12774,
+  "n_vectors_saved": 10000,
+  "no_gradients": true,
+  "population_fingerprint": "sha256:4a4ce18e7a368e60108fe1506ee6a70611d532d0821b376dc1ac8d483e2b4440",
+  "position_definition": "query position immediately before first BPE token of a baseline-correct EN/ZH reference unit",
+  "sampling_policy": "uniform without replacement over extracted baseline-correct content positions",
+  "sampling_seed": 2408,
+  "site": "decoder_post_cross_attn_residual",
+  "slurm_job_id": "51111",
+  "source": "baseline exact-site L24 teacher-forced states",
+  "split": "D-dev-select",
+  "status": "COMPLETE",
+  "utterances": 300,
+  "utterances_with_positions": 296
+}

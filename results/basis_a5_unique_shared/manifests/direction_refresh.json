@@ -1,0 +1,13 @@
+{
+  "git_commit": "2b307645b05f91b080302d8f33f755212446dca1",
+  "models": [
+    "whisper",
+    "qwen3_asr_1p7b"
+  ],
+  "protocol_hash": "sha256:39c3f62c162ab0fe10acb5bc2b0c17040b2744ecee5fb9d4dd08a2d12c78dfb2",
+  "qwen_encoder_layers": 24,
+  "rank": 32,
+  "schema_version": "basis_a5_direction_refresh_v1",
+  "source_role": "D-construct",
+  "status": "PASS"
+}

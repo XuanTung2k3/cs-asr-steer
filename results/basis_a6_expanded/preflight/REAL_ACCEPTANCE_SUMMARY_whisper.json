@@ -1,0 +1,48 @@
+{
+  "benchmark": {
+    "a6_f_conditioning": {
+      "seconds_per_call": 1.3534560594707727,
+      "status": "MEASURED"
+    },
+    "a6_f_nonconditioning": {
+      "seconds_per_call": 1.3534560594707727,
+      "status": "MEASURED"
+    },
+    "a6_tt_conditioning": {
+      "seconds_per_call": 1.3534560594707727,
+      "status": "MEASURED"
+    },
+    "a6_tt_raw_us": {
+      "seconds_per_call": 1.3534560594707727,
+      "status": "MEASURED"
+    },
+    "direction_cache_bytes": 440317,
+    "estimated_full_a6_f_hours": 0.1899587451888804,
+    "estimated_full_a6_tt_hours": 0.1899587451888804,
+    "git_commit": "96024c1cfeb8388215c40bbc5cad0a6313a2249a",
+    "hidden_state_temporary_bytes": 0,
+    "job_id": "53326",
+    "mean_call_sec": 1.3534560594707727,
+    "measurement_note": "actual model-resident acceptance calls; artifact/cache sizes are finalized after serialization",
+    "model": "whisper",
+    "model_load_sec": 7.777388885617256,
+    "n_calls": 76,
+    "output_artifact_bytes": 2652852,
+    "peak_allocated_vram_bytes": 4984075264,
+    "peak_reserved_vram_bytes": 5337251840
+  },
+  "cache_reuse": true,
+  "decode": {
+    "greedy": "PASS",
+    "official_standard": "PASS"
+  },
+  "git_commit": "96024c1cfeb8388215c40bbc5cad0a6313a2249a",
+  "gold_leakage": true,
+  "job_id": "53326",
+  "model": "whisper",
+  "model_load_sec": 7.777388885617256,
+  "oracle_tt": "PASS",
+  "panel_fingerprint": "sha256:c81c6316c9333f3225e9c9c44df80adef0893050189d09bca8e23ba46806409b",
+  "schema_version": "basis_a6_real_acceptance_summary_v1",
+  "status": "PASS"
+}

@@ -1,0 +1,348 @@
+{
+  "acceptance_tests": {
+    "artifacts": [
+      "acceptance/encoder_rho0_identity.json",
+      "acceptance/encoder_normpreserve.json",
+      "acceptance/encoder_padding_exclusion.json",
+      "acceptance/encoder_local_mask.json",
+      "acceptance/encoder_no_grad.json"
+    ],
+    "focused_cpu_tests": {
+      "failed": 0,
+      "log": "acceptance/focused_tests_repair.log",
+      "passed": 5,
+      "status": "PASS"
+    },
+    "no_grad": "PASS",
+    "normpreserve": "PASS",
+    "oracle_local_mask": "PASS",
+    "padding_exclusion": "PASS",
+    "real_model_job": "51680",
+    "rho0_identity": "PASS"
+  },
+  "artifact_hashes": {
+    "acceptance": {
+      "encoder_acceptance_summary.json": "sha256:ad3ecf7b1f82fd1e4ab4335e99ccc537700a044107ed8447d4241a98307b3541",
+      "encoder_local_mask.json": "sha256:1df021cdfbac908857edb352cb204ee49e3ef7629a9092db83f2568ea24d540f",
+      "encoder_no_grad.json": "sha256:4d212db45be0a3e427eb7f0570a835a1fc5adc8e4d976b708266867a4a2bf96d",
+      "encoder_normpreserve.json": "sha256:7412301cb540f93640d66b5ad3c1146dcc5f40ba308d5e248e8e1486e80eb842",
+      "encoder_padding_exclusion.json": "sha256:4cb85dc5f14ef77801f8a1d582dd002bc7bce132d63373cebbc8b3c9411d6183",
+      "encoder_rho0_identity.json": "sha256:dccad1a9637d3d302c3bde1a8848ab53b40ccf97c6e3fc479f09d87d9c6dc6d6",
+      "focused_tests_repair.log": "sha256:87947979d022818d5da3374a73ba3445db9748689073e10f0303fbd42cce9617"
+    },
+    "acceptance_local_mask": "sha256:47b138beb82d964956d2d0447cfd5a5cb7b87df867031a3ac75c8d833a6c3d8f",
+    "acceptance_no_grad": "sha256:040f2180cb7d2c015285f796ba2b9c949d80fe66d3da9df8a71786c02c32a758",
+    "acceptance_normpreserve": "sha256:acf894dc0ce28d2f449c66e20de09364f7508607349f8a419654a12351180fa0",
+    "acceptance_padding": "sha256:e5707aa14e32eb94c1f53ad83d98702e172b3627c2270a13ca68e497058d3609",
+    "acceptance_rho0": "sha256:79a4762c9e7967b83b1b2c6542c43a7218366eb7ddc7a2d945052930daf7312e",
+    "conditioning_figures": {
+      "correction_damage_frontier": "sha256:47f38b9e1ef51fb1d7866de4703b47a9c1114515c70048ba59471947d1806fea",
+      "cross_dataset": "sha256:ff3118503fa862ab022e1e31d99c237ffb1697d0fca94c02353ba5a4536cd4d0",
+      "matrix_retention": "sha256:7ba709ab615482482c4915542fe74067af496202578f97cab72d5e46878fda59",
+      "mer": "sha256:cfac0a24d3a823dce75f2d0c7075b9235a4d58e6fb325fa9f0ba6ef0206e4912",
+      "pier": "sha256:0ea13c4390c934654714013dec0464cd58cd36df72dc02d1d41d9fddc4c4e80c"
+    },
+    "cross_corpus_csv": "sha256:33b4e4dca6278220d3c1d302be5701753cae71dd5eca42cad1a77c6a29c34582",
+    "cross_corpus_md": "sha256:90fffaa832d56ef071a853c077aa863649a0051c577042d153d5cd4a3ae9a6df",
+    "final_report": "sha256:71f58a422c19f054a89a5cf56d2b600a14f34cc3e8bf81fc7ed220a8d3e95e9e",
+    "focused_tests": "sha256:b9340d8c746a702414b0298546e1d1ae63712ab62e6d4dbbba636d5da546dfc4",
+    "metric_consistency": "sha256:5988bedb45a03359663e30f4c2058a98feb17388c96fa6e76b57249febd30cf2",
+    "raw_full_depth": "sha256:dfaec1eb2d6143e75714e590aedc848b8c2dbe98843bb4b995ea421a7bff82f1",
+    "raw_selected_dose": "sha256:9d090e676d6f189ce071c7a85881bea7ab22d1048fb3c8229d36bdac43cc930f",
+    "reconciliation": "sha256:aa967f61e551742fae84e4476cd8c5a510165f90059534f9e76af78635722362",
+    "repair_protocol": "sha256:871da6cee76365dd6b03c14cfa3bab0694bf731324c20e4026df0bad2010077e",
+    "runtime_json": "sha256:ad288636ba555881a0a44f451457cf03aa3336ce3359bd0c95700bf5a939134e",
+    "runtime_md": "sha256:b4328452f69db0aa283274549f0848ffb0fd3b01ba83d99fcf9fd5293dbd0806",
+    "summary": "sha256:cfbff68ed9c638b7e0892f8b89d699fd502ea7d164387b2fff1c1aa35248d8e1",
+    "superseded_manifest": "sha256:0211bc7ba70c70b062820f4b8632fc5823135a57c2ce4b239b7361192b2acc85"
+  },
+  "chronology_reconciliation": {
+    "affected_blocks": 76,
+    "document": "docs/current/BASIS_A3_PROTOCOL_RECONCILIATION.md",
+    "historical_mismatch_preserved": true,
+    "outcome": "REPAIRED_WITH_DOCUMENTED_PROVENANCE",
+    "repair_protocol": "repair/REPAIR_PROTOCOL.json",
+    "rerun_performed": true
+  },
+  "data_exposure": {
+    "a3_d_dev_confirm": false,
+    "a3_d_dev_select": true,
+    "a3_d_test": false,
+    "global_project_exposure": "See docs/current/DATA_EXPOSURE.md; not claimed globally untouched.",
+    "seame_dev_man_count": 50,
+    "seame_dev_sge_count": 50
+  },
+  "decoding": {
+    "condition_on_prev_tokens": false,
+    "do_sample": false,
+    "language": "zh",
+    "max_new_tokens": 200,
+    "num_beams": 1,
+    "task": "transcribe",
+    "temperature": 0.0
+  },
+  "directions": {
+    "conditioning_layers": [
+      24,
+      26,
+      27,
+      31
+    ],
+    "decoder_layers": 32,
+    "encoder_decoder_hash_overlap": false,
+    "encoder_layers": 32,
+    "raw_decoder_and_conditioning_source": "sha256:5f510df5e25dc6d76976433d1376244b58ad687fe3ddc4ceb2a56f5bbe6b03d5",
+    "raw_encoder_manifest": "sha256:d7504dff518b16051a8cf567335fdc397eb386c4a411535e0c15b39e76ae14fc"
+  },
+  "encoder_site": {
+    "acceptance_status": "BLOCKED_NOT_RUN_AFTER_MISMATCH",
+    "alignment_tolerance_ms": 80,
+    "description": "post-self-attention residual / pre-FFN, implemented as q_enc + self_attn_output",
+    "hash": "sha256:c77771d1dddf0f9c156123fbac204bb25e066572b36d03ed60764be7e7a40fed",
+    "implementation": "src/csasr/lss/encoder_sites.py"
+  },
+  "execution_waves": [
+    {
+      "commit": "5a5f22b",
+      "config_hash": "4b7e536c79946a189b465dc4156b97d3da5cdea90ae3abf0836ec34f56b02767",
+      "datasets": [
+        "cs_dialogue"
+      ],
+      "jobs": [
+        "51638",
+        "51639"
+      ],
+      "name": "CS R1"
+    },
+    {
+      "commit": "d4012bd",
+      "config_hash": "570aa275ba9fc45f205be824dc87596f43a48164a828af19bf277d316f43c579",
+      "datasets": [
+        "seame_dev_man",
+        "seame_dev_sge"
+      ],
+      "jobs": [
+        "51649",
+        "51650",
+        "51651",
+        "51652"
+      ],
+      "name": "SEAME R1"
+    },
+    {
+      "commit": "aa71f21",
+      "config_hash": "570aa275ba9fc45f205be824dc87596f43a48164a828af19bf277d316f43c579",
+      "datasets": [
+        "cs_dialogue",
+        "seame_dev_man",
+        "seame_dev_sge"
+      ],
+      "jobs": [
+        "51653",
+        "51654",
+        "51655"
+      ],
+      "name": "R2 + Conditioning"
+    }
+  ],
+  "final_acceptance_status": "ACCEPTED_WITH_REPAIR_PROVENANCE",
+  "final_commit_created": true,
+  "final_git_commit": "PATH_LIMITED_FREEZE_COMMIT; exact SHA recorded in final handoff",
+  "geometry": {
+    "csv": "geometry/raw_cond_decoder_geometry.csv",
+    "fields": [
+      "cosine",
+      "angle",
+      "raw_l2",
+      "unit_normalized_l2",
+      "raw_norm",
+      "cond_norm"
+    ],
+    "figures": [
+      "figures/geometry_cos_raw_cond.png",
+      "figures/geometry_angle_deg.png",
+      "figures/geometry_unit_l2.png",
+      "figures/geometry_raw_norm.png",
+      "figures/geometry_cond_norm.png"
+    ],
+    "identity_validated": "unit_L2 = sqrt(2 - 2*cosine)",
+    "json": "geometry/raw_cond_decoder_geometry.json",
+    "layers": 32,
+    "status": "PASS"
+  },
+  "grids": {
+    "conditioning": {
+      "accepted_records": 72,
+      "layers": [
+        24,
+        26,
+        27,
+        31
+      ],
+      "rho": [
+        0.25,
+        0.5,
+        1.0
+      ]
+    },
+    "directions": [
+      "Raw",
+      "Conditioning"
+    ],
+    "raw_r1": {
+      "accepted_records": 384,
+      "layers": "all encoder and decoder layers",
+      "rho": [
+        0.5
+      ]
+    },
+    "raw_r2": {
+      "accepted_records": 84,
+      "decoder_layers": [
+        0,
+        2,
+        24,
+        27
+      ],
+      "encoder_layers": [
+        2,
+        16,
+        21
+      ],
+      "rho_05_reused_from_r1": true,
+      "rho_additional": [
+        0.25,
+        1.0
+      ]
+    },
+    "scopes": [
+      "Global",
+      "Oracle-local"
+    ]
+  },
+  "initial_status": "POSTRUN_AUDIT_IN_PROGRESS",
+  "metric_schema": {
+    "candidate_level_utility_separate": true,
+    "metric_validation": "PASS",
+    "metric_validation_artifact": "metric_audit/final_metric_consistency.json",
+    "name": "basis_a3_condition_v1",
+    "poi_fields": [
+      "poi_corrections",
+      "poi_corruptions",
+      "poi_net_utility"
+    ],
+    "poi_net_formula": "poi_net_utility = poi_corrections - poi_corruptions"
+  },
+  "original_protocol_freeze": {
+    "commit": "5a8b068",
+    "historical_manifest_preserved": true,
+    "spec": "docs/current/BASIS_A3_RAW_COND_SCOPE_DEPTH_SPEC.md"
+  },
+  "panels": {
+    "cs_dialogue": {
+      "count": 300,
+      "fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+      "role": "D-dev-select"
+    },
+    "seame_dev_man": {
+      "count": 50,
+      "fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+      "role": "development panel"
+    },
+    "seame_dev_sge": {
+      "count": 50,
+      "fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+      "role": "development panel"
+    }
+  },
+  "r2_selection": {
+    "commit": "3b86926",
+    "decoder_layers": [
+      0,
+      2,
+      24,
+      27
+    ],
+    "encoder_layers": [
+      2,
+      16,
+      21
+    ],
+    "frozen_before_r2_execution": true,
+    "selection_impact": "NO SELECTION IMPACT; source was CS-Dialogue R1 only"
+  },
+  "reason": "Scientific snapshot mismatch across execution waves; no final acceptance or scientific rerun.",
+  "repair": {
+    "acceptance_slurm_job": "51680",
+    "boundary_tolerance_ms": 80,
+    "canonical_mask": "target-segment union alignment",
+    "failed_harness_jobs": [
+      "51677",
+      "51679"
+    ],
+    "mask_implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+    "protocol": "repair/REPAIR_PROTOCOL.json",
+    "protocol_commit": "69a5aa0933c6f8be43752d6a28a414a92c5f875e",
+    "protocol_hash": "sha256:871da6cee76365dd6b03c14cfa3bab0694bf731324c20e4026df0bad2010077e",
+    "repaired_configuration_count": 76,
+    "repaired_result_digest": "sha256:16b96f46b67a55fe45dadb06ccc05bcd120811ebad6a71c36985464595b4fb75",
+    "repaired_slurm_jobs": [
+      "51682",
+      "51683"
+    ]
+  },
+  "result_grid_validation": {
+    "conditioning": {
+      "completed": 72,
+      "expected": 72,
+      "invalid": 0
+    },
+    "duplicate_keys": 0,
+    "r2_rho_05_reused_from_corrected_r1": true,
+    "raw_r1": {
+      "completed": 384,
+      "expected": 384,
+      "invalid": 0
+    },
+    "raw_r2": {
+      "completed": 84,
+      "expected": 84,
+      "invalid": 0
+    },
+    "repaired_alignment_method": "frozen_seame_target_segments"
+  },
+  "schema_version": "basis_a3_postrun_acceptance_manifest_v1",
+  "slurm": {
+    "max_concurrent_gpu_jobs": 2,
+    "partition": "mig",
+    "preflight_job": "51626",
+    "quarantined_jobs": [
+      "51625",
+      "51627",
+      "51628",
+      "51629",
+      "51632",
+      "51633"
+    ],
+    "runtime_artifact": "runtime/runtime_summary.json",
+    "scientific_jobs": [
+      "51638",
+      "51639",
+      "51649",
+      "51650",
+      "51651",
+      "51652",
+      "51653",
+      "51654",
+      "51655"
+    ]
+  },
+  "status": "ACCEPTED_WITH_REPAIR_PROVENANCE",
+  "superseded_results": {
+    "count": 76,
+    "manifest": "quarantine/superseded_noncanonical_mask/superseded_manifest.json",
+    "manifest_hash": "sha256:0211bc7ba70c70b062820f4b8632fc5823135a57c2ce4b239b7361192b2acc85",
+    "mask_semantics": "second-boundary alignment",
+    "root": "quarantine/superseded_noncanonical_mask/"
+  }
+}

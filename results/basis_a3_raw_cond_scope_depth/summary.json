@@ -1,0 +1,8 @@
+{
+  "schema_version": "basis_a3_summary_v2",
+  "raw_r1_rows": 384,
+  "raw_r2_rows": 84,
+  "conditioning_rows": 72,
+  "geometry_layers": 32,
+  "status": "COMPLETE"
+}

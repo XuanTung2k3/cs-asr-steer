@@ -1,0 +1,14 @@
+{
+  "all_eligible_selected_when_below_target": true,
+  "eligible_mixed_total": 220,
+  "manifest_fingerprint": "sha256:eefe1d22cb7668e4a4e3fa7532858942b0325b5cb1544c96ad2e90a898cbc578",
+  "schema_version": "basis_a6_ascend_eval_eligibility_audit_v1",
+  "selected_ids_match_manifest": true,
+  "selected_total": 220,
+  "selection_seed": 42,
+  "source_split": "validation",
+  "status": "PASS",
+  "target": 300,
+  "test_usage": 0,
+  "validation_total": 1130
+}

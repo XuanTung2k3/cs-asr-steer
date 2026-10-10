@@ -1,0 +1,14 @@
+# DG-07B submission manifest.  DG-07A does not submit these jobs.
+partition: mig
+max_concurrent_gpu_jobs: 2
+launcher: sbatch/cs_asr_dg07_baselines_ablations.sh
+batches:
+  batch_1:
+    - LB1_SALSA_EXACT_GLOBAL
+    - LB2_LORA_MATCHED_BUDGET
+  batch_2:
+    - A1_LOCAL_ONLY
+    - A2_CONDITIONING_ONLY
+  batch_3:
+    - A3_FIXED_MIXTURE_GATE
+    # A5 is deferred because lambda_A was not predeclared.

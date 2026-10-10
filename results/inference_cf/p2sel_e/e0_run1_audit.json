@@ -1,0 +1,32 @@
+{
+ "checks": {
+  "agree_h2_lower80": true,
+  "agree_h3_lower80": true,
+  "agree_h3_point": true,
+  "counts": true,
+  "counts_agree": true,
+  "hypotheses_agree": true,
+  "label_agrees": true,
+  "null_provider": true,
+  "row_integrity": true,
+  "rows_180": true
+ },
+ "independent": {
+  "H_E2": false,
+  "H_E3": false,
+  "H_E4": false,
+  "h2_lower80": -0.2549019607843137,
+  "h3_lower80": 0.0,
+  "h3_point": 0.0,
+  "n2": 9967,
+  "n3": 9967,
+  "oracle_FN": false,
+  "short_only_FN": false,
+  "static": false
+ },
+ "label": "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+ "schema": "p2_sel_e_e0_audit_v1",
+ "selected": null,
+ "stage": "E0",
+ "verdict": "P2_SEL_E_AUDIT: PASS"
+}

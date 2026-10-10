@@ -1,0 +1,45 @@
+{
+  "schema_version": "basis_a6_runtime_preflight_v1",
+  "status": "BLOCKED_MODEL_BENCHMARK_NOT_RUN",
+  "atlas_execution": "NOT_STARTED",
+  "model_resident_runner": true,
+  "models": {
+    "whisper": {
+      "baseline_analysis": "NOT_RUN",
+      "a6_f": "NOT_RUN",
+      "a6_tt": "NOT_RUN"
+    },
+    "qwen3_asr_1p7b": {
+      "baseline_analysis": "NOT_RUN",
+      "a6_f": "NOT_RUN",
+      "a6_tt": "NOT_RUN"
+    }
+  },
+  "gpu_acceptance": {
+    "schema_version": "basis_a6_gpu_acceptance_v1",
+    "status": "PASS",
+    "slurm_job_id": "53309",
+    "cuda": true,
+    "device_count": 1,
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA H100 80GB HBM3 MIG 3g.40gb",
+        "total_memory_gb": 42.412802048
+      }
+    ]
+  },
+  "measurements": {
+    "runtime_seconds": null,
+    "peak_vram_gb": null,
+    "cache_size_bytes": null,
+    "disk_size_bytes": null
+  },
+  "target_policy": {
+    "estimated_hours_per_job_max": 2.5,
+    "hard_hours_per_job_max": 3.0,
+    "max_simultaneous_gpu_jobs": 2,
+    "prefer_mig_gb": 40
+  },
+  "reason": "A6-F direction construction and A6-TT model analysis require explicit GPU model runners; only the minimal CUDA device acceptance was authorized before the full atlas."
+}

@@ -1,0 +1,25 @@
+{
+ "checks": {
+  "actuator_inherited": true,
+  "anchors": true,
+  "auditor_independent": true,
+  "final_decode_forced": true,
+  "frozen:configs/inference_cf/p2_tta_a3.json": true,
+  "frozen:docs/inference_cf/P2_TTA_A3_CLAUDE_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_TTA_A3_PANEL.json": true,
+  "frozen:docs/inference_cf/P2_TTA_A3_SPEC.md": true,
+  "kl_orientation_and_teacher": true,
+  "mechanism_thresholds": true,
+  "no_outcome": true,
+  "optimizer_inherited_in_code": true,
+  "panel_replayed_independently": true,
+  "plan_committed": true,
+  "runner_reference_steering_free": true,
+  "safety_copied_exactly": true,
+  "teachers_reuse_masks_distances": true,
+  "tests_present": true
+ },
+ "git_commit": "eab6c640da695da525bc6f2e0e16465fb0b250ba",
+ "schema": "p2_tta_a3_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_TTA_A3"
+}

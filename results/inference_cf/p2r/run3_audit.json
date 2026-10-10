@@ -1,0 +1,127 @@
+{
+  "schema": "p2r_audit_v1",
+  "verdict": "P2_R_AUDIT: PASS",
+  "issues": [],
+  "checks": {
+    "manifest_hash": true,
+    "sources_match_manifest_commit": true,
+    "sources_changed_after_run": [
+      "experiments/inference_cf_p2r_analyze.py"
+    ],
+    "population_hash": true,
+    "config_hash": true,
+    "rows": {
+      "expected": 80,
+      "ok": 80,
+      "identity_ok": true,
+      "runtime": "completed",
+      "job": "54874"
+    },
+    "all_D_dev_select": true,
+    "d1_positions_present": 180,
+    "d1_energy_unmatched": 0,
+    "random_not_orthogonal": 0,
+    "plus_minus_not_opposite": 0,
+    "d2_targets_present": [
+      209,
+      209
+    ],
+    "d2_energy": {
+      "current": 793.9451794120179,
+      "oracle": 793.9467961790649,
+      "ratio": 1.0000020363711362
+    },
+    "primary_recomputed_agrees": {
+      "D1.L_plus": true,
+      "D1.L_minus": true,
+      "D1.L_plus_minus": true,
+      "D1.Lex_plus_minus": true,
+      "D3.L_plus_random": true,
+      "D3.L_minus_random": true,
+      "D3.P_plus_random": true,
+      "D3.P_minus_random": true,
+      "D2.L_oracle_current": true,
+      "D2.L_oracle_none": true,
+      "D2.P_oracle_current": true
+    }
+  },
+  "recomputed_primary": {
+    "D1.L_plus": {
+      "estimate": -0.025841160498413385,
+      "ci": [
+        -0.08003132243951162,
+        0.025395274048342336
+      ]
+    },
+    "D1.L_minus": {
+      "estimate": 0.09819574589822805,
+      "ci": [
+        0.031457991372136514,
+        0.17680481867462972
+      ]
+    },
+    "D1.L_plus_minus": {
+      "estimate": -0.12403690639664144,
+      "ci": [
+        -0.25170690602823803,
+        -0.011993666037041018
+      ]
+    },
+    "D1.Lex_plus_minus": {
+      "estimate": -0.0675370228095371,
+      "ci": [
+        -0.1604703010836852,
+        0.01787025994720704
+      ]
+    },
+    "D3.L_plus_random": {
+      "estimate": -0.08482510470876506,
+      "ci": [
+        -0.18745161914357952,
+        -0.011737772901268576
+      ]
+    },
+    "D3.L_minus_random": {
+      "estimate": 0.03921180168787638,
+      "ci": [
+        -0.06108080660011255,
+        0.14540091835400634
+      ]
+    },
+    "D3.P_plus_random": {
+      "estimate": -5.838071564690397e-05,
+      "ci": [
+        -0.0015147252859040517,
+        0.0016293037386767308
+      ]
+    },
+    "D3.P_minus_random": {
+      "estimate": -0.0006132543170063317,
+      "ci": [
+        -0.003846621457369034,
+        0.0014534256654923567
+      ]
+    },
+    "D2.L_oracle_current": {
+      "estimate": 0.011465544147334465,
+      "ci": [
+        -0.016395441045262145,
+        0.04396787053921346
+      ]
+    },
+    "D2.L_oracle_none": {
+      "estimate": -0.036313081381594316,
+      "ci": [
+        -0.09940151525432711,
+        0.014286034423199674
+      ]
+    },
+    "D2.P_oracle_current": {
+      "estimate": 0.00046527345615446553,
+      "ci": [
+        -0.0004764680643693291,
+        0.0015668239369714743
+      ]
+    }
+  }
+}

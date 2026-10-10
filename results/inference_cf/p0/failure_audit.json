@@ -1,0 +1,13 @@
+{
+  "failure": "Transformers generate returns content-only sequences; original parser incorrectly required forced prefix in sequences. All state/scoring rows invalid; preserved without reuse.",
+  "git_commit": "55faf76ca6d16173efc5eabeedea1bda0c3f4242",
+  "job_id": "54702",
+  "manifest_hash": "sha256:2ef71c487c61c6d897d795b475eeb89582326caed43ff53b53777051325e3c31",
+  "peak_vram_bytes": 3426093568,
+  "row_count": 60,
+  "runtime_sec": 43.46947979927063,
+  "status_reasons": {
+    "('skip', 'baseline_prompt_mismatch')": 57,
+    "('skip', 'frozen_baseline_text_mismatch')": 3
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "p2_tta0_panel20_v1",
+  "role": "already-exposed D-dev-select",
+  "parent": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+  "parent_byte_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+  "selection": "first encountered row per dialogue in exact saved parent rows order; preserve encounter order",
+  "rows": [
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_111",
+      "parent_row_index": 0,
+      "parent_selection_sha256": "0f9816c669fab3e323ef13e7088f62a0cbad0b3290b2f7873d5890561aae3f31"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_91",
+      "parent_row_index": 5,
+      "parent_selection_sha256": "01c366659c13b37c1b61362d32a31bba5ae93905652a2474b3e44d70d47d15f7"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_111",
+      "parent_row_index": 10,
+      "parent_selection_sha256": "012341c8c085ddab80fd4444fb0584b68fcebe9a5999f32a03e5947d0d297c3e"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_116",
+      "parent_row_index": 15,
+      "parent_selection_sha256": "09da9be20d52d1a658f8d89767651760d119d8b174a250078c7ee695774261b7"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_472",
+      "parent_row_index": 20,
+      "parent_selection_sha256": "00f8807a45dffcb686b8f9ae7c1cfe9592d40ae90a56c6e96356300fd42cf150"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_380",
+      "parent_row_index": 25,
+      "parent_selection_sha256": "052e7d37678950e94ef848085c6a0f7372006b40b136b173e3eeaa3629ff743f"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0085_S0_185",
+      "parent_row_index": 30,
+      "parent_selection_sha256": "07d893e5c480d9c1255925fa836bc715c9a6fa66e6fe4993614c0327de77a23f"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_196",
+      "parent_row_index": 35,
+      "parent_selection_sha256": "1e4191c753852710305c6a2aa1b2b5a111eeec5e5736f3e38b35b8c34448b7d7"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_80",
+      "parent_row_index": 40,
+      "parent_selection_sha256": "10f78172ea23b8d799bbb1152a049de623562d9a0f3b00c24d8f6fc95726af75"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_402",
+      "parent_row_index": 45,
+      "parent_selection_sha256": "1a5968fb5f9a949c915417db1fa0fae317c82ba4a3e53ae952b13c931ce2a1c5"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_141",
+      "parent_row_index": 50,
+      "parent_selection_sha256": "13af929208284ab3f5330b8f040406cba5081178e25cb0c8a429fb1018968394"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_71",
+      "parent_row_index": 55,
+      "parent_selection_sha256": "0a802d227e71b814418c70f4090e138a92fd230ac45c7d74af6f98ef286abb5c"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1027_S0_199",
+      "parent_row_index": 60,
+      "parent_selection_sha256": "341b78113cd9d552816a0035db76a88e83b1e569ba53ce5f3912f0af6f2db084"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_53",
+      "parent_row_index": 65,
+      "parent_selection_sha256": "0161514f5775b1fcda916573350b461d8c6cad854998d35c4e26d509b6d9b621"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_110",
+      "parent_row_index": 70,
+      "parent_selection_sha256": "20c769d7de6307561ff6ded787c9aba1639be1860a55b97800b5b54aa8572a74"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_24",
+      "parent_row_index": 75,
+      "parent_selection_sha256": "17e6ec056f2ed43a120c1d297d478835e3836e91fc29a8b6edca0b3c1b4ed4fd"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_23",
+      "parent_row_index": 80,
+      "parent_selection_sha256": "231b7ae6b37685e1e29fe5317d91c83f469da5e406ce9c39afbaaa48c997bfac"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_131",
+      "parent_row_index": 85,
+      "parent_selection_sha256": "09643ac3e5185dbb78c738f743e828f8cc93b5ca08746f45d9aa87d7c13fb72f"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_266",
+      "parent_row_index": 90,
+      "parent_selection_sha256": "2662039d24b85cd60c6ed8b7bc51bc757320926a22ed75b6e626d9e27072c61c"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2012_S0_24",
+      "parent_row_index": 95,
+      "parent_selection_sha256": "049a8cd0ce33d85ce401966cf7baf80bd2eb4e98a3e27cb5fbf7be9a76991ec4"
+    }
+  ]
+}

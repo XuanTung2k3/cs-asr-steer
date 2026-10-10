@@ -1,0 +1,51 @@
+{
+ "ASR_HARM_ALIGNMENT": null,
+ "checks": {
+  "label_agrees": true,
+  "manifest_self": true,
+  "passes_agree": true,
+  "pooled_agree": true,
+  "primary_bound": true,
+  "rows_sites_clamps_reconstruction_self": true,
+  "runtime": true,
+  "sources_at_commit": true
+ },
+ "criteria": {
+  "INDUCE_1_PASS": true,
+  "INDUCE_1_detail": {
+   "n": 6,
+   "pooled": 0.7708333333333334,
+   "succ": 4
+  },
+  "INDUCE_3_PASS": true,
+  "INDUCE_3_detail": {
+   "n": 5,
+   "pooled": 0.875,
+   "succ": 5
+  },
+  "RESCUE_1_PASS": false,
+  "RESCUE_1_detail": {
+   "n": 4,
+   "pooled": 0.41666666666666663,
+   "succ": 2
+  },
+  "RESCUE_3_PASS": false,
+  "RESCUE_3_detail": {
+   "n": 4,
+   "pooled": 0.6136363636363636,
+   "succ": 2
+  }
+ },
+ "failures": [],
+ "git_commit": "ca4a92e99e676ddc00e202464602612c017a0052",
+ "label": "P2_PATH0_ASYMMETRIC",
+ "passes": {
+  "INDUCE_1_PASS": true,
+  "INDUCE_3_PASS": true,
+  "RESCUE_1_PASS": false,
+  "RESCUE_3_PASS": false
+ },
+ "phase": "primary",
+ "schema": "p2_path0_post_audit_v1",
+ "verdict": "P2_PATH0_AUDIT: PASS"
+}

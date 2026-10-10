@@ -1,0 +1,20 @@
+{
+  "schema_version": "a6_ott_search_alignment_audit_v1",
+  "status": "BLOCKED",
+  "phase": "A",
+  "regime": "oracle_tt",
+  "dataset": "cs_dialogue",
+  "frozen_search_ids_unchanged": true,
+  "confirmed_missing_accepted_oracle_span": [
+    "ZH-CN_U0011_S0_758"
+  ],
+  "failure_observed_in": "physical acceptance path using canonical cs_dialogue_dev_select loader",
+  "effect": "direction construction refused before model steering; no Phase-A logical row accepted",
+  "required_action": "resolve canonical accepted acoustic alignment metadata for the frozen Search IDs",
+  "forbidden_workaround": [
+    "corpus-level direction",
+    "fixed-vector artifact",
+    "guessed time span",
+    "substitute utterance ID"
+  ]
+}

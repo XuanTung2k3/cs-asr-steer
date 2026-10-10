@@ -1,0 +1,50 @@
+{
+  "schema_version": "a6_ott_phase_b_final_settings_all_v1",
+  "seame_outcomes_loaded": false,
+  "settings": [
+    {
+      "family": "add_unique",
+      "layer": 20,
+      "model": "whisper",
+      "rho": 1.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 24,
+      "model": "whisper",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "model": "whisper",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 15,
+      "model": "qwen3_asr_1p7b",
+      "rho": 2.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 13,
+      "model": "qwen3_asr_1p7b",
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "model": "qwen3_asr_1p7b",
+      "rho": 0.5,
+      "side": "decoder"
+    }
+  ],
+  "source_confirm_sha256": "sha256:72b6033d3488a69507469940eb963401c81693dc60f9cad58f8e0c68039b3521",
+  "status": "FROZEN_BEFORE_PHASE_C"
+}

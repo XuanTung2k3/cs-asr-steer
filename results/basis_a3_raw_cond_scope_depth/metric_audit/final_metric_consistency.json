@@ -1,0 +1,11 @@
+{
+  "accepted_record_count": 540,
+  "candidate_level_utility": "kept separate; not substituted for POI net utility",
+  "duplicate_configuration_keys": {},
+  "formula": "poi_net_utility = poi_corrections - poi_corruptions",
+  "invalid_rows": [],
+  "schema_version": "basis_a3_final_metric_consistency_v1",
+  "source_semantics": "results/basis_a3_raw_cond_scope_depth/metric_audit/semantics.json",
+  "status": "PASS",
+  "unique_configuration_count": 540
+}

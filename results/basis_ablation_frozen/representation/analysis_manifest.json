@@ -1,0 +1,35 @@
+{
+  "schema_version": "basis_a_representation_analysis_v1",
+  "status": "PLANNED_PRE_RUN",
+  "git_commit": "c6f2a5e07bf3bf2caed8bef3eb503cb6dc10dae9",
+  "model": "Whisper-large-v3",
+  "site": "decoder_post_cross_attn_residual",
+  "layer": 24,
+  "data_role": "D-dev-select",
+  "population_fingerprint": "sha256:4a4ce18e7a368e60108fe1506ee6a70611d532d0821b376dc1ac8d483e2b4440",
+  "state_source": "baseline exact-site L24 teacher-forced states",
+  "position_definition": "first-BPE-token query position for a baseline-correct EN/ZH reference unit",
+  "baseline_source": "reused DG-04 B0 canonical frozen transcripts",
+  "pca": {
+    "seed": 2408,
+    "max_vectors": 10000,
+    "fit_rows_not_directions": true
+  },
+  "projection_distributions": {
+    "directions": ["raw", "local", "conditioning"],
+    "score": "<featurewise_LN(r_t), direction>",
+    "layer_norm_epsilon": 1e-5,
+    "affine": false,
+    "groups": ["embedded_EN", "matrix_ZH"],
+    "statistics": ["n", "mean", "std", "median", "q25", "q75", "standardized_mean_difference"]
+  },
+  "operational": {
+    "partition": "main",
+    "gpus": 1,
+    "batch_size": 1,
+    "frozen_backbone": true,
+    "no_gradients": true,
+    "no_intervention_decode": true,
+    "forbidden_splits": ["D-dev-confirm", "D-test"]
+  }
+}

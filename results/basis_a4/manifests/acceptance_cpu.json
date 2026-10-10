@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "conditioning_avg_not_materialized": true,
+    "directions_are_raw_conditioning_only": true,
+    "focused_cpu_tests": true,
+    "protocol_frozen": true,
+    "qwen_architecture": true,
+    "qwen_dimensions": true,
+    "qwen_official_model_type": true,
+    "qwen_sites_frozen": true,
+    "whisper_reuse_count": true
+  },
+  "pytest_command": [
+    "/home/tungnx/miniconda3/envs/acl1/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_basis_a4_qwen.py",
+    "tests/test_lss_sites.py",
+    "tests/test_dg02_site.py"
+  ],
+  "pytest_stderr": "",
+  "pytest_stdout": ".....................................                                    [100%]\n=============================== warnings summary ===============================\ntests/test_lss_sites.py::test_recorded_site_matches_a_manual_reimplementation\n  /home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/joblib/_multiprocessing_helpers.py:44: UserWarning: [Errno 28] No space left on device.  joblib will operate in serial mode\n    warnings.warn(\"%s.  joblib will operate in serial mode\" % (e,))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n",
+  "required_before_gpu": true,
+  "schema_version": "basis_a4_acceptance_v1",
+  "status": "PASS"
+}

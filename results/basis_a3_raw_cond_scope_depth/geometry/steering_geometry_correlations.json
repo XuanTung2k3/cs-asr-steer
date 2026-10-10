@@ -1,0 +1,974 @@
+[
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.7883051668127876,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.9563358357738111,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.02301017944539544,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.8505103121362932,
+    "spearman": -1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": -0.043182643579017334,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": 0.847018731928954,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.7879206618974807,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.9565008838446412,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.02399515947074576,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8511279132547166,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": 0.044167570847535156,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": -0.8476424987714901,
+    "spearman": -1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.7790884124266514,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.9577007746504326,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.04241244715901552,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.861153616408623,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": 0.06257435550110003,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": -0.8577837509658145,
+    "spearman": -1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.5443942364410604,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.8996813316490605,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.23404407245342917,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.8746309182492499,
+    "spearman": -1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": -0.7321271004414555,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": 0.8521768109966628,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.5440501432848188,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.900197941703975,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.23340371086635864,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8751835331753837,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": 0.7318916987479543,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": -0.8527722919252134,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.5346348286700201,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.9081872226623176,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.21921645899047504,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8844685790348557,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": 0.7248296975991921,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "cs_dialogue",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": -0.8628119110746882,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.48596786933344865,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.8047343770653218,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.053110883034338474,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.8338578816107007,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.48551848476676757,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.8041680208265235,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.05241634161595152,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8345038781702329,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.4744310510052564,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.7932514981175105,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.03739925986482633,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8450650899017972,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.23031639433301168,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.34804808494766687,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.25649813607286276,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.8197924569342097,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.23110866403828703,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.34907886027683843,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.2561251804884482,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8204685172191031,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.2471380536446353,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.36716529897585387,
+    "spearman": -0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.24569322576321156,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8313297456989878,
+    "spearman": 0.39999999999999997,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_man",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": -0.9226518231985099,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.9374883443119465,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.18770273778390173,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.8594831355090613,
+    "spearman": -1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.9229184582280402,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.9371548625536122,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.1866492589226356,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8600783116065729,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": 0.9254754344867346,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.9306438978047531,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.16775966448496826,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.8698633495583701,
+    "spearman": 1.0,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "global",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-PIER-gain",
+    "pearson": null,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-PIER-gain",
+    "pearson": 0.8304416570147776,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": 0.7523921845457208,
+    "spearman": 0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": -0.7718409820616637,
+    "spearman": -0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "cos_raw_cond",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-PIER-gain",
+    "pearson": null,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.8310997431057459,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.7525655914273579,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.7725920448266635,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "angle_deg",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-PIER-gain",
+    "pearson": null,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-PIER-gain",
+    "pearson": -0.8416443193095238,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Matrix-Ret",
+    "pearson": -0.7520742583404685,
+    "spearman": -0.7999999999999999,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Matrix-Ret",
+    "pearson": 0.7841917652423448,
+    "spearman": 0.19999999999999998,
+    "n": 4
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Raw-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  },
+  {
+    "Dataset": "seame_dev_sge",
+    "Scope": "oracle_local",
+    "geometry": "unit_l2",
+    "outcome": "Cond-Outside",
+    "pearson": null,
+    "spearman": null,
+    "n": 0
+  }
+]

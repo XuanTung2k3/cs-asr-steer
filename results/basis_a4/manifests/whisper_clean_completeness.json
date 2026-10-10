@@ -1,0 +1,24 @@
+{
+  "conditioning_anchor_cells": 24,
+  "conditioning_avg": "REDUNDANT_NOT_RUN",
+  "conditioning_by_dataset": {
+    "cs_dialogue": 64,
+    "seame_dev_man": 64,
+    "seame_dev_sge": 64
+  },
+  "conditioning_cells": 192,
+  "conditioning_clean_cells": 168,
+  "duplicate_keys": 0,
+  "empty_provenance": 0,
+  "errors": [],
+  "git_commit": "7b8e05cd295a4d33f9cd4816b5069149f7a48cb4",
+  "jobs": {
+    "cs_dialogue": 52091,
+    "seame_dev_man": 52092,
+    "seame_dev_sge": 52094
+  },
+  "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+  "raw_cells": 384,
+  "schema_version": "basis_a4_whisper_completeness_v1",
+  "status": "PASS"
+}

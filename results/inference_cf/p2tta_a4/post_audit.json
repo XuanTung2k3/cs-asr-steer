@@ -1,0 +1,102 @@
+{
+ "checks": {
+  "analysis_bound": true,
+  "compute": true,
+  "diag_recomputed": true,
+  "distance_recomputed": true,
+  "label_agrees": true,
+  "live_audit": true,
+  "manifest_self": true,
+  "mechanics_agree": true,
+  "metrics_agree": true,
+  "output_recomputed": true,
+  "panel": true,
+  "partial_rescue_agrees": true,
+  "reset_recomputed": true,
+  "rows_recomputed": true,
+  "runtime": true,
+  "safety_points_agree": true,
+  "seal_committed_unchanged": true,
+  "sources_at_commit": true,
+  "theta0_hash": true,
+  "update_recomputed": true
+ },
+ "failures": {
+  "diag": [],
+  "distance": [],
+  "output": [],
+  "reset": [],
+  "rows": [],
+  "update": []
+ },
+ "git_commit": "e506e74eff166b652b0976dc3cb1b769e03e1430",
+ "independent": {
+  "anchor": {
+   "D_ANCHOR2_tw": 0.06159720272426057,
+   "G_E_tw": 0.4060844690818059,
+   "pass": true,
+   "rho": 0.1516856895895021
+  },
+  "benefit": true,
+  "en": {
+   "median_R_E": 0.4653887793247555,
+   "pass": true,
+   "rows_decreased": 11
+  },
+  "metrics": {
+   "A2": {
+    "en_wer": 0.5180722891566265,
+    "mer": 0.2920353982300885,
+    "pier": 0.5140562248995983,
+    "poi_errors": 128,
+    "zh_cer": 0.21494102228047182
+   },
+   "A3": {
+    "en_wer": 0.5180722891566265,
+    "mer": 0.29301868239921336,
+    "pier": 0.5140562248995983,
+    "poi_errors": 128,
+    "zh_cer": 0.2162516382699869
+   },
+   "A4": {
+    "en_wer": 0.5180722891566265,
+    "mer": 0.2920353982300885,
+    "pier": 0.5140562248995983,
+    "poi_errors": 128,
+    "zh_cer": 0.21494102228047182
+   },
+   "B0_AUTO": {
+    "en_wer": 0.3413654618473896,
+    "mer": 0.29793510324483774,
+    "pier": 0.3413654618473896,
+    "poi_errors": 85,
+    "zh_cer": 0.27916120576671033
+   },
+   "B0_FORCED": {
+    "en_wer": 0.5863453815261044,
+    "mer": 0.2861356932153392,
+    "pier": 0.5863453815261044,
+    "poi_errors": 146,
+    "zh_cer": 0.18479685452162517
+   }
+  },
+  "rescue_fraction": {
+   "outside": 0.19157088122605365,
+   "retention": 0.08695652173912702,
+   "zh_cer": 0.07964954201513322
+  },
+  "safety": {
+   "EN_ret": true,
+   "MER": true,
+   "ZH_CER": false,
+   "ZH_ret": false,
+   "caps": true,
+   "corruption": true,
+   "outside": false,
+   "severe": true
+  }
+ },
+ "label": "P2_TTA_A4_SEQUENCE_SAFETY_NOT_RESCUED",
+ "schema": "p2_tta_a4_post_audit_v1",
+ "verdict": "P2_TTA_A4_AUDIT: PASS"
+}

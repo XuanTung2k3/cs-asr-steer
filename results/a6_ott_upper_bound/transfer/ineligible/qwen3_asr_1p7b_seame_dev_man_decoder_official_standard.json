@@ -1,0 +1,53 @@
+{
+  "dataset": "seame_dev_man",
+  "mode": "official_standard",
+  "model": "qwen3_asr_1p7b",
+  "phase": "C",
+  "rows": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_00141|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01639|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01804|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02439|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02473|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02545|conditioning_cs|decoder|0|0.5|official_standard|decoder_post_cross_attn_residual",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "schema_version": "a6_ott_ineligible_v1",
+  "side": "decoder",
+  "status": "PASS"
+}

@@ -1,0 +1,94 @@
+{
+ "checks": {
+  "bootstrap_agrees": true,
+  "counts": true,
+  "dialogues": true,
+  "exactly_300_rows": true,
+  "label_agrees": true,
+  "live_audit_2pct": true,
+  "lodo_agrees": true,
+  "manifest_self": true,
+  "metrics_agree": true,
+  "opportunity_gate_agrees": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "retention_breadth_agree": true,
+  "rows_barrier_dispatch_controller_recomputed": true,
+  "runtime": true,
+  "safety_agrees": true,
+  "seal_committed_unchanged": true,
+  "sources_at_commit": true
+ },
+ "failures": [],
+ "git_commit": "e1086f2451d74ea5b563d0f88bfa72542502d6cd",
+ "independent": {
+  "R_net": -2,
+  "added_caps": 0,
+  "breadth": false,
+  "changed": {
+   "FIXED100": [
+    "ZH-CN_U0023_S0_664",
+    "ZH-CN_U0039_S0_380",
+    "ZH-CN_U0091_S0_68",
+    "ZH-CN_U0092_S0_101"
+   ],
+   "NEW200": [
+    "ZH-CN_U0011_S0_265",
+    "ZH-CN_U0021_S0_118",
+    "ZH-CN_U0023_S0_91",
+    "ZH-CN_U0085_S0_108",
+    "ZH-CN_U0085_S0_99",
+    "ZH-CN_U1063_S0_56",
+    "ZH-CN_U2004_S0_118"
+   ]
+  },
+  "content": 32,
+  "eos_abstain": 12,
+  "gate_open": true,
+  "metrics": {
+   "A2": {
+    "en_wer": 0.44656488549618323,
+    "mer": 0.24064364491050444,
+    "mixed": 2662,
+    "pier": 0.44274809160305345,
+    "poi": 696,
+    "zh": 1921,
+    "zh_cer": 0.20328042328042328
+   },
+   "B0_AUTO": {
+    "en_wer": 0.3880407124681934,
+    "mer": 0.26080274814680887,
+    "mixed": 2885,
+    "pier": 0.383587786259542,
+    "poi": 603,
+    "zh": 2237,
+    "zh_cer": 0.23671957671957672
+   },
+   "B0_FORCED": {
+    "en_wer": 0.46564885496183206,
+    "mer": 0.2687579099620322,
+    "mixed": 2973,
+    "pier": 0.4637404580152672,
+    "poi": 729,
+    "zh": 2202,
+    "zh_cer": 0.233015873015873
+   },
+   "G1A": {
+    "en_wer": 0.44656488549618323,
+    "mer": 0.2408244440426686,
+    "mixed": 2664,
+    "pier": 0.44274809160305345,
+    "poi": 696,
+    "zh": 1923,
+    "zh_cer": 0.2034920634920635
+   }
+  },
+  "retention": true,
+  "safe": true,
+  "severe": 0
+ },
+ "label": "P2_PATH5_SAFE_NO_ADDED_VALUE",
+ "phase": "full",
+ "schema": "p2_path5_post_audit_v1",
+ "verdict": "P2_PATH5_AUDIT: PASS"
+}

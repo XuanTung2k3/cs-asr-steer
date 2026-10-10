@@ -1,0 +1,132 @@
+{
+  "datasets": {
+    "ascend_confirm": "ASCEND_CONFIRM_200",
+    "cs_dialogue_confirm": "CS_CONFIRM_280"
+  },
+  "decode_modes": [
+    "greedy",
+    "official_standard"
+  ],
+  "eligibility": {
+    "ASCEND_CONFIRM_ADD_UNIQUE_DECODER.json": "sha256:5532ff91d12ca48ead1cc8b1be4ee9978ff8c3b313a28ad9121381788ca71619",
+    "ASCEND_CONFIRM_ADD_UNIQUE_ENCODER.json": "sha256:6f3154939458b9682cc66fb8cd2bb52744f8b236b4939dbe5779cb85e289c78e",
+    "ASCEND_CONFIRM_COMMON.json": "sha256:69eb205f60c258a1ead22eee54d2fd9f1a00db05b385dc9f0e078cfde641398d",
+    "ASCEND_CONFIRM_CONDITIONING_CS_DECODER.json": "sha256:4a3db49d1451cacfd6b894e626b9dafa2dcff8eabc6aaa3d7d0ea77b651dbd7f",
+    "ASCEND_CONFIRM_METHODS.json": "sha256:5ca9599cc346e3887c376f004511f01fd42531d41d28b70d77c8c133c5482dda",
+    "CS_CONFIRM_ADD_UNIQUE_DECODER.json": "sha256:3dfefb4aca3b3023092ffe65ed5ce33de7d4a7b1ee0e202541ef70c4da05fd11",
+    "CS_CONFIRM_ADD_UNIQUE_ENCODER.json": "sha256:85d4b5d765f27e824f1711f596308b81c7fdca15d1afada842d378464ec2055c",
+    "CS_CONFIRM_COMMON.json": "sha256:2eaf64f87839e9e01eb80586ee371502d6266286a53893baca4573fb1435a6bd",
+    "CS_CONFIRM_CONDITIONING_CS_DECODER.json": "sha256:34458b0ad0a3e40e244cf478cdd7da9d3b852379b9e4f6e307915d68a0385322",
+    "CS_CONFIRM_METHODS.json": "sha256:89dc1785c78f65a686757035cac1b3183975e0dee188867ff86a4800c9f5ebb7"
+  },
+  "fixed_direction_artifact": null,
+  "forbidden_inputs": [
+    "phase_c",
+    "transfer",
+    "seame",
+    "d-test",
+    "phase_b_outcomes"
+  ],
+  "manifest_sha256": "sha256:222716243ad1ad696cc56e134e0dfe9346ed6a58b8e7d0bc1f8f1c2af0b62b11",
+  "phase": "B",
+  "phase_a_search_freeze": "sha256:20ca7e93c8823934f373b9107eb63650b50cd087178960dacac45951e61e235b",
+  "phase_a_selection": {
+    "qwen3_asr_1p7b": "sha256:107bb0fc30bdaf06a22a329898fc895fc0d081715e6b66fd6a81cd0631278b9e",
+    "whisper": "sha256:46601549573c3fb9a9f07d773772b22e1cd6714a0dd3090eb0b977c403d94aa9"
+  },
+  "qwen_official_equivalence": "sha256:aea79074a4ab84eaddec58b753906ab36997addb003c45b4ad612c675713add5",
+  "regime": "oracle_tt",
+  "schema_version": "a6_ott_phase_b_manifest_v3",
+  "selection_outcomes_loaded": "phase_a_only",
+  "settings": {
+    "qwen3_asr_1p7b": {
+      "model": "qwen3_asr_1p7b",
+      "phase_a_selection_sha256": "sha256:107bb0fc30bdaf06a22a329898fc895fc0d081715e6b66fd6a81cd0631278b9e",
+      "schema_version": "a6_ott_phase_b_settings_v1",
+      "settings": [
+        {
+          "family": "add_unique",
+          "layer": 0,
+          "rho": 2.0,
+          "side": "encoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 15,
+          "rho": 2.0,
+          "side": "encoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 13,
+          "rho": 0.5,
+          "side": "decoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 7,
+          "rho": 0.5,
+          "side": "decoder"
+        },
+        {
+          "family": "conditioning_cs",
+          "layer": 3,
+          "rho": 0.5,
+          "side": "decoder"
+        },
+        {
+          "family": "conditioning_cs",
+          "layer": 0,
+          "rho": 0.5,
+          "side": "decoder"
+        }
+      ],
+      "status": "FROZEN_FROM_PHASE_A_SELECTION"
+    },
+    "whisper": {
+      "model": "whisper",
+      "phase_a_selection_sha256": "sha256:46601549573c3fb9a9f07d773772b22e1cd6714a0dd3090eb0b977c403d94aa9",
+      "schema_version": "a6_ott_phase_b_settings_v1",
+      "settings": [
+        {
+          "family": "add_unique",
+          "layer": 4,
+          "rho": 0.5,
+          "side": "encoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 20,
+          "rho": 1.0,
+          "side": "encoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 25,
+          "rho": 0.5,
+          "side": "decoder"
+        },
+        {
+          "family": "add_unique",
+          "layer": 24,
+          "rho": 0.5,
+          "side": "decoder"
+        },
+        {
+          "family": "conditioning_cs",
+          "layer": 11,
+          "rho": 2.0,
+          "side": "decoder"
+        },
+        {
+          "family": "conditioning_cs",
+          "layer": 0,
+          "rho": 0.5,
+          "side": "decoder"
+        }
+      ],
+      "status": "FROZEN_FROM_PHASE_A_SELECTION"
+    }
+  },
+  "status": "FROZEN_BEFORE_CONFIRM_EXECUTION"
+}

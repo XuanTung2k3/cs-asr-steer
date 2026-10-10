@@ -1,0 +1,116 @@
+{
+  "dataset": "seame_dev_sge",
+  "mode": "official_standard",
+  "model": "qwen3_asr_1p7b",
+  "phase": "C",
+  "rows": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00033|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00043|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00191|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00406|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00489|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00507|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00624|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00629|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00740|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_00745|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02604|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02611|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_02960|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03000|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_sge|dev_sge_03157|add_unique|encoder|15|2.0|official_standard|encoder_post_self_attn_residual_pre_ffn",
+      "equivalence_provenance": "official_standard == greedy",
+      "outcome_consulted": false,
+      "reason": "empty_oracle_ab_group",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "schema_version": "a6_ott_ineligible_v1",
+  "side": "encoder",
+  "status": "PASS"
+}

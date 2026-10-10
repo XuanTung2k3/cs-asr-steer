@@ -1,0 +1,42 @@
+{
+ "checks": {
+  "code_anchor:experiments/inference_cf_cached.py": true,
+  "code_anchor:experiments/inference_cf_p0_r2.py": true,
+  "code_anchor:experiments/inference_cf_p2dir.py": true,
+  "code_anchor:experiments/inference_cf_p2r.py": true,
+  "code_anchor:experiments/inference_cf_p2sel.py": true,
+  "code_anchor:src/csasr/inference_cf/core_r2.py": true,
+  "code_anchor:src/csasr/inference_cf/readout.py": true,
+  "code_anchor:src/csasr/lss/sites.py": true,
+  "code_anchor:src/csasr/models/hooks.py": true,
+  "e0_audit_pass": true,
+  "e1_only_if_selected_and_authorized": true,
+  "e2_only_if_supported": true,
+  "firewall_e0_run1": true,
+  "no_p3_full300_extra_stage": true,
+  "runtime_surface_reference_free": true,
+  "single_attempt_e0_run1": true,
+  "unchanged:configs/inference_cf/p2_sel_e.json": true,
+  "unchanged:docs/inference_cf/P2_SEL_E_CODEX_DESIGN.md": true,
+  "unchanged:docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md": true,
+  "unchanged:docs/inference_cf/P2_SEL_E_SPEC.md": true,
+  "unchanged:results/inference_cf/p2sel_e/prerun_audit.json": true,
+  "unchanged:tests/test_p2_sel_e_q_contract.py": true
+ },
+ "e0": {
+  "label": "P2_SEL_E_DIAGNOSIS_AMBIGUOUS",
+  "selected": null
+ },
+ "e1_run": false,
+ "e2_run": false,
+ "entries": [
+  "e0_run1",
+  "e0_run1_analysis.json",
+  "e0_run1_audit.json",
+  "prerun_audit.json",
+  "prerun_audit_r1.json"
+ ],
+ "git_commit": "c7bc7e6b0621b7e6842e07a3a130d42403c05a39",
+ "schema": "p2_sel_e_final_audit_v1",
+ "verdict": "P2_SEL_E_AUDIT: PASS"
+}

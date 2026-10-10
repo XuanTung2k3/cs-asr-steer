@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "at_most_one_new_direction_progressed": true,
+    "construction_reference_free": true,
+    "evaluator_after_seal": true,
+    "exp1_audit_pass": true,
+    "firewall_exp1": true,
+    "firewall_extract": true,
+    "no_extra_attempts_or_stages": true,
+    "no_fresh_data": true,
+    "no_p3": true,
+    "one_attempt_per_stage": true,
+    "only_three_directions": true,
+    "single_layer_16_no_alpha_or_gate_search": true,
+    "stop_rule_respected": true,
+    "unchanged_since_freeze:configs/inference_cf/p2_dir_direction_identification.json": true,
+    "unchanged_since_freeze:docs/inference_cf/P2_DIR_CODEX_DESIGN.md": true,
+    "unchanged_since_freeze:docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md": true,
+    "unchanged_since_freeze:experiments/inference_cf_cached.py": true,
+    "unchanged_since_freeze:experiments/inference_cf_p2r.py": true,
+    "unchanged_since_freeze:experiments/inference_cf_p2rj.py": true,
+    "unchanged_since_freeze:results/inference_cf/p2r/population.json": true,
+    "unchanged_since_freeze:results/inference_cf/p2rj/positions.json": true,
+    "unchanged_since_freeze:src/csasr/inference_cf/core_p1.py": true,
+    "unchanged_since_freeze:src/csasr/inference_cf/core_r2.py": true,
+    "unchanged_since_freeze:src/csasr/lss/sites.py": true,
+    "unchanged_since_freeze:src/csasr/models/hooks.py": true
+  },
+  "final_label": "P2_DIR_NO_NEW_DIRECTION_SUPPORTED",
+  "git_commit": "c899fa1362ab3ac0aebcf0b6a20f8d2cceb225b8",
+  "notes": {
+    "jobs": {
+      "exp1": "57792",
+      "extract": "57789"
+    },
+    "p2dir_entries": [
+      "construction_population.json",
+      "exp1_run1",
+      "exp1_run1_analysis.json",
+      "exp1_run1_audit.json",
+      "extract_run1",
+      "final_audit.json",
+      "folds_run1",
+      "prerun_audit.json"
+    ]
+  },
+  "schema": "p2dir_final_audit_v1",
+  "supplementary": [
+    "P2_DIR_CAUSAL_POWER_WITH_DAMAGE:D2"
+  ],
+  "verdict": "P2_DIR_AUDIT: PASS"
+}

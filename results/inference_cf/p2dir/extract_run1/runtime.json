@@ -1,0 +1,1 @@
+{"autograd_calls":0,"elapsed_sec":85.68615531921387,"end_unix":1791283656.6754587,"failures":0,"gpu":"NVIDIA H100 80GB HBM3 MIG 3g.40gb","job_id":"57789","mode":"extract","node":"worker-mig-3g40gb-0","peak_vram_allocated_bytes":3687371264,"peak_vram_reserved_bytes":3995074560,"start_unix":1791283570.9893034,"status":"completed"}

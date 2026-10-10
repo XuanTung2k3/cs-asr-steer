@@ -1,0 +1,44 @@
+{
+  "model": "qwen3_asr_1p7b",
+  "phase_a_selection_sha256": "sha256:107bb0fc30bdaf06a22a329898fc895fc0d081715e6b66fd6a81cd0631278b9e",
+  "schema_version": "a6_ott_phase_b_settings_v1",
+  "settings": [
+    {
+      "family": "add_unique",
+      "layer": 0,
+      "rho": 2.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 15,
+      "rho": 2.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 13,
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 7,
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 3,
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "rho": 0.5,
+      "side": "decoder"
+    }
+  ],
+  "status": "FROZEN_FROM_PHASE_A_SELECTION"
+}

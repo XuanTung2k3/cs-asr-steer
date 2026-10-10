@@ -1,0 +1,22 @@
+{
+  "n_utterances": 6257,
+  "regime": "greedy",
+  "runtime_sec": 5493.8977200984955,
+  "schema_version": "dg08_dtest_eval_v1",
+  "slurm": {
+    "job_ids": [
+      "50734"
+    ],
+    "node": "worker-mig-3g40gb-0",
+    "partition": "mig"
+  },
+  "task": "dtest",
+  "written": [
+    "F0_FROZEN_WHISPER",
+    "F3_LORA_seed42",
+    "F3_LORA_seed73",
+    "F4_MSTAR_seed13",
+    "F4_MSTAR_seed42",
+    "F4_MSTAR_seed73"
+  ]
+}

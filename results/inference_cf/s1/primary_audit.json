@@ -1,0 +1,62 @@
+{
+ "checks": {
+  "acoustic_file_open_firewall": true,
+  "acoustic_frozen_model": true,
+  "acoustic_no_autograd_training_steering_lid": true,
+  "acoustic_no_detection_no_candidate_regeneration": true,
+  "acoustic_no_hooks_left": true,
+  "acoustic_runtime_completed": true,
+  "acoustic_wall_under_3h": true,
+  "counters_lac_reused_180": true,
+  "counters_masked_encoders": true,
+  "counters_masked_steps": true,
+  "independent:array_hashes": true,
+  "independent:fallback_finite": true,
+  "independent:lac_reuse": true,
+  "independent:lineage": true,
+  "independent:mask_groups": true,
+  "independent:mask_identity": true,
+  "independent:masked_lineage": true,
+  "independent:masked_logp": true,
+  "independent:scores_rankings": true,
+  "independent:status_copy": true,
+  "independent:unexpected_mask": true,
+  "independent:union_immutability": true,
+  "manifest_valid_sources_unchanged": true,
+  "no_reference_file_opened_by_any_job": true,
+  "order_candidate_seal_then_audit_then_acoustic": true,
+  "output_seal_committed_on_remote": true,
+  "output_seal_covers_run": true,
+  "output_seal_files_unchanged": true,
+  "output_seal_hash": true,
+  "primary_analysis_counts": true,
+  "primary_analysis_reference_free": true,
+  "runner_never_imported_evaluator": true,
+  "seal_precedes_references": true,
+  "sources_identical_across_jobs": true
+ },
+ "created_unix": 1791476243.3020568,
+ "failed": [],
+ "git_head": "7ffb21b8f0e77294b3451f66dae7858ade980e57",
+ "notes": {
+  "auditor_self_hash": {
+   "acoustic_manifest": "sha256:eec16031fd9e22770361b0055df9ffd04da3ff96ec2918f056dfab9d653b2f8f",
+   "candidates_manifest": "sha256:84d20e6823e9f39bb06b87c2f3d8c7e57aabbc16e7c5a5565ba0b3fe18995a7b",
+   "current": "sha256:eec16031fd9e22770361b0055df9ffd04da3ff96ec2918f056dfab9d653b2f8f"
+  },
+  "bad": {},
+  "forbidden_opened": [],
+  "mask_groups": 124,
+  "masked_steps": 3500,
+  "paired": 59,
+  "status_mix": {
+   "LOW_ASSOCIATION/NO_TARGET": 80,
+   "LOW_HEARD_MASS/NO_TARGET": 14,
+   "NO_EN_REGION/NO_TARGET": 13,
+   "OK/NO_MATCHED_OFFTARGET": 14,
+   "OK/OK": 59
+  }
+ },
+ "schema": "s1_audit_primary_v1",
+ "verdict": "S1_AUDIT: PASS (PRIMARY)"
+}

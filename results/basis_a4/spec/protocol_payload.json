@@ -1,0 +1,205 @@
+{
+  "conditioning_avg": {
+    "reason": "all-content position set is already Conditioning; weighting-only variant is out of scope",
+    "run": false,
+    "status": "REDUNDANT"
+  },
+  "decoding": {
+    "condition_on_prev_tokens": false,
+    "do_sample": false,
+    "max_new_tokens": 200,
+    "num_beams": 1,
+    "temperature": 0.0
+  },
+  "depth_rescale": false,
+  "directions": [
+    "Raw",
+    "Conditioning"
+  ],
+  "execution_plan_sha256": "sha256:ece2efb6964b5ceee35dead85a532ad8c00d152e44bb89f955faba4cfda9e4fc",
+  "forbidden_splits": [
+    "D-dev-confirm",
+    "D-test"
+  ],
+  "git": "54e0c132addaa2884ca061f915c5e890cf11987d",
+  "norm_preserve": true,
+  "panel_fingerprints": {
+    "cs_dialogue": {
+      "count": 300,
+      "fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+      "source_sha256": "sha256:68296819a8fea23fae557919300d5c29db2830126e9d6e8f8bc6b9736ad95fed"
+    },
+    "seame_dev_man": {
+      "count": 50,
+      "fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+      "source_sha256": "sha256:eb4fb17c840e65481b6896f52fc3b0a5efb6913ccbdbcbb5e925d78f909aaa55"
+    },
+    "seame_dev_sge": {
+      "count": 50,
+      "fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238",
+      "source_sha256": "sha256:63afab130d2a2b647512f9db3b92887b71922cddd13e0fe222c6a9264cde62b1"
+    }
+  },
+  "panels": {
+    "cs_dialogue": {
+      "n": 300,
+      "role": "D-dev-select"
+    },
+    "seame_dev_man": {
+      "n": 50,
+      "role": "SEAME-dev-man"
+    },
+    "seame_dev_sge": {
+      "n": 50,
+      "role": "SEAME-dev-sge"
+    }
+  },
+  "protocol_hash": "sha256:eb8920e0b80191a41b6858fa366b12238bc66879a333e7cb3bf703a6b45deff6",
+  "qwen": {
+    "baseline_language": "Chinese",
+    "context": "",
+    "decoder_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "decoder_site": "qwen_text_decoder_post_self_attn_residual_pre_mlp",
+    "encoder_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "encoder_site": "qwen_audio_encoder_post_self_attn_residual_pre_ffn",
+    "max_new_tokens": 200,
+    "model_id": "Qwen/Qwen3-ASR-1.7B",
+    "model_path": "/mnt/data/tungnx/Qwen3-ASR-1.7B"
+  },
+  "qwen_encoder_cache": "OFF",
+  "rho": 0.5,
+  "schema_version": "basis_a4_protocol_v1",
+  "scopes": [
+    "global",
+    "oracle_local"
+  ],
+  "spec_sha256": "sha256:1f2f8f5e84c4dcda8f1b605c33d8e3a8607458f41b25cb0a79818d90a5a8a308",
+  "status": "FROZEN_PRE_RUN",
+  "study": "BASIS-A4",
+  "whisper": {
+    "decoder_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "decoder_site": "decoder_post_cross_attn_residual",
+    "encoder_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "encoder_site": "encoder_post_self_attn_residual_pre_ffn"
+  }
+}

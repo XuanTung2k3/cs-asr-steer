@@ -1,0 +1,65 @@
+{
+ "schema": "dir_sprint0_terminal_v1",
+ "terminal_label": "DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE",
+ "evaluator_provisional_label": "DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE",
+ "labels_agree": true,
+ "family_status": {
+  "D3": {
+   "validity": "VALID_AND_TESTED",
+   "outcome": "LEXICAL_POWER_INSUFFICIENT",
+   "qualifying_variant": null,
+   "mechanistic_effect": false
+  },
+  "D4": {
+   "validity": "VALID_AND_TESTED",
+   "outcome": "LEXICAL_POWER_INSUFFICIENT",
+   "qualifying_variant": null,
+   "mechanistic_effect": false
+  },
+  "D5": {
+   "validity": "VALID_AND_TESTED",
+   "outcome": "LEXICAL_POWER_INSUFFICIENT",
+   "qualifying_variant": null,
+   "mechanistic_effect": false
+  }
+ },
+ "audits": {
+  "PRE": "PASS_TO_DIR_SPRINT0",
+  "A": "DIR_SPRINT0_AUDIT_A: PASS",
+  "PRIMARY": "DIR_SPRINT0_AUDIT_PRIMARY: PASS",
+  "FULL": "DIR_SPRINT0_AUDIT_FULL: PASS"
+ },
+ "preserved_failed_attempts": [
+  "results/inference_cf/dir_sprint0/run1/audit_PRE_attempt1_BLOCK.json",
+  "results/inference_cf/dir_sprint0/run1/manifest_attempt1_superseded.json",
+  "results/inference_cf/dir_sprint0/run1/audit_A_attempt1_BLOCK.json",
+  "results/inference_cf/dir_sprint0/run1/job_B_launch_58356_guard_refusal.json",
+  "results/inference_cf/dir_sprint0/run1/authorization_B_runner_sorted.json"
+ ],
+ "auditor_of_record": "results/inference_cf/dir_sprint0/run1/audit_r1/inference_cf_dir_sprint0_audit_r1.py",
+ "hashes": {
+  "evaluation.json": "sha256:188d928a9b1ec00ea74554b6e0baaa33071b0843249138c58fc02ec1fa65e858",
+  "audit_FULL.json": "sha256:7907ae55f04f198424d9a55d804c86747903de910adf7a81d094141bd6e8eae8",
+  "audit_PRIMARY.json": "sha256:3d828e4074f903ec987758adf743083587df90539b49a7c74c8e04b7d97ad1f9",
+  "audit_A.json": "sha256:5ec365dd041d8cb46effe0aae4df8b8cc1ed14eb9c75c58255b56993a8619b9b",
+  "audit_PRE.json": "sha256:477c5ff815c55721b342423f236d531a753d7fa3246e52b7e01d4215e8a20f7e",
+  "job_A_seal.json": "sha256:f943e74db93f42819eb396382a8777fa8b96aa46d795619469665a1ded5c25c9",
+  "pulse_seal.json": "sha256:063b424e7a945f373d6b899a1f34429cfc99513c1fcebdd2afc9eb046706057e",
+  "authorization_B.json": "sha256:4ebe747c302f7e4acfaa70253c7447033726b17e2a45b18043487d09dc96258b",
+  "manifest.json": "sha256:24bbdb99168a13d3e52b1de1f416b03b4e70419f996a9ca3e8102ca228e90c40"
+ },
+ "scientific_jobs": {
+  "A": {
+   "slurm": 58354,
+   "elapsed_sec": 1979
+  },
+  "B": {
+   "slurm": 58357,
+   "elapsed_sec": 1288
+  }
+ },
+ "guard_refused_launch_not_a_job": 58356,
+ "authorizes": "nothing further: no full decoding, no A2-TTA integration, no new direction search, no confirm/test/transfer use",
+ "recommendation": "close DIR-SPRINT0 (and the steering-direction-discovery branch); return to the separately frozen A2 confirmation only on explicit human authorization",
+ "created_unix": 1791602624.3005178
+}

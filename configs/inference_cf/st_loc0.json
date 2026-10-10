@@ -1,0 +1,463 @@
+{
+  "schema": "st_loc0_frozen_v1",
+  "stage": "ST-LOC0",
+  "status": "DESIGN_FROZEN_IMPLEMENTATION_PENDING",
+  "design_base_commit": "8c1298333597d970daac6d79a1f3278bf6080800",
+  "spec": "docs/inference_cf/ST_LOC0_SPEC.md",
+  "design": "docs/inference_cf/ST_LOC0_CODEX_DESIGN.md",
+  "panel": "docs/inference_cf/ST_LOC0_PANEL.json",
+  "panel_identity_hash": "sha256:fa9d33c90f54f873dac2f2662878957be8313b9b97f43f7bd2caf3c22f2a6f69",
+  "source_sha256": {
+    "results/inference_cf/p2r/population.json": "sha256:2ae92b626fa540d464446ab9b2b7ad85e479820fe98b45872ad803538fc12020",
+    "results/inference_cf/p2rj/positions.json": "sha256:8264257918513ec078b88a96ffa53e3b04b424d772dc391d4ae10f7461cd2864",
+    "results/inference_cf/p2dir/construction_population.json": "sha256:87cfe9f0e6cbe71e43575d20d597f2235101574504e921e0562ebf5a0426f4b8",
+    "results/inference_cf/p2dir/folds_run1/folds.json": "sha256:294c3fb982ba7fb7abc7c4b431c753d4994eb6539be81cee51ba678f812d86e2",
+    "results/inference_cf/p2dir/extract_run1/manifest.json": "sha256:3897190c44f289eec2ac210deaa3c105471de61a76a5d937c5c43ab044672d22",
+    "results/inference_cf/p2dir/extract_run1/states.npz": "sha256:3c812246076164aaf461b37b09531225ceb7296c5b3a525db5647be4a147f801",
+    "results/inference_cf/p2dir/exp1_run1/manifest.json": "sha256:6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+    "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "sha256:59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+    "results/inference_cf/p2_A_r1_L16/panel.json": "sha256:a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+    "results/inference_cf/p0_r2/inference_panel.json": "sha256:a1eca10644a400034cfc14ccb44bea863e6957b3606ab38d266eb29b8ad5987e",
+    "configs/inference_cf/p2_dir_direction_identification.json": "sha256:b6f07ddaefd70ca212eb021cbeb41636eedcd0b5b967a8d3a7aa15e280e41485",
+    "src/csasr/inference_cf/core_p1.py": "sha256:2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+    "src/csasr/inference_cf/core_r2.py": "sha256:93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+    "src/csasr/inference_cf/directions.py": "sha256:72a51a2d9c4c54db3525f13035a1d799509ba632234888c43e717c42eafd0cd7",
+    "src/csasr/inference_cf/unique.py": "sha256:3c1587722c6469f0adfe31592238950d7e30d7ae0cf0edd12f0e81a344b06e72",
+    "src/csasr/inference_cf/readout.py": "sha256:9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+    "src/csasr/lss/sites.py": "sha256:d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+    "src/csasr/models/hooks.py": "sha256:4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+    "experiments/inference_cf_p2r.py": "sha256:ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+    "experiments/inference_cf_p2dir.py": "sha256:ac1b7b84d0892d70146f6c2dffa4e7a925280d7eb818e893c47ec4bf0ac52b14",
+    "experiments/inference_cf_p2dir_prepare.py": "sha256:70b90f8a576c328eb90328d9260241da379678db660ae2c5982525e010a970b5",
+    "experiments/inference_cf_p2dir_analyze.py": "sha256:14b47bac4b5f5a99099edf94eb77ef23cea72704fc441d79cda66c6c536d1ca5",
+    "experiments/inference_cf_p2dir_audit.py": "sha256:9b43346e3dd72fbe97a7733c0792363bf99055b2b3f9189ae909ee1528c34c4f",
+    "experiments/inference_cf_cached.py": "sha256:7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "src/csasr/experiments/basis_a5_unique_shared.py": "sha256:959ed31c32281695390a5a059eff1d5111598787cd8f93793ecd7b226c6664ac",
+    "experiments/basis_a5_unique_shared.py": "sha256:58666140bb619010b9a76b49a1a1f22053a8b66f6cea6b351ecfc5fe77709b1e"
+  },
+  "scope": "Human-authorized supporting inference_cf feasibility extension; core METHOD_CONTRACT/v6 and historical claims remain unchanged. No runtime optimizer implemented.",
+  "layers": [
+    16,
+    24
+  ],
+  "layer_indexing": "zero_based HuggingFace decoder.layers",
+  "sites": [
+    "POST_SELF_ATTENTION",
+    "POST_CROSS_ATTENTION_PRE_FFN"
+  ],
+  "primary_families": [
+    "v_prompt",
+    "v_unq"
+  ],
+  "primary_arms": [
+    {
+      "id": "v_prompt_L16_POST_SELF_ATTENTION_plus",
+      "family": "v_prompt",
+      "layer": 16,
+      "site": "POST_SELF_ATTENTION",
+      "sign": 1
+    },
+    {
+      "id": "v_prompt_L16_POST_SELF_ATTENTION_minus",
+      "family": "v_prompt",
+      "layer": 16,
+      "site": "POST_SELF_ATTENTION",
+      "sign": -1
+    },
+    {
+      "id": "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_plus",
+      "family": "v_prompt",
+      "layer": 16,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": 1
+    },
+    {
+      "id": "v_prompt_L16_POST_CROSS_ATTENTION_PRE_FFN_minus",
+      "family": "v_prompt",
+      "layer": 16,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": -1
+    },
+    {
+      "id": "v_prompt_L24_POST_SELF_ATTENTION_plus",
+      "family": "v_prompt",
+      "layer": 24,
+      "site": "POST_SELF_ATTENTION",
+      "sign": 1
+    },
+    {
+      "id": "v_prompt_L24_POST_SELF_ATTENTION_minus",
+      "family": "v_prompt",
+      "layer": 24,
+      "site": "POST_SELF_ATTENTION",
+      "sign": -1
+    },
+    {
+      "id": "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_plus",
+      "family": "v_prompt",
+      "layer": 24,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": 1
+    },
+    {
+      "id": "v_prompt_L24_POST_CROSS_ATTENTION_PRE_FFN_minus",
+      "family": "v_prompt",
+      "layer": 24,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": -1
+    },
+    {
+      "id": "v_unq_L16_POST_SELF_ATTENTION_plus",
+      "family": "v_unq",
+      "layer": 16,
+      "site": "POST_SELF_ATTENTION",
+      "sign": 1
+    },
+    {
+      "id": "v_unq_L16_POST_SELF_ATTENTION_minus",
+      "family": "v_unq",
+      "layer": 16,
+      "site": "POST_SELF_ATTENTION",
+      "sign": -1
+    },
+    {
+      "id": "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_plus",
+      "family": "v_unq",
+      "layer": 16,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": 1
+    },
+    {
+      "id": "v_unq_L16_POST_CROSS_ATTENTION_PRE_FFN_minus",
+      "family": "v_unq",
+      "layer": 16,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": -1
+    },
+    {
+      "id": "v_unq_L24_POST_SELF_ATTENTION_plus",
+      "family": "v_unq",
+      "layer": 24,
+      "site": "POST_SELF_ATTENTION",
+      "sign": 1
+    },
+    {
+      "id": "v_unq_L24_POST_SELF_ATTENTION_minus",
+      "family": "v_unq",
+      "layer": 24,
+      "site": "POST_SELF_ATTENTION",
+      "sign": -1
+    },
+    {
+      "id": "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_plus",
+      "family": "v_unq",
+      "layer": 24,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": 1
+    },
+    {
+      "id": "v_unq_L24_POST_CROSS_ATTENTION_PRE_FFN_minus",
+      "family": "v_unq",
+      "layer": 24,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "sign": -1
+    }
+  ],
+  "primary_arm_count": 16,
+  "controls": {
+    "NONE": {
+      "reference": "matched unedited B0M_L16 replay, 180 queries; zero checks at all four sites"
+    },
+    "random": [
+      {
+        "id": "RANDOM_L16_POST_SELF_ATTENTION",
+        "layer": 16,
+        "site": "POST_SELF_ATTENTION",
+        "seed_key": "ST_LOC0-random-v1|240924|L16|POST_SELF_ATTENTION",
+        "seed": 17427988090784862104,
+        "array_sha256": "sha256:4f8be0ca0f21fb364993b6153fcce36ea5a5db9de062eca9fe4772f547c74612",
+        "distribution": "PCG64 standard_normal(1280) float64, normalize float64, serialize float32; one fixed vector per physical site"
+      },
+      {
+        "id": "RANDOM_L16_POST_CROSS_ATTENTION_PRE_FFN",
+        "layer": 16,
+        "site": "POST_CROSS_ATTENTION_PRE_FFN",
+        "seed_key": "ST_LOC0-random-v1|240924|L16|POST_CROSS_ATTENTION_PRE_FFN",
+        "seed": 10458670157388162757,
+        "array_sha256": "sha256:983f22e431039ed2e0c32f292a3e1125be982e1ac4e59c779af719b0f3ea3916",
+        "distribution": "PCG64 standard_normal(1280) float64, normalize float64, serialize float32; one fixed vector per physical site"
+      },
+      {
+        "id": "RANDOM_L24_POST_SELF_ATTENTION",
+        "layer": 24,
+        "site": "POST_SELF_ATTENTION",
+        "seed_key": "ST_LOC0-random-v1|240924|L24|POST_SELF_ATTENTION",
+        "seed": 16908626741325901899,
+        "array_sha256": "sha256:c1fcaf4ce9a7960b7cb24aa2e9f4ad73675a844992bbf63c8da3e211877fe06c",
+        "distribution": "PCG64 standard_normal(1280) float64, normalize float64, serialize float32; one fixed vector per physical site"
+      },
+      {
+        "id": "RANDOM_L24_POST_CROSS_ATTENTION_PRE_FFN",
+        "layer": 24,
+        "site": "POST_CROSS_ATTENTION_PRE_FFN",
+        "seed_key": "ST_LOC0-random-v1|240924|L24|POST_CROSS_ATTENTION_PRE_FFN",
+        "seed": 971045296961550332,
+        "array_sha256": "sha256:578dd60a17ca26b1c5e6cbcc33c0000f4598a9d3b42e16c320142ace29eeb10c",
+        "distribution": "PCG64 standard_normal(1280) float64, normalize float64, serialize float32; one fixed vector per physical site"
+      }
+    ],
+    "D2": {
+      "layer": 16,
+      "site": "POST_CROSS_ATTENTION_PRE_FFN",
+      "eligible_for_selection": false,
+      "source": "sealed historical exp1_run1 rows t{t}_D2 float32 vectors; audited readout.py objective unchanged",
+      "direction_recomputation": "reuse sealed D2; independent auditor spot checks historical construction, no fresh main-candidate gradient",
+      "historical_settings": {
+        "partition_function": "csasr.inference_cf.core_r2.tokenizer_partition",
+        "partition_version": "whisper_han_ascii_v1",
+        "epsilon": 1e-12,
+        "temperature": 1,
+        "objective": "log(P_E+eps)-log(P_M+eps)",
+        "logits": "suppression-processed",
+        "probe_dtype": "float32",
+        "forward_dtype": "bfloat16",
+        "geometry_dtype": "float64 CPU",
+        "tiny_tangent_norm": 1e-08,
+        "fallback": "no-edit with reason"
+      }
+    },
+    "total_pulse_arms": 21
+  },
+  "conditions": {
+    "c_M": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "c_E": [
+      50258,
+      50259,
+      50360,
+      50364
+    ],
+    "prefix": "identical baseline_content_tokens[:t], not references or independently generated EN content",
+    "query": "4+t-1",
+    "baseline_run": "results/inference_cf/p2_A_r1_L16",
+    "baseline_system": "B0M_L16",
+    "eos_token": 50257,
+    "max_new_tokens": 200,
+    "greedy": true,
+    "temperature": 1,
+    "forward_dtype": "bfloat16",
+    "geometry_dtype": "float64 CPU",
+    "attention": "eager",
+    "batch_size": 1,
+    "model": {
+      "dir": "/mnt/data/tungnx/whisper-large-v3",
+      "files": {
+        "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+        "config.json": "sha256:ad0e8d1e46f4d01f7861a21509e5d0f977d6cc1f367a370603c92541d819807b",
+        "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+        "merges.txt": "sha256:2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+        "model.safetensors": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+        "normalizer.json": "sha256:bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+        "preprocessor_config.json": "sha256:7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+        "special_tokens_map.json": "sha256:1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87",
+        "tokenizer.json": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+        "tokenizer_config.json": "sha256:844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+        "vocab.json": "sha256:e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+      }
+    },
+    "partition_version": "whisper_han_ascii_v1",
+    "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+    "suppression_hash": "sha256:e93e88ef310ed47a78a9932f3d2d5ffd02d7bc3d59bca0e2e90524e34b2ef8e8"
+  },
+  "V1": {
+    "source": "csasr.inference_cf.core_p1.direction / OldDirection",
+    "epsilon": 1e-06,
+    "tiny_norm": 0.0001,
+    "delta_dtype": "subtract float64 after upcasting h_E and h_M",
+    "serialization": "float32",
+    "orientation": "h_E-h_M",
+    "dynamic_per_query": true,
+    "fallback": "nonfinite/tiny delta => exact no-edit, reason recorded"
+  },
+  "V2": {
+    "source": "csasr.inference_cf.unique NEW_P2_DIR_CROSSFIT_V1 / UniqueDirection",
+    "A": "EN-correct unedited forced-ZH states",
+    "B": "ZH-correct unedited forced-ZH states",
+    "rank": 32,
+    "center": false,
+    "crossfit": "leave_one_dialogue_out",
+    "minimum_count_per_group": 32,
+    "math_dtype": "float64 CPU",
+    "serialization": "float32",
+    "relative_guard": 1e-10,
+    "orthogonality_tolerance": 1e-08,
+    "serialized_unit_tolerance": 2e-06,
+    "sign": "toward mean_A-minus-mean_B",
+    "fit_new_sites_separately": true,
+    "fallback": "invalid fold => exact no-edit; no alternate rank/vector/group/global fit",
+    "label_free": false
+  },
+  "energy": {
+    "e_star": 1.1260757575454359,
+    "solver": "experiments.inference_cf_p2r.solve_scale unchanged",
+    "solver_max_evaluations": 8,
+    "max_relative_norm_error": 0.02,
+    "max_relative_squared_error": 0.02,
+    "max_pairwise_relative_squared_error": 0.02,
+    "consumed_vs_proposed_relative_norm_tolerance": 0.005,
+    "solver_matches_hook_abs_scaled_tolerance": 1e-06,
+    "norm_preserve": true,
+    "repair_epsilon": 1e-06,
+    "depth_rescale": false,
+    "alpha": 1,
+    "scale": 1,
+    "gain_at_query": 1,
+    "protocol": "single matched-energy pulse; alpha=1 is solver API multiplier, not a new scientific dose"
+  },
+  "cell_eligibility": {
+    "reasons_for_no_edit": [
+      "tiny_or_nonfinite_V1_delta",
+      "invalid_new_site_D1_fold",
+      "energy_unreachable",
+      "solver_target_unattainable_within_8_evaluations"
+    ],
+    "zero_edit_exact": true,
+    "analyze_all_180": true,
+    "ineligible_cell_delta": 0,
+    "minimum_valid_per_stratum": 57,
+    "minimum_valid_dialogues_per_stratum": 12,
+    "invalid_cells_remain_in_denominator": true,
+    "missing_planned_cell_is_STAGE_INVALID": true,
+    "unexpected_hook_energy_or_cache_failure_is_STAGE_INVALID": true,
+    "baseline_B_state_or_emitted_logits_nonfinite_is_STAGE_INVALID": true
+  },
+  "historical_reproduction": {
+    "historical_D0_D1_logits_and_consumed_states": "bitwise at identical pipeline; no relaxation",
+    "baseline_states_logits": "bitwise",
+    "zero_restore": "bitwise",
+    "D0_vector_max_abs": 1e-06,
+    "D1_vector_max_abs": 2e-06,
+    "D2_vector_max_abs": 2e-06,
+    "D2_J_abs": 0.0001,
+    "D2_independent_J_abs": 1e-05,
+    "D2_cos_min": 0.999999,
+    "solver_scale_D0_abs": 1e-09,
+    "evaluator_scalar_abs": 1e-08
+  },
+  "bootstrap": {
+    "unit": "paired dialogue cluster",
+    "aggregation": "mean positions within dialogue then mean represented dialogues",
+    "replicates": 10000,
+    "seed": 240924,
+    "source_convention": "P2-DIR authoritative bootstrap; replaces suggested 2000 with historical 10000",
+    "family_size": 16,
+    "family_alpha": 0.05,
+    "adjustment": "Bonferroni two-sided percentile intervals for 16 EN-confusion margin comparisons",
+    "adjusted_quantiles": [
+      0.0015625,
+      0.9984375
+    ],
+    "shared_draws": true,
+    "calibration_refit_in_bootstrap": false,
+    "correct_state_intervals": "pointwise 95%, descriptive; no safety claim",
+    "controls_intervals": "pointwise 95%, descriptive"
+  },
+  "decision": {
+    "minimum_EN_confusion_dialogue_macro_delta_margin_nats": 0.5,
+    "adjusted_lower_bound_strictly_above": 0,
+    "minimum_top1_reference_corrections": 3,
+    "minimum_correction_dialogues": 3,
+    "precedence": [
+      "ST_LOC0_INVALID",
+      "ST_LOC0_NO_FIXED_DIRECTION_LEVER",
+      "ST_LOC0_LOCAL_EFFECT_ONLY",
+      "ST_LOC0_SITE_FEASIBLE"
+    ],
+    "no_fixed_direction_lever": "no eligible primary arm with adjusted EN-confusion margin lower bound >0",
+    "local_effect_only": "at least one eligible primary arm lower>0, but no arm satisfies ALL feasibility gates (including +0.50 materiality and top1/breadth)",
+    "site_feasible": "at least one eligible primary arm satisfies all feasibility gates and independent audit PASS",
+    "winner_order": [
+      "corrections_desc",
+      "correction_dialogues_desc",
+      "confusion_macro_delta_margin_desc",
+      "EN_plus_ZH_correct_corruptions_asc",
+      "configuration_id_lexicographic_asc"
+    ],
+    "correct_state_damage_is_feasibility_disqualifier": false,
+    "source_block_label": "ST_LOC0_BLOCKED_DIRECTION_PROVENANCE"
+  },
+  "oracle": {
+    "post_seal_only": true,
+    "primary_arms_only": true,
+    "exclude_D2_and_random": true,
+    "reference_dependent": true,
+    "non_deployable": true
+  },
+  "audit": {
+    "pre_run": "PASS_TO_ST_LOC0",
+    "post_run": "ST_LOC0_AUDIT: PASS",
+    "independent_no_import_primary_decision": true,
+    "calibration_seal_before_pulse_outcomes": true,
+    "all_outputs_push_before_evaluator": true,
+    "historical_barrier_before_new_site_pulses": true
+  },
+  "compute": {
+    "new_scientific_jobs_in_Codex": 0,
+    "future_max_jobs": 1,
+    "scheduler": "sbatch",
+    "max_pending_or_running": 1,
+    "hard_ceiling_seconds": 10800,
+    "estimated_minutes": [
+      15,
+      30
+    ],
+    "estimate_basis": "historical extraction 85.686 s; 540 pulses plus D2 gradients 113.328 s; 3780 pulses scale to ~793 s before overhead, new fits ~40 s CPU",
+    "pre_run_estimate_gate": "abort before submission if conservative complete-matrix estimate exceeds 3h; explicit human compute revision, never reduce arms",
+    "pulse_cells": 3780,
+    "NONE_cells": 180,
+    "new_LID_calls": 0,
+    "new_main_candidate_autograd_calls": 0,
+    "future_single_job_phases": [
+      "passive paired extraction",
+      "CPU site-specific fits + immutable calibration PUSH",
+      "historical barrier",
+      "full frozen pulse matrix",
+      "immutable output PUSH",
+      "post-seal CPU evaluator and independent audit"
+    ]
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select 180 positions",
+      "historical P2-R/P2-RJ/P2-DIR artifacts"
+    ],
+    "forbidden": [
+      "D-dev-confirm",
+      "D-test",
+      "router-calib new role",
+      "P3",
+      "transfer datasets",
+      "A2 as actuator",
+      "reference/evaluator/oracle input to runner"
+    ],
+    "V2_labels": "offline sealed construction membership only; never runtime features",
+    "runner_projection": [
+      "runtime_queries",
+      "utterances",
+      "sealed site/fold direction vectors"
+    ],
+    "no_method_change_from_outcome": true
+  },
+  "site_forward": {
+    "implementation": "transformers.models.whisper.modeling_whisper.WhisperDecoderLayer.forward",
+    "transformers_version": "4.57.6",
+    "forward_source_sha256": "sha256:78267a125c841f9bb589b85a34ab524f98d13c7c05345145928ec3055dc74aa6",
+    "module_file_sha256": "sha256:851c78f1aa62f84ed0d0a4dfded478a05c98f43d26732b56fea2d4acc79728b8",
+    "d_model": 1280,
+    "eval_mode_required": true
+  }
+}

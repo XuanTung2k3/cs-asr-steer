@@ -1,0 +1,65 @@
+{
+  "schema_version": "basis_a3_seame_encoder_local_repair_v1",
+  "status": "FROZEN_BEFORE_RERUN",
+  "study": "BASIS-A3",
+  "repair_source_commit": "f5a7efa14ef207dd718f3e7e190884d3b3a10e5f",
+  "repair_source_dirty_at_freeze": true,
+  "mask_definition": {
+    "name": "target-segment union alignment",
+    "implementation": "experiments/basis_a3.py::_encoder_span",
+    "implementation_hash": "sha256:10110ab016d7895664d78240717c88f74011353a59eadd3dde73910bb3d2636b",
+    "algorithm": "union all segments with target=true; reconstruct segment acoustic times using payload silence_seconds; convert union to encoder frames",
+    "boundary_tolerance_ms": 80,
+    "silence_seconds": 0.08,
+    "padding_excluded": true
+  },
+  "canonicality_evidence": {
+    "spec": "docs/current/BASIS_A3_RAW_COND_SCOPE_DEPTH_SPEC.md",
+    "reconciliation": "docs/current/BASIS_A3_PROTOCOL_RECONCILIATION.md",
+    "later_execution_commits": ["d4012bd5bb085ac983c2acb1eeed1bbf400ad17e", "aa71f217f5103844bca713664a8e98a9ae8c384e"],
+    "focused_test": "tests/test_basis_a3_encoder_site.py::test_seame_local_span_uses_frozen_target_segment_metadata",
+    "r2_snapshot_semantics": "R2 was executed from aa71f21, which contains the same target-segment-union implementation"
+  },
+  "reason_for_rerun": "Replace only SEAME encoder Oracle-local outputs created under the earlier second-boundary mask semantics.",
+  "panels": {
+    "seame_dev_man": {"count": 50, "fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c"},
+    "seame_dev_sge": {"count": 50, "fingerprint": "sha256:ebdcdd10b6f0d4a5f7666097f96168bf39869a65e39de779dfdc7c8ebfb77238"}
+  },
+  "directions": {
+    "raw_encoder_manifest": "sha256:d7504dff518b16051a8cf567335fdc397eb386c4a411535e0c15b39e76ae14fc",
+    "encoder_site_primitives": "sha256:c77771d1dddf0f9c156123fbac204bb25e066572b36d03ed60764be7e7a40fed",
+    "decoder_source": "sha256:5f510df5e25dc6d76976433d1376244b58ad687fe3ddc4ceb2a56f5bbe6b03d5"
+  },
+  "affected_configurations": {
+    "seame_dev_man": {
+      "r1": {"direction": "Raw", "side": "encoder", "layers": "L0-L31", "scope": "oracle_local", "rho": [0.5], "count": 32},
+      "r2": {"direction": "Raw", "side": "encoder", "layers": [2, 16, 21], "scope": "oracle_local", "rho": [0.25, 1.0], "count": 6}
+    },
+    "seame_dev_sge": {
+      "r1": {"direction": "Raw", "side": "encoder", "layers": "L0-L31", "scope": "oracle_local", "rho": [0.5], "count": 32},
+      "r2": {"direction": "Raw", "side": "encoder", "layers": [2, 16, 21], "scope": "oracle_local", "rho": [0.25, 1.0], "count": 6}
+    },
+    "total": 76,
+    "r2_rho_05": "reused from corrected R1; no separate decode"
+  },
+  "preserved_unaffected_groups": [
+    "CS-Dialogue all results",
+    "SEAME decoder R1 and R2",
+    "SEAME Global encoder R1 and R2",
+    "Conditioning all datasets and layers",
+    "all direction artifacts",
+    "decoder geometry"
+  ],
+  "superseded_outputs": {
+    "source_commits": ["d4012bd5bb085ac983c2acb1eeed1bbf400ad17e", "aa71f217f5103844bca713664a8e98a9ae8c384e"],
+    "source_jobs": ["51649", "51652", "51654", "51655"],
+    "mask_semantics": "second-boundary alignment",
+    "quarantine_root": "results/basis_a3_raw_cond_scope_depth/quarantine/superseded_noncanonical_mask/"
+  },
+  "execution": {
+    "partition": "mig",
+    "gpu": "nvidia_h100_80gb_hbm3_3g.40gb:1",
+    "max_concurrent_jobs": 2,
+    "scientific_rerun_scope": "only the 76 listed configurations"
+  }
+}

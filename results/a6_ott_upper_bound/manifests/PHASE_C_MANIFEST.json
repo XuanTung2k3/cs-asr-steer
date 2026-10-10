@@ -1,0 +1,19 @@
+{
+  "allowed_artifact_prefixes": [
+    "results/a6_ott_upper_bound/phase_b/",
+    "results/a6_ott_upper_bound/phase_c/",
+    "results/basis_a6_expanded/baselines/"
+  ],
+  "forbidden_path_terms": [
+    "d-test"
+  ],
+  "outcome_loading": {
+    "phase_a": "search-only",
+    "phase_b": "confirm-after-phase-a-freeze",
+    "phase_c": "seame-after-phase-b-freeze"
+  },
+  "phase": "C",
+  "schema_version": "a6_ott_phase_manifest_v1",
+  "search_freeze_hash": "sha256:f9d3cd9723bd221fb2439e950af59417c2cf4b319182d14e1608e028133d2e9e",
+  "status": "LOCKED_UNTIL_PREVIOUS_PHASE"
+}

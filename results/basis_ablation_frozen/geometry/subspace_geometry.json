@@ -1,0 +1,64 @@
+{
+  "equivalent_within_1e-10": true,
+  "gram_matrices": {
+    "local": [
+      [
+        1.0000000000000004,
+        -1.734723475976807e-17
+      ],
+      [
+        -1.734723475976807e-17,
+        1.0000000000000002
+      ]
+    ],
+    "raw": [
+      [
+        1.0000000000000002,
+        -0.08690108042758633
+      ],
+      [
+        -0.08690108042758633,
+        1.0000000000000002
+      ]
+    ]
+  },
+  "local_projection_matrix": {
+    "path": "results/basis_ablation_frozen/geometry/projection_local.npy",
+    "sha256": "sha256:6b584b2de0f01c4880d6636c13aa89d450c72ac9bf96f7555b85ae1ffa4c6fe9",
+    "shape": [
+      1280,
+      1280
+    ]
+  },
+  "principal_angles_degrees": [
+    0.0,
+    0.0
+  ],
+  "projection_frobenius_distance": 6.119351641089615e-16,
+  "raw_projection_matrix": {
+    "path": "results/basis_ablation_frozen/geometry/projection_raw.npy",
+    "sha256": "sha256:796447b21172847a1ad61c171ce3bac9bce1b612b2554d7a7bacf2f31e4ba754",
+    "shape": [
+      1280,
+      1280
+    ]
+  },
+  "svd": {
+    "local": {
+      "condition_number": 1.0000000000000002,
+      "effective_rank": 2,
+      "singular_values": [
+        1.0,
+        0.9999999999999999
+      ]
+    },
+    "raw": {
+      "condition_number": 1.0910285008611769,
+      "effective_rank": 2,
+      "singular_values": [
+        1.0425454812273593,
+        0.9555620961363076
+      ]
+    }
+  }
+}

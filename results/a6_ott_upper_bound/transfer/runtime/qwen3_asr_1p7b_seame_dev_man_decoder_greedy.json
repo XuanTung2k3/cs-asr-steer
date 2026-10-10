@@ -1,0 +1,53 @@
+{
+  "dataset": "seame_dev_man",
+  "direction_constructions": 12,
+  "gpu_job_id": "53561",
+  "ineligible": [
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_00141|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01639|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_01804|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02439|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02473|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    },
+    {
+      "canonical_key": "C|qwen3_asr_1p7b|seame_dev_man|dev_man_02545|conditioning_cs|decoder|0|0.5|greedy|decoder_post_cross_attn_residual",
+      "outcome_consulted": false,
+      "reason": "conditioning_cs_position_selection_empty",
+      "status": "INELIGIBLE"
+    }
+  ],
+  "mode": "greedy",
+  "model": "qwen3_asr_1p7b",
+  "new_rows": 0,
+  "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "phase": "C",
+  "reused_rows": 172,
+  "rho_cache_hits": 0,
+  "runtime_sec": 12.81400434486568,
+  "side": "decoder",
+  "status": "PASS"
+}

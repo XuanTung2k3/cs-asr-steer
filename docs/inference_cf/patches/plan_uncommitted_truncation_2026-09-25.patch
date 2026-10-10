@@ -1,0 +1,75 @@
+diff --git a/INFERENCE_STEERING_IMPLEMENTATION_PLAN.md b/INFERENCE_STEERING_IMPLEMENTATION_PLAN.md
+index 9966390..4de41d9 100644
+--- a/INFERENCE_STEERING_IMPLEMENTATION_PLAN.md
++++ b/INFERENCE_STEERING_IMPLEMENTATION_PLAN.md
+@@ -155,69 +155,7 @@ g_t = E_t R_t^B .
+ 
+ *Historical R2 candidate (rejected, now an ablation):* R2 added a same-prefix forced-English counterfactual conflict `R_t^{Ecf}` (same tokenizer classes) and `D_t=[R_t^B-R_t^{Ecf}]_+`, giving `g_t^{cf}=E_tD_t`. It was feasible but significantly worse than `E_tR_t^B` (paired ΔAUROC −0.11), so the frozen rule rejected it. `g^{cf}` survives only as a P2/P3 mechanism ablation.
+ 
+-Desired qualitative behavior:
+-
+-| Case | `E_t`: local support for `E` | `R_t`: baseline matrix bias | desired `g_t` |
+-| --- | ---: | ---: | ---: |
+-| matrix-language token | low | high or any | low |
+-| already-correct embedded token | high | low | low |
+-| English-to-Han confusion | high | high | high |
+-
+-English-to-English substitutions are out of this mechanism. Deletions have no emitted word; evaluate their next-token or EOS gap slot separately and conditionally.
+-
+-Thus the selected gate asks whether **local acoustics support `E` while baseline decoding is `M`-like**. It is a ranking score, not a proof of repair. The detector formula is frozen; only the score-to-dose relation remains to be validated in P2.
+-
+-### 3.6 Intervention
+-
+-After P0-R2 validates the gate and P1 validates causal plumbing, use
+-
+-```math
+-\tilde h_{\ell,t} = h^B_{\ell,t} + \alpha g_t d_{\ell,t},
+-```
+-
+-followed by
+-
+-```math
+-\boxed{
+-h'_{\ell,t}
+-=
+-\tilde h_{\ell,t}
+-\frac{\|h^B_{\ell,t}\|_2}
+-     {\|\tilde h_{\ell,t}\|_2+\epsilon}.
+-}
+-```
+-
+-At exactly zero effective dose, bypass both addition and rescaling so baseline identity is exact.
+-
+-### 3.7 P0-R2 scientific gates before P1
+-
+-P0-R2 is a **gate-feasibility study**, not a steering experiment. It must evaluate the components separately before multiplying them.
+-
+-- **R2-LS — LocalSupport validity.** On a predeclared development diagnostic panel with improved token/reference alignment, test whether `E_t` is dense/finite and separates embedded-language positions from matrix-language positions. Report full distributions, pairwise language posterior mass, local-window/alignment failures, and an audio-dependence control. If local native LID is unstable or nearly constant on short windows, block this instantiation rather than tuning many windows.
+-- **R2-BC — BaselineConflict validity.** Verify tokenizer-language partition coverage and ambiguity, finite full-distribution masses, and the `0≤R≤Q` invariant. Report `P_M/P_E/Q/R` by `EN-confusion`, `EN-deletion-slot`, `EN-same-language-sub`, `EN-correct`, and `ZH-correct`; no generic baseline-wrong English category or arbitrary `R≥0.5` boundary.
+-- **R2-ECF / R2-GATE — repair-need discrimination (historical R2 contract; outcome: `g^{cf}` not preferred, `E_tR_t^B` selected).** Evaluate both `g_t^{old}=E_tR_t^B` and `g_t^{cf}=E_t[R_t^B-R_t^{Ecf}]_+`, with the latter primary in R2, for `EN-confusion` versus `ZH-correct` and versus `EN-correct`. Report paired AUROC differences, deletion slots secondarily, and same-language substitutions as out-of-mechanism diagnostics while retaining all in overall ASR metrics. Reference labels are evaluator-only and never enter inference.
+-- **Alignment validity.** The previous coarse character-fraction position mapping produced noisy examples. R2 must use a documented, reproducible alignment with explicit unalignable cases; do not silently force labels onto generated positions. Alignment quality is part of the feasibility verdict.
+-- **No-reference / no-leakage.** Local audio spans, token sets, posterior calculations, and gate values must be computable without reference transcripts or oracle switch positions.
+-- **P1 entry condition.** P1 stays blocked until the final R2 gate contract is versioned and the above component/combined diagnostics are judged usable under predeclared criteria. A promising `hE-hM` direction alone is not sufficient.
+-
+-### 3.8 Later cross-model/multilingual contract
+-
+-The paper-level abstraction is
+-
+-```math
+-d_{\ell,t} = norm(h^E_{\ell,t}-h^M_{\ell,t}),
+-\qquad
+-E_t = LocalSupport(E|x,t;M,E),
+-\qquad
+-R_t^B = BaselineConflict(p_t^B;M,E),
+-\qquad g_t=E_tR_t^B .
+-```
+-
+-(The R2-rejected counterfactual `R_t^{Ecf}` / `g_t^{cf}` is an ablation, not part of the paper-level method.)
+-
+-`LocalSupport` and `BaselineConflict` are provider interfaces, not permanently tied to Whisper local LID or Chinese-vs-Latin script. For a new model such as Qwen3-ASR, revalidate `cB/cM/cE`, common-prefix semantics, the hidden intervention site, local language evidence, and baseline-conflict provider on that model's development data before any locked evaluation.
+-
+-## 4. Paper-first execution order
++Desired qualitative behavior
+ 
+ The critical path is now **P0/P0-R1 completed negative feasibility → P0-R2 revised gate feasibility → P1 causal working method → P2 compact development/freeze → P3 locked evaluation → P4 paper artifacts/audit**.
+ 

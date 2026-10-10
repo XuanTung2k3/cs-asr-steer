@@ -1,0 +1,75 @@
+{
+  "n_layers": 32,
+  "comparisons": {
+    "Raw": {
+      "auroc_vs_utility": {
+        "pearson": -0.4730495325761334,
+        "spearman": -0.7602639296187682
+      },
+      "auroc_vs_pier_gain": {
+        "pearson": 0.05834444560254916,
+        "spearman": 0.18658357771260994
+      },
+      "auroc_vs_outside_harm": {
+        "pearson": 0.46774408580766796,
+        "spearman": 0.7972873900293254
+      }
+    },
+    "Local": {
+      "auroc_vs_utility": {
+        "pearson": -0.4189351837315606,
+        "spearman": -0.8266129032258064
+      },
+      "auroc_vs_pier_gain": {
+        "pearson": 0.038816848543712465,
+        "spearman": 0.05755131964809384
+      },
+      "auroc_vs_outside_harm": {
+        "pearson": 0.41959811753798837,
+        "spearman": 0.879765395894428
+      }
+    },
+    "Conditioning": {
+      "auroc_vs_utility": {
+        "pearson": -0.1957481346110469,
+        "spearman": -0.2569648093841642
+      },
+      "auroc_vs_pier_gain": {
+        "pearson": 0.25244416395122005,
+        "spearman": 0.6337976539589442
+      },
+      "auroc_vs_outside_harm": {
+        "pearson": 0.24209319837511614,
+        "spearman": 0.8090175953079177
+      }
+    },
+    "Raw+Cond": {
+      "auroc_vs_utility": {
+        "pearson": -0.43677150717538,
+        "spearman": -0.6631231671554252
+      },
+      "auroc_vs_pier_gain": {
+        "pearson": 0.12512442148894423,
+        "spearman": 0.5590175953079178
+      },
+      "auroc_vs_outside_harm": {
+        "pearson": 0.3450676521869218,
+        "spearman": 0.8442082111436948
+      }
+    },
+    "Local+Cond": {
+      "auroc_vs_utility": {
+        "pearson": -0.4443575328066364,
+        "spearman": -0.657624633431085
+      },
+      "auroc_vs_pier_gain": {
+        "pearson": 0.11524750008993052,
+        "spearman": 0.564882697947214
+      },
+      "auroc_vs_outside_harm": {
+        "pearson": 0.3556021914395108,
+        "spearman": 0.8522727272727272
+      }
+    }
+  }
+}

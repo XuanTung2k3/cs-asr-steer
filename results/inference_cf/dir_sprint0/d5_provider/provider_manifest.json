@@ -1,0 +1,183 @@
+{
+ "adapter": {
+  "path": "src/csasr/inference_cf/phone_provider.py",
+  "sha256": "sha256:a7cf6b1fdc87842ac95581a2c7236b787c067f7001d5c1ca2780a6e2f5f0030f",
+  "version": "dir_sprint0_d5_phone_provider_v1"
+ },
+ "created_unix": 1791569590.5532608,
+ "engineering_audio": {
+  "dir": "/mnt/data/tungnx/cs-asr-steer/providers/engineering_audio",
+  "files": {
+   "aishell_example_mandarin.wav": {
+    "channels": 1,
+    "frames": 34492,
+    "language": "zh",
+    "license": "Apache-2.0 (repo; AISHELL-1)",
+    "origin": "AISHELL-1 example shipped in speechbrain/asr-transformer-aishell",
+    "sample_rate": 16000,
+    "sha256": "sha256:bc86e7fd26157eaf3357850c85b4c5f6578e7ab5ed5e08eb791c5001ad64bd4a",
+    "url": "https://huggingface.co/speechbrain/asr-transformer-aishell/resolve/703ce755c649ba09211202a35a7cff2eb6eadb8c/example_mandarin.wav"
+   },
+   "aishell_example_mandarin2.flac": {
+    "channels": 1,
+    "frames": 234356,
+    "language": "zh",
+    "license": "Apache-2.0 (repo; AISHELL-1)",
+    "origin": "AISHELL-1 example shipped in speechbrain/asr-transformer-aishell",
+    "sample_rate": 44100,
+    "sha256": "sha256:7604f8a181b67dab458e2f192621437ecb2eeba7207ef8068d24a2f9431ca94c",
+    "url": "https://huggingface.co/speechbrain/asr-transformer-aishell/resolve/703ce755c649ba09211202a35a7cff2eb6eadb8c/example_mandarin2.flac"
+   },
+   "cv14_example_zh_CN.wav": {
+    "channels": 1,
+    "frames": 143471,
+    "language": "zh",
+    "license": "Apache-2.0 (repo; Common Voice CC0)",
+    "origin": "Common Voice 14 zh-CN example shipped in speechbrain/asr-wav2vec2-commonvoice-14-zh-CN",
+    "sample_rate": 48000,
+    "sha256": "sha256:ce7e2596e01b63dddb917bd8c8626f6f2455fa74fde6212c11d39641ba346ce1",
+    "url": "https://huggingface.co/speechbrain/asr-wav2vec2-commonvoice-14-zh-CN/resolve/92a28d6b46996c6a63b052b1933ddbfd5910dea5/example-zh-CN.wav"
+   },
+   "sample1.flac": {
+    "channels": 1,
+    "frames": 219040,
+    "language": "en",
+    "license": "CC-BY-4.0 (LibriSpeech)",
+    "origin": "LibriSpeech sample used as the provider model-card widget",
+    "sample_rate": 16000,
+    "sha256": "sha256:cb5c48a2d1d6f7dedd0330f088a4cbe76de1a86e6a6109c06d255bb1ca2f7542",
+    "url": "https://cdn-media.huggingface.co/speech_samples/sample1.flac"
+   },
+   "sample2.flac": {
+    "channels": 1,
+    "frames": 227440,
+    "language": "en",
+    "license": "CC-BY-4.0 (LibriSpeech)",
+    "origin": "LibriSpeech sample used as the provider model-card widget",
+    "sample_rate": 16000,
+    "sha256": "sha256:4e82c7e879bce92c1d3bc99ddb7bdf681611bc251b6d244430e54fe44b86e75e",
+    "url": "https://cdn-media.huggingface.co/speech_samples/sample2.flac"
+   }
+  },
+  "use": "engineering plausibility only; not CS-Dialogue; not used for selection or accuracy claims"
+ },
+ "environment": {
+  "acl1_at_manifest": {
+   "pip_freeze_lines": 347,
+   "pip_freeze_sha256": "sha256:3ee48ab0387f7405a6828151e4c13020aa749fab6cb6f5b621af2a1c5ee0149a",
+   "python": "/home/tungnx/miniconda3/envs/acl1/bin/python"
+  },
+  "acl1_before_install": {
+   "captured": "2026-10-09, before the dir_sprint0_d5 venv was created",
+   "pip_check_preexisting": [
+    "opencv-python 4.13.0.92 has requirement numpy>=2; python_version >= \"3.9\", but you have numpy 1.26.4.",
+    "opencv-python-headless 4.12.0.88 has requirement numpy<2.3.0,>=2; python_version >= \"3.9\", but you have numpy 1.26.4.",
+    "rerun-sdk 0.26.2 has requirement numpy>=2, but you have numpy 1.26.4.",
+    "torch 2.10.0+cu128 has requirement nvidia-nccl-cu12==2.27.5; platform_system == \"Linux\", but you have nvidia-nccl-cu12 2.27.3.",
+    "torch 2.10.0+cu128 has requirement triton==3.6.0; platform_system == \"Linux\", but you have triton 3.4.0."
+   ],
+   "pip_freeze_lines": 347,
+   "pip_freeze_sha256": "sha256:3ee48ab0387f7405a6828151e4c13020aa749fab6cb6f5b621af2a1c5ee0149a",
+   "python": "/home/tungnx/miniconda3/envs/acl1/bin/python"
+  },
+  "installed_into_venv": {
+   "panphon": "0.22.2",
+   "unicodecsv": "0.14.1"
+  },
+  "numpy": "1.26.4",
+  "python": "3.11.9",
+  "requirements_file": {
+   "path": "/mnt/data/tungnx/cs-asr-steer/envs/dir_sprint0_d5/requirements-d5.txt",
+   "sha256": "sha256:0310d1a2ddbd51c1a974c02740d638cda33b7dfca66df3c5f6cf4470445a65fe"
+  },
+  "soundfile": "0.13.1",
+  "system_site_packages": true,
+  "torch": "2.10.0+cu128",
+  "transformers": "4.57.6",
+  "venv": "/mnt/data/tungnx/cs-asr-steer/envs/dir_sprint0_d5",
+  "venv_base_python": "/home/tungnx/miniconda3/envs/acl1/bin/python",
+  "wheelhouse": {
+   "panphon-0.22.2-py2.py3-none-any.whl": "sha256:a4c65113430d0699054cb00df978c02712d3c80913a1ef67697f888d96f3a00a",
+   "unicodecsv-0.14.1.tar.gz": "sha256:018c08037d48649a0412063ff4eda26eaa81eff1546dbffa51fa5293276ff7fc"
+  }
+ },
+ "feature_table": {
+  "builder": {
+   "path": "experiments/inference_cf_dir_sprint0_d5_feature_table.py",
+   "sha256": "sha256:6ec05c0fcb90a61d2933d86f807988e11eadabfe3566452b0c2d9c0139e029ab"
+  },
+  "file_sha256": "sha256:ef36f0cf6bba2d6bb004d99f55771fae7f48fe08bb01e1aab7eaeec16d272f73",
+  "panphon_data_sha256": {
+   "asjp.yml": "sha256:1212dba27529bbc1c3eb12b43e1331f58c8e3b1d649089f28d579ee4cc7a1a4f",
+   "diacritic_definitions.yml": "sha256:7e93c5bd9ee3dfeea820375d5c7e630dd3f358d2c6a32946091a97b843e73d56",
+   "diacritic_definitions_schema.yml": "sha256:590ed17e0cba8f1d89e575ca3e475eab2d17769cc354cfb04c79f4edb0c59a4f",
+   "dogolpolsky_prime.yml": "sha256:f07b896a6b95dcc1aa921f98cb7d51f366d882a4d0dc5cee0bfa1f5339a84f80",
+   "dolgopolsky_prime.yml": "sha256:f07b896a6b95dcc1aa921f98cb7d51f366d882a4d0dc5cee0bfa1f5339a84f80",
+   "feature_weights.csv": "sha256:03e80a6489e4993de6f17e063eaa74eb59c1d9ba9bc0dec9bec6ffce0cb8080d",
+   "ipa-xsampa.csv": "sha256:4e3f3d9eb3245f4eb95ba47225b625e632b35f218ab6c7868d66b9363dcef9a6",
+   "ipa_all.csv": "sha256:0ec0052edf4e58c8c23eda10c0195687eb167ce9bd206cf9a85b9cce8b181f0a",
+   "ipa_bases.csv": "sha256:61991886e55adaf7df42799bb422af90ff403b2b6cc56dead4a5b4acddcc5568",
+   "sort_order.yml": "sha256:4b1e9dd91a40e645814b9f7f88f2c09eddcf4123ba669cf43e66be6725819276",
+   "sort_order_schema.yml": "sha256:079c42947439048af5211eba5704c2414174a3d1517d8ff76345dca0c80b3334"
+  },
+  "panphon_version": "0.22.2",
+  "path": "results/inference_cf/dir_sprint0/d5_provider/feature_table.json",
+  "schema": "dir_sprint0_d5_feature_table_v1",
+  "status_counts": {
+   "blank": 1,
+   "excluded": 32,
+   "segmental": 355,
+   "special": 3,
+   "tone_only": 1
+  },
+  "table_digest": "sha256:8e1735afeff73367e3045d95eb82e1bff966e7736ec6b72a2f67b7712942566a"
+ },
+ "frame_geometry": {
+  "frame_stride": 320,
+  "n_frames": "0 if N < 400 else (N - 400) // 320 + 1",
+  "provider_frame_span": "[320 j, 320 j + 400)",
+  "r2_encoder_frame_span": "[320 f, 320 f + 320)",
+  "receptive_field": 400,
+  "sample_rate": 16000
+ },
+ "git_head_at_creation": "72727f347ae72e575019339d4bfb226c03875919",
+ "licenses": {
+  "model": "Apache-2.0",
+  "panphon": "MIT",
+  "unicodecsv": "BSD"
+ },
+ "manifest_digest": "sha256:93ae874c09b89c3595e61c978b06d3f94a78f395b2b6688799652ab8e98a885e",
+ "model": {
+  "architecture": "Wav2Vec2ForCTC (wav2vec2-large-xlsr-53 fine-tuned on Common Voice espeak phones)",
+  "dir": "/mnt/data/tungnx/cs-asr-steer/providers/wav2vec2-xlsr-53-espeak-cv-ft/2c733782da5604684829819a5eb744c193fe9398",
+  "download_url_template": "https://huggingface.co/facebook/wav2vec2-xlsr-53-espeak-cv-ft/resolve/2c733782da5604684829819a5eb744c193fe9398/<file>",
+  "files": {
+   ".gitattributes": "sha256:fa057bb09b78fe6d33af5a01440be5e8c881cd8055de35ee5588ea759cf57bfc",
+   "README.md": "sha256:32a058c9a338807e9e237fad17a9f400f67c64ee2e18d71750c912ffbfb9e22b",
+   "config.json": "sha256:4609fb49b7e1d28aecb2840da1926c40bd915bc6f1120a940afacf7159bbfb13",
+   "preprocessor_config.json": "sha256:a2254a5b58f72cd4de3632f8eee64f3f098b7c1402128d2f419e7d00ae13e335",
+   "pytorch_model.bin": "sha256:04366b6c8d24099ef313cf02f0e58d26f5dddfda16edbfc8eb2c713d94a9f551",
+   "special_tokens_map.json": "sha256:bb7068de1150661a10b55f9e4b12a0e77af8bf91f5e45e1b58afaf1d0e17f675",
+   "tokenizer_config.json": "sha256:d663833dacef7d29f563e23029d448fe41415dbe5e8e6d5a98b598a5258c18d8",
+   "vocab.json": "sha256:d732ab2456c0c017930001dc9af0b41b3b93d25b2eb9740bf9d925508d7d87d0"
+  },
+  "license": "apache-2.0",
+  "paper": "arXiv:2109.11680",
+  "published_weights_lfs_sha256": "sha256:04366b6c8d24099ef313cf02f0e58d26f5dddfda16edbfc8eb2c713d94a9f551",
+  "repo": "facebook/wav2vec2-xlsr-53-espeak-cv-ft",
+  "revision": "2c733782da5604684829819a5eb744c193fe9398",
+  "sizes": {
+   ".gitattributes": 1175,
+   "README.md": 3043,
+   "config.json": 1856,
+   "preprocessor_config.json": 212,
+   "pytorch_model.bin": 1263535127,
+   "special_tokens_map.json": 85,
+   "tokenizer_config.json": 412,
+   "vocab.json": 4637
+  },
+  "tokenizer_class_not_used": "Wav2Vec2PhonemeCTCTokenizer (would require phonemizer); ids map through vocab.json"
+ },
+ "schema": "dir_sprint0_d5_provider_manifest_v1",
+ "status": "PROVIDER_FROZEN_ENGINEERING_ONLY"
+}

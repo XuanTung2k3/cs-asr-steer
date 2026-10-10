@@ -1,0 +1,161 @@
+{
+  "gpu_jobs_submitted": [],
+  "legacy_namespace_preserved": "results/basis_a6_expanded",
+  "matrix": {
+    "qwen3_asr_1p7b": {
+      "exact_reused": 0,
+      "logical_total": 12800,
+      "remaining_physical": 12800
+    },
+    "whisper": {
+      "exact_reused": 0,
+      "logical_total": 11520,
+      "remaining_physical": 11520
+    }
+  },
+  "namespace": "results/a6_ott_upper_bound",
+  "phase_manifests": [
+    "manifests/PHASE_A_MANIFEST.json",
+    "manifests/PHASE_B_MANIFEST.json",
+    "manifests/PHASE_C_MANIFEST.json"
+  ],
+  "provenance": {
+    "code_config_snapshot_hash": "f3b6a8018bbe6d29a2ae30481029d346bed0e0e3273443a8dbee91e69ea05e96",
+    "config_hash": "41d5f23fb0245dcfac78bff11bd596b52039178395a819e3c8dfe23d33896efa",
+    "environment": {
+      "cuda_visible_devices": null,
+      "platform": "Linux-5.15.0-130-generic-x86_64-with-glibc2.35",
+      "python": "3.13.12",
+      "slurm_job_id": null
+    },
+    "git_commit": "f14fbb1f123d0063efc04b93de8bb5417d052d6f",
+    "git_status": [
+      " M docs/current/CODE_MAP.md",
+      " M docs/current/METHOD_CONTRACT.md",
+      " M docs/current/STATUS.md",
+      "?? configs/expansion/aga_clean.yaml",
+      "?? configs/expansion/bilora.yaml",
+      "?? configs/expansion/learned_expansion.yaml",
+      "?? configs/expansion/lora_paper_style.yaml",
+      "?? configs/expansion/salsa.yaml",
+      "?? docs/current/AGA_REIMPLEMENTATION_AUDIT.md",
+      "?? docs/current/TRAINING_EXPANSION_IMPLEMENTATION.md",
+      "?? docs/reports/",
+      "?? results/basis_a5_unique_shared/directions/qwen3_asr_1p7b/decoder/",
+      "?? results/basis_a5_unique_shared/directions/qwen3_asr_1p7b/encoder/",
+      "?? results/basis_a5_unique_shared/directions/whisper/decoder/",
+      "?? results/basis_a5_unique_shared/directions/whisper/encoder/",
+      "?? results/basis_a5_unique_shared/qwen/",
+      "?? results/basis_a5_unique_shared/whisper/",
+      "?? results/basis_a6_expanded/ascend/ASCEND_EVAL_ALIGNMENT.json",
+      "?? results/basis_a6_expanded/baselines/",
+      "?? results/basis_a6_expanded/manifests/FULL_RUN_EXECUTION_STATUS.json",
+      "?? results/basis_a6_expanded/manifests/FULL_RUN_SHARDS.json",
+      "?? results/basis_a6_expanded/oracle_tt/cache/",
+      "?? results/basis_a6_expanded/slurm/",
+      "?? results/basis_frozen_layer_atlas/free_decode/",
+      "?? results/basis_frozen_layer_atlas/mixture/",
+      "?? results/basis_frozen_layer_atlas/quarantined_raw_norm_bug/",
+      "?? results/basis_frozen_layer_atlas/teacher_forced/",
+      "?? results/learned_expansion/",
+      "?? slurm-51490.out",
+      "?? src/csasr/steering/expansion/controller_factory.py",
+      "?? src/csasr/steering/expansion/layered.py",
+      "?? src/csasr/steering/expansion/lora_baselines.py",
+      "?? src/csasr/steering/expansion/manifest.py",
+      "?? src/csasr/steering/expansion/reporting.py",
+      "?? tests/test_training_expansion.py"
+    ],
+    "source_snapshot_hash": "1f5b6fed8fa62664086a1e7745176b6aae7386cea5aec55b894d3b694cabdc66",
+    "stage": "a6_ott_preflight"
+  },
+  "qwen_standard_equivalence": {
+    "checks": [
+      {
+        "dataset": "cs_dialogue_dev_select",
+        "greedy_hash": "sha256:6ab8600c8eb6708f6f7deefdb307dd6f2f535fd54042d2b30036ffe2c971f854",
+        "ok": true,
+        "standard_hash": "sha256:f161b7e7b705f6879d604ff4f9e4d7fea1eba7204122c40a9b83e1b35336f15b"
+      },
+      {
+        "dataset": "ascend_eval",
+        "greedy_hash": "sha256:a74d7ef8944919138e16e67b38056f10d6bbfc6ffa5ca37f6de288a3f7b22835",
+        "ok": true,
+        "standard_hash": "sha256:717f91b0298aa2b1d91d96d1d793f8bf86d96d2b3860a16b05bd99637f6fb5c9"
+      },
+      {
+        "dataset": "seame_dev_man",
+        "greedy_hash": "sha256:adf24470c86646d263e81dce43d99308866eacb0283ac21d4302a361dbbb20b5",
+        "ok": true,
+        "standard_hash": "sha256:d630c9340707644416df608a17b6b7d3b6697e5d95ac64eabc360a5c42d3c038"
+      },
+      {
+        "dataset": "seame_dev_sge",
+        "greedy_hash": "sha256:4fa81655b1998ee0bb10fb951fc1d19e814e0371dbd386a8a077bcf9f59fb9a4",
+        "ok": true,
+        "standard_hash": "sha256:6b75d7b33ecd01bcc89693772cf6914e5ab521455deab4923350395910da1773"
+      }
+    ],
+    "equivalence": "official_standard == greedy",
+    "status": "PASS"
+  },
+  "real_model_acceptance": {
+    "qwen3_asr_1p7b": {
+      "cache_reuse": true,
+      "oracle_tt": "PASS",
+      "status": "PASS"
+    },
+    "whisper": {
+      "cache_reuse": true,
+      "oracle_tt": "PASS",
+      "status": "PASS"
+    }
+  },
+  "reusable_percentage": {
+    "exact_search_rows": 0.0,
+    "validated_direction_construction": {
+      "note": "construction reuse only; no Phase-A decoded row is exact-reused",
+      "percentage": 0.17045454545454544,
+      "reusable_direction_constructions": 12,
+      "total_direction_constructions": 7040
+    }
+  },
+  "reuse": {
+    "downgraded": 1,
+    "exact_reused": 16,
+    "manifest_sha256": "sha256:1a5a4b47d0bee24fc11751023ed1d1f72843f8f8131a6f825372cd3265a5d8d6",
+    "validated_partial_construction": 1
+  },
+  "runtime": {
+    "ancillary_exact_reused": 16,
+    "phase_a": {
+      "qwen3_asr_1p7b": {
+        "direction_constructions": 3200,
+        "exact_reused": 0,
+        "gpu_hours": 9.45843326420345,
+        "logical_total": 12800,
+        "remaining_physical": 12800,
+        "seconds_per_greedy_eval": 2.66018435555722
+      },
+      "whisper": {
+        "direction_constructions": 3840,
+        "exact_reused": 0,
+        "gpu_hours": 11.401183015023562,
+        "logical_total": 11520,
+        "remaining_physical": 11520,
+        "seconds_per_greedy_eval": 3.5628696921948633
+      }
+    },
+    "pipeline_max": {
+      "expected_wall_hours_at_2_gpus": 21.935146893051634,
+      "qwen_gpu_hours": 14.158092292354539,
+      "slack_adjusted_gpu_hours": 43.87029378610327,
+      "total_gpu_hours": 38.14808155313328,
+      "whisper_gpu_hours": 23.989989260778746
+    },
+    "reuse_note": "directions are one construction per sample/layer; rho reuses the direction; Qwen standard aliases greedy"
+  },
+  "schema_version": "a6_ott_preflight_manifest_v1",
+  "slurm_state_checked": true,
+  "status": "READY_TO_RUN"
+}

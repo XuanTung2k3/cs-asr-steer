@@ -1,0 +1,16 @@
+{
+  "dataset": "cs_dialogue_confirm",
+  "direction_constructions": 2192,
+  "gpu_job_id": "53516",
+  "ineligible": [],
+  "mode": "official_standard",
+  "model": "whisper",
+  "new_rows": 1096,
+  "panel_fingerprint": "sha256:7fb612ee1be7806c624dd0836fbf5e43429d41e3af032e0d4cb7fe4e8a3398ff",
+  "phase": "B",
+  "reused_rows": 0,
+  "rho_cache_hits": 0,
+  "runtime_sec": 1520.6864383574575,
+  "side": "decoder",
+  "status": "PASS"
+}

@@ -1,0 +1,31 @@
+{
+ "checks": {
+  "analysis_manifest": true,
+  "counts_agree": true,
+  "groups": true,
+  "label_agrees": true,
+  "manifest_sources_at_commit": true,
+  "row_reconstruction": true,
+  "statistics_agree": true
+ },
+ "independent": {
+  "C_diff": 0.1163294908393799,
+  "C_lower80": -0.050989791535605934,
+  "Etok_diff": 0.00988416334694353,
+  "Etok_lower80": -0.16730279622547173,
+  "fn_recall": 8,
+  "fp_contrast": 1,
+  "fp_suppressed": 1,
+  "tp_contrast": 30,
+  "tp_evidence": 36,
+  "valid_draws": [
+   9967,
+   9967
+  ]
+ },
+ "label": "P2_SEL_T_TOKEN_LID_NOT_DISCRIMINATIVE",
+ "row_failures": [],
+ "schema": "p2_sel_t_t0_audit_v1",
+ "stage": "T0",
+ "verdict": "P2_SEL_T_AUDIT: PASS"
+}

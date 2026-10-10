@@ -1,0 +1,22 @@
+{
+  "eligible_epochs": [
+    1,
+    2,
+    3
+  ],
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive canonical utility then PIER gain then higher matrix retention then lower energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg06/d2/checkpoint_epoch1.pt",
+  "selected_checkpoint_sha256": "sha256:bf49dddfa570b2e887c6d6704ed271598ba0856fd363d427c7a698589fb14612",
+  "selected_epoch": 1,
+  "variant": "d2"
+}

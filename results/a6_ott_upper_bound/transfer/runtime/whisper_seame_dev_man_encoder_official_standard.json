@@ -1,0 +1,16 @@
+{
+  "dataset": "seame_dev_man",
+  "direction_constructions": 50,
+  "gpu_job_id": "53549",
+  "ineligible": [],
+  "mode": "official_standard",
+  "model": "whisper",
+  "new_rows": 50,
+  "panel_fingerprint": "sha256:3f49d08d66e88d4bf9f79ef8a80f6013fb1d1d16e07269fb50bc94e4f26e2a3c",
+  "phase": "C",
+  "reused_rows": 0,
+  "rho_cache_hits": 0,
+  "runtime_sec": 43.67137014120817,
+  "side": "encoder",
+  "status": "PASS"
+}

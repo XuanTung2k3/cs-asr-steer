@@ -1,0 +1,14 @@
+{
+  "schema_version": "basis_a6_gpu_acceptance_v1",
+  "status": "PASS",
+  "slurm_job_id": "53316",
+  "cuda": true,
+  "device_count": 1,
+  "devices": [
+    {
+      "index": 0,
+      "name": "NVIDIA H100 80GB HBM3 MIG 3g.40gb",
+      "total_memory_gb": 42.412802048
+    }
+  ]
+}

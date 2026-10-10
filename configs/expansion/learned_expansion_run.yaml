@@ -1,0 +1,34 @@
+# Executable config for experiments/learned_expansion.py (one-seed exploratory).
+# Frozen semantics inherited from DG-05/06: exact site, NormPreserve, D1 objective,
+# beta = DG-04 reference, seed 42, 3 epochs, greedy D-dev-select selection.
+stage: learned_expansion_run
+
+model:
+  id: /mnt/data/tungnx/whisper-large-v3
+  hub_id: openai/whisper-large-v3
+  revision: null
+  dtype: bfloat16
+  device: cuda
+  freeze_backbone: true
+  attn_implementation: eager
+  local_files_only: true
+
+data:
+  candidate_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+  training_roles: [loc-train, util-train]
+  selection_role: D-dev-select
+  forbidden_roles: [D-dev-confirm, D-test]
+
+training:
+  seed: 42
+  objective: L_corr(C_E) + lambda_M L_ret,M
+  lambda_m: 1.0
+  beta: 4.465628877080159
+  epochs: 3
+  batch_size: 8
+  gradient_accumulation: 2
+
+selection:
+  decode_split: D-dev-select
+  decode: greedy_temperature_0_beam_1
+  rule: positive_utility_then_pier_gain_then_matrix_retention_then_lower_energy

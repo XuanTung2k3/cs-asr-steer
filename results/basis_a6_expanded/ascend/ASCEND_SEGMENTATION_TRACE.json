@@ -1,0 +1,70 @@
+[
+  {
+    "utterance_id": "ascend/validation/00000",
+    "raw": "嗯",
+    "normalized": "嗯",
+    "units": [
+      "嗯"
+    ],
+    "tags": [
+      "ZH"
+    ],
+    "en_units": 0,
+    "zh_units": 1,
+    "eligible": false
+  },
+  {
+    "utterance_id": "ascend/validation/00000",
+    "raw": "嗯",
+    "normalized": "嗯",
+    "units": [
+      "嗯"
+    ],
+    "tags": [
+      "ZH"
+    ],
+    "en_units": 0,
+    "zh_units": 1,
+    "eligible": false
+  },
+  {
+    "utterance_id": "ascend/validation/00001",
+    "raw": "小朋友我回想一下when i was in elementary school",
+    "normalized": "小朋友我回想一下when i was in elementary school",
+    "units": [
+      "小",
+      "朋",
+      "友",
+      "我",
+      "回",
+      "想",
+      "一",
+      "下",
+      "when",
+      "i",
+      "was",
+      "in",
+      "elementary",
+      "school"
+    ],
+    "tags": [
+      "ZH",
+      "ZH",
+      "ZH",
+      "ZH",
+      "ZH",
+      "ZH",
+      "ZH",
+      "ZH",
+      "EN",
+      "EN",
+      "EN",
+      "EN",
+      "EN",
+      "EN"
+    ],
+    "en_units": 6,
+    "zh_units": 8,
+    "eligible": true
+  }
+]

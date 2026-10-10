@@ -1,0 +1,16 @@
+{
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive utility -> PIER gain -> matrix retention -> lower energy",
+  "selected_checkpoint": null,
+  "selected_epoch": null,
+  "variant": "A3_FIXED_MIXTURE_GATE"
+}

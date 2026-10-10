@@ -1,0 +1,144 @@
+{
+  "backbone_frozen": true,
+  "basis_frozen": true,
+  "basis_hashes": {
+    "cond": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+    "local": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93"
+  },
+  "basis_record": {
+    "dim": 1280,
+    "direction_names": [
+      "raw_language_contrast",
+      "language_conditioning",
+      "conditioning_residualized_local"
+    ],
+    "metrics": {
+      "conditioning_fraction_removed": 0.00755179777948131,
+      "cos_local_cond": -2.2551405187698492e-17,
+      "cos_raw_cond": -0.08690108042756353,
+      "n_cond_contrasts": 1,
+      "n_raw_contrasts": 1,
+      "v_cond_norm": 1.0000000000000002,
+      "v_local_norm": 1.0,
+      "v_raw_norm": 3.8102723282874966
+    },
+    "provenance": {
+      "aggregation": "dialogue_balanced_mean",
+      "conditioning_prompts": {
+        "c_E": "build_prefix(language='en')",
+        "c_M": "build_prefix(language='zh')"
+      },
+      "construction_config_hash": "sha256:1c021fe9787c2a987b3bcf7bf2e6e2c68782cafe99df87b3abaeeed8b8ed01e4",
+      "dataset_fingerprint": {
+        "composite": "sha256:3981d6a8134e8f73b49e1fc66451980a59d0f460759aab279a142ecb2f7310ab",
+        "files": {
+          "candidates_all.parquet": "sha256:343d10b8cdf3a29d026b2e1e9747a666ca2fc3d4027a428af9a0e67da4a0fdf3",
+          "poi_D-construct.parquet": "sha256:ed863f2184a856f685041b10cba5eeab01639d6a1e26318c4300d2cbcaccda15",
+          "poi_D-dev-select.parquet": "sha256:4a16bfac78de9ac4cb299e640dc67c6284bab59319d38c0add53e6bad998eb6f",
+          "role_D-construct.parquet": "sha256:5f81fc215caa1170f950fa24f075a2ca4e46a3150b44ccff8ba3a8f672d5b725",
+          "role_D-dev-select.parquet": "sha256:25a45f28c0e192c6b2d71bdd0eccbfe354ac1a4e0019cddd78168d86423d2109"
+        }
+      },
+      "dataset_role": "D-construct",
+      "diagnostic_dose": {
+        "alpha": 1.0,
+        "nominal_update_norm": 8.931257754160319,
+        "rho": 1.0,
+        "scale": 8.931257754160319
+      },
+      "git_commit": "eac2e374db331be46ee13e147b2ec14e7983e077",
+      "mean_site_norm_s_l": 8.931257754160319,
+      "model_id": "openai/whisper-large-v3",
+      "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+      "n_conditioning_pairs": 125,
+      "n_embedded_positions": 233,
+      "n_matrix_positions": 233,
+      "reused_cached_activations": false,
+      "seeds": {
+        "random_controls": [
+          0,
+          1,
+          2
+        ]
+      },
+      "site": "decoder_post_cross_attn_residual"
+    },
+    "python_layer_index": 24,
+    "schema_version": "steering_basis_v1",
+    "scientific_layer": 24,
+    "site": "decoder_post_cross_attn_residual",
+    "tensor_dtype": "float64",
+    "tensor_files": {
+      "conditioning_residualized_local": "conditioning_residualized_local_L24.npy",
+      "language_conditioning": "language_conditioning_L24.npy",
+      "raw_language_contrast": "raw_language_contrast_L24.npy"
+    },
+    "tensor_hashes": {
+      "conditioning_residualized_local": "sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93",
+      "language_conditioning": "sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991",
+      "raw_language_contrast": "sha256:b637493362f2ba319aef3d24f74f382334508cdc28f79fc7a062cd528cf3b2c8"
+    }
+  },
+  "beta": 4.465628877080159,
+  "checkpoint_selection": "positive utility -> PIER gain -> matrix retention -> lower energy",
+  "controller_init_hash": "sha256:9f86e97cf74fc87faedff8140b34a4cd7ecb7b99dd5125408c35e85ab426be5f",
+  "correction_set": {
+    "n_positions": 51227,
+    "path": "/home/tungnx/cs-asr-steer/results/dg05/correction_set_v1.json",
+    "sha256": "sha256:813604876dfb68eb7fc2e8f1864c46f7c57ef25ed4f3c700798c0f88d199a430"
+  },
+  "created_at": "2026-09-08T07:01:47.531399+00:00",
+  "data_safety": {
+    "forbidden": [
+      "D-dev-confirm",
+      "D-test"
+    ],
+    "inference_inputs": [
+      "site_state"
+    ]
+  },
+  "dataset_manifest_hash": null,
+  "decode": {
+    "condition_on_prev_tokens": false,
+    "do_sample": false,
+    "language": "zh",
+    "max_new_tokens": 200,
+    "num_beams": 1,
+    "task": "transcribe",
+    "temperature": 0.0
+  },
+  "exact_site": "decoder post-cross-attention residual, pre-FFN",
+  "git_commit": "fab6165eef97282c184d47fdde800d16f4482e1a",
+  "lambda_e": null,
+  "lambda_m": 1.0,
+  "layer": 24,
+  "model_id": "/mnt/data/tungnx/whisper-large-v3",
+  "model_revision": null,
+  "normalization_version": null,
+  "objective": "L_corr + lambda_M L_ret,M",
+  "phase": "a2_conditioning_only",
+  "production_artifact": true,
+  "provenance_version": "artifact-provenance-v1",
+  "resolved_config_hash": "98a53c4dbb530f09af25ae5e9b2f27e98a2c8c2e16d9c37672e38a9ab4f4b863",
+  "retention_set": {
+    "R_E_positions": 11748,
+    "R_M_positions": 151556,
+    "path": "/home/tungnx/cs-asr-steer/results/dg06/retention_set_v1.json",
+    "sha256": "sha256:ad2d38a9b83755b078855c8c16ba03594c759a69cd6b697f9d5e76d22337585d"
+  },
+  "seed": 42,
+  "selection_role": "D-dev-select",
+  "slurm": {
+    "max_concurrent_gpu_jobs": 2,
+    "partition": "mig"
+  },
+  "source_snapshot_hash": "69daf679c507a5703be50663e0880192a0f5f033a89a24e343a495d9064af1e9",
+  "stage": "dg07_a2_conditioning_only",
+  "trainable_parameter_count": 43585,
+  "training_roles": [
+    "loc-train",
+    "util-train"
+  ],
+  "upstream_artifacts": [],
+  "variant": "A2_CONDITIONING_ONLY"
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": "basis_a4_quarantine_v1",
+  "status": "QUARANTINED",
+  "reason": "Early reuse preparation used an invalid extra decoder path before the side-aware glob fix; these 24 files are excluded from A4 completeness.",
+  "recoverable": true,
+  "scientific_status": "not accepted"
+}

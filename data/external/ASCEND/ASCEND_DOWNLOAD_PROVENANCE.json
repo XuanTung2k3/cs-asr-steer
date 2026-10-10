@@ -1,0 +1,74 @@
+{
+  "schema_version": "ascend_download_provenance_v1",
+  "dataset_repo": "CAiRE/ASCEND",
+  "requested_revision": null,
+  "expected_splits": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "observed_splits": [
+    "train",
+    "test",
+    "validation"
+  ],
+  "expected_sizes_reference": {
+    "train": 9869,
+    "validation": 1130,
+    "test": 1315
+  },
+  "observed_sizes": {
+    "train": 9869,
+    "test": 1315,
+    "validation": 1130
+  },
+  "size_matches_reference": true,
+  "hf_fingerprints": {
+    "train": "1fd524f9a0b1019f",
+    "test": "10a739ffe0346d73",
+    "validation": "6d67003534257f4e"
+  },
+  "feature_schema": {
+    "train": {
+      "id": "Value('string')",
+      "path": "Value('string')",
+      "audio": "Audio(sampling_rate=16000, decode=True, num_channels=None, stream_index=None)",
+      "transcription": "Value('string')",
+      "duration": "Value('float32')",
+      "language": "Value('string')",
+      "original_speaker_id": "Value('int64')",
+      "session_id": "Value('int64')",
+      "topic": "Value('string')"
+    },
+    "test": {
+      "id": "Value('string')",
+      "path": "Value('string')",
+      "audio": "Audio(sampling_rate=16000, decode=True, num_channels=None, stream_index=None)",
+      "transcription": "Value('string')",
+      "duration": "Value('float32')",
+      "language": "Value('string')",
+      "original_speaker_id": "Value('int64')",
+      "session_id": "Value('int64')",
+      "topic": "Value('string')"
+    },
+    "validation": {
+      "id": "Value('string')",
+      "path": "Value('string')",
+      "audio": "Audio(sampling_rate=16000, decode=True, num_channels=None, stream_index=None)",
+      "transcription": "Value('string')",
+      "duration": "Value('float32')",
+      "language": "Value('string')",
+      "original_speaker_id": "Value('int64')",
+      "session_id": "Value('int64')",
+      "topic": "Value('string')"
+    }
+  },
+  "do_not_use_splits": [
+    "test"
+  ],
+  "save_dir": "data/external/ASCEND/dataset",
+  "cache_dir": "data/external/ASCEND/hf_cache",
+  "preparation_code_hash": "sha256:a7715a5ae06737964e19e3e5e7a836033ec02558ed19a4ee69379993bfe06f32",
+  "test_rows_consumed_by_a6": 0,
+  "test_split_policy": "metadata-only download verification; adapter/manifests refuse test rows"
+}

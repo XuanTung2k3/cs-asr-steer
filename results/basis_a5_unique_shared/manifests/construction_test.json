@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "a4_final_complete": true,
+    "a4_qwen_acceptance": true,
+    "distinct_indices": true,
+    "finite": true,
+    "orthogonal": true,
+    "unit": true
+  },
+  "protocol_hash": "sha256:81b54db57113effa5463efe135861760ffc1a0ba0628763979027b70ad60e91f",
+  "schema_version": "basis_a5_construction_test_v1",
+  "status": "PASS"
+}

@@ -1,0 +1,61 @@
+{
+ "checks": {
+  "auditor_independent": true,
+  "code_anchor:experiments/inference_cf_cached.py": true,
+  "code_anchor:experiments/inference_cf_p0_r2.py": true,
+  "code_anchor:experiments/inference_cf_p2dir.py": true,
+  "code_anchor:experiments/inference_cf_p2r.py": true,
+  "code_anchor:experiments/inference_cf_p2sel.py": true,
+  "code_anchor:src/csasr/inference_cf/core_r2.py": true,
+  "code_anchor:src/csasr/inference_cf/readout.py": true,
+  "code_anchor:src/csasr/lss/sites.py": true,
+  "code_anchor:src/csasr/models/hooks.py": true,
+  "d2_sealed": true,
+  "e1_constants": true,
+  "evidence_anchor:docs/inference_cf/P2_DIR_EXP1_REPORT.md": true,
+  "evidence_anchor:docs/inference_cf/P2_DIR_FINAL_REPORT.md": true,
+  "evidence_anchor:docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md": true,
+  "evidence_anchor:docs/inference_cf/P2_SEL_REPORT.md": true,
+  "evidence_anchor:results/inference_cf/p2dir/exp1_run1/directions_sealed.json": true,
+  "evidence_anchor:results/inference_cf/p2dir/exp1_run1/manifest.json": true,
+  "evidence_anchor:results/inference_cf/p2dir/exp1_run1_audit.json": true,
+  "evidence_anchor:results/inference_cf/p2sel/final_audit.json": true,
+  "evidence_anchor:results/inference_cf/p2sel/s1_run1_audit.json": true,
+  "evidence_anchor:results/inference_cf/p2sel_e/prerun_audit.json": true,
+  "expected_groups_from_frozen_scalars": true,
+  "frozen_at_b693b8d:configs/inference_cf/p2_sel_e.json": true,
+  "frozen_at_b693b8d:docs/inference_cf/P2_SEL_E_CODEX_DESIGN.md": true,
+  "frozen_at_b693b8d:docs/inference_cf/P2_SEL_E_PRE_RUN_AUDIT.md": true,
+  "frozen_at_b693b8d:docs/inference_cf/P2_SEL_E_SPEC.md": true,
+  "frozen_at_b693b8d:results/inference_cf/p2sel_e/prerun_audit.json": true,
+  "frozen_at_b693b8d:tests/test_p2_sel_e_q_contract.py": true,
+  "mini_panel_hash": true,
+  "native_lid_100way_source": true,
+  "no_Q_near_one_rule": true,
+  "no_e_stage_outcome": true,
+  "p2r_join_and_E_identity": true,
+  "p2sel_terminal_audited": true,
+  "population_180": true,
+  "population_hash": true,
+  "provider_identity": true,
+  "runtime_surface_reference_free": true,
+  "tests_present": true
+ },
+ "git_commit": "07035237caecd8d57c8d9a043e6d9ebb6812e289",
+ "notes": {
+  "groups": {
+   "EN_FN": 18,
+   "EN_TP": 42,
+   "ZH_FP": 5,
+   "ZH_TN": 55
+  },
+  "preregistered_conflict": "E0 precedence can select R3 (H_E3), but config E1.requires and spec sections 3/6 authorize E1 only for R1/R2/R4. If E0 selects R3, the pre-E1 audit BLOCKs and the stage stops (contract conflict); no E1 is run.",
+  "preregistered_interpretations": [
+   "lag E=None (fallback step in the P2-R trace) is treated as missing history = 0",
+   "a hypothesis bootstrap with fewer than 9900 valid draws fails that hypothesis criterion",
+   "E_long is the recomputed 1 s current E (must reproduce P2-R within 1e-6)"
+  ]
+ },
+ "schema": "p2_sel_e_prerun_audit_r1_v1",
+ "verdict": "PASS_TO_P2_SEL_E_E0"
+}

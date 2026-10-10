@@ -1,0 +1,17 @@
+{
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive utility -> PIER gain -> matrix retention -> lower energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg07/LB1_SALSA_EXACT_GLOBAL/checkpoint_epoch3.pt",
+  "selected_checkpoint_sha256": "sha256:03cc0bf68a8c241f55b515e48792624e6d348fa9cb6ae8407a42d1642be96f8e",
+  "selected_epoch": 3,
+  "variant": "LB1_SALSA_EXACT_GLOBAL"
+}

@@ -1,0 +1,156 @@
+{
+  "schema": "p2rj_jacobian_diagnosis_v1",
+  "stage": "P2-RJ Jacobian H1-vs-H4 disambiguation (diagnostic only; evaluator-side; not a method-selection stage)",
+  "role": "D-dev-select (already exposed; the exact frozen P2-R D1 population; exploratory diagnosis only)",
+  "spec": "docs/inference_cf/P2_RJ_JACOBIAN_DIAGNOSIS_SPEC.md",
+  "p2_reference": {
+    "frozen_configuration": "results/inference_cf/p2_frozen_configuration.json",
+    "unchanged": true
+  },
+  "p2r_reference": {
+    "config": "configs/inference_cf/p2_r_mechanism_diagnosis.json",
+    "population": "results/inference_cf/p2r/population.json",
+    "population_hash": "sha256:6a880d2b20049200dbd7e58ab6d34c55238a772e7be616fac337c7fff8b743bb",
+    "run": "results/inference_cf/p2r/run3",
+    "run_manifest_hash": "sha256:33a99f298746220ae92445d15b064ed7229279002116cce61a70daab399f88a9",
+    "verdict": "P2_R_MECHANISM_STILL_AMBIGUOUS",
+    "unchanged": true
+  },
+  "baseline_run": "results/inference_cf/p2_A_r1_L16",
+  "baseline_system": "B0M_L16",
+  "conditions": {
+    "cB": [
+      50258,
+      50260,
+      50360,
+      50364
+    ],
+    "cE": [
+      50258,
+      50259,
+      50360,
+      50364
+    ],
+    "language_token_ids": [
+      50259,
+      50260
+    ]
+  },
+  "site": {
+    "layer": 16,
+    "state": "r = q + u_source at the query predicting token t: the exact DG-02 post-cross-attention / pre-FFN site of the unedited B branch (forced-ZH), teacher-forced on the matched-baseline tokens with the P2-R cached-branch semantics",
+    "num_forced_prefix": 4,
+    "attention": "eager",
+    "suppression": "generation_config suppress_tokens / begin_suppress_tokens (identical to generate())"
+  },
+  "population": {
+    "source": "results/inference_cf/p2r/population.json d1 (all three strata, all 180 positions, unchanged)",
+    "strata": [
+      "EN-confusion",
+      "EN-correct",
+      "ZH-correct"
+    ],
+    "primary_stratum": "EN-confusion",
+    "minimum_interpretable": {
+      "positions": 40,
+      "dialogues": 12
+    }
+  },
+  "margin": {
+    "primary": "m(r) = logsumexp_{y in Y_ref} z_proc(y) - z_proc(c*)  (processed logits; normalizer-free; equals P2-R margin_ref_vs_competitor at the unedited state)",
+    "Y_ref": "the frozen P2-R target_ids of the position (reference-consistent first-token set; ZH-correct: the baseline token)",
+    "competitor": "c* = the first token of the P2-R saved unedited processed top-20 list (rec.none.top_ids) that is not in Y_ref; a fixed token identity per position (EN-confusion: the baseline argmax)",
+    "gap": "gap = -m(r0) (EN-confusion deficit; > 0 by construction of the stratum except degenerate cases); for EN-correct / ZH-correct m(r0) > 0 is a surplus",
+    "secondary_targets": {
+      "logp_ref": "log sum_{y in Y_ref} p_proc(y)  (P2-R L quantity)",
+      "log_PE": "log processed mass of the frozen embedded (Latin) token partition",
+      "log_PM": "log processed mass of the frozen matrix (Han) token partition"
+    }
+  },
+  "gradient": {
+    "definition": "g = d m / d r at the unedited site state (autograd through the frozen model; a zero-valued probe delta added to u_source at the query, so the forward is value-identical to the unedited step)",
+    "tangent": "g_tan = g - rhat <rhat, g>, rhat = r/|r| (NormPreserve edits lie on the |r| sphere to first order)",
+    "primary_norm": "tangent",
+    "use": "EVALUATOR-ONLY. The gradient is never applied as a steering direction, never enters a hooked forward with a nonzero edit, and never leaves the diagnostic namespace."
+  },
+  "energy": {
+    "e_star": 1.1260757575454359,
+    "source": "the frozen P2-R target realized edit norm (sqrt(1203.3762345332195 / 949)); reused exactly, not tuned"
+  },
+  "directions": {
+    "plus_d": "d = norm(hE - hB) (core_p1.direction) recomputed at the exact state; must reproduce P2-R cos_d_state",
+    "minus_d": "-d",
+    "random": "the frozen P2-R random vector (inference_cf_p2r.random_direction: seed int(sha256('P2R-random-v1|uid|t')[:16],16), N(0,I_1280), projected orthogonal to r, normalized)",
+    "realized_edit": "delta_a = apply_steering(r, s_a v_a) - r in the site dtype, with s_a = inference_cf_p2r.solve_scale(r, v_a, e*) (must reproduce the saved P2-R solver s bitwise); geometry only, no model forward with the edit"
+  },
+  "metrics": {
+    "per_position": [
+      "gap (EN-confusion) / surplus (correct strata)",
+      "|g|, |g_tan|, |g_rad|",
+      "A = |g_tan| * e*  (first-order maximum achievable margin change under an e*-size NormPreserve edit)",
+      "rho = A / gap (gap <= 0 -> +inf)",
+      "cos(g_tan, v_a) for v_a in {+d, -d, random} (unit arm directions)",
+      "pred_a = <g, delta_a> (first-order predicted margin change of the realized P2-R arm edit)",
+      "kappa_a = <g_tan, delta_a> / A  (fraction of the first-order optimum captured by arm a)",
+      "same for the secondary targets (logp_ref, log_PE, log_PM): norms, cosines with the arm directions, cos between secondary and primary tangent gradients"
+    ]
+  },
+  "analysis": {
+    "bootstrap": {
+      "unit": "dialogue",
+      "replicates": 10000,
+      "seed": 240924,
+      "aggregation": "average positions within dialogue, then across dialogues",
+      "interval": "percentile"
+    },
+    "decision_family": [
+      "Q50",
+      "K_plus"
+    ],
+    "simultaneous": "Bonferroni over the decision family: each two-sided at alpha = 0.05/2 (percentiles 0.0125, 0.9875)",
+    "Q50": "dialogue-weighted fraction of valid EN-confusion positions with rho >= 0.5",
+    "K_plus": "dialogue-weighted mean of kappa_plus over valid EN-confusion positions",
+    "leverage": {
+      "WEAK": "hi(Q50) < 0.5",
+      "SUBSTANTIAL": "lo(Q50) > 0.5",
+      "UNRESOLVED": "otherwise"
+    },
+    "alignment": {
+      "MISALIGNED": "hi(K_plus) < 0.10",
+      "ALIGNED": "lo(K_plus) >= 0.25",
+      "PARTIAL": "otherwise"
+    },
+    "diagnosis": {
+      "P2_RJ_DIRECTION_ISSUE": "valid and SUBSTANTIAL and MISALIGNED",
+      "P2_RJ_DIRECTION_AND_SITE_ISSUE": "valid and WEAK and MISALIGNED",
+      "P2_RJ_SITE_OR_SENSITIVITY_ISSUE": "valid and WEAK and (PARTIAL or ALIGNED)",
+      "P2_RJ_STILL_AMBIGUOUS": "otherwise (including any validity failure, UNRESOLVED leverage, SUBSTANTIAL with PARTIAL/ALIGNED)"
+    },
+    "validity": {
+      "V1_provenance": "manifest, config, population, source hashes and Git commit verify",
+      "V2_completeness": "every utterance row ok; all 180 positions present",
+      "V3_state_identity": "per position: recomputed decode-rule (first-index) processed argmax == baseline_token, and P2-R none.argmax == baseline_token or an exact recomputed logit tie with it (v1.1); |logp_ref - P2-R none.logp_ref| <= 1e-3; |m(r0) - P2-R margin| <= 1e-3; |r| == P2-R pre_norm (rel 1e-6); |cos_d_state - P2-R| <= 1e-6; recomputed first-index best non-reference token equals the frozen c* or c* attains exactly the maximal non-reference log-probability (v1.1); recomputed solver s equals the saved P2-R s for all three arms (rel 1e-9); grad-step logits bitwise equal to the no-grad step logits. Mismatching positions are excluded and counted; more than 9 of 180 mismatches (5%) = run invalid (implementation defect)",
+      "V4_finite": "every gradient finite and nonzero",
+      "V5_min_population": ">= 40 valid EN-confusion positions over >= 12 dialogues",
+      "V6_fd_sign": "first-order sanity: pooled Pearson r between pred_a and the observed P2-R arm change of m (fixed competitor, from the saved arm top-20) over all valid (position, arm) pairs, dialogue bootstrap (10000, seed 240924, pointwise 95%): lower bound > 0",
+      "V7_precision": "fp32 recomputation (same bf16 weights cast to fp32, same prefixes): median over valid positions of cos(g_tan_bf16, g_tan_fp32) >= 0.9, AND the fp32 diagnosis label (same rules, analytic float64 chord edits of length e*) equals the bf16 label"
+    },
+    "fd_descriptive": "slope (through origin) and Pearson r of observed vs predicted, per arm and per stratum, for m and for logp_ref"
+  },
+  "precision": {
+    "primary": "bfloat16 (the exact P2-R states)",
+    "secondary": "float32 (precision validity V7)",
+    "gradient_dtype": "probe delta float32 -> cast to site dtype; gradient read in float32; all geometry in CPU float64"
+  },
+  "compute": {
+    "slurm_partition": "mig",
+    "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1",
+    "gpus": 1,
+    "time_limit": "01:00:00",
+    "batch_size": 1,
+    "max_jobs": 1
+  },
+  "amendments": [
+    "v1.1 (pre-outcome): tie-aware V3 argmax/competitor identity; see spec section 12"
+  ]
+}

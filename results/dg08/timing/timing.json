@@ -1,0 +1,48 @@
+{
+  "gpu": "mig",
+  "records": {
+    "F0_FROZEN_WHISPER": {
+      "decode_sec": 5.344438552856445,
+      "n_utterances": 100,
+      "overhead_vs_F0": 1.0,
+      "rtf": 0.03857580108715751,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 18.711039337621898
+    },
+    "F2_SALSA": {
+      "decode_sec": 4.658548831939697,
+      "n_utterances": 100,
+      "overhead_vs_F0": 0.8716629045065623,
+      "rtf": 0.033625094819299116,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 21.465912155816692
+    },
+    "F3_LORA": {
+      "decode_sec": 14.065306901931763,
+      "n_utterances": 100,
+      "overhead_vs_F0": 2.6317651073777,
+      "rtf": 0.10152244729032389,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 7.109692002971209
+    },
+    "F4_MSTAR": {
+      "decode_sec": 4.708912134170532,
+      "n_utterances": 100,
+      "overhead_vs_F0": 0.8810864017986991,
+      "rtf": 0.033988613776385956,
+      "total_audio_sec": 138.54381249999997,
+      "utt_per_sec": 21.236327446915688
+    }
+  },
+  "regime": "greedy",
+  "runtime_sec": 39.419721364974976,
+  "schema_version": "dg08_timing_v1",
+  "slurm": {
+    "job_ids": [
+      "50761"
+    ],
+    "node": "worker-mig-3g40gb-0",
+    "partition": "mig"
+  },
+  "timing_subset": "D-dev-select first 100 by duration"
+}

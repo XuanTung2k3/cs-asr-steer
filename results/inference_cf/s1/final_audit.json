@@ -1,0 +1,87 @@
+{
+ "checks": {
+  "analysis_hash": true,
+  "confusion_M_hits_zero": true,
+  "correct_state_M_hits_60": true,
+  "evaluation_after_primary_audit_pass": true,
+  "gate_D_inference_matches": true,
+  "gate_D_point_matches": true,
+  "gate_H_matches": true,
+  "label_matches": true,
+  "positions_order": true,
+  "protection_counts_match": true,
+  "sealed_outputs_unchanged": true
+ },
+ "created_unix": 1791476296.8392658,
+ "failed": [],
+ "git_head": "9483d40f7aae5bd63929975c871fe0d1ea427f53",
+ "independent_label": "S1_CANDIDATE_HEADROOM_INSUFFICIENT",
+ "notes": {
+  "H": {
+   "dialogues": 9,
+   "incremental": 3,
+   "incremental_dialogues": 3,
+   "union20": 11
+  },
+  "P20": 4,
+  "P20_dialogues": 4,
+  "corruptions": {
+   "EN-correct": 1,
+   "ZH-correct": 2
+  },
+  "gate_D": {
+   "P20_dialogues": false,
+   "P20_fraction": false,
+   "P20_rows": false,
+   "hit_macro": false,
+   "mrr_LAC_UNION": true,
+   "mrr_M_ORIGINAL": true,
+   "mrr_OFF_TARGET": true,
+   "mrr_SHUFFLED_SUPPORT": true,
+   "net_LAC_UNION": false,
+   "net_OFF_TARGET": false,
+   "net_SHUFFLED_SUPPORT": false,
+   "net_vs_M": false,
+   "new_dialogues": false,
+   "prot": true
+  },
+  "independent_label": "S1_CANDIDATE_HEADROOM_INSUFFICIENT",
+  "latin_promotions": 0,
+  "vs": {
+   "LAC_UNION": {
+    "finite": 9904,
+    "hit_macro": 0.0,
+    "lower": -0.023809523809523808,
+    "mrr_macro": 0.10406746031746031,
+    "net": 0,
+    "new_dialogues": 0
+   },
+   "M_ORIGINAL": {
+    "finite": 9904,
+    "hit_macro": 0.0,
+    "lower": 0.06593406593406592,
+    "mrr_macro": 0.14832875457875455,
+    "net": 0,
+    "new_dialogues": 0
+   },
+   "OFF_TARGET": {
+    "finite": 9904,
+    "hit_macro": 0.0,
+    "lower": 0.05714285714285716,
+    "mrr_macro": 0.14832875457875458,
+    "net": 0,
+    "new_dialogues": 0
+   },
+   "SHUFFLED_SUPPORT": {
+    "finite": 9904,
+    "hit_macro": 0.0,
+    "lower": 0.059523809523809514,
+    "mrr_macro": 0.1568452380952381,
+    "net": 0,
+    "new_dialogues": 0
+   }
+  }
+ },
+ "schema": "s1_audit_full_v1",
+ "verdict": "S1_AUDIT: PASS (FULL)"
+}

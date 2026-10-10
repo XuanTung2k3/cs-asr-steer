@@ -1,0 +1,51 @@
+{
+ "checks": {
+  "actuator_unchanged:src/csasr/lss/sites.py": true,
+  "actuator_unchanged:src/csasr/models/hooks.py": true,
+  "auditor_independent_of_analysis": true,
+  "candidates_exactly_D0_D1_D2": true,
+  "construction_allowlist": true,
+  "construction_matches_positions": true,
+  "construction_modules_reference_free": true,
+  "construction_self_hash": true,
+  "design_anchor:results/basis_a5_unique_shared/directions/whisper/manifest.json": true,
+  "design_anchor:results/basis_a6_expanded/fixed/cs_dialogue/directions/whisper/decoder/L16/add_unique.npy": true,
+  "design_anchor:results/basis_a6_expanded/manifests/FIXED_DIRECTION_INVENTORY.json": true,
+  "design_anchor:results/inference_cf/p2_final_summary.json": true,
+  "design_anchor:results/inference_cf/p2_frozen_configuration.json": true,
+  "design_anchor:results/inference_cf/p2r/population.json": true,
+  "design_anchor:results/inference_cf/p2rj/positions.json": true,
+  "design_anchor:results/inference_cf/p2rj/run1/manifest.json": true,
+  "design_anchor:src/csasr/basis_a6/directions.py": true,
+  "design_anchor:src/csasr/basis_a6/fixed.py": true,
+  "design_anchor:src/csasr/experiments/basis_a5_unique_shared.py": true,
+  "design_anchor:src/csasr/inference_cf/core_p1.py": true,
+  "design_anchor:src/csasr/inference_cf/core_r2.py": true,
+  "e_star": true,
+  "firewall_d_dev_select": true,
+  "fold_plan_leave_one_dialogue_out": true,
+  "layer16_normpreserve_no_rescale": true,
+  "positions_hash": true,
+  "reused_module_unchanged:experiments/inference_cf_cached.py": true,
+  "reused_module_unchanged:experiments/inference_cf_p2r.py": true,
+  "reused_module_unchanged:experiments/inference_cf_p2rj.py": true,
+  "runner_phase1_reference_free": true,
+  "strata_60_each": true,
+  "test_present:tests/test_inference_cf_p2dir_audit.py": true,
+  "test_present:tests/test_inference_cf_p2dir_directions.py": true,
+  "test_present:tests/test_inference_cf_p2dir_protocol.py": true,
+  "unchanged_since_freeze:configs/inference_cf/p2_dir_direction_identification.json": true,
+  "unchanged_since_freeze:docs/inference_cf/P2_DIR_CODEX_DESIGN.md": true,
+  "unchanged_since_freeze:docs/inference_cf/P2_DIR_DIRECTION_IDENTIFICATION_SPEC.md": true
+ },
+ "git_commit": "18024419e2353ff778ad055355a45f763846137c",
+ "notes": {
+  "folds": 20,
+  "surface": {
+   "ok": true,
+   "violations": {}
+  }
+ },
+ "schema": "p2dir_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_DIR_EXP1"
+}

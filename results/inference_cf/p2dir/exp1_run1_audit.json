@@ -1,0 +1,277 @@
+{
+ "checks": {
+  "analysis_manifest": true,
+  "config_hash": true,
+  "construction_hash": true,
+  "d2_gpu_spotcheck": true,
+  "direction_provenance": true,
+  "extraction_states_hash": true,
+  "fold_reconstructed:CSD0006": true,
+  "fold_reconstructed:CSD0011": true,
+  "fold_reconstructed:CSD0012": true,
+  "fold_reconstructed:CSD0014": true,
+  "fold_reconstructed:CSD0015": true,
+  "fold_reconstructed:CSD0020": true,
+  "fold_reconstructed:CSD0043": true,
+  "fold_reconstructed:CSD0046": true,
+  "fold_reconstructed:CSD0051": true,
+  "fold_reconstructed:CSD0501": true,
+  "fold_reconstructed:CSD0502": true,
+  "fold_reconstructed:CSD0511": true,
+  "fold_reconstructed:CSD0514": true,
+  "fold_reconstructed:CSD0517": true,
+  "fold_reconstructed:CSD0532": true,
+  "fold_reconstructed:CSD0538": true,
+  "fold_reconstructed:CSD0540": true,
+  "fold_reconstructed:CSD0541": true,
+  "fold_reconstructed:CSD1002": true,
+  "fold_reconstructed:CSD1006": true,
+  "folds_hash": true,
+  "label_agrees": true,
+  "manifest_self_hash": true,
+  "matched_agrees": true,
+  "only_three_directions": true,
+  "partition_hash": true,
+  "population_180": true,
+  "positions_hash": true,
+  "qualification_agrees": true,
+  "realized_energy_from_states": true,
+  "sealed_files": true,
+  "sources_at_manifest_commit": true,
+  "statistics_agree_1e-8": true,
+  "valid_draws": true,
+  "valid_rate_agrees": true
+ },
+ "independent_family": {
+  "D1": {
+   "conf": [
+    0.22703141301572055,
+    [
+     0.0794351168875655,
+     0.42118380822868745
+    ],
+    10000
+   ],
+   "corr": [
+    0.0,
+    [
+     0.0,
+     0.0
+    ],
+    10000
+   ],
+   "en": [
+    -0.03436499663818181,
+    [
+     -0.16454407230597967,
+     0.102654557841286
+    ],
+    10000
+   ],
+   "obs": {
+    "EN-correct": 0.0,
+    "ZH-correct": 0.0
+   },
+   "paired": [
+    0.24693253002662108,
+    [
+     0.1067838665762892,
+     0.45695313686084843
+    ],
+    10000
+   ],
+   "zh": [
+    -0.04010416666666667,
+    [
+     -0.09895963541666668,
+     0.016666666666666666
+    ],
+    10000
+   ]
+  },
+  "D2": {
+   "conf": [
+    4.498990392648479,
+    [
+     3.8286616902042003,
+     5.167774068569009
+    ],
+    10000
+   ],
+   "corr": [
+    0.07714285714285714,
+    [
+     0.0125,
+     0.16297916666666726
+    ],
+    10000
+   ],
+   "en": [
+    1.534769991090775,
+    [
+     1.0422180731521724,
+     2.136390549674383
+    ],
+    10000
+   ],
+   "obs": {
+    "EN-correct": 0.016666666666666666,
+    "ZH-correct": 0.13749999999999998
+   },
+   "paired": [
+    4.5188915096593805,
+    [
+     3.873746947906463,
+     5.168608473727768
+    ],
+    10000
+   ],
+   "zh": [
+    -2.0114583333333336,
+    [
+     -2.4658880208333334,
+     -1.5840957031249963
+    ],
+    10000
+   ]
+  }
+ },
+ "independent_qualification": {
+  "D1": {
+   "benefit": false,
+   "qualifies": false,
+   "safety": true
+  },
+  "D2": {
+   "benefit": true,
+   "qualifies": false,
+   "safety": false
+  }
+ },
+ "independent_tie": [
+  4.271958979632759,
+  [
+   3.833444027673649,
+   4.739983986603814
+  ],
+  10000
+ ],
+ "label": "P2_DIR_NO_NEW_DIRECTION_SUPPORTED",
+ "notes": {
+  "energy_failures": [],
+  "folds": {
+   "CSD0006": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8553099262026341
+   },
+   "CSD0011": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8705948550391734
+   },
+   "CSD0012": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8682359344478681
+   },
+   "CSD0014": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8715330322654348
+   },
+   "CSD0015": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8715982940199166
+   },
+   "CSD0020": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8631495391882722
+   },
+   "CSD0043": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8746060161544292
+   },
+   "CSD0046": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8707656988684689
+   },
+   "CSD0051": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8522869344741106
+   },
+   "CSD0501": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8648539921085696
+   },
+   "CSD0502": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8686482115443573
+   },
+   "CSD0511": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8712926634265592
+   },
+   "CSD0514": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8704175619147086
+   },
+   "CSD0517": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8682288626021043
+   },
+   "CSD0532": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8566761587811097
+   },
+   "CSD0538": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.867384222127438
+   },
+   "CSD0540": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8695024744482692
+   },
+   "CSD0541": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8617499179806153
+   },
+   "CSD1002": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8643210915249139
+   },
+   "CSD1006": {
+    "index": 0,
+    "max_abs_diff": 0.0,
+    "sigma": 0.8683444543687767
+   }
+  },
+  "max_stat_diff": 8.881784197001252e-16,
+  "provenance_failures": [],
+  "spot_n": 30
+ },
+ "schema": "p2dir_exp1_audit_v1",
+ "selected": null,
+ "stage": "EXP1",
+ "valid_rate": {
+  "D0": 1.0,
+  "D1": 1.0,
+  "D2": 1.0
+ },
+ "verdict": "P2_DIR_AUDIT: PASS"
+}

@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.09440506249666214,
+        "hidden.weight": 4.00901460647583,
+        "norm.bias": 0.5832211971282959,
+        "norm.weight": 35.9797248840332,
+        "output.bias": 0.16701482236385345,
+        "output.weight": 1.1331325769424438
+      },
+      "correction_ce": 1.1508942759311889,
+      "epoch": 1,
+      "gradient_norm": 0.42299280795985117,
+      "n_C_E": 51227,
+      "peak_gpu_memory_bytes": 6188773888,
+      "runtime_sec": 352.2102544307709,
+      "selection": "pending free-decoding D-dev-select"
+    },
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.09956710785627365,
+        "hidden.weight": 4.71292781829834,
+        "norm.bias": 0.6328261494636536,
+        "norm.weight": 36.04405212402344,
+        "output.bias": 0.16381458938121796,
+        "output.weight": 1.1936867237091064
+      },
+      "correction_ce": 1.1416931690033594,
+      "epoch": 2,
+      "gradient_norm": 0.3165046399853264,
+      "n_C_E": 51227,
+      "peak_gpu_memory_bytes": 6188492288,
+      "runtime_sec": 350.70769333839417,
+      "selection": "pending free-decoding D-dev-select"
+    },
+    {
+      "controller_parameter_norms": {
+        "hidden.bias": 0.1049090027809143,
+        "hidden.weight": 5.466691017150879,
+        "norm.bias": 0.694546103477478,
+        "norm.weight": 36.09464645385742,
+        "output.bias": 0.16166159510612488,
+        "output.weight": 1.2566992044448853
+      },
+      "correction_ce": 1.1391622050194758,
+      "epoch": 3,
+      "gradient_norm": 0.2879272691368197,
+      "n_C_E": 51227,
+      "peak_gpu_memory_bytes": 6188492288,
+      "runtime_sec": 350.52869939804077,
+      "selection": "pending free-decoding D-dev-select"
+    }
+  ]
+}

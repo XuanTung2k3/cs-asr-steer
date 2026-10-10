@@ -1,0 +1,284 @@
+[
+  {
+    "dataset": "cs_dialogue",
+    "direction": "Raw",
+    "side": "decoder",
+    "layer": 24,
+    "rho": 1.0,
+    "selection_score": 0.9930918541621616,
+    "global_path": "raw_r2/cs_dialogue/L24/Raw_decoder_L24_global_rho1.json",
+    "local_path": "raw_r2/cs_dialogue/L24/Raw_decoder_L24_oracle_local_rho1.json",
+    "examples": [
+      {
+        "utterance_id": "ZH-CN_U2011_S0_93",
+        "reference": "Yes yes yes, 这个韩剧的这个编剧 <FIL/> 我觉得特别的厉害，超厉害。 <FIL/> 就是 <FIL/> 不过说到音乐， <SPK/> 我最近也发现了一些 new singers 和 ban bans 超激动。",
+        "baseline": "韩剧的编剧我觉得特别的厉害,超厉害。不过说到音乐,我最近也发现了一些新歌手和乐队超激动。",
+        "global": "��������",
+        "oracle_local": "��韩剧的编剧特别厉害,超厉害。不过说到音乐,我最近也发现了一些新歌手和乐�band,超�s"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_187",
+        "reference": "time，嗯。",
+        "baseline": "谈",
+        "global": "�Tam",
+        "oracle_local": "谈"
+      },
+      {
+        "utterance_id": "ZH-CN_U1028_S0_38",
+        "reference": "想说 any volunteer wants to <FIL/> answer the question，然后我扫眼一看一个人都没有举手，全部都是怂的。然后我就走下讲台，我就去要 pick 人嘛，必须要抽人。",
+        "baseline": "想说any volunteer wants to answer the question然后我扫眼一看一个人都没有举手全部都是怂的然后我就走一下讲台我就需要pick人嘛必须要抽人",
+        "global": "想 volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer",
+        "oracle_local": "想说any volunteerwant toanswer the question然后我扫眼一看一个人都没有举手全部都是怂的然后我就走一下讲台我就需要pick人嘛必须要抽人"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_184",
+        "reference": "<FIL/> 毕业以后 <FIL/> 毕业以后，肯定 teacher 是不会再管你了。因为已经毕业，但是在毕业之前会给到我们一些指导。对，在我们 graduate 之前会给我们一些指导，就是讲 <FIL/> 我们要怎么样去 <FIL/> make 我们这个简历啊，怎么样去找找对。",
+        "baseline": "毕业以后,毕业以后肯定teacher是不会再管你了,因为已经毕业了但是在毕业之前会给到我们一些指导对,在我们graduate之前会给我们一些指导就是讲我们要怎么样去make我们这个简历啊,怎么样去找job,对",
+        "global": "�b graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate graduate",
+        "oracle_local": "毕业以后,毕业以后肯定tete是不会再管你了,因为已经毕业了但是在毕业之前会给到我们一些指导对,在graduate之前会给我们一些指导就是讲我们要怎么样去make我们简历,怎么样去找job"
+      },
+      {
+        "utterance_id": "ZH-CN_U1082_S0_134",
+        "reference": "<FIL/> 是什么原因让你们 broke up 了呀？是一些 personal 的原因吗？还是说一些现实原因导致的？",
+        "baseline": "是什么原因让你们broke up了呀是一些personal的原因吗还是说一些现实原因导致的",
+        "global": "是 personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal personal",
+        "oracle_local": "是什么原因让你们broke up了呀是一些personal的原因吗还是说一些现实原因导致的"
+      }
+    ]
+  },
+  {
+    "dataset": "cs_dialogue",
+    "direction": "conditioning",
+    "side": "decoder",
+    "layer": 31,
+    "rho": 1.0,
+    "selection_score": 0.9876888765753654,
+    "global_path": "conditioning/cs_dialogue/L31/conditioning_decoder_L31_global_rho1.json",
+    "local_path": "conditioning/cs_dialogue/L31/conditioning_decoder_L31_oracle_local_rho1.json",
+    "examples": [
+      {
+        "utterance_id": "ZH-CN_U2011_S0_93",
+        "reference": "Yes yes yes, 这个韩剧的这个编剧 <FIL/> 我觉得特别的厉害，超厉害。 <FIL/> 就是 <FIL/> 不过说到音乐， <SPK/> 我最近也发现了一些 new singers 和 ban bans 超激动。",
+        "baseline": "韩剧的编剧我觉得特别的厉害,超厉害。不过说到音乐,我最近也发现了一些新歌手和乐队超激动。",
+        "global": "� I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "� I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I"
+      },
+      {
+        "utterance_id": "ZH-CN_U2011_S0_22",
+        "reference": "<FIL/> 好的， <FIL/> 嗨维维 <FIL/> ，我听说 <FIL/> 这个生活大学的生活非常的 colourful， <FIL/> 你可不可以讲一些你自己的一些 experience， 你我想对大学生活有更多的这个 <FIL/> 了解。",
+        "baseline": "嗨,薇薇,我听说大学的生活非常的colorful,你可不可以讲一些你自己的experience,我想对大学生活有更多的了解。",
+        "global": "� I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "嗨,薇薇,我听说大学的生活非常的colorful, you can talk about your experience? 我想对大学 I want to know more about college life."
+      },
+      {
+        "utterance_id": "ZH-CN_U2003_S0_132",
+        "reference": "<FIL/> 确实高二，高二会有很多的 lesson， 我们高三也会有非常多的 lesson and tests。 我我每天都非常的 nervous。",
+        "baseline": "确实高二会有很多的lesson我们高三也会有非常多的lesson and test我每天都非常的nervous",
+        "global": "� I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "确实高二会有很多的lesson我们 in the third grade will also have a lot of lessons and the I'm very nervous every day"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_184",
+        "reference": "<FIL/> 毕业以后 <FIL/> 毕业以后，肯定 teacher 是不会再管你了。因为已经毕业，但是在毕业之前会给到我们一些指导。对，在我们 graduate 之前会给我们一些指导，就是讲 <FIL/> 我们要怎么样去 <FIL/> make 我们这个简历啊，怎么样去找找对。",
+        "baseline": "毕业以后,毕业以后肯定teacher是不会再管你了,因为已经毕业了但是在毕业之前会给到我们一些指导对,在我们graduate之前会给我们一些指导就是讲我们要怎么样去make我们这个简历啊,怎么样去找job,对",
+        "global": "� I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I will not I",
+        "oracle_local": "毕业以后,毕业以后肯定te Iter是不会再管你了,因为已经毕业了。但是在毕业之前会给到我们一些指导。 Yes,在我们graduate之前会给我们一些指导。就是讲我们 how to make 我们这个简历啊,怎么样去找job,对。"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_187",
+        "reference": "time，嗯。",
+        "baseline": "谈",
+        "global": "� I",
+        "oracle_local": "谈"
+      }
+    ]
+  },
+  {
+    "dataset": "seame_dev_man",
+    "direction": "Raw",
+    "side": "encoder",
+    "layer": 24,
+    "rho": 0.5,
+    "selection_score": 1.0001861937345806,
+    "global_path": "raw_r1/seame_dev_man/L24/Raw_encoder_L24_global_rho0.5.json",
+    "local_path": "raw_r1/seame_dev_man/L24/Raw_encoder_L24_oracle_local_rho0.5.json",
+    "examples": [
+      {
+        "utterance_id": "dev_man_01900",
+        "reference": "like 那个 女 的 会 比较 比较 强 right",
+        "baseline": "来那个女的会比较强",
+        "global": "啊",
+        "oracle_local": "来那个女的会比较强"
+      },
+      {
+        "utterance_id": "dev_man_01646",
+        "reference": "等 一下 你 你 show 我",
+        "baseline": "等一下你去我",
+        "global": "阿弟弟",
+        "oracle_local": "等一下你去我"
+      },
+      {
+        "utterance_id": "dev_man_01533",
+        "reference": "but 你的 下面 已经 翘了 你 的 下面 已经 翘",
+        "baseline": "你的下面已經翹了勒你的下面已經翹了",
+        "global": "我可以在这里",
+        "oracle_local": "你的下面已經"
+      },
+      {
+        "utterance_id": "dev_man_01303",
+        "reference": "there 她 满 她 满 胖 的",
+        "baseline": "等一下他往旁了",
+        "global": "你還沒拍完",
+        "oracle_local": "你還沒拍完"
+      },
+      {
+        "utterance_id": "dev_man_01016",
+        "reference": "当然 会 考虑 的 as in 当 有 好的 当然 是 选 好的 不好 的 就 too bad",
+        "baseline": "当然会考虑的啦有好的当然是选好的不好的就 too bad 咯",
+        "global": "多謝大家收看",
+        "oracle_local": "当然会考虑的啦有好多的事情要做就对了"
+      }
+    ]
+  },
+  {
+    "dataset": "seame_dev_man",
+    "direction": "conditioning",
+    "side": "decoder",
+    "layer": 31,
+    "rho": 1.0,
+    "selection_score": 1.143089885025369,
+    "global_path": "conditioning/seame_dev_man/L31/conditioning_decoder_L31_global_rho1.json",
+    "local_path": "conditioning/seame_dev_man/L31/conditioning_decoder_L31_oracle_local_rho1.json",
+    "examples": [
+      {
+        "utterance_id": "dev_man_02085",
+        "reference": "这个 很 像 很好 这种 很 容易 score 的 我 跟 你 讲",
+        "baseline": "哇這個人真的好欸欸這種好容易score喔我跟你講",
+        "global": "哇 This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good. This is so good",
+        "oracle_local": "哇這個人真的好欸欸這種好容易score I跟你講"
+      },
+      {
+        "utterance_id": "dev_man_00603",
+        "reference": "给 物 我 觉得 写 一个 card 比 买 礼物 更 更 好 因为 买 礼物 你 自己 可以 买 可是 card 是 别人 的 心意 你 是 不能 弄 到 的",
+        "baseline": "给礼物啊我觉得写一个卡比买礼物更好因为买礼物你自己可以买嘛卡是别人的心意你是不能弄到的",
+        "global": "给 I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "给礼物啊我觉得写一个卡比 I think it's better to write a card than to buy a gift.比买礼物更好 Because you can buy a gift by yourself.因为 I think it's better to write a card than to buy a gift.因为买礼物你自己可以买吗 Because you can buy a gift by yourself.这个是卡是别人的心意 This card is someone else's heart.你是不能弄到的 You can't get it."
+      },
+      {
+        "utterance_id": "dev_man_01854",
+        "reference": "我 问 你 那个 东西 十二块 的 你 还 要不要 他 跟 我 讲 五点 这样 子 还有 slot 你 要不要 来",
+        "baseline": "欸我以为那个东西12块了你还不要他跟我讲5点这样子很有slot你要不要来",
+        "global": "欸 I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "欸我以为那个东西12块了你还不要他跟我讲5点这样子很有slot你要不要来"
+      },
+      {
+        "utterance_id": "dev_man_01275",
+        "reference": "怎样 办 我 应该 去 我 问 他 then 他 讲 如果 我 要 用 这个 voucher 不可以 用 这个 这个",
+        "baseline": "講版阿 我應該去嗎我問他欸 大家講如果要用這個保全不可以用這個這個",
+        "global": "講 I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "講版阿 我應該去嗎我問他欸 大家講 If I want to use this voucher不可以用這個 這個 I can't use this"
+      },
+      {
+        "utterance_id": "dev_man_00573",
+        "reference": "我 也是 每次 这样 我 朋友 讲 like 每次 跟 我 讲 英语 no 每次 跟 我 讲 华语 我 每次 reply in english",
+        "baseline": "我也是每次这样耶我朋友讲每次跟我讲英语每次跟我讲华语我每次回答英语",
+        "global": "我 I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "我也是每次这样耶我朋友讲每次跟我讲 I always say like每次跟我讲英语 every time I speak English每次跟我讲华语 every time I speak Chinese我每 I I I reply in English"
+      }
+    ]
+  },
+  {
+    "dataset": "seame_dev_sge",
+    "direction": "Raw",
+    "side": "encoder",
+    "layer": 24,
+    "rho": 0.5,
+    "selection_score": 0.8212121212121212,
+    "global_path": "raw_r1/seame_dev_sge/L24/Raw_encoder_L24_global_rho0.5.json",
+    "local_path": "raw_r1/seame_dev_sge/L24/Raw_encoder_L24_oracle_local_rho0.5.json",
+    "examples": [
+      {
+        "utterance_id": "dev_sge_03006",
+        "reference": "she 她 很 厉害",
+        "baseline": "他很厲害",
+        "global": "Shine the light",
+        "oracle_local": "厲害"
+      },
+      {
+        "utterance_id": "dev_sge_03000",
+        "reference": "is 很好 的",
+        "baseline": "是很好的",
+        "global": "is",
+        "oracle_local": "is"
+      },
+      {
+        "utterance_id": "dev_sge_02842",
+        "reference": "but 不 可以 如果 那个 人 怎么 都 没有 做 你 会 不爽",
+        "baseline": "如果那个人怎么都没有做你会不爽",
+        "global": "但对于我自己来说",
+        "oracle_local": "OK啊如果那个人怎么都没有做你会不爽"
+      },
+      {
+        "utterance_id": "dev_sge_01662",
+        "reference": "she 很 厉害",
+        "baseline": "很厉害",
+        "global": "shy",
+        "oracle_local": "很厉害"
+      },
+      {
+        "utterance_id": "dev_sge_00920",
+        "reference": "then 然后 你们",
+        "baseline": "然后你们",
+        "global": "derby",
+        "oracle_local": "Dare you hold me"
+      }
+    ]
+  },
+  {
+    "dataset": "seame_dev_sge",
+    "direction": "conditioning",
+    "side": "decoder",
+    "layer": 31,
+    "rho": 1.0,
+    "selection_score": 0.9693939393939394,
+    "global_path": "conditioning/seame_dev_sge/L31/conditioning_decoder_L31_global_rho1.json",
+    "local_path": "conditioning/seame_dev_sge/L31/conditioning_decoder_L31_oracle_local_rho1.json",
+    "examples": [
+      {
+        "utterance_id": "dev_sge_00789",
+        "reference": "变成 我 的 事情 then 他 很 生 我 的 气 then 他 去 跟 sam 讲 说 我 我 like 我",
+        "baseline": "变成我的事情他很生我的气的他去跟Sam讲说我我来我",
+        "global": "� I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I",
+        "oracle_local": "变成我的事情他很 I 生我的气的他去跟 I 讲说我我 I"
+      },
+      {
+        "utterance_id": "dev_sge_00745",
+        "reference": "她 有 空 来 载 你 没有 空 then 你 要在 office 等 她 等到 她",
+        "baseline": "他有空来讲你没有空你要在office等他等到他",
+        "global": "他 you have the time to say you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you have the time you",
+        "oracle_local": "他有空来讲你没有空你要在office等他"
+      },
+      {
+        "utterance_id": "dev_sge_00191",
+        "reference": "那时候 我 叫 他 停在 yew-tee yew-tee mal- yew-tee-mall 那边 因为 我 想要 拿 我 想要 提钱 还有二十多块 应该够 yes 然后 他 不用紧 他还 他等 他 真的 在 那边 等 他 还把 那个 me~ 他 还是 放住 在 meter 在那边跑 在那边",
+        "baseline": "那时候我叫他停在UD Mall那边,我想要提前,我还没20多块吧,还够了他还不用紧,他还在那边等,他还把米特放在那边跑",
+        "global": "那 I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I will I",
+        "oracle_local": "那时候我叫他停在UD Mall I想提前20 I不用紧他 in等 I把那个米是放住的比特在那边跑那边"
+      },
+      {
+        "utterance_id": "dev_sge_00371",
+        "reference": "then 我 一定 要 用 两个 华语 跟 英语 我 可以 他讲 英语 我 讲 华语 这样",
+        "baseline": "我一定要用兩個 華語跟英語我可以 他講英語 我講華語",
+        "global": "我 I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I must I",
+        "oracle_local": "我一定要用兩個 華語跟英語我可以 他講英語 我講華語"
+      },
+      {
+        "utterance_id": "dev_sge_00624",
+        "reference": "他 要 卖 我们 两 百 五十 还是 一百 五十 我 忘记 了 but 是 算 百 的 then 我 就 跟 alex 说 要 就 五十 不要 算",
+        "baseline": "他要卖我们250还是150忘记了是算白的啦我跟 Alex 说要就50不要算",
+        "global": "他 I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I'll I",
+        "oracle_local": "他要卖我们250还是150忘记了是算白的啦我跟 Alex 说要就50不要算"
+      }
+    ]
+  }
+]

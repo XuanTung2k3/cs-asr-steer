@@ -313,6 +313,7 @@ class AuditRecord:
 # positions, so a beam's gate is intrinsically its own -- never fabricated from a
 # beam index (spec §6). Returns a gain of shape (B,), (B, T), or a scalar.
 GateFn = Callable[..., torch.Tensor]
+ActionFn = Callable[..., tuple[torch.Tensor, torch.Tensor]]
 
 
 class DecoderPostCrossAttnInterventionHook:
@@ -349,9 +350,10 @@ class DecoderPostCrossAttnInterventionHook:
     to zero on cached calls.
     """
 
-    def __init__(self, bundle, layer: int, direction: torch.Tensor, *,
+    def __init__(self, bundle, layer: int, direction: torch.Tensor | None, *,
                  alpha: float, num_forced_prefix: int, scale: float = 1.0,
                  gate_fn: GateFn | None = None, gain: torch.Tensor | None = None,
+                 action_fn: ActionFn | None = None,
                  norm_preserve: bool = True, mode: str = "steer",
                  record: bool = False, record_last_only: bool = True,
                  enforce_contract_layer: bool = False):
@@ -365,6 +367,12 @@ class DecoderPostCrossAttnInterventionHook:
             raise ValueError(
                 f"layer {layer} is not a contract candidate {CONTRACT_DECODER_LAYERS}; "
                 "layer selection is DG-03")
+        if direction is None and action_fn is None:
+            raise ValueError("provide direction or action_fn")
+        if direction is not None and action_fn is not None:
+            raise ValueError("provide direction or action_fn, not both")
+        if action_fn is not None and (gate_fn is not None or gain is not None):
+            raise ValueError("action_fn cannot be combined with gate_fn or gain")
         if gate_fn is not None and gain is not None:
             raise ValueError("pass gate_fn or gain, not both")
         if int(num_forced_prefix) < 0:
@@ -374,6 +382,7 @@ class DecoderPostCrossAttnInterventionHook:
         self.direction = direction
         self.alpha = float(alpha)
         self.scale = float(scale)
+        self.action_fn = action_fn
         self.gate_fn = gate_fn
         self.gain = gain
         self.num_forced_prefix = int(num_forced_prefix)
@@ -414,18 +423,12 @@ class DecoderPostCrossAttnInterventionHook:
         return None
 
     # -- gate assembly -------------------------------------------------------
-    def _resolve_gain(self, q, u_source, site, abs_pos, eligible):
+    def _coerce_gain(self, g, site, eligible):
         B, T = site.shape[0], site.shape[1]
-        if self.gate_fn is not None:
-            g = self.gate_fn(q=q, u_source=u_source, r=site, abs_pos=abs_pos)
-            # Preserve autograd when the gate is a trainable tensor (spec §9);
-            # only wrap plain scalars/sequences.
-            g = g.to(site.device, site.dtype) if torch.is_tensor(g) \
-                else torch.as_tensor(g, device=site.device, dtype=site.dtype)
-        elif self.gain is not None:
-            g = self.gain.to(site.device, site.dtype)
-        else:
-            g = torch.ones(B, T, device=site.device, dtype=site.dtype)
+        # Preserve autograd when the gate is a trainable tensor (spec §9);
+        # only wrap plain scalars/sequences.
+        g = g.to(site.device, site.dtype) if torch.is_tensor(g) \
+            else torch.as_tensor(g, device=site.device, dtype=site.dtype)
         if g.ndim == 0:
             g = g.reshape(1, 1).expand(B, T)
         elif g.ndim == 1:                      # per-row (B,) -> (B, T)
@@ -440,6 +443,21 @@ class DecoderPostCrossAttnInterventionHook:
             raise ValueError(f"gate must be scalar/(B,)/(B,T); got shape {tuple(g.shape)}")
         # Forced-prefix positions always receive a zero effective edit (spec §7).
         return g * eligible.to(site.dtype).view(1, T)
+
+    def _resolve_gain(self, q, u_source, site, abs_pos, eligible):
+        B, T = site.shape[0], site.shape[1]
+        if self.gate_fn is not None:
+            raw = self.gate_fn(q=q, u_source=u_source, r=site, abs_pos=abs_pos)
+        elif self.gain is not None:
+            raw = self.gain
+        else:
+            raw = torch.ones(B, T, device=site.device, dtype=site.dtype)
+        return self._coerce_gain(raw, site, eligible)
+
+    def _resolve_direction(self, q, u_source, site, abs_pos):
+        if self.direction is None:
+            raise RuntimeError("fixed direction is unavailable without action_fn output")
+        return self.direction
 
     def _emit_records(self, abs_pos, eligible, gain, site, steered):
         B, T = site.shape[0], site.shape[1]
@@ -472,8 +490,16 @@ class DecoderPostCrossAttnInterventionHook:
         T = site.shape[1]
         abs_pos = self._abs_positions(T, site.device)
         eligible = abs_pos >= self.num_forced_prefix            # (T,)
-        gain = self._resolve_gain(q, u_source, site, abs_pos, eligible)
-        steered = apply_steering(site, self.direction, self.alpha, self.scale,
+        if self.action_fn is not None:
+            gain, direction = self.action_fn(
+                q=q, u_source=u_source, r=site, abs_pos=abs_pos)
+            if not torch.is_tensor(gain) or not torch.is_tensor(direction):
+                raise TypeError("action_fn must return (gain_tensor, direction_tensor)")
+            gain = self._coerce_gain(gain, site, eligible)
+        else:
+            gain = self._resolve_gain(q, u_source, site, abs_pos, eligible)
+            direction = self._resolve_direction(q, u_source, site, abs_pos)
+        steered = apply_steering(site, direction, self.alpha, self.scale,
                                  gain, self.norm_preserve)
         if self.record:
             self._emit_records(abs_pos, eligible, gain, site, steered)

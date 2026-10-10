@@ -1,0 +1,47 @@
+{
+ "checks": {
+  "anchor:configs/model/whisper_large_v3.yaml": true,
+  "anchor:docs/inference_cf/P2_SEL_MINI_PANEL.json": true,
+  "anchor:docs/inference_cf/P2_TTA0_PANEL20.json": true,
+  "anchor:experiments/inference_cf_cached.py": true,
+  "anchor:experiments/inference_cf_p2.py": true,
+  "anchor:experiments/inference_cf_p2seq.py": true,
+  "anchor:experiments/inference_cf_p2seq_analyze.py": true,
+  "anchor:experiments/inference_cf_p2seq_audit.py": true,
+  "anchor:results/inference_cf/p2dir/exp1_run1/manifest.json": true,
+  "anchor:results/inference_cf/p2seq/reuse_audit.json": true,
+  "anchor:results/inference_cf/p2seq/run1/manifest.json": true,
+  "anchor:results/inference_cf/p2seq/run1_audit.json": true,
+  "anchor:src/csasr/evaluation/canonical.py": true,
+  "anchor:src/csasr/evaluation/mer.py": true,
+  "anchor:src/csasr/evaluation/pier.py": true,
+  "anchor:src/csasr/evaluation/retention.py": true,
+  "anchor:src/csasr/models/whisper.py": true,
+  "auditor_independent": true,
+  "environment": true,
+  "frozen:configs/inference_cf/p2_tta0.json": true,
+  "frozen:docs/inference_cf/P2_TTA0_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_TTA0_PANEL20.json": true,
+  "frozen:docs/inference_cf/P2_TTA0_SPEC.md": true,
+  "no_outcome": true,
+  "optimizer_frozen": true,
+  "panel": true,
+  "reuse_proofs": true,
+  "runner_reference_steering_free": true,
+  "seal_committed": true,
+  "suppression": true,
+  "teachers_exact_and_masks": true,
+  "tests_present": true,
+  "trainables_exact": true
+ },
+ "git_commit": "503c874c193a9dc57a86e42153f04568ec279ab9",
+ "notes": {
+  "trainables": {
+   "scalars": 248320,
+   "tensors": 194,
+   "total": 1543490560
+  }
+ },
+ "schema": "p2_tta0_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_TTA0"
+}

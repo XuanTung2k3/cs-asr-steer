@@ -1,0 +1,17 @@
+{
+ "checks": {
+  "counts": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "rows_trigger_scores_winner_G1G2_ownership": true,
+  "runtime": true,
+  "sources_at_commit": true
+ },
+ "failures": [],
+ "git_commit": "e1198aa28be795994e658063089c908e1aa7eaf2",
+ "label": null,
+ "phase": "primary",
+ "schema": "p2_path2_post_audit_v1",
+ "verdict": "P2_PATH2_AUDIT: PASS"
+}

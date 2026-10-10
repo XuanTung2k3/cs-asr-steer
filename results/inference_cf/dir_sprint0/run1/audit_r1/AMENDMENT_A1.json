@@ -1,0 +1,32 @@
+{
+ "schema": "dir_sprint0_auditor_amendment_v1",
+ "amendment": "A1",
+ "stage_trigger": "audit A attempt 1 (BLOCK)",
+ "attempt1_file": "results/inference_cf/dir_sprint0/run1/audit_A_attempt1_BLOCK.json",
+ "attempt1_sha256": "sha256:1d999dda1a594f806785d66d3da7ccfa36acaf152018fa74f10285ef02073f6b",
+ "attempt1_failed_checks": [
+  "opened_paths_allowlist"
+ ],
+ "attempt1_other_checks_passed": 21,
+ "cause": [
+  "the runner opens every manifest-pinned source for hash verification; experiments/inference_cf_p2r_population.py (pinned historical source, never imported -- verified by the pre-run static import scan) matched the forbidden name marker 'p2r_population' because the auditor screened names before checking the pinned allowlist (the same pitfall as SRD2-G0 amendment A1 item 2)",
+  "the frozen provider directory /mnt/data/.../wav2vec2-xlsr-53-espeak-cv-ft/... contains the substring 'espeak' that the auditor screens to detect a phonemizer/espeak installation"
+ ],
+ "change": "opened_paths_check only: explicit allowlist categories (selected audio, Whisper model, frozen provider dir/engineering clips, manifest-pinned sources, run directory) are resolved before the forbidden-name screen; pinned sources with a forbidden-looking name are listed separately as hash-only; every other path still meets the unchanged screen",
+ "unchanged": [
+  "runner",
+  "mechanics module",
+  "config",
+  "population",
+  "Job A outputs and seal",
+  "every recomputation, metric, predicate and tolerance in the auditor"
+ ],
+ "auditor_of_record": "results/inference_cf/dir_sprint0/run1/audit_r1/inference_cf_dir_sprint0_audit_r1.py",
+ "auditor_r1_sha256": "sha256:2a29c279a5b365e30a550c742061d92d69c17903a4b00eef913010f1967b5d0d",
+ "canonical_auditor_kept_at_manifest_bytes": "experiments/inference_cf_dir_sprint0_audit.py",
+ "canonical_auditor_sha256": "sha256:0832a5dd70066696a1682f2eaf5991fc6ceaac86d267f83edd96e24c8371454f",
+ "why_r1_in_run_dir": "the canonical auditor is a manifest-pinned source; editing it would invalidate the pre-audited manifest for Job B, so the amended auditor lives in the run directory (as in SRD2-G0)",
+ "outcome_information_used": false,
+ "references_used": false,
+ "created_unix": 1791600692.2494674
+}

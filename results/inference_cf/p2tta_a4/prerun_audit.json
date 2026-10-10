@@ -1,0 +1,26 @@
+{
+ "checks": {
+  "actuator_inherited": true,
+  "anchors": true,
+  "auditor_independent": true,
+  "final_decode_forced": true,
+  "frozen:configs/inference_cf/p2_tta_a4.json": true,
+  "frozen:docs/inference_cf/P2_TTA_A4_CLAUDE_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_TTA_A4_SPEC.md": true,
+  "no_outcome": true,
+  "optimizer_inherited_in_code": true,
+  "panel_is_A3_panel": true,
+  "partition": true,
+  "plan_committed": true,
+  "pre_outcome_counts": true,
+  "rescue_reference_is_sealed_A3": true,
+  "runner_reference_steering_free": true,
+  "safety_copied": true,
+  "teachers_reuse_classes": true,
+  "tests_present": true,
+  "thresholds": true
+ },
+ "git_commit": "9488a69e12d7fb20634941f301e84d37e77c5d4a",
+ "schema": "p2_tta_a4_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_TTA_A4"
+}

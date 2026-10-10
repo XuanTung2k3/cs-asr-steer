@@ -1,0 +1,733 @@
+{
+ "compute_preforecast": {
+  "assumptions": "Job A = 2x the SRD2 per-utterance capture cost (extra null / translate / forced-EN branches, v_AC region pass and phone provider); Job B = 9 ungated arms on every structural query + 4 gated arms at the SRD2 nonzero-gate fraction + 2 autograd calls per query + 1.5x SRD2 per-query overhead (full-vocabulary outputs for more arms).",
+  "basis": "measured SRD2-G0 Slurm 58300 / 58314 runtimes on the same MIG 3g.40gb type",
+  "expected_structural_queries_240": 6160,
+  "forecast_pulses_upper": 60163,
+  "job_a_forecast_sec": 1223,
+  "job_b_forecast_sec": 1582,
+  "limit_per_job_sec": 10800,
+  "srd2_measured": {
+   "autograd_mean_sec": 0.03512316338084417,
+   "capture_elapsed_sec": 1017.2659900188446,
+   "per_query_overhead_sec": 0.035772538716609376,
+   "pulse_elapsed_sec": 925.0121605396271,
+   "pulse_mean_sec": 0.013362861081096078,
+   "structural_queries": 10267
+  },
+  "status": "PRE-FORECAST ONLY (not a design-freeze projection; recost after Job A would be mandatory)"
+ },
+ "d1_folds": {
+  "dialogues": [
+   "CSD0006",
+   "CSD0011",
+   "CSD0012",
+   "CSD0014",
+   "CSD0015",
+   "CSD0020",
+   "CSD0043",
+   "CSD0046",
+   "CSD0051",
+   "CSD0501",
+   "CSD0502",
+   "CSD0511",
+   "CSD0514",
+   "CSD0517",
+   "CSD0532",
+   "CSD0538",
+   "CSD0540",
+   "CSD0541",
+   "CSD1002",
+   "CSD1006"
+  ],
+  "folds_hash": "sha256:854f9e7b9a903386afa2483a071fbc35e771e4c47ba75d4e103ea424904c5c83",
+  "folds_json_sha256": "sha256:294c3fb982ba7fb7abc7c4b431c753d4994eb6539be81cee51ba678f812d86e2",
+  "n_folds": 20,
+  "pass": true,
+  "status": {
+   "ok": 20
+  },
+  "vector_file_hash_matches": 20,
+  "version": [
+   "NEW_P2_DIR_CROSSFIT_V1"
+  ]
+ },
+ "d5_provider_inventory": {
+  "feature_mapping_packages": [],
+  "ipa_feature_mapping_available": false,
+  "local_models": [
+   {
+    "architectures": [
+     "MossTranscribeDiarizeForConditionalGeneration"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:2b2b7a6e61334152bdd7ecf8a4da3073b4940a097e193d1d2b22093e77535234",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "moss_transcribe_diarize",
+    "path": "/mnt/data/tungnx/models/MOSS-Transcribe-Diarize"
+   },
+   {
+    "architectures": null,
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:00815c46d15b45071437665a85144aa4c3c6fb434080147e318612dd26617047",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/models/Vevo"
+   },
+   {
+    "architectures": null,
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:ef262b1454dd2a77e1461b0b2cd53e19b8a7624cc131b837d36df67356bc75e8",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/models/XTTS-v2"
+   },
+   {
+    "architectures": [
+     "Wav2Vec2ForCTC"
+    ],
+    "class": "latin_grapheme_ctc",
+    "config_sha256": "sha256:2af7f73073d212b0ef91d3c73839355ca504c24a6b361c58a9e4e64210376ba9",
+    "ctc_vocab": {
+     "ascii_letter_symbols": 26,
+     "ipa_or_multichar_symbols": 0,
+     "sha256": "sha256:6b6f1632d08b489faf2c954eb70e71f39d0861053feb9ae40da59cfa8d0ef5bb",
+     "size": 31,
+     "symbols": [
+      "a",
+      "i",
+      "e",
+      "n",
+      "o",
+      "u",
+      "t",
+      "s",
+      "r",
+      "m",
+      "k",
+      "l",
+      "d",
+      "g",
+      "h",
+      "y",
+      "b",
+      "p",
+      "w",
+      "c",
+      "v",
+      "j",
+      "z",
+      "f",
+      "'",
+      "q",
+      "x"
+     ]
+    },
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "wav2vec2",
+    "path": "/mnt/data/tungnx/models/mms-fa"
+   },
+   {
+    "architectures": null,
+    "class": "no_config",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/models/omniASR-LLM-7B"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/models/omniASR-LLM-7B-v2"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/models/vieneu"
+   },
+   {
+    "architectures": [
+     "Qwen3ASRForConditionalGeneration"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "qwen3_asr",
+    "path": "/mnt/data/tungnx/cs-asr-steer/models/Qwen3-ForcedAligner-0.6B"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "hf_cache_snapshots": [],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/mnt/data/tungnx/cs-asr-steer/model_cache/huggingface/hub/models--Qwen--Qwen3-ForcedAligner-0.6B"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "hf_cache_snapshots": [],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/home/tungnx/.cache/huggingface/hub/models--AnKhanh--lanr_exp"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "hf_cache_snapshots": [],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/home/tungnx/.cache/huggingface/hub/models--MahmoudAshraf--mms-300m-1130-forced-aligner"
+   },
+   {
+    "architectures": [
+     "Qwen2ForCausalLM"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:27467e2fc311a7656c09a43ae9c3d408211e1f212bbddbc93c8596a06423826f",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "hf_cache_snapshots": [
+     "3aab1f1954e9cc14eb9509a215f9e5ca08227a9b"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": "qwen2",
+    "path": "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B"
+   },
+   {
+    "architectures": [
+     "Qwen2ForCausalLM"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:eed00b17e22553979d090fa492e587e92885e328914c8e0b0b78f0a0d3576b3b",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "hf_cache_snapshots": [
+     "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": "qwen2",
+    "path": "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct"
+   },
+   {
+    "architectures": [
+     "Qwen2ForCausalLM"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:267ce68584c5f24c3b267d934db2de68dd21d1ca677fb78ed809eb60067f7642",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "hf_cache_snapshots": [
+     "d149729398750b98c0af14eb82c78cfe92750796"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": "qwen2",
+    "path": "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-7B"
+   },
+   {
+    "architectures": [
+     "BartModel"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:1ef73a85a141b1c46315c3c0f72c4dc678842c5d198f939510e6543ac847b17b",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "hf_cache_snapshots": [
+     "cb48c1365bd826bd521f650dc2e0940aee54720c"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": "bart",
+    "path": "/home/tungnx/.cache/huggingface/hub/models--facebook--bart-large"
+   },
+   {
+    "architectures": null,
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:f0138e2bfcfecf5d356b6cce6814d6078ce40fce0811613ac753dbb1fced593b",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "hf_cache_snapshots": [
+     "cdb7964e4fe842935d671bfab5a5ebe00a96648c"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/home/tungnx/.cache/huggingface/hub/models--lerobot--xvla-base"
+   },
+   {
+    "architectures": null,
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:db9ff1de61760910dcc5d355528346144d6a80687212c8600cf31207f0f5e010",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "hf_cache_snapshots": [
+     "12e8783e996944f5c97e490d37d4c145484ed70a"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/home/tungnx/.cache/huggingface/hub/models--lerobot--xvla-libero"
+   },
+   {
+    "architectures": null,
+    "class": "no_weights",
+    "ctc_vocab": null,
+    "has_weights": false,
+    "hf_cache_snapshots": [
+     "06f233fe06e710322aca913c1bc4249a0d71fce1"
+    ],
+    "is_phone_recognizer": false,
+    "model_type": null,
+    "path": "/home/tungnx/.cache/huggingface/hub/models--openai--whisper-large-v3"
+   },
+   {
+    "architectures": [
+     "WhisperForConditionalGeneration"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:c5b526b3e3cd64cd8940dabb45e8ba726629e22d8ed389c29b552f9140daf04a",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "whisper",
+    "path": "/mnt/data/tungnx/whisper-large-v3-turbo"
+   },
+   {
+    "architectures": [
+     "Qwen3ASRForConditionalGeneration"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:76d3ae4601ce939830b2517f4a6cadb86cc51316c3900af6b020b051c21a478c",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "qwen3_asr",
+    "path": "/mnt/data/tungnx/Qwen3-ASR-0.6B"
+   },
+   {
+    "architectures": [
+     "Qwen3ASRForConditionalGeneration"
+    ],
+    "class": "non_ctc_model",
+    "config_sha256": "sha256:2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f",
+    "ctc_vocab": null,
+    "has_weights": true,
+    "is_phone_recognizer": false,
+    "model_type": "qwen3_asr",
+    "path": "/mnt/data/tungnx/Qwen3-ASR-1.7B"
+   }
+  ],
+  "notes": {
+   "/mnt/data/tungnx/cs-asr-steer/models/Qwen3-ForcedAligner-0.6B": "Text-conditioned forced aligner: needs an input transcript and returns unit timestamps; no phone inventory or phone posteriors.",
+   "/mnt/data/tungnx/models/mms-fa": "MMS-300m CTC forced-alignment checkpoint (local copy; HF download metadata only). Output inventory = 26 lowercase Latin letters + apostrophe: romanized-grapheme posteriors, not phones. Letter-to-feature mapping is orthographic and language-dependent (e.g. pinyin b/p = unaspirated/aspirated voiceless stops vs English b/p = voicing contrast; pinyin x/q/c/z/j have no English letter value), so no reliable phoneme-to-articulatory-feature mapping exists for an EN/ZH code-switching study.",
+   "models--MahmoudAshraf--mms-300m-1130-forced-aligner": "HF cache entry with refs only (no snapshot / weights)."
+  },
+  "pass": false,
+  "phone_recognizer_available": false,
+  "phone_recognizers": [],
+  "phonetic_distributions": {
+   "allosaurus": null,
+   "charsiu": null,
+   "epitran": null,
+   "espnet": null,
+   "fairseq": null,
+   "g2p-en": null,
+   "g2pM": null,
+   "ipapy": null,
+   "montreal-forced-aligner": null,
+   "nemo_toolkit": null,
+   "panphon": null,
+   "phonecodes": null,
+   "phonemizer": null,
+   "pyctcdecode": null,
+   "s3prl": null,
+   "speechbrain": null
+  },
+  "phonetic_executables": {
+   "espeak": null,
+   "espeak-ng": null,
+   "festival": null,
+   "mfa": null
+  }
+ },
+ "data_access": {
+  "audio_read": false,
+  "downloads_or_installs": false,
+  "gpu": false,
+  "model_forward": false,
+  "references_read": false,
+  "role_parquet_read": false
+ },
+ "elapsed_sec": 0.41026973724365234,
+ "families": {
+  "D3_acoustic_prior_contrast": {
+   "new_code_needed": "objective z(c_AP)-z(b_t) through the existing ZeroProbe / clone_scratch / tangent_unit mechanics (readout.objective is hard-coded to J); null decoder branch fed the B0 content prefix on the historical 30 s zero waveform",
+   "status": "IMPLEMENTABLE_WITH_EXISTING_PROVIDERS"
+  },
+  "D4_transcription_fidelity": {
+   "new_code_needed": "translate-prompt Branch fed the B0 content prefix; DG-02 L16 state capture; tangent projection as D2",
+   "status": "IMPLEMENTABLE_WITH_EXISTING_PROVIDERS"
+  },
+  "D5_phonetic_concept": {
+   "missing": [
+    "frozen acoustic phone-recognition model (no phone-output model is installed or cached)",
+    "phone/IPA-to-articulatory-feature mapping resource (no panphon/epitran/ipapy/phonecodes, no espeak/espeak-ng executable)"
+   ],
+   "status": "PROVIDER_BLOCKED"
+  }
+ },
+ "forbidden_opened_paths": [],
+ "git": {
+  "branch": "feature/inference-cf-steering",
+  "clean_at_start": false,
+  "head": "f2f0282f4ff148f119a6e07f6c4dffe0647f8ebc",
+  "porcelain_at_start": [
+   "?? experiments/inference_cf_dir_sprint0_feasibility.py",
+   "?? results/inference_cf/dir_sprint0/"
+  ]
+ },
+ "historical_controls_available": {
+  "D0": true,
+  "D1": true,
+  "D2": true,
+  "R2_g_old": true,
+  "random": true,
+  "v_AC": true
+ },
+ "label": "DIR_SPRINT0_D5_PROVIDER_BLOCKED",
+ "opened_paths": [
+  "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1/config.json",
+  "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B/snapshots/3aab1f1954e9cc14eb9509a215f9e5ca08227a9b/config.json",
+  "/home/tungnx/.cache/huggingface/hub/models--Qwen--Qwen2.5-7B/snapshots/d149729398750b98c0af14eb82c78cfe92750796/config.json",
+  "/home/tungnx/.cache/huggingface/hub/models--facebook--bart-large/snapshots/cb48c1365bd826bd521f650dc2e0940aee54720c/config.json",
+  "/home/tungnx/.cache/huggingface/hub/models--lerobot--xvla-base/snapshots/cdb7964e4fe842935d671bfab5a5ebe00a96648c/config.json",
+  "/home/tungnx/.cache/huggingface/hub/models--lerobot--xvla-libero/snapshots/12e8783e996944f5c97e490d37d4c145484ed70a/config.json",
+  "/home/tungnx/cs-asr-steer-inf/docs/inference_cf/SRD2_G0_POPULATION.json",
+  "/home/tungnx/cs-asr-steer-inf/experiments/inference_cf_cached.py",
+  "/home/tungnx/cs-asr-steer-inf/experiments/inference_cf_p0_r2.py",
+  "/home/tungnx/cs-asr-steer-inf/experiments/inference_cf_p2r.py",
+  "/home/tungnx/cs-asr-steer-inf/experiments/inference_cf_srd2_g0.py",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/folds.json",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0006.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0011.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0012.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0014.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0015.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0020.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0043.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0046.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0051.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0501.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0502.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0511.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0514.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0517.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0532.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0538.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0540.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD0541.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD1002.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/p2dir/folds_run1/vectors/CSD1006.npy",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/srd2_g0/run1/capture_runtime.json",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/srd2_g0/run1/descriptive.json",
+  "/home/tungnx/cs-asr-steer-inf/results/inference_cf/srd2_g0/run1/pulse_runtime.json",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/core_p1.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/core_r2.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/r0_regions.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/readout.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/s1_evidence.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/src_cf0_pilot.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/srd2_g0.py",
+  "/home/tungnx/cs-asr-steer-inf/src/csasr/inference_cf/unique.py",
+  "/home/tungnx/miniconda3/envs/acl1/lib/python311.zip",
+  "/mnt/data/tungnx/Qwen3-ASR-0.6B/config.json",
+  "/mnt/data/tungnx/Qwen3-ASR-1.7B/config.json",
+  "/mnt/data/tungnx/cs-asr-steer/models/Qwen3-ForcedAligner-0.6B/config.json",
+  "/mnt/data/tungnx/models/MOSS-Transcribe-Diarize/config.json",
+  "/mnt/data/tungnx/models/Vevo/config.json",
+  "/mnt/data/tungnx/models/XTTS-v2/config.json",
+  "/mnt/data/tungnx/models/mms-fa/config.json",
+  "/mnt/data/tungnx/models/mms-fa/vocab.json",
+  "/mnt/data/tungnx/whisper-large-v3-turbo/config.json",
+  "/mnt/data/tungnx/whisper-large-v3/added_tokens.json",
+  "/mnt/data/tungnx/whisper-large-v3/generation_config.json"
+ ],
+ "population": {
+  "dialogues": 20,
+  "excluded": {
+   "SRD2_G0_400": 400,
+   "documented_exposure_registry": 300
+  },
+  "note": "Counts only. No utterance was selected; selection must be frozen in the design (identity-only hash rule).",
+  "pass": true,
+  "remaining_eligible_total": 7219,
+  "remaining_per_dialogue": {
+   "CSD0006": 895,
+   "CSD0011": 552,
+   "CSD0012": 852,
+   "CSD0014": 233,
+   "CSD0015": 882,
+   "CSD0020": 663,
+   "CSD0043": 191,
+   "CSD0046": 220,
+   "CSD0051": 166,
+   "CSD0501": 520,
+   "CSD0502": 262,
+   "CSD0511": 189,
+   "CSD0514": 262,
+   "CSD0517": 228,
+   "CSD0532": 92,
+   "CSD0538": 212,
+   "CSD0540": 217,
+   "CSD0541": 178,
+   "CSD1002": 295,
+   "CSD1006": 110
+  },
+  "remaining_per_dialogue_max": 895,
+  "remaining_per_dialogue_min": 92,
+  "required_per_dialogue": 12,
+  "role": "D-dev-select",
+  "roster_count": 7919,
+  "roster_hash": "sha256:28aa458ba2bbbc03b69087952075595d14ca2c655e1712ef3691930ccd29a566",
+  "source": "docs/inference_cf/SRD2_G0_POPULATION.json (committed identity roster; no role parquet read)",
+  "source_sha256": "sha256:ab76b61c890138e176804b81b60316d7ea0aaf067f281f08c6534717e7dd65b6"
+ },
+ "providers": {
+  "cached_branch_any_prompt": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "experiments/inference_cf_cached.py",
+   "required_definitions": [
+    "Branch",
+    "cached_greedy"
+   ],
+   "required_text": [
+    "def __init__(self, bundle, encoded, prompt: list[int], name: str)"
+   ],
+   "sha256": "sha256:7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140"
+  },
+  "d0_prompt_direction": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/core_p1.py",
+   "required_definitions": [
+    "direction",
+    "processed_argmax"
+   ],
+   "required_text": [],
+   "sha256": "sha256:2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4"
+  },
+  "d1_crossfit_fit": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/unique.py",
+   "required_definitions": [
+    "fit_fold"
+   ],
+   "required_text": [],
+   "sha256": "sha256:3c1587722c6469f0adfe31592238950d7e30d7ae0cf0edd12f0e81a344b06e72"
+  },
+  "d2_scratch_gradient_provider": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "objective_is_hardcoded_J": true,
+   "pass": true,
+   "path": "src/csasr/inference_cf/readout.py",
+   "required_definitions": [
+    "readout_direction",
+    "objective",
+    "processed_logits",
+    "ZeroProbe",
+    "clone_scratch",
+    "tangent_unit",
+    "cache_fingerprint"
+   ],
+   "required_text": [],
+   "sha256": "sha256:9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4"
+  },
+  "historical_null_audio_30s_zeros": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "experiments/inference_cf_p0_r2.py",
+   "required_definitions": [
+    "native_lid"
+   ],
+   "required_text": [
+    "np.zeros(30 * bundle.sample_rate, dtype=np.float32)"
+   ],
+   "sha256": "sha256:91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3"
+  },
+  "r2_gate_g_old": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/srd2_g0.py",
+   "required_definitions": [
+    "r2_gate",
+    "native_preview",
+    "CachedSolver",
+    "NativeSite",
+    "chord_guards"
+   ],
+   "required_text": [],
+   "sha256": "sha256:ad7ca0fdb1a89b7a520f35b30d9bbbca1f7e777aa00e41fee160c79ad6a91b3c"
+  },
+  "r2_primitives": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/core_r2.py",
+   "required_definitions": [
+    "tokenizer_partition",
+    "max_attention_window",
+    "local_support",
+    "conflict_from_logits"
+   ],
+   "required_text": [],
+   "sha256": "sha256:93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3"
+  },
+  "random_direction_pcg64": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/src_cf0_pilot.py",
+   "required_definitions": [
+    "random_direction",
+    "direction"
+   ],
+   "required_text": [],
+   "sha256": "sha256:f39690fcfd87cb2e01b7fcb98741a667ae2d5f66da25780a532171127c79dc6e"
+  },
+  "solver": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "experiments/inference_cf_p2r.py",
+   "required_definitions": [
+    "solve_scale"
+   ],
+   "required_text": [],
+   "sha256": "sha256:ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e"
+  },
+  "srd2_null_reuse": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "experiments/inference_cf_srd2_g0.py",
+   "required_definitions": [
+    "capture_utterance",
+    "cached_baseline"
+   ],
+   "required_text": [
+    "np.zeros(30 * bundle.sample_rate, dtype=np.float32)"
+   ],
+   "sha256": "sha256:5c36cd52b8e92dab978d9e860670f7526b00cf610190aa1c8d41b523ec542537"
+  },
+  "v_ac_region_chain": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/r0_regions.py",
+   "required_definitions": [
+    "window_grid",
+    "classify_window",
+    "query_mapping"
+   ],
+   "required_text": [],
+   "sha256": "sha256:a30de91bc6d38a6a5b7f90ed80b4869b004aa292e8ec6e3fc12709347c5ee80d"
+  },
+  "v_ac_s1_association": {
+   "missing_definitions": [],
+   "missing_text": [],
+   "pass": true,
+   "path": "src/csasr/inference_cf/s1_evidence.py",
+   "required_definitions": [
+    "select_target",
+    "select_offtarget"
+   ],
+   "required_text": [],
+   "sha256": "sha256:aee717f72afdfa6758903f87b85d53ff09f661426e1db681ba8ac6f15837ba1e"
+  }
+ },
+ "schema": "dir_sprint0_feasibility_v1",
+ "whisper_tokens": {
+  "added_token_strings": {
+   "50257": "<|endoftext|>",
+   "50258": "<|startoftranscript|>",
+   "50259": "<|en|>",
+   "50260": "<|zh|>",
+   "50359": "<|translate|>",
+   "50360": "<|transcribe|>",
+   "50364": "<|notimestamps|>"
+  },
+  "added_token_strings_match": true,
+  "files": {
+   "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+   "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23"
+  },
+  "lang_en_zh": [
+   50259,
+   50260
+  ],
+  "pass": true,
+  "prompts": {
+   "c_EN (forced-EN transcribe, D0)": [
+    50258,
+    50259,
+    50360,
+    50364
+   ],
+   "c_TL (forced-ZH translate, D4)": [
+    50258,
+    50260,
+    50359,
+    50364
+   ],
+   "c_TR (B0 forced-ZH transcribe)": [
+    50258,
+    50260,
+    50360,
+    50364
+   ]
+  },
+  "sot_notimestamps_eos": [
+   50258,
+   50364,
+   50257
+  ],
+  "task_to_id": {
+   "transcribe": 50360,
+   "translate": 50359
+  },
+  "task_to_id_match": true,
+  "task_tokens_in_suppress_list": {
+   "50359": true,
+   "50360": true
+  }
+ }
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "a6_ott_phase_bc_job_audit_v1",
+  "status": "PASS",
+  "max_simultaneous_gpu_jobs": 2,
+  "unrelated_jobs_cancelled": false,
+  "decisions": [
+    {
+      "jobs": ["53489_0", "53489_1", "53490_0", "53490_1"],
+      "action": "cancel_failed_superseded",
+      "reason": "initial_hook-tuple integration failure; no accepted confirmation rows"
+    },
+    {
+      "jobs": ["53495_3", "53496_3"],
+      "action": "cancel_after_preserving_artifacts",
+      "reason": "superseded confirmation shards; completed encoder rows and partial decoder rows preserved"
+    },
+    {
+      "jobs": ["53504_6", "53504_7"],
+      "action": "cancel_pending_and_resubmit_nonoverlap",
+      "reason": "released Whisper official shards for a second GPU without duplicate coverage; resubmitted as 53517_6/53517_7"
+    },
+    {
+      "jobs": ["53519_1", "53520_1", "53522_1", "53523_1", "53528_1", "53535_1"],
+      "action": "preserve_failed_or_cancelled_partial_artifacts",
+      "reason": "Qwen CS decoder structural-handler/resumability repairs; exact rows reused by later successful shards"
+    },
+    {
+      "jobs": ["53531_1", "53532_1", "53534_1", "53537_1", "53538_1"],
+      "action": "cancel_or_validate_duplicate",
+      "reason": "duplicate exact Qwen CS decoder coverage appeared during interrupted execution context; valid atomic rows retained"
+    },
+    {
+      "jobs": ["53541_0", "53541_2", "53541_3"],
+      "action": "preserve_failed_transfer_artifacts",
+      "reason": "old transfer code discovered model-specific empty A/B eligibility; rerun used explicit INELIGIBLE handling"
+    }
+  ],
+  "gpu_hours_from_sacct": {
+    "phase_b_all_attempts": 2.548,
+    "phase_c_all_attempts": 0.297
+  },
+  "queue_and_wall_note": "sacct elapsed is recorded per shard; Phase-B aggregation was CPU-only and excluded from GPU-hour totals."
+}

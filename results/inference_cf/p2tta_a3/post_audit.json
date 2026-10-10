@@ -1,0 +1,89 @@
+{
+ "checks": {
+  "analysis_bound": true,
+  "compute": true,
+  "dcond_recomputed": true,
+  "distance_recomputed": true,
+  "label_agrees": true,
+  "live_audit": true,
+  "manifest_self": true,
+  "mechanics_agree": true,
+  "metrics_agree": true,
+  "output_recomputed": true,
+  "panel": true,
+  "reset_recomputed": true,
+  "rows_recomputed": true,
+  "runtime": true,
+  "safety_points_agree": true,
+  "seal_committed_unchanged": true,
+  "sources_at_commit": true,
+  "theta0_hash": true,
+  "update_recomputed": true
+ },
+ "failures": {
+  "dcond": [],
+  "distance": [],
+  "output": [],
+  "reset": [],
+  "rows": [],
+  "update": []
+ },
+ "git_commit": "0d29d3563a3818d847059cb794c48155ce98e73f",
+ "independent": {
+  "gap": {
+   "median_rel": 0.5138262863083056,
+   "pass": true,
+   "rows_decreased": 12
+  },
+  "metrics": {
+   "A2": {
+    "en_wer": 0.5180722891566265,
+    "mer": 0.2920353982300885,
+    "pier": 0.5140562248995983,
+    "poi_errors": 128,
+    "zh_cer": 0.21494102228047182
+   },
+   "A3": {
+    "en_wer": 0.5180722891566265,
+    "mer": 0.29301868239921336,
+    "pier": 0.5140562248995983,
+    "poi_errors": 128,
+    "zh_cer": 0.2162516382699869
+   },
+   "B0_AUTO": {
+    "en_wer": 0.3413654618473896,
+    "mer": 0.29793510324483774,
+    "pier": 0.3413654618473896,
+    "poi_errors": 85,
+    "zh_cer": 0.27916120576671033
+   },
+   "B0_FORCED": {
+    "en_wer": 0.5863453815261044,
+    "mer": 0.2861356932153392,
+    "pier": 0.5863453815261044,
+    "poi_errors": 146,
+    "zh_cer": 0.18479685452162517
+   }
+  },
+  "movement": {
+   "R_dist": 0.11409395973154357,
+   "closer": 4,
+   "farther": 1,
+   "pass": true
+  },
+  "promising_A2": true,
+  "safety": {
+   "EN_ret": true,
+   "MER": true,
+   "ZH_CER": false,
+   "ZH_ret": false,
+   "caps": true,
+   "corruption": true,
+   "outside": false,
+   "severe": true
+  }
+ },
+ "label": "P2_TTA_A3_TEACHER_UNSAFE",
+ "schema": "p2_tta_a3_post_audit_v1",
+ "verdict": "P2_TTA_A3_AUDIT: PASS"
+}

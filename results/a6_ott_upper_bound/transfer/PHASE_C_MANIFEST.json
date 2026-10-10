@@ -1,0 +1,30 @@
+{
+  "datasets": {
+    "seame_dev_man": "SEAME-man",
+    "seame_dev_sge": "SEAME-sge"
+  },
+  "decode_modes": [
+    "greedy",
+    "official_standard"
+  ],
+  "fixed_direction_artifact": null,
+  "manifest_sha256": "sha256:f5d29822ab64dbe3fb5437f8eb18e11336e0a671da9a0c44a05a4ff0c1fe4f66",
+  "phase": "C",
+  "phase_b_final_settings": "sha256:790b96b4ee3235b8a40e5b62f8a3c6cf12768992634cc7fc2bba5dea186bbd61",
+  "regime": "oracle_tt",
+  "schema_version": "a6_ott_phase_c_manifest_v1",
+  "seame_eligibility": {
+    "SEAME_MAN_ADD_UNIQUE_DECODER.json": "sha256:7b098317f422a1d428250eeabfd6f2578c1530d39cea4b168f4d9083cfd91cbe",
+    "SEAME_MAN_ADD_UNIQUE_ENCODER.json": "sha256:a530b16b0fb2dcb8aaf6e04ffb3ef53d855914e045487b1dc321f216f41326a7",
+    "SEAME_MAN_COMMON.json": "sha256:a919b7cdc76c7206bad6bcffbb2bdbb644f7f8ab433a2b517be89ba46534e3f7",
+    "SEAME_MAN_CONDITIONING_CS_DECODER.json": "sha256:18f2ffe32715ef8a8e915c39665fdd540fe6b7fe9297f530a185461051b78bf1",
+    "SEAME_MAN_METHODS.json": "sha256:08dd1621fe32446e50bf9adf46ed0a0795c4e59d2810d0f11228add4f57be7e3",
+    "SEAME_SGE_ADD_UNIQUE_DECODER.json": "sha256:7bb87fdac970c021d771cf42a4d71174bfe0febf7d645b278e545ed3a78bab2d",
+    "SEAME_SGE_ADD_UNIQUE_ENCODER.json": "sha256:8c1f04e97a13917a37e64516d6872eddfce9a1b280241055db409725782d10fb",
+    "SEAME_SGE_COMMON.json": "sha256:42b62e6231c28162d1d96dc639b1f90fbd68e8cee17c2ddd874515f8ff65dc14",
+    "SEAME_SGE_CONDITIONING_CS_DECODER.json": "sha256:ddec904358b7d88f6afc8a4a2cde40e02003e2c09c8cbce93791ca1bf2206208",
+    "SEAME_SGE_METHODS.json": "sha256:05eac9a0abd4d2865732ed52e1abf36dc858218d7e88c58eaa9f60d4e9d1dda9"
+  },
+  "seame_outcomes_loaded": false,
+  "status": "FROZEN_BEFORE_TRANSFER_EXECUTION"
+}

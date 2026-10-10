@@ -1,0 +1,90 @@
+{
+ "schema": "p2rje_audit_v1",
+ "manifest_hash": "sha256:a6fc9ccef39a0b6d4e4720fdf53eea35024e35f00fe43a8bf5b1adf8fbc23bda",
+ "checks": {
+  "manifest_hash": true,
+  "sources_match_manifest_commit": true,
+  "decision_sources_unchanged": true,
+  "config_hash": true,
+  "positions_hash": true,
+  "runtime_completed": true,
+  "population_size_equals_frozen_p2r_ledger": true,
+  "no_duplicates": true,
+  "positions_are_r2_en_confusion_units": true,
+  "dialogue_membership": true,
+  "utterances_in_d_dev_select_panel": true,
+  "original_60_included_once": true,
+  "no_gradient_into_edits:inference_cf_p2rje.py": true,
+  "no_steering_hook:inference_cf_p2rje.py": true,
+  "no_gradient_into_edits:inference_cf_p2rj.py": true,
+  "no_steering_hook:inference_cf_p2rj.py": true,
+  "no_forbidden_roles_in_sources": true,
+  "rows_ok_bf16": true,
+  "rows_ok_fp32": true,
+  "completeness_all_positions_both_passes": true,
+  "zero_probe_value_identity_all": true,
+  "overlap_reproduces_p2rj_run1": true,
+  "state_basic_all": true
+ },
+ "notes": {
+  "sources_changed_since_freeze": [],
+  "overlap_max_deviation": 2.220446049250313e-16
+ },
+ "bf16": {
+  "Q50": [
+   0.5386806388536493,
+   [
+    0.4060739923283176,
+    0.6653032233049535
+   ]
+  ],
+  "leverage": "UNRESOLVED",
+  "n": 227,
+  "dialogues": 17,
+  "median_gap": 10.562189102172852,
+  "median_g": 4.3509779795486265,
+  "median_gtan": 4.348154005104105,
+  "median_A": 4.896350815221826,
+  "median_rho": 0.5187429395535706,
+  "frac_rho": {
+   "0.1": 1.0,
+   "0.5": 0.5242290748898678,
+   "1.0": 0.11894273127753303
+  }
+ },
+ "fp32": {
+  "Q50": [
+   0.5190727957163944,
+   [
+    0.38541973597336915,
+    0.6471871136360756
+   ]
+  ],
+  "leverage": "UNRESOLVED",
+  "n": 227,
+  "dialogues": 17,
+  "median_gap": 10.537496566772461,
+  "median_g": 4.349125415126875,
+  "median_gtan": 4.348633456084382,
+  "median_A": 4.896890713347648,
+  "median_rho": 0.5188445446217411,
+  "frac_rho": {
+   "0.1": 1.0,
+   "0.5": 0.5198237885462555,
+   "1.0": 0.12334801762114538
+  }
+ },
+ "precision_median_cos": 0.9998132709127378,
+ "agreement_with_analysis": {
+  "bf16.Q50": true,
+  "bf16.leverage": true,
+  "fp32.Q50": true,
+  "fp32.leverage": true,
+  "precision_cos": true,
+  "median_A": true,
+  "median_rho": true,
+  "diagnosis": true
+ },
+ "independent_diagnosis": "P2_RJ_E_DIRECTION_CONFIRMED_SITE_UNRESOLVED",
+ "verdict": "P2_RJ_E_AUDIT: PASS"
+}

@@ -1,0 +1,2939 @@
+{
+  "schema": "p2_tta_funnel_v1",
+  "status": "PRE_OUTCOME_MASTER_FREEZE",
+  "starting_commit": "e397d38c08bc8b0670a27fb6078ae5364878897b",
+  "spec": "docs/inference_cf/P2_TTA_FUNNEL_SPEC.md",
+  "design": "docs/inference_cf/P2_TTA_FUNNEL_CODEX_DESIGN.md",
+  "scope": "separate exposed development funnel; core v6 unchanged; no scientific execution in design session",
+  "source_sha256": {
+    "configs/inference_cf/p2_tta0.json": "9c57c3457fe089d4b2a62d979779d4ec42815132c23ac466f4df94283d75e8d0",
+    "docs/inference_cf/P2_TTA0_SPEC.md": "85c07b4de3c5ef844c65947cab2f124faa0bcdd2fe78625279f9ecc02987ce2a",
+    "docs/inference_cf/P2_TTA0_CODEX_DESIGN.md": "02ab8c2672cbbf6c96265b90f5d7952fd1e5cc5d3edb78046ba5c9bd7888b6bc",
+    "docs/inference_cf/P2_TTA0_PANEL20.json": "3c752d7a2e247a77f05956839e3aa396ae04818fea7440f74b87778af5fa9eb4",
+    "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "docs/inference_cf/P2_TTA0_REPORT.md": "d542de04746b2c17af7c6d2e2ac00494fff86547bffd069dcb19ce4b13657abf",
+    "src/csasr/inference_cf/episodic_tta.py": "eee4f8ee816351e09ab572211bb4f0adb014a3c843b34b0592c795a67097be29",
+    "experiments/inference_cf_p2tta0.py": "fe68e1aa4f69ec2ae33594c09bbebc09465e07fad38530210f085f1ec4d4a694",
+    "experiments/inference_cf_p2tta0_analyze.py": "416610910dc31a0ba0ad489143e6225ef2690e3edb0f26b7a652112c06b9d2f7",
+    "experiments/inference_cf_p2tta0_audit.py": "0c45aaf7d947b7e559a85d23157464aa6add9551ddb52aa8c89733bd4db1d124",
+    "src/csasr/models/whisper.py": "24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c",
+    "results/inference_cf/p2seq/run1/manifest.json": "7a2c3276a9ae9222e2dca64b375dff06a0fea80b14cf2dec69245f604b603224",
+    "results/inference_cf/p2seq/run1_audit.json": "3e51a44dec6f625312b94019b41ca45c19c29e0e7cd7edb638c3c3622e5933ed",
+    "results/inference_cf/p2seq/reuse_audit.json": "1ccf829f36e4c890fe51435bf10790e78cdfa214a6b8c8a7f3083c34374dbd66",
+    "results/inference_cf/p2dir/exp1_run1/manifest.json": "6842a733b7246ad3705af69314b00ef0e3d5021684597d79b48ab5e256fbf412",
+    "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+    "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+    "experiments/inference_cf_p2.py": "45b1aefd158c6ff5b5a936b11ad37b14e65cba61030ab91f05e6d1715f49657d",
+    "experiments/inference_cf_p2seq.py": "75dd86482bb1433895ae41e0c980c76a33e9fab4714aca1e6a1b8fb80b2e1a72",
+    "experiments/inference_cf_p2seq_analyze.py": "24ecbcacf29e9ebd1826e5fb6fb898aad81d142e5e607b2fc9cb988b03357aa2",
+    "experiments/inference_cf_p2seq_audit.py": "1ff5fe0b619e829e5bcede47eb9d81e7a645c27c72afdfb8ef15f061c744ae7e",
+    "src/csasr/evaluation/canonical.py": "2b56f63456c2f71dc8e220a970a07525ae6f6d026a29daf9b2a695be0af20404",
+    "src/csasr/evaluation/retention.py": "44b0c004ffd2fd75c5c07f3db11a22ecc8c5fa98687ef58bafcc7d23f4361dde",
+    "src/csasr/evaluation/mer.py": "ab91fe565d51dc14018dbbd9ba86f731f30c90d01fbdf279b0f5ac158aa0342d",
+    "src/csasr/evaluation/pier.py": "33607492838ea35ba3b10463e8de0e96d419d4d5b9573ddefb7af7c4f405eacc"
+  },
+  "baseline100": [
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0021_S0_513",
+      "parent_index": 9,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/009.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/019.json",
+      "forced_sha256": "6ab9aa349b842ea7496a1c69255ee84fb1d86033b01bfd056d5dfa54f4b99726",
+      "auto_sha256": "4f8e538e87e8751b2fddf23fdc3b6c510f5079c74ab1574d1d387227b0793e5f"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_666",
+      "parent_index": 11,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/011.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/038.json",
+      "forced_sha256": "b2c56c9402e2d4ccbdae1c16f073c0b7302e2cc0a4d33ea32883791aa39eafb9",
+      "auto_sha256": "18eafa258e95ece4c160d1ac1ddfb9cba4201c50acd5953f446f17732780badc"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_87",
+      "parent_index": 13,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/013.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/041.json",
+      "forced_sha256": "9405836e0a02bff4f0d848c30bfce1c5ab098cc997ebe8694cb7c5383d5b699f",
+      "auto_sha256": "93aab1e0564630a266f96ec5c998aefef20a8372ad6869c036e5251bdc8b182a"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_664",
+      "parent_index": 14,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/014.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/037.json",
+      "forced_sha256": "6abc10eacd52732731477f424f094f2a8499897754fa7beee2213f9d09930cc4",
+      "auto_sha256": "920d714e44034a8456a7c0beba7509de4cf53e17e24a7ee6e40a61f3d6a9d1cc"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_472",
+      "parent_index": 20,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/020.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/067.json",
+      "forced_sha256": "82421436828923c6585569f5e9ff22b4265e0357c9e5436350c2db224932a8ee",
+      "auto_sha256": "cfeb5156c582f612814171118492acb4f2b5d66634d340f9f6f59ffac93eb68f"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_80",
+      "parent_index": 29,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/029.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/079.json",
+      "forced_sha256": "6c3b67dc64fb6e326796fe348fbc90bc683bd63067e3e90bf404649437328011",
+      "auto_sha256": "7d6dd135bec6b00300845e5ff5644a9825111188bde98fcfb724ddb81f6c57ba"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_68",
+      "parent_index": 37,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/037.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/112.json",
+      "forced_sha256": "728985dc3ebe409a8d78374c8e62dcca099b1d799f52b097a70e5f85942d0a54",
+      "auto_sha256": "3b9345e4f6991b9978147c86ef6c29a40a1c19bd804a168ac21f71c8003295ec"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0092_S0_101",
+      "parent_index": 39,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/039.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/115.json",
+      "forced_sha256": "7ae60fe5d41ab36845c5584f6e095b3f8c12ca3faea48e9d9347869a6557f355",
+      "auto_sha256": "16a5fa15c91cc5d8959d3f98ecaea8d6f98cf526905ef18613d2bb67c44b1bb8"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_80",
+      "parent_index": 40,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/040.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/134.json",
+      "forced_sha256": "e11c6b870e2fb801ed1ffd0e8f3c76226a0eb1f24206c98ec4a0e3a03d1cd5b1",
+      "auto_sha256": "f7360dc59fa185869fae067870dcdf7ed677695aa01d09a2ca4c9f9bc060ab9f"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_61",
+      "parent_index": 52,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/052.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/157.json",
+      "forced_sha256": "3318fda8f17a9b7aa47225d1c7c23a69df3596e3082e068a8b923a1984b75fc0",
+      "auto_sha256": "e26a9dcbea4588900dc6f01bae06b8954184bd3bf1a5c7c44d77b7baf811e41f"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_23",
+      "parent_index": 80,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/080.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/241.json",
+      "forced_sha256": "8d5ade4dccce483920c011f268b530900309af92a2c2605bb45685bc8f558a7b",
+      "auto_sha256": "e6e79005ca2224f72eb508d592b6994d601b011442ae8d273d4833a3156a79a2"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_104",
+      "parent_index": 93,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/093.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/274.json",
+      "forced_sha256": "c6d3e0bf89cf56b0f2f845cd2d4db122a7461d032b3bcb0a2c4ce0128c2c6a6d",
+      "auto_sha256": "c15514c9cdd5a1d53a8f94584c7eaec2eca8d4285b13eb6bb977ffa3032646c1"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_111",
+      "parent_index": 0,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/000.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/001.json",
+      "forced_sha256": "413291f12f955e19cfbfc8461d1b37f63f5fca2ab4d2ba158120114b31c2d793",
+      "auto_sha256": "febe425f40a6590596abbd28c3b132bfbf2fd9f34743b23350a21db10b25bb5b"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_54",
+      "parent_index": 1,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/001.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/006.json",
+      "forced_sha256": "c75ef0e4e45c2a0b16785a07b881d62c1a1a69ddf3c6e1c1023cdf8c85b5b034",
+      "auto_sha256": "39a2f6782c68fc72e527c01208a02d3bac9062d4dacf1395d7a9b3075160f3bc"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0012_S0_103",
+      "parent_index": 2,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/002.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/011.json",
+      "forced_sha256": "1d24b25f30fc2789c109400b14484193f36d25c56ef2973368279f6633b28b6c",
+      "auto_sha256": "4f7892c8f30f83aa5412ba76b99d488bdc448fc53d68a6addcda29bc88c397f2"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_503",
+      "parent_index": 3,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/003.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/005.json",
+      "forced_sha256": "40aadfef8f3b187c91f597300015d0c89be0dbbd2aeb3d1049cd191a1fb456b6",
+      "auto_sha256": "c6fef3c6bab7cfe18eb0fb3713e73fe5fe36baea4ba38949245bd089837cfbcf"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_103",
+      "parent_index": 4,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/004.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/000.json",
+      "forced_sha256": "3bd0e19cfd9e2af7ea538f5ae75f6f9bd434b31cc0359aab27ec7daabbefd3ce",
+      "auto_sha256": "2021a1a8c2517811efb7fb582482bccb55cfb5680fffb09a1c014fbe659ffe19"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_91",
+      "parent_index": 5,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/005.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/029.json",
+      "forced_sha256": "70eebe9fd774152e71a6d74e2bf22132df70bf70c9431451b341929ea127810f",
+      "auto_sha256": "7b9ff149f2578080b08dc56fb87e39841c0e5d677210e2b0d4990443fee83a82"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0021_S0_225",
+      "parent_index": 6,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/006.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/016.json",
+      "forced_sha256": "cd4f48e906ee2b61fc9c44f2cd9234b49fa1b129c2992d6c88c3ca4da0414c93",
+      "auto_sha256": "db1a2d63892b3e8833fc189f01204de4d453c1a0da95de76f4c768545c7168fc"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_228",
+      "parent_index": 7,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/007.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/022.json",
+      "forced_sha256": "5b2543e6acbab8899133a62126903835d0e6c7a0f2f737fd38b15f56359506f7",
+      "auto_sha256": "aa6b27b535fdad7cbf52071b1cdbba0a6f69994fe3cf042df348c015e6675ace"
+    },
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0022_S0_305",
+      "parent_index": 8,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/008.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/025.json",
+      "forced_sha256": "5bc711f2dd6005e524266a7108d375add357ed06db9b9d5af495117b8e26d69e",
+      "auto_sha256": "0a3dc433556415c76f436d28f5c67515a659a1a872f259854b56304d0c73b67b"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_111",
+      "parent_index": 10,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/010.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/032.json",
+      "forced_sha256": "76e433127c8bf1372f7c5e0550d8af73d2dd1396e4f65c440b50d9ad97e244e8",
+      "auto_sha256": "e60cf929f1929e05a7c4acf4b9b0f1edba1189ec7477d153160b81def3a9c170"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0024_S0_283",
+      "parent_index": 12,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/012.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/043.json",
+      "forced_sha256": "379067da72ce422e782fd4ba92dc1cb5484a8fe1f5301b93bf00fc158a81877a",
+      "auto_sha256": "157d237293ba21de0552abf3b81e1a0f78a0579f4dc53c65f6086210e1fb1a3f"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_116",
+      "parent_index": 15,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/015.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/046.json",
+      "forced_sha256": "945dde11e9d96222fd33ab679dd9075ddc986f3fd8931bb675ae975dddc5a3a5",
+      "auto_sha256": "af415cfd437fe18c3da5240539f935e5c71b6caf051b4d850b867ecc9a32a664"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0028_S0_37",
+      "parent_index": 16,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/016.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/059.json",
+      "forced_sha256": "ebb865c79695607247185257150179ab2bda0ce94a6e3e11c002f53bc6717bd7",
+      "auto_sha256": "6ba9dacad12cc13c7e8361dfd947266f253523939d927d118b00509504ed2d38"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_163",
+      "parent_index": 17,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/017.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/049.json",
+      "forced_sha256": "6ab65c8ed9aa26d1e9a2bf5123428b055b5e43eb1b6f8b73d79a2d7e1ec11cdc",
+      "auto_sha256": "14e9620934d01aa07be620b862a8617762a5e9c141af32b66a649dbe29541821"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_144",
+      "parent_index": 18,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/018.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/047.json",
+      "forced_sha256": "1de06812d72ba2c3c208ef2e302bbdab6cb4f2bacb9f10fe478e65c65b83979e",
+      "auto_sha256": "6d9c5d93b405a0565b88640ec208a651854049593a9a121e7f7f0e562ab545a4"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0028_S0_120",
+      "parent_index": 19,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/019.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/054.json",
+      "forced_sha256": "a0681730b2968d8e52f9f01328f2289096ae720d42b5c5678f07a5cbd4831da4",
+      "auto_sha256": "5b9f5765b92c81b1ca6a4479856491f51c682ad3538456dfa74163afaba76818"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_204",
+      "parent_index": 21,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/021.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/062.json",
+      "forced_sha256": "fdd14ce9323d76d7552cc245bb400f817ab39c84088f8239fd01948b3606a7a3",
+      "auto_sha256": "9ab0a33d906afac23325d95a526be8d671a7557daa78e5c50669d3a96036adc6"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_456",
+      "parent_index": 22,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/022.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/066.json",
+      "forced_sha256": "0c05acebd78f1508bbf5013905d7160069d283a54b1e6565cc73f495a0ca2453",
+      "auto_sha256": "74d53b433fe0d77dd42d994a6becd5bc8789eae73aff97ade1b24d3973c108b2"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0030_S0_81",
+      "parent_index": 23,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/023.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/074.json",
+      "forced_sha256": "6fb9f048e6a8b4d30f9d9a7c8a4b1e6f5f6933ca495ede32c0b865f0b1ec0147",
+      "auto_sha256": "44e9792ded3eab47631e1c8f81242b15a5cd21e3f479f50c019da2e7b3c2e6b7"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_651",
+      "parent_index": 24,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/024.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/068.json",
+      "forced_sha256": "8222735bc704cb3e149127aca4b7830d717b1da8464058de4be46f841cca5940",
+      "auto_sha256": "4bb22070837ba614a6fcc70ea5118ef6fddf1b3c0139bb5ac3d385daf95e50e1"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_380",
+      "parent_index": 25,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/025.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/077.json",
+      "forced_sha256": "109b81d1fd5454963cce91efb043b4d9f460b6744f5326d5e69adabe21c173a3",
+      "auto_sha256": "0da4bf3e34622211abfe84b2770af3ebeb7d86a622d64286f3db925c0652f0e5"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0040_S0_141",
+      "parent_index": 26,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/026.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/082.json",
+      "forced_sha256": "f48e02bc382e29ea8e7fceb7855859b8e93fc260894a3b535827ed1bbdc3611e",
+      "auto_sha256": "ced1509e80138bfbadb0aad6be2530e4428301d09f44c80f2c999147549ecb42"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0040_S0_105",
+      "parent_index": 27,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/027.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/081.json",
+      "forced_sha256": "9019d5a704f846f7ba89c2027bac2199eba7cbea355c61db6966393deabfbfc6",
+      "auto_sha256": "2b66266522c2f0082b6d40e0678dc06ea90b9f5f401ebb99d26d3954b5767d33"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_315",
+      "parent_index": 28,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/028.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/076.json",
+      "forced_sha256": "84b5f2db541352e9a1e7905c91a0b01e9641918c2815b523c6268bcce487e9c5",
+      "auto_sha256": "5d445b582b99365f75c044d82c75b810bdd634e878a68039a372432ef1a89bad"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0085_S0_185",
+      "parent_index": 30,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/030.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/094.json",
+      "forced_sha256": "daa945c5b6bcb5a6699dcd7d8582da5858d07945c8459aea12d81a404eaf7f57",
+      "auto_sha256": "1e333f9d45940ffe32daee4a5ccf6d365f7e04aaed9ec7aeba61357db1f311ef"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_185",
+      "parent_index": 31,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/031.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/098.json",
+      "forced_sha256": "7ede3a1ded4daaa99418350c02d0eede365febd3a559e377475fd922ab6f0f12",
+      "auto_sha256": "756b0019e48373bf9358e9d70ebb78b150a66a97563a525a3c0f709a03cff010"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_2",
+      "parent_index": 32,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/032.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/099.json",
+      "forced_sha256": "69c86f998e798d2594b42e0a0c1c924d273f8a3ba349941b77a192908cc82d50",
+      "auto_sha256": "3a75596f92a080fa902b363304ab5ec89ce59b43b38603956998a7e5f3ce4a58"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_222",
+      "parent_index": 33,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/033.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/101.json",
+      "forced_sha256": "9a46ec07331b310d51d060ce83d865a2e62d1e91943fc38d2a27a7280b4360f5",
+      "auto_sha256": "0a84e8d53fb7d054777acfcc01bf21ef6551436a8c5f2710c1935aefd98b5add"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0086_S0_183",
+      "parent_index": 34,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/034.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/097.json",
+      "forced_sha256": "8d8f30e6343731f83321b68d7c5fa37d32ebdbdda92c8ffe140d60057e5cdc1e",
+      "auto_sha256": "3aeaf8388a11fc405dbef3872c4735b8b24a6b9f30cbcd634ef79137e5ed917f"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_196",
+      "parent_index": 35,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/035.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/106.json",
+      "forced_sha256": "865ba24f829e31c345c9e0efb999c58bd12e726dbf63168f4b354ca7da6fb5fe",
+      "auto_sha256": "b2f07b13769fc37de54fd083a7d0504743f7f71a40a8a7e9ab31b2a13e61c170"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_62",
+      "parent_index": 36,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/036.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/111.json",
+      "forced_sha256": "7457490ea8caa85a434192fbba14693feb4fb3f9d2ddb4cad5aa2ea3d80e0106",
+      "auto_sha256": "5527eeb1e262be11bd1cf887b8412d33c56e3c1eec685713fefc771eedae165a"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_241",
+      "parent_index": 38,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/038.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/110.json",
+      "forced_sha256": "2c8ce8119115eac180590888ac935c9aeb86a73e8f4c7c51f761d6a4d00ce25e",
+      "auto_sha256": "6d0f2749a236cae2988164618355b0a0f24ad6744a33cbaa699455950b35073f"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0101_S0_71",
+      "parent_index": 41,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/041.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/128.json",
+      "forced_sha256": "abeda99277f1ba92ee4121f3fb5a44cd3d91931d9d4fb667769d78ce386684d7",
+      "auto_sha256": "3b1aeb073f516f19d5ad22fc2298b4f465aac17253852bdb00c2c74175681247"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_64",
+      "parent_index": 42,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/042.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/132.json",
+      "forced_sha256": "e15c4514d85b39f4d7056ac0b2baa329e611976148949c305b9d3ec3e46728d3",
+      "auto_sha256": "179e146bef8f7e67a73b51a25a7d0bbce32d31b928b9f918ef1a345efff99e16"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0101_S0_190",
+      "parent_index": 43,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/043.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/122.json",
+      "forced_sha256": "5f64168906b379ec1342244436694e1661f031893320950076c721ae6db959d8",
+      "auto_sha256": "4c8c8e2f0b4c53da2854fb646508da81641a1ba3d763aca4a63ac8842ae64d2c"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_44",
+      "parent_index": 44,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/044.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/130.json",
+      "forced_sha256": "245dd41eb38c625059ddffc3596672ceb163aaf2ff474652adacb683d8583ac2",
+      "auto_sha256": "060e06318069faf3dfc21fba26cd05128575b5e70778c12cf4393390fb64bd6d"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_402",
+      "parent_index": 45,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/045.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/140.json",
+      "forced_sha256": "04be7049301e43cb10b73d62b0e97319e6576d835b672f2e22d286c29c907c98",
+      "auto_sha256": "178d4a08daea9ab42d955eae2c2e27ee11ed16219721aff79fecc17b90d1ab25"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1002_S0_488",
+      "parent_index": 46,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/046.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/149.json",
+      "forced_sha256": "df289f9468b0e0a21403496072751207dab26f7e40971137bebfd8269c9f4c31",
+      "auto_sha256": "93c461977c69c62a7367b2c846dc9abde9fa7421061da2c30e3fda5bd75435ce"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_482",
+      "parent_index": 47,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/047.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/144.json",
+      "forced_sha256": "c0736519d142cf1eecf56ca7e0dd8c4f4945ffb478ccac14c65cbc07175b7d08",
+      "auto_sha256": "72b77237d57b612dfb4b6b1dbdad572a31a5cff4aa8eb5f9be4e4eaf1c5396a0"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1002_S0_284",
+      "parent_index": 48,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/048.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/146.json",
+      "forced_sha256": "017176607888988921e8b3fcc15d6d19e72bf34395d06bc6c903b9c06a814c97",
+      "auto_sha256": "eef702c236320cc341087b71d74ce0cf3cc499cd3eb38aa615c9aa89081c6972"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_44",
+      "parent_index": 49,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/049.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/142.json",
+      "forced_sha256": "933b4e72b2cea5966b11f40e8721c5cb11ec7cb0a3e744f759b755c846124eed",
+      "auto_sha256": "d34beffe9455b34ff8c59ba2019fd294baf634d3f8464758a775d11adc64f01e"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_141",
+      "parent_index": 50,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/050.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/152.json",
+      "forced_sha256": "2285f3d1564fc404cd7a35abbb26b887daab32d9740822b4d57a9ff7ebce5aa4",
+      "auto_sha256": "7dc6217fcadd60b290e52da68e0caf43812c8fd3d23db2e6206926663cdb8f35"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1004_S0_221",
+      "parent_index": 51,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/051.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/160.json",
+      "forced_sha256": "234fbaa322d446c91aabda6d0139dc752f36c242dd6040dfa277745329f8f2cc",
+      "auto_sha256": "cf1c2eb4aec6f11f3d86b15028fb8fb63cfeaba77fa9c396d68b8db8eed07fdd"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_63",
+      "parent_index": 53,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/053.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/158.json",
+      "forced_sha256": "f02209b0100ae62323363d6e61616ca3f01e26f6f4692f6793591737830035c4",
+      "auto_sha256": "f7cfcc97ce232057f0d2be3f69af519dbc8b1e7058aee0c9143c09588eff46b7"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_94",
+      "parent_index": 54,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/054.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/159.json",
+      "forced_sha256": "1bd05dbb0091e79fd5e89fd9c60898312e4b905d3ab9fb6e5977a48173a18c3c",
+      "auto_sha256": "88784bc6c3925ff8499540fc8fb2fb5ca0ba1b4d4a944f493daf358d1ffebb4f"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_71",
+      "parent_index": 55,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/055.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/179.json",
+      "forced_sha256": "77ae4eb4dacbd0156fbcfee2668240bc6e773d3671a7cc8b8720260463807c56",
+      "auto_sha256": "c945edef5b3c6537e556e7709147518f3f333b80d9b63c31bf1fd071e539f3ca"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_66",
+      "parent_index": 56,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/056.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/178.json",
+      "forced_sha256": "4ec3c6461de237eb0e2d885e223a8619e3223120688024cdc0e99f91f9486605",
+      "auto_sha256": "11d8d2a9d13ec682ca4fac7210db679d17cd5ae30cde1991452ba88012db1b5c"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_195",
+      "parent_index": 57,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/057.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/166.json",
+      "forced_sha256": "91a00fc71bd600c4825dd7ab17319af65ab80eb8e911a964721d1f0cf30ac455",
+      "auto_sha256": "fec83011f18609b49e259a3e59ac978bba4d09fb952f3a81d539f3f88a4b2391"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_68",
+      "parent_index": 58,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/058.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/172.json",
+      "forced_sha256": "d316d64d31f23a9788f7a3e57ab170d7a53671f8fddc1e9ed73c67a409d0a03c",
+      "auto_sha256": "0c2831a67045df7153e0efc2796702b30fb4745fd8f3383ffa3c79c0b62f56ab"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1021_S0_173",
+      "parent_index": 59,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/059.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/165.json",
+      "forced_sha256": "d3ca0818b73f34a2f70e10ba6af987d60a4e37c30412873405bd89bb363362a0",
+      "auto_sha256": "27d62acb52d30fef392f3a0230c0baa6a734f5809040a969a22f6542dcc969ad"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1027_S0_199",
+      "parent_index": 60,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/060.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/180.json",
+      "forced_sha256": "cf31d3e7f0b57274114c867f0743aabba0c2cbafac0d0eb22fa080fd6e026977",
+      "auto_sha256": "0e29777fbb1cd83644748d4e0bdc8a69ffc210e3c33eb128c188d1cfa6f9056d"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_184",
+      "parent_index": 61,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/061.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/190.json",
+      "forced_sha256": "c75681551b809083866c4b7bc8587020ab6b40cfdd921efcb0ccd3e2df94176a",
+      "auto_sha256": "377462c1a03b738a5366fa87c96f25910c0345bc854d149d4b8271951b261c89"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_38",
+      "parent_index": 62,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/062.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/192.json",
+      "forced_sha256": "e815fb4825046227ea7671b3ae579d91bbf7970f4e877b9dbe0e8cfcd3c8afda",
+      "auto_sha256": "7f092e99f76eca2ced6e2a239c52e357f2e0aff4d6362df4d1e1d61d153fcb7e"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_40",
+      "parent_index": 63,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/063.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/193.json",
+      "forced_sha256": "d0827228557c4813afb4e5f36c24f255965afb1bbe7c1e13d881d31610b4b7be",
+      "auto_sha256": "b9baca56bec4c4bccb0bc0a66ef3ce391e4043d02e60e61535f04a9e1f876cd3"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1028_S0_176",
+      "parent_index": 64,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/064.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/189.json",
+      "forced_sha256": "7d85061562a964948de74ab059e07058b97ba5a8d53546c433207365865fafce",
+      "auto_sha256": "1b2514ad89c6d5dee4ab13ee1b56886d7c26fe5531a78c844c581250e849d12e"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_53",
+      "parent_index": 65,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/065.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/206.json",
+      "forced_sha256": "a9b1f935ebd2db34e31fdd10cb5b5bc8766dab014cf498d00e7e698400e5d9b9",
+      "auto_sha256": "f83b96cb905a28a50c5375ce8d7a46588cd5a5414fd5e5757ff87c12d575e6d3"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1033_S0_199",
+      "parent_index": 66,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/066.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/197.json",
+      "forced_sha256": "32afdf242bb4224c75012dfdade7a11b0272deb7d1c9a9506f8fb0e9106b9ede",
+      "auto_sha256": "e08958b7f4b8b0a74120343ef3a58ad48876f4023fb265dd95fb31ae8615b628"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1033_S0_191",
+      "parent_index": 67,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/067.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/196.json",
+      "forced_sha256": "b34f81bb2392a73836baf2e91f5ddea8d4707d7aa44dc85f5391b4f922763a63",
+      "auto_sha256": "7e8ed8684dad149e6f5d19991f5ce43f6390099ddd11c74a684378c8ec37dccc"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_177",
+      "parent_index": 68,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/068.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/202.json",
+      "forced_sha256": "aefe0a78443e1b7de8f52187289060ee556df5a9347d0a4818586ce5707bfcb9",
+      "auto_sha256": "f9981e545fd41b9fcab56fd264d94c635c4cb80b853484eb26f9c0b109b43f0a"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_173",
+      "parent_index": 69,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/069.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/201.json",
+      "forced_sha256": "0f83bccde512c7482aec405654635ac47dd76c2691a10ffcf8db09683ea64605",
+      "auto_sha256": "bbd92d33524317a89b13c04bd207caa7764bc79234886d1f909b577f19da0770"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_110",
+      "parent_index": 70,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/070.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/219.json",
+      "forced_sha256": "8e0f789941a4d66c15e2b227e46c01caad9e95080509b5a81acd66d40e9b5741",
+      "auto_sha256": "061b6fe5a7eecfd2eb3b57431daf988ec8e7f3525383808fa6e32d2a72b11a7a"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_26",
+      "parent_index": 71,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/071.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/220.json",
+      "forced_sha256": "096a6110634b49d1369f9f246e07802db3930ac1a7296cc3a4495fb1fec438d9",
+      "auto_sha256": "c841f689d62cb9496e3c618752ed5b4cee539439998c3018cc08908557384717"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_95",
+      "parent_index": 72,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/072.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/224.json",
+      "forced_sha256": "140b20018ebfc4ef89996a1ab354fb1d89a05ad84a99089b0497f416721373dd",
+      "auto_sha256": "70f2f6b26c27a0de7c3954702ff50859cd433db5c9b7fa753ef5fee7a119a3b3"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_100",
+      "parent_index": 73,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/073.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/217.json",
+      "forced_sha256": "0a91d0c7809b2d2b8f3ca14a9cafce32978a17a3a471516e58ecd07cf96b8427",
+      "auto_sha256": "1f7b5f18fcedcfab79df53ecf2bb6652541a6b48e05bd0f2334d054197e68197"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1063_S0_54",
+      "parent_index": 74,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/074.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/214.json",
+      "forced_sha256": "4a8363fe1f1ac728e004fdfb6495ca11802e32e14c99304fca1b72f0c2ce50ca",
+      "auto_sha256": "38065df09ddee857eccecffb41ef9a64f7d6d98a4ef77a12a7e3e59e4a5964db"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_24",
+      "parent_index": 75,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/075.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/234.json",
+      "forced_sha256": "5446d102c22b1c93b6c9d1108ecb41d70209258a35ed077f8fdf4316ff369b96",
+      "auto_sha256": "424e6f8da798fc26eba4c3827abfd3beb0ab0bf314a23b4cd02fa34a22d155ee"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_35",
+      "parent_index": 76,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/076.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/238.json",
+      "forced_sha256": "397a329f0eedca50bec0d20ebd9c92b4a5295868805451b353865cd69b686874",
+      "auto_sha256": "3ead5db619f8cf190b00268773f0bb72bb28e3cab3d3e83bd7b324d08d19fb81"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_154",
+      "parent_index": 77,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/077.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/229.json",
+      "forced_sha256": "fda5fceee71f73146f5b06e3d28c9ce1a9c54ee2451b53bac5cd215979a35408",
+      "auto_sha256": "5e693b3b52153ddebd4f9de1104736d2ab651ecab7612c821d79e17911093283"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_178",
+      "parent_index": 78,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/078.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/232.json",
+      "forced_sha256": "17a25b2bb0ddf8b027606e71fcab82111218b9b918a505f0f5bd6a6c6680efd8",
+      "auto_sha256": "a8161ca152bc3575a04684e29b501d15c346d4a5f5ac26d45cf249281390e423"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_26",
+      "parent_index": 79,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/079.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/236.json",
+      "forced_sha256": "fb2a2a1d479dbacbd2cfd60052833267c75a8286fba7221a2ffc3aed0567f25c",
+      "auto_sha256": "ec45bf27d56b0b215d8cc75866352a7a8f0eb2ffa0228a4880d710129005c1ff"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1080_S0_43",
+      "parent_index": 81,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/081.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/250.json",
+      "forced_sha256": "fb82e5e4dc66f86739af5c92bbec38fdf41b2d125baa3feb92bd75521e6d1677",
+      "auto_sha256": "43ccf9d8949de9ddd6817e26418792d0a997f24cbe1e3de9c45fbdf2a5531821"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1080_S0_64",
+      "parent_index": 82,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/082.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/252.json",
+      "forced_sha256": "d86a53dc541c31c959d396eed605176e06ab3705feee1e6218c7a502e4c7c0c4",
+      "auto_sha256": "65120fa7a4890ea4aca159440e5908e8bcf3f8fa531615d8a89615bbf0c0640b"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_54",
+      "parent_index": 83,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/083.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/242.json",
+      "forced_sha256": "e40339f99499f55b9e995d4b2f28a4896a1d12f7e5a04f17eb70ede85a97326e",
+      "auto_sha256": "b05b2071b3164dddd872589ebe8bc70fcec703a758a6d2ca13dad46fa04e08e1"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_68",
+      "parent_index": 84,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/084.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/244.json",
+      "forced_sha256": "cc9caf36fb9063550a9c2b5f4ec33f061d78d82310121c96acc2d707f1a4bead",
+      "auto_sha256": "56b9ff035ecc232d559f5f1fd1ef24ca0a76fe3f23f051bdd59513c8654bf0fc"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_131",
+      "parent_index": 85,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/085.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/255.json",
+      "forced_sha256": "c8765eedea1f8d439dee45b373ba88a8a5ddfb507400ec93ef1a8e0d54908092",
+      "auto_sha256": "8a9109aef16e16eec03633f16687a9046ad458e292914c4a08e3adbb34b2fda5"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_76",
+      "parent_index": 86,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/086.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/261.json",
+      "forced_sha256": "8115fed0a01ed38105921fc64a749f9d63cc5fb18580be207d001f0d878e1d51",
+      "auto_sha256": "70bbf842bdb44938dd93797b7d200f13bd08636bb286eb42b08d40da24e19f78"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1082_S0_67",
+      "parent_index": 87,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/087.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/269.json",
+      "forced_sha256": "14475f4e6cac74e4c4dd1697aca5ae852147bbf53c68edd4022f4d34c6eb2819",
+      "auto_sha256": "035ee365623244449145c2f64029477c5a0d96172336d741ccb50414fb598183"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_172",
+      "parent_index": 88,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/088.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/256.json",
+      "forced_sha256": "35a484db7e440212703af90e1dc2b81277dabf40b11ea9a0bf3fa40e94358c81",
+      "auto_sha256": "50e720cf748531794dbd31f9cdd5ac42b32cbbec85d1829646455f21a4e4d829"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_65",
+      "parent_index": 89,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/089.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/260.json",
+      "forced_sha256": "a0de1e7c7f0d77f6d83558dcc7054c0a59dbab5b5a3a4dfc9fa6b5fe41eed90d",
+      "auto_sha256": "d5fb3b5a1592d3a84cacd2896c5e59f9fe0df3f7dd95a25512f4da3388c1acb9"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_266",
+      "parent_index": 90,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/090.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/281.json",
+      "forced_sha256": "ff0981e4cb5989218b0c536e71d2ece9d070b49c74eb8a12a6e5472712146336",
+      "auto_sha256": "752706463edad1f24d02f5fc40fda5a0ff5219d09f02a6bd37004ec04bba6516"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_154",
+      "parent_index": 91,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/091.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/280.json",
+      "forced_sha256": "6a553f9c7a190488b37b7101167e00a35483004d18e9d247a2c18914b1dae747",
+      "auto_sha256": "3abe09d49d5a298eeab44dee284a44a223cf5a8fea724654a28ecd8893c5d624"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_150",
+      "parent_index": 92,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/092.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/279.json",
+      "forced_sha256": "f77d9e5356477c06580b2ca9b04516b09336eaf32ba2c1b54fd8e92fd4c68b2e",
+      "auto_sha256": "fb46c36ea59128461dafb6488f9f16a037350b33045d267d33fc67c626537a5b"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_287",
+      "parent_index": 94,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/094.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/284.json",
+      "forced_sha256": "c191a82c6e8099d47bbb7412da261728cbd2aa0bf663c214dfddeedf5d682dc1",
+      "auto_sha256": "a2423c5894eafe1f91ee876edec22fc5544b77a01bdbe97139087ee36b14a594"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2012_S0_24",
+      "parent_index": 95,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/095.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/297.json",
+      "forced_sha256": "69011bfcf88fb633565137bf671d5c1d9fc0a9542d02eaa975a165bf2b4e0921",
+      "auto_sha256": "798112c6e44b61dd7f92061824b43f97db4351f67f0bd6ccaaf47565de4c6263"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_22",
+      "parent_index": 96,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/096.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/286.json",
+      "forced_sha256": "0d39d2c0e829e79eae139b80a49acb6eaa2083221ed299553a39f4fa1100a0ef",
+      "auto_sha256": "3140efa773742953f17faab196e279be1d5f88d6c3f22877cbaf5506107a2164"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_99",
+      "parent_index": 97,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/097.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/293.json",
+      "forced_sha256": "3f43ec036045dbe1ecd25643215751fa2edb2efa58e2ca53625ebe98ad8ae52d",
+      "auto_sha256": "1caa2cd0f6e82483613f23f6f76b2e6a6d816176c81773499fa3692553fbac9c"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_36",
+      "parent_index": 98,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/098.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/289.json",
+      "forced_sha256": "75a609bb88765af5166e7d79338829d464dcbe6c1d4d22e371d1952641b00bd6",
+      "auto_sha256": "219a80a1d7af56c7cf73262da15cb9272adabca4e5055881a9e19596ddb7b0f6"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2011_S0_108",
+      "parent_index": 99,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/099.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/285.json",
+      "forced_sha256": "cafa4f8fb85cd8e51c0bdeaf71a8e3e4e550e642c0d85ddfd44b77de2c274b5b",
+      "auto_sha256": "b79fc27116d00b1c8dc527273a234663d4f4e6acab8d9a6686cdd512f822ce5f"
+    }
+  ],
+  "common": {
+    "trainables": {
+      "module_family": "decoder torch.nn.LayerNorm affine weight/bias ONLY",
+      "parameters": [
+        {
+          "name": "model.decoder.layers.0.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.0.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.1.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.2.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.3.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.4.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.5.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.6.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.7.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.8.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.9.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.10.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.11.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.12.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.13.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.14.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.15.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.16.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.17.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.18.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.19.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.20.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.21.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.22.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.23.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.24.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.25.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.26.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.27.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.28.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.29.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.30.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.self_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.self_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.encoder_attn_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.encoder_attn_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.final_layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layers.31.final_layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layer_norm.weight",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        },
+        {
+          "name": "model.decoder.layer_norm.bias",
+          "shape": [
+            1280
+          ],
+          "numel": 1280
+        }
+      ],
+      "tensor_count": 194,
+      "scalar_count": 248320,
+      "total_unique_model_scalars": 1543490560,
+      "fraction": 0.00016088209830062065,
+      "forward_dtype": "bfloat16",
+      "masters_dtype": "float32",
+      "implementation": "torch.func.functional_call(model,{name:master.to(bfloat16)},strict=False,tie_weights=True); all actual model parameters requires_grad False; only enumerated fp32 masters require grad",
+      "final_decode": "copy masters rounded bf16 into exact LN names only; decode ordinary frozen-model path; restore original bf16 bytes in finally"
+    },
+    "optimization": {
+      "optimizer": "torch.optim.AdamW",
+      "lr": 0.001,
+      "weight_decay": 0,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "amsgrad": false,
+      "foreach": false,
+      "fused": false,
+      "maximize": false,
+      "steps": 2,
+      "scheduler": null,
+      "gradient_accumulation": false,
+      "gradient_clipping": null,
+      "grad_scaler": null,
+      "autocast": false,
+      "eval_mode": true,
+      "seed": 240924,
+      "reset": "new masters and optimizer from exact theta0 each objective/utterance; no optimizer/cache/gradient state transfer; reset actual bf16 LN, verify exact hash and flags; all other parameters immutable"
+    },
+    "teacher_forcing": {
+      "input": "cB+y; no appended EOS; explicit IDs (no labels auto-shift), use_cache=False, no past KV; ordinary detached non-inference encoder outputs reused",
+      "target_query": "content token t predicted by raw logits at absolute decoder index3+t for t=0..T-1; final query3+T reports EOS probability only",
+      "cB": [
+        50258,
+        50260,
+        50360,
+        50364
+      ],
+      "suppression": "generation_config.suppress_tokens all content positions, begin_suppress_tokens at t0 only; float32 log_softmax on finite allowed vocabulary, no 0*(-inf)",
+      "temperature": 1,
+      "forced_prefix_loss": false,
+      "EOS_loss": false,
+      "EOS_in_predictive_vocabulary": true,
+      "teacher_special_handling": "preserve generated content IDs including UTF8 fragments; strip only verified initial AUTO prompt/terminal EOS if present; unexpected interior control IDs INVALID; no text retokenization",
+      "valid_positions": "fixed from theta0 teacher: non-special content ID AND target not suppressed at t; log exclusions/counts; same loss mask for both steps",
+      "cap": "use complete frozen prefix up to200 generated content IDs even if capped; do not invent EOS target",
+      "empty": "exactly2 no-op AdamW steps with scalar zero connected to masters and zero gradients; log no_valid_content, loss0; final baseline identity; no drop/refill",
+      "encoder": "one original frozen encoder per utterance, detached clone outside inference_mode; no encoder recomputation during objectives; no encoder grads/cache carry"
+    },
+    "decode": {
+      "model_anchor": "results/inference_cf/p2dir/exp1_run1/manifest.json:model.files",
+      "model_config": "configs/model/whisper_large_v3.yaml",
+      "precision": "bf16/eager eval batch1",
+      "forced_path": "existing cached.Branch.step(cB then one token), capture_layer=16 PASSIVE recorder, attention=True, processed_argmax, no action hook; audit theta0 token equality vs P2SEQ S0",
+      "auto_path": "exact historical generate(task=transcribe,language=None,do_sample=False,num_beams=1,max_new_tokens=200,condition_on_prev_tokens=False)",
+      "max_new_tokens": 200,
+      "greedy": true,
+      "sampling": false,
+      "beam": 1,
+      "steering": false,
+      "D2_calls": 0,
+      "LID_calls": 0,
+      "final_condition": "forced-ZH only",
+      "runtime_failure": "nonfinite loss/grad/master/effective params/logits or reset/provider/path mismatch =>INVALID and STOP; do not change clipping/LR/precision"
+    },
+    "metrics": [
+      "canonical PIER/MER/EN-WER/ZH-CER",
+      "POI corrections/corruptions",
+      "matrix ZH/embedded EN retention",
+      "P2SEQ lexical outside-POI edits/harm with counts",
+      "deletions/insertions/substitutions",
+      "caps/severe truncation/counts/lengths",
+      "runtime/peak allocated and reserved VRAM"
+    ],
+    "uncertainty": {
+      "replicates": 2000,
+      "seed": 240924,
+      "unit": "20 sorted dialogues one utterance each, paired draws",
+      "CI": "95% pointwise percentile of corpus count-sum ratios; descriptive only, no significance gate; omit empty denominator draws, disclose counts"
+    }
+  },
+  "original_tta0_decision": {
+    "thresholds": {
+      "max_MER_increase": 0.01,
+      "max_ZH_CER_increase": 0.015,
+      "min_matrix_ZH_retention": 0.98,
+      "min_embedded_EN_retention": 0.95,
+      "max_outside_POI_harm_rate": 0.03,
+      "max_POI_corruption_rate": 0.05,
+      "max_additional_caps": 1,
+      "max_new_severe_truncations": 0,
+      "min_net_POI_error_reduction": 2,
+      "alternative_min_MER_improved_utterances": 3,
+      "alternative_improved_strictly_exceed_degraded": true,
+      "EM_entropy_relative_reduction_min": 0.01,
+      "float_guard": 1e-12
+    },
+    "useful": "net POI reduction>=2 OR >=3 utterances have fewer mixed errors than forced AND improved count>degraded count; ties not improvements",
+    "safety": "all point safety bounds, no new severe truncation; empty baseline-correct rate denominator=>None and explicitly not assessable/vacuous bound; nonempty primary reference language populations required",
+    "per_objective_precedence": [
+      "INVALID",
+      "EM_CONFIRMATION_BIAS if A1",
+      "VIABLE",
+      "NOT_VIABLE"
+    ],
+    "EM_confirmation_bias": "A1 token-weighted corpus mean entropy on fixed y_B valid positions decreases>=1% from initial AND any MER/ZH/retention/outside/corruption/truncation/cap safety bound fails; distinct from no-gain; not automatic for entropy-only shrinkage",
+    "labels": [
+      "TTA0_EM_VIABLE",
+      "TTA0_EM_NOT_VIABLE",
+      "TTA0_EM_CONFIRMATION_BIAS",
+      "TTA0_AC_VIABLE",
+      "TTA0_AC_NOT_VIABLE"
+    ],
+    "selection": "only viable =>select; neither =>NO_VIABLE; both lexicographically lower corpus MER, PIER, ZH-CER, mean per-utterance fp32-master update L2; tolerance1e-12 per float tie, then fixed A2 (problem-specific) exact tie",
+    "stage_precedence": [
+      "P2_TTA0_INVALID",
+      "P2_TTA0_OBJECTIVE_SELECTED",
+      "P2_TTA0_NO_VIABLE_OBJECTIVE"
+    ],
+    "incomplete": "any missing20/objective/output/reset/step/audit =>stage INVALID; neither objective advances"
+  },
+  "TTA0_R": {
+    "parent_label": "P2_TTA0_INVALID",
+    "relative_gradient_tolerance": 0.02,
+    "previous_relative_gradient_tolerance": 0.001,
+    "absolute_gradient_floor": 1e-08,
+    "absolute_loss_tolerance": 1e-05,
+    "diagnostic_only_basis": "recorded CPU fp32/bf16 discrepancies 0.00749-0.01044; recorded live A1 0.01025; no reference outcomes",
+    "sealed_sha256": {
+      "results/inference_cf/p2tta0/prerun_audit.json": "60a92dd0514da667497803de42ed1d46e30a4708cb372a5f7f8363b788c0a51b",
+      "results/inference_cf/p2tta0/pseudo_sealed.json": "8e5e5600e606495e13e248b2c9352acb8ce52e4a244aabeafdd588df41a0bf43",
+      "results/inference_cf/p2tta0/run1/manifest.json": "a64924cc8f125c1d6d2d9ac2cfae48477595af887006f766ec853f46b303cc1b",
+      "results/inference_cf/p2tta0/run1/rows/00.json": "f9f4570d884fa42c544712a1c5b0e368f6c6ada494e975fd7adeb33c7f3f47fe",
+      "results/inference_cf/p2tta0/run1/rows/00_final_masters_fp32.npz": "985addec0a03a32396e5c970218e346a852657dffa9c88142a760b46c6b48984",
+      "results/inference_cf/p2tta0/run1/rows/01.json": "f49a057b50b2624763130aded252fd68cda8de0be81bce163840628073183a98",
+      "results/inference_cf/p2tta0/run1/rows/01_final_masters_fp32.npz": "a7a78abdb7a711625bb72a41ae16e84a6dfd0a5cc601daa3568442f00ae3f0f7",
+      "results/inference_cf/p2tta0/run1/rows/02.json": "f01fb2bb055deb2833b6e73df7cd2606712a72bb6f53576f0bc1160d7802e2d1",
+      "results/inference_cf/p2tta0/run1/rows/02_final_masters_fp32.npz": "f4fa4cf1241e7638196b8b20741b69edf0ae2e31e8c7341bce3d496bebd2154e",
+      "results/inference_cf/p2tta0/run1/rows/03.json": "2076cb87a74ea5bb79fef6447413c8111689c89651b9f416676b00aabda702b0",
+      "results/inference_cf/p2tta0/run1/rows/03_final_masters_fp32.npz": "94774172dbddb3cf894521bf5175bf846d0ce6aa6df4ab08af4326162256d90c",
+      "results/inference_cf/p2tta0/run1/rows/04.json": "09d87e8477a1384324d096edc81fbcc73f665c204716b4abe48d1363b4f67dd1",
+      "results/inference_cf/p2tta0/run1/rows/04_final_masters_fp32.npz": "f823101b2de8a3439c4d8f524770f48895443d439bbb5923f55a1a2013140a74",
+      "results/inference_cf/p2tta0/run1/rows/05.json": "77acb09a41c62a966bf8a6a298e5d6ab63e1b82dbafd9a592629390f9d07663b",
+      "results/inference_cf/p2tta0/run1/rows/05_final_masters_fp32.npz": "f774c1b56a349f55201489b1c1028c1f0665a5279f10e472c6e2f8802b0b965b",
+      "results/inference_cf/p2tta0/run1/rows/06.json": "fcad1860d5663b996dd43d3781529ba407f88e3a3a2335ba57fefb3eb949b1b9",
+      "results/inference_cf/p2tta0/run1/rows/06_final_masters_fp32.npz": "6d3d71bd7e761106fcd63ba38ca640b32f88e0a4bdd266422699366e4e3bdc57",
+      "results/inference_cf/p2tta0/run1/rows/07.json": "7419a93f337a32db576874bb86de4baffeb7407c007a5c7e8252bb13cb9e9e98",
+      "results/inference_cf/p2tta0/run1/rows/07_final_masters_fp32.npz": "d7f490c870506ef2416cb1ad87b48297f31b63b33c5299e2e14b79a650b9f775",
+      "results/inference_cf/p2tta0/run1/rows/08.json": "d5431cbb5476f7e44c77ae642a508abd2dcb05f8ff8df77452f4ff9f613e083a",
+      "results/inference_cf/p2tta0/run1/rows/08_final_masters_fp32.npz": "2f07f8f34dcb51c0eecb3b7ce9e93e242334c1a151c16c2f18207461d4c93549",
+      "results/inference_cf/p2tta0/run1/rows/09.json": "58f22f1d15c46d377ca09a3127b3076633b3def3dec276e3fb77838e7a695279",
+      "results/inference_cf/p2tta0/run1/rows/09_final_masters_fp32.npz": "3cb37c1aeac12aa6ef26ac71117c5309c56b3a930a6ae8cd3fd00cd51e7fce7d",
+      "results/inference_cf/p2tta0/run1/rows/10.json": "ee07590707d062241de8e89709631560b78d32fe902694400e094bb7d24332c5",
+      "results/inference_cf/p2tta0/run1/rows/10_final_masters_fp32.npz": "dbada16fb4c0512c6cc04e376b679ceec196f28456d15f06ecd69f61df4fe0b3",
+      "results/inference_cf/p2tta0/run1/rows/11.json": "fd61db84fe35fc7231ebd6001d6ae7c9252f1430d64fe1571e249cac5ce75459",
+      "results/inference_cf/p2tta0/run1/rows/11_final_masters_fp32.npz": "ef1c1654d7723831c75416646d6fb565a249d68c30592c837eedd37a9e07245f",
+      "results/inference_cf/p2tta0/run1/rows/12.json": "393d51979061ebbec311ce2a51e4e13ff54aa3f696f89d8641991095f5bb84a9",
+      "results/inference_cf/p2tta0/run1/rows/12_final_masters_fp32.npz": "569c83e55742234938c3f02580e34217b3303f59068848ba81fa35b880ca64d8",
+      "results/inference_cf/p2tta0/run1/rows/13.json": "193aa2d4e9d2ac23e7bfcf49cd177f3e668f9c10517006651b7da0ac55b2fc38",
+      "results/inference_cf/p2tta0/run1/rows/13_final_masters_fp32.npz": "839f35aa2dbd37e7b6dfef90b0b4e8ea47b751dc1bd2b152b995ecb6672b89e0",
+      "results/inference_cf/p2tta0/run1/rows/14.json": "aa11494a2963e23c5d86267d7015527c3f9723131393ecce9c0041e1323074b1",
+      "results/inference_cf/p2tta0/run1/rows/14_final_masters_fp32.npz": "b0fa9315ba06765c01f0e82187a632203ee8328bacc9e44704650147eb52b45e",
+      "results/inference_cf/p2tta0/run1/rows/15.json": "bbe1f05231ea0a1e75cabf597bb74b1821545ecd60b2c25de1f96b602ef2668a",
+      "results/inference_cf/p2tta0/run1/rows/15_final_masters_fp32.npz": "c01b721ac8ab3d7056cee9b3001cf83825422693ed5511ee48b9bd21a7bc08ae",
+      "results/inference_cf/p2tta0/run1/rows/16.json": "6945d713a3c5de6acfba64a9c932baa71f0486f1b640caf60bac04ef6f50a7ad",
+      "results/inference_cf/p2tta0/run1/rows/16_final_masters_fp32.npz": "7b05fd416c9b4e6e3859d21b7d6d312c80ac4678c1fdd1c7f5fc0d2a07fe7bb8",
+      "results/inference_cf/p2tta0/run1/rows/17.json": "449cc07e3475b486825d1643ae3138676178ffa5066e7bc89cd8b59279888fd7",
+      "results/inference_cf/p2tta0/run1/rows/17_final_masters_fp32.npz": "e415ddb1cff42596785bb54f8164c3f8ae9109d9dc245f7668a8e60bdb979822",
+      "results/inference_cf/p2tta0/run1/rows/18.json": "bf1caa7ddc466fe3230db46c51ca4d1799572af6ec222f06c1036f7da0022f3b",
+      "results/inference_cf/p2tta0/run1/rows/18_final_masters_fp32.npz": "da518558f08205726139b7ecba46762d7d48532f0fe9d5f0337c33263e5c18bd",
+      "results/inference_cf/p2tta0/run1/rows/19.json": "ae7714f339bbc1989b2499735d328f9930b621bed30f1d7889993588dd3c4edf",
+      "results/inference_cf/p2tta0/run1/rows/19_final_masters_fp32.npz": "e032f2f80a221949c038ee9746d9127e2626bdf481cb8f19582c09a084c44f82",
+      "results/inference_cf/p2tta0/run1/runtime.json": "4e6b920f114c8a48f69384b1080530e7cd9803f35aa657b92977baf372e86df6",
+      "results/inference_cf/p2tta0/run1/slurm-57868.err": "50fdb2ea8cba3a87bdb5ca683789d3cc42c86af46d26ba268a1f50bbf48704f7",
+      "results/inference_cf/p2tta0/run1/slurm-57868.out": "feb832727404ee07b70975532eaa4059c4abd83f3870ba84d22dcfd18f4699e3",
+      "results/inference_cf/p2tta0/run1/theta0_ln_fp32.npz": "25b890d0d859422650b68cb84bac4a865d88a541591499ce7ff2a5ac27a231b4",
+      "results/inference_cf/p2tta0/run1_audit.json": "d491c8e2c593c58e1d3a74a49a66da4c1eeb5103968a40416fda59ee0590079e",
+      "results/inference_cf/p2tta0/run1_invalid_record.json": "73976885a354feb2760f60c85111560e9002220ea74513e24aa24de829a9d1e6",
+      "results/inference_cf/p2tta0/run1_live_audit_diagnostic.json": "c0c3ac6c77e3f390bf259b1d42981158ed2445551ec1133735f76bfa2729b5c9"
+    },
+    "baseline20": [
+      {
+        "utterance_id": "ZH-CN_U0011_S0_111",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/000.json",
+        "forced_row_sha256": "413291f12f955e19cfbfc8461d1b37f63f5fca2ab4d2ba158120114b31c2d793",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/001.json",
+        "auto_row_sha256": "febe425f40a6590596abbd28c3b132bfbf2fd9f34743b23350a21db10b25bb5b",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0022_S0_91",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/005.json",
+        "forced_row_sha256": "70eebe9fd774152e71a6d74e2bf22132df70bf70c9431451b341929ea127810f",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/029.json",
+        "auto_row_sha256": "7b9ff149f2578080b08dc56fb87e39841c0e5d677210e2b0d4990443fee83a82",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0023_S0_111",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/010.json",
+        "forced_row_sha256": "76e433127c8bf1372f7c5e0550d8af73d2dd1396e4f65c440b50d9ad97e244e8",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/032.json",
+        "auto_row_sha256": "e60cf929f1929e05a7c4acf4b9b0f1edba1189ec7477d153160b81def3a9c170",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0027_S0_116",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/015.json",
+        "forced_row_sha256": "945dde11e9d96222fd33ab679dd9075ddc986f3fd8931bb675ae975dddc5a3a5",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/046.json",
+        "auto_row_sha256": "af415cfd437fe18c3da5240539f935e5c71b6caf051b4d850b867ecc9a32a664",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0029_S0_472",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/020.json",
+        "forced_row_sha256": "82421436828923c6585569f5e9ff22b4265e0357c9e5436350c2db224932a8ee",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/067.json",
+        "auto_row_sha256": "cfeb5156c582f612814171118492acb4f2b5d66634d340f9f6f59ffac93eb68f",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0039_S0_380",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/025.json",
+        "forced_row_sha256": "109b81d1fd5454963cce91efb043b4d9f460b6744f5326d5e69adabe21c173a3",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/077.json",
+        "auto_row_sha256": "0da4bf3e34622211abfe84b2770af3ebeb7d86a622d64286f3db925c0652f0e5",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0085_S0_185",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/030.json",
+        "forced_row_sha256": "daa945c5b6bcb5a6699dcd7d8582da5858d07945c8459aea12d81a404eaf7f57",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/094.json",
+        "auto_row_sha256": "1e333f9d45940ffe32daee4a5ccf6d365f7e04aaed9ec7aeba61357db1f311ef",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0091_S0_196",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/035.json",
+        "forced_row_sha256": "865ba24f829e31c345c9e0efb999c58bd12e726dbf63168f4b354ca7da6fb5fe",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/106.json",
+        "auto_row_sha256": "b2f07b13769fc37de54fd083a7d0504743f7f71a40a8a7e9ab31b2a13e61c170",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U0102_S0_80",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/040.json",
+        "forced_row_sha256": "e11c6b870e2fb801ed1ffd0e8f3c76226a0eb1f24206c98ec4a0e3a03d1cd5b1",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/134.json",
+        "auto_row_sha256": "f7360dc59fa185869fae067870dcdf7ed677695aa01d09a2ca4c9f9bc060ab9f",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1001_S0_402",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/045.json",
+        "forced_row_sha256": "04be7049301e43cb10b73d62b0e97319e6576d835b672f2e22d286c29c907c98",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/140.json",
+        "auto_row_sha256": "178d4a08daea9ab42d955eae2c2e27ee11ed16219721aff79fecc17b90d1ab25",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1003_S0_141",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/050.json",
+        "forced_row_sha256": "2285f3d1564fc404cd7a35abbb26b887daab32d9740822b4d57a9ff7ebce5aa4",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/152.json",
+        "auto_row_sha256": "7dc6217fcadd60b290e52da68e0caf43812c8fd3d23db2e6206926663cdb8f35",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1022_S0_71",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/055.json",
+        "forced_row_sha256": "77ae4eb4dacbd0156fbcfee2668240bc6e773d3671a7cc8b8720260463807c56",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/179.json",
+        "auto_row_sha256": "c945edef5b3c6537e556e7709147518f3f333b80d9b63c31bf1fd071e539f3ca",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1027_S0_199",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/060.json",
+        "forced_row_sha256": "cf31d3e7f0b57274114c867f0743aabba0c2cbafac0d0eb22fa080fd6e026977",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/180.json",
+        "auto_row_sha256": "0e29777fbb1cd83644748d4e0bdc8a69ffc210e3c33eb128c188d1cfa6f9056d",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1034_S0_53",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/065.json",
+        "forced_row_sha256": "a9b1f935ebd2db34e31fdd10cb5b5bc8766dab014cf498d00e7e698400e5d9b9",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/206.json",
+        "auto_row_sha256": "f83b96cb905a28a50c5375ce8d7a46588cd5a5414fd5e5757ff87c12d575e6d3",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1064_S0_110",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/070.json",
+        "forced_row_sha256": "8e0f789941a4d66c15e2b227e46c01caad9e95080509b5a81acd66d40e9b5741",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/219.json",
+        "auto_row_sha256": "061b6fe5a7eecfd2eb3b57431daf988ec8e7f3525383808fa6e32d2a72b11a7a",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1076_S0_24",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/075.json",
+        "forced_row_sha256": "5446d102c22b1c93b6c9d1108ecb41d70209258a35ed077f8fdf4316ff369b96",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/234.json",
+        "auto_row_sha256": "424e6f8da798fc26eba4c3827abfd3beb0ab0bf314a23b4cd02fa34a22d155ee",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1079_S0_23",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/080.json",
+        "forced_row_sha256": "8d5ade4dccce483920c011f268b530900309af92a2c2605bb45685bc8f558a7b",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/241.json",
+        "auto_row_sha256": "e6e79005ca2224f72eb508d592b6994d601b011442ae8d273d4833a3156a79a2",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U1081_S0_131",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/085.json",
+        "forced_row_sha256": "c8765eedea1f8d439dee45b373ba88a8a5ddfb507400ec93ef1a8e0d54908092",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/255.json",
+        "auto_row_sha256": "8a9109aef16e16eec03633f16687a9046ad458e292914c4a08e3adbb34b2fda5",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U2004_S0_266",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/090.json",
+        "forced_row_sha256": "ff0981e4cb5989218b0c536e71d2ece9d070b49c74eb8a12a6e5472712146336",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/281.json",
+        "auto_row_sha256": "752706463edad1f24d02f5fc40fda5a0ff5219d09f02a6bd37004ec04bba6516",
+        "auto_system": "B0_AUTO"
+      },
+      {
+        "utterance_id": "ZH-CN_U2012_S0_24",
+        "forced_row": "results/inference_cf/p2seq/run1/rows/095.json",
+        "forced_row_sha256": "69011bfcf88fb633565137bf671d5c1d9fc0a9542d02eaa975a165bf2b4e0921",
+        "forced_system": "S0",
+        "auto_row": "results/inference_cf/p2_A_r1_L16/rows/297.json",
+        "auto_row_sha256": "798112c6e44b61dd7f92061824b43f97db4351f67f0bd6ccaaf47565de4c6263",
+        "auto_system": "B0_AUTO"
+      }
+    ],
+    "no_new_adaptation": true,
+    "pre_evaluation_gate": "PASS_TO_P2_TTA0_R_EVALUATION",
+    "post_audit": "P2_TTA0_R_AUDIT: PASS",
+    "rules": "original_tta0_decision exact copy; original TTA0 losses/masks/decode/viability/confirmation bias/tie break unchanged",
+    "labels": [
+      "P2_TTA0_R_STILL_INVALID",
+      "P2_TTA0_R_OBJECTIVE_SELECTED",
+      "P2_TTA0_R_NO_VIABLE_OBJECTIVE"
+    ],
+    "new_gpu_jobs": 0
+  },
+  "MAP": {
+    "run_only_if": "audited P2_TTA0_R_NO_VIABLE_OBJECTIVE",
+    "panel": "docs/inference_cf/P2_TTA_MAP_PANEL24.json",
+    "panel_sha256": "327272ec1481848aa8797103dae8be7ad0831770898350395c345efffb95dce6",
+    "panel_algorithm": "docs/inference_cf/P2_TTA_MAP_PANEL_CONTRACT.md",
+    "objectives": [
+      "A1_GREEDY_EM",
+      "A3_SOFT_AUTO_KL"
+    ],
+    "A1": {
+      "name": "GREEDY_EM",
+      "teacher": "theta0 B0_FORCED generated content IDs only, sealed before updates",
+      "loss": "mean over fixed valid content t of -sum over allowed v p_t(v)*log p_t(v); all predictive allowed tokens including EOS; no CE/pseudo-label term"
+    },
+    "A3": {
+      "temperature": 1,
+      "loss": "mean valid t sum allowed v q_t(v)*(log q_t(v)-log p_t(v)); full vocabulary, stop-gradient theta0 AUTO teacher; forced-ZH student; identical y_A content prefixes",
+      "AUTO_condition": "theta0 HF Whisper detect_language on detached encoder, then SOT/native-language/transcribe/no-timestamps; never substitute EN",
+      "teacher": "existing theta0 AUTO greedy content IDs; q/logq computed once before updates, detached float32; no top-k",
+      "mask": "same original content target validity and generation suppression for teacher and student; EOS excluded target but included predictive class"
+    },
+    "mechanism": {
+      "informative_L0_min": 0.0001,
+      "minimum_informative_rows": 6,
+      "relative_objective_reduction_min": 0.1,
+      "fraction_informative_rows_reducing_at_least_10pct_min": 0.6,
+      "D_cond0_material_min_nats": 0.01,
+      "D_cond_relative_reduction_min": 0.1,
+      "disagreement_output_change_fraction_min": 0.25,
+      "disagreement_toward_AUTO_fraction_min": 0.25,
+      "summed_token_distance_to_AUTO_reduction_min": 0.1,
+      "LOW_DISAGREEMENT_if_total_D_below": 6
+    },
+    "outcome_thresholds": {
+      "max_MER_increase": 0.01,
+      "max_ZH_CER_increase": 0.015,
+      "min_matrix_ZH_retention": 0.98,
+      "min_embedded_EN_retention": 0.95,
+      "max_outside_POI_harm_rate": 0.03,
+      "max_POI_corruption_rate": 0.05,
+      "max_additional_caps": 1,
+      "max_new_severe_truncations": 0,
+      "min_net_POI_error_reduction": 2,
+      "alternative_min_MER_improved_utterances": 3,
+      "alternative_improved_strictly_exceed_degraded": true,
+      "EM_entropy_relative_reduction_min": 0.01,
+      "float_guard": 1e-12
+    },
+    "primary_diagnosis_precedence": [
+      "INVALID",
+      "OBJECTIVE_NOT_OPTIMIZED",
+      "SEQUENCE_INSTABILITY",
+      "OBJECTIVE_PROMISING",
+      "TEACHER_NOT_SAFE",
+      "CONDITION_GAP_NOT_CLOSED",
+      "SEQUENCE_LEVERAGE_LIMIT"
+    ],
+    "selection": "only OBJECTIVE_PROMISING; lower MER, PIER, ZH-CER, outside harm, mean fp32 update L2; per-component float tie 1e-12; exact tie A3",
+    "labels": [
+      "P2_TTA_MAP_INVALID",
+      "P2_TTA_MAP_OBJECTIVE_SELECTED",
+      "P2_TTA_MAP_NO_VIABLE_OBJECTIVE"
+    ],
+    "pre_audit": "PASS_TO_P2_TTA_MAP",
+    "post_audit": "P2_TTA_MAP_AUDIT: PASS",
+    "jobs_max": 1,
+    "target_minutes": 15,
+    "hard_minutes": 60,
+    "diagnosis_predicates": {
+      "optimized": "at least6 L0>=1e-4 rows; token-weighted relative objective decrease>=0.10; ceil(0.60*n_informative) rows individually decrease>=0.10",
+      "gap_closed": "D token-weighted D_cond0>=0.01 AND relative D_cond decrease>=0.10",
+      "sequence_movement": "ceil(0.25*n_D) D content token sequences change from FORCED",
+      "toward_AUTO": "ceil(0.25*n_D) D token Levenshtein distances strictly decrease AND summed D distance decreases>=0.10",
+      "teacher_attribution": "candidate unsafe AND toward_AUTO AND AUTO unsafe by same frozen point bounds",
+      "strong_instability": "new severe truncation OR extra caps>1 OR deletion errors/reference mixed units increase>0.01 AND total content-length ratio<0.90",
+      "sequence_instability": "candidate unsafe AND (strong_instability OR NOT teacher_attribution)",
+      "promising_A1": "optimized AND original TTA0 safe AND original TTA0 useful",
+      "promising_A3": "promising_A1 AND gap_closed AND sequence_movement AND toward_AUTO AND n_D>=6",
+      "condition_gap_not_closed": "not promising and not gap_closed, after higher-precedence labels",
+      "sequence_leverage_limit": "remaining non-promising cases after higher-precedence labels; record absent/away/unhelpful output movement"
+    }
+  },
+  "TTA1": {
+    "run_only_if": "exactly one objective in audited immutable R or MAP selection artifact",
+    "inheritance_contract": "docs/inference_cf/P2_TTA1_INHERITANCE_CONTRACT.md",
+    "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+    "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+    "systems": [
+      "B0_FORCED",
+      "B0_AUTO",
+      "SELECTED_TTA"
+    ],
+    "thresholds": {
+      "max_MER_increase": 0.01,
+      "max_ZH_CER_increase": 0.015,
+      "min_matrix_ZH_retention": 0.98,
+      "min_embedded_EN_retention": 0.95,
+      "max_outside_POI_harm_rate": 0.03,
+      "max_POI_corruption_rate": 0.05,
+      "max_additional_caps": 1,
+      "max_new_severe_truncations": 0,
+      "min_net_POI_error_reduction": 5,
+      "EM_entropy_relative_reduction_min": 0.01,
+      "float_guard": 1e-12,
+      "min_absolute_PIER_reduction": 0.005
+    },
+    "benefit": "both net POI reduction>=5 AND PIER decrease>=0.005; no utterance-count alternative; descriptive CI, no significance gate",
+    "labels": [
+      "P2_TTA1_INVALID",
+      "P2_TTA1_SEQUENCE_DAMAGE",
+      "P2_TTA1_SUPPORTED",
+      "P2_TTA1_NO_USEFUL_GAIN"
+    ],
+    "pre_audit": "PASS_TO_P2_TTA1",
+    "post_audit": "P2_TTA1_AUDIT: PASS",
+    "jobs_max": 1,
+    "target_minutes": 60,
+    "hard_minutes": 180,
+    "adapted_reuse": "reuse only independently audited exact same objective/settings/theta0 episodes; all compatible rows, no outcome filtering; MAP first then R; otherwise new episodes in single job"
+  },
+  "audit": {
+    "relative_gradient_tolerance": 0.02,
+    "absolute_loss_tolerance": 1e-05,
+    "absolute_gradient_floor": 1e-08,
+    "independent": "no import primary analysis/decision; own formula, counts, bootstrap, labels and selection; canonical evaluator primitives allowed",
+    "float64": "existing numerical artifact exact primary/auditor gradient equivalence and repeated fp32 equivalence retained; new A3 formula tested float64 independently before run",
+    "github_gate": "resolved manifest/preaudit/teacher seals/selection artifact pushed before dependent outcome",
+    "partial": "missing outputs, nonfinite, wall-clock budget overrun or sealed-input hash mismatch => invalid STOP; token-cap safety handled by outcome rules"
+  },
+  "compute": {
+    "design_session_jobs": 0,
+    "new_scientific_jobs_max": 2,
+    "stages_parallel": false,
+    "pending_running_max": 1,
+    "submit": "sbatch",
+    "allocation": "H100 MIG3g.40gb,4CPU,48G",
+    "MAP_optimizer_steps": 96,
+    "TTA1_optimizer_steps_max": 200,
+    "budget_failure": "seal partial INVALID, stop; no extra job or expanded budget"
+  },
+  "firewall": {
+    "allowed": [
+      "already-exposed D-dev-select fixed100",
+      "sealed TTA0 run1",
+      "MAP theta0-only derived24",
+      "existing inference_cf artifacts"
+    ],
+    "forbidden": [
+      "router-calib new role",
+      "D-dev-confirm",
+      "D-test",
+      "P3",
+      "full300",
+      "SEAME",
+      "CS-FLEURS",
+      "ViMedCSS",
+      "ASCEND",
+      "transfer/fresh validation",
+      "steering/D2/continual adaptation"
+    ]
+  },
+  "github": "checks -> inspect diff -> commit -> push origin HEAD:cs-asr-steer-inf; no force, main merge, PR",
+  "source_anchor_policy": "Original source hashes are historical provenance at starting_commit; verify historical bytes through git if extended during implementation. New implementation code hashes must be frozen in resolved pre-run manifest. Immutable scientific configs/results/panels remain byte-identical."
+}

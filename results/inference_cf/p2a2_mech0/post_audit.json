@@ -1,0 +1,72 @@
+{
+ "A2_CONFIRMATION_READY": "YES",
+ "checks": {
+  "M_stop_summary_agrees": true,
+  "aggregates": true,
+  "bootstrap_agrees": true,
+  "counts": true,
+  "dialogues": true,
+  "exactly_300_rows": true,
+  "fractions_agree": true,
+  "geometry_margins_actions_recomputed": true,
+  "groups_agree": true,
+  "label_agrees": true,
+  "live_audit_2pct": true,
+  "lodo_agrees": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "readiness_agrees": true,
+  "reconstruction_states_norms_recomputed": true,
+  "retention_sensitivity_recomputed": true,
+  "runtime": true,
+  "seal_committed_unchanged": true,
+  "severe_agrees": true,
+  "sources_at_commit": true
+ },
+ "failures": {
+  "geometry": [],
+  "retention": [],
+  "rows": []
+ },
+ "git_commit": "9ed40e7ff5787e5f23049e67356f0697916c7977",
+ "independent": {
+  "EOS_group": {
+   "dlg": 10,
+   "mx": 323,
+   "pdlg": 6,
+   "prow": 8,
+   "rows": 12,
+   "zh": 300
+  },
+  "F_DEL_EOS": 0.9706744868035191,
+  "F_ZH_EOS": 0.9646302250803859,
+  "aggregates": {
+   "A2": [
+    3037,
+    1012,
+    4126
+   ],
+   "B0": [
+    3309,
+    1074,
+    4456
+   ]
+  },
+  "dM2_median": 0.6250000298023224,
+  "dM2_pos_rate": 1.0,
+  "missed_severe": [],
+  "nonEOS_group": {
+   "dlg": 13,
+   "mx": 7,
+   "pdlg": 8,
+   "prow": 11,
+   "rows": 32,
+   "zh": -28
+  }
+ },
+ "label": "P2_A2_MECH0_TERMINATION_DOMINANT",
+ "phase": "full",
+ "schema": "p2_a2_mech0_post_audit_v1",
+ "verdict": "P2_A2_MECH0_AUDIT: PASS"
+}

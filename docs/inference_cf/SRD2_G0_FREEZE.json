@@ -1,0 +1,38 @@
+{
+  "schema": "srd2_g0_design_freeze_index_v1",
+  "initial_local_remote_head": "b7e7b659b9ba06c305dbb422a0e8ecafa7fd6861",
+  "status": "DESIGN_FROZEN_IMPLEMENTATION_PENDING",
+  "files": {
+    "configs/inference_cf/srd2_g0.json": "sha256:218b3be997e8fafc102f7ec866b0a82b9925bb180e671f714c651bddee392eb9",
+    "docs/inference_cf/SRD2_G0_SPEC.md": "sha256:120e3bf1c2df874a4eef5e179a0bf7b55cbdb6f839b487b4708f0aeba4fef436",
+    "docs/inference_cf/SRD2_G0_DESIGN.md": "sha256:f1af51ecaacedf92e36f39b815e19adc6540ab717b94ed2e204141643d8b170f",
+    "docs/inference_cf/SRD2_G0_FIREWALL.md": "sha256:811e320ebaa6f8516019a05d55bee87aad26f0a0cebb45501cc2c43d451a5880",
+    "docs/inference_cf/SRD2_G0_CLAUDE_HANDOFF.md": "sha256:554568a0ab255b64ec5138c15d42306fdfc282b4557a078ce08c67d910f4015e",
+    "docs/inference_cf/SRD2_G0_COMPUTE_FEASIBILITY.md": "sha256:292b306a20d61a6386e803d8ab85ad7b1339153ec170eac87d9fa14f972dbb9c",
+    "docs/inference_cf/SRD2_G0_POPULATION.json": "sha256:ab76b61c890138e176804b81b60316d7ea0aaf067f281f08c6534717e7dd65b6",
+    "experiments/inference_cf_srd2_g0_inventory.py": "sha256:7eafed3229d107ee8e6cf08b84a413f99e53ec8c93cc22b9b77da20f69e3de55",
+    "tests/test_srd2_g0_freeze.py": "sha256:550471e81294d4de3c30c6de52b42cad5092435a33808e928e6be49f49dc5da8"
+  },
+  "scientific_model_forwards": 0,
+  "scientific_jobs_submitted": 0,
+  "new_lexical_outcomes_inspected": false,
+  "independent_pre_run_audit": "REQUIRED_AFTER_IMPLEMENTATION; not yet performed",
+  "source_pins": "configs/inference_cf/srd2_g0.json:source_sha256/model/environment",
+  "historical_tracked_files_modified": false,
+  "validation": {
+    "focused_contract_tests_passed": 20,
+    "selected_historical_regression_cases_passed": 36,
+    "historical_suites": [
+      "test_inference_cf_p0_r2",
+      "test_inference_cf_p2dir_directions",
+      "test_inference_cf_p2dir_audit",
+      "test_inference_cf_p2dir_protocol"
+    ],
+    "selection": "pure numerical/provenance/statistics/schema cases; all model-forward cases deliberately excluded",
+    "model_checkpoint_hash_files_verified": 11,
+    "selected_audio_hashes_verified": 400,
+    "parquet_ID_role_projection_verified": true,
+    "all_quantitative_predicates_machine_readable": true
+  },
+  "freeze_index_hash": "sha256:b929fb03283bd35d296e9f420a01bbea83cb0526d0207feaf0314536f5ec1893"
+}

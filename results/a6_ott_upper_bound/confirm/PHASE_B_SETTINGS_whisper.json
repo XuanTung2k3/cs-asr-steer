@@ -1,0 +1,44 @@
+{
+  "model": "whisper",
+  "phase_a_selection_sha256": "sha256:46601549573c3fb9a9f07d773772b22e1cd6714a0dd3090eb0b977c403d94aa9",
+  "schema_version": "a6_ott_phase_b_settings_v1",
+  "settings": [
+    {
+      "family": "add_unique",
+      "layer": 4,
+      "rho": 0.5,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 20,
+      "rho": 1.0,
+      "side": "encoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 25,
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "add_unique",
+      "layer": 24,
+      "rho": 0.5,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 11,
+      "rho": 2.0,
+      "side": "decoder"
+    },
+    {
+      "family": "conditioning_cs",
+      "layer": 0,
+      "rho": 0.5,
+      "side": "decoder"
+    }
+  ],
+  "status": "FROZEN_FROM_PHASE_A_SELECTION"
+}

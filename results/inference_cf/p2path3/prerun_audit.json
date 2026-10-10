@@ -1,0 +1,33 @@
+{
+ "checks": {
+  "anchors_and_helpers_unchanged": true,
+  "auditor_independent": true,
+  "barrier_before_remaining88": true,
+  "compute_plan": true,
+  "controller_input_allowlist": true,
+  "controller_unchanged_semantics": true,
+  "execution_order": true,
+  "frozen:configs/inference_cf/p2_path3.json": true,
+  "frozen:docs/inference_cf/P2_PATH3_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_PATH3_PANEL.json": true,
+  "frozen:docs/inference_cf/P2_PATH3_SPEC.md": true,
+  "no_G2": true,
+  "no_cross_model_cache": true,
+  "no_outcome": true,
+  "own_rule_truth_tables": true,
+  "panel_hash": true,
+  "parent_bytes": true,
+  "partitions_independent": true,
+  "plan_committed": true,
+  "reference_barrier": true,
+  "replay_exact_no_tolerance": true,
+  "safety_thresholds_TTA1": true,
+  "teachers_classes_masks": true,
+  "tests_present": true,
+  "two_instances_no_alias": true
+ },
+ "failures": [],
+ "git_commit": "ddfa7872c67974d4b2109380f2570cf47f6039dd",
+ "schema": "p2_path3_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_PATH3"
+}

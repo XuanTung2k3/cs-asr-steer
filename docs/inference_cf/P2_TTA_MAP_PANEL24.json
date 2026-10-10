@@ -1,0 +1,256 @@
+{
+  "schema": "p2_tta_map_panel24_v1",
+  "role": "already-exposed D-dev-select",
+  "selection_inputs": "theta0 decoded text equality only; no references/adapted outputs",
+  "parent": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+  "parent_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+  "algorithm": "docs/inference_cf/P2_TTA_MAP_PANEL_CONTRACT.md",
+  "parent_D_count": 12,
+  "parent_A_count": 88,
+  "parent_D_dialogues": 9,
+  "LOW_DISAGREEMENT": false,
+  "utterances": 24,
+  "dialogues": 20,
+  "rows": [
+    {
+      "dialogue_id": "CSD0011",
+      "utterance_id": "ZH-CN_U0021_S0_513",
+      "parent_index": 9,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/009.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/019.json",
+      "forced_sha256": "6ab9aa349b842ea7496a1c69255ee84fb1d86033b01bfd056d5dfa54f4b99726",
+      "auto_sha256": "4f8e538e87e8751b2fddf23fdc3b6c510f5079c74ab1574d1d387227b0793e5f"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_666",
+      "parent_index": 11,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/011.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/038.json",
+      "forced_sha256": "b2c56c9402e2d4ccbdae1c16f073c0b7302e2cc0a4d33ea32883791aa39eafb9",
+      "auto_sha256": "18eafa258e95ece4c160d1ac1ddfb9cba4201c50acd5953f446f17732780badc"
+    },
+    {
+      "dialogue_id": "CSD0015",
+      "utterance_id": "ZH-CN_U0029_S0_472",
+      "parent_index": 20,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/020.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/067.json",
+      "forced_sha256": "82421436828923c6585569f5e9ff22b4265e0357c9e5436350c2db224932a8ee",
+      "auto_sha256": "cfeb5156c582f612814171118492acb4f2b5d66634d340f9f6f59ffac93eb68f"
+    },
+    {
+      "dialogue_id": "CSD0020",
+      "utterance_id": "ZH-CN_U0039_S0_80",
+      "parent_index": 29,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/029.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/079.json",
+      "forced_sha256": "6c3b67dc64fb6e326796fe348fbc90bc683bd63067e3e90bf404649437328011",
+      "auto_sha256": "7d6dd135bec6b00300845e5ff5644a9825111188bde98fcfb724ddb81f6c57ba"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0091_S0_68",
+      "parent_index": 37,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/037.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/112.json",
+      "forced_sha256": "728985dc3ebe409a8d78374c8e62dcca099b1d799f52b097a70e5f85942d0a54",
+      "auto_sha256": "3b9345e4f6991b9978147c86ef6c29a40a1c19bd804a168ac21f71c8003295ec"
+    },
+    {
+      "dialogue_id": "CSD0051",
+      "utterance_id": "ZH-CN_U0102_S0_80",
+      "parent_index": 40,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/040.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/134.json",
+      "forced_sha256": "e11c6b870e2fb801ed1ffd0e8f3c76226a0eb1f24206c98ec4a0e3a03d1cd5b1",
+      "auto_sha256": "f7360dc59fa185869fae067870dcdf7ed677695aa01d09a2ca4c9f9bc060ab9f"
+    },
+    {
+      "dialogue_id": "CSD0502",
+      "utterance_id": "ZH-CN_U1003_S0_61",
+      "parent_index": 52,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/052.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/157.json",
+      "forced_sha256": "3318fda8f17a9b7aa47225d1c7c23a69df3596e3082e068a8b923a1984b75fc0",
+      "auto_sha256": "e26a9dcbea4588900dc6f01bae06b8954184bd3bf1a5c7c44d77b7baf811e41f"
+    },
+    {
+      "dialogue_id": "CSD0540",
+      "utterance_id": "ZH-CN_U1079_S0_23",
+      "parent_index": 80,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/080.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/241.json",
+      "forced_sha256": "8d5ade4dccce483920c011f268b530900309af92a2c2605bb45685bc8f558a7b",
+      "auto_sha256": "e6e79005ca2224f72eb508d592b6994d601b011442ae8d273d4833a3156a79a2"
+    },
+    {
+      "dialogue_id": "CSD1002",
+      "utterance_id": "ZH-CN_U2004_S0_104",
+      "parent_index": 93,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/093.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/274.json",
+      "forced_sha256": "c6d3e0bf89cf56b0f2f845cd2d4db122a7461d032b3bcb0a2c4ce0128c2c6a6d",
+      "auto_sha256": "c15514c9cdd5a1d53a8f94584c7eaec2eca8d4285b13eb6bb977ffa3032646c1"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_87",
+      "parent_index": 13,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/013.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/041.json",
+      "forced_sha256": "9405836e0a02bff4f0d848c30bfce1c5ab098cc997ebe8694cb7c5383d5b699f",
+      "auto_sha256": "93aab1e0564630a266f96ec5c998aefef20a8372ad6869c036e5251bdc8b182a"
+    },
+    {
+      "dialogue_id": "CSD0046",
+      "utterance_id": "ZH-CN_U0092_S0_101",
+      "parent_index": 39,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/039.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/115.json",
+      "forced_sha256": "7ae60fe5d41ab36845c5584f6e095b3f8c12ca3faea48e9d9347869a6557f355",
+      "auto_sha256": "16a5fa15c91cc5d8959d3f98ecaea8d6f98cf526905ef18613d2bb67c44b1bb8"
+    },
+    {
+      "dialogue_id": "CSD0012",
+      "utterance_id": "ZH-CN_U0023_S0_664",
+      "parent_index": 14,
+      "group": "D",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/014.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/037.json",
+      "forced_sha256": "6abc10eacd52732731477f424f094f2a8499897754fa7beee2213f9d09930cc4",
+      "auto_sha256": "920d714e44034a8456a7c0beba7509de4cf53e17e24a7ee6e40a61f3d6a9d1cc"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_111",
+      "parent_index": 0,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/000.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/001.json",
+      "forced_sha256": "413291f12f955e19cfbfc8461d1b37f63f5fca2ab4d2ba158120114b31c2d793",
+      "auto_sha256": "febe425f40a6590596abbd28c3b132bfbf2fd9f34743b23350a21db10b25bb5b"
+    },
+    {
+      "dialogue_id": "CSD0014",
+      "utterance_id": "ZH-CN_U0027_S0_116",
+      "parent_index": 15,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/015.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/046.json",
+      "forced_sha256": "945dde11e9d96222fd33ab679dd9075ddc986f3fd8931bb675ae975dddc5a3a5",
+      "auto_sha256": "af415cfd437fe18c3da5240539f935e5c71b6caf051b4d850b867ecc9a32a664"
+    },
+    {
+      "dialogue_id": "CSD0043",
+      "utterance_id": "ZH-CN_U0085_S0_185",
+      "parent_index": 30,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/030.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/094.json",
+      "forced_sha256": "daa945c5b6bcb5a6699dcd7d8582da5858d07945c8459aea12d81a404eaf7f57",
+      "auto_sha256": "1e333f9d45940ffe32daee4a5ccf6d365f7e04aaed9ec7aeba61357db1f311ef"
+    },
+    {
+      "dialogue_id": "CSD0501",
+      "utterance_id": "ZH-CN_U1001_S0_402",
+      "parent_index": 45,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/045.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/140.json",
+      "forced_sha256": "04be7049301e43cb10b73d62b0e97319e6576d835b672f2e22d286c29c907c98",
+      "auto_sha256": "178d4a08daea9ab42d955eae2c2e27ee11ed16219721aff79fecc17b90d1ab25"
+    },
+    {
+      "dialogue_id": "CSD0511",
+      "utterance_id": "ZH-CN_U1022_S0_71",
+      "parent_index": 55,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/055.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/179.json",
+      "forced_sha256": "77ae4eb4dacbd0156fbcfee2668240bc6e773d3671a7cc8b8720260463807c56",
+      "auto_sha256": "c945edef5b3c6537e556e7709147518f3f333b80d9b63c31bf1fd071e539f3ca"
+    },
+    {
+      "dialogue_id": "CSD0514",
+      "utterance_id": "ZH-CN_U1027_S0_199",
+      "parent_index": 60,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/060.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/180.json",
+      "forced_sha256": "cf31d3e7f0b57274114c867f0743aabba0c2cbafac0d0eb22fa080fd6e026977",
+      "auto_sha256": "0e29777fbb1cd83644748d4e0bdc8a69ffc210e3c33eb128c188d1cfa6f9056d"
+    },
+    {
+      "dialogue_id": "CSD0517",
+      "utterance_id": "ZH-CN_U1034_S0_53",
+      "parent_index": 65,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/065.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/206.json",
+      "forced_sha256": "a9b1f935ebd2db34e31fdd10cb5b5bc8766dab014cf498d00e7e698400e5d9b9",
+      "auto_sha256": "f83b96cb905a28a50c5375ce8d7a46588cd5a5414fd5e5757ff87c12d575e6d3"
+    },
+    {
+      "dialogue_id": "CSD0532",
+      "utterance_id": "ZH-CN_U1064_S0_110",
+      "parent_index": 70,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/070.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/219.json",
+      "forced_sha256": "8e0f789941a4d66c15e2b227e46c01caad9e95080509b5a81acd66d40e9b5741",
+      "auto_sha256": "061b6fe5a7eecfd2eb3b57431daf988ec8e7f3525383808fa6e32d2a72b11a7a"
+    },
+    {
+      "dialogue_id": "CSD0538",
+      "utterance_id": "ZH-CN_U1076_S0_24",
+      "parent_index": 75,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/075.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/234.json",
+      "forced_sha256": "5446d102c22b1c93b6c9d1108ecb41d70209258a35ed077f8fdf4316ff369b96",
+      "auto_sha256": "424e6f8da798fc26eba4c3827abfd3beb0ab0bf314a23b4cd02fa34a22d155ee"
+    },
+    {
+      "dialogue_id": "CSD0541",
+      "utterance_id": "ZH-CN_U1081_S0_131",
+      "parent_index": 85,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/085.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/255.json",
+      "forced_sha256": "c8765eedea1f8d439dee45b373ba88a8a5ddfb507400ec93ef1a8e0d54908092",
+      "auto_sha256": "8a9109aef16e16eec03633f16687a9046ad458e292914c4a08e3adbb34b2fda5"
+    },
+    {
+      "dialogue_id": "CSD1006",
+      "utterance_id": "ZH-CN_U2012_S0_24",
+      "parent_index": 95,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/095.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/297.json",
+      "forced_sha256": "69011bfcf88fb633565137bf671d5c1d9fc0a9542d02eaa975a165bf2b4e0921",
+      "auto_sha256": "798112c6e44b61dd7f92061824b43f97db4351f67f0bd6ccaaf47565de4c6263"
+    },
+    {
+      "dialogue_id": "CSD0006",
+      "utterance_id": "ZH-CN_U0011_S0_54",
+      "parent_index": 1,
+      "group": "A",
+      "forced_path": "results/inference_cf/p2seq/run1/rows/001.json",
+      "auto_path": "results/inference_cf/p2_A_r1_L16/rows/006.json",
+      "forced_sha256": "c75ef0e4e45c2a0b16785a07b881d62c1a1a69ddf3c6e1c1023cdf8c85b5b034",
+      "auto_sha256": "39a2f6782c68fc72e527c01208a02d3bac9062d4dacf1395d7a9b3075160f3bc"
+    }
+  ]
+}

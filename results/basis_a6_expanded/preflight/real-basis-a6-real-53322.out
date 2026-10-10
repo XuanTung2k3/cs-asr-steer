@@ -1,0 +1,79 @@
+hostname worker-mig-3g40gb-0
+date 2026-09-21T04:35:10.701037+00:00
+which_python /home/tungnx/miniconda3/envs/acl1/bin/python
+sys.executable /home/tungnx/miniconda3/envs/acl1/bin/python
+python_version 3.11.9 | packaged by conda-forge | (main, Apr 19 2024, 18:36:13) [GCC 12.3.0]
+git_head 96024c1cfeb8388215c40bbc5cad0a6313a2249a
+cuda_visible_devices MIG-03b429d6-3263-53d0-9ea7-1a959c08b65f
+torch_version 2.10.0+cu128
+torch_cuda_version 12.8
+torch_cuda_available True
+visible_gpu NVIDIA H100 80GB HBM3 MIG 3g.40gb
+scipy_version 1.17.1
+transformers_version 4.57.6
+datasets_version 4.8.4
+sklearn_version 1.8.0
+Traceback (most recent call last):
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 540, in <module>
+    if __name__ == "__main__": raise SystemExit(main())
+                                                ^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 537, in main
+    return run(ap.parse_args().model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 513, in run
+    if model == "whisper": traces[mode] = _whisper_fixed(bundle, rows, mode, 16, 16)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 247, in _whisper_fixed
+    ze = _whisper_generate(bundle, row["audio_path"], mode, zero_e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 150, in _whisper_generate
+    out = bundle.model.generate(**batch_model_inputs(bundle, [audio_path]), **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/generation_whisper.py", line 866, in generate
+    ) = self.generate_with_fallback(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/generation_whisper.py", line 1038, in generate_with_fallback
+    seek_outputs = super().generate(
+                   ^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/generation/utils.py", line 2467, in generate
+    model_kwargs = self._prepare_encoder_decoder_kwargs_for_generation(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/generation/utils.py", line 861, in _prepare_encoder_decoder_kwargs_for_generation
+    model_kwargs["encoder_outputs"]: ModelOutput = encoder(**encoder_kwargs)  # type: ignore
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/modeling_whisper.py", line 710, in forward
+    layer_outputs = encoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/modeling_whisper.py", line 411, in forward
+    hidden_states, attn_weights = self.self_attn(
+                                  ^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1882, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1843, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/src/csasr/lss/encoder_sites.py", line 137, in _hook
+    raise ValueError(f"gain shape {tuple(gain.shape)} != {tuple(site.shape[:2])}")
+ValueError: gain shape (1, 1375) != (1, 1500)

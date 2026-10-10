@@ -1,0 +1,25 @@
+BASIS-A3 encoder-local repair acceptance log
+timestamp: 2026-09-10T03:01:11Z
+repair_protocol_commit: 69a5aa0933c6f8be43752d6a28a414a92c5f875e
+
+CPU focused command:
+LD_LIBRARY_PATH=/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-} /home/tungnx/miniconda3/envs/acl1/bin/python -m pytest -q tests/test_basis_a3_encoder_site.py tests/test_basis_a3_protocol.py
+
+CPU result:
+.....                                                                    [100%]
+5 passed, 0 failed
+warning: joblib reported [Errno 28] No space left on device and used serial mode; this did not change the test result.
+
+Real-model acceptance job history:
+- 51677 FAILED: acceptance harness omitted the dataset argument to _encoder_gain; no scientific check result was produced.
+- 51679 FAILED: harness executed all checks; NormPreserve threshold was incorrectly set to FP32 precision for the bfloat16 inference path. No scientific grid cell was run.
+- 51680 COMPLETED: all five acceptance checks PASS.
+
+Acceptance summary:
+encoder_rho0_identity=PASS
+encoder_normpreserve=PASS (max_relative_error=0.004958256760582866; bfloat16 tolerance=0.01)
+encoder_padding_exclusion=PASS
+encoder_local_mask=PASS
+encoder_no_grad=PASS
+passed: 5
+failed: 0

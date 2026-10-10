@@ -1,111 +1,129 @@
 # EXPERIMENT MATRIX
 
-Companion to `METHOD_CONTRACT.md` (MC) and `CODE_MAP.md`. Systems, ablations, and controls, with
-their data role, layer, basis (direction), gate, objective, seed policy, decoding regime, and
-purpose. Terminology is the contract's (MC §1–§8).
+Companion to `METHOD_CONTRACT.md` (MC) and `CODE_MAP.md`. **Reconciled 2026-09-07 (DG-03R)** to the
+updated proposal: **contrastive steering basis → adaptive controller → damage-aware optimization**.
+The older disagreement/localizer/utility-selector/factorized-gate matrix is `LEGACY DESIGN` and is
+recorded in §E for provenance only.
 
-**Bases:** `raw` = `Δ^raw` · `resid` = conditioning-residualized `Δ^⊥` (primary) · `legacy` =
-rejected-site / pre-narrowing direction · `random`/`sign`/`wrong-loc`/`perm` = controls.
-**Gate:** `oracle` = gold CS decoder steps · `factorized` = MC §6 · `global` = all positions ·
-`none`. **Decoding:** `TF` = teacher-forced (screening only) · `FD` = free-decoding (claims, MC §9).
-**Site/layer:** decoder post-cross-attn residual (MC §1); candidate layers **{16, 24}** only (MC §3).
+**Basis (MC §4):** `V^0 = [v_local, v_cond]` at a candidate layer · `v_local` =
+conditioning-residualized local-language direction · `v_cond` = language-conditioning direction ·
+`legacy` = rejected-site / pre-narrowing (`v_nat`) · `random`/`sign`/`wrong-loc` = controls.
+**Controller (MC §6):** `f_θ(LN(r_t)) → (g_t, π_t)`; `d_{ℓ,t}=normalize(V^0 π_t)`; no oracle CS
+location at inference. **Decoding:** `TF` = teacher-forced (optimization + screening only) · `FD` =
+free-decoding (checkpoint selection + all transcript claims, MC §9). **Site/layer:** decoder
+post-cross-attn residual, pre-FFN, FROZEN (DG-02); candidate layers **{16, 24}** (MC §3).
 
 The matrices below are the **required/proposed design**, not an inventory of implemented runners.
-`CODE_MAP.md` is authoritative for implementation status. In particular, current Job-A/Job-B and
-Round-1 outputs are post-FFN legacy/current-execution results and do not instantiate these systems.
+`CODE_MAP.md` is authoritative for implementation status. Legacy Job-A/Job-B/Round-1 outputs are
+post-FFN and do **not** instantiate these systems.
+
+Main scientific comparison: the **correction–retention–efficiency trade-off**, visualized as the
+**correction–damage frontier** over steering strength / controller operating points.
 
 ---
 
-## A. Required — systems (proposed + baselines)
+## Post-DG-02 sequence (DG-03 … DG-08)
 
-| ID | System | Role | Layer | Basis | Gate | Objective | Seeds | Decode | Purpose |
-|---|---|---|---|---|---|---|---|---|---|
-| F0 | Frozen baseline, no intervention | D-dev-select / D-dev-confirm | — | — | none | none | 1 (det.) | FD | reference point; freeze `E_EN`/`C_EN` |
-| F5 | **Frozen-direction auto soft-local** (proposed) | train gate on `loc∪util`/`router-calib`; select on D-dev-select; confirm on D-dev-confirm | 16 or 24 | resid | factorized | train localizer/selector; direction frozen | ≥3 gate seeds | FD | proposed system; not implemented |
-| T1 | **Trained local steering** (proposed trained) | train `loc∪util`; select D-dev-select | 16 or 24 | resid (trained) | factorized | correction CE; retention loss `OPEN`; NormPreserve at intervention | seed 42 (+≥2 more `OPEN`) | FD | trained counterpart of F5 (rank `OPEN`, MC §4) |
-| P1–P3 | Prompt baselines: forced-ZH, forced-EN, bilingual-token | D-dev-confirm | — | — | none | none | 1 | FD | training-free reference controls |
-| F2 | Global steering, same per-position α | D-dev-confirm | 16 or 24 | resid | global | none | 1 | FD | local-vs-global axis |
-| F3 | Global steering, matched total energy | D-dev-confirm | 16 or 24 | resid | global | none | 1 | FD | energy-matched global control |
-| T2 | SALSA-D / learned global rank-one steering | train `loc∪util` | 16 or 24 | trained-global | global | learned-steering loss | seed 42 | FD | learned-vs-closed-form × global-vs-local |
-| T3 | Matched-data LoRA (PM) | train `loc∪util` **only** | n/a | n/a | n/a | LoRA CE | seed 42 | FD | parameter-efficiency competitor; report hours/params/mem/time |
-| U1 | Oracle-local upper bound (= F1) | D-dev-select / D-dev-confirm | 16 or 24 | resid | oracle | none | 1 | FD | headroom ceiling; **upper bound, not deployable** (MC §11) |
-
-## A′. Required — controls (specificity nulls; MC §10 Gate B)
-
-Applied at the **same layer, gate, and realized energy** as the proposed system so the comparison
-changes the *direction/location*, not the energy.
-
-| ID | Control | Basis / change | Seeds | Decode | Rules out |
-|---|---|---|---|---|---|
-| N1 | Within-pair label-permuted direction | `perm` (swap EN/ZH inside matched pairs, re-residualize, normalize) | **≥5** | FD | "any difference-of-means works" |
-| N2 | Matched-norm random direction | `random` (`directions/controls.random_direction`) | ≥5 | FD | "any vector at this energy works" |
-| N3 | Opposite sign | `sign` (`controls.wrong_sign`) | 1 | FD | direction sign carries the effect |
-| N4 | Wrong location | `resid` applied to matched ZH / non-target region | 1 | FD | "steering anywhere works" |
-| N5 | Global matched-energy (= F3) | `resid`, energy spread over utterance | 1 | FD | locality matters |
-| N6 | Preservation set | correct-EN, neighbouring-ZH, monolingual retention | 1 | FD | intervention is selective, not blunt |
-
-**Seed policy note:** frozen deterministic systems (F*, prompt, oracle) run one seed; the
-null directions that *have* a random construction (N1 label-permutation, N2 random) run ≥5 seeds
-with mean and spread; trained systems and any localizer run ≥3 seeds (v5 §6-Exp2).
-
----
-
-## B. Secondary — localizer & selector ablations (post-Gate-B)
-
-Only meaningful once Gate B (oracle headroom, free-decoding) has passed. All secondary ablations
-use **free decoding** for their primary outcome metrics (PIER, correction, corruption) unless
-noted otherwise; teacher-forced diagnostics may be used for screening but do not determine the
-ablation result.
-
-| ID | Experiment | Role | Purpose |
+| Ticket | Purpose | Data role | Decode |
 |---|---|---|---|
-| L1–L4 | Localizer ladder: transcript heuristic → off-the-shelf LID → linear+smoothing → temporal-conv | loc-train / router-calib | Gate C: ≥70% recall of oracle-correctable spans |
-| S1–S5 | Selector ablation: steer-all, uncertainty-only, language-only, full utility, full+abstention | util-train / router-calib | Gate D: outcome supervision beats steer-all & uncertainty |
-| G1 | Score decomposition: gate with/without decoder score, with/without disagreement score | router-calib | isolate the value of each §5 score / factor; **determines the disagreement hypothesis** (MC §5): if disagreement adds no held-out incremental value, fall back to retention-aware gate without it (MC §6 fallback) |
-| E1 | Layer ablation: 16 vs 24 (single selected layer per site) | D-dev-select | one layer chosen; not both |
-| E2 | Basis ablation: raw vs conditioning-residualized (`cos(Δ^raw, Δ^⊥)`, energy removed) | D-construct | justify conditioning residualization (MC §4) |
-| E3 | Norm-preserve on vs off | D-dev-select | justify norm-preserving repair (MC §7) |
+| **DG-03 ✅ COMPLETE** | Basis built & versioned at L16/L24 (`steering_basis_v1`, provenance complete); causal screen selected **L24** (U=+33 vs L16 U=−6; direction-specific vs sign −43, not-any-vector vs random −7, location-specific vs count-matched wrong-loc +10; matrix preserved). Complete `result_v1`+retention per condition; edit-count/energy audited. Spec `DG03_BASIS_CAUSAL_SPEC.md`. | construct `D-construct`; screen `D-dev-select` | FD |
+| **DG-04 ✅ COMPLETE** | Frozen-steering baselines + small strength grid → **RQ1** correction–damage frontier before any learning; reference B1 `ρ=0.5` | `D-dev-select`; B3 calibration `router-calib` | FD (TF calibration only) |
+| **DG-05** | Adaptive controller `f_θ(LN(r_t)) → (g_t, π_t)`, `V^0` fixed; no oracle location | train on `loc-train ∪ util-train`; select on `D-dev-select` | FD |
+| **DG-06 ✅ COMPLETE / FROZEN** | Damage-aware training (MC §8): D0 (reuse DG-05) / D1 (+matrix KL retention) / D2 (+embedded KL retention), `λ_M=λ_E=1.0`, β/layer/basis fixed, D1==D2 reconstructed DG-05 init (jobs 50558/50559 on `mig`). Both flip MER/matrix-CER from harm→gain and cut outside harm ~73%; **`SELECT D1`** (net 85 > D2 net 68). D2 adds incremental embedded-retention benefit; outcome **FULL DAMAGE-AWARE SUCCESS**. Gate penalty + basis refinement deferred | train `loc-train ∪ util-train`; select `D-dev-select` | TF optimize / FD select |
+| **DG-07** | Baselines & key ablations (SALSA-global, matched LoRA, local-only, cond-only, fixed vs learned mixture, global vs adaptive, fixed vs refined basis, correction-only vs correction+retention) | train pool; `D-dev-select` | FD |
+| **DG-08 ✅ COMPLETE / FROZEN** | Locked Whisper core eval, seeds [13,42,73], F0–F4 finalists. Greedy + beam-5 on locked D-test (6,257 utts/15 dialogues), 2000-rep dialogue-block bootstrap. **M\* significantly beats frozen Whisper on PIER/MER/utility in both regimes (CIs exclude zero); COMPETITIVE with SALSA/LoRA (best matrix retention among interventions + lowest beam-5 MER + inference parity; SALSA higher raw correction and lower en-WER; LoRA MER-catastrophic over-generation).** Beam robustness PERSISTS. Outside-harm N/A on D-test (no candidate/POI alignments). Lock `1fb2c37`; result `e94339d`; report `results/dg08/DG08_RESULTS_SUMMARY.md`. Independent CPU-only audit/freeze 2026-09-09 (all blocking gates PASS). mig-only; no post-test tuning | train `loc-train ∪ util-train`; select `D-dev-select`; **`D-test`** final (no D-dev-confirm selection) | FD |
 
-## C. Optional — drop-first order (v5 §10.1)
-
-| Priority | Item |
-|---|---|
-| 1 | SEAME same-pair transfer (Job A S0–S2 / Job B pilot) — only if licensed audio ready |
-| 2 | Small-MLP selector capacity ablation |
-| 3 | Adjacent-layer / fourth-dose appendix checks (out of scope under MC §3) |
-| 4 | Optional conventional adapter baseline |
-| 5 | Utility-scaled (vs binary) intervention strength |
-| — | Round-3 Qwen frozen/training (stub/guard only; experiment pipeline unimplemented) |
-
-Teacher-forced diagnostics (gold-token margin/rank; `steer_sweep.teacher_forced_sanity`) are
-**screening only** and never a system claim (MC §9).
+Later (only after the Whisper core method succeeds): SEAME / ViMedCSS, selected multilingual sets,
+Qwen3-ASR (architecture replication first), other speech/audio-LMs if feasible. Do **not** expand
+architecture/dataset scope before the Whisper core study is established.
 
 ---
+
+## A. Required — core systems & baselines (DG-04/DG-05/DG-07)
+
+| ID | System | Kind | Layer | Basis | Strength/gate | Objective | Seeds | Decode |
+|---|---|---|---|---|---|---|---|---|
+| B0 | Frozen backbone, no intervention | baseline | — | — | none | none | 1 (det.) | FD |
+| B1 | Global fixed **local** steering | baseline | 16 or 24 | `v_local` | fixed `β`, all positions | none | 1 | FD |
+| B2 | Fixed **local+conditioning** mixture | baseline | 16 or 24 | `V^0` fixed mix | fixed `β`, fixed `π` | none | 1 | FD |
+| B3 | Exact-site F5-style / projection-gated steering (where scientifically comparable) | baseline | 16 or 24 | `v_local` | projection gate | none | 1 | FD |
+| B4 | **SALSA-style learned global vector** (`LB1_SALSA_EXACT_GLOBAL`) | baseline | 24 | trained-global at exact site | global all-position vector | selected DG-06 D1 objective | seed 42 | FD |
+| B5 | **Matched-budget LoRA** (`LB2_LORA_MATCHED_BUDGET`) | baseline | decoder L24 Q/V | n/a | Q/V PEFT update | selected DG-06 D1 objective | seed 42 | FD |
+| **M**  | **Adaptive controller** `f_θ(LN r)→(g_t,π_t)`, `V^0` fixed (proposed) | method | 16 or 24 | `V^0` + controller mix | learned `g_t`, `π_t`, opt. `β` | damage-aware (MC §8) | ≥3 | FD |
+| M-ref | Constrained basis refinement `V=V^0+ΔV`, anchor `‖ΔV‖_F²` | ablation | 16 or 24 | refined | controller | + `λ_A` anchor | ≥3 | FD |
+| U | Oracle-location upper bound | reference | 16 or 24 | `V^0` | oracle span | none | 1 | FD |
+
+Optional-only baselines (never blockers for the core paper): adapter/ReFT; full fine-tuning.
+
+## A′. Required — causal controls (MC §10 Gate B / DG-03), applied at matched layer & realized energy
+
+| ID | Control | Change | Seeds | Rules out |
+|---|---|---|---|---|
+| C-sign | Sign-reversed direction (`controls.wrong_sign`) | flip `d` | 1 | direction sign carries the effect |
+| C-rand | Matched-norm random direction (`controls.random_direction`) | random `d` at matched energy | ≥5 | "any vector at this energy works" |
+| C-loc | Wrong location | steer matched non-target region | 1 | "steering anywhere works" |
+| C-pres | Preservation / correct-token analysis | measure baseline-correct embedded + matrix retention | 1 | intervention is blunt, not selective |
+
+Label-permutation may remain if already justified and inexpensive; not required to expand DG-03R
+scope. **Do not add new mechanistic analyses** in DG-03R.
+
+## B. Key ablations (DG-07)
+
+local-only vs conditioning-only vs `V^0`; fixed mixture vs learned token mixture; global vs adaptive
+strength; fixed vs refined basis; correction-only vs correction+matrix vs correction+matrix+embedded
+retention (staged, MC §8). All primary outcomes on **free decoding**.
+
+DG-07A freezes the required new systems and fairness contract in
+`docs/current/DG07_BASELINES_ABLATIONS_SPEC.md`: the selected D1 objective
+`L_corr(C_E) + λ_M L_ret,M(R_M)` with `λ_M=1`, shared by SALSA, LoRA, and the
+structural gate ablations wherever applicable. The development matrix uses one
+seed (42), greedy decoding, and `D-dev-select`; three seeds and beam-5 remain
+DG-08 scope. `A5_REFINED_BASIS` is deferred because no anchor coefficient was
+predeclared.
+
+---
+
+## C. Evaluation contract (DG-08) — preserves DG-01 metrics
+
+Report, per operating point / strength: **MER, PIER, embedded-language WER, matrix-language CER/WER,
+correction rate, corruption rate**, outside-harm/edit diagnostics (with their existing DG-01 semantic
+distinction), **embedded retention, matrix retention**, gate-strength distribution, gate coverage
+*once its denominator is legitimately defined*, trainable parameters, GPU-hours, memory, latency.
+Primary visualization: the **correction–damage frontier**. Confidence intervals are
+conversation/dialogue-block bootstrap. Metric definitions, gains (`baseline − method`, positive =
+better), and correction/corruption/outside-harm semantics are **frozen by DG-01** and unchanged.
 
 ## D. Decision conditions between stages
 
-| From → To | Condition to proceed |
+| From → To | Condition |
 |---|---|
-| **Stage 1 audit → Ticket 2 metric canonicalization** | Repository mappings audited and metric discrepancies recorded. This condition is met; metric canonicalization may begin. |
-| **Metric canonicalization → comparable new results** | One versioned PIER/MER denominator, correctness-transition accounting, delta sign, and artifact schema, with focused tests (CODE_MAP §3). |
-| **Exact-site integration → new scientific runs** | Exact-site hook verified on the real model at layers 16 and 24 and integrated with cache position, forced-prefix exclusion, and beam expansion; `spec.yaml` candidate layers reconciled to `{16,24}`. |
-| Directions frozen → Oracle screen | `Δ^⊥` finite, unit-norm, dialogue-bootstrap-stable; `cos(Δ^raw, Δ^⊥)` and removed-energy reported |
-| Oracle screen → Automatic method | **Gate B passes** on **free-decoding**: net utility >0 with conversation-block bootstrap 95% CI excluding 0, corrections > corruptions, and the proposed direction beats N1–N4 in paired bootstrap. If Gate B fails, **stop** — no localizer/selector can rescue a useless action |
-| Transport gate T | ≥60% practical decoder coverage with target-step concentration on the **high-confidence alignment subset**; else lock E-only as the practical system |
-| Localizer → Selector | Gate C: ≥70% recall of oracle-correctable spans at manageable candidate load |
-| Selector → Confirmation | Gate D on development data; then freeze the **entire** pipeline before `D-test` |
-| Confirmation → Locked test | one scheduled `D-test` batch, mechanical rerun of the frozen dry-run script; no new code, no threshold change, primary claim already chosen (MC §11) |
+| DG-03 basis → DG-04 | `V^0` finite, unit-norm, dialogue-bootstrap-stable; intended direction beats sign/random/wrong-location controls at L16 and/or L24; one layer selected |
+| DG-04 → DG-05 | a favorable free-decoding correction–damage point exists for some fixed steering (RQ1); corrections > corruptions with CI |
+| DG-05 → DG-06 | controller runs at inference from `LN(r_t)` only (no oracle location), beam-safe |
+| DG-06 → DG-07 | staged damage-aware training improves the frontier over fixed steering (RQ2) |
+| DG-07 → DG-08 | method non-dominated vs SALSA-global / matched LoRA on correction–retention–efficiency (RQ3); then **freeze the entire pipeline before `D-test`** |
+| DG-08 confirm → locked test | one scheduled `D-test` batch, mechanical rerun of the frozen script; no new code/threshold change; primary claim already chosen (MC §11) |
 
-**Seed / decoding invariants:** greedy, `temperature=0`, `num_beams=1` for primary decoding;
-beam-5 only as a final-pass appendix. All confidence intervals are conversation/dialogue-block
-bootstrap (10,000 resamples for final intervals). Development selection estimates are kept
-separate from locked test estimates.
+**Seed/decoding invariants:** greedy, `temperature=0`, `num_beams=1` primary; beam-5 finalists only.
+Trained systems run ≥3 seeds; random-construction controls ≥5. Development selection estimates are
+kept separate from locked-test estimates.
 
-**Metric sign invariant for new artifacts:** report named raw method-minus-baseline changes for
-MER/PIER (negative is improvement) and/or an explicitly named improvement quantity (positive is
-improvement); never use the ambiguous bare name `delta_pier`. Legacy artifacts retain their
-original signs and labels and must be converted explicitly before comparison.
+**Metric sign invariant:** report named improvement quantities (positive = better) or explicit
+`method − baseline` changes; never the bare `delta_pier`. Legacy artifacts keep their original signs
+and are converted explicitly before comparison (DG-01).
 
-**Outcome invariant:** correction = baseline incorrect to method correct; corruption/harm = baseline
-correct to method incorrect. An outside-region transcript edit is not outside harm unless it is
-also a correctness flip under the frozen candidate-unit accounting.
+**Outcome invariant:** correction = baseline-incorrect → method-correct; corruption/harm =
+baseline-correct → method-incorrect. An outside-region transcript edit is not outside harm unless it
+is also a correctness flip under the frozen candidate-unit accounting (DG-01).
+
+---
+
+## E. LEGACY DESIGN (superseded for the core paper; preserved for provenance)
+
+The former matrix centered on: temporal localizer ladder (L1–L4, Gate C recall); outcome-supervised
+utility/abstention selector (S1–S5, Gate D); factorized gate `g_t = 1[t∈S]·m_t·1[p̂≥τ]`;
+encoder–decoder **disagreement decision gate** and its repairability study; decoder-transport gate T.
+These are **not prerequisites** for the core method. Disagreement may appear only as
+`OPTIONAL SUPPORTING ANALYSIS`, never as a gate before controller training. Legacy F5/T1/SALSA-E/LoRA
+scaffolding and post-FFN Round-1 results remain on file (CODE_MAP) and are not evidence for the
+exact-site method.

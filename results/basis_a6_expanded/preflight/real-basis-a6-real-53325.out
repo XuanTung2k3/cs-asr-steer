@@ -1,0 +1,32 @@
+hostname worker-mig-3g40gb-0
+date 2026-09-21T04:39:55.723824+00:00
+which_python /home/tungnx/miniconda3/envs/acl1/bin/python
+sys.executable /home/tungnx/miniconda3/envs/acl1/bin/python
+python_version 3.11.9 | packaged by conda-forge | (main, Apr 19 2024, 18:36:13) [GCC 12.3.0]
+git_head 96024c1cfeb8388215c40bbc5cad0a6313a2249a
+cuda_visible_devices MIG-09c332c6-27d7-5b98-8a77-6f93e77f7cd3
+torch_version 2.10.0+cu128
+torch_cuda_version 12.8
+torch_cuda_available True
+visible_gpu NVIDIA H100 80GB HBM3 MIG 3g.40gb
+scipy_version 1.17.1
+transformers_version 4.57.6
+datasets_version 4.8.4
+sklearn_version 1.8.0
+Traceback (most recent call last):
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 543, in <module>
+    if __name__ == "__main__": raise SystemExit(main())
+                                                ^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 540, in main
+    return run(ap.parse_args().model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 519, in run
+    tt = _tt(bundle, model, rows[:4], "greedy", OUT / f"REAL_ORACLE_TT_{model}.json")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 452, in _tt
+    active = sum(int(x.active_positions if hasattr(x, "active_positions") else x.steered) for x in records)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer/scripts/basis_a6_real_acceptance.py", line 452, in <genexpr>
+    active = sum(int(x.active_positions if hasattr(x, "active_positions") else x.steered) for x in records)
+                                                                               ^^^^^^^^^
+AttributeError: 'EncoderSiteRecord' object has no attribute 'steered'

@@ -1,0 +1,17 @@
+{
+  "population": {
+    "n_utterances": 300,
+    "outside_harm": {
+      "inside_units": 736,
+      "outside_units": 16030,
+      "target_candidates": 210,
+      "unknown_units": 67
+    },
+    "role": "D-dev-select"
+  },
+  "rule": "positive utility -> PIER gain -> matrix retention -> lower energy",
+  "selected_checkpoint": "/home/tungnx/cs-asr-steer/results/dg07/LB2_LORA_MATCHED_BUDGET/checkpoint_epoch3.pt",
+  "selected_checkpoint_sha256": "sha256:7861cdf83b364a417f1cf627f42660c150f1386dccc8898355ab79d04fea0046",
+  "selected_epoch": 3,
+  "variant": "LB2_LORA_MATCHED_BUDGET"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "p2_path4_r1_contract_audit_v1",
+  "audit_scope": "pre-outcome freeze, NOT runnable-manifest audit",
+  "contract_revision": "PATH4_R1_EOS_BOUNDARY_V1",
+  "original_blocked_commit": "29661e972f0ebfd727d228d2f6dbd9b17dd41c5a",
+  "config_sha256": "90d4f8f0dabc22b9dd4b8e2e8fab9e8e624819d622496c84b057b00530cdbd0e",
+  "amendment_source_sha256": {
+    "docs/inference_cf/P2_PATH4_EOS_AMENDMENT.md": "15b020f6ba629d69bf19e42f21067523eac2a2ab2324fe5cd518d85001810472",
+    "src/csasr/inference_cf/eos_boundary.py": "80807bfd0d13914bec5612fa9a0d438fa92e5a9443330676f2fa71dd49f6f04a",
+    "tests/test_inference_cf_p2path4_r1.py": "70167aca4914c93bdcc8514070d6c4cebb82fbcc44cbb44bf5c23f78886bf7c3",
+    "experiments/inference_cf_p2path4_r1_contract_audit.py": "ca0ebebffd2b61b89ff71eb9a60e207a7512298624b6d9d74a5789c41d5c01c2"
+  },
+  "checks": {
+    "original_science_unchanged": true,
+    "compute_budget_unchanged": true,
+    "archive_exact": true,
+    "blocked_provenance": true,
+    "revision": true,
+    "G1_narrow_change": true,
+    "historical_sources_unchanged": true,
+    "amendment_sources": true,
+    "spec_design_historical_body_preserved": true,
+    "panel_exact": true,
+    "fixed100": true,
+    "token_only_partitions": true,
+    "known_four_representable": true,
+    "runtime_reference_free": true,
+    "scope_no_runner_or_scientific_output": true,
+    "EOS_H1": true,
+    "independent_H1_math": true,
+    "required_CPU_tests_pass": true
+  },
+  "CPU_test_count": 71,
+  "test_report_sha256": "7db3bb3b392499d44cb5e6fd51e6e37e06267e667ca67e5a8e140ea1827e147e",
+  "boundary_ids_reference_free": [
+    "ZH-CN_U0027_S0_116",
+    "ZH-CN_U0086_S0_222",
+    "ZH-CN_U0091_S0_196",
+    "ZH-CN_U1004_S0_221"
+  ],
+  "content_content_count": 10,
+  "scientific_runs": 0,
+  "PATH4_reference_outcomes_opened": false,
+  "runtime_manifest_pre_audit_required_before_job": true,
+  "verdict": "PASS_TO_P2_PATH4_R1"
+}

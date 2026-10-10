@@ -1,0 +1,376 @@
+{
+  "summary": "results/inference_cf/p2_A_r1_summary.json",
+  "runs": {
+    "results/inference_cf/p2_A_r1_L16": {
+      "manifest_hash_ok": true,
+      "sources_match_commit": true,
+      "source_mismatches": [],
+      "statuses": [
+        "ok"
+      ],
+      "stale_rows": 0,
+      "runtime_status": "completed",
+      "job": "54821",
+      "elapsed_sec": 3348.1511809825897,
+      "peak_vram_gb": 3.933920383453369,
+      "B0M_L16_vs_cached_greedy_B0_token_diff_utts": 59
+    },
+    "results/inference_cf/p2_A_r1_L24": {
+      "manifest_hash_ok": true,
+      "sources_match_commit": true,
+      "source_mismatches": [],
+      "statuses": [
+        "ok"
+      ],
+      "stale_rows": 0,
+      "runtime_status": "completed",
+      "job": "54822",
+      "elapsed_sec": 3293.322654247284,
+      "peak_vram_gb": 3.933920383453369,
+      "B0M_L24_vs_cached_greedy_B0_token_diff_utts": 59
+    }
+  },
+  "configs": {
+    "L16_a0.5_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L16",
+      "method": {
+        "mer": 0.26459929899601975,
+        "mer_errors": 4454,
+        "pier": 0.4739858906525573,
+        "pier_errors": 1075,
+        "zh_cer": 0.22803145261415367,
+        "en_wer": 0.4775132275132275,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9995666117708243,
+      "dpier_errors": -1,
+      "dzh_cer_increase": -0.00020692509311628915,
+      "dmer_increase": -0.00011881423394521917,
+      "realized_energy": 74.94140308734545,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": false
+      },
+      "valid": false,
+      "diverged": 12,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 12,
+      "edit_at_divergence_changed_token": 5,
+      "config": {
+        "alpha": 0.5,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 16,
+        "name": "L16_a0.5_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a1_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L16",
+      "method": {
+        "mer": 0.2644804847620745,
+        "mer_errors": 4452,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22810042764519245,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9995666117708243,
+      "dpier_errors": 0,
+      "dzh_cer_increase": -0.0001379500620775076,
+      "dmer_increase": -0.00023762846789049386,
+      "realized_energy": 301.3540866135187,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": false
+      },
+      "valid": false,
+      "diverged": 13,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 13,
+      "edit_at_divergence_changed_token": 8,
+      "config": {
+        "alpha": 1.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 16,
+        "name": "L16_a1_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L16_a2_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L16",
+      "method": {
+        "mer": 0.26382700647537577,
+        "mer_errors": 4441,
+        "pier": 0.47266313932980597,
+        "pier_errors": 1072,
+        "zh_cer": 0.22734170230376605,
+        "en_wer": 0.47619047619047616,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9997399670624946,
+      "dpier_errors": 2,
+      "dzh_cer_increase": -0.0008966754035039104,
+      "dmer_increase": -0.0008911067545891993,
+      "realized_energy": 1203.3762345332195,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": true
+      },
+      "valid": true,
+      "diverged": 20,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 20,
+      "edit_at_divergence_changed_token": 13,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 16,
+        "name": "L16_a2_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L24_a0.5_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L24",
+      "method": {
+        "mer": 0.2644804847620745,
+        "mer_errors": 4452,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22810042764519245,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9995666117708243,
+      "dpier_errors": 0,
+      "dzh_cer_increase": -0.0001379500620775076,
+      "dmer_increase": -0.00023762846789049386,
+      "realized_energy": 75.29480670707603,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": false
+      },
+      "valid": false,
+      "diverged": 12,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 12,
+      "edit_at_divergence_changed_token": 5,
+      "config": {
+        "alpha": 0.5,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 24,
+        "name": "L24_a0.5_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L24_a1_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L24",
+      "method": {
+        "mer": 0.2644804847620745,
+        "mer_errors": 4452,
+        "pier": 0.4739858906525573,
+        "pier_errors": 1075,
+        "zh_cer": 0.22789350255207616,
+        "en_wer": 0.4775132275132275,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9996532894166594,
+      "dpier_errors": -1,
+      "dzh_cer_increase": -0.00034487515519379675,
+      "dmer_increase": -0.00023762846789049386,
+      "realized_energy": 298.05718445405887,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": false
+      },
+      "valid": false,
+      "diverged": 14,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 14,
+      "edit_at_divergence_changed_token": 9,
+      "config": {
+        "alpha": 1.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 24,
+        "name": "L24_a1_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    },
+    "L24_a2_ER_id_pos": {
+      "run": "results/inference_cf/p2_A_r1_L24",
+      "method": {
+        "mer": 0.26442107764510187,
+        "mer_errors": 4451,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22789350255207616,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "baseline": {
+        "mer": 0.26471811322996497,
+        "mer_errors": 4456,
+        "pier": 0.47354497354497355,
+        "pier_errors": 1074,
+        "zh_cer": 0.22823837770726996,
+        "en_wer": 0.47707231040564374,
+        "caps": 2
+      },
+      "matrix_zh_retention": 0.9993065788333189,
+      "dpier_errors": 0,
+      "dzh_cer_increase": -0.00034487515519379675,
+      "dmer_increase": -0.00029703558486310344,
+      "realized_energy": 1206.270423990143,
+      "checks": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4": true,
+        "V5": false
+      },
+      "valid": false,
+      "diverged": 28,
+      "unattributed": 0,
+      "b_branch_consistent_at_divergence": 28,
+      "edit_at_divergence_changed_token": 23,
+      "config": {
+        "alpha": 2.0,
+        "direction_sign": 1.0,
+        "dose": "id",
+        "gate": "ER",
+        "layer": 24,
+        "name": "L24_a2_ER_id_pos"
+      },
+      "agrees_with_evaluator": {
+        "pier_errors": true,
+        "mer_errors": true,
+        "zh_cer": true,
+        "en_wer": true,
+        "caps": true,
+        "retention": true,
+        "valid": true,
+        "unattributed": true
+      }
+    }
+  },
+  "issues": [],
+  "matched_baselines_identical": true,
+  "independent_selection": "L16_a2_ER_id_pos",
+  "evaluator_selection": "L16_a2_ER_id_pos",
+  "verdict": "AUDIT_PASS"
+}

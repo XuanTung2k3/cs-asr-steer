@@ -1,0 +1,56 @@
+BASIS-A6 environment diagnostic
+Date: 2026-09-21
+
+BEFORE / observed batch failures
+---------------------------------
+The prior full CPU-suite run failed during SciPy/sklearn import with:
+
+  ImportError: ... libstdc++.so.6: version `CXXABI_1.3.15' not found
+
+The prior GPU job 53308 failed because the batch default interpreter could not
+import torch. Its replacement job 53309 used:
+
+  /home/tungnx/miniconda3/envs/acl1/bin/python
+
+and reached CUDA successfully.
+
+The login-shell default interpreter is `/home/tungnx/miniconda3/bin/python`
+(Python 3.13.12); it has no torch, scipy, or sklearn. The A6 environment
+interpreter is Python 3.11.9 from `/home/tungnx/miniconda3/envs/acl1`.
+
+BEFORE / library inspection
+---------------------------
+The A6 environment contains:
+
+  /home/tungnx/miniconda3/envs/acl1/lib/libstdc++.so.6 -> libstdc++.so.6.0.34
+
+That library exports `CXXABI_1.3.15` and `GLIBCXX_3.4.30`. The SciPy
+`_distance_pybind` extension resolves both libstdc++ and libgcc from the A6
+environment when invoked with the A6 interpreter.
+
+REPAIR
+------
+Added `slurm/a6_env.sh`. Every A6 sbatch wrapper must source it. It selects the
+exact acl1 interpreter and prepends the environment-local `lib/` directory to
+`LD_LIBRARY_PATH` for the process. No system library was modified.
+
+AFTER / login verification with the A6 bootstrap
+-------------------------------------------------
+  sys.executable: /home/tungnx/miniconda3/envs/acl1/bin/python
+  Python: 3.11.9
+  torch: 2.10.0+cu128
+  torch.version.cuda: 12.8
+  torch.cuda.is_available (login node): False
+  scipy: 1.17.1
+  sklearn: 1.8.0
+  transformers: 4.57.6
+  datasets: 4.8.4
+  import numpy, scipy, sklearn, torch: IMPORT_OK
+
+CUDA availability is intentionally checked on the allocated GPU node by the
+same bootstrap with `a6_print_environment 1`; the wrapper fails immediately if
+CUDA is unavailable there.
+
+Note: importing sklearn emits an existing joblib warning that `/tmp` has no
+space and it will operate serially. This does not prevent imports or A6 CPU
+tests; it is retained as an environment note rather than changing system state.

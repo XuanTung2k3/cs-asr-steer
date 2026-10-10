@@ -1,0 +1,22 @@
+{
+ "checks": {
+  "counts": true,
+  "counts_agree": true,
+  "criteria_agree": true,
+  "historical_baselines_recomputed": true,
+  "label_agrees": true,
+  "manifest_self": true,
+  "primary_bound": true,
+  "primary_valid_agrees": true,
+  "rows_trigger_scores_winner_G1G2_ownership": true,
+  "runtime": true,
+  "seal_committed_unchanged": true,
+  "sources_at_commit": true
+ },
+ "failures": [],
+ "git_commit": "ead824b6e75cc5574452724aee2acf4c191a4ff1",
+ "label": "P2_PATH2_BRANCH_CONTROL_SUFFICIENT",
+ "phase": "full",
+ "schema": "p2_path2_post_audit_v1",
+ "verdict": "P2_PATH2_AUDIT: PASS"
+}

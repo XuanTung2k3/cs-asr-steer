@@ -1,0 +1,1 @@
+{"audio_sec":103.965,"cached_sec":40.9304518699646,"elapsed_sec":80.42107391357422,"end_unix":1790306056.2681613,"gpu":"NVIDIA H100 80GB HBM3 MIG 3g.40gb","job_id":"54801","node":"worker-mig-3g40gb-0","output_tokens":696,"peak_vram_bytes":4186167808,"probe_sec":39.04112911224365,"start_unix":1790305975.8470876,"status":"completed"}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "basis_a4_qwen_local_rerun_decision_v1",
+  "decision_commit": "252e9cd",
+  "decision": "rerun_all_qwen_oracle_local",
+  "reason": "Both CS encoder-local and CS decoder-local mappings were invalid: the old runner keyed D-construct spans against the disjoint D-dev-select evaluation panel. SEAME mappings were audited separately and were nonzero.",
+  "affected_mask_types": ["encoder", "decoder"],
+  "rho": 0.5,
+  "expected": {
+    "raw_encoder": 72,
+    "raw_decoder": 84,
+    "conditioning_decoder": 84,
+    "total": 240
+  },
+  "performance_blind": true,
+  "unrelated_science_rerun": false,
+  "cache_policy": "OFF",
+  "model_revision": "sha256:5d87c842f212c25fef15bbb1d300fbbb5fafc98eb97fc37f01fcfbf2ce3453e8"
+}

@@ -1,0 +1,76 @@
+# DG-08 locked Whisper core evaluation protocol.  Frozen before new training /
+# D-test.  Do not change after the D-test lock is committed.
+stage: dg08_locked_whisper_eval
+
+model:
+  id: /mnt/data/tungnx/whisper-large-v3
+  hub_id: openai/whisper-large-v3
+  revision: null
+  dtype: bfloat16
+  device: cuda
+  freeze_backbone: true
+  attn_implementation: eager
+  local_files_only: true
+
+seeds: [13, 42, 73]
+
+data:
+  candidate_config: configs/lss/l1b_candidates_dialogue_v2r3.yaml
+  dtest_locked_parquet: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/manifests/roles/locked/role_D-test.parquet
+  reference_column: transcript_raw
+  timing_role: D-dev-select
+  timing_subset: first_100_by_duration
+
+basis:
+  path: results/dg03/basis/steering_basis_v1_L24.json
+  layer: 24
+  local_hash: sha256:2459a63576be545325a68d744bd228854bd5f9e6e09bbcf93e5c6122cd7efa93
+  cond_hash: sha256:319951b5d28f9e49d159169e1e098f8410ed074154a378d64ba24fd35572f991
+
+finalists:
+  F0_FROZEN_WHISPER: {kind: baseline}
+  F1_DG04_FROZEN_STEERING:
+    kind: fixed_direction
+    direction: v_local
+    rho: 0.5
+    beta_nominal: 4.465628877080159
+    reference: results/dg04/reference.json
+  F2_SALSA:
+    kind: global_vector
+    seed42_checkpoint: results/dg07/LB1_SALSA_EXACT_GLOBAL/selected_checkpoint.pt
+    seed42_sha256: sha256:03cc0bf68a8c241f55b515e48792624e6d348fa9cb6ae8407a42d1642be96f8e
+    trainable_parameters: 1280
+  F3_LORA:
+    kind: qv_lora
+    rank: 9
+    alpha: 9.0
+    seed42_checkpoint: results/dg07/LB2_LORA_MATCHED_BUDGET/selected_checkpoint.pt
+    seed42_sha256: sha256:7861cdf83b364a417f1cf627f42660c150f1386dccc8898355ab79d04fea0046
+    trainable_parameters: 46080
+  F4_MSTAR:
+    kind: adaptive_controller
+    beta: 4.465628877080159
+    seed42_checkpoint: results/dg06/d1/selected_checkpoint.pt
+    seed42_sha256: sha256:b9c45a1e279a5b5acf84c45adff6f48a2eae67f0e1062294b9211c7b77fef241
+    trainable_parameters: 43651
+
+decode:
+  greedy: {task: transcribe, language: zh, do_sample: false, num_beams: 1,
+           temperature: 0.0, max_new_tokens: 200, condition_on_prev_tokens: false}
+  beam5:  {task: transcribe, language: zh, do_sample: false, num_beams: 5,
+           temperature: 0.0, max_new_tokens: 200, condition_on_prev_tokens: false}
+
+metrics:
+  schema: metrics_v1
+  primary: [pier, mer, net_correction_utility]
+  outside_harm_on_dtest: not_available_no_candidate_poi_alignments
+
+bootstrap:
+  unit: dialogue
+  repetitions: 2000
+  seed: 42
+  ci: 0.95
+
+slurm:
+  partition: mig
+  max_concurrent_gpu_jobs: 2

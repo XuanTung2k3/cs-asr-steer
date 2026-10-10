@@ -1,0 +1,29 @@
+hostname worker-mig-3g40gb-0
+date 2026-09-21T04:12:07.285358+00:00
+which_python /home/tungnx/miniconda3/envs/acl1/bin/python
+sys.executable /home/tungnx/miniconda3/envs/acl1/bin/python
+python_version 3.11.9 | packaged by conda-forge | (main, Apr 19 2024, 18:36:13) [GCC 12.3.0]
+git_head a05a7d7879246e482b9e3ce39df06c7e97f164c3
+cuda_visible_devices MIG-09c332c6-27d7-5b98-8a77-6f93e77f7cd3
+torch_version 2.10.0+cu128
+torch_cuda_version 12.8
+torch_cuda_available True
+visible_gpu NVIDIA H100 80GB HBM3 MIG 3g.40gb
+scipy_version 1.17.1
+transformers_version 4.57.6
+datasets_version 4.8.4
+sklearn_version 1.8.0
+{
+  "schema_version": "basis_a6_gpu_acceptance_v1",
+  "status": "PASS",
+  "slurm_job_id": "53316",
+  "cuda": true,
+  "device_count": 1,
+  "devices": [
+    {
+      "index": 0,
+      "name": "NVIDIA H100 80GB HBM3 MIG 3g.40gb",
+      "total_memory_gb": 42.412802048
+    }
+  ]
+}

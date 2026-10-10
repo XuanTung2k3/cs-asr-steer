@@ -1,0 +1,27 @@
+{
+ "checks": {
+  "auditor_independent": true,
+  "baselines_teachers_masks_ancestors": true,
+  "budget": true,
+  "frozen:configs/inference_cf/p2_tta_funnel.json": true,
+  "frozen:docs/inference_cf/P2_TTA1_INHERITANCE_CONTRACT.md": true,
+  "frozen:docs/inference_cf/P2_TTA_FUNNEL_CODEX_DESIGN.md": true,
+  "frozen:docs/inference_cf/P2_TTA_FUNNEL_SPEC.md": true,
+  "frozen:docs/inference_cf/P2_TTA_MAP_PANEL24.json": true,
+  "frozen:docs/inference_cf/P2_TTA_MAP_PANEL_CONTRACT.md": true,
+  "historical_sources_at_starting_commit": true,
+  "immutable_configs_panels_current": true,
+  "inheritance_exact": true,
+  "no_tta1_outcome": true,
+  "panel100": true,
+  "plan_committed_and_hashed": true,
+  "predecessor_selection_independent": true,
+  "reuse_all_compatible_no_filtering": true,
+  "runner_reference_steering_free": true,
+  "selection_committed": true,
+  "tests_present": true
+ },
+ "git_commit": "658e5b725fe455772a8a8e1df45d55616bd04dc1",
+ "schema": "p2_tta1_prerun_audit_v1",
+ "verdict": "PASS_TO_P2_TTA1"
+}

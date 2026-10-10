@@ -1,0 +1,1391 @@
+{
+ "schema": "dir_sprint0_design_v1",
+ "status": "DESIGN_FROZEN",
+ "initial_head": "930bca0d119e90c0f46847890d4c8d4bd1feb006",
+ "study": "DIR-SPRINT0: bounded three-family steering-direction discovery (D3 acoustic-prior contrast, D4 transcription-fidelity contrast, D5 phonetic-concept steering) against historical matched controls",
+ "authority": "separately human-authorized development sprint; core v6, METHOD_CONTRACT and every historical verdict unchanged",
+ "scientific_question": "Does any new direction family produce actual English first-token corrections, beyond matched D2 and random controls, with acceptable Mandarin, English and EOS safety, at the frozen L16 DG-02 site and realized chord e*?",
+ "population": {
+  "manifest": "docs/inference_cf/DIR_SPRINT0_POPULATION.json",
+  "file_sha256": "sha256:d22f1e44475f7b5a855273c370d99898634e7c2ae468f4c3df2d7216040394ac",
+  "manifest_hash": "sha256:a348e05ab3f8fd57d666e0357668c8f0906e476b0166608a35462ee38b14fa04",
+  "selected_hash": "sha256:e7a85a68891c471e12b454100a544192dc50276ef55e0ed2f5e6a4029d2c0b33",
+  "selected_ids_hash": "sha256:5b62f378fa0ba671723a85dd4836b21ba785a71dab8067ada4d08cc28c3371c2",
+  "roster_hash": "sha256:391fd3ac88e74477a041e72d038b0c12e25f3d6cffe7c3c39f4a279fbaa1aef4",
+  "role": "D-dev-select",
+  "utterances": 240,
+  "dialogues": 20,
+  "utterances_per_dialogue": 12,
+  "seed": 240924,
+  "selection_tag": "DIR-SPRINT0-population-v1",
+  "exclusion_registry": {
+   "reader": "csasr.inference_cf.exposure_registry.exposed_ids",
+   "addenda": "docs/current/DATA_EXPOSURE_ADDENDA.json",
+   "addenda_sha256": "sha256:7658c25bc59e446b55fa92fabe1986f1968767390a3a5ec08c65dea3ebbd8b70",
+   "base_ledger_sha256": "sha256:9ac2eb4ba625d5c2ec3e2487972bd8e762789a012d3e748819df1695d7c79ee4",
+   "exposed_ids_count": 700,
+   "exposed_ids_hash": "sha256:46e50bbdf7ff8b19e880db0c791058e5bcb83e00c30e498afab24f3a6ac89e00",
+   "by_source": {
+    "A1-SRD2-G0-400": 400,
+    "documented_registry_at_srd2_freeze": 300
+   }
+  },
+  "selection_features": "identity only (role, dialogue, UID hash, audio existence / mono 16 kHz); no correctness, language, reference, baseline prediction, phonetic score or gate value",
+  "calibration_bank": {
+   "definition": "ALL FULL300 documented-exposure utterances (unlabeled; D5 concept prototypes only)",
+   "count": 300,
+   "ids_hash_sorted": "sha256:22a160bdab929e54dd2bbe41a51bd21fd7dde04e63850d000cf77bb2c245b2fc",
+   "rows_hash": "sha256:b9952e24177b02b7e39cb4402a4ce017af5e323bd665eabfef576bb33f4c3ff1",
+   "labels_used": false,
+   "correctness_filtering": false,
+   "outcome_use": false
+  },
+  "new_utterance_development_only": true,
+  "independent_dialogue_confirmation": false
+ },
+ "model": {
+  "dir": "/mnt/data/tungnx/whisper-large-v3",
+  "files": {
+   "added_tokens.json": "sha256:3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+   "config.json": "sha256:ad0e8d1e46f4d01f7861a21509e5d0f977d6cc1f367a370603c92541d819807b",
+   "generation_config.json": "sha256:fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23",
+   "merges.txt": "sha256:2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+   "model.safetensors": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+   "normalizer.json": "sha256:bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+   "preprocessor_config.json": "sha256:7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+   "special_tokens_map.json": "sha256:1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87",
+   "tokenizer.json": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+   "tokenizer_config.json": "sha256:844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389",
+   "vocab.json": "sha256:e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+  },
+  "precision": "bfloat16",
+  "attention_implementation": "eager",
+  "eval": true,
+  "parameter_requires_grad": false,
+  "parameter_updates": 0,
+  "layer_zero_based": 16,
+  "site": "DG-02 decoder_post_cross_attn_residual pre-FFN",
+  "norm_preserve": true,
+  "depth_rescale": false,
+  "temperature_readout": 1.0,
+  "suppression_hash": "sha256:e93e88ef310ed47a78a9932f3d2d5ffd02d7bc3d59bca0e2e90524e34b2ef8e8"
+ },
+ "environment": {
+  "interpreter": "/home/tungnx/miniconda3/envs/acl1/bin/python",
+  "torch": "2.10.0+cu128",
+  "transformers": "4.57.6",
+  "threads": 1,
+  "historical_gpu": "NVIDIA H100 80GB HBM3 MIG 3g.40gb",
+  "transformers_forward_source": "/home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/transformers/models/whisper/modeling_whisper.py",
+  "transformers_forward_sha256": "sha256:851c78f1aa62f84ed0d0a4dfded478a05c98f43d26732b56fea2d4acc79728b8",
+  "phone_provider_process": "child CPU process of Job A (acl1 interpreter; same torch/transformers as the audited provider venv), torch threads 4, float32, no TF32",
+  "phone_provider_children": 2
+ },
+ "baseline": {
+  "provider": "cached.Branch + cached._processed + core_p1.processed_argmax; cached_greedy is replay-loop reference only",
+  "prompt": [
+   50258,
+   50260,
+   50360,
+   50364
+  ],
+  "eos_id": 50257,
+  "task": "transcribe",
+  "language": "zh",
+  "num_beams": 1,
+  "sampling": false,
+  "max_new_tokens": 200,
+  "condition_on_prev_tokens": false,
+  "timestamps": false,
+  "heard_seconds_max": 30,
+  "sample_rate": 16000,
+  "same_encoder_in_all_paths": true,
+  "argmax_tie": "lowest token ID; explicit argmax (not topk tie order)",
+  "tie_implementation_note": "cached_greedy uses topk for its next ID; new canonical baseline uses the existing processed_argmax explicitly to preserve the R2/D2 lowest-ID tie convention, not topk tie order"
+ },
+ "queries": {
+  "inventory": "all t=0..T-1; t=T only if cached baseline terminated=eos",
+  "absolute_query": "4+t-1",
+  "prefix": "baseline content[:t]",
+  "prestep_cache": "prompt + content[:t-1] for t>=1; feed content[t-1]",
+  "pulse_structural_eligibility": "t>=1 AND complete UTF8 prefix AND no unexpected special content token AND finite native site/raw logits",
+  "t0": "inventory/gate row retained; frozen forced-prefix no-edit exclusion",
+  "EOS": "real EOS prediction query eligible if other structural checks pass; EOS not a veto",
+  "cap": "no invented t=T EOS query after 200-token cap",
+  "gate_provider_failure": "g=0 with original reason; ungated arms unaffected",
+  "invalid_direction": "that arm exact no-edit at that query; every other arm unchanged"
+ },
+ "gate": {
+  "version": "R2 g_old, unchanged",
+  "epsilon": 1e-12,
+  "formula": "g = E * max(0,P_M_B-P_E_B)",
+  "E": "max(0,tanh((log((pi_EN+eps)/(pi_ZH+eps))-log((pi_null_EN+eps)/(pi_null_ZH+eps)))/2))",
+  "conflict_logits": "raw model logits BEFORE generation processors; float32 full-vocabulary log_softmax",
+  "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+  "partition_counts": {
+   "matrix": 1667,
+   "embedded": 37858,
+   "ambiguous": 12341
+  },
+  "attention_source": "original R2 full_replay(use_cache=False, attention=True) on canonical cached B0 content, query 4+t-1",
+  "alignment_heads": [
+   [
+    7,
+    0
+   ],
+   [
+    10,
+    17
+   ],
+   [
+    12,
+    18
+   ],
+   [
+    13,
+    12
+   ],
+   [
+    16,
+    1
+   ],
+   [
+    17,
+    14
+   ],
+   [
+    19,
+    11
+   ],
+   [
+    21,
+    4
+   ],
+   [
+    24,
+    1
+   ],
+   [
+    25,
+    6
+   ]
+  ],
+  "window_frames": 50,
+  "frame_samples": 320,
+  "max_frames": 1500,
+  "window_tie": "earliest maximum valid-frame attention mass",
+  "partial_terminal_crop": "original R2 left shift <=319 samples",
+  "local_lid": "native_lid; SOT-only; softmax over full 100 language-token vocabulary; actual PCM crop padded to30s",
+  "null": "recompute one all-zero 30s float32 waveform through same native provider; pin probabilities and waveform/model hashes",
+  "null_EN_historical": 0.3173545002937317,
+  "null_ZH_historical": 0.01905861869454384,
+  "null_probability_abs_tolerance": 1e-06,
+  "fallback_precedence": [
+   "mid_character",
+   "localizer_fail",
+   "local_support_fail",
+   "baseline_provider_fail",
+   "nonfinite_signal"
+  ],
+  "no_low_mass_or_confidence_veto": true,
+  "ecf_dependency": false,
+  "cropped_lid_cache": "within utterance, exact audio/model/preprocess/start/end hashes only"
+ },
+ "compatibility": {
+  "input_and_query_identity_fraction": 1.0,
+  "cached_replay_equals_cached_baseline": "bitwise raw logits/site, processed argmax, tokens/termination",
+  "full_vs_cached_raw_TV_median_max": 0.01,
+  "full_vs_cached_raw_TV_p99_max": 0.05,
+  "full_vs_cached_raw_TV_max": 0.1,
+  "full_vs_cached_raw_script_mass_abs_diff_p99_max": 0.02,
+  "full_vs_cached_processed_argmax_agreement_min": 0.995,
+  "full_vs_cached_site_relative_L2_p99_max": 0.02,
+  "full_vs_cached_site_relative_L2_max": 0.05,
+  "full_vs_cached_site_cosine_min": 0.999,
+  "quantiles": "numpy linear quantiles over all structurally eligible queries; no favorable subset",
+  "causality_probe_queries": "per utterance first eligible, median eligible, last eligible; deduplicate",
+  "prefix_only_vs_full_TV_max": 0.05,
+  "prefix_only_vs_full_attention_L1_max": 0.02,
+  "cross_path_bitwise_required": false,
+  "recompute_gate_from_saved_full_path_inputs": true,
+  "fail_action": "INVALID and STOP; never replace full-replay gate with cached-attention gate",
+  "decoder_self_attention_future_mass_max": 1e-07,
+  "TV_definition": "0.5*sum(abs(softmax(raw_full.float32)-softmax(raw_cached.float32))) over full vocabulary",
+  "site_relative_L2_definition": "norm64(r_full-r_cached)/norm64(r_cached); same native site, zero norm invalid",
+  "probe_attention_definition": "L1 between heard-masked, renormalized ten-head mean cross-attention distributions at the same query"
+ },
+ "branches": {
+  "B0": {
+   "prompt": [
+    50258,
+    50260,
+    50360,
+    50364
+   ],
+   "tokens": [
+    "<|startoftranscript|>",
+    "<|zh|>",
+    "<|transcribe|>",
+    "<|notimestamps|>"
+   ],
+   "role": "canonical forced-ZH transcribe baseline; the only persistent history"
+  },
+  "E": {
+   "prompt": [
+    50258,
+    50259,
+    50360,
+    50364
+   ],
+   "tokens": [
+    "<|startoftranscript|>",
+    "<|en|>",
+    "<|transcribe|>",
+    "<|notimestamps|>"
+   ],
+   "role": "D0 only; own cold cache fed the identical B0 content prefix"
+  },
+  "TL": {
+   "prompt": [
+    50258,
+    50260,
+    50359,
+    50364
+   ],
+   "tokens": [
+    "<|startoftranscript|>",
+    "<|zh|>",
+    "<|translate|>",
+    "<|notimestamps|>"
+   ],
+   "role": "D4 only; own cold cache fed the identical B0 content prefix; generation_config.task_to_id.translate=50359"
+  },
+  "NULL": {
+   "prompt": [
+    50258,
+    50260,
+    50360,
+    50364
+   ],
+   "audio": "np.zeros(30*16000, float32) through the identical feature extractor/encoder (R2 null); one encoder output per job",
+   "role": "D3 only; own cold cache per utterance fed the identical B0 content prefix"
+  },
+  "identity": "same absolute query index 4+t-1; fed tokens == prompt + content[:t]; separate DiagBranch objects/caches; site = L16 DG-02 r=q+u_source in native BF16; logits float32 of BF16"
+ },
+ "families": {
+  "D0": {
+   "name": "prompt vector (historical P2-DIR D0)",
+   "construction": "csasr.inference_cf.core_p1.direction(h_E, h_B)",
+   "h_E": "E-branch L16 DG-02 site at the query",
+   "h_B": "B0 L16 DG-02 site",
+   "sign": 1,
+   "orientation": "toward the forced-EN prompt state (historical P2-DIR D0 +)"
+  },
+  "D1": {
+   "name": "unique-language subspace (historical P2-DIR D1)",
+   "folds": "results/inference_cf/p2dir/folds_run1/folds.json",
+   "folds_sha256": "sha256:294c3fb982ba7fb7abc7c4b431c753d4994eb6539be81cee51ba678f812d86e2",
+   "folds_hash": "sha256:854f9e7b9a903386afa2483a071fbc35e771e4c47ba75d4e103ea424904c5c83",
+   "vector_sha256": {
+    "CSD0006": "sha256:24e03316815afdc54d87e628a6e9cb7f59313edc7db4369d7de79633fb948aa8",
+    "CSD0011": "sha256:1cf74fc69d8dbf407def31af3b88ed61069d224047ef115b07dc04caba5c9157",
+    "CSD0012": "sha256:e268ec50cc666aa0d498edfe3fde4719407305aee97731c6d52923a1e4320a98",
+    "CSD0014": "sha256:c0db2ed60631a858cead21c508487fbcaa7b89da88c2d2cc5c281c9027b36b33",
+    "CSD0015": "sha256:e2104e02d4885d2a413bdd55678fedf9abab1dd47f4c015699d9e92fef129478",
+    "CSD0020": "sha256:9428b0aa2267e558182d5035266df684685b3e86bf7548345e520ab710c56cf5",
+    "CSD0043": "sha256:e9fb0419dc4da376e3c1e3555fa49663dba8615c4f5469a4918d981064a0c50f",
+    "CSD0046": "sha256:9d168c3674923f5e08373a41acaf84bf730b1d92992e20cbd4669ed7150f2948",
+    "CSD0051": "sha256:f4a85e37863b90c699ce695b9ef46a2fd40683f6ae51ad1b9561866eadbc62b2",
+    "CSD0501": "sha256:db922e92b164859d410fc051f4092cc771a1d990296053c1e032f81741551012",
+    "CSD0502": "sha256:30b4b7cebcf44692c5fc4df79143ef050c063bebd53d7c422e2d3638080f0f37",
+    "CSD0511": "sha256:1076c0918c6ff0b7684b457c24033c485910f638f8e51c45d465e5aeeb1c6fc2",
+    "CSD0514": "sha256:2f9f5489348596c1b587820bd863e51ace6f14bd503349fd4b4b2df3d309a5ef",
+    "CSD0517": "sha256:bd464d8dc9cab9db8a98fdcee0be5f4fc5c5fb234bad689ea36f57ae8caffc2c",
+    "CSD0532": "sha256:c519df187376fdad6486ad307c656aa800380793300b154a99a5d1b1e0c4ffcc",
+    "CSD0538": "sha256:29358b00cf61c82386c6e5663717512e05399db753c7a562c1d94d88665cef06",
+    "CSD0540": "sha256:f1eb8a5881ec2f79ff438c0ce78ad6fe4d171cf75fb60597ba551c1657b53147",
+    "CSD0541": "sha256:8495a86a37a61a48132071ce91ca43a8a4a5a7cb3dd210c8fc428d63863ef9ad",
+    "CSD1002": "sha256:d3c38669f3cbb0734be5ba0f82f26c576d7f5b996c0e31447ba2f3f899fe27cc",
+    "CSD1006": "sha256:db5845a27d967ce4a79472818147201cf18461d265c4f979bbb3e5afe3557187"
+   },
+   "vector_file_sha256": {
+    "CSD0006": "sha256:158e750dd67845a94ba86896a4e41d1e4c849aa538360eaf93c127183f032c78",
+    "CSD0011": "sha256:437a6493f23aaffbb1a63fbd12ba06ff5ea1e4e5fa17a2efdd534adc1e1cf89b",
+    "CSD0012": "sha256:b4511ba30083f48015dd84891e52848e80d06ec6f69560ea72af5597ba323f96",
+    "CSD0014": "sha256:2509d73755cbee0bef0d1c491390268b522a2972d06838e580f7ea108a6a0e94",
+    "CSD0015": "sha256:57188230edfee8836f32073c24d8efa5c972736a09de0a5bf2fc12b01d40274a",
+    "CSD0020": "sha256:5ce96abe2fc3b48f07bf7c49bacf32416ab4cdb41a7beccdc108055eaecec1b1",
+    "CSD0043": "sha256:6f49bb52afcdad9775fc9a5cb4dd684ee4819e6d43f1e6d9f079f5e16cf67e72",
+    "CSD0046": "sha256:750663e38ef82e67ef93b25a4207e9d3ec3c8de2a3261f2fc780e748ca75d0c6",
+    "CSD0051": "sha256:e8a836f8607a90e5adf09c0782b70bae029e69dc8160082b93d536b28cc19c51",
+    "CSD0501": "sha256:a39a5e9f0531c7c9ca77dd34336b5c9c71c65e6fff46ad42b7922a2891d4a9b0",
+    "CSD0502": "sha256:7452f49095926dd876cb0e8842b0154b6afea19eb39632a1862c3a6b9ed4878e",
+    "CSD0511": "sha256:368ac8ae4e15982b03556802933aa6218ddd79bac6f32ef34bc64b07c1449c0a",
+    "CSD0514": "sha256:d39830aef0e0da992ac47141179a8017e8fb9672a20359cec02e641b520bbfd4",
+    "CSD0517": "sha256:dd38372518ac828b13dcc9ff37a26654f23b8b2fc73aa9f0e1f99d4431c04a3a",
+    "CSD0532": "sha256:8a28b0062305cb2445bf3f67b948fad24f0950a38094694edb97fb9387aa6f53",
+    "CSD0538": "sha256:620e6b15b50ee1cc3df556f1ddcc1121a758a46e13ead0605b1bb430a60eb7df",
+    "CSD0540": "sha256:abe7d9a5747d798a1620d3e81d87b1394154a64f523548a48bfdc16769a338ef",
+    "CSD0541": "sha256:05204e483995197318c535494e6ff9fac5352f1a6897af9ce49f0c5958e73f22",
+    "CSD1002": "sha256:d4199691c176ec57756c03d2744dd127a857e2d9f68382166d9ad1e356d2601a",
+    "CSD1006": "sha256:1c2e98df9b46629deba46461d8280019f8348ce8b907478e24406e8a44adc0da"
+   },
+   "assignment": "original fold semantics: utterance of dialogue d receives fold d (fitted without dialogue d); assignment made in the CPU construct stage from population metadata, never by the GPU runner",
+   "sign": 1,
+   "refit": false
+  },
+  "D2": {
+   "provider": "ReadoutDirection -> readout.readout_direction",
+   "J": "log(P_E+1e-12)-log(P_M+1e-12)",
+   "gradient": "one native-BF16 scratch query with zero float32 probe, torch.autograd.grad(J, probe); no backward/weight update",
+   "probabilities": "generation-suppressed float32 full-vocabulary softmax, temperature1",
+   "tangent": "float64 g-h*dot(h,g)/dot(h,h); normalize with historical epsilon; serialize float32",
+   "tiny_state": 1e-08,
+   "tiny_tangent": 1e-08,
+   "unit_tolerance": 2e-06,
+   "radial_tolerance": 1e-06,
+   "epsilon": 1e-12,
+   "scratch_clean_identity": "bitwise site/raw logits against ordinary cached query",
+   "construct_once_per_structural_query": true,
+   "shared_direction_all_arms": true,
+   "sign": 1,
+   "gated_arm": "D2G"
+  },
+  "VAC": {
+   "name": "v_AC local acoustic difference (historical SRC-CF0-P construction)",
+   "regions": {
+    "provider": "experiments.inference_cf_p0_r2.native_lid",
+    "softmax_size": 100,
+    "language_ids": [
+     50259,
+     50260,
+     50261,
+     50262,
+     50263,
+     50264,
+     50265,
+     50266,
+     50267,
+     50268,
+     50269,
+     50270,
+     50271,
+     50272,
+     50273,
+     50274,
+     50275,
+     50276,
+     50277,
+     50278,
+     50279,
+     50280,
+     50281,
+     50282,
+     50283,
+     50284,
+     50285,
+     50286,
+     50287,
+     50288,
+     50289,
+     50290,
+     50291,
+     50292,
+     50293,
+     50294,
+     50295,
+     50296,
+     50297,
+     50298,
+     50299,
+     50300,
+     50301,
+     50302,
+     50303,
+     50304,
+     50305,
+     50306,
+     50307,
+     50308,
+     50309,
+     50310,
+     50311,
+     50312,
+     50313,
+     50314,
+     50315,
+     50316,
+     50317,
+     50318,
+     50319,
+     50320,
+     50321,
+     50322,
+     50323,
+     50324,
+     50325,
+     50326,
+     50327,
+     50328,
+     50329,
+     50330,
+     50331,
+     50332,
+     50333,
+     50334,
+     50335,
+     50336,
+     50337,
+     50338,
+     50339,
+     50340,
+     50341,
+     50342,
+     50343,
+     50344,
+     50345,
+     50346,
+     50347,
+     50348,
+     50349,
+     50350,
+     50351,
+     50352,
+     50353,
+     50354,
+     50355,
+     50356,
+     50357,
+     50358
+    ],
+    "language_map_hash": "sha256:09b0f7fc1c3501b7df005d9c9dbf6423d766004e5545043b4af3114dae73a324",
+    "en_id": 50259,
+    "zh_id": 50260,
+    "sample_rate": 16000,
+    "window_samples": 16000,
+    "stride_samples": 8000,
+    "end_rule": "regular full windows plus unique right-anchored final full window; if N<16000 use [0,N)",
+    "padding": "native _features pads each raw crop to 30s; no energy normalization",
+    "minimum_crop_samples": 8000,
+    "minimum_rms": 0.0001,
+    "pair_mass_min": 0.5,
+    "conditional_language_mass_min": 0.8,
+    "probability_tolerance": 1e-06,
+    "epsilon": 1e-12,
+    "null_correction_in_primary": false,
+    "sample_vote_fraction_min": 0.75,
+    "uncertain_votes_in_denominator": true,
+    "merge": "maximal adjacent identical sample labels, no gap filling/minimum-span deletion"
+   },
+   "regions_source": "configs/inference_cf/r0_region_vector.json:regions (unchanged)",
+   "s1_regions": {
+    "source": "R0 run1 primary windows and track_heard_intervals only; no oracle/script/SVD groups",
+    "heard_samples": "min(resampled full waveform samples,480000)",
+    "alignment_heads": [
+     [
+      7,
+      0
+     ],
+     [
+      10,
+      17
+     ],
+     [
+      12,
+      18
+     ],
+     [
+      13,
+      12
+     ],
+     [
+      16,
+      1
+     ],
+     [
+      17,
+      14
+     ],
+     [
+      19,
+      11
+     ],
+     [
+      21,
+      4
+     ],
+     [
+      24,
+      1
+     ],
+     [
+      25,
+      6
+     ]
+    ],
+    "frame_samples": 320,
+    "attention": "fresh matched M cached-query attention; mean frozen heads then restrict real heard frames; require raw heard mass >=0.5; normalize heard mass in float64",
+    "minimum_target_samples": 4000,
+    "maximum_target_samples": 32000,
+    "association": "each maximal EN interval clipped to heard horizon; discard <4000 samples; length=min(interval length,32000); candidate starts interval-left+n*320 plus unique right anchored last start; greatest normalized query-attention integral over fractional frame overlaps, then earliest start/end",
+    "associated_mass_min": 0.1,
+    "target_minimum_rms": 0.0001,
+    "absent": "NO_EN_REGION / LOW_HEARD_MASS / LOW_ASSOCIATION / LOW_ENERGY; retain row, fallback M ranking"
+   },
+   "s1_regions_source": "configs/inference_cf/s1_acoustic_evidence.json:regions (unchanged)",
+   "heard_mass_min": 0.5,
+   "association_attention": "cached B0 query frozen alignment-head attention (S1 'fresh matched M cached-query attention')",
+   "mask": "lexical_compatibility.hard_mask: positive float32 zero on [a,b), outside bytes identical",
+   "features": "lexical_compatibility.waveform_model_inputs; zero-change identity with batch_model_inputs required per utterance",
+   "masked_state": "cold forced-ZH DiagBranch on the masked encoder output fed prompt + the identical B0 prefix; L16 DG-02 site",
+   "direction": "csasr.inference_cf.src_cf0_pilot.direction(h_clean, h_mask) (float64 delta, ||.||+1e-6, abstain < 1e-4)",
+   "sign": 1,
+   "orientation": "+ = original minus predicted-English-masked (audio present)",
+   "when_constructible": "S1 target status OK and direction status OK; otherwise explicit no-edit with reason"
+  },
+  "RND": {
+   "name": "matched isotropic random",
+   "tag": "DIR-SPRINT0-random-v1",
+   "seed": 240924,
+   "construction": "PCG64(int(SHA256(tag|seed|UID|t|16)[:16],16)).standard_normal(1280) / norm -> float32 (SRC-CF0-P arithmetic; no projection)",
+   "sign": 1
+  },
+  "D3": {
+   "name": "acoustic-prior contrast",
+   "branches": "B0 (original audio) and NULL (all-zero 30 s audio), identical forced-ZH prompt and B0 content prefix",
+   "log_probs": "float32 torch.log_softmax of processed logits (suppress_tokens -> -inf; t>=1 so no begin suppression), upcast to float64",
+   "contrast": "A(v) = l_B(v) - max(l_N(v), log(1e-12)); floor applied after the log-softmax",
+   "score": "S(v) = l_B(v) + 1.0 * A(v)",
+   "contrast_coefficient": 1.0,
+   "null_log_floor": "log(1e-12)",
+   "legal_static": {
+    "definition": "token IDs < 50257 (EOS), not in generation_config.suppress_tokens, not special, whose byte string is UTF-8-boundary legal (first byte not 0x80-0xBF; strict decode succeeds or fails only with 'unexpected end of data' at the end)",
+    "count": 49695,
+    "hash": "sha256:bfcdc254e103330fa058056ad2fb687c014195680f8cf74330562115d33268f0",
+    "excluded_counts": {
+     "suppressed": 82,
+     "continuation_start": 466,
+     "invalid_utf8": 13,
+     "empty": 1
+    },
+    "hash_definition": "csasr.inference_cf.core.digest(sorted list of legal IDs)"
+   },
+   "legal_per_query": "legal_static AND finite l_B AND finite l_N",
+   "plausibility": "l_B(v) >= max_w l_B(w) + log(1e-3) (max over the full processed vocabulary, EOS included)",
+   "plausibility_log_alpha": "log(1e-3)",
+   "plausibility_justification": "covers the actuator's first-order reach at e* (P2-DIR A = ||g_tan|| e* = 5.72 [5.18, 6.30] nats; log(1e-3) = -6.91); adapts to entropy, unlike S1's fixed Top-20 (which missed most English-confusion targets); not tuned on any D3 outcome",
+   "candidate": "c_AP = argmax over plausible legal set of S; exact ties -> lowest token ID",
+   "abstentions": {
+    "nonfinite_branch": "no-edit",
+    "no_plausible_legal_candidate": "no-edit",
+    "baseline_is_candidate": "c_AP == b_t -> exact no-edit (no gradient call)"
+   },
+   "EOS": "EOS can be b_t (EOS query) but never c_AP",
+   "objective": "J = z[c_AP] - z[b_t] on the scratch query's float32 raw logits (both unsuppressed)",
+   "gradient": "historical zero-probe scratch autograd (readout.ZeroProbe / clone_scratch / cache_fingerprint), one torch.autograd.grad, no parameter gradients",
+   "tangent": "readout.tangent_unit (float64 g - h(h.g)/(h.h), ||.||+1e-12, guards 1e-8 / 2e-6 / 1e-6)",
+   "sign": 1,
+   "gated_arm": "D3G",
+   "comparator_D3CD": "direct contrastive token selection: top-1 := c_AP where D3 status is 'candidate', else B0 top-1; non-steering, not energy-matched; never a pulse"
+  },
+  "D4": {
+   "name": "transcription-fidelity contrast",
+   "construction": "readout.tangent_unit(h_TR - h_TL, h_TR) (float64)",
+   "h_TR": "B0 L16 DG-02 site (transcribe prompt)",
+   "h_TL": "TL-branch L16 DG-02 site (translate prompt)",
+   "sign": 1,
+   "orientation": "transcribe minus translate; never reversed",
+   "gated_arm": "D4G",
+   "entanglement": "Whisper <|translate|> means X->English: TR-TL partly encodes 'do not output English'; reported, not resolved by sign choice"
+  },
+  "D5": {
+   "name": "phonetic-concept steering",
+   "provider_manifest": "results/inference_cf/dir_sprint0/d5_provider/provider_manifest.json",
+   "provider_manifest_sha256": "sha256:6ee8a58ab4d80c6c75ab694aab8e318e1d98dce91bb22fe0a15c4bcb742bc6e3",
+   "provider_manifest_digest": "sha256:93ae874c09b89c3595e61c978b06d3f94a78f395b2b6688799652ab8e98a885e",
+   "provider_model_revision": "2c733782da5604684829819a5eb744c193fe9398",
+   "feature_table": "results/inference_cf/dir_sprint0/d5_provider/feature_table.json",
+   "feature_table_sha256": "sha256:ef36f0cf6bba2d6bb004d99f55771fae7f48fe08bb01e1aab7eaeec16d272f73",
+   "feature_table_digest": "sha256:8e1735afeff73367e3045d95eb82e1bff966e7736ec6b72a2f67b7712942566a",
+   "concept_table": "results/inference_cf/dir_sprint0/design/d5_concept_table.json",
+   "concept_table_sha256": "sha256:efc05909e6ed495cb414b0a33e27b6d022b671edd6c3ded7a511002cd9ce9bcd",
+   "concept_table_digest": "sha256:cbd856f317119cd6cf050f506dcfead204aa9a89e4385084ac106002787cf536",
+   "threshold_engineering": "results/inference_cf/dir_sprint0/design/d5_threshold_engineering.json",
+   "threshold_engineering_sha256": "sha256:c38f4d350bd53894fb43ca076798642fd7fb5bc1267e4d4d9c44fd555124bb33",
+   "primary_concepts": [
+    "NAS",
+    "STOP",
+    "FRIC",
+    "LAB",
+    "COR",
+    "DOR"
+   ],
+   "concept_rules": {
+    "NAS": "nas=+1",
+    "STOP": "son=-1 & cont=-1",
+    "FRIC": "son=-1 & cont=+1",
+    "LAB": "cons=+1 & lab=+1",
+    "COR": "cons=+1 & cor=+1",
+    "DOR": "cons=+1 & cor=-1 & lab=-1 & hi=+1",
+    "VOI_OBS": "son=-1 & voi=+1",
+    "ASP": "sg=+1"
+   },
+   "descriptive_only": [
+    "VOI_OBS",
+    "ASP"
+   ],
+   "exclusion_reason": "voicing and aspiration follow espeak's English/Mandarin label conventions (English p/t/k never aspirated; Mandarin b/d/g written p/t/k), so they partly encode language; no language-neutral representation can be established without outcomes; kept descriptive",
+   "tone": "provider tone mass recorded descriptively; never converted into a concept",
+   "posteriors": "PhoneProvider.posteriors once on the full original 16 kHz waveform (CPU float32, 4 threads); never on crops",
+   "provider_apparatus": "at Job A start each child reruns the public engineering clips sample1.flac and aishell_example_mandarin.wav: in-job repeat bitwise AND (bitwise equal to the sealed engineering hash OR max |dlogp| <= 1e-3 with argmax agreement 1.0)",
+   "provider_apparatus_clips": [
+    "sample1.flac",
+    "aishell_example_mandarin.wav"
+   ],
+   "provider_failure_scope": "apparatus failure or a child that does not finish its loop blocks D5 family-wide; a single utterance's provider failure only abstains that utterance's evidence (provider_failure); prototype coverage minima still apply",
+   "provider_apparatus_tolerance": {
+    "max_abs_logprob": 0.001,
+    "argmax_agreement": 1.0
+   },
+   "window": "R2 max_attention_window of the query (full-replay frozen ten-head attention; the gate's own window), [start_sample, end_sample)",
+   "weights": "phone_provider.interval_weights: fraction of each 400-sample provider span inside the window",
+   "emitting_frame": "s_j = sum_{segmental v} p_jv >= 0.5",
+   "evidence": "q_k = sum_j w_j e_j sum_v p_jv C_vk / sum_j w_j e_j s_j over segmental v (fraction of emitting phone mass in concept class k)",
+   "validity": {
+    "window_present": true,
+    "window_frames_min": 20,
+    "emitting_weight_min": 2.0,
+    "excluded_share_max": 0.1,
+    "finite": true,
+    "order": [
+     "no_window",
+     "provider_failure",
+     "too_few_window_frames",
+     "nonfinite_posteriors",
+     "low_emitting_weight",
+     "excluded_mass",
+     "zero_valid_mass",
+     "nonfinite_evidence"
+    ],
+    "silence": "silent windows have no emitting frame (engineering: synthetic silence/noise frames s_j <= 0.13) -> low_emitting_weight",
+    "language_convention": "handled by excluding voicing/aspiration from the primary concepts; Mandarin-convention mass reported descriptively, never a gate"
+   },
+   "threshold_justification": "engineering (public clips + synthetic only): per-frame segmental mass bimodal (speech emitting frames >= 0.98, 2.7-5.1% of frames in (0.2,0.8)); silence/noise frames <= 0.13; 1-s speech windows emitting weight p05 2.6-8.2 (min 0 in a pause), silence 0; 1-s windows hold 50-51 provider frames, 20 = 0.4 s",
+   "bank": {
+    "population": "calibration_bank (FULL300, all utterances)",
+    "queries": "structural queries of the canonical cached B0 (same generator) with valid D5 evidence",
+    "state": "B0 L16 DG-02 site, unit-normalized h/||h|| (float64)",
+    "quantiles": [
+     0.2,
+     0.8
+    ],
+    "quantile_method": "numpy linear over all valid bank queries (pooled)",
+    "high": "q_k >= Q_0.8",
+    "low": "q_k <= Q_0.2",
+    "requires": "Q_0.8 > Q_0.2",
+    "dialogue_balancing": "Delta_d = mean_High,d - mean_Low,d for dialogues with >= 5 High and >= 5 Low; v_k = normalize(mean_d Delta_d) (equal dialogue weight)",
+    "dialogues_min": 15,
+    "side_total_min": 500,
+    "dialogue_side_min": 5,
+    "mu": "dialogue-macro mean of q_k over valid bank queries",
+    "sd": "pooled population SD (ddof 0); > 1e-6",
+    "low_rank_normalization": null,
+    "labels_used": false,
+    "failure": "any concept failing -> D5 PROVIDER_OR_CONSTRUCTION_BLOCKED"
+   },
+   "direction": "z_k = (q_k - mu_k)/sd_k; d_PHON = readout.tangent_unit(sum_k z_k v_k, h_B); ||z|| < 1e-6 -> abstain",
+   "sign": 1,
+   "orientation": "toward bank states rich in the concept classes the local audio over-expresses",
+   "gated_arm": "D5G",
+   "shuffle": {
+    "arm": "D5SH",
+    "gated_arm": "D5SHG",
+    "tag": "DIR-SPRINT0-d5-shuffle-v1",
+    "seed": 240924,
+    "pool": "D5-valid structural queries of the same utterance",
+    "rule": "order by (SHA256(tag|seed|UID|t), t); position i receives the z-vector of position (i+1) mod n",
+    "construction": "identical prototypes, normalization, tangent rule and e*; recipient's own h_B",
+    "singleton": "n == 1: donor = self, flagged uninformative, still pulsed",
+    "degenerate_reporting": "count bitwise-identical donor/recipient z vectors and cos(d_D5, d_D5SH) > 0.9",
+    "no_oracle": true
+   },
+   "not_whisper_only": "requires the external pretrained phone model, the frozen feature/concept tables and the FULL300 calibration bank"
+  }
+ },
+ "arms": {
+  "B0": {
+   "kind": "none",
+   "target": "0"
+  },
+  "D0": {
+   "kind": "pulse",
+   "family": "D0",
+   "gate": null,
+   "target": "e_star",
+   "role": "historical control"
+  },
+  "D1": {
+   "kind": "pulse",
+   "family": "D1",
+   "gate": null,
+   "target": "e_star",
+   "role": "historical control"
+  },
+  "D2": {
+   "kind": "pulse",
+   "family": "D2",
+   "gate": null,
+   "target": "e_star",
+   "role": "historical control (matched comparator)"
+  },
+  "VAC": {
+   "kind": "pulse",
+   "family": "VAC",
+   "gate": null,
+   "target": "e_star",
+   "role": "historical control (when constructible)"
+  },
+  "RND": {
+   "kind": "pulse",
+   "family": "RND",
+   "gate": null,
+   "target": "e_star",
+   "role": "matched random comparator"
+  },
+  "D3": {
+   "kind": "pulse",
+   "family": "D3",
+   "gate": null,
+   "target": "e_star",
+   "role": "new primary"
+  },
+  "D4": {
+   "kind": "pulse",
+   "family": "D4",
+   "gate": null,
+   "target": "e_star",
+   "role": "new primary"
+  },
+  "D5": {
+   "kind": "pulse",
+   "family": "D5",
+   "gate": null,
+   "target": "e_star",
+   "role": "new primary"
+  },
+  "D5SH": {
+   "kind": "pulse",
+   "family": "D5SH",
+   "gate": null,
+   "target": "e_star",
+   "role": "D5 negative control"
+  },
+  "D2G": {
+   "kind": "pulse",
+   "family": "D2",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "historical R2-gated D2"
+  },
+  "D3G": {
+   "kind": "pulse",
+   "family": "D3",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "new secondary"
+  },
+  "D4G": {
+   "kind": "pulse",
+   "family": "D4",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "new secondary"
+  },
+  "D5G": {
+   "kind": "pulse",
+   "family": "D5",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "new secondary"
+  },
+  "D5SHG": {
+   "kind": "pulse",
+   "family": "D5SH",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "gated D5 negative control"
+  },
+  "RNDG": {
+   "kind": "pulse",
+   "family": "RND",
+   "gate": "g_old",
+   "target": "e_star*g_old",
+   "role": "gated random comparator"
+  },
+  "D3CD": {
+   "kind": "decision",
+   "family": "D3",
+   "role": "non-steering direct contrastive comparator"
+  }
+ },
+ "arm_order": [
+  "D0",
+  "D1",
+  "D2",
+  "VAC",
+  "RND",
+  "D3",
+  "D4",
+  "D5",
+  "D5SH",
+  "D2G",
+  "D3G",
+  "D4G",
+  "D5G",
+  "D5SHG",
+  "RNDG"
+ ],
+ "variants": {
+  "D3": {
+   "ungated": "D3",
+   "gated": "D3G"
+  },
+  "D4": {
+   "ungated": "D4",
+   "gated": "D4G"
+  },
+  "D5": {
+   "ungated": "D5",
+   "gated": "D5G"
+  }
+ },
+ "matched_comparators": {
+  "D3": {
+   "D2": "D2",
+   "RND": "RND"
+  },
+  "D3G": {
+   "D2": "D2G",
+   "RND": "RNDG"
+  },
+  "D4": {
+   "D2": "D2",
+   "RND": "RND"
+  },
+  "D4G": {
+   "D2": "D2G",
+   "RND": "RNDG"
+  },
+  "D5": {
+   "D2": "D2",
+   "RND": "RND",
+   "SH": "D5SH"
+  },
+  "D5G": {
+   "D2": "D2G",
+   "RND": "RNDG",
+   "SH": "D5SHG"
+  }
+ },
+ "dose": {
+  "e_star": 1.1260757575454359,
+  "solver": "experiments.inference_cf_p2r.solve_scale + scaled_direction; loc0_sites.pulse_action",
+  "max_evaluations": 8,
+  "native_bf16_emulation": true,
+  "CPU_float64_geometry": true,
+  "relative_squared_energy_error_max": 0.02,
+  "relative_chord_error_max": 0.02,
+  "solver_vs_hook_abs_error_factor": 1e-06,
+  "consumed_vs_proposed_relative_error_max": 0.005,
+  "zero_target": "bypass solver/hook edit; bitwise NONE",
+  "unreachable_or_out_of_tolerance": "explicit exact no-edit; retain planned dose and denominator; no rescaling/floor",
+  "new_norm_rounding_threshold": false,
+  "gated_vs_shuffle_total_realized_squared_energy_ratio_range": null,
+  "each_gated_arm_fraction_planned_squared_energy_lost_max": 0.1,
+  "energy_comparison_zero_total": "INCONCLUSIVE, never divide by zero",
+  "B1_nonzero_requests_matched_fraction_min": null,
+  "repair_epsilon": 1e-06,
+  "consumed_vs_proposed_error_definition": "abs(consumed_chord_norm/proposed_chord_norm-1); norm ratio, NOT vector relative L2",
+  "native_consumption_preview": "record pristine native q,u,r=q+u; preview q+(u+(proposed_r-r)) on same native site device/dtype/order; never inspect FFN/logits",
+  "preview_guard_failure": "native_consumption_unattainable: exact no-edit with planned dose retained; no coefficient refinement, gate floor or alternative energy",
+  "solver_calls_per_arm": "one original solve_scale, max8 emulations; pulse_action may use hash-verified cached solver result, never solve a second time",
+  "actual_consumption_preview_check": "bitwise predicted/actual FFN input for edited cells; otherwise INVALID; exact no-edit output=B0 for abstentions",
+  "per_arm_target": "ungated e*; gated e*·g_old solved as its own native chord (never coefficient × gate); zero gate -> exact zero",
+  "ungated_nonzero_requests_matched_fraction_min": 0.95,
+  "gated_planned_squared_energy_lost_max": 0.1,
+  "matched_fraction_denominator": "cells with a valid direction and a nonzero target",
+  "D2_RND_energy_failure": "INVALID (comparators unusable)",
+  "new_family_energy_failure": "that variant ineligible for promising status"
+ },
+ "job_A_gate": {
+  "rows_complete": 240,
+  "dialogues_complete": 20,
+  "inventory_complete_fraction": 1.0,
+  "pulse_structural_queries_min": 2000,
+  "pulse_structural_dialogues_min": 20,
+  "nonzero_old_gate_queries_min": 20,
+  "nonzero_old_gate_dialogues_min": 5,
+  "finite_provider_fraction_on_complete_prefix_min": 0.99,
+  "branch_identity_fraction": 1.0,
+  "branch_finite_fraction": 1.0,
+  "compatibility": "ALL frozen SRD2-G0 compatibility predicates pass",
+  "bank_rows_complete_for_D5": 300,
+  "D3_null_finite_fraction_min": 0.99,
+  "no_lexical_labels_for_authorization": true
+ },
+ "evaluation": {
+  "alignment": "post-seal normalize/segment_units, align_tokens and R2 unit_to_token_positions; no timings needed",
+  "English_targets": "historical p2r_population.target_set with raw/lower/capitalized/UPPER and optional leading space, exact prefix-ID stability, distinguishing prefix >=min(2,len(word))",
+  "Mandarin_targets": "historical correct-state singleton baseline first-token ID",
+  "collisions": "different strata or multiple English reference units at one query -> primary unalignable; Mandarin same-category deduplicated to unique query",
+  "primary_confusions": "wrong-language substitution or script/transliteration; exclude deletions/same-language substitutions into separate descriptive ledgers",
+  "correction": "B0 argmax notin Y and arm argmax in Y",
+  "corruption": "B0 argmax in Y and arm argmax notin Y",
+  "primary_unit": "unique (UID,t), not reference-unit multiplicity",
+  "structural_fallbacks": "count as no-edit, stay in mapped stratum denominator",
+  "ambiguous_offsets_or_targets": "explicit unalignable ledger; never repair using oracle timings",
+  "EOS_deletions": "secondary only; no missing-word recovery claim",
+  "utility": "U_a = C_a - H_ZH_a - H_EN_a (equal predeclared event costs)",
+  "full_population_reporting": "all 240 utterances / all inventory rows; mapping, structural, constructible, edited and common-eligible denominators separately",
+  "long_audio_without_heard_scope_timing": "duration>30s rows primary-unalignable (heard_scope), still executed",
+  "mapping_implementation": "experiments.inference_cf_srd2_g0_evaluate.map_utterance (unchanged); auditor: experiments.inference_cf_srd2_g0_audit.own_map (independent)",
+  "EOS_severe": "arm top-1 == EOS, B0 top-1 != EOS, baseline remaining content tokens (T - t) >= 10; over all inventory queries; reference-free single-query early-stop risk proxy",
+  "gap": "G = max_{k notin Y} zp_k - max_{k in Y} zp_k on processed (suppressed) float32 logits; Delta_a = G_B0 - G_a",
+  "script_mass": "raw float32 full-vocabulary P_E / P_M (tokenizer partition), descriptive",
+  "D3CD_top1": "c_AP where D3 status == candidate else B0 top-1"
+ },
+ "opportunities": {
+  "mapped_EN_confusion_min": 150,
+  "mapped_EN_confusion_dialogues_min": 10,
+  "mapped_EN_correct_min": 50,
+  "mapped_EN_correct_dialogues_min": 10,
+  "mapped_ZH_correct_min": 500,
+  "mapped_ZH_correct_dialogues_min": 15,
+  "English_unit_mapping_fraction_min": 0.8
+ },
+ "coverage": {
+  "constructible_fraction_structural_min": 0.5,
+  "constructible_fraction_EN_confusion_min": 0.5,
+  "constructible": {
+   "D3": "D3 status in {candidate, baseline_is_candidate} AND (baseline_is_candidate OR gradient direction ok)",
+   "D4": "tangent direction ok",
+   "D5": "evidence ok AND direction ok"
+  },
+  "EN_confusion_denominator": "mapped EN-confusion queries that are structurally eligible"
+ },
+ "power": {
+  "corrections_min": 8,
+  "correction_dialogues_min": 4,
+  "max_correction_dialogue_share": 0.5
+ },
+ "advantage": {
+  "over_D2_corrections_min": 4,
+  "over_RND_corrections_min": 4,
+  "positive_paired_correction_gain_vs_D2_dialogues_min": 3,
+  "D5_over_shuffle_corrections_min": 4,
+  "D5_positive_paired_gain_vs_shuffle_dialogues_min": 3,
+  "D3_utility_minus_D3CD_min": 1
+ },
+ "safety_estimability": {
+  "active_ZH_correct_min": 40,
+  "active_ZH_correct_dialogues_min": 8
+ },
+ "safety": {
+  "utility_min": 1,
+  "unconditional_ZH_corruption_rate_max": 0.01,
+  "active_ZH_corruption_rate_max": 0.05,
+  "EN_corruptions_max": 3,
+  "unconditional_EN_corruption_rate_max": 0.02,
+  "EOS_severe_events_max": 0,
+  "damage_dialogue": "no dialogue with >= 3 ZH corruptions AND active ZH corruption rate > 0.20"
+ },
+ "mechanistic": {
+  "definition": "dialogue-macro mean over mapped structural EN-confusion queries of (Delta_v - Delta_RND(matched))",
+  "point_min_nats": 0.5,
+  "adjusted_lower_gt": 0.0,
+  "family_size": 6,
+  "quantiles": [
+   0.004166666666666667,
+   0.9958333333333333
+  ]
+ },
+ "statistics": {
+  "seed": 240924,
+  "bootstrap_replicates": 10000,
+  "cluster": "paired resample of 20 sorted dialogues with replacement; same draws for every arm",
+  "count_statistic": "resampled totals",
+  "margin_statistic": "mean of represented dialogue means",
+  "primary_family": [
+   "C_v-C_D2",
+   "C_v-C_RND",
+   "U_v-U_D2",
+   "U_v-U_RND"
+  ],
+  "primary_family_members": "for v in {D3, D3G, D4, D4G, D5, D5G} (24) + D5/D5G vs shuffle C and U (4) + D3/D3G utility vs D3CD (2) = 30",
+  "family_size": 30,
+  "family_quantiles": [
+   0.0008333333333333334,
+   0.9991666666666666
+  ],
+  "descriptive_ci": "percentile 95%",
+  "undefined_rates": "NOT_ESTIMABLE below 9500 valid draws",
+  "significance_gate": false,
+  "multiplicity_disclosure": "6 candidate variants (3 families x 2 controller variants); either variant may qualify its family"
+ },
+ "family_status": {
+  "validity": [
+   "PROVIDER_OR_CONSTRUCTION_BLOCKED",
+   "INSUFFICIENT_COVERAGE",
+   "VALID_AND_TESTED"
+  ],
+  "outcome_precedence": [
+   "PROMISING_FEASIBILITY",
+   "SAFETY_FAILED",
+   "INSUFFICIENT_COVERAGE",
+   "LEXICAL_POWER_INSUFFICIENT"
+  ],
+  "definitions": {
+   "PROVIDER_OR_CONSTRUCTION_BLOCKED": "family-wide construction failure: D3 null branch finite < 0.99 of structural queries or legal-set hash mismatch; D4 prompt/task identity failure; D5 provider apparatus failure, table/concept digest mismatch, bank capture incomplete or any prototype failure",
+   "INSUFFICIENT_COVERAGE": "constructible fraction < 0.5 on structural or on structural mapped EN-confusion queries; or (outcome) a variant with energy+power+advantage lacks safety-estimable edits",
+   "VALID_AND_TESTED": "constructed and covered; outcome evaluated",
+   "PROMISING_FEASIBILITY": "some variant passes energy, power, advantage, safety-estimability and safety",
+   "SAFETY_FAILED": "some variant passes energy, power, advantage and safety-estimability but none passes safety",
+   "LEXICAL_POWER_INSUFFICIENT": "no variant passes energy + power + advantage"
+  },
+  "variant_order": [
+   "ungated",
+   "gated"
+  ],
+  "negative_is_not_provider_failure": true
+ },
+ "terminal_precedence": [
+  "DIR_SPRINT0_INVALID",
+  "DIR_SPRINT0_COMPUTE_BLOCKED",
+  "DIR_SPRINT0_OPPORTUNITY_INSUFFICIENT",
+  "DIR_SPRINT0_STEERING_FEASIBILITY_SIGNAL",
+  "DIR_SPRINT0_CAUSAL_POWER_WITH_DAMAGE",
+  "DIR_SPRINT0_MECHANISTIC_EFFECT_ONLY",
+  "DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE"
+ ],
+ "terminal_definitions": {
+  "DIR_SPRINT0_INVALID": "critical experiment-wide failure (provenance, firewall, B0/cache/site identity, restore, solver/hook/FFN integrity, incomplete matrix, old30 apparatus, weights, D2 or RND ungated energy validity, failed audit), or all three new families PROVIDER_OR_CONSTRUCTION_BLOCKED",
+  "DIR_SPRINT0_COMPUTE_BLOCKED": "post-A Job B recost > 9000 s (STOP before Job B for a human resource decision)",
+  "DIR_SPRINT0_OPPORTUNITY_INSUFFICIENT": "Job A coverage or evaluator opportunity predicates fail, or no new family is VALID_AND_TESTED",
+  "DIR_SPRINT0_STEERING_FEASIBILITY_SIGNAL": ">= 1 family PROMISING_FEASIBILITY (independent FULL audit PASS)",
+  "DIR_SPRINT0_CAUSAL_POWER_WITH_DAMAGE": "no promising family; >= 1 family SAFETY_FAILED",
+  "DIR_SPRINT0_MECHANISTIC_EFFECT_ONLY": "no family with power+advantage; >= 1 VALID family variant with a mechanistic effect (gap closed beyond matched random >= 0.5 nat, adjusted lower > 0)",
+  "DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE": "every remaining case"
+ },
+ "stage_aware_rule_evaluation": "before Job B apply only available integrity/resource/Job-A predicates; pending energy/evaluation/audit predicates are NOT evaluated as failures. At final evaluation every rule input must be present; missing critical evidence =>INVALID.",
+ "metrics_conventions": {
+  "rates": "corruptions/unique mapped queries; active rate uses actually nonzero achieved edits, not g>0",
+  "retention": null,
+  "energy_ratio": null,
+  "lost_energy": "sum(target_norm^2 on no-edit unreachable/invalid requests)/sum(planned_target_norm^2), not counts",
+  "uninformative_query_fraction": "D5 shuffle: queries in singleton utterances / D5-valid queries",
+  "utility_dialogue_share": null,
+  "beyond_heard_scope": "duration > 30 s rows primary-unalignable; still executed and in all-240 coverage",
+  "count_predicates": "integer events; rates computed full precision, no rounded table thresholding",
+  "numeric_missing": "undefined is never a passing comparison; integrity metrics missing =>INVALID; lexical opportunity/ratio missing=>INCONCLUSIVE",
+  "no_gold_in_global_B_authorization": true,
+  "critical_failure_flag": "any required completed integrity/audit failure; a failed FULL audit sets this flag true. Pending conditional phases are not treated as failed matrices.",
+  "correction_dialogue_share": "max per-dialogue corrections / total corrections; zero total -> undefined"
+ },
+ "firewall": {
+  "runtime_input_allowlist": [
+   "canonical_index",
+   "utterance_id",
+   "audio_path",
+   "audio_full_sha256"
+  ],
+  "dialogue_metadata": "aggregation/audit only, not gate feature",
+  "forbidden_roles": [
+   "D-dev-confirm",
+   "D-test",
+   "router-calib",
+   "P3",
+   "SEAME",
+   "CS-FLEURS",
+   "ViMedCSS",
+   "ASCEND",
+   "transfer"
+  ],
+  "runners_forbidden": [
+   "reference",
+   "target_ids",
+   "stratum",
+   "CTC",
+   "MMS-FA",
+   "oracle_region",
+   "evaluator_gradient",
+   "language_label",
+   "gold_phone",
+   "phonemizer"
+  ],
+  "barriers": [
+   "PASS_TO_DIR_SPRINT0",
+   "job_A_seal_push",
+   "DIR_SPRINT0_AUDIT_A_PASS",
+   "global_authorization_B",
+   "job_B_seal_push",
+   "DIR_SPRINT0_AUDIT_PRIMARY_PASS",
+   "evaluator",
+   "DIR_SPRINT0_AUDIT_FULL_PASS"
+  ],
+  "authorization_B_fields": [
+   "schema",
+   "job_A_seal_hash",
+   "construct_seal_hash",
+   "config_hash",
+   "population_hash",
+   "audit_hash",
+   "resource_forecast_hash",
+   "authorized"
+  ],
+  "authorization_contains_per_row_correctness": false,
+  "bank_input_allowlist": [
+   "bank_index",
+   "utterance_id",
+   "audio_path",
+   "audio_full_sha256"
+  ],
+  "construct_stage_metadata": "dialogue_id from the frozen population only for D1 fold assignment, D5 bank dialogue balancing and cluster bookkeeping; never a lexical label"
+ },
+ "compute": {
+  "max_scientific_jobs": 2,
+  "seconds_max_each": 10800,
+  "pre_job_B_forecast_max_seconds": 9000,
+  "job_A_conservative_seconds": 6000,
+  "job_B_formula": "0.18 * structural_queries + 0.05 * planned_nonzero_pulses + 800",
+  "job_B_observed_component": "sum over structural queries of [2*c + n_autograd_q*0.0434598979 + n_pulse_q*(0.0177027043 + 0.02 + 104768/v)] + max(800, l + 240*a + w + 180)",
+  "historical_D2_p95_sec": 0.043459897860884666,
+  "historical_pulse_p95_sec": 0.017702704295516014,
+  "per_pulse_solver_allowance_sec": 0.02,
+  "per_pulse_bytes": 104768,
+  "post_A_recost": "both forecasts <= 9000 s, from the reference-free complete planned pulse matrix",
+  "automatic_population_reduction": false,
+  "arm_reduction": false,
+  "timeout": "preserved as INVALID; no third job, no subset"
+ },
+ "outputs": {
+  "root": "results/inference_cf/dir_sprint0/run1",
+  "overwrite_existing_attempts": false,
+  "archive_root": "/mnt/data/tungnx/cs-asr-steer/archives/dir_sprint0/run1",
+  "logit_storage": "lossless native BF16 bits full vocabulary per query/arm",
+  "seals": "commit/push immutable manifests and complete content-addressed artifact hashes"
+ },
+ "historical_apparatus": {
+  "source": "results/inference_cf/p2dir/exp1_run1/audit_spot.json",
+  "source_sha256": "sha256:6a03f6f0ae6e93bc86adada057eb41c56d4909171b27e2bcbacb2f3ee33b1d73",
+  "queries": [
+   {
+    "utterance_id": "ZH-CN_U0023_S0_253",
+    "t": 1
+   },
+   {
+    "utterance_id": "ZH-CN_U1027_S0_3",
+    "t": 9
+   },
+   {
+    "utterance_id": "ZH-CN_U1081_S0_172",
+    "t": 1
+   },
+   {
+    "utterance_id": "ZH-CN_U1027_S0_57",
+    "t": 3
+   },
+   {
+    "utterance_id": "ZH-CN_U0011_S0_265",
+    "t": 18
+   },
+   {
+    "utterance_id": "ZH-CN_U1080_S0_1",
+    "t": 183
+   },
+   {
+    "utterance_id": "ZH-CN_U1064_S0_100",
+    "t": 98
+   },
+   {
+    "utterance_id": "ZH-CN_U1080_S0_181",
+    "t": 21
+   },
+   {
+    "utterance_id": "ZH-CN_U0011_S0_265",
+    "t": 3
+   },
+   {
+    "utterance_id": "ZH-CN_U0030_S0_61",
+    "t": 3
+   },
+   {
+    "utterance_id": "ZH-CN_U2012_S0_108",
+    "t": 19
+   },
+   {
+    "utterance_id": "ZH-CN_U0101_S0_205",
+    "t": 38
+   },
+   {
+    "utterance_id": "ZH-CN_U0039_S0_380",
+    "t": 75
+   },
+   {
+    "utterance_id": "ZH-CN_U1063_S0_26",
+    "t": 55
+   },
+   {
+    "utterance_id": "ZH-CN_U0011_S0_103",
+    "t": 2
+   },
+   {
+    "utterance_id": "ZH-CN_U2011_S0_108",
+    "t": 40
+   },
+   {
+    "utterance_id": "ZH-CN_U2003_S0_280",
+    "t": 35
+   },
+   {
+    "utterance_id": "ZH-CN_U1028_S0_1",
+    "t": 87
+   },
+   {
+    "utterance_id": "ZH-CN_U1033_S0_199",
+    "t": 45
+   },
+   {
+    "utterance_id": "ZH-CN_U0023_S0_87",
+    "t": 17
+   },
+   {
+    "utterance_id": "ZH-CN_U1003_S0_141",
+    "t": 18
+   },
+   {
+    "utterance_id": "ZH-CN_U0029_S0_95",
+    "t": 2
+   },
+   {
+    "utterance_id": "ZH-CN_U1034_S0_173",
+    "t": 64
+   },
+   {
+    "utterance_id": "ZH-CN_U1063_S0_26",
+    "t": 84
+   },
+   {
+    "utterance_id": "ZH-CN_U0085_S0_99",
+    "t": 16
+   },
+   {
+    "utterance_id": "ZH-CN_U0091_S0_209",
+    "t": 53
+   },
+   {
+    "utterance_id": "ZH-CN_U0011_S0_103",
+    "t": 9
+   },
+   {
+    "utterance_id": "ZH-CN_U0039_S0_380",
+    "t": 116
+   },
+   {
+    "utterance_id": "ZH-CN_U2003_S0_280",
+    "t": 20
+   },
+   {
+    "utterance_id": "ZH-CN_U0028_S0_37",
+    "t": 6
+   }
+  ],
+  "new_outcome_denominator_inclusion": false,
+  "runner_receives_stratum": false,
+  "clean_state_and_logits_bitwise": true,
+  "saved_D2_direction_max_abs_error": 0.0,
+  "objective_abs_tolerance": 1e-06,
+  "pulse_numerics": "unchanged original P2-DIR guards; no relaxed reproduction tolerance",
+  "zero_dose_bitwise": true
+ },
+ "future_execution_requires_independent_pre_run_audit": true,
+ "source_sha256": {
+  "experiments/inference_cf_p0_r2.py": "sha256:91c4ab3982f8862d1e2ace6d857d5410362cdfc383374bc758d564490f94ebc3",
+  "experiments/inference_cf_cached.py": "sha256:7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+  "experiments/inference_cf_p2r.py": "sha256:ed9d6a94584d7524cf880cd949da8f1cecd73a0273dd0d0f3845c47ec04eef7e",
+  "experiments/inference_cf_p0_r2_evaluate.py": "sha256:625f6ce31c6985f54aa3887ff671d58e1977b2664b2c04a23974c4fee7d7110b",
+  "experiments/inference_cf_p2r_population.py": "sha256:0c0fd96a80da45fc305348fab6295113b4271a20a662d65289fe0cd5831c9b1f",
+  "experiments/inference_cf_srd2_g0.py": "sha256:5c36cd52b8e92dab978d9e860670f7526b00cf610190aa1c8d41b523ec542537",
+  "experiments/inference_cf_srd2_g0_evaluate.py": "sha256:7a62fb735b91fa1f84ce69ef962e7c3a14f38f9ba0aa5e98d4bc3e0c5748a6cb",
+  "experiments/inference_cf_srd2_g0_audit.py": "sha256:1d3ab37eb90d7ed71365ac48ffd106307e3ab074687da209ec9d421de3996ee1",
+  "experiments/inference_cf_srd2_g0_inventory.py": "sha256:7eafed3229d107ee8e6cf08b84a413f99e53ec8c93cc22b9b77da20f69e3de55",
+  "experiments/inference_cf_dir_sprint0_d5_feature_table.py": "sha256:6ec05c0fcb90a61d2933d86f807988e11eadabfe3566452b0c2d9c0139e029ab",
+  "experiments/inference_cf_dir_sprint0_d5_provider.py": "sha256:16e264dbd2fc8b5d398f4d8ebab445ae32428164404dbc6cde9e5a7c4b77025e",
+  "experiments/inference_cf_dir_sprint0_d5_provider_audit.py": "sha256:87c6e9c31b76a29e0d4044e928892c6073f4a1d896c76f9482ecaead953e5bdc",
+  "src/csasr/inference_cf/core.py": "sha256:32e208a74ec5d32476b89c69fa7c8e33449a67445e5bf48d6e61afaad43ef5f4",
+  "src/csasr/inference_cf/core_r2.py": "sha256:93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+  "src/csasr/inference_cf/core_p1.py": "sha256:2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+  "src/csasr/inference_cf/directions.py": "sha256:72a51a2d9c4c54db3525f13035a1d799509ba632234888c43e717c42eafd0cd7",
+  "src/csasr/inference_cf/readout.py": "sha256:9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+  "src/csasr/inference_cf/unique.py": "sha256:3c1587722c6469f0adfe31592238950d7e30d7ae0cf0edd12f0e81a344b06e72",
+  "src/csasr/inference_cf/loc0_sites.py": "sha256:17968cac6f5e7d3e5008db7e0aceaf8629112872d1c9f017318d002b13c1e9fc",
+  "src/csasr/inference_cf/srd2_g0.py": "sha256:ad7ca0fdb1a89b7a520f35b30d9bbbca1f7e777aa00e41fee160c79ad6a91b3c",
+  "src/csasr/inference_cf/r0_regions.py": "sha256:a30de91bc6d38a6a5b7f90ed80b4869b004aa292e8ec6e3fc12709347c5ee80d",
+  "src/csasr/inference_cf/s1_evidence.py": "sha256:aee717f72afdfa6758903f87b85d53ff09f661426e1db681ba8ac6f15837ba1e",
+  "src/csasr/inference_cf/src_cf0_pilot.py": "sha256:f39690fcfd87cb2e01b7fcb98741a667ae2d5f66da25780a532171127c79dc6e",
+  "src/csasr/inference_cf/lexical_compatibility.py": "sha256:2ece3498492ffd948a6d7f68d1536df5a04ed8bc1668f9885e607abfeb8d5427",
+  "src/csasr/inference_cf/phone_provider.py": "sha256:a7cf6b1fdc87842ac95581a2c7236b787c067f7001d5c1ca2780a6e2f5f0030f",
+  "src/csasr/inference_cf/exposure_registry.py": "sha256:dd88eb7006701954bf3f3937013fea3d671f27dc0db7d11cabbd8b4f342897d6",
+  "src/csasr/inference_cf/prompt_r1.py": "sha256:a9c058d255d82bd765205c14c8dbedb48a5d6e0c57acdb41f02ea1217eb8c1fe",
+  "src/csasr/lss/sites.py": "sha256:d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+  "src/csasr/models/hooks.py": "sha256:4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+  "src/csasr/models/whisper.py": "sha256:24e98002a37b1d36ffcbb41f7aeed4a4dde81321f0c437d29286c0e981be145c",
+  "src/csasr/data/normalize.py": "sha256:ba67a6741393355faa9bcad2f31a683034499665b2d49cf4bd0a1c24b319020f",
+  "src/csasr/evaluation/mer.py": "sha256:ab91fe565d51dc14018dbbd9ba86f731f30c90d01fbdf279b0f5ac158aa0342d",
+  "src/csasr/evaluation/pier.py": "sha256:33607492838ea35ba3b10463e8de0e96d419d4d5b9573ddefb7af7c4f405eacc",
+  "src/csasr/utils/provenance.py": "sha256:bed06aaf4b192da0a99fb2877e617cd4bf890f4cef73d1f74fee810301ebede0",
+  "src/csasr/lss/specfreeze.py": "sha256:e92017fe8ed17209d8bddf6fed448d539cfc71b3be8d3b5f27e65377a7fef3c0",
+  "configs/model/whisper_large_v3.yaml": "sha256:52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+  "configs/inference_cf/srd2_g0.json": "sha256:218b3be997e8fafc102f7ec866b0a82b9925bb180e671f714c651bddee392eb9",
+  "configs/inference_cf/r0_region_vector.json": "sha256:162f803913692e65798b422c4b0a360868f90cfb5ff0c28b63406ab1b4ff3885",
+  "configs/inference_cf/s1_acoustic_evidence.json": "sha256:cd030a315b47f1b27da93fe4c4327c58d696fe0f84f8d0b1d84ab5a945364675",
+  "configs/inference_cf/src_cf0_pilot.json": "sha256:f1881050b0718559d05a3ddaa0cb2832953e0fc7553be4c360d952d57f51aa87",
+  "docs/current/DATA_EXPOSURE.md": "sha256:9ac2eb4ba625d5c2ec3e2487972bd8e762789a012d3e748819df1695d7c79ee4",
+  "docs/current/METHOD_CONTRACT.md": "sha256:183c778d8fe4665af6fabf4ce29dbda8ceaec5a9aa4f86b7f6a5727d689be940",
+  "docs/inference_cf/SRD2_G0_POPULATION.json": "sha256:ab76b61c890138e176804b81b60316d7ea0aaf067f281f08c6534717e7dd65b6",
+  "docs/inference_cf/SRD2_G0_FINAL_REPORT.md": "sha256:5ceeb502ca7909b9ab6ffde83b85ba9eac45cfedb31496784e693a06cc22e36d",
+  "docs/inference_cf/MECH_LANG0_REPORT.md": "sha256:65055ae09d480d5b61ffe85c22dd4c38b9e0abaca0934b5f8ab5cbaa91ce2dca",
+  "docs/inference_cf/P2_DIR_EXP1_REPORT.md": "sha256:bad9f413adbb15879c90b376c646048a9e3de88ebe1802ebe9bf44fad6a54963",
+  "docs/inference_cf/ST_LOC0_REPORT.md": "sha256:f3da4fae5eafe62c4437e18d5a73b41e6ecc71842dd97f3152740a4d8b1098dc",
+  "docs/inference_cf/S1_ACOUSTIC_EVIDENCE_REPORT.md": "sha256:dc60cc61bdda91f634506c2e3ddec55107fa0ccc2cab833b389ec4b32cac00b0",
+  "docs/inference_cf/DIR_SPRINT0_FEASIBILITY_AUDIT.md": "sha256:6bf55215c02e141cbf3c8371c699355cc4ad13a351f3b038655ec120b32dd4ca",
+  "docs/inference_cf/DIR_SPRINT0_D5_PROVIDER_REPORT.md": "sha256:ae918518074cd129f4cb6f46e27680c5c143dde1b9d445c3962aa98f67327681",
+  "docs/inference_cf/DIR_SPRINT0_D5_PROVIDER_INSTALL.md": "sha256:a11521386ab87a3eb91b9aa84da283f73c36238d06bb82405c4202462390b631",
+  "results/inference_cf/dir_sprint0/d5_provider/provider_manifest.json": "sha256:6ee8a58ab4d80c6c75ab694aab8e318e1d98dce91bb22fe0a15c4bcb742bc6e3",
+  "results/inference_cf/dir_sprint0/d5_provider/feature_table.json": "sha256:ef36f0cf6bba2d6bb004d99f55771fae7f48fe08bb01e1aab7eaeec16d272f73",
+  "results/inference_cf/dir_sprint0/d5_provider/engineering_checks.json": "sha256:3391d54f05cb5c414f9cdb8d8574d25e84b805e335f821d52e056eff306541ee",
+  "results/inference_cf/dir_sprint0/d5_provider/provider_audit.json": "sha256:0c70a83ce9d53fd0af3bdb7b49a884c2ee0ec6e8e4596b528abe554c63e7b88f",
+  "results/inference_cf/p2dir/folds_run1/folds.json": "sha256:294c3fb982ba7fb7abc7c4b431c753d4994eb6539be81cee51ba678f812d86e2",
+  "results/inference_cf/p2dir/exp1_run1/audit_spot.json": "sha256:6a03f6f0ae6e93bc86adada057eb41c56d4909171b27e2bcbacb2f3ee33b1d73",
+  "results/inference_cf/p2dir/exp1_run1/directions_sealed.json": "sha256:59d46b4cdb8358cedb3a56473348676519033600f26f4622e2c776b7caef239c",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0006.npy": "sha256:158e750dd67845a94ba86896a4e41d1e4c849aa538360eaf93c127183f032c78",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0011.npy": "sha256:437a6493f23aaffbb1a63fbd12ba06ff5ea1e4e5fa17a2efdd534adc1e1cf89b",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0012.npy": "sha256:b4511ba30083f48015dd84891e52848e80d06ec6f69560ea72af5597ba323f96",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0014.npy": "sha256:2509d73755cbee0bef0d1c491390268b522a2972d06838e580f7ea108a6a0e94",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0015.npy": "sha256:57188230edfee8836f32073c24d8efa5c972736a09de0a5bf2fc12b01d40274a",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0020.npy": "sha256:5ce96abe2fc3b48f07bf7c49bacf32416ab4cdb41a7beccdc108055eaecec1b1",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0043.npy": "sha256:6f49bb52afcdad9775fc9a5cb4dd684ee4819e6d43f1e6d9f079f5e16cf67e72",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0046.npy": "sha256:750663e38ef82e67ef93b25a4207e9d3ec3c8de2a3261f2fc780e748ca75d0c6",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0051.npy": "sha256:e8a836f8607a90e5adf09c0782b70bae029e69dc8160082b93d536b28cc19c51",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0501.npy": "sha256:a39a5e9f0531c7c9ca77dd34336b5c9c71c65e6fff46ad42b7922a2891d4a9b0",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0502.npy": "sha256:7452f49095926dd876cb0e8842b0154b6afea19eb39632a1862c3a6b9ed4878e",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0511.npy": "sha256:368ac8ae4e15982b03556802933aa6218ddd79bac6f32ef34bc64b07c1449c0a",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0514.npy": "sha256:d39830aef0e0da992ac47141179a8017e8fb9672a20359cec02e641b520bbfd4",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0517.npy": "sha256:dd38372518ac828b13dcc9ff37a26654f23b8b2fc73aa9f0e1f99d4431c04a3a",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0532.npy": "sha256:8a28b0062305cb2445bf3f67b948fad24f0950a38094694edb97fb9387aa6f53",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0538.npy": "sha256:620e6b15b50ee1cc3df556f1ddcc1121a758a46e13ead0605b1bb430a60eb7df",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0540.npy": "sha256:abe7d9a5747d798a1620d3e81d87b1394154a64f523548a48bfdc16769a338ef",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD0541.npy": "sha256:05204e483995197318c535494e6ff9fac5352f1a6897af9ce49f0c5958e73f22",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD1002.npy": "sha256:d4199691c176ec57756c03d2744dd127a857e2d9f68382166d9ad1e356d2601a",
+  "results/inference_cf/p2dir/folds_run1/vectors/CSD1006.npy": "sha256:1c2e98df9b46629deba46461d8280019f8348ce8b907478e24406e8a44adc0da"
+ }
+}

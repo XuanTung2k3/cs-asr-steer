@@ -1,0 +1,22 @@
+{
+ "schema": "dir_sprint0_freeze_v1",
+ "parent_head": "930bca0d119e90c0f46847890d4c8d4bd1feb006",
+ "status": "DESIGN_FROZEN",
+ "files": {
+  "configs/inference_cf/dir_sprint0.json": "sha256:b264460beedd09ae4b0c005ef5f8178494c49a52aa9ba2bec4bc116c984d27db",
+  "docs/inference_cf/DIR_SPRINT0_SPEC.md": "sha256:83cc190843879349dd599325ce0b3ef693b8821818b3a71315731e6e388637c9",
+  "docs/inference_cf/DIR_SPRINT0_DESIGN.md": "sha256:7f86683debc940227e4b381ab84ff93a45c91e1edf7f1ab900d4a397aeb9dd82",
+  "docs/inference_cf/DIR_SPRINT0_FIREWALL.md": "sha256:e5009d7015a5b3ff87c98b2ef00b3ed7acf8b46ea3f0330e410ca7a1b89361e1",
+  "docs/inference_cf/DIR_SPRINT0_COMPUTE_FEASIBILITY.md": "sha256:22b50ef596042babbc0f15f8594e47709889befcddb0fb8220b63f9ab720b84a",
+  "docs/inference_cf/DIR_SPRINT0_POPULATION.json": "sha256:d22f1e44475f7b5a855273c370d99898634e7c2ae468f4c3df2d7216040394ac",
+  "results/inference_cf/dir_sprint0/design/d5_concept_table.json": "sha256:efc05909e6ed495cb414b0a33e27b6d022b671edd6c3ded7a511002cd9ce9bcd",
+  "results/inference_cf/dir_sprint0/design/d5_threshold_engineering.json": "sha256:c38f4d350bd53894fb43ca076798642fd7fb5bc1267e4d4d9c44fd555124bb33",
+  "results/inference_cf/dir_sprint0/design/d5_provider_reference.json": "sha256:07c21500d14834538e52e1efb03e9b556b65e4858bfe42134736ca3818dc186c",
+  "results/inference_cf/dir_sprint0/design/d5_provider_reference.npz": "sha256:7be675832642315d5ff222573bec23aaa7f4e4f8e545b5bd86eb68e7b870d5ea",
+  "experiments/inference_cf_dir_sprint0_population.py": "sha256:76b992b2779153a0bdd0ed402d1aed9c3ee52655912aa30c5d9b10fa78cfb265",
+  "experiments/inference_cf_dir_sprint0_d5_concepts.py": "sha256:4b8536b674f65c7773f7af9f27c9722dd21ba45dcdb5aaf35862aaffd01939c9",
+  "tests/test_dir_sprint0_freeze.py": "sha256:ee7fd9fb2ba3c079272e5262601860f3f204419bd352b3084ceb8c6331cf0fd3"
+ },
+ "freeze_index_hash": "sha256:54da35aaea3a60a7f335c8e0031729e9398ee68be0fdb1868da41485468e52ee",
+ "note": "pre-outcome design freeze; no D-dev-select audio, model forward on CS-Dialogue data, reference or outcome was used. Design artifacts derive from the pinned provider, panphon and public engineering clips only."
+}

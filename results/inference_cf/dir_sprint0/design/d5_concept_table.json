@@ -1,0 +1,8510 @@
+{
+ "schema": "dir_sprint0_d5_concepts_v1",
+ "classes": [
+  "NAS",
+  "STOP",
+  "FRIC",
+  "LAB",
+  "COR",
+  "DOR",
+  "VOI_OBS",
+  "ASP"
+ ],
+ "primary": [
+  "NAS",
+  "STOP",
+  "FRIC",
+  "LAB",
+  "COR",
+  "DOR"
+ ],
+ "descriptive_only": [
+  "VOI_OBS",
+  "ASP"
+ ],
+ "rules": {
+  "NAS": "nas=+1",
+  "STOP": "son=-1 & cont=-1",
+  "FRIC": "son=-1 & cont=+1",
+  "LAB": "cons=+1 & lab=+1",
+  "COR": "cons=+1 & cor=+1",
+  "DOR": "cons=+1 & cor=-1 & lab=-1 & hi=+1",
+  "VOI_OBS": "son=-1 & voi=+1",
+  "ASP": "sg=+1"
+ },
+ "aggregation": "fraction of the symbol's frozen panphon segments in the class",
+ "feature_table": "results/inference_cf/dir_sprint0/d5_provider/feature_table.json",
+ "feature_table_sha256": "sha256:ef36f0cf6bba2d6bb004d99f55771fae7f48fe08bb01e1aab7eaeec16d272f73",
+ "feature_table_digest": "sha256:8e1735afeff73367e3045d95eb82e1bff966e7736ec6b72a2f67b7712942566a",
+ "panphon_version": "0.22.2",
+ "excluded_from_primary": {
+  "VOI_OBS": "voicing: English b/d/g vs Mandarin unaspirated p/t/k written with the same espeak letters (language-convention confound)",
+  "ASP": "aspiration: marked for Mandarin, never for English in espeak (confound)"
+ },
+ "tone": "recorded separately by the provider table; never converted into a concept value",
+ "rows": [
+  {
+   "id": 0,
+   "symbol": "<pad>",
+   "status": "blank",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 1,
+   "symbol": "<s>",
+   "status": "special",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 2,
+   "symbol": "</s>",
+   "status": "special",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 3,
+   "symbol": "<unk>",
+   "status": "special",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 4,
+   "symbol": "n",
+   "status": "segmental",
+   "segments": [
+    "n"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 5,
+   "symbol": "s",
+   "status": "segmental",
+   "segments": [
+    "s"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 6,
+   "symbol": "t",
+   "status": "segmental",
+   "segments": [
+    "t"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 7,
+   "symbol": "ə",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 8,
+   "symbol": "l",
+   "status": "segmental",
+   "segments": [
+    "l"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 9,
+   "symbol": "a",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 10,
+   "symbol": "i",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 11,
+   "symbol": "k",
+   "status": "segmental",
+   "segments": [
+    "k"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 12,
+   "symbol": "d",
+   "status": "segmental",
+   "segments": [
+    "d"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 13,
+   "symbol": "m",
+   "status": "segmental",
+   "segments": [
+    "m"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 14,
+   "symbol": "ɛ",
+   "status": "segmental",
+   "segments": [
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 15,
+   "symbol": "ɾ",
+   "status": "segmental",
+   "segments": [
+    "ɾ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 16,
+   "symbol": "e",
+   "status": "segmental",
+   "segments": [
+    "e"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 17,
+   "symbol": "ɪ",
+   "status": "segmental",
+   "segments": [
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 18,
+   "symbol": "p",
+   "status": "segmental",
+   "segments": [
+    "p"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 19,
+   "symbol": "o",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 20,
+   "symbol": "ɐ",
+   "status": "segmental",
+   "segments": [
+    "ɐ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 21,
+   "symbol": "z",
+   "status": "segmental",
+   "segments": [
+    "z"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 22,
+   "symbol": "ð",
+   "status": "segmental",
+   "segments": [
+    "ð"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 23,
+   "symbol": "f",
+   "status": "segmental",
+   "segments": [
+    "f"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 24,
+   "symbol": "j",
+   "status": "segmental",
+   "segments": [
+    "j"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 25,
+   "symbol": "v",
+   "status": "segmental",
+   "segments": [
+    "v"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 26,
+   "symbol": "b",
+   "status": "segmental",
+   "segments": [
+    "b"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 27,
+   "symbol": "ɹ",
+   "status": "segmental",
+   "segments": [
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 28,
+   "symbol": "ʁ",
+   "status": "segmental",
+   "segments": [
+    "ʁ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 29,
+   "symbol": "ʊ",
+   "status": "segmental",
+   "segments": [
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 30,
+   "symbol": "iː",
+   "status": "segmental",
+   "segments": [
+    "iː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 31,
+   "symbol": "r",
+   "status": "segmental",
+   "segments": [
+    "r"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 32,
+   "symbol": "w",
+   "status": "segmental",
+   "segments": [
+    "w"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 33,
+   "symbol": "ʌ",
+   "status": "segmental",
+   "segments": [
+    "ʌ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 34,
+   "symbol": "u",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 35,
+   "symbol": "ɡ",
+   "status": "segmental",
+   "segments": [
+    "ɡ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 36,
+   "symbol": "æ",
+   "status": "segmental",
+   "segments": [
+    "æ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 37,
+   "symbol": "aɪ",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 38,
+   "symbol": "ʃ",
+   "status": "segmental",
+   "segments": [
+    "ʃ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 39,
+   "symbol": "h",
+   "status": "segmental",
+   "segments": [
+    "h"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 40,
+   "symbol": "ɔ",
+   "status": "segmental",
+   "segments": [
+    "ɔ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 41,
+   "symbol": "ɑː",
+   "status": "segmental",
+   "segments": [
+    "ɑː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 42,
+   "symbol": "ŋ",
+   "status": "segmental",
+   "segments": [
+    "ŋ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 43,
+   "symbol": "ɚ",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 44,
+   "symbol": "eɪ",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 45,
+   "symbol": "β",
+   "status": "segmental",
+   "segments": [
+    "β"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 46,
+   "symbol": "uː",
+   "status": "segmental",
+   "segments": [
+    "uː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 47,
+   "symbol": "y",
+   "status": "segmental",
+   "segments": [
+    "y"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 48,
+   "symbol": "ɑ̃",
+   "status": "segmental",
+   "segments": [
+    "ɑ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 49,
+   "symbol": "oʊ",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 50,
+   "symbol": "ᵻ",
+   "status": "segmental",
+   "segments": [
+    "ɪ̈"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 51,
+   "symbol": "eː",
+   "status": "segmental",
+   "segments": [
+    "eː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 52,
+   "symbol": "θ",
+   "status": "segmental",
+   "segments": [
+    "θ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 53,
+   "symbol": "aʊ",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 54,
+   "symbol": "ts",
+   "status": "segmental",
+   "segments": [
+    "t͡s"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 55,
+   "symbol": "oː",
+   "status": "segmental",
+   "segments": [
+    "oː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 56,
+   "symbol": "ɔ̃",
+   "status": "segmental",
+   "segments": [
+    "ɔ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 57,
+   "symbol": "ɣ",
+   "status": "segmental",
+   "segments": [
+    "ɣ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 58,
+   "symbol": "ɜ",
+   "status": "segmental",
+   "segments": [
+    "ɜ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 59,
+   "symbol": "ɑ",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 60,
+   "symbol": "dʒ",
+   "status": "segmental",
+   "segments": [
+    "d͡ʒ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 61,
+   "symbol": "əl",
+   "status": "segmental",
+   "segments": [
+    "ə",
+    "l"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 62,
+   "symbol": "x",
+   "status": "segmental",
+   "segments": [
+    "x"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 63,
+   "symbol": "ɜː",
+   "status": "segmental",
+   "segments": [
+    "ɜː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 64,
+   "symbol": "ç",
+   "status": "segmental",
+   "segments": [
+    "ç"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 65,
+   "symbol": "ʒ",
+   "status": "segmental",
+   "segments": [
+    "ʒ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 66,
+   "symbol": "tʃ",
+   "status": "segmental",
+   "segments": [
+    "t͡ʃ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 67,
+   "symbol": "ɔː",
+   "status": "segmental",
+   "segments": [
+    "ɔː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 68,
+   "symbol": "ɑːɹ",
+   "status": "segmental",
+   "segments": [
+    "ɑː",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 69,
+   "symbol": "ɛ̃",
+   "status": "segmental",
+   "segments": [
+    "ɛ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 70,
+   "symbol": "ʎ",
+   "status": "segmental",
+   "segments": [
+    "ʎ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 71,
+   "symbol": "ɔːɹ",
+   "status": "segmental",
+   "segments": [
+    "ɔː",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 72,
+   "symbol": "ʋ",
+   "status": "segmental",
+   "segments": [
+    "ʋ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 73,
+   "symbol": "aː",
+   "status": "segmental",
+   "segments": [
+    "aː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 74,
+   "symbol": "ɕ",
+   "status": "segmental",
+   "segments": [
+    "ɕ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 75,
+   "symbol": "œ",
+   "status": "segmental",
+   "segments": [
+    "œ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 76,
+   "symbol": "ø",
+   "status": "segmental",
+   "segments": [
+    "ø"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 77,
+   "symbol": "oːɹ",
+   "status": "segmental",
+   "segments": [
+    "oː",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 78,
+   "symbol": "ɲ",
+   "status": "segmental",
+   "segments": [
+    "ɲ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 79,
+   "symbol": "yː",
+   "status": "segmental",
+   "segments": [
+    "yː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 80,
+   "symbol": "ʔ",
+   "status": "segmental",
+   "segments": [
+    "ʔ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 81,
+   "symbol": "iə",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 82,
+   "symbol": "i5",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 83,
+   "symbol": "s.",
+   "status": "segmental",
+   "segments": [
+    "ʂ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 84,
+   "symbol": "tɕ",
+   "status": "segmental",
+   "segments": [
+    "t͡ɕ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 85,
+   "symbol": "??",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 86,
+   "symbol": "nʲ",
+   "status": "segmental",
+   "segments": [
+    "nʲ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 87,
+   "symbol": "ɛː",
+   "status": "segmental",
+   "segments": [
+    "ɛː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 88,
+   "symbol": "œ̃",
+   "status": "segmental",
+   "segments": [
+    "œ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 89,
+   "symbol": "ɭ",
+   "status": "segmental",
+   "segments": [
+    "ɭ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 90,
+   "symbol": "ɔø",
+   "status": "segmental",
+   "segments": [
+    "ɔ",
+    "ø"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 91,
+   "symbol": "ʑ",
+   "status": "segmental",
+   "segments": [
+    "ʑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 92,
+   "symbol": "tʲ",
+   "status": "segmental",
+   "segments": [
+    "tʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 93,
+   "symbol": "ɨ",
+   "status": "segmental",
+   "segments": [
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 94,
+   "symbol": "ɛɹ",
+   "status": "segmental",
+   "segments": [
+    "ɛ",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 95,
+   "symbol": "ts.",
+   "status": "segmental",
+   "segments": [
+    "ʈ͡ʂ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 96,
+   "symbol": "rʲ",
+   "status": "segmental",
+   "segments": [
+    "rʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 97,
+   "symbol": "ɪɹ",
+   "status": "segmental",
+   "segments": [
+    "ɪ",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 98,
+   "symbol": "ɭʲ",
+   "status": "segmental",
+   "segments": [
+    "ɭʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 99,
+   "symbol": "i.5",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 100,
+   "symbol": "ɔɪ",
+   "status": "segmental",
+   "segments": [
+    "ɔ",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 101,
+   "symbol": "q",
+   "status": "segmental",
+   "segments": [
+    "q"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP"
+    ]
+   ]
+  },
+  {
+   "id": 102,
+   "symbol": "sʲ",
+   "status": "segmental",
+   "segments": [
+    "sʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 103,
+   "symbol": "u5",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 104,
+   "symbol": "ʊɹ",
+   "status": "segmental",
+   "segments": [
+    "ʊ",
+    "ɹ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 105,
+   "symbol": "iɜ",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 106,
+   "symbol": "a5",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 107,
+   "symbol": "iɛ5",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 108,
+   "symbol": "øː",
+   "status": "segmental",
+   "segments": [
+    "øː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 109,
+   "symbol": "ʕ",
+   "status": "segmental",
+   "segments": [
+    "ʕ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 110,
+   "symbol": "ja",
+   "status": "segmental",
+   "segments": [
+    "j",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 111,
+   "symbol": "əɜ",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 112,
+   "symbol": "th",
+   "status": "segmental",
+   "segments": [
+    "tʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 113,
+   "symbol": "ɑ5",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 114,
+   "symbol": "oɪ",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 115,
+   "symbol": "dʲ",
+   "status": "segmental",
+   "segments": [
+    "dʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 116,
+   "symbol": "ə5",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 117,
+   "symbol": "tɕh",
+   "status": "segmental",
+   "segments": [
+    "t͡ɕʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 118,
+   "symbol": "ts.h",
+   "status": "segmental",
+   "segments": [
+    "ʈ͡ʂʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 119,
+   "symbol": "mʲ",
+   "status": "segmental",
+   "segments": [
+    "mʲ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 120,
+   "symbol": "ɯ",
+   "status": "segmental",
+   "segments": [
+    "ɯ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 121,
+   "symbol": "dʑ",
+   "status": "segmental",
+   "segments": [
+    "d͡ʑ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 122,
+   "symbol": "vʲ",
+   "status": "segmental",
+   "segments": [
+    "vʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 123,
+   "symbol": "e̞",
+   "status": "segmental",
+   "segments": [
+    "e̞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 124,
+   "symbol": "tʃʲ",
+   "status": "segmental",
+   "segments": [
+    "t͡ʃʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 125,
+   "symbol": "ei5",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 126,
+   "symbol": "o5",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 127,
+   "symbol": "onɡ5",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "ŋ"
+   ],
+   "values": [
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 128,
+   "symbol": "ɑu5",
+   "status": "segmental",
+   "segments": [
+    "ɑ",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 129,
+   "symbol": "iɑ5",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 130,
+   "symbol": "ai5",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 131,
+   "symbol": "aɪɚ",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "ɪ",
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 132,
+   "symbol": "kh",
+   "status": "segmental",
+   "segments": [
+    "kʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 133,
+   "symbol": "ə1",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 134,
+   "symbol": "ʐ",
+   "status": "segmental",
+   "segments": [
+    "ʐ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 135,
+   "symbol": "i2",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 136,
+   "symbol": "ʉ",
+   "status": "segmental",
+   "segments": [
+    "ʉ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 137,
+   "symbol": "ħ",
+   "status": "segmental",
+   "segments": [
+    "ħ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC"
+    ]
+   ]
+  },
+  {
+   "id": 138,
+   "symbol": "t[",
+   "status": "segmental",
+   "segments": [
+    "t̪"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 139,
+   "symbol": "aɪə",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "ɪ",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 140,
+   "symbol": "ʲ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 141,
+   "symbol": "ju",
+   "status": "segmental",
+   "segments": [
+    "j",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 142,
+   "symbol": "ə2",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 143,
+   "symbol": "u2",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 144,
+   "symbol": "oɜ",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 145,
+   "symbol": "pː",
+   "status": "segmental",
+   "segments": [
+    "pː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 146,
+   "symbol": "iɛɜ",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 147,
+   "symbol": "ou5",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 148,
+   "symbol": "y5",
+   "status": "segmental",
+   "segments": [
+    "y"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 149,
+   "symbol": "uɜ",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 150,
+   "symbol": "tː",
+   "status": "segmental",
+   "segments": [
+    "tː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 151,
+   "symbol": "uo5",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 152,
+   "symbol": "d[",
+   "status": "segmental",
+   "segments": [
+    "d̪"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 153,
+   "symbol": "uoɜ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 154,
+   "symbol": "tsh",
+   "status": "segmental",
+   "segments": [
+    "t͡sʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 155,
+   "symbol": "ɑɜ",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 156,
+   "symbol": "ɵ",
+   "status": "segmental",
+   "segments": [
+    "ɵ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 157,
+   "symbol": "i̪5",
+   "status": "segmental",
+   "segments": [
+    "ɹ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 158,
+   "symbol": "uei5",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 159,
+   "symbol": "ɟ",
+   "status": "segmental",
+   "segments": [
+    "ɟ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 160,
+   "symbol": "aɜ",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 161,
+   "symbol": "ɑɨ",
+   "status": "segmental",
+   "segments": [
+    "ɑ",
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 162,
+   "symbol": "i.ɜ",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 163,
+   "symbol": "eʊ",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 164,
+   "symbol": "o2",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 165,
+   "symbol": "ɐ̃",
+   "status": "segmental",
+   "segments": [
+    "ɐ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 166,
+   "symbol": "ä",
+   "status": "segmental",
+   "segments": [
+    "ä"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 167,
+   "symbol": "pʲ",
+   "status": "segmental",
+   "segments": [
+    "pʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 168,
+   "symbol": "kʲ",
+   "status": "segmental",
+   "segments": [
+    "kʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 169,
+   "symbol": "n̩",
+   "status": "segmental",
+   "segments": [
+    "n̩"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 170,
+   "symbol": "ɒ",
+   "status": "segmental",
+   "segments": [
+    "ɒ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 171,
+   "symbol": "ph",
+   "status": "segmental",
+   "segments": [
+    "pʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 172,
+   "symbol": "ɑu2",
+   "status": "segmental",
+   "segments": [
+    "ɑ",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 173,
+   "symbol": "uɨ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 174,
+   "symbol": "əɪ",
+   "status": "segmental",
+   "segments": [
+    "ə",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 175,
+   "symbol": "ɫ",
+   "status": "segmental",
+   "segments": [
+    "ɫ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 176,
+   "symbol": "ɬ",
+   "status": "segmental",
+   "segments": [
+    "ɬ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 177,
+   "symbol": "yɜ",
+   "status": "segmental",
+   "segments": [
+    "y"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 178,
+   "symbol": "bʲ",
+   "status": "segmental",
+   "segments": [
+    "bʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 179,
+   "symbol": "ɑ2",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 180,
+   "symbol": "s̪",
+   "status": "segmental",
+   "segments": [
+    "s̪"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 181,
+   "symbol": "aiɜ",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 182,
+   "symbol": "χ",
+   "status": "segmental",
+   "segments": [
+    "χ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC"
+    ]
+   ]
+  },
+  {
+   "id": 183,
+   "symbol": "ɐ̃ʊ̃",
+   "status": "segmental",
+   "segments": [
+    "ɐ̃",
+    "ʊ̃"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ],
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 184,
+   "symbol": "1",
+   "status": "tone_only",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 185,
+   "symbol": "ə4",
+   "status": "segmental",
+   "segments": [
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 186,
+   "symbol": "yæɜ",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "æ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 187,
+   "symbol": "a2",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 188,
+   "symbol": "ɨː",
+   "status": "segmental",
+   "segments": [
+    "ɨː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 189,
+   "symbol": "t̪",
+   "status": "segmental",
+   "segments": [
+    "t̪"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 190,
+   "symbol": "iouɜ",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 191,
+   "symbol": "ũ",
+   "status": "segmental",
+   "segments": [
+    "ũ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 192,
+   "symbol": "onɡɜ",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "ŋ"
+   ],
+   "values": [
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 193,
+   "symbol": "aɨ",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 194,
+   "symbol": "iɛ2",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 195,
+   "symbol": "ɔɨ",
+   "status": "segmental",
+   "segments": [
+    "ɔ",
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 196,
+   "symbol": "ɑuɜ",
+   "status": "segmental",
+   "segments": [
+    "ɑ",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 197,
+   "symbol": "o̞",
+   "status": "segmental",
+   "segments": [
+    "o̞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 198,
+   "symbol": "ei2",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 199,
+   "symbol": "iou2",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 200,
+   "symbol": "c",
+   "status": "segmental",
+   "segments": [
+    "c"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 201,
+   "symbol": "kː",
+   "status": "segmental",
+   "segments": [
+    "kː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 202,
+   "symbol": "y2",
+   "status": "segmental",
+   "segments": [
+    "y"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 203,
+   "symbol": "ɖ",
+   "status": "segmental",
+   "segments": [
+    "ɖ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 204,
+   "symbol": "oe",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 205,
+   "symbol": "dˤ",
+   "status": "segmental",
+   "segments": [
+    "dˤ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 206,
+   "symbol": "yɛɜ",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 207,
+   "symbol": "əʊ",
+   "status": "segmental",
+   "segments": [
+    "ə",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 208,
+   "symbol": "S",
+   "status": "segmental",
+   "segments": [
+    "ʃ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 209,
+   "symbol": "ɡʲ",
+   "status": "segmental",
+   "segments": [
+    "ɡʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 210,
+   "symbol": "onɡ2",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "ŋ"
+   ],
+   "values": [
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 211,
+   "symbol": "u\"",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 212,
+   "symbol": "eiɜ",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 213,
+   "symbol": "ʈ",
+   "status": "segmental",
+   "segments": [
+    "ʈ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 214,
+   "symbol": "ɯᵝ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 215,
+   "symbol": "iou5",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 216,
+   "symbol": "dZ",
+   "status": "segmental",
+   "segments": [
+    "d͡ʒ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 217,
+   "symbol": "r̝̊",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 218,
+   "symbol": "i.2",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 219,
+   "symbol": "tS",
+   "status": "segmental",
+   "segments": [
+    "t͡ʃ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 220,
+   "symbol": "s^",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 221,
+   "symbol": "ʝ",
+   "status": "segmental",
+   "segments": [
+    "ʝ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 222,
+   "symbol": "yə5",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 223,
+   "symbol": "iɑɜ",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 224,
+   "symbol": "uə5",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 225,
+   "symbol": "pf",
+   "status": "segmental",
+   "segments": [
+    "p͡f"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 226,
+   "symbol": "ɨu",
+   "status": "segmental",
+   "segments": [
+    "ɨ",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 227,
+   "symbol": "iɑ2",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 228,
+   "symbol": "ou2",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 229,
+   "symbol": "ər2",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 230,
+   "symbol": "fʲ",
+   "status": "segmental",
+   "segments": [
+    "fʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 231,
+   "symbol": "ai2",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 232,
+   "symbol": "r̝",
+   "status": "segmental",
+   "segments": [
+    "r̝"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 233,
+   "symbol": "uəɜ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 234,
+   "symbol": "ɳ",
+   "status": "segmental",
+   "segments": [
+    "ɳ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 235,
+   "symbol": "əɨ",
+   "status": "segmental",
+   "segments": [
+    "ə",
+    "ɨ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 236,
+   "symbol": "ua5",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 237,
+   "symbol": "uɪ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 238,
+   "symbol": "ɽ",
+   "status": "segmental",
+   "segments": [
+    "ɽ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 239,
+   "symbol": "bː",
+   "status": "segmental",
+   "segments": [
+    "bː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 240,
+   "symbol": "yu5",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 241,
+   "symbol": "uo2",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 242,
+   "symbol": "yɛ5",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 243,
+   "symbol": "l̩",
+   "status": "segmental",
+   "segments": [
+    "l̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 244,
+   "symbol": "ɻ",
+   "status": "segmental",
+   "segments": [
+    "ɻ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 245,
+   "symbol": "ərɜ",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 246,
+   "symbol": "ʂ",
+   "status": "segmental",
+   "segments": [
+    "ʂ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 247,
+   "symbol": "i̪2",
+   "status": "segmental",
+   "segments": [
+    "ɹ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 248,
+   "symbol": "ouɜ",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 249,
+   "symbol": "uaɜ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 250,
+   "symbol": "a.",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 251,
+   "symbol": "a.ː",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 252,
+   "symbol": "yæ5",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "æ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 253,
+   "symbol": "dː",
+   "status": "segmental",
+   "segments": [
+    "dː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 254,
+   "symbol": "r̩",
+   "status": "segmental",
+   "segments": [
+    "r̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 255,
+   "symbol": "ee",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 256,
+   "symbol": "ɪu",
+   "status": "segmental",
+   "segments": [
+    "ɪ",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 257,
+   "symbol": "ər5",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 258,
+   "symbol": "i̪ɜ",
+   "status": "segmental",
+   "segments": [
+    "ɹ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 259,
+   "symbol": "æi",
+   "status": "segmental",
+   "segments": [
+    "æ",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 260,
+   "symbol": "u:",
+   "status": "segmental",
+   "segments": [
+    "uː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 261,
+   "symbol": "i.ː",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 262,
+   "symbol": "t^",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 263,
+   "symbol": "o1",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 264,
+   "symbol": "ɪ^",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 265,
+   "symbol": "ai",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 266,
+   "symbol": "ueiɜ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 267,
+   "symbol": "æː",
+   "status": "segmental",
+   "segments": [
+    "æː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 268,
+   "symbol": "ɛɪ",
+   "status": "segmental",
+   "segments": [
+    "ɛ",
+    "ɪ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 269,
+   "symbol": "eə",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 270,
+   "symbol": "i.",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 271,
+   "symbol": "ɴ",
+   "status": "segmental",
+   "segments": [
+    "ɴ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 272,
+   "symbol": "ie",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "e"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 273,
+   "symbol": "ua2",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 274,
+   "symbol": "ɑ1",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 275,
+   "symbol": "o4",
+   "status": "segmental",
+   "segments": [
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 276,
+   "symbol": "tʃː",
+   "status": "segmental",
+   "segments": [
+    "t͡ʃː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 277,
+   "symbol": "o:",
+   "status": "segmental",
+   "segments": [
+    "oː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 278,
+   "symbol": "ɑ:",
+   "status": "segmental",
+   "segments": [
+    "ɑː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 279,
+   "symbol": "u1",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 280,
+   "symbol": "N",
+   "status": "segmental",
+   "segments": [
+    "ŋ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 281,
+   "symbol": "i̪1",
+   "status": "segmental",
+   "segments": [
+    "ɹ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 282,
+   "symbol": "au",
+   "status": "segmental",
+   "segments": [
+    "a",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 283,
+   "symbol": "yæ2",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "æ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 284,
+   "symbol": "u.",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 285,
+   "symbol": "qː",
+   "status": "segmental",
+   "segments": [
+    "qː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP"
+    ]
+   ]
+  },
+  {
+   "id": 286,
+   "symbol": "yəɜ",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 287,
+   "symbol": "y:",
+   "status": "segmental",
+   "segments": [
+    "yː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 288,
+   "symbol": "kʰ",
+   "status": "segmental",
+   "segments": [
+    "kʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 289,
+   "symbol": "tʃʰ",
+   "status": "segmental",
+   "segments": [
+    "t͡ʃʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 290,
+   "symbol": "iʊ",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 291,
+   "symbol": "sx",
+   "status": "segmental",
+   "segments": [
+    "s",
+    "x"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.5,
+    0.5,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ],
+    [
+     "FRIC",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 292,
+   "symbol": "õ",
+   "status": "segmental",
+   "segments": [
+    "õ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 293,
+   "symbol": "uo",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 294,
+   "symbol": "tʰ",
+   "status": "segmental",
+   "segments": [
+    "tʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 295,
+   "symbol": "uai5",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 296,
+   "symbol": "bʰ",
+   "status": "segmental",
+   "segments": [
+    "bʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 297,
+   "symbol": "u.ː",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 298,
+   "symbol": "uə2",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 299,
+   "symbol": "ʊə",
+   "status": "segmental",
+   "segments": [
+    "ʊ",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 300,
+   "symbol": "d^",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 301,
+   "symbol": "s̪ː",
+   "status": "segmental",
+   "segments": [
+    "s̪ː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 302,
+   "symbol": "yiɜ",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "i",
+    "ɜ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 303,
+   "symbol": "dʰ",
+   "status": "segmental",
+   "segments": [
+    "dʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 304,
+   "symbol": "r.",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 305,
+   "symbol": "oe:",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 306,
+   "symbol": "i1",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 307,
+   "symbol": "ɟː",
+   "status": "segmental",
+   "segments": [
+    "ɟː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 308,
+   "symbol": "yu2",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 309,
+   "symbol": "nʲʲ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 310,
+   "symbol": "i̪4",
+   "status": "segmental",
+   "segments": [
+    "ɹ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 311,
+   "symbol": "uei2",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "e",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 312,
+   "symbol": "tsʲ",
+   "status": "segmental",
+   "segments": [
+    "t͡sʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 313,
+   "symbol": "ɸ",
+   "status": "segmental",
+   "segments": [
+    "ɸ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "LAB"
+    ]
+   ]
+  },
+  {
+   "id": 314,
+   "symbol": "ĩ",
+   "status": "segmental",
+   "segments": [
+    "ĩ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 315,
+   "symbol": "ɑ4",
+   "status": "segmental",
+   "segments": [
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 316,
+   "symbol": "t̪ː",
+   "status": "segmental",
+   "segments": [
+    "t̪ː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 317,
+   "symbol": "eɑ",
+   "status": "segmental",
+   "segments": [
+    "e",
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 318,
+   "symbol": "u4",
+   "status": "segmental",
+   "segments": [
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 319,
+   "symbol": "e:",
+   "status": "segmental",
+   "segments": [
+    "eː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 320,
+   "symbol": "tsː",
+   "status": "segmental",
+   "segments": [
+    "t͡sː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 321,
+   "symbol": "ʈʰ",
+   "status": "segmental",
+   "segments": [
+    "ʈʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 322,
+   "symbol": "ɡʰ",
+   "status": "segmental",
+   "segments": [
+    "ɡʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 323,
+   "symbol": "ɯɯ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 324,
+   "symbol": "dʒʲ",
+   "status": "segmental",
+   "segments": [
+    "d͡ʒʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 325,
+   "symbol": "ʂʲ",
+   "status": "segmental",
+   "segments": [
+    "ʂʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 326,
+   "symbol": "X",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 327,
+   "symbol": "ɵː",
+   "status": "segmental",
+   "segments": [
+    "ɵː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 328,
+   "symbol": "uaiɜ",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 329,
+   "symbol": "tɕʲ",
+   "status": "segmental",
+   "segments": [
+    "t͡ɕʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 330,
+   "symbol": "ã",
+   "status": "segmental",
+   "segments": [
+    "ã"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 331,
+   "symbol": "t^ː",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 332,
+   "symbol": "ẽː",
+   "status": "segmental",
+   "segments": [
+    "ẽː"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 333,
+   "symbol": "yɛ2",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 334,
+   "symbol": "cː",
+   "status": "segmental",
+   "segments": [
+    "cː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 335,
+   "symbol": "i.1",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 336,
+   "symbol": "ɛʊ",
+   "status": "segmental",
+   "segments": [
+    "ɛ",
+    "ʊ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 337,
+   "symbol": "dˤdˤ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 338,
+   "symbol": "dʒː",
+   "status": "segmental",
+   "segments": [
+    "d͡ʒː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 339,
+   "symbol": "i4",
+   "status": "segmental",
+   "segments": [
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 340,
+   "symbol": "ɡː",
+   "status": "segmental",
+   "segments": [
+    "ɡː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 341,
+   "symbol": "yi",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 342,
+   "symbol": "ɕʲ",
+   "status": "segmental",
+   "segments": [
+    "ɕʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 343,
+   "symbol": "ɟʰ",
+   "status": "segmental",
+   "segments": [
+    "ɟʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 344,
+   "symbol": "pʰ",
+   "status": "segmental",
+   "segments": [
+    "pʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "LAB",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 345,
+   "symbol": "dʑʲ",
+   "status": "segmental",
+   "segments": [
+    "d͡ʑʲ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 346,
+   "symbol": "yuɜ",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 347,
+   "symbol": "ua1",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 348,
+   "symbol": "ua4",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 349,
+   "symbol": "æiː",
+   "status": "segmental",
+   "segments": [
+    "æ",
+    "iː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 350,
+   "symbol": "ɐɐ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 351,
+   "symbol": "ui",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 352,
+   "symbol": "iou1",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 353,
+   "symbol": "ʊː",
+   "status": "segmental",
+   "segments": [
+    "ʊː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 354,
+   "symbol": "a1",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 355,
+   "symbol": "iou4",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    [],
+    []
+   ]
+  },
+  {
+   "id": 356,
+   "symbol": "cʰ",
+   "status": "segmental",
+   "segments": [
+    "cʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 357,
+   "symbol": "iɛ1",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 358,
+   "symbol": "yə2",
+   "status": "segmental",
+   "segments": [
+    "y",
+    "ə"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 359,
+   "symbol": "ɖʰ",
+   "status": "segmental",
+   "segments": [
+    "ɖʰ"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 360,
+   "symbol": "ẽ",
+   "status": "segmental",
+   "segments": [
+    "ẽ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 361,
+   "symbol": "ʒʲ",
+   "status": "segmental",
+   "segments": [
+    "ʒʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 362,
+   "symbol": "ää",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 363,
+   "symbol": "ər4",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 364,
+   "symbol": "iːː",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 365,
+   "symbol": "ɪː",
+   "status": "segmental",
+   "segments": [
+    "ɪː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 366,
+   "symbol": "iɑ1",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɑ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 367,
+   "symbol": "ər1",
+   "status": "segmental",
+   "segments": [
+    "ə˞"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 368,
+   "symbol": "œː",
+   "status": "segmental",
+   "segments": [
+    "œː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 369,
+   "symbol": "øi",
+   "status": "segmental",
+   "segments": [
+    "ø",
+    "i"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 370,
+   "symbol": "ɪuː",
+   "status": "segmental",
+   "segments": [
+    "ɪ",
+    "uː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 371,
+   "symbol": "cʰcʰ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 372,
+   "symbol": "əː1",
+   "status": "segmental",
+   "segments": [
+    "əː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 373,
+   "symbol": "iː1",
+   "status": "segmental",
+   "segments": [
+    "iː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 374,
+   "symbol": "ũ",
+   "status": "segmental",
+   "segments": [
+    "ũ"
+   ],
+   "values": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "NAS"
+    ]
+   ]
+  },
+  {
+   "id": 375,
+   "symbol": "kʰː",
+   "status": "segmental",
+   "segments": [
+    "kʰː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "DOR",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 376,
+   "symbol": "o̞o̞",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 377,
+   "symbol": "xʲ",
+   "status": "segmental",
+   "segments": [
+    "xʲ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "FRIC",
+     "DOR"
+    ]
+   ]
+  },
+  {
+   "id": 378,
+   "symbol": "ou1",
+   "status": "segmental",
+   "segments": [
+    "o",
+    "u"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 379,
+   "symbol": "iɛ4",
+   "status": "segmental",
+   "segments": [
+    "i",
+    "ɛ"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 380,
+   "symbol": "e̞e̞",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 381,
+   "symbol": "y1",
+   "status": "segmental",
+   "segments": [
+    "y"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 382,
+   "symbol": "dzː",
+   "status": "segmental",
+   "segments": [
+    "d͡zː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS"
+    ]
+   ]
+  },
+  {
+   "id": 383,
+   "symbol": "dʲʲ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 384,
+   "symbol": "dʰː",
+   "status": "segmental",
+   "segments": [
+    "dʰː"
+   ],
+   "values": [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "segment_members": [
+    [
+     "STOP",
+     "COR",
+     "VOI_OBS",
+     "ASP"
+    ]
+   ]
+  },
+  {
+   "id": 385,
+   "symbol": "ɯᵝɯᵝ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 386,
+   "symbol": "lː",
+   "status": "segmental",
+   "segments": [
+    "lː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [
+     "COR"
+    ]
+   ]
+  },
+  {
+   "id": 387,
+   "symbol": "uo1",
+   "status": "segmental",
+   "segments": [
+    "u",
+    "o"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    [],
+    []
+   ]
+  },
+  {
+   "id": 388,
+   "symbol": "i.4",
+   "status": "segmental",
+   "segments": [
+    "ɻ̩"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 389,
+   "symbol": "i:",
+   "status": "segmental",
+   "segments": [
+    "iː"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  },
+  {
+   "id": 390,
+   "symbol": "yɛ5ʲ",
+   "status": "excluded",
+   "segments": null,
+   "values": null,
+   "segment_members": null
+  },
+  {
+   "id": 391,
+   "symbol": "a4",
+   "status": "segmental",
+   "segments": [
+    "a"
+   ],
+   "values": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "segment_members": [
+    []
+   ]
+  }
+ ],
+ "counts": {
+  "NAS": 26,
+  "STOP": 68,
+  "FRIC": 35,
+  "LAB": 18,
+  "COR": 78,
+  "DOR": 28,
+  "VOI_OBS": 40,
+  "ASP": 19
+ },
+ "concept_table_digest": "sha256:cbd856f317119cd6cf050f506dcfead204aa9a89e4385084ac106002787cf536"
+}

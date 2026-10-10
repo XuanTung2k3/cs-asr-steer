@@ -1,0 +1,32 @@
+{
+ "schema": "dir_sprint0_d5_concepts_v1_provider_reference",
+ "threads": 4,
+ "device": "cpu",
+ "dtype": "float32",
+ "clips": {
+  "sample1.flac": {
+   "audio_sha256": "sha256:cb5c48a2d1d6f7dedd0330f088a4cbe76de1a86e6a6109c06d255bb1ca2f7542",
+   "log_probs_sha256": "sha256:8c7cf1c1256eab30077d0a6ee0a11d037e97c9db6b9fc283264dfeff4f1ba2fe",
+   "shape": [
+    684,
+    392
+   ],
+   "sealed_engineering_hash_equal": true
+  },
+  "aishell_example_mandarin.wav": {
+   "audio_sha256": "sha256:bc86e7fd26157eaf3357850c85b4c5f6578e7ab5ed5e08eb791c5001ad64bd4a",
+   "log_probs_sha256": "sha256:a58f8d0c96397f39624847707d316d4b4bb6608eb3647bdc378beff3da485723",
+   "shape": [
+    107,
+    392
+   ],
+   "sealed_engineering_hash_equal": true
+  }
+ },
+ "provider_manifest_digest": "sha256:93ae874c09b89c3595e61c978b06d3f94a78f395b2b6688799652ab8e98a885e",
+ "npz_sha256": "sha256:7be675832642315d5ff222573bec23aaa7f4e4f8e545b5bd86eb68e7b870d5ea",
+ "npz_keys": {
+  "sample1.flac": "sample1_flac",
+  "aishell_example_mandarin.wav": "aishell_example_mandarin_wav"
+ }
+}

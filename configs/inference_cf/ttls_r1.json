@@ -1,0 +1,260 @@
+{
+ "schema": "ttls_r1_config_v1",
+ "status": "FROZEN_BEFORE_RUN",
+ "ticket": "TTLS-R1 unified test-time learned steering pilot (exploratory)",
+ "spec": "docs/inference_cf/TTLS_R1_SPEC.md",
+ "starting_commit": "c69038adb3b0ecbdf5ed62eabafc89895d4ef890",
+ "branch": "feature/ttls-r1",
+ "population": {
+  "panel": "docs/inference_cf/P2_SEL_MINI_PANEL.json",
+  "panel_sha256": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+  "teacher_plan": "results/inference_cf/p2tta_funnel/tta1/plan_sealed.json",
+  "rows": 100,
+  "dialogues": 20,
+  "subgroup": {
+   "panel": "docs/inference_cf/P2_TTA_A3_PANEL.json",
+   "rows": 24,
+   "use": "targeted descriptive subgroup; never a population estimate"
+  },
+  "role": "already-exposed D-dev-select fixed-100 (subset of the documented FULL300 exposure); no new exposure",
+  "forbidden": [
+   "D-dev-confirm",
+   "D-test",
+   "router-calib",
+   "P3",
+   "transfer",
+   "any unexposed utterance"
+  ]
+ },
+ "model": {
+  "name": "whisper-large-v3",
+  "dtype": "bfloat16",
+  "dir": "/mnt/data/tungnx/whisper-large-v3",
+  "seed": 240924,
+  "max_new_tokens": 200
+ },
+ "prompts": {
+  "cB": [
+   50258,
+   50260,
+   50360,
+   50364
+  ],
+  "cB_tokens": [
+   "<|startoftranscript|>",
+   "<|zh|>",
+   "<|transcribe|>",
+   "<|notimestamps|>"
+  ],
+  "cE": [
+   50258,
+   50259,
+   50360,
+   50364
+  ],
+  "cE_tokens": [
+   "<|startoftranscript|>",
+   "<|en|>",
+   "<|transcribe|>",
+   "<|notimestamps|>"
+  ],
+  "cA": "historical detect_language(input_features) prompt (B1 replay only)"
+ },
+ "site": {
+  "layer": 16,
+  "tensor": "decoder_post_cross_attn_residual (pre-FFN), DG-02",
+  "hook": "csasr.lss.sites.DecoderPostCrossAttnInterventionHook (action_fn)",
+  "repair": "models.hooks.apply_steering NormPreserve, alpha=scale=1, no sqrt(L) rescale",
+  "num_forced_prefix": 4,
+  "editable_steps": "content step t >= 1"
+ },
+ "variables": {
+  "LN": {
+   "what": "historical A2 actuator unchanged (episodic_tta): 194 decoder LayerNorm affine tensors",
+   "trainable_scalars": 248320,
+   "optimizer": {
+    "name": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0,
+    "betas": [
+     0.9,
+     0.999
+    ],
+    "eps": 1e-08
+   },
+   "masters": "fresh fp32 from theta0, bf16 forward via functional_call",
+   "reset": "LNGuard exact restore + bitwise verify"
+  },
+  "TTLS": {
+   "what": "one temporary fp32 vector z in R^1280 at the L16 DG-02 site: r~_t = NormPreserve(r_t + g_t z)",
+   "trainable_scalars": 1280,
+   "init": "zeros",
+   "optimizer": {
+    "name": "AdamW",
+    "lr": 0.015737387135538537,
+    "lr_rule": "E_STAR / (2 sqrt(d_model))",
+    "weight_decay": 0.0,
+    "betas": [
+     0.9,
+     0.999
+    ],
+    "eps": 1e-08
+   },
+   "budget": {
+    "E_STAR": 1.1260757575454359,
+    "projection": "after every step z <- z * min(1, E_STAR/||z||)",
+    "source": "frozen DG-02 L16 realized chord (P2/DIR-SPRINT0), about 15% of ||r||"
+   },
+   "reset": "new zero z and new optimizer per utterance and per arm; the hook exists only inside one forward/decode call"
+  },
+  "steps": 2,
+  "loss_evaluations": 3
+ },
+ "masks": {
+  "CE": "ALL editable steps (t >= 1): the CE objective has no localization signal; the global mask is the closest activation-space analogue of A2's shared parameters",
+  "AC": "{t*}: the first accepted acoustic-lexical candidate step",
+  "deviation": "The proposed first AUTO/forced disagreement region is structurally unusable on this panel (reference-free design-time finding): forced and AUTO differ on 12/100 rows and the first token differs at content step 0 on 12/12 (leading-space artifact or whole-utterance translation); step 0 is a DG-02 forced-prefix position that is never edited."
+ },
+ "objectives": {
+  "CE": "historical A2: mean over valid y_A positions of -log p_theta(y_A[t] | cB, y_A[:t]) (episodic_tta.position_terms + objective_loss('A2'))",
+  "AC": "-log p_theta(c* | cB, y_B[:t*]) at the first accepted candidate; no accepted candidate => exact abstention (output = B0)",
+  "P": "+ LAMBDA_P * mean_{t in S} KL(p_theta0,t || p_theta,t) on the B0 path y_B under cB over the allowed vocabulary (soft_auto_tta.allowed_log_probs/kl_terms)",
+  "LAMBDA_P": 1.0,
+  "note": "KL to theta0 has zero gradient at theta0, so P acts on the second update only (two-step budget)"
+ },
+ "candidate_rule": {
+  "branches": "teacher-forced on the B0 path y_B: clean/null audio x cB/cE prompts, frozen theta0, computed before any adaptation",
+  "null_audio": "30 s of zeros through the same feature extractor and encoder (DIR-SPRINT0 D3 null)",
+  "structural": "1 <= t < |y_B|, UTF-8-complete prefix y_B[:t], b_t not EOS and not embedded-Latin",
+  "proposal": "e_t = argmax cE_clean log-prob at t (lowest ID on ties); language-disagreement step iff e_t embedded-Latin (=> e_t != b_t); M = all such steps",
+  "evidence": "A^c(v) = l^c_clean(v) - max(l^c_null(v), log 1e-12); E^c = A^c(e_t) - A^c(b_t) for c in {cB, cE}",
+  "accept": "E^cB >= tau and E^cE >= tau (prompt-robust acoustic support)",
+  "tau": 2.302585092994046,
+  "tau_definition": "log 10 (likelihood-ratio 10, conventional 'strong' evidence)",
+  "target": "t* = first accepted step, c* = e_t*",
+  "partition_hash": "sha256:7daa50091056677286dd30933300cb9b1245ca778f969df2a95ccc06016dac02",
+  "partition": "core_r2.tokenizer_partition whisper_han_ascii_v1"
+ },
+ "stable_set": {
+  "rule": "valid content steps t of y_B with p_theta0(b_t) >= 0.5 under cB and t not in M",
+  "p_min": 0.5
+ },
+ "arms": {
+  "B0": "forced-ZH greedy (reused P2-SEQ S0; reproduced in-job)",
+  "B1": "AUTO greedy (reused; replayed in-job with the historical detect_language prompt)",
+  "B2": "historical A2 = AUTO pseudo-CE on LN (reused TTA1/TTA0-R outputs; decoded in-job from archived fp32 masters)",
+  "T1": "TTLS-CE",
+  "T2": "TTLS-CE+P",
+  "T2A": "A2-CE+P (added matched comparator so P is not a TTLS-only advantage)",
+  "T3": "A2-AC",
+  "T4": "TTLS-AC",
+  "T5": "A2-AC+P",
+  "T6": "TTLS-AC+P"
+ },
+ "comparators": {
+  "CD": {
+   "what": "no-update full-sequence acoustic-contrastive decoding: frozen DIR-SPRINT0 D3 rule (dir_sprint0.d3_candidate) at every step t >= 1 with a UTF-8-complete prefix whose clean greedy token is not EOS",
+   "legal_static": {
+    "definition": "token IDs < 50257 (EOS), not in generation_config.suppress_tokens, not special, whose byte string is UTF-8-boundary legal (first byte not 0x80-0xBF; strict decode succeeds or fails only with 'unexpected end of data' at the end)",
+    "count": 49695,
+    "hash": "sha256:bfcdc254e103330fa058056ad2fb687c014195680f8cf74330562115d33268f0",
+    "excluded_counts": {
+     "suppressed": 82,
+     "continuation_start": 466,
+     "invalid_utf8": 13,
+     "empty": 1
+    },
+    "hash_definition": "csasr.inference_cf.core.digest(sorted list of legal IDs)"
+   }
+  },
+  "ACSUB": "no-update: the accepted candidate c* substituted at t* (prefix y_B[:t*]), then ordinary forced-ZH greedy; abstain => B0"
+ },
+ "matched_pairs": {
+  "CE": [
+   "B2",
+   "T1"
+  ],
+  "CE+P": [
+   "T2A",
+   "T2"
+  ],
+  "AC": [
+   "T3",
+   "T4"
+  ],
+  "AC+P": [
+   "T5",
+   "T6"
+  ]
+ },
+ "evaluation": {
+  "primary": "free decoding only; canonical csasr.evaluation (PIER, MER, EN-WER, ZH-CER, POI transitions, retention, outside harm)",
+  "references": "opened only after the committed output seal",
+  "genuine_substitution_categories": [
+   "wrong_language_substitution",
+   "phonetic_transliteration_or_script",
+   "same_language_substitution",
+   "other"
+  ],
+  "deletion_categories": [
+   "deletion",
+   "boundary_error",
+   "insertion_near_poi"
+  ],
+  "eos_recovery_row": "B0 terminated eos and B0 tokens are a strict prefix of the system tokens",
+  "premature_eos_row": "system terminated eos and system tokens are a strict prefix of B0 tokens",
+  "safety_bounds_vs_B0": {
+   "max_MER_increase": 0.01,
+   "max_ZH_CER_increase": 0.015,
+   "min_matrix_ZH_retention": 0.98,
+   "max_outside_POI_harm_rate": 0.03,
+   "max_POI_corruption_rate": 0.05,
+   "max_additional_caps": 1,
+   "max_new_severe_truncations": 0,
+   "float_guard": 1e-12
+  },
+  "bootstrap": {
+   "unit": "dialogue cluster",
+   "replicates": 2000,
+   "seed": 240924,
+   "descriptive": true
+  }
+ },
+ "label_rule": {
+  "order": [
+   "TTLS_R1_INVALID",
+   "TTLS_R1_PROMISING",
+   "TTLS_R1_MIXED",
+   "TTLS_R1_NOT_SUPPORTED"
+  ],
+  "INVALID": "any integrity failure: missing/failed row, B0/B1/B2 reuse identity mismatch, failed in-job validation, reset or non-LN change",
+  "PROMISING": "some TTLS arm X in {T1,T2,T4,T6} with matched A2 arm Y has (a) >= 8 genuine-substitution POI corrections vs B0 in >= 4 dialogues, (b) all safety bounds vs B0, and (c) genuine-substitution corrections(X) >= (Y) and newly introduced Mandarin errors(X) <= (Y)",
+  "MIXED": "not PROMISING and some TTLS arm has >= 3 genuine-substitution corrections vs B0 and net POI corrections (corrections - corruptions) > 0",
+  "NOT_SUPPORTED": "otherwise",
+  "AUTO": "comparison with B1 is reported for every arm but does not enter the label"
+ },
+ "compute": {
+  "jobs": 1,
+  "time_limit": "03:00:00",
+  "partition": "mig",
+  "gres": "nvidia_h100_80gb_hbm3_3g.40gb:1"
+ },
+ "source_sha256": {
+  "docs/inference_cf/P2_SEL_MINI_PANEL.json": "266ea7ea6328c0e6b68f554cb48085fc41359ade86c214defbfb9bff004815f5",
+  "results/inference_cf/p2tta_funnel/tta1/plan_sealed.json": "5223f00a5ac490650af0201ae80eb0a0ba5aa0b2ad498d435998a483b33ff464",
+  "results/inference_cf/p2tta_funnel/tta1/output_seal.json": "1b5d05bcb9574df36fe0803d06045d997bf5e33059f37dd452c9d4b6b5df5919",
+  "results/inference_cf/p2tta_funnel/tta1/evaluation.json": "76a0b45c1398c7a30c63d2767f932489f1107da2920388af8132d7b1f668f2f8",
+  "docs/inference_cf/P2_TTA_A3_PANEL.json": "6422741b91e64ff007458b7a04d2f559e8ed8ffb592a087a538adf63632b2206",
+  "configs/inference_cf/dir_sprint0.json": "b264460beedd09ae4b0c005ef5f8178494c49a52aa9ba2bec4bc116c984d27db",
+  "src/csasr/inference_cf/episodic_tta.py": "eee4f8ee816351e09ab572211bb4f0adb014a3c843b34b0592c795a67097be29",
+  "src/csasr/inference_cf/soft_auto_tta.py": "aed36be3326796c031a6ee0c706c1842531a6ec3a9cd121e9e956b107520511a",
+  "src/csasr/lss/sites.py": "d8cc93c9aea05abd9557e8a70ac66c1d0ba35bbc2af008bcf4e3791406c75e48",
+  "src/csasr/models/hooks.py": "4b5182bb3de913e1e79bf52a4a16c349bf29bb2a5242233bb0f321190adf256e",
+  "src/csasr/inference_cf/dir_sprint0.py": "0e052f8e20dfc4fa72432c1405612b2a79494a11f02f9594b7dfd8a228dbf4a8",
+  "experiments/inference_cf_cached.py": "7c6b627eebe17892c4908c0dce11400eae03d0c4b8bd039a119f91ca0e317140",
+  "src/csasr/inference_cf/core_r2.py": "93f27b37746086305b3eac3c11abce889e4816bb741aed8047d16561125576c3",
+  "src/csasr/inference_cf/core_p1.py": "2e6a95cc00aea023ddc1a76cab5775812252c2748912f753c488b2b860fe18c4",
+  "src/csasr/inference_cf/readout.py": "9a04403822dfd5f1a371ab0188d3c68992fd2dc1bd2bb1fe808b29e0eca3aab4",
+  "experiments/inference_cf_p2tta0.py": "fe68e1aa4f69ec2ae33594c09bbebc09465e07fad38530210f085f1ec4d4a694"
+ }
+}

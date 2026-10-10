@@ -1,0 +1,14 @@
+/home/tungnx/cs-asr-steer-ttls-r1r-audit/src/csasr/inference_cf/ttls.py:206: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  if not math.isfinite(float(loss)):
+Traceback (most recent call last):
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 99, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 94, in main
+    if i in [2,31,53]:summ['gradient_crosschecks'].append(grad_probe(train,s))
+                                                          ^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 69, in grad_probe
+    assert torch.equal(loss.detach(),li.detach()) and rel<=.02 and cos>=.999 and float(g.norm())>0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

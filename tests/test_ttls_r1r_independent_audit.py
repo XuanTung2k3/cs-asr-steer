@@ -58,3 +58,26 @@ def test_lexical_separation_not_promoted_boundary_repairs():
     assert lexical(e('same_language_substitution','people','peoplethey'))=='word_boundary_repair'
     assert lexical(e('wrong_language_substitution','cooking','烧烤'))=='genuine_wrong_language'
     assert lexical(e('deletion','topic',''))=='deletion_or_boundary'
+
+def test_independent_complete_site_gradient_includes_ffn_residual_skip():
+    sys.path.insert(0,str(ROOT/'tests'))
+    from test_ttls_r1 import _bundle,_encode,LAYER,CB
+    from csasr.inference_cf import ttls as L,ttls_r1r as R
+    from csasr.inference_cf.episodic_tta import teacher_logits
+    from experiments.ttls_r1r_independent_replay import independent_repair
+    b=_bundle();_,enc=_encode(b);y=[20,21,22,23];ep=R.EpisodeR1R(b,enc,L.ALL,layer=LAYER)
+    _,loss=L.ce_terms(ep,y,[True]*4,[],[],2,prompt=CB);g=torch.autograd.grad(loss,ep.z)[0]
+    z=torch.zeros(b.d_model,requires_grad=True);layer=b.model.model.decoder.layers[LAYER];cap={}
+    def pre(mod,args):cap['q']=args[0]
+    def intervention(mod,args,output):
+        u=output[0];h=cap['q']+u;gain=(torch.arange(h.shape[1])>=4).to(h.dtype).view(1,-1);out=u+(independent_repair(h,z,gain)-h)
+        return (out,)+output[1:]
+    class Direct:
+        params={'z':z}
+        def forward(self,prompt,y):
+            hooks=[layer.encoder_attn_layer_norm.register_forward_pre_hook(pre),layer.encoder_attn.register_forward_hook(intervention)]
+            try:return teacher_logits(b.model,enc,prompt,y,None)
+            finally:
+                for hook in hooks:hook.remove()
+    _,li=L.ce_terms(Direct(),y,[True]*4,[],[],2,prompt=CB);gi=torch.autograd.grad(li,z)[0]
+    assert torch.equal(loss,li) and torch.equal(g,gi)

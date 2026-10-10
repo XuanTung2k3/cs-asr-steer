@@ -1,0 +1,30 @@
+{
+  "index": 0,
+  "id": "ZH-CN_U0011_S0_111",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      7239,
+      2166,
+      9254,
+      10440,
+      14496,
+      1546,
+      24999,
+      2707,
+      399,
+      6734,
+      6734,
+      24282,
+      30
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "所以你用什么样的transportation去去向?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.010200725868344307
+}

@@ -15,7 +15,7 @@ from csasr.inference_cf.core_r2 import tokenizer_partition
 from csasr.inference_cf import ttls as L,ttls_r1r as R
 from csasr.lss.sites import assert_no_site_hooks
 from experiments.inference_cf_ttls_r1r import Ctx,integrity_row,process_row
-OUT=ROOT/'results/inference_cf/ttls_r1r_independent_audit/replay_r2'
+OUT=ROOT/'results/inference_cf/ttls_r1r_independent_audit/replay_r3'
 def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def independent_repair(h,z,g):
@@ -26,7 +26,7 @@ def independent_repair(h,z,g):
     return torch.where(gain>0,out,h)
 def main():
     assert not (OUT/'summary.json').exists(),'preserve prior attempt'
-    sel=json.loads((OUT.parent/'replay_selection.json').read_text());plan=json.loads((ROOT/'results/inference_cf/ttls_r1/plan_sealed.json').read_text());man=json.loads((ROOT/'results/inference_cf/ttls_r1r/run1/manifest.json').read_text());auditman=json.loads((OUT.parent/'manifest_r2.json').read_text())
+    sel=json.loads((OUT.parent/'replay_selection.json').read_text());plan=json.loads((ROOT/'results/inference_cf/ttls_r1/plan_sealed.json').read_text());man=json.loads((ROOT/'results/inference_cf/ttls_r1r/run1/manifest.json').read_text());auditman=json.loads((OUT.parent/'manifest_r3.json').read_text())
     for p,h in {**man['sources'],**auditman['sources']}.items():assert sha(ROOT/p)==h.removeprefix('sha256:')
     for p,h in man['model']['files'].items():assert sha(Path(man['model']['dir'])/p)==h.removeprefix('sha256:')
     torch.manual_seed(240924);torch.set_num_threads(1);bundle=load_whisper(load_config(ROOT/'configs/model/whisper_large_v3.yaml'));model=bundle.model;model.eval();model.requires_grad_(False)
@@ -55,15 +55,22 @@ def main():
     def grad_probe(enc,s):
         ep=R.EpisodeR1R(bundle,enc,L.ALL);_,loss=L.ce_terms(ep,s['y_A'],s['y_A_valid_mask'],sup,beg,tok.eos_token_id,prompt=L.CB);g=torch.autograd.grad(loss,ep.z)[0]
         z=torch.zeros(bundle.d_model,device=bundle.device,requires_grad=True)
-        def pre(mod,args):
-            h=args[0];q=torch.arange(h.shape[1],device=h.device);gain=(q>=4).to(h.dtype).view(1,-1)
-            return (independent_repair(h,z,gain),)+args[1:]
         class Direct:
             params={'z':z}
             def forward(self,prompt,y):
-                hook=model.model.decoder.layers[16].final_layer_norm.register_forward_pre_hook(pre)
+                # Intervene before BOTH the FFN normalization and its residual skip, as DG-02 requires.
+                # A final_layer_norm pre-hook alone misses the residual skip gradient.
+                layer=model.model.decoder.layers[16];cap={}
+                def remember(mod,args):cap['q']=args[0]
+                def intervention(mod,args,output):
+                    u=output[0] if isinstance(output,tuple) else output;h=cap['q']+u
+                    q=torch.arange(h.shape[1],device=h.device);gain=(q>=4).to(h.dtype).view(1,-1)
+                    edited=independent_repair(h,z,gain);out=u+(edited-h)
+                    return (out,)+output[1:] if isinstance(output,tuple) else out
+                hooks=[layer.encoder_attn_layer_norm.register_forward_pre_hook(remember),layer.encoder_attn.register_forward_hook(intervention)]
                 try:return teacher_logits(model,enc,prompt,y,None)
-                finally:hook.remove()
+                finally:
+                    for hook in hooks:hook.remove()
         _,li=L.ce_terms(Direct(),s['y_A'],s['y_A_valid_mask'],sup,beg,tok.eos_token_id,prompt=L.CB);gi=torch.autograd.grad(li,z)[0]
         rel=float((g-gi).norm()/g.norm());cos=float(torch.nn.functional.cosine_similarity(g,gi,dim=0))
         assert torch.equal(loss.detach(),li.detach()) and rel<=.02 and cos>=.999 and float(g.norm())>0

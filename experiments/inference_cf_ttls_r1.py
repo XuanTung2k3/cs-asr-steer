@@ -386,8 +386,11 @@ def cmd_run(args) -> None:
     for p, h in m["sources"].items():
         if file_hash(ROOT / p) != h:
             raise ValueError(f"source changed: {p}")
-    if git("rev-parse", "HEAD") != m["git_commit"]:
-        raise ValueError("git commit changed")
+    if subprocess.run(["git", "merge-base", "--is-ancestor", m["git_commit"], "HEAD"], cwd=ROOT).returncode != 0:
+        raise ValueError("manifest source commit is not an ancestor of HEAD")
+    extra = set(git("diff", "--name-only", m["git_commit"], "HEAD").split()) - {f"{args.out}/manifest.json"}
+    if extra:                                    # only the committed run manifest may follow the source commit
+        raise ValueError(f"files changed after the manifest source commit: {sorted(extra)}")
     plan = json.loads((ROOT / PLAN).read_text())
     if plan["plan_hash"] != m["plan_hash"]:
         raise ValueError("plan")

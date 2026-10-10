@@ -14,6 +14,7 @@ The reader hash-checks the ledger, the registry and the addenda, and refuses to 
 | Addendum | Stage | Role | IDs | Exposure |
 |---|---|---|---|---|
 | A1-SRD2-G0-400 | SRD2-G0 (2026-10-09) | D-dev-select, 20 dialogues | 400 (`sha256:ff2e3054…`) | Single-query intervened pulses (Slurm 58300/58314). References opened post-seal for lexical evaluation, filtered to these IDs. Now exposed development data, not fresh validation |
+| A2-DIR-SPRINT0-240 | DIR-SPRINT0 (2026-10-10) | D-dev-select, 20 dialogues (12 each) | 240 (`sha256:5b62f378…`) | Single-query intervened pulses, 15 arms (Slurm 58354/58357). References opened post-seal for lexical evaluation, filtered to these IDs. Now exposed development data, not fresh validation. FULL300 was used unlabeled as the D5 calibration bank (no new reference exposure) |
 
 The DIR-SPRINT0 feasibility and D5 provider sessions read no D-dev-select audio, reference or label. They add no
-exposure entry.
+exposure entry. The DIR-SPRINT0 study itself is entry A2.

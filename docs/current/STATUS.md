@@ -902,3 +902,57 @@ SRD2-G0 contract test):** the 400 SRD2-G0 D-dev-select utterances (20 dialogues;
 references opened for lexical evaluation (post-seal, filtered to the 400 IDs) and are exposed development data; the old30
 P2-DIR apparatus queries (already-exposed FULL300) were used for engineering reproduction only. No D-dev-confirm, D-test,
 router-calib, P3 or transfer use. Report docs/inference_cf/SRD2_G0_FINAL_REPORT.md. Core v6 and historical verdicts unchanged.
+
+
+## DIR-SPRINT0 executed — terminal DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE (2026-10-10)
+
+**What ran.** Three new direction families at the L16 DG-02 site and e*:
+- **D3**, acoustic-prior contrast (original versus null audio, plausibility-constrained candidate, token-margin readout
+  gradient);
+- **D4**, transcribe-minus-translate;
+- **D5**, phonetic-concept steering (frozen wav2vec2-xlsr-53-espeak phone model plus panphon concepts, with an unlabeled
+  FULL300 calibration bank);
+
+against matched D0, D1, D2, v_AC and random controls, R2-gated variants, a D5 shuffle and direct contrastive selection.
+
+**Population.** 240 new D-dev-select utterances (12 × 20), with all 700 previously registered exposures excluded.
+
+**Timeline.**
+
+| Step | Commit / job | Result |
+|---|---|---|
+| Design freeze | c54d5027 | |
+| Implementation | 76adcfba | |
+| Pre-run audit | 62f6ee44 | PASS_TO_DIR_SPRINT0; attempt 1 BLOCK preserved |
+| Job A | Slurm 58354, 33 min | 6,946 structural queries; all reference-free predicates PASS; no family blocked |
+| Audit A | a08ab3e9 | PASS via r1; attempt 1 BLOCK preserved |
+| Job B | Slurm 58357, 21.5 min | 58,578 executed cells, all integrity checks; launch 58356 refused at the authorization guard before any work, preserved |
+| PRIMARY audit | eba309fd | PASS |
+| Evaluation | 2bac6081 | |
+| FULL audit | 38c5a3de | PASS, label identical |
+
+**Corrections (of 701 EN-confusion queries):**
+
+| Arm | Corrections |
+|---|---|
+| D3 | 2 |
+| D4 | 0 |
+| D5 | 0 |
+| D2 | 2 (the same two as D3) |
+| D3CD | 4 |
+| Every gated arm | 0 |
+
+**Mandarin corruptions** (of 3,216 ZH-correct queries): D2 275 (10.1% active), D3 80 (83% of its 96 edited states),
+D4 11, D5 8.
+
+**Lexical alignment.** D4 and D5 are lexically orthogonal: cos with D2 is at random level, and gap closure beyond random
+is about 0.01 nat. D5 is indistinguishable from its shuffle.
+
+**Next.** STOP: close the steering-direction-discovery branch; no full decoding. The advisory next step remains the
+separately frozen exact-A2 confirmation, which needs human authorization.
+
+**Data exposure.** The 240 utterances are registered as append-only addendum A2-DIR-SPRINT0-240 in
+`docs/current/DATA_EXPOSURE_ADDENDA.json` (`exposed_ids()` now 940). FULL300 was used unlabeled as the D5 bank. No
+D-dev-confirm, D-test, router-calib, P3 or transfer use.
+
+**Report.** `docs/inference_cf/DIR_SPRINT0_FINAL_REPORT.md`. Core v6 and historical verdicts are unchanged.

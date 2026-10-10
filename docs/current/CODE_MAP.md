@@ -543,3 +543,38 @@ of record results/inference_cf/srd2_g0/run1/audit_r1/inference_cf_srd2_g0_audit_
 experiments/inference_cf_srd2_g0_describe.py (post-terminal descriptive tables), slurm/inference_cf_srd2_g0.sbatch,
 tests/test_inference_cf_srd2_g0.py. Results results/inference_cf/srd2_g0/run1 (raw arrays archived content-addressed under
 /mnt/data/tungnx/cs-asr-steer/archives/srd2_g0/run1). Not imported by any deployable path.
+
+## DIR-SPRINT0 (executed 2026-10-10; terminal DIR_SPRINT0_ALL_DIRECTIONS_INEFFECTIVE)
+
+**Mechanics.** `src/csasr/inference_cf/dir_sprint0.py`:
+- the runtime projection;
+- the D3 legal set, candidate rule and zero-probe token-margin gradient;
+- the D4 and D0 tangents and the random direction;
+- D5 concept evidence, calibration prototypes, the query direction and the within-utterance derangement;
+- the v_AC wrappers and arm targets.
+
+**Phone provider.** `src/csasr/inference_cf/phone_provider.py`, with the `exposure_registry.py` exposure reader.
+
+**Runner.** `experiments/inference_cf_dir_sprint0.py`: prepare / manifest / capture (+ two CPU `phones` children) /
+construct / seal-a / authorize-b / pulses / seal-b / smoke.
+
+**Evaluation and audit.**
+- `experiments/inference_cf_dir_sprint0_evaluate.py` (post-seal; reuses the SRD2-G0 `map_utterance`).
+- `experiments/inference_cf_dir_sprint0_audit.py` (independent pre / a / primary / full / concepts-check; the
+  manifest-pinned attempt-1 version).
+- The auditor of record: `results/inference_cf/dir_sprint0/run1/audit_r1/inference_cf_dir_sprint0_audit_r1.py`
+  (amendment A1).
+
+**Supporting scripts and tests.**
+- `experiments/inference_cf_dir_sprint0_population.py` (identity-only selector).
+- `experiments/inference_cf_dir_sprint0_d5_concepts.py` (concept table, threshold engineering, provider reference).
+- `experiments/inference_cf_dir_sprint0_describe.py` (post-terminal descriptive tables).
+- `slurm/inference_cf_dir_sprint0.sbatch`.
+- `tests/test_dir_sprint0_{impl,freeze}.py`.
+
+**Outputs.**
+- Design artifacts: `results/inference_cf/dir_sprint0/design/`.
+- Run: `results/inference_cf/dir_sprint0/run1`, with raw arrays archived content-addressed under
+  `/mnt/data/tungnx/cs-asr-steer/archives/dir_sprint0/run1`.
+
+Not imported by any deployable path.

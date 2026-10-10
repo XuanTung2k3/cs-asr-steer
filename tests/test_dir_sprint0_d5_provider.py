@@ -204,14 +204,20 @@ def test_exposure_registry_unions_ledger_and_addendum():
     pop = json.loads((ROOT / "docs/inference_cf/SRD2_G0_POPULATION.json").read_text())
     srd2 = {r["utterance_id"] for r in pop["selected"]}
     documented = {r["utterance_id"] for r in pop["roster"] if r["exclusion_reasons"]}
-    assert reg["by_source"] == {"documented_registry_at_srd2_freeze": 300, "A1-SRD2-G0-400": 400}
-    assert reg["ids"] == frozenset(srd2 | documented) and len(reg["ids"]) == 700 and reg["role"] == "D-dev-select"
+    # append-only registry: the base ledger + A1 stay exactly as registered; later addenda (A2 = DIR-SPRINT0) only add IDs
+    assert reg["by_source"]["documented_registry_at_srd2_freeze"] == 300 and reg["by_source"]["A1-SRD2-G0-400"] == 400
+    add = json.loads((ROOT / "docs/current/DATA_EXPOSURE_ADDENDA.json").read_text())
+    assert add["entries"][0]["addendum_id"] == "A1-SRD2-G0-400"
+    later = set().union(*[set(e["utterance_ids"]) for e in add["entries"][1:]]) if len(add["entries"]) > 1 else set()
+    assert len(srd2 | documented) == 700 and reg["ids"] == frozenset(srd2 | documented | later) and reg["role"] == "D-dev-select"
     pin = json.loads((ROOT / "configs/inference_cf/srd2_g0.json").read_text())["source_sha256"]["docs/current/DATA_EXPOSURE.md"]
     assert reg["base_ledger_sha256"] == pin == "sha256:" + hashlib.sha256((ROOT / "docs/current/DATA_EXPOSURE.md").read_bytes()).hexdigest()
 
 
 def test_exposure_registry_rejects_tampering(tmp_path):
-    for rel in ("docs/current/DATA_EXPOSURE.md", er.ADDENDA, "docs/inference_cf/SRD2_G0_POPULATION.json"):
+    # copy the ledger, the addenda and every population file an (append-only) addendum entry pins
+    pops = {e["population_file"]["path"] for e in json.loads((ROOT / er.ADDENDA).read_text())["entries"] if e.get("population_file")}
+    for rel in ("docs/current/DATA_EXPOSURE.md", er.ADDENDA, "docs/inference_cf/SRD2_G0_POPULATION.json", *sorted(pops)):
         (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(ROOT / rel, tmp_path / rel)
     er.exposed_ids(tmp_path)

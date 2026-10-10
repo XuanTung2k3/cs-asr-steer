@@ -1,0 +1,51 @@
+{
+  "schema": "a2p_dev200_independent_replay_v1",
+  "audited_revision": "4bbc0f83bd8f440a196c62a64a65025b9fc07420",
+  "audit_source_commit": "95c7729a29f520721f76c30e8c51e4277f92af4d",
+  "sources": {
+    "experiments/a2p_dev200_independent_replay.py": "dc5773ad52e75207ffa17280cab9a06981e003af0c70f00d29046f71d882f847",
+    "experiments/a2p_dev200_independent_analysis.py": "ef2ed712b50087970db2df939067285406e7106dc77e370e69566db20bb4d691",
+    "tests/test_a2p_dev200_independent_audit.py": "1b3b8ae1b82435f5f8941042eb24ea16270642235c8ec6f5d3267f86bcba8556",
+    "experiments/ttls_r1_independent_analysis.py": "3f93e74de73601cfb8b8773dd872054da40b6ab01f45469efcd704579b225bcc",
+    "experiments/ttls_r1r_independent_analysis.py": "4b166df77ed6afd47ea5cbfa49dade9f9c7624047cf14acb59b465aa7f7b5528",
+    "configs/model/whisper_large_v3.yaml": "52be1c35b927b62f0d2cfdb7db23cccdfdce66db328a6b24e9cfec548fefe742",
+    "slurm/a2p_dev200_independent_replay.sbatch": "90c658301e8d8b27b1d700e1aa6e9bc92d06f06fa07a2e1c3fdb606ba6b79d17",
+    "results/inference_cf/a2p_dev200_independent_audit/replay_selection.json": "df0954d883c9576f84229c58c3e28e2130801033d8b95376c56a1a90003161f7"
+  },
+  "seed": 240924,
+  "selected_rows": 24,
+  "selected_dialogues": 20,
+  "max_jobs": 1,
+  "max_minutes": 30,
+  "reference_access": false,
+  "independent_calculations": [
+    "M before acoustic acceptance",
+    "S valid and p0>=.5 and not M",
+    "allowed-vocabulary CE",
+    "forward theta0-to-student KL"
+  ],
+  "baseline_and_B3_equality": [
+    "tokens",
+    "text",
+    "termination",
+    "effective_LN_bytes",
+    "three_losses",
+    "parts",
+    "two_grad_norms",
+    "master_delta_norms",
+    "effective_delta_norms"
+  ],
+  "optimizer_new_hashes": "Original B3 full fp32 masters/optimizer tensors were not archived. New hashes verify this audit only; effective bf16 hashes and trajectories are compared to original.",
+  "tests": {
+    "historical": 73,
+    "focused": 3,
+    "note": "Initial independent test compared adapt_sec and failed solely on elapsed time; fixed before GPU freeze; all numerical histories and gradients identical."
+  },
+  "known_limitations": [
+    "Outcome-stratified audit subset is not a representative estimate",
+    "Model revision is local files rather than an upstream HF revision",
+    "Resets/frozen model bytes verified across audit episodes; original raw gates inspected all200"
+  ],
+  "manifest_sha256": "52cc93d8e5230d1a8a3c75d26c9745148cb7543f4d75f5a61bac2233c5a5ec86",
+  "manifest_hash": "sha256:17a9f63d4e60afcd168d0bdc746b74f8b0cfbb23806fed03536966ea2d4b81c9"
+}

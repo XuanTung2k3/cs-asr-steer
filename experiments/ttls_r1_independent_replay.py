@@ -10,14 +10,16 @@ import torch,numpy as np
 from transformers.modeling_outputs import BaseModelOutput
 from transformers.models.whisper.tokenization_whisper import bytes_to_unicode
 from csasr.utils.config import load_config
-from csasr.models.whisper import load_whisper,batch_model_inputs,waveform_model_inputs
+from csasr.models.whisper import load_whisper,batch_model_inputs
+from csasr.inference_cf.lexical_compatibility import waveform_model_inputs
+from csasr.inference_cf.soft_auto_tta import auto_prompt
 from csasr.inference_cf.episodic_tta import LNGuard,decoder_ln_names,tensor_bytes_hash,teacher_logits,adapt,forced_decode
 from csasr.inference_cf.core_r2 import tokenizer_partition
 from csasr.inference_cf.dir_sprint0 import legal_static
 from csasr.inference_cf import ttls as L
 from csasr.lss.sites import assert_no_site_hooks
 from experiments.inference_cf_ttls_r1 import Ctx,process_row,ARMS
-from experiments.inference_cf_p2tta0 import audio_full_sha256,auto_prompt
+from experiments.inference_cf_p2tta0 import audio_full_sha256
 OUT=ROOT/'results/inference_cf/ttls_r1_independent_audit/replay'
 def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
 def th(t):return hashlib.sha256(t.detach().contiguous().cpu().view(torch.uint8).numpy().tobytes()).hexdigest()

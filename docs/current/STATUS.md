@@ -976,3 +976,11 @@ zero vector = clean decoder bitwise on 100/100 (free decode, logits, FFN input; 
 rerun; T2/T4/T6 token-identical to R1, T1 differs on 2 rows. Label **`TTLS_R1R_VALID_BUT_INSUFFICIENT`**: best arm T1
 has 4 genuine lexical corrections in 1 utterance/dialogue; TTLS-AC = direct substitution. Recommendation: close this
 TTLS configuration; no TTLS Round 2; any A2+P study needs separate human approval. Report: `docs/inference_cf/TTLS_R1R_REPORT.md`.
+
+## A2P-DEV200 (2026-10-10; exposed-development generalization, branch `feature/a2p-dev200`; terminal for this round)
+
+A2-CE+P (TTLS-R1 T2A, unchanged; 16-row fixed100 oracle bitwise, A2-only path reproduces archived A2) on the frozen
+P2-PATH5 NEW200 roster; Slurm 58397 (one job, 8.4 min). Label **`A2P_DEV200_NOT_SUPPORTED`**: A2 introduces only 9 new
+Mandarin errors on NEW200 and A2+P the same 9 (D = 0); A2+P retains 22/22 genuine units but differs from A2 on 5/200 rows
+(ZH-CER +0.0011 [0, +0.0027]). The fixed100 26 -> 3 protection does not generalize. A2+P not promoted; no next round
+started. Report: `docs/inference_cf/A2P_DEV200_REPORT.md`.

@@ -602,3 +602,9 @@ No existing module was modified.
 - `experiments/inference_cf_ttls_r1r.py` (manifest/run/seal; phase-A zero census gates phase B),
   `experiments/inference_cf_ttls_r1r_evaluate.py`, `slurm/inference_cf_ttls_r1r.sbatch`, `tests/test_ttls_r1r.py`.
 - Results `results/inference_cf/ttls_r1r/`; spec/report `docs/inference_cf/TTLS_R1R_{SPEC,REPORT}.md`.
+
+## A2P-DEV200 (2026-10-10; exploratory, executed)
+
+- `experiments/inference_cf_a2p_dev200.py` (prepare/manifest/run/seal; B3 = TTLS-R1 T2A path; FIXED100 regression
+  oracle), `experiments/inference_cf_a2p_dev200_evaluate.py` (breadth/concentration/LODO/event-level lexical analysis),
+  `slurm/inference_cf_a2p_dev200.sbatch`, `tests/test_a2p_dev200.py`; results `results/inference_cf/a2p_dev200/`.

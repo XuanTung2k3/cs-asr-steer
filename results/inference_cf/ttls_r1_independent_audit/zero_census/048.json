@@ -1,0 +1,22 @@
+{
+  "index": 48,
+  "id": "ZH-CN_U1002_S0_284",
+  "dialogue": "CSD0501",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      2166,
+      9254,
+      24620,
+      10440,
+      38109,
+      251,
+      6240,
+      30
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "你用的是什么缝呢?"
+  }
+}

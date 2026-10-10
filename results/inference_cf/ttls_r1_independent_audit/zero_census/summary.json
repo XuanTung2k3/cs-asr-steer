@@ -1,0 +1,14 @@
+{
+  "rows": 100,
+  "mismatches": [
+    "ZH-CN_U0022_S0_228",
+    "ZH-CN_U0086_S0_183",
+    "ZH-CN_U0092_S0_101",
+    "ZH-CN_U1003_S0_141",
+    "ZH-CN_U2012_S0_24",
+    "ZH-CN_U2011_S0_108"
+  ],
+  "weights_unchanged": true,
+  "elapsed_sec": 110.71673345565796,
+  "job": "58389"
+}

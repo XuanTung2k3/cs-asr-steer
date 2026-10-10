@@ -1,0 +1,22 @@
+{
+  "index": 26,
+  "id": "ZH-CN_U0040_S0_141",
+  "dialogue": "CSD0020",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      7239,
+      1654,
+      29618,
+      4511,
+      4275,
+      3330,
+      113,
+      48480
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "所以我学到要遵守"
+  }
+}

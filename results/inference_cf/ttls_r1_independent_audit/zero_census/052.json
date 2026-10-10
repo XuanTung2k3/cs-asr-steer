@@ -1,0 +1,16 @@
+{
+  "index": 52,
+  "id": "ZH-CN_U1003_S0_61",
+  "dialogue": "CSD0502",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      6734,
+      2346
+    ],
+    "terminated": "eos",
+    "length": 2,
+    "text": "去yes"
+  }
+}

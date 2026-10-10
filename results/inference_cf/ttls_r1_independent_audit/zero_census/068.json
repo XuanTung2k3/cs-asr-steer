@@ -1,0 +1,27 @@
+{
+  "index": 68,
+  "id": "ZH-CN_U1034_S0_177",
+  "dialogue": "CSD0517",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      14659,
+      11,
+      4184,
+      42766,
+      1530,
+      251,
+      5233,
+      243,
+      6734,
+      36757,
+      8090,
+      30124,
+      27261
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "哦,那你可以尝试去比如说夜市"
+  }
+}

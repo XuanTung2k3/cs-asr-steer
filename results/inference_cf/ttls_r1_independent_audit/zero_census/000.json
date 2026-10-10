@@ -1,0 +1,27 @@
+{
+  "index": 0,
+  "id": "ZH-CN_U0011_S0_111",
+  "dialogue": "CSD0006",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      7239,
+      2166,
+      9254,
+      10440,
+      14496,
+      1546,
+      24999,
+      2707,
+      399,
+      6734,
+      6734,
+      24282,
+      30
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "所以你用什么样的transportation去去向?"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "index": 93,
+  "id": "ZH-CN_U2004_S0_104",
+  "dialogue": "CSD1002",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      36757,
+      8090,
+      3858,
+      228,
+      9724,
+      32,
+      19017,
+      99,
+      3111,
+      4563,
+      48
+    ],
+    "terminated": "eos",
+    "length": 11,
+    "text": "比如说哆啦A梦就很Q"
+  }
+}

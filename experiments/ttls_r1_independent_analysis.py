@@ -90,7 +90,7 @@ def main():
             C[s].append(scores[s]['counts']);a,b=tok['B0'],tok[s]
             er=term['B0']=='eos' and len(b)>len(a) and b[:len(a)]==a
             premature=term[s]=='eos' and len(b)<len(a) and a[:len(b)]==b
-            severe=term[s]=='eos' and len(a)>=10 and len(b)<.5*len(a)
+            severe=term[s]=='eos' and len(a)>=10 and len(b)<=len(a)//2
             z=compare(scores['B0'],scores[s],u,dlg[-1],er)
             EV[s].extend(z.pop('events'));TR[s].update(z)
             TR[s].update(dict(changed=int(a!=b),eos_recovery=int(er),premature_eos=int(premature),severe_truncation=int(severe),caps=int(term[s]=='cap')))

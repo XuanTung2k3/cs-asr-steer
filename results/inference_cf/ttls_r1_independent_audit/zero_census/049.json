@@ -1,0 +1,29 @@
+{
+  "index": 49,
+  "id": "ZH-CN_U1001_S0_44",
+  "dialogue": "CSD0501",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      4184,
+      2166,
+      20754,
+      18961,
+      5155,
+      49500,
+      231,
+      2412,
+      7598,
+      17682,
+      17673,
+      1546,
+      35549,
+      7434,
+      30
+    ],
+    "terminated": "eos",
+    "length": 15,
+    "text": "那你那個你的家鄉有什麼特色的food嗎?"
+  }
+}

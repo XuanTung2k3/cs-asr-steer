@@ -1,0 +1,28 @@
+{
+  "index": 39,
+  "id": "ZH-CN_U0092_S0_101",
+  "dialogue": "CSD0046",
+  "baseline_match": true,
+  "zero_matches_B0": false,
+  "zero": {
+    "tokens": [
+      40486,
+      11,
+      23661,
+      255,
+      26111,
+      8833,
+      11706,
+      32442,
+      1546,
+      19002,
+      9990,
+      27854,
+      8082,
+      1543
+    ],
+    "terminated": "eos",
+    "length": 14,
+    "text": "当然,热干面比之前的更加流行。"
+  }
+}

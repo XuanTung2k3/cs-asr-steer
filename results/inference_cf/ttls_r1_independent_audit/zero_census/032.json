@@ -1,0 +1,29 @@
+{
+  "index": 32,
+  "id": "ZH-CN_U0086_S0_2",
+  "dialogue": "CSD0043",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      15947,
+      220,
+      21176,
+      5708,
+      2131,
+      12074,
+      4563,
+      12979,
+      44089,
+      8225,
+      6723,
+      29567,
+      9567,
+      226,
+      18034
+    ],
+    "terminated": "eos",
+    "length": 15,
+    "text": "Hello 早上好今天很高興能可以一起錄音"
+  }
+}

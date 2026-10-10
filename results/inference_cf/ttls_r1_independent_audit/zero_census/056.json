@@ -1,0 +1,27 @@
+{
+  "index": 56,
+  "id": "ZH-CN_U1022_S0_66",
+  "dialogue": "CSD0511",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      36757,
+      8090,
+      12565,
+      41410,
+      4479,
+      227,
+      8082,
+      49873,
+      32526,
+      11706,
+      9830,
+      225,
+      41606
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "比如说和你在旅行的时候你是比较喜欢"
+  }
+}

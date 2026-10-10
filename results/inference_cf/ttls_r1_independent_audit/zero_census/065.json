@@ -1,0 +1,22 @@
+{
+  "index": 65,
+  "id": "ZH-CN_U1034_S0_53",
+  "dialogue": "CSD0517",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      3581,
+      5155,
+      15759,
+      29567,
+      23661,
+      100,
+      23661,
+      97
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "在家里一起烧烤"
+  }
+}

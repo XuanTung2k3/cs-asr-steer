@@ -1,0 +1,27 @@
+{
+  "index": 92,
+  "id": "ZH-CN_U2004_S0_150",
+  "dialogue": "CSD1002",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      2412,
+      29111,
+      5000,
+      12949,
+      49076,
+      2930,
+      108,
+      38515,
+      50,
+      74,
+      2498,
+      365,
+      8085
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "有时候他会给我买一些Skirt with flowers"
+  }
+}

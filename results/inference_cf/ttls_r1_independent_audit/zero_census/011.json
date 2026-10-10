@@ -1,0 +1,26 @@
+{
+  "index": 11,
+  "id": "ZH-CN_U0023_S0_666",
+  "dialogue": "CSD0012",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      8713,
+      5620,
+      76,
+      1325,
+      561,
+      13162,
+      366,
+      767,
+      4232,
+      365,
+      4092,
+      12122
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "text": "对就是many peoplethey are actually born withlike privilege"
+  }
+}

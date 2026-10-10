@@ -1,0 +1,35 @@
+{
+  "source_commit": "04c46ae4cfb292dfffdfc767c31cb7446a8b12d2",
+  "script_sha256": "7d51a9cbb88bbd5f74c7a61b095b2f6c826aeca38b79ddfa3c800b5ca9a6812e",
+  "plan_sha256": "6b43d7283bc2f484a7f7faab0c74ea7dedd6afd5112c8c117ed31a810006f1c8",
+  "model": {
+    "model_id": "openai/whisper-large-v3",
+    "model_revision": "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+    "tokenizer_revision": "sha256:6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca",
+    "dtype": "torch.bfloat16",
+    "device": "cuda",
+    "encoder_step_sec": 0.02,
+    "max_encoder_frames": 1500,
+    "num_encoder_layers": 32,
+    "num_decoder_layers": 32,
+    "d_model": 1280,
+    "sample_rate": 16000,
+    "chunk_sec": 30.0,
+    "modules": {
+      "encoder_layer_module_path": "model.model.encoder.layers[l]",
+      "encoder_layer_class": "WhisperEncoderLayer",
+      "encoder_hook_location": "residual stream output of encoder block l (before block l+1)",
+      "encoder_output_is_tuple": true,
+      "encoder_layer_indexing": "zero-indexed",
+      "decoder_layer_module_path": "model.model.decoder.layers[k]",
+      "decoder_layer_class": "WhisperDecoderLayer",
+      "decoder_hook_location": "residual stream output of decoder block k",
+      "encoder_final_layer_norm": "model.model.encoder.layer_norm (applied after last block)",
+      "num_encoder_layers": 32,
+      "num_decoder_layers": 32
+    }
+  },
+  "job": "58389",
+  "purpose": "zero-vector integrity control only; no new objective or optimization",
+  "references": false
+}

@@ -1,0 +1,26 @@
+{
+  "index": 10,
+  "id": "ZH-CN_U0023_S0_111",
+  "dialogue": "CSD0012",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      8713,
+      11,
+      5562,
+      18888,
+      1541,
+      15003,
+      1546,
+      20182,
+      1112,
+      3317,
+      3387,
+      1543
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "text": "对,这才是我们的一个common goal。"
+  }
+}

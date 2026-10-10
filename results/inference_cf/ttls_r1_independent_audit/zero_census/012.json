@@ -1,0 +1,16 @@
+{
+  "index": 12,
+  "id": "ZH-CN_U0024_S0_283",
+  "dialogue": "CSD0012",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      9443,
+      12202
+    ],
+    "terminated": "eos",
+    "length": 2,
+    "text": "OK 好"
+  }
+}

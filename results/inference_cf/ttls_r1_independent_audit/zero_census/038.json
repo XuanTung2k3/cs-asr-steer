@@ -1,0 +1,37 @@
+{
+  "index": 38,
+  "id": "ZH-CN_U0091_S0_241",
+  "dialogue": "CSD0046",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      4184,
+      5562,
+      5155,
+      13545,
+      32981,
+      11284,
+      1541,
+      20182,
+      1571,
+      541,
+      10725,
+      1546,
+      13545,
+      32981,
+      14769,
+      45726,
+      47911,
+      12949,
+      43297,
+      3854,
+      9265,
+      294,
+      12960
+    ],
+    "terminated": "eos",
+    "length": 23,
+    "text": "那这家公司它是一个goose export的公司吗还是他们会直接set factory in Britain"
+  }
+}

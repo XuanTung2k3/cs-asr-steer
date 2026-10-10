@@ -1,0 +1,26 @@
+{
+  "index": 80,
+  "id": "ZH-CN_U1079_S0_23",
+  "dialogue": "CSD0540",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      40,
+      486,
+      352,
+      281,
+      1783,
+      2918,
+      268,
+      294,
+      341,
+      4266,
+      12830,
+      13
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "text": "I will go to Xiamen in this summer vacation."
+  }
+}

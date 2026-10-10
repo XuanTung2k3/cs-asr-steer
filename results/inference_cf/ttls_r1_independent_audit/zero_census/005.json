@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "id": "ZH-CN_U0022_S0_91",
+  "dialogue": "CSD0011",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      5620,
+      15368,
+      16866,
+      29649,
+      41646,
+      12760,
+      2257,
+      39810,
+      14066,
+      399,
+      1654,
+      11706,
+      9830,
+      225,
+      41606,
+      5562,
+      39810,
+      9709,
+      24447,
+      5620,
+      5616,
+      1128,
+      458,
+      437,
+      428,
+      958,
+      2822,
+      307,
+      411
+    ],
+    "terminated": "eos",
+    "length": 29,
+    "text": "就是这个过程其实像一种creation我比较喜欢这种感觉就是you never know what your next drink is like"
+  }
+}

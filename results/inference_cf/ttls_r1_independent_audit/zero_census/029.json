@@ -1,0 +1,17 @@
+{
+  "index": 29,
+  "id": "ZH-CN_U0039_S0_80",
+  "dialogue": "CSD0020",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      25246,
+      11361,
+      8861
+    ],
+    "terminated": "eos",
+    "length": 3,
+    "text": "我想問一下"
+  }
+}

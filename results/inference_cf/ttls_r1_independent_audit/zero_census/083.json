@@ -1,0 +1,27 @@
+{
+  "index": 83,
+  "id": "ZH-CN_U1079_S0_54",
+  "dialogue": "CSD0540",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      40,
+      500,
+      380,
+      458,
+      2166,
+      21625,
+      10123,
+      42,
+      18671,
+      1546,
+      7598,
+      6240,
+      30
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "I don't know你選吃KFC的什麼呢?"
+  }
+}

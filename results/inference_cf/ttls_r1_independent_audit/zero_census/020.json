@@ -1,0 +1,15 @@
+{
+  "index": 20,
+  "id": "ZH-CN_U0029_S0_472",
+  "dialogue": "CSD0015",
+  "baseline_match": true,
+  "zero_matches_B0": true,
+  "zero": {
+    "tokens": [
+      9443
+    ],
+    "terminated": "eos",
+    "length": 1,
+    "text": "OK"
+  }
+}

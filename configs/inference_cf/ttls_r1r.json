@@ -1,0 +1,80 @@
+{
+  "schema": "ttls_r1r_config_v1",
+  "status": "FROZEN before execution and before any repaired outcome exists",
+  "ticket": "TTLS-R1R numerical repair, re-execution and scientific revalidation (not a new method search)",
+  "spec": "docs/inference_cf/TTLS_R1R_SPEC.md",
+  "starting_commit": "f99f176b60b403da282852957410298d06138ba2",
+  "starting_branch": "audit/ttls-r1-independent",
+  "branch": "feature/ttls-r1r-repair",
+  "inherits": {
+    "config": "configs/inference_cf/ttls_r1.json",
+    "config_sha256": "8270f6636674d4397601ad9ba0737628834f707a2c8e710c91c15722a152f764",
+    "plan": "results/inference_cf/ttls_r1/plan_sealed.json",
+    "plan_sha256": "6b43d7283bc2f484a7f7faab0c74ea7dedd6afd5112c8c117ed31a810006f1c8",
+    "plan_hash": "sha256:61ba6a5216e12e683e82ae0a8ca405cbe67a450bfa28e4c13682ef244169e31e",
+    "r1_output_seal": "results/inference_cf/ttls_r1/output_seal.json",
+    "r1_output_seal_sha256": "e0d0237810ff72692440a9887cee55c0f626497b25b94ab456e20e6af0e2be41",
+    "unchanged": ["population (same 100 exposed D-dev-select ids, same order)", "model, BF16, eager, greedy, cap 200",
+                  "prompts cB / cE", "site DG-02 decoder L16 post-cross-attn pre-FFN, forced prefix 4 (step 0 never edited)",
+                  "TTLS variable: one fresh zero fp32 z in R^1280 per arm per utterance", "AdamW lr E*/(2 sqrt 1280), wd 0, betas .9/.999, eps 1e-8",
+                  "2 updates, 3 loss evaluations", "projection ||z|| <= E* = 1.1260757575454359",
+                  "CE objective (historical A2 loss on y_A, mask ALL)", "AC objective and candidate rule (theta0-only, null audio, tau = log 10), mask {t*}",
+                  "P: lambda 1, KL(p0 || p) on frozen stable set S", "decoding and evaluation protocols (R1 evaluator primitives, R1 safety bounds)"]
+  },
+  "numerics": {
+    "name": "ratio_first_v1",
+    "historical": "steered = steered / (new_norm + EPS) * orig_norm",
+    "repaired": "steered = steered * (orig_norm / new_norm.clamp_min(EPS))",
+    "EPS": 1e-06,
+    "module": "src/csasr/inference_cf/ttls_r1r.py",
+    "historical_kernel_modified": false,
+    "z_zero_branch_or_detach": false
+  },
+  "rerun_arms": {"T1": ["TTLS", "CE", false], "T2": ["TTLS", "CE", true], "T4": ["TTLS", "AC", false], "T6": ["TTLS", "AC", true]},
+  "controls": {
+    "B0": "clean forced-ZH decode, must equal the sealed S0 tokens/termination on 100/100",
+    "Z0_ALL": "TTLS zero vector, no optimizer, actual CE mask ALL, repaired kernel: free decode must equal B0 on 100/100",
+    "Z0_AC": "TTLS zero vector, no optimizer, actual AC mask {t*} on every accepted row: free decode must equal B0",
+    "Z0_hist": "historical-kernel zero control = audit census (results/inference_cf/ttls_r1_independent_audit/zero_census), reused, not rerun"
+  },
+  "reused_unchanged": {
+    "source": "results/inference_cf/ttls_r1/run1/rows (sealed, output_seal.json)",
+    "systems": ["B1", "B2", "T2A", "T3", "T5", "CD", "ACSUB"],
+    "original_ttls_for_contrast": ["T1", "T2", "T4", "T6"]
+  },
+  "integrity_gates": {
+    "phase": "phase A covers all 100 rows (no optimizer) BEFORE any arm; any failure stops the job before TTLS optimization/efficacy",
+    "zero_free_decode_identity": "Z0_ALL tokens and termination == B0 on 100/100; Z0_AC == B0 on every accepted row",
+    "zero_teacher_forced_identity": "logits and L16 FFN input (final_layer_norm pre-hook) bitwise equal to clean, mask ALL, 100/100",
+    "zero_initial_KL_max": 1e-12,
+    "candidates_stable_set_equal_R1": "t*, c*, M, accepted, S, p0_top recomputed and equal to the sealed R1 rows",
+    "initial_gradient": "every TTLS episode: grad_l2 at step 0 finite and > 0",
+    "nonzero_edit_norm_rel_err_max": 0.02,
+    "nonzero_edit_consumed": "edited-position FFN-input chord > 0 whenever the final z != 0",
+    "outside_mask_ffn_displacement": 0.0,
+    "episodic_reset": "fresh zero z and empty optimizer per episode; no site hooks leaked; LN guard theta0; post-row clean decode == B0; non-LN bytes unchanged and no model grads at job end",
+    "references": "none; runner reads only the sealed plan and sealed R1 rows (for candidate equality)"
+  },
+  "evaluation": {
+    "primary": "free decoding; R1 evaluator primitives (experiments/inference_cf_ttls_r1_evaluate.py) unchanged",
+    "references": "opened only after the committed R1R output seal",
+    "lexical_classes": {
+      "deletion_or_boundary": "B0 category in {deletion, boundary_error, insertion_near_poi}",
+      "word_boundary_repair": "B0 category in {same_language_substitution, other} and compact(lower(POI)) is a substring of (or equal to) compact(lower(B0 surface)) (compact = spaces removed); i.e. a spacing / concatenation repair",
+      "genuine_wrong_language": "B0 category in {wrong_language_substitution, phonetic_transliteration_or_script}",
+      "genuine_same_language": "B0 category in {same_language_substitution, other} and not word_boundary_repair",
+      "genuine_lexical": "genuine_wrong_language + genuine_same_language"
+    },
+    "safety_bounds_vs_B0": "R1 safety_bounds_vs_B0, unchanged",
+    "bootstrap": {"unit": "dialogue cluster", "replicates": 2000, "seed": 240924, "descriptive": true}
+  },
+  "label_rule": {
+    "order": ["TTLS_R1R_INVALID", "TTLS_R1R_VALID_AND_PROMISING", "TTLS_R1R_VALID_BUT_INSUFFICIENT"],
+    "INVALID": "any integrity gate fails, any row missing/failed, B0 not reproduced, or seal/manifest mismatch",
+    "VALID_AND_PROMISING": "some corrected TTLS arm X in {T1,T2,T4,T6} with matched A2 arm Y (T1:B2, T2:T2A, T4:T3, T6:T5) has (a) >= 8 genuine_lexical POI corrections vs B0 in >= 4 dialogues, (b) all R1 safety bounds vs B0, (c) genuine_lexical(X) >= genuine_lexical(Y) and new Mandarin errors(X) <= (Y)",
+    "VALID_BUT_INSUFFICIENT": "otherwise (valid repair, no qualifying arm)",
+    "descriptive_only": "the R1 frozen label rule applied to the corrected arms; comparisons with AUTO (B1) and ACSUB"
+  },
+  "compute": {"slurm_jobs": 1, "max_hours": 3, "partition": "mig", "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1", "smoke_jobs": 0},
+  "forbidden_data": ["D-dev-confirm", "D-test", "P3", "router-calib", "any fresh reserved evaluation data"]
+}

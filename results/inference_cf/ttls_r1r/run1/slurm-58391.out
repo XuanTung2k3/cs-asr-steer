@@ -1,0 +1,200 @@
+TTLS-R1R A 1/100 ZH-CN_U0011_S0_111 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.7s
+TTLS-R1R A 2/100 ZH-CN_U0011_S0_54 pass=True Z0_ALL== AC=- hist_dlogit=0.18 kl0=0 0.6s
+TTLS-R1R A 3/100 ZH-CN_U0012_S0_103 pass=True Z0_ALL== AC== hist_dlogit=0.188 kl0=0 1.1s
+TTLS-R1R A 4/100 ZH-CN_U0011_S0_503 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.6s
+TTLS-R1R A 5/100 ZH-CN_U0011_S0_103 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.8s
+TTLS-R1R A 6/100 ZH-CN_U0022_S0_91 pass=True Z0_ALL== AC=- hist_dlogit=0.133 kl0=0 0.9s
+TTLS-R1R A 7/100 ZH-CN_U0021_S0_225 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.2s
+TTLS-R1R A 8/100 ZH-CN_U0022_S0_228 pass=True Z0_ALL== AC=- hist_dlogit=0.174 kl0=0 2.9s
+TTLS-R1R A 9/100 ZH-CN_U0022_S0_305 pass=True Z0_ALL== AC=- hist_dlogit=0.164 kl0=0 0.9s
+TTLS-R1R A 10/100 ZH-CN_U0021_S0_513 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 1.4s
+TTLS-R1R A 11/100 ZH-CN_U0023_S0_111 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.5s
+TTLS-R1R A 12/100 ZH-CN_U0023_S0_666 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 0.5s
+TTLS-R1R A 13/100 ZH-CN_U0024_S0_283 pass=True Z0_ALL== AC=- hist_dlogit=0.0684 kl0=0 0.3s
+TTLS-R1R A 14/100 ZH-CN_U0023_S0_87 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 1.2s
+TTLS-R1R A 15/100 ZH-CN_U0023_S0_664 pass=True Z0_ALL== AC=- hist_dlogit=0.148 kl0=0 0.7s
+TTLS-R1R A 16/100 ZH-CN_U0027_S0_116 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 2.1s
+TTLS-R1R A 17/100 ZH-CN_U0028_S0_37 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.0s
+TTLS-R1R A 18/100 ZH-CN_U0027_S0_163 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.9s
+TTLS-R1R A 19/100 ZH-CN_U0027_S0_144 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.6s
+TTLS-R1R A 20/100 ZH-CN_U0028_S0_120 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.7s
+TTLS-R1R A 21/100 ZH-CN_U0029_S0_472 pass=True Z0_ALL== AC=- hist_dlogit=0.0684 kl0=0 0.3s
+TTLS-R1R A 22/100 ZH-CN_U0029_S0_204 pass=True Z0_ALL== AC== hist_dlogit=0.141 kl0=0 0.7s
+TTLS-R1R A 23/100 ZH-CN_U0029_S0_456 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.4s
+TTLS-R1R A 24/100 ZH-CN_U0030_S0_81 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.0s
+TTLS-R1R A 25/100 ZH-CN_U0029_S0_651 pass=True Z0_ALL== AC=- hist_dlogit=0.203 kl0=0 0.8s
+TTLS-R1R A 26/100 ZH-CN_U0039_S0_380 pass=True Z0_ALL== AC=- hist_dlogit=0.18 kl0=0 3.5s
+TTLS-R1R A 27/100 ZH-CN_U0040_S0_141 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 0.5s
+TTLS-R1R A 28/100 ZH-CN_U0040_S0_105 pass=True Z0_ALL== AC=- hist_dlogit=0.164 kl0=0 0.9s
+TTLS-R1R A 29/100 ZH-CN_U0039_S0_315 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.1s
+TTLS-R1R A 30/100 ZH-CN_U0039_S0_80 pass=True Z0_ALL== AC=- hist_dlogit=0.0781 kl0=0 0.3s
+TTLS-R1R A 31/100 ZH-CN_U0085_S0_185 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 2.5s
+TTLS-R1R A 32/100 ZH-CN_U0086_S0_185 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 2.2s
+TTLS-R1R A 33/100 ZH-CN_U0086_S0_2 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 0.6s
+TTLS-R1R A 34/100 ZH-CN_U0086_S0_222 pass=True Z0_ALL== AC=- hist_dlogit=0.25 kl0=0 1.4s
+TTLS-R1R A 35/100 ZH-CN_U0086_S0_183 pass=True Z0_ALL== AC== hist_dlogit=0.147 kl0=0 2.5s
+TTLS-R1R A 36/100 ZH-CN_U0091_S0_196 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 2.3s
+TTLS-R1R A 37/100 ZH-CN_U0091_S0_62 pass=True Z0_ALL== AC=- hist_dlogit=0.199 kl0=0 0.6s
+TTLS-R1R A 38/100 ZH-CN_U0091_S0_68 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.4s
+TTLS-R1R A 39/100 ZH-CN_U0091_S0_241 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.8s
+TTLS-R1R A 40/100 ZH-CN_U0092_S0_101 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 0.6s
+TTLS-R1R A 41/100 ZH-CN_U0102_S0_80 pass=True Z0_ALL== AC=- hist_dlogit=0.18 kl0=0 0.8s
+TTLS-R1R A 42/100 ZH-CN_U0101_S0_71 pass=True Z0_ALL== AC=- hist_dlogit=0.18 kl0=0 1.8s
+TTLS-R1R A 43/100 ZH-CN_U0102_S0_64 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 1.3s
+TTLS-R1R A 44/100 ZH-CN_U0101_S0_190 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 2.2s
+TTLS-R1R A 45/100 ZH-CN_U0102_S0_44 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.9s
+TTLS-R1R A 46/100 ZH-CN_U1001_S0_402 pass=True Z0_ALL== AC=- hist_dlogit=0.195 kl0=0 1.1s
+TTLS-R1R A 47/100 ZH-CN_U1002_S0_488 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.2s
+TTLS-R1R A 48/100 ZH-CN_U1001_S0_482 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.8s
+TTLS-R1R A 49/100 ZH-CN_U1002_S0_284 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 0.5s
+TTLS-R1R A 50/100 ZH-CN_U1001_S0_44 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 0.6s
+TTLS-R1R A 51/100 ZH-CN_U1003_S0_141 pass=True Z0_ALL== AC=- hist_dlogit=0.211 kl0=0 5.1s
+TTLS-R1R A 52/100 ZH-CN_U1004_S0_221 pass=True Z0_ALL== AC=- hist_dlogit=0.164 kl0=0 1.4s
+TTLS-R1R A 53/100 ZH-CN_U1003_S0_61 pass=True Z0_ALL== AC=- hist_dlogit=0.0938 kl0=0 0.3s
+TTLS-R1R A 54/100 ZH-CN_U1003_S0_63 pass=True Z0_ALL== AC== hist_dlogit=0.188 kl0=0 3.6s
+TTLS-R1R A 55/100 ZH-CN_U1003_S0_94 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.7s
+TTLS-R1R A 56/100 ZH-CN_U1022_S0_71 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.4s
+TTLS-R1R A 57/100 ZH-CN_U1022_S0_66 pass=True Z0_ALL== AC=- hist_dlogit=0.163 kl0=0 0.6s
+TTLS-R1R A 58/100 ZH-CN_U1021_S0_195 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.9s
+TTLS-R1R A 59/100 ZH-CN_U1021_S0_68 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 1.9s
+TTLS-R1R A 60/100 ZH-CN_U1021_S0_173 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.6s
+TTLS-R1R A 61/100 ZH-CN_U1027_S0_199 pass=True Z0_ALL== AC=- hist_dlogit=0.141 kl0=0 1.0s
+TTLS-R1R A 62/100 ZH-CN_U1028_S0_184 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.8s
+TTLS-R1R A 63/100 ZH-CN_U1028_S0_38 pass=True Z0_ALL== AC=- hist_dlogit=0.203 kl0=0 1.3s
+TTLS-R1R A 64/100 ZH-CN_U1028_S0_40 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 2.8s
+TTLS-R1R A 65/100 ZH-CN_U1028_S0_176 pass=True Z0_ALL== AC=- hist_dlogit=0.166 kl0=0 1.8s
+TTLS-R1R A 66/100 ZH-CN_U1034_S0_53 pass=True Z0_ALL== AC== hist_dlogit=0.125 kl0=0 0.6s
+TTLS-R1R A 67/100 ZH-CN_U1033_S0_199 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.5s
+TTLS-R1R A 68/100 ZH-CN_U1033_S0_191 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.4s
+TTLS-R1R A 69/100 ZH-CN_U1034_S0_177 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.6s
+TTLS-R1R A 70/100 ZH-CN_U1034_S0_173 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.9s
+TTLS-R1R A 71/100 ZH-CN_U1064_S0_110 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 1.8s
+TTLS-R1R A 72/100 ZH-CN_U1064_S0_26 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.7s
+TTLS-R1R A 73/100 ZH-CN_U1064_S0_95 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 2.1s
+TTLS-R1R A 74/100 ZH-CN_U1064_S0_100 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.7s
+TTLS-R1R A 75/100 ZH-CN_U1063_S0_54 pass=True Z0_ALL== AC=- hist_dlogit=0.215 kl0=0 2.5s
+TTLS-R1R A 76/100 ZH-CN_U1076_S0_24 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 2.0s
+TTLS-R1R A 77/100 ZH-CN_U1076_S0_35 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.7s
+TTLS-R1R A 78/100 ZH-CN_U1076_S0_154 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.8s
+TTLS-R1R A 79/100 ZH-CN_U1076_S0_178 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 2.2s
+TTLS-R1R A 80/100 ZH-CN_U1076_S0_26 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 2.2s
+TTLS-R1R A 81/100 ZH-CN_U1079_S0_23 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.5s
+TTLS-R1R A 82/100 ZH-CN_U1080_S0_43 pass=True Z0_ALL== AC=- hist_dlogit=0.145 kl0=0 2.1s
+TTLS-R1R A 83/100 ZH-CN_U1080_S0_64 pass=True Z0_ALL== AC=- hist_dlogit=0.203 kl0=0 2.3s
+TTLS-R1R A 84/100 ZH-CN_U1079_S0_54 pass=True Z0_ALL== AC=- hist_dlogit=0.102 kl0=0 0.6s
+TTLS-R1R A 85/100 ZH-CN_U1079_S0_68 pass=True Z0_ALL== AC=- hist_dlogit=0.18 kl0=0 1.2s
+TTLS-R1R A 86/100 ZH-CN_U1081_S0_131 pass=True Z0_ALL== AC=- hist_dlogit=0.148 kl0=0 0.7s
+TTLS-R1R A 87/100 ZH-CN_U1081_S0_76 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.7s
+TTLS-R1R A 88/100 ZH-CN_U1082_S0_67 pass=True Z0_ALL== AC=- hist_dlogit=0.148 kl0=0 1.9s
+TTLS-R1R A 89/100 ZH-CN_U1081_S0_172 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 1.0s
+TTLS-R1R A 90/100 ZH-CN_U1081_S0_65 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 0.8s
+TTLS-R1R A 91/100 ZH-CN_U2004_S0_266 pass=True Z0_ALL== AC=- hist_dlogit=0.137 kl0=0 0.5s
+TTLS-R1R A 92/100 ZH-CN_U2004_S0_154 pass=True Z0_ALL== AC=- hist_dlogit=0.172 kl0=0 1.3s
+TTLS-R1R A 93/100 ZH-CN_U2004_S0_150 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.6s
+TTLS-R1R A 94/100 ZH-CN_U2004_S0_104 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 0.5s
+TTLS-R1R A 95/100 ZH-CN_U2004_S0_287 pass=True Z0_ALL== AC=- hist_dlogit=0.188 kl0=0 0.8s
+TTLS-R1R A 96/100 ZH-CN_U2012_S0_24 pass=True Z0_ALL== AC=- hist_dlogit=0.203 kl0=0 1.1s
+TTLS-R1R A 97/100 ZH-CN_U2011_S0_22 pass=True Z0_ALL== AC=- hist_dlogit=0.148 kl0=0 1.3s
+TTLS-R1R A 98/100 ZH-CN_U2011_S0_99 pass=True Z0_ALL== AC== hist_dlogit=0.125 kl0=0 1.0s
+TTLS-R1R A 99/100 ZH-CN_U2011_S0_36 pass=True Z0_ALL== AC=- hist_dlogit=0.156 kl0=0 1.2s
+TTLS-R1R A 100/100 ZH-CN_U2011_S0_108 pass=True Z0_ALL== AC=- hist_dlogit=0.125 kl0=0 1.6s
+TTLS-R1R B 1/100 ZH-CN_U0011_S0_111 A t*=None T1== T2== T4=- T6=- 1.1s
+TTLS-R1R B 2/100 ZH-CN_U0011_S0_54 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 3/100 ZH-CN_U0012_S0_103 A t*=3 T1== T2== T4== T6== 2.1s
+TTLS-R1R B 4/100 ZH-CN_U0011_S0_503 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 5/100 ZH-CN_U0011_S0_103 A t*=None T1== T2== T4=- T6=- 1.3s
+TTLS-R1R B 6/100 ZH-CN_U0022_S0_91 A t*=None T1== T2== T4=- T6=- 1.5s
+TTLS-R1R B 7/100 ZH-CN_U0021_S0_225 A t*=None T1== T2== T4=- T6=- 1.9s
+TTLS-R1R B 8/100 ZH-CN_U0022_S0_228 A t*=None T1== T2== T4=- T6=- 4.4s
+TTLS-R1R B 9/100 ZH-CN_U0022_S0_305 A t*=None T1== T2== T4=- T6=- 1.5s
+TTLS-R1R B 10/100 ZH-CN_U0021_S0_513 D t*=None T1== T2== T4=- T6=- 2.2s
+TTLS-R1R B 11/100 ZH-CN_U0023_S0_111 A t*=None T1== T2== T4=- T6=- 0.9s
+TTLS-R1R B 12/100 ZH-CN_U0023_S0_666 D t*=None T1=Δ T2=Δ T4=- T6=- 1.0s
+TTLS-R1R B 13/100 ZH-CN_U0024_S0_283 A t*=None T1== T2== T4=- T6=- 0.8s
+TTLS-R1R B 14/100 ZH-CN_U0023_S0_87 D t*=None T1=Δ T2=Δ T4=- T6=- 2.0s
+TTLS-R1R B 15/100 ZH-CN_U0023_S0_664 D t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 16/100 ZH-CN_U0027_S0_116 A t*=None T1=Δ T2=Δ T4=- T6=- 3.4s
+TTLS-R1R B 17/100 ZH-CN_U0028_S0_37 A t*=None T1== T2== T4=- T6=- 1.6s
+TTLS-R1R B 18/100 ZH-CN_U0027_S0_163 A t*=None T1== T2== T4=- T6=- 3.0s
+TTLS-R1R B 19/100 ZH-CN_U0027_S0_144 A t*=None T1== T2== T4=- T6=- 4.0s
+TTLS-R1R B 20/100 ZH-CN_U0028_S0_120 A t*=None T1== T2== T4=- T6=- 2.6s
+TTLS-R1R B 21/100 ZH-CN_U0029_S0_472 D t*=None T1== T2== T4=- T6=- 0.6s
+TTLS-R1R B 22/100 ZH-CN_U0029_S0_204 A t*=1 T1== T2== T4=Δ T6=Δ 1.4s
+TTLS-R1R B 23/100 ZH-CN_U0029_S0_456 A t*=None T1== T2== T4=- T6=- 2.2s
+TTLS-R1R B 24/100 ZH-CN_U0030_S0_81 A t*=None T1== T2== T4=- T6=- 3.2s
+TTLS-R1R B 25/100 ZH-CN_U0029_S0_651 A t*=None T1== T2== T4=- T6=- 1.4s
+TTLS-R1R B 26/100 ZH-CN_U0039_S0_380 A t*=None T1== T2== T4=- T6=- 5.0s
+TTLS-R1R B 27/100 ZH-CN_U0040_S0_141 A t*=None T1== T2== T4=- T6=- 0.8s
+TTLS-R1R B 28/100 ZH-CN_U0040_S0_105 A t*=None T1== T2== T4=- T6=- 1.5s
+TTLS-R1R B 29/100 ZH-CN_U0039_S0_315 A t*=None T1== T2== T4=- T6=- 3.3s
+TTLS-R1R B 30/100 ZH-CN_U0039_S0_80 D t*=None T1== T2== T4=- T6=- 0.7s
+TTLS-R1R B 31/100 ZH-CN_U0085_S0_185 A t*=None T1== T2== T4=- T6=- 4.0s
+TTLS-R1R B 32/100 ZH-CN_U0086_S0_185 A t*=None T1=Δ T2== T4=- T6=- 3.4s
+TTLS-R1R B 33/100 ZH-CN_U0086_S0_2 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 34/100 ZH-CN_U0086_S0_222 A t*=None T1=Δ T2=Δ T4=- T6=- 1.8s
+TTLS-R1R B 35/100 ZH-CN_U0086_S0_183 A t*=23 T1== T2== T4=Δ T6=Δ 4.3s
+TTLS-R1R B 36/100 ZH-CN_U0091_S0_196 A t*=None T1=Δ T2=Δ T4=- T6=- 3.6s
+TTLS-R1R B 37/100 ZH-CN_U0091_S0_62 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 38/100 ZH-CN_U0091_S0_68 D t*=None T1=Δ T2=Δ T4=- T6=- 0.8s
+TTLS-R1R B 39/100 ZH-CN_U0091_S0_241 A t*=None T1== T2== T4=- T6=- 1.3s
+TTLS-R1R B 40/100 ZH-CN_U0092_S0_101 D t*=None T1== T2=Δ T4=- T6=- 1.1s
+TTLS-R1R B 41/100 ZH-CN_U0102_S0_80 D t*=None T1== T2== T4=- T6=- 1.4s
+TTLS-R1R B 42/100 ZH-CN_U0101_S0_71 A t*=None T1== T2== T4=- T6=- 2.8s
+TTLS-R1R B 43/100 ZH-CN_U0102_S0_64 A t*=None T1== T2== T4=- T6=- 2.1s
+TTLS-R1R B 44/100 ZH-CN_U0101_S0_190 A t*=None T1=Δ T2=Δ T4=- T6=- 3.5s
+TTLS-R1R B 45/100 ZH-CN_U0102_S0_44 A t*=None T1== T2== T4=- T6=- 1.9s
+TTLS-R1R B 46/100 ZH-CN_U1001_S0_402 A t*=None T1== T2== T4=- T6=- 1.9s
+TTLS-R1R B 47/100 ZH-CN_U1002_S0_488 A t*=None T1== T2== T4=- T6=- 1.9s
+TTLS-R1R B 48/100 ZH-CN_U1001_S0_482 A t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 49/100 ZH-CN_U1002_S0_284 A t*=None T1== T2== T4=- T6=- 0.8s
+TTLS-R1R B 50/100 ZH-CN_U1001_S0_44 A t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 51/100 ZH-CN_U1003_S0_141 A t*=None T1=Δ T2=Δ T4=- T6=- 7.6s
+TTLS-R1R B 52/100 ZH-CN_U1004_S0_221 A t*=None T1== T2== T4=- T6=- 2.2s
+TTLS-R1R B 53/100 ZH-CN_U1003_S0_61 D t*=None T1== T2== T4=- T6=- 0.7s
+TTLS-R1R B 54/100 ZH-CN_U1003_S0_63 A t*=33 T1=Δ T2=Δ T4=Δ T6=Δ 5.6s
+TTLS-R1R B 55/100 ZH-CN_U1003_S0_94 A t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 56/100 ZH-CN_U1022_S0_71 A t*=None T1== T2== T4=- T6=- 3.7s
+TTLS-R1R B 57/100 ZH-CN_U1022_S0_66 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 58/100 ZH-CN_U1021_S0_195 A t*=None T1== T2== T4=- T6=- 2.8s
+TTLS-R1R B 59/100 ZH-CN_U1021_S0_68 A t*=None T1== T2== T4=- T6=- 2.9s
+TTLS-R1R B 60/100 ZH-CN_U1021_S0_173 A t*=None T1== T2== T4=- T6=- 2.2s
+TTLS-R1R B 61/100 ZH-CN_U1027_S0_199 A t*=None T1== T2== T4=- T6=- 1.6s
+TTLS-R1R B 62/100 ZH-CN_U1028_S0_184 A t*=None T1== T2== T4=- T6=- 1.3s
+TTLS-R1R B 63/100 ZH-CN_U1028_S0_38 A t*=None T1== T2== T4=- T6=- 2.1s
+TTLS-R1R B 64/100 ZH-CN_U1028_S0_40 A t*=None T1== T2== T4=- T6=- 4.4s
+TTLS-R1R B 65/100 ZH-CN_U1028_S0_176 A t*=None T1== T2== T4=- T6=- 2.9s
+TTLS-R1R B 66/100 ZH-CN_U1034_S0_53 A t*=4 T1== T2== T4=Δ T6=Δ 1.3s
+TTLS-R1R B 67/100 ZH-CN_U1033_S0_199 A t*=None T1== T2== T4=- T6=- 2.3s
+TTLS-R1R B 68/100 ZH-CN_U1033_S0_191 A t*=None T1== T2== T4=- T6=- 2.2s
+TTLS-R1R B 69/100 ZH-CN_U1034_S0_177 A t*=None T1== T2== T4=- T6=- 0.9s
+TTLS-R1R B 70/100 ZH-CN_U1034_S0_173 A t*=None T1== T2== T4=- T6=- 3.0s
+TTLS-R1R B 71/100 ZH-CN_U1064_S0_110 A t*=None T1== T2== T4=- T6=- 2.8s
+TTLS-R1R B 72/100 ZH-CN_U1064_S0_26 A t*=None T1== T2== T4=- T6=- 4.2s
+TTLS-R1R B 73/100 ZH-CN_U1064_S0_95 A t*=None T1== T2== T4=- T6=- 3.2s
+TTLS-R1R B 74/100 ZH-CN_U1064_S0_100 A t*=None T1== T2== T4=- T6=- 4.4s
+TTLS-R1R B 75/100 ZH-CN_U1063_S0_54 A t*=None T1=Δ T2== T4=- T6=- 3.9s
+TTLS-R1R B 76/100 ZH-CN_U1076_S0_24 A t*=None T1== T2== T4=- T6=- 3.2s
+TTLS-R1R B 77/100 ZH-CN_U1076_S0_35 A t*=None T1== T2== T4=- T6=- 4.3s
+TTLS-R1R B 78/100 ZH-CN_U1076_S0_154 A t*=None T1== T2== T4=- T6=- 2.8s
+TTLS-R1R B 79/100 ZH-CN_U1076_S0_178 A t*=None T1== T2== T4=- T6=- 3.4s
+TTLS-R1R B 80/100 ZH-CN_U1076_S0_26 A t*=None T1== T2== T4=- T6=- 3.4s
+TTLS-R1R B 81/100 ZH-CN_U1079_S0_23 D t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 82/100 ZH-CN_U1080_S0_43 A t*=None T1== T2== T4=- T6=- 3.4s
+TTLS-R1R B 83/100 ZH-CN_U1080_S0_64 A t*=None T1== T2== T4=- T6=- 3.7s
+TTLS-R1R B 84/100 ZH-CN_U1079_S0_54 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 85/100 ZH-CN_U1079_S0_68 A t*=None T1== T2== T4=- T6=- 1.9s
+TTLS-R1R B 86/100 ZH-CN_U1081_S0_131 A t*=None T1== T2== T4=- T6=- 1.1s
+TTLS-R1R B 87/100 ZH-CN_U1081_S0_76 A t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 88/100 ZH-CN_U1082_S0_67 A t*=None T1== T2== T4=- T6=- 2.9s
+TTLS-R1R B 89/100 ZH-CN_U1081_S0_172 A t*=None T1== T2== T4=- T6=- 1.7s
+TTLS-R1R B 90/100 ZH-CN_U1081_S0_65 A t*=None T1== T2== T4=- T6=- 1.5s
+TTLS-R1R B 91/100 ZH-CN_U2004_S0_266 A t*=None T1== T2== T4=- T6=- 0.9s
+TTLS-R1R B 92/100 ZH-CN_U2004_S0_154 A t*=None T1== T2== T4=- T6=- 2.1s
+TTLS-R1R B 93/100 ZH-CN_U2004_S0_150 A t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 94/100 ZH-CN_U2004_S0_104 D t*=None T1== T2== T4=- T6=- 1.0s
+TTLS-R1R B 95/100 ZH-CN_U2004_S0_287 A t*=None T1== T2== T4=- T6=- 1.2s
+TTLS-R1R B 96/100 ZH-CN_U2012_S0_24 A t*=None T1== T2== T4=- T6=- 1.8s
+TTLS-R1R B 97/100 ZH-CN_U2011_S0_22 A t*=None T1== T2== T4=- T6=- 2.1s
+TTLS-R1R B 98/100 ZH-CN_U2011_S0_99 A t*=4 T1== T2== T4=Δ T6=Δ 2.0s
+TTLS-R1R B 99/100 ZH-CN_U2011_S0_36 A t*=None T1== T2== T4=- T6=- 2.0s
+TTLS-R1R B 100/100 ZH-CN_U2011_S0_108 A t*=None T1== T2== T4=- T6=- 2.7s

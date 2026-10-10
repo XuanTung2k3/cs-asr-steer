@@ -1,0 +1,38 @@
+{
+  "index": 47,
+  "id": "ZH-CN_U1001_S0_482",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      21206,
+      30275,
+      11189,
+      9709,
+      24447,
+      23664,
+      9487,
+      29717,
+      7384,
+      116,
+      14200,
+      6363,
+      8679,
+      1654,
+      7182,
+      12949,
+      29992,
+      4563,
+      28737,
+      448,
+      22468
+    ],
+    "terminated": "eos",
+    "length": 21,
+    "text": "嗯 对但是感觉每次拉伸我的leg muscle我都会觉得很痛very sore"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.01371991727501154
+}

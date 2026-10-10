@@ -1,0 +1,41 @@
+{
+  "index": 40,
+  "id": "ZH-CN_U0102_S0_80",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      15003,
+      6912,
+      9722,
+      33744,
+      244,
+      31021,
+      11,
+      4563,
+      23151,
+      28566,
+      17699,
+      1546,
+      16017,
+      33025,
+      11748,
+      230,
+      19117,
+      11,
+      43320,
+      17944,
+      5233,
+      243,
+      16866,
+      30
+    ],
+    "terminated": "eos",
+    "length": 24,
+    "text": "我们来自湖南,很受欢迎的香菜馈金,你有没有试过?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.1796875,
+  "historical_ffn_diff": 0.015181444585323334
+}

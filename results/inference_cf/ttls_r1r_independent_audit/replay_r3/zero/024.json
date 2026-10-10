@@ -1,0 +1,42 @@
+{
+  "index": 24,
+  "id": "ZH-CN_U0029_S0_651",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      45681,
+      15003,
+      7391,
+      120,
+      17947,
+      1369,
+      240,
+      15106,
+      27654,
+      23151,
+      6062,
+      34627,
+      7256,
+      243,
+      11957,
+      253,
+      40,
+      2044,
+      1541,
+      12531,
+      118,
+      4035,
+      1546,
+      19912,
+      23516
+    ],
+    "terminated": "eos",
+    "length": 25,
+    "text": "我觉得我们彼此互相享受吧因为毕竟Iron是艺人的玩物"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.203125,
+  "historical_ffn_diff": 0.018091673031449318
+}

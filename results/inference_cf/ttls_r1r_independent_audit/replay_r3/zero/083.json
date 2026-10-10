@@ -1,0 +1,30 @@
+{
+  "index": 83,
+  "id": "ZH-CN_U1079_S0_54",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      40,
+      500,
+      380,
+      458,
+      2166,
+      21625,
+      10123,
+      42,
+      18671,
+      1546,
+      7598,
+      6240,
+      30
+    ],
+    "terminated": "eos",
+    "length": 13,
+    "text": "I don't know你選吃KFC的什麼呢?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.1015625,
+  "historical_ffn_diff": 0.011601818725466728
+}

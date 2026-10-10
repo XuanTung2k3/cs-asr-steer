@@ -1,0 +1,28 @@
+{
+  "index": 93,
+  "id": "ZH-CN_U2004_S0_104",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      36757,
+      8090,
+      3858,
+      228,
+      9724,
+      32,
+      19017,
+      99,
+      3111,
+      4563,
+      48
+    ],
+    "terminated": "eos",
+    "length": 11,
+    "text": "比如说哆啦A梦就很Q"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.016502533107995987
+}

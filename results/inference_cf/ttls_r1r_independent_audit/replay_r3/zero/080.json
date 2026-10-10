@@ -1,0 +1,29 @@
+{
+  "index": 80,
+  "id": "ZH-CN_U1079_S0_23",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      40,
+      486,
+      352,
+      281,
+      1783,
+      2918,
+      268,
+      294,
+      341,
+      4266,
+      12830,
+      13
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "text": "I will go to Xiamen in this summer vacation."
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.020933279767632484
+}

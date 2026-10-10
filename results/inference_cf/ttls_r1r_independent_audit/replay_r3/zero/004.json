@@ -1,0 +1,42 @@
+{
+  "index": 4,
+  "id": "ZH-CN_U0011_S0_103",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      5620,
+      43083,
+      610,
+      2695,
+      1546,
+      44848,
+      45681,
+      45726,
+      41046,
+      36482,
+      3316,
+      238,
+      1546,
+      34627,
+      21454,
+      1395,
+      3581,
+      16086,
+      12022,
+      11706,
+      9830,
+      225,
+      11249,
+      222,
+      47446
+    ],
+    "terminated": "eos",
+    "length": 25,
+    "text": "就是那个period的时间我觉得还是挺幸运的因为high school在国外比较简单"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.15625,
+  "historical_ffn_diff": 0.018061483278870583
+}

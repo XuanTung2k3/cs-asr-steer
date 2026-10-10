@@ -1,0 +1,36 @@
+{
+  "index": 54,
+  "id": "ZH-CN_U1003_S0_94",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      7239,
+      25246,
+      22064,
+      8861,
+      2166,
+      30276,
+      11279,
+      3581,
+      27658,
+      28455,
+      44332,
+      240,
+      29485,
+      5708,
+      20127,
+      20778,
+      44848,
+      14769,
+      30
+    ],
+    "terminated": "eos",
+    "length": 19,
+    "text": "所以我想问一下你经常在社交媒体上花很多时间吗?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.014350921846926212
+}

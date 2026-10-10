@@ -1,0 +1,22 @@
+{
+  "index": 37,
+  "id": "ZH-CN_U0091_S0_68",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      44,
+      1258,
+      11,
+      934,
+      291
+    ],
+    "terminated": "eos",
+    "length": 5,
+    "text": "Mason, after you"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.009320060722529888
+}

@@ -1,0 +1,34 @@
+{
+  "index": 97,
+  "id": "ZH-CN_U2011_S0_99",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      14659,
+      11,
+      40486,
+      11,
+      1654,
+      34448,
+      7182,
+      4563,
+      7093,
+      6734,
+      15368,
+      33,
+      7327,
+      1546,
+      31382,
+      39861,
+      12949
+    ],
+    "terminated": "eos",
+    "length": 17,
+    "text": "哦,当然,我一直都很想去这个BTS的演唱会"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.011330367997288704
+}

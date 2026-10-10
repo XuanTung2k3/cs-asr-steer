@@ -1,0 +1,38 @@
+{
+  "index": 94,
+  "id": "ZH-CN_U2004_S0_287",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      34627,
+      220,
+      18594,
+      116,
+      19940,
+      18453,
+      7795,
+      105,
+      15555,
+      33242,
+      2412,
+      19,
+      2496,
+      420,
+      805,
+      2496,
+      293,
+      257,
+      1922,
+      5616,
+      458
+    ],
+    "terminated": "eos",
+    "length": 21,
+    "text": "因为 霸王别姬她好像有4 hours or 3 hours and a halfyou know"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.1875,
+  "historical_ffn_diff": 0.014498323202133179
+}

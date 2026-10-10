@@ -1,0 +1,18 @@
+{
+  "index": 20,
+  "id": "ZH-CN_U0029_S0_472",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      9443
+    ],
+    "terminated": "eos",
+    "length": 1,
+    "text": "OK"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.068359375,
+  "historical_ffn_diff": 0.005644349846988916
+}

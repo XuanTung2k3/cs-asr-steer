@@ -1,0 +1,29 @@
+{
+  "index": 10,
+  "id": "ZH-CN_U0023_S0_111",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      8713,
+      11,
+      5562,
+      18888,
+      1541,
+      15003,
+      1546,
+      20182,
+      1112,
+      3317,
+      3387,
+      1543
+    ],
+    "terminated": "eos",
+    "length": 12,
+    "text": "对,这才是我们的一个common goal。"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.011777096427977085
+}

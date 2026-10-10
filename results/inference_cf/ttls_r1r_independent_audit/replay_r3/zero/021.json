@@ -1,0 +1,27 @@
+{
+  "index": 21,
+  "id": "ZH-CN_U0029_S0_204",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      10642,
+      0,
+      42070,
+      27797,
+      220,
+      11386,
+      20690,
+      9574,
+      45277,
+      23034
+    ],
+    "terminated": "eos",
+    "length": 10,
+    "text": "喔!Twilight 目光之城是不是"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.140625,
+  "historical_ffn_diff": 0.014005673117935658
+}

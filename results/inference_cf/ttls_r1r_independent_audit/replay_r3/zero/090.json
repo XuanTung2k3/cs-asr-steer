@@ -1,0 +1,27 @@
+{
+  "index": 90,
+  "id": "ZH-CN_U2004_S0_266",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      4200,
+      1546,
+      11706,
+      9830,
+      225,
+      1474,
+      104,
+      1546,
+      1541,
+      38515
+    ],
+    "terminated": "eos",
+    "length": 10,
+    "text": "看的比较末的是一些"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.13671875,
+  "historical_ffn_diff": 0.019400252029299736
+}

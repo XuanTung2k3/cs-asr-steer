@@ -1,0 +1,25 @@
+{
+  "index": 65,
+  "id": "ZH-CN_U1034_S0_53",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      3581,
+      5155,
+      15759,
+      29567,
+      23661,
+      100,
+      23661,
+      97
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "在家里一起烧烤"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.014798233285546303
+}

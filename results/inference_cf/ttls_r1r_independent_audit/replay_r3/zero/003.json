@@ -1,0 +1,31 @@
+{
+  "index": 3,
+  "id": "ZH-CN_U0011_S0_503",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      7239,
+      2166,
+      11274,
+      6287,
+      2855,
+      18961,
+      27658,
+      6236,
+      32502,
+      43605,
+      28350,
+      18214,
+      31429,
+      30
+    ],
+    "terminated": "eos",
+    "length": 14,
+    "text": "所以你覺得這個對你的社會技巧有沒有進步?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.125,
+  "historical_ffn_diff": 0.014092150144279003
+}

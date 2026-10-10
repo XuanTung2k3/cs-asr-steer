@@ -1,0 +1,20 @@
+{
+  "index": 29,
+  "id": "ZH-CN_U0039_S0_80",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      25246,
+      11361,
+      8861
+    ],
+    "terminated": "eos",
+    "length": 3,
+    "text": "我想問一下"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.078125,
+  "historical_ffn_diff": 0.010633789002895355
+}

@@ -1,0 +1,35 @@
+{
+  "index": 85,
+  "id": "ZH-CN_U1081_S0_131",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      1654,
+      12979,
+      5975,
+      1541,
+      19425,
+      27905,
+      4479,
+      227,
+      9592,
+      116,
+      29618,
+      38358,
+      28907,
+      247,
+      6847,
+      231,
+      11336,
+      7182
+    ],
+    "terminated": "eos",
+    "length": 18,
+    "text": "我高中是四川旅游学院龙泉成都"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.1484375,
+  "historical_ffn_diff": 0.01577274687588215
+}

@@ -1,0 +1,32 @@
+{
+  "index": 36,
+  "id": "ZH-CN_U0091_S0_62",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      14200,
+      39,
+      21462,
+      1541,
+      19976,
+      223,
+      20078,
+      11,
+      1541,
+      3581,
+      21854,
+      1546,
+      36,
+      32579,
+      644
+    ],
+    "terminated": "eos",
+    "length": 15,
+    "text": "我的Hometown是威海,是在中國的Eastern part"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.19921875,
+  "historical_ffn_diff": 0.01523252110928297
+}

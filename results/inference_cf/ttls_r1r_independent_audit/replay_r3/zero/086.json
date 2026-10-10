@@ -1,0 +1,37 @@
+{
+  "index": 86,
+  "id": "ZH-CN_U1081_S0_76",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      9709,
+      24447,
+      9709,
+      24447,
+      4563,
+      4563,
+      7093,
+      68,
+      267,
+      4563,
+      7093,
+      10123,
+      8861,
+      31022,
+      9147,
+      6912,
+      3111,
+      48263,
+      18105,
+      3784
+    ],
+    "terminated": "eos",
+    "length": 20,
+    "text": "感觉感觉很很想eat很想吃一下听起来就非常的delicious"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.15625,
+  "historical_ffn_diff": 0.01524022314697504
+}

@@ -1,0 +1,25 @@
+{
+  "index": 48,
+  "id": "ZH-CN_U1002_S0_284",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      2166,
+      9254,
+      24620,
+      10440,
+      38109,
+      251,
+      6240,
+      30
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "你用的是什么缝呢?"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.140625,
+  "historical_ffn_diff": 0.015758894383907318
+}

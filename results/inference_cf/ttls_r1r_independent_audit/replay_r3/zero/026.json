@@ -1,0 +1,25 @@
+{
+  "index": 26,
+  "id": "ZH-CN_U0040_S0_141",
+  "baseline_equal": true,
+  "zero": {
+    "tokens": [
+      7239,
+      1654,
+      29618,
+      4511,
+      4275,
+      3330,
+      113,
+      48480
+    ],
+    "terminated": "eos",
+    "length": 8,
+    "text": "所以我学到要遵守"
+  },
+  "zero_free_equal": true,
+  "zero_ffn_equal": true,
+  "zero_logits_equal": true,
+  "historical_logits_diff": 0.171875,
+  "historical_ffn_diff": 0.015840621665120125
+}

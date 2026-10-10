@@ -15,7 +15,7 @@ from csasr.inference_cf.core_r2 import tokenizer_partition
 from csasr.inference_cf import ttls as L,ttls_r1r as R
 from csasr.lss.sites import assert_no_site_hooks
 from experiments.inference_cf_ttls_r1r import Ctx,integrity_row,process_row
-OUT=ROOT/'results/inference_cf/ttls_r1r_independent_audit/replay'
+OUT=ROOT/'results/inference_cf/ttls_r1r_independent_audit/replay_r2'
 def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def independent_repair(h,z,g):
@@ -59,6 +59,7 @@ def main():
             h=args[0];q=torch.arange(h.shape[1],device=h.device);gain=(q>=4).to(h.dtype).view(1,-1)
             return (independent_repair(h,z,gain),)+args[1:]
         class Direct:
+            params={'z':z}
             def forward(self,prompt,y):
                 hook=model.model.decoder.layers[16].final_layer_norm.register_forward_pre_hook(pre)
                 try:return teacher_logits(model,enc,prompt,y,None)
@@ -66,7 +67,13 @@ def main():
         _,li=L.ce_terms(Direct(),s['y_A'],s['y_A_valid_mask'],sup,beg,tok.eos_token_id,prompt=L.CB);gi=torch.autograd.grad(li,z)[0]
         rel=float((g-gi).norm()/g.norm());cos=float(torch.nn.functional.cosine_similarity(g,gi,dim=0))
         assert torch.equal(loss.detach(),li.detach()) and rel<=.02 and cos>=.999 and float(g.norm())>0
-        return {'id':s['utterance_id'],'primary_norm':float(g.norm()),'independent_norm':float(gi.norm()),'relative_difference':rel,'cosine':cos,'loss_equal':True,'tolerance_frozen':{'relative':.02,'cosine':.999}}
+        with torch.no_grad():
+            clean_B=teacher_logits(model,enc,L.CB,s['y_B'],None)
+            logq=L.allowed_log_probs(clean_B,len(s['y_B']),sup,beg)
+        logits_B=ep.forward(L.CB,s['y_B']);S=json.loads((ROOT/f"results/inference_cf/ttls_r1r/run1/integrity/{plan['ids'].index(s['utterance_id']):03d}.json").read_text())['candidates']['S']
+        P=L.preservation_term(logits_B,logq,S,len(s['y_B']),sup,beg);gp=torch.autograd.grad(P,ep.z)[0]
+        assert float(P)==0.0
+        return {'initial_P':float(P),'initial_P_grad_norm':float(gp.norm()),'initial_P_grad_relative_to_CE':float(gp.norm()/g.norm()),'id':s['utterance_id'],'primary_norm':float(g.norm()),'independent_norm':float(gi.norm()),'relative_difference':rel,'cosine':cos,'loss_equal':True,'tolerance_frozen':{'relative':.02,'cosine':.999}}
     for i,s in enumerate(plan['rows']):
         inf,train=encode(s);clean=forced_decode(bundle,inf,L.CB,max_new_tokens=200,capture_layer=16);zero=torch.zeros(bundle.d_model,device=bundle.device)
         zd=L.greedy_decode(bundle,inf,L.CB,hook_factory=lambda:R.ttls_hook_r1r(bundle,zero,L.ALL,mode='steer'),max_new_tokens=200,capture_layer=16)

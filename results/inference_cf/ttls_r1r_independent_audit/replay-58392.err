@@ -1,0 +1,17 @@
+/home/tungnx/cs-asr-steer-ttls-r1r-audit/src/csasr/inference_cf/ttls.py:206: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  if not math.isfinite(float(loss)):
+Traceback (most recent call last):
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 92, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 87, in main
+    if i in [2,31,53]:summ['gradient_crosschecks'].append(grad_probe(train,s))
+                                                          ^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/experiments/ttls_r1r_independent_replay.py", line 66, in grad_probe
+    _,li=L.ce_terms(Direct(),s['y_A'],s['y_A_valid_mask'],sup,beg,tok.eos_token_id,prompt=L.CB);gi=torch.autograd.grad(li,z)[0]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/tungnx/cs-asr-steer-ttls-r1r-audit/src/csasr/inference_cf/ttls.py", line 252, in ce_terms
+    return logits, objective_loss("A2", terms, mask_A, ep.params)
+                                                       ^^^^^^^^^
+AttributeError: 'Direct' object has no attribute 'params'

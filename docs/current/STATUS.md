@@ -967,3 +967,12 @@ D-dev-confirm, D-test, router-calib, P3 or transfer use.
 - **A2 + KL preservation (T2A)** keeps 30/31 POI corrections and cuts new Mandarin errors 26 → 3, for the best MER (0.2495).
 - **Acoustic-lexical objective:** 94% abstention, and no gain over direct substitution.
 - Report: `docs/inference_cf/TTLS_R1_REPORT.md`. No next round was started; the core-v6 method is unchanged.
+
+## TTLS-R1R (2026-10-10; numerical repair + revalidation, branch `feature/ttls-r1r-repair`; terminal for this round)
+
+Repairs the TTLS-R1 zero-edit defect found by the independent audit (`TTLS_R1_INDEPENDENT_AUDIT.md`) with a versioned
+ratio-first norm repair (`src/csasr/inference_cf/ttls_r1r.py`; historical kernel untouched). Slurm 58391 (one job, 6 min):
+zero vector = clean decoder bitwise on 100/100 (free decode, logits, FFN input; initial KL 0). Corrected T1/T2/T4/T6
+rerun; T2/T4/T6 token-identical to R1, T1 differs on 2 rows. Label **`TTLS_R1R_VALID_BUT_INSUFFICIENT`**: best arm T1
+has 4 genuine lexical corrections in 1 utterance/dialogue; TTLS-AC = direct substitution. Recommendation: close this
+TTLS configuration; no TTLS Round 2; any A2+P study needs separate human approval. Report: `docs/inference_cf/TTLS_R1R_REPORT.md`.

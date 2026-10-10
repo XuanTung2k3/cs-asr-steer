@@ -593,3 +593,12 @@ Not imported by any deployable path.
 | `results/inference_cf/ttls_r1/` | Run outputs and evaluation |
 
 No existing module was modified.
+
+## TTLS-R1R (2026-10-10; exploratory repair, executed)
+
+- `src/csasr/inference_cf/ttls_r1r.py` — `apply_steering_ratio_first` (ratio-first NormPreserve, exact zero-edit identity),
+  `RatioFirstInterventionHook` (DG-02 hook subclass), `ttls_hook_r1r`, `EpisodeR1R`, `site_ffn_probe`, `zero_kl`,
+  `displacement_r1r`. Use instead of `ttls.ttls_hook` for any TTLS work; `models.hooks.apply_steering` is historical.
+- `experiments/inference_cf_ttls_r1r.py` (manifest/run/seal; phase-A zero census gates phase B),
+  `experiments/inference_cf_ttls_r1r_evaluate.py`, `slurm/inference_cf_ttls_r1r.sbatch`, `tests/test_ttls_r1r.py`.
+- Results `results/inference_cf/ttls_r1r/`; spec/report `docs/inference_cf/TTLS_R1R_{SPEC,REPORT}.md`.

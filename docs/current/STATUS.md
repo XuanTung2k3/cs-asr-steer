@@ -956,3 +956,14 @@ separately frozen exact-A2 confirmation, which needs human authorization.
 D-dev-confirm, D-test, router-calib, P3 or transfer use.
 
 **Report.** `docs/inference_cf/DIR_SPRINT0_FINAL_REPORT.md`. Core v6 and historical verdicts are unchanged.
+
+## TTLS-R1 (2026-10-10; exploratory, branch `feature/ttls-r1`; terminal for this round)
+
+- **Run:** one job, Slurm 58385, on the exposed fixed-100 panel.
+- **Frozen label:** `TTLS_R1_MIXED`, triggered by T1. Its qualifying corrections are word-boundary repairs; no
+  Mandarin-for-English correction comes from CE adaptation.
+- **TTLS-CE** (a single 1,280-scalar L16 DG-02 vector) makes 0 new Mandarin errors, against 26 for A2. It also makes
+  fewer POI corrections: 8 against 31.
+- **A2 + KL preservation (T2A)** keeps 30/31 POI corrections and cuts new Mandarin errors 26 → 3, for the best MER (0.2495).
+- **Acoustic-lexical objective:** 94% abstention, and no gain over direct substitution.
+- Report: `docs/inference_cf/TTLS_R1_REPORT.md`. No next round was started; the core-v6 method is unchanged.

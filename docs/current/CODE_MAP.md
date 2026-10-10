@@ -578,3 +578,18 @@ construct / seal-a / authorize-b / pulses / seal-b / smoke.
   `/mnt/data/tungnx/cs-asr-steer/archives/dir_sprint0/run1`.
 
 Not imported by any deployable path.
+
+## TTLS-R1 (2026-10-10; exploratory, executed)
+
+| Path | Role |
+|---|---|
+| `src/csasr/inference_cf/ttls.py` | TTLS primitives: canonical DG-02 hook with a learned z; `Episode` (LN via `episodic_tta`, or TTLS); frozen AC candidate and stable-set rules; KL preservation; greedy / CD decoders; displacement |
+| `experiments/inference_cf_ttls_r1.py` | Runner: prepare / manifest / run / seal |
+| `experiments/inference_cf_ttls_r1_evaluate.py` | Post-seal evaluator |
+| `slurm/inference_cf_ttls_r1.sbatch` | One-job sbatch |
+| `tests/test_ttls_r1.py` | 14 focused tests |
+| `configs/inference_cf/ttls_r1.json` | Frozen config |
+| `docs/inference_cf/TTLS_R1_{SPEC,REPORT}.md` | Spec and report |
+| `results/inference_cf/ttls_r1/` | Run outputs and evaluation |
+
+No existing module was modified.

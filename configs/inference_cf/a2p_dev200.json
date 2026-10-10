@@ -1,0 +1,66 @@
+{
+  "schema": "a2p_dev200_config_v1",
+  "status": "FROZEN before execution and before any NEW200 A2+P outcome or NEW200 reference is opened in this ticket",
+  "ticket": "A2P-DEV200: preservation-constrained decoder TTA (A2+P) generalization to NEW200; exposed development, NOT confirmation",
+  "spec": "docs/inference_cf/A2P_DEV200_SPEC.md",
+  "starting_commit": "146a5d0e",
+  "branch": "feature/a2p-dev200",
+  "population": {
+    "primary": "NEW200 = FULL300 - FIXED100 (P2-PATH5 frozen roster), 200 utterances, 20 dialogues x 10, FULL300 order",
+    "panel": "docs/inference_cf/P2_PATH5_PANEL.json",
+    "panel_sha256": "4386b1fcb272e1892c8d3766a4c305e4ae8700d0b5cf63f74bbc67a7b0adc5a2",
+    "path5_config": "configs/inference_cf/p2_path5.json",
+    "path5_config_sha256": "90a6514b44ac6d58c279062d89d6b1cded80077207f515e9f0d170476afeb43e",
+    "membership_sha256": {"NEW200": "e23a8ce549820a8aa4287eceb3bce71ea2d8aae1af52b9a50bab6a228a9b2b40",
+                          "FIXED100": "15c0c82e1a4285f85a9ac51d395d4e26549b34a218f48ddbde75a3d91657e94d",
+                          "FULL300": "bc8062390705cf133cbd42813d01b65f7ff3d5db836c5b94d9fc602275db6c5c"},
+    "membership_hash_convention": "P2-PATH5 membership_hash: sha256 of sorted-key compact UTF-8 JSON {partition, rows:[{utterance_id, dialogue_id}]}",
+    "exposure": "already-exposed D-dev-select (in exposure_registry.exposed_ids()); references previously opened in DG-04/06/07, P0-R2, P2 selection and P2-PATH5 scoring; A2+P never evaluated on NEW200. Not fresh validation.",
+    "forbidden": ["D-dev-confirm", "D-test", "router-calib", "P3", "transfer datasets", "any unexposed data"]
+  },
+  "arms": {
+    "B0": {"what": "frozen Whisper forced-ZH greedy (cB, cap 200)", "source": "P2-PATH5 run1 rows .theta0 (live canonical cached forced decode)", "in_job_check": "live forced decode == source tokens and termination, 200/200"},
+    "B1": {"what": "frozen Whisper AUTO greedy", "source": "P2-PATH5 plan rows .analysis.AUTO (= sealed P2-A r1 systems.B0_AUTO)", "in_job_check": "detect_language + auto_prompt live forced decode text == source text, 200/200 (TTLS-R1 convention); token equality recorded"},
+    "B2": {"what": "historical A2-CE", "source": "P2-PATH5 run1 rows .A2_free (live TTA1 A2 episode, P2-PATH5 audit PASS)", "in_job_check": "B3 step-0 CE == P2-PATH5 A2_log.losses[0] bitwise, 200/200 (same theta0, teacher, mask, prompt)"},
+    "B3": {"what": "A2-CE+P (TTLS-R1 arm T2A, unchanged)", "source": "NEW GPU execution"}
+  },
+  "B3_definition": {
+    "code": "experiments/inference_cf_ttls_r1.py process_row arm ('T2A','LN','CE',True); reused: ttls.Episode(variable='LN'), ttls.ce_terms, ttls.preservation_term, ttls.select_candidates, ttls.stable_positions, ttls.displacement, episodic_tta.forced_decode; theta0 branches via experiments/inference_cf_ttls_r1r.theta0_branches (byte-identical TTLS-R1 code path)",
+    "trainables": "194 decoder LayerNorm affine tensors, 248320 scalars, fresh fp32 masters per utterance (LNGuard), bf16 functional_call",
+    "optimizer": {"name": "AdamW", "lr": 0.001, "weight_decay": 0.0, "betas": [0.9, 0.999], "eps": 1e-08, "updates": 2, "loss_evaluations": 3},
+    "loss": "L = L_A2_CE(y_A; y_A_valid_mask, cB prompt) + 1.0 * mean_{t in S} KL(p_theta0(.|y_B[:t], audio, cB) || p_theta(.|y_B[:t], audio, cB)) over the allowed vocabulary (soft_auto_tta.allowed_log_probs / kl_terms); if y_A == y_B the CE logits are reused for P; empty S -> P = 0 * sum(logits)",
+    "stable_set": "S = {t : y_B_valid_mask[t] and p_theta0(y_B[t]) >= 0.5 and t not in M}, M = TTLS-R1 frozen candidate rule (cB/cE x clean/null-audio branches, embedded partition, UTF-8 prefix completeness, tau = log 10)",
+    "final_decode": "materialize effective bf16 LN state, forced-ZH greedy cap 200 (episodic_tta.forced_decode), exact LNGuard restore",
+    "references": "none; y_A is the theta0 AUTO pseudo-transcript, y_B the theta0 forced decode"
+  },
+  "regression_oracle": {
+    "population": "FIXED100 subset, frozen rule: every TTLS-R1 row whose sealed B2 or T2A tokens differ from y_B, plus the first two rows (by index) where neither differs",
+    "checks_exact": ["theta0 candidates / stable set == sealed TTLS-R1 row", "B3 tokens, termination, losses, parts, grad_l2, master_delta_l2 == sealed TTLS-R1 T2A", "A2-only Episode(LN) final fp32 masters == archived A2 masters and decode == sealed A2"],
+    "on_failure": "STOP before NEW200"
+  },
+  "evaluation": {
+    "references": "NEW200 role references opened only after the committed A2P-DEV200 output seal",
+    "metrics": "canonical csasr.evaluation via the TTLS-R1 evaluator primitives (PIER, MER, EN-WER, ZH-CER, POI transitions, matrix-ZH retention, outside-POI harm, EOS/truncation events) + the TTLS-R1R frozen lexical split",
+    "lexical_event": "maximal run of consecutive reference POI indices corrected (or corrupted) together in one utterance",
+    "termination_changed_row": "row where the system termination differs from B0, or eos-recovery / premature-eos holds for B2 or B3",
+    "bootstrap": {"unit": "dialogue", "replicates": 2000, "seed": 240924, "descriptive": true}
+  },
+  "decision_rule": {
+    "order": ["A2P_DEV200_INVALID", "A2P_DEV200_NOT_SUPPORTED", "A2P_DEV200_BROAD_SUPPORT", "A2P_DEV200_CONCENTRATED_OR_MIXED"],
+    "notation": "N2 = new ZH corruptions of B2 vs B0; N3 = of B3 vs B0; D = N2 - N3; per-utterance d_u = newZH_B2(u) - newZH_B3(u)",
+    "INVALID": "any integrity failure (regression oracle, B0/B1/B2 reuse identity, reset, non-LN change, missing rows, seal)",
+    "NOT_SUPPORTED": "D <= 0, or genuine (else all-POI) correction retention < 0.5 when assessable, or MER(B3) > MER(B2) + 0.005",
+    "BROAD_SUPPORT": {
+      "1_opportunity": "N2 >= 10",
+      "2_magnitude": "D >= 0.5 * N2",
+      "3_breadth": "#utterances d_u > 0 >= 5, #dialogues with positive dialogue sum >= 4, and #utterances d_u > 0 >= 2 * #utterances d_u < 0",
+      "4_concentration": "largest single-utterance share of sum_{d_u>0} d_u <= 0.5; D > 0 in >= 18 of 20 leave-one-dialogue-out panels; D restricted to non-termination-changed rows >= 5",
+      "5_retention": "if B2 genuine-lexical POI corrections >= 3: fraction retained by B3 >= 0.8; else if B2 POI corrections >= 3: all-correction retention >= 0.8; else not assessable (passes, reported)",
+      "6_safety_vs_B2": "MER(B3) <= MER(B2) + 0.002, PIER(B3) <= PIER(B2) + 0.01, new severe truncations and added caps (vs B0) of B3 <= those of B2",
+      "7_vs_AUTO": "MER(B3) < MER(B1) and ZH-CER(B3) < ZH-CER(B1); PIER/EN-WER gap reported as the trade-off"
+    },
+    "CONCENTRATED_OR_MIXED": "valid, not NOT_SUPPORTED, not BROAD_SUPPORT",
+    "note": "every verdict is exposed-development evidence; FULL300 aggregates and fixed100 are secondary and never enter the rule"
+  },
+  "compute": {"slurm_jobs": 1, "max_hours": 3, "partition": "mig", "gres": "gpu:nvidia_h100_80gb_hbm3_3g.40gb:1", "smoke_jobs": 0, "sweeps": 0}
+}

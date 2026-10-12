@@ -5,7 +5,7 @@ cached alignment attention, and masked-audio rescoring. No saved artifact contai
 gate, **not** a scientific verdict. K2 is not eligible, and nothing in K2 was implemented or run.
 
 **Update 2026-10-12 (§10 governs):** after the final scientific preflight, the status is **`READY_FOR_K1_CAPTURE`**,
-pending GPU authorization and a yes/no on the evaluator-side amendments A1–A3/G1. Nothing has been submitted.
+with amendments A1–A3/G1 approved, implemented and sealed. Only GPU authorization is pending; nothing has been submitted.
 
 Scope: design `docs/research_review/ABTS0_DESIGN.md` (pinned `sha256:bf6cf5c2…`); forensic base `5c504c4e`. Data:
 exposed D-dev-select FULL300 only (20 dialogues). No confirm/test/router-calib/P3/transfer access, no GPU job, no
@@ -255,11 +255,9 @@ named sealed artifacts. Their outputs are quoted here; they are not K1 evidence.
 **Decision: `READY_FOR_K1_CAPTURE`, not submitted.** The runtime path (capture → select → score) is final. It is
 covered by the sealed plan `sha256:5f3c3ae7…`, and nothing below changes it.
 
-Two things are still required before the job runs:
-- **GPU authorization.**
-- **A yes/no on four evaluator-side amendments (A1–A3, G1, §10.3).** They touch no pinned file. This text, committed
-  before any K1 output exists, is their pre-registration. If they are rejected, the frozen v1 evaluator runs unchanged
-  and its timing bias (§10.1, item 3) is reported as a known limitation.
+**Approved and implemented (§10.6).** A1–A3 and G1 were approved on 2026-10-12 with seven conditions. They are
+implemented additively and sealed in `amendment_seal.json` before any K1 output existed. The only thing still required
+before the job runs is **GPU authorization**.
 
 K2 remains ineligible. Sections 1–9 are kept as the original record; where they differ, this section governs. An
 uncommitted draft of this section, from an earlier pass, was reviewed, verified and folded in here.
@@ -366,9 +364,8 @@ selection or threshold choice.
 cd /home/tungnx/cs-asr-steer-inf
 export PYTHONPATH="$PWD/src:$PWD" LD_LIBRARY_PATH="/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
 PY=/home/tungnx/miniconda3/envs/acl1/bin/python; R=results/inference_cf/abts0_k1
-# 0  CPU, before capture and only if A1–A3/G1 are approved: add abts0_k1_gate.py, abts0_k1_evaluate_v2.py (+ `groups`
-#    subcommand writing $R/groups_prerun.json) and the one-line sbatch guard; focused synthetic tests only; commit + push.
-"$PY" experiments/abts0_k1_evaluate_v2.py groups
+# 0  DONE (fe213d17): v2 evaluator, G1 gate, sbatch guards, groups_prerun.json; amendment_seal.json READY_FOR_K1_CAPTURE.
+"$PY" experiments/abts0_k1_gate.py verify-amendments          # must print the seal hash; the sbatch re-checks it
 # 1  GPU capture (authorized). Resumes at row level if re-submitted after a wall-time stop.
 mkdir -p $R/run1
 sbatch --output=$R/run1/slurm-%j.out --error=$R/run1/slurm-%j.err --export=ALL,PHASE=capture slurm/abts0_k1.sbatch
@@ -377,7 +374,7 @@ sbatch --output=$R/run1/slurm-%j.out --error=$R/run1/slurm-%j.err --export=ALL,P
 git add $R/run1/capture $R/run1/runtime_capture.json $R/run1/selection.json $R/run1/candidates_sealed.json
 git commit -m "ABTS-0 K1: capture + sealed candidates (pre-scoring)" && git push origin research/steering-forensics
 # 3  Gate. If not PASS: record K1_BLOCKED / K1_INSUFFICIENT(STRUCTURAL) in k1_status, commit, STOP.
-"$PY" experiments/abts0_k1_gate.py && git add $R/gate_prescore.json && git commit -m "ABTS-0 K1: pre-score gate" && git push
+"$PY" experiments/abts0_k1_gate.py check && git add $R/gate_prescore.json && git commit -m "ABTS-0 K1: pre-score gate" && git push
 # 4  GPU scoring of sealed chosen pairs only (the sbatch refuses to score without gate PASS)
 sbatch --output=$R/run1/slurm-%j.out --error=$R/run1/slurm-%j.err --export=ALL,PHASE=score slurm/abts0_k1.sbatch
 # 5  Output seal (also re-verifies archive hashes), commit + push BEFORE opening references
@@ -386,10 +383,6 @@ git add $R/run1/scores $R/run1/runtime_score.json $R/output_seal.json && git com
 # 6  Reference evaluation, v2 primary (approved) with v1 alongside; then a new sealed k1_status. STOP for human review.
 "$PY" experiments/abts0_k1_evaluate_v2.py evaluate
 ```
-
-If A1–A3/G1 are rejected, skip step 0's new files. In that case, step 3 becomes the manual integrity/capacity
-checklist from G1 (over all 300 utterances, since no frozen group list exists), and step 6 runs
-`experiments/abts0_k1_evaluate.py evaluate`.
 
 ### 10.5 GPU cost and stop conditions
 
@@ -414,3 +407,37 @@ The expected total is about 0.5–1 GPU-hour. At most 3 GPU-hours can be allocat
 - Any `INVALID_ENGINE_IDENTITY` or seal mismatch → `K1_BLOCKED`.
 - Population, thresholds, 200 ms association, rules and the evaluator must not change after step 1.
 - No K2, entropy/RL, optimizer or layer sweep. A `K1_PASS` only queues human review.
+
+### 10.6 Approved amendments: implementation and final checks
+
+All seven approval conditions are met:
+
+| Condition | How it is met |
+|---|---|
+| 1. No false lexical matches | `lexical_label` uses the frozen `align_tokens` path **and** the exact union of all co-optimal alignments (forward/backward DP, checked against brute force). These cases are AMBIGUOUS: the word repeated inside the alignable window (`REPEAT`); an optimal alignment that assigns the word outside the block or deletes it (`ALIGNMENT`); a block that starts on a different English run (`RUN`); an adjacent occurrence (`BOUNDARY`); an unmappable or non-Han block (`UNMAPPED`); a block aligned to nothing (`NO_ALIGNMENT`). Primary precision counts all AMBIGUOUS cases as incorrect, and `precision_optimistic` is reported separately. |
+| 2. Recall reporting | `onset_recall` = onset hits / reachable (39). `genuine_run_onset_coverage` = onset hits / genuine heard runs (186). Also reported: `reachable_run_coverage_a1`, and the original v1 metric `reachable_run_coverage_v1`. |
+| 3. Safety | Every labelled pair carries `block_b0_correct_mandarin` and `over_correct_mandarin` (a non-literal proposal whose block contains Mandarin units that B0 got right). Accepted, chosen and `EN_ON_MANDARIN_SPEECH` counts are reported per group. |
+| 4. 200 ms runtime tolerance | `ONSET_TOL = 3200` is unchanged. `sens400_*` counts and labels `ONSET_MISMATCH` proposals with \|onset_diff\| ≤ 6400; these are never scored or used in the decision. |
+| 5. Additive changes | New files are `experiments/abts0_k1_evaluate_v2.py`, `experiments/abts0_k1_gate.py` and `tests/test_abts0_k1_v2.py`. The v1 evaluator is untouched; v2 runs it and stores `v1_label` and v1 metrics alongside. The sbatch changed by two guard lines. |
+| 6. Hashes, seals, plan consistency | See below. The runtime source bundle is unchanged, so the plan did not need re-preparing. |
+| 7. Selection is reference-free | The runner and `abts0_k1.py` are untouched, and a test asserts they never reference the gate, v2 or `groups_prerun`. The gate opens no reference file, and its audit hook raises on forbidden paths. `groups_prerun.json` (MM 214 / MIX 56 / END 30) was frozen before any capture output existed; `groups` refuses to run once one does. |
+
+**Final hashes.**
+- Commit: `fe213d17` (amendments). The amendment seal is committed on top of it.
+- Plan `sha256:5f3c3ae7410df3d53d8f751aa623a88d615f50b737f65a76ae183fa031887951`. Its self-hash is valid, all 13 source pins match, and its source list equals the runner's `SOURCES`.
+- Config `sha256:5befb72ae3a5e41a3f557be66dd2c22a697543334ec3ebe5454d80db437a392f`.
+- Design `sha256:bf6cf5c2f328cb6d057f19df2dd61ece44f456d33733e479f6704d4953ca7c17`. This matches the config pin.
+- Groups `sha256:2cf68cb6ec06b7d8e4da32fd8a64cf93218a257064f0c02751119087f579d2a8`.
+- Amendment seal `sha256:c4368812d9cd42709b39ba7589df597e65aad1aea41cb2a3fc4d6ff4d458e93e`, status `READY_FOR_K1_CAPTURE`. It pins:
+  - the v1 and v2 evaluators, the gate and the sbatch;
+  - the groups, registry and plan files, the config and the design;
+  - `mer.py`, `pier.py`, `normalization.py`;
+  - both test files.
+
+  `verify-amendments` passes, and the capture phase refuses to run if any pinned file changes.
+
+**Focused tests.** 46/46 passed (exit 0): `tests/test_abts0_k1_v2.py` (22 new) and `tests/test_abts0_k1.py` (the
+original 24). No regression sweep was run.
+
+**Final K1 status: `READY_FOR_K1_CAPTURE`.** `k1_status.json` (`K1_BLOCKED`, pre-amendment) is kept as the historical
+record.

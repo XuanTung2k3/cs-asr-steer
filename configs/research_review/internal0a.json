@@ -1,0 +1,100 @@
+{
+  "schema": "internal0a_v1",
+  "study": "INTERNAL-0A",
+  "seed": 240924,
+  "parent_head": "4c69723db458542314569b080a4601ddece2a418",
+  "role": "D-dev-select FULL300, enriched retrospective diagnostic only",
+  "model_config": "configs/model/whisper_large_v3.yaml",
+  "historical_plan": "results/inference_cf/abts0_k1/plan_sealed.json",
+  "historical_selection": "results/inference_cf/abts0_k1/run1/selection.json",
+  "historical_capture_seal": "results/inference_cf/abts0_k1/capture_seal.json",
+  "historical_attrition": "results/inference_cf/abts0_k1f/attrition.json",
+  "outputs": "results/research_review/internal0a",
+  "archive": "/mnt/data/tungnx/cs-asr-steer/archives/internal0a/run1",
+  "engine": {
+    "name": "matched_forced_decode_v1",
+    "precision": "bf16",
+    "attention": "eager",
+    "batch": 1,
+    "cB": [50258, 50260, 50360, 50364],
+    "cE": [50258, 50259, 50360, 50364],
+    "eos": 50257,
+    "max_new_tokens_local": 64,
+    "max_new_tokens_global": 200,
+    "capture_layer": 16,
+    "tie": "processed argmax, lowest token ID",
+    "auto": "fresh native single-SOT detection on each crop, then matched greedy transcription"
+  },
+  "crops": {
+    "sample_rate": 16000,
+    "heard_max_samples": 480000,
+    "short_samples": 32000,
+    "hop_samples": 16000,
+    "long_samples": 64000,
+    "tail": "clip, retain final partial view; <=2 seconds uses one view",
+    "padding": "only the unchanged Whisper feature extractor pads to 30 s",
+    "branches": ["2_EN", "2_AUTO", "4_AUTO", "4_ZH"]
+  },
+  "alignment": {
+    "heads": [[7, 0], [10, 17], [12, 18], [13, 12], [16, 1], [17, 14], [19, 11], [21, 4], [24, 1], [25, 6]],
+    "method": "unchanged abts0_k1.token_intervals, current-query attention, median width 7",
+    "full_audio_time": "crop start + local sample interval; timing is a model estimate, not gold",
+    "boundary_samples": 3200,
+    "association_cover_min": 0.5,
+    "recurrence_overlap_fraction_min": 0.5
+  },
+  "selection": {
+    "discovery": "all Latin words from union of all four local branches; no selection filters",
+    "supported": "at least one interior, uncapped 2-s occurrence and one interior, uncapped 4-AUTO occurrence in different physical crop bounds",
+    "ZH_comparator_only": true,
+    "require_R0": false,
+    "require_language_detector": false,
+    "baseline_block": "contiguous overlapping Han or Latin units, >=0.5 interval coverage",
+    "abstain": ["unlocated", "conflicting blocks", "repeated-occurrence ambiguity", "boundary-only", "cap-only", "already present in baseline block"],
+    "ranking": ["distinct non-4-ZH branch count descending", "distinct non-4-ZH view count descending", "interval start", "casefold word", "candidate ID"],
+    "max_selected_per_utterance": 1
+  },
+  "control_selection": {
+    "rule": "outside onset utterances; >=1 canonical Mandarin reference unit and ALL Mandarin reference units MATCH matched B0; English errors allowed and disclosed",
+    "ordering": "SHA256('240924:' + utterance_id), then ID",
+    "one_per_eligible_dialogue": true,
+    "no_fallback_if_absent": true
+  },
+  "shuffled": {
+    "rule": "within-dialogue nonzero circular rotation of hash-ordered selected IDs minimizing summed heard-duration mismatch",
+    "timing": "donor intervals and crops rescaled by recipient/donor heard duration; reassociate to recipient B0; no new inference",
+    "singleton": "identity pairing, flagged uninformative, retained, excluded from paired precision comparison"
+  },
+  "gates": {
+    "evaluable_absent_min": 12,
+    "new_hits_min": 3,
+    "new_dialogues_min": 3,
+    "selected_min": 10,
+    "selected_dialogues_min": 6,
+    "precision_min": 0.8,
+    "genuine_min": 6,
+    "genuine_dialogues_min": 4,
+    "false_control_max": 1,
+    "precision_advantage_min": 0.2
+  },
+  "evaluation": {
+    "lexical": "primary: two independent bilingual reviewers identify literal word AND exact reference occurrence from original audio and crop; disagreement/unclear=incorrect; unchanged ABTS A1 co-optimal B0 mapping is secondary only",
+    "adjudication": "post-seal blinded template; review all target-word appearances, actual/shuffled selections, one hash-selected unfiltered occurrence per utterance, and original absent-onset audibility; no branch/support/selection flags shown; literal labels must exactly match canonical EN reference units",
+    "semantic_taxonomy": ["LITERAL", "TRANSLATION", "WRONG_ENGLISH", "HALLUCINATION", "WRONG_OCCURRENCE", "AMBIGUOUS"],
+    "discovery_denominators": [14, 39],
+    "timing_proxy": "descriptive only, never decisive lexical ground truth",
+    "bootstrap": {"seed": 240924, "reps": 2000, "unit": "dialogue", "use": "descriptive 95% intervals, no significance gate"},
+    "supported_authorizes": "human review of a separately frozen delivery pilot only; no automatic steering or protected-data progression"
+  },
+  "compute": {
+    "gpu": "H100 MIG 3g.40gb",
+    "cpus": 4,
+    "mem_GB": 48,
+    "smoke_limit_minutes": 20,
+    "capture_limit_hours": 3,
+    "forecast_safety_factor": 2.0,
+    "model_load_reserve_seconds": 120,
+    "max_engineering_grid_items": 2,
+    "full_capture_requires_explicit_human_approval": true
+  }
+}

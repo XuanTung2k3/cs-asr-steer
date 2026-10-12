@@ -1,0 +1,121 @@
+{
+  "schema": "abts0_k1_config_v1",
+  "study": "ABTS-0 K1 -- reference-free lexical candidate feasibility (no steering, no training, no K2)",
+  "status": "FROZEN_BEFORE_K1_OUTPUTS",
+  "design": {
+    "path": "docs/research_review/ABTS0_DESIGN.md",
+    "sha256": "sha256:bf6cf5c2f328cb6d057f19df2dd61ece44f456d33733e479f6704d4953ca7c17",
+    "forensic_base": "5c504c4e0754d3a8b71bf8b66f4120c88967956f",
+    "interpretations": "docs/research_review/ABTS0_K1_REPORT.md section 2 (I1-I12); encoded in src/csasr/inference_cf/abts0_k1.py"
+  },
+  "panel": {
+    "path": "docs/inference_cf/R0_PANEL.json",
+    "file_sha256": "sha256:51255fcb9b8e9ab7c73200797a338bd07fcf71f9961cce9425a7031f79d7d042",
+    "identity_hash": "sha256:ff28efc645150d122410991d3b2449edc239b26111e97fda09ddf31e9340e2cb",
+    "role": "already-exposed D-dev-select FULL300 (fixed100 + NEW200), 20 dialogues x 15; no confirm/test/router-calib/P3/transfer"
+  },
+  "inputs": {
+    "r0_output_seal": {"path": "results/inference_cf/r0/output_seal.json",
+                       "sha256": "sha256:94d09c04636f9a4456a4812369dab2e0120d645e11c459f0efc611083d94610c"},
+    "r0_rows": "results/inference_cf/r0/run1/rows/{i:03d}.{json,npz}; PRIMARY track_heard_intervals only; reused by audio file hash",
+    "b0m_lineage": "results/inference_cf/p2_A_r1_L16/rows/{i:03d}.json systems.B0M_L16 (descriptive identity check only)",
+    "s1_config": {"path": "configs/inference_cf/s1_acoustic_evidence.json",
+                  "sha256": "sha256:cd030a315b47f1b27da93fe4c4327c58d696fe0f84f8d0b1d84ab5a945364675"}
+  },
+  "engine": {
+    "name": "matched_forced_decode_v1",
+    "definition": "experiments.inference_cf_cached.Branch.step(new, capture_layer=16, attention=True) + core_p1.processed_argmax (lowest-ID ties); identical loop to episodic_tta.forced_decode / ttls.greedy_decode",
+    "excluded": "experiments.inference_cf_cached.cached_greedy (torch.topk tie-breaking; 59/300 forced-ZH divergences, all at exact ties)",
+    "precision": "bf16", "attention": "eager", "batch": 1, "max_new_tokens": 200, "eos": 50257,
+    "cB": [50258, 50260, 50360, 50364],
+    "cE": [50258, 50259, 50360, 50364],
+    "auto": "native single-SOT detection (generation _retrieve_init_tokens, lowest-ID argmax verified) then matched_forced_decode under the detected prompt",
+    "capture_layer": 16,
+    "suppression": "generation_config.suppress_tokens every step; begin_suppress_tokens at content step 0 only"
+  },
+  "alignment": {
+    "heads": [[7, 0], [10, 17], [12, 18], [13, 12], [16, 1], [17, 14], [19, 11], [21, 4], [24, 1], [25, 6]],
+    "source": "cached current-query attention returned by Branch.step at every decode step of the branch's own history",
+    "rows": "row s = query predicting content token s (prediction-query offset -1); EOS row included when terminated by EOS; capped decodes time T-1 tokens",
+    "heard_frames": "ceil(min(N,480000)/320)",
+    "standardize": "per frame over the available prediction rows (mean/std, ddof 0, std floor 1e-8)",
+    "median_width": 7,
+    "dtw": "csasr.data.alignment.dtw on -mean_heads; csasr.data.alignment.token_frame_spans",
+    "frame_samples": 320
+  },
+  "candidates": {
+    "word_regex": "[A-Za-z]+(?:['’-][A-Za-z]+)*",
+    "han": "csasr.data.normalize.is_han",
+    "min_han_cover": 0.5,
+    "onset_tolerance_samples": 3200,
+    "present_tolerance_samples": 3200,
+    "min_content_t": 1,
+    "encoding": "candidate c: tokenizer.encode(' ' + surface, add_special_tokens=False); B0 block b: tokenizer.encode(block_surface, add_special_tokens=False); every piece < eos and not in suppress_tokens"
+  },
+  "region": {
+    "r0_en_min_fraction": 0.5,
+    "s1_functions": "csasr.inference_cf.s1_evidence.heard_attention / select_target / select_offtarget, unchanged, with the S1 config",
+    "heard_mass_min": 0.5,
+    "crop_word_cover_min": 0.5,
+    "attention_query": "B0 branch cached attention at the target query (row t)"
+  },
+  "selection": {
+    "rule": "earliest structurally eligible pair per utterance (steps 2-3), before any acoustic scoring",
+    "order": ["en_onset_sample", "en_first_token_index", "surface"],
+    "on_verification_failure": "abstain; never try a later proposal"
+  },
+  "scoring": {
+    "F": "mean_j log P(w_j | a, p, w_<j); float32 log_softmax of processed full-vocabulary logits, upcast float64",
+    "conditions": ["x", "target", "off"],
+    "mask": "csasr.inference_cf.lexical_compatibility.hard_mask (positive float32 zero, half-open, bytes outside preserved)",
+    "replay": "fresh cold Branch per (condition, word): prompt, then B0 prefix tokens one per step, then candidate pieces one per step",
+    "A": "A_R(w) = F_x(w) - F_R(w)",
+    "C": "[A_target(c) - A_target(b)] - [A_off(c) - A_off(b)]",
+    "accept": "A_target(c) >= ln 2 and C >= ln 2",
+    "threshold_nats": 0.6931471805599453
+  },
+  "controls": {
+    "unfiltered_U0": "every forced-EN heard word whose casefold is absent from all B0 Latin words",
+    "unfiltered_U1": "every step-2 associated proposal",
+    "structural_U2": "every step-2+3 eligible proposal (all, not only the earliest)",
+    "off_target_only": "accept iff A_off(c) - A_off(b) >= ln 2 on the scored pairs",
+    "shuffled": "R0 heard track circularly shifted by floor(heard/2); steps 3-4 rebuilt; no extra acoustic scoring"
+  },
+  "outputs": {
+    "dir": "results/inference_cf/abts0_k1",
+    "archive": "/mnt/data/tungnx/cs-asr-steer/archives/abts0_k1/run1/sha256",
+    "archive_contents": "per-utterance packed bf16 alignment-head attention (heard frames) for B0 and EN branches, content-addressed"
+  },
+  "compute": {
+    "job": "one Slurm job, H100 MIG 3g.40gb, bf16, wall limit 2h",
+    "forecast_decoder_steps_max": 180000,
+    "forecast_encoder_calls_max": 900,
+    "abort_if_forecast_hours_gt": 2.0
+  },
+  "evaluator": {
+    "references": "experiments.inference_cf_p2_evaluate.load_references (frozen R2 evaluation panel)",
+    "timing_proxy": "R0 oracle source: MMS-FA CTC reference-unit timing via experiments.inference_cf_r0_analyze.oracle_tracks; NOT ground truth",
+    "groups": {"MM": "reference EN fraction < 0.2", "MIX": "0.2 <= fraction < 0.5", "END": "fraction >= 0.5"},
+    "en_fraction": "canonical units (evaluation.normalization.segment_units(normalize_text(reference))): EN units / all units",
+    "literal": "a canonical reference EN unit equal to the normalized candidate whose CTC interval overlaps the candidate's EN-word interval; sensitivity: +-200 ms",
+    "artifact_taxonomy": {
+      "filler": ["okay", "ok", "yeah", "yep", "oh", "uh", "um", "umm", "hmm", "mm", "ah", "er", "eh", "wow"],
+      "acronym": "single-letter EN unit adjacent to another single-letter EN unit",
+      "boundary_join": "PIER category boundary_error, or Latin hypothesis token containing the reference word as a strict substring"
+    },
+    "genuine": "B0-wrong (PIER categorize against matched-engine B0) and not an artifact",
+    "reachable_onset": "genuine run whose onset unit is Han-substituted in B0 (wrong_language_substitution / phonetic_transliteration_or_script), B0 aligned unit index > 0, CTC onset inside the heard horizon",
+    "go_MM": {
+      "accepted_min": 12, "accepted_dialogues_min": 6, "precision_min": 0.75,
+      "genuine_recoverable_words_min": 6, "genuine_recoverable_dialogues_min": 4,
+      "reachable_recall_min": 0.2, "auroc_min": 0.65, "auroc_dialogues_min": 3
+    },
+    "labels": {
+      "K1_BLOCKED": "engineering/data prerequisite unresolved, or any integrity check failed",
+      "K1_INSUFFICIENT": "reachable genuine MM onsets < 12 or in < 6 dialogues, or < 3 dialogues with both literal and nonliteral scored MM pairs",
+      "K1_FAIL": "measurable, but any go_MM condition fails",
+      "K1_PASS": "every go_MM condition holds; makes K2 eligible for human review only"
+    },
+    "bootstrap": {"seed": 240924, "reps": 2000, "unit": "dialogue", "use": "descriptive only"}
+  }
+}

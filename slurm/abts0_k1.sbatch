@@ -10,7 +10,8 @@
 #   PHASE=capture  matched-engine B0 / EN (+ cached alignment-head attention) and AUTO for FULL300
 #   PHASE=score    hard-zero target / off-target rescoring of the SEALED chosen pairs only
 #                  (requires the committed + pushed results/inference_cf/abts0_k1/run1/candidates_sealed.json)
-# Between them (CPU): python experiments/abts0_k1.py select --workers 16 ; commit + push the candidate seal.
+# Between them (CPU): python experiments/abts0_k1.py select --workers 16 ; commit + push the candidate seal ;
+#   python experiments/abts0_k1_gate.py check  (G1; PHASE=score refuses without its PASS).
 # Submit with:
 #   sbatch --output=results/inference_cf/abts0_k1/run1/slurm-%j.out --error=results/inference_cf/abts0_k1/run1/slurm-%j.err \
 #          --export=ALL,PHASE=<capture|score> slurm/abts0_k1.sbatch
@@ -24,10 +25,12 @@ PY=/home/tungnx/miniconda3/envs/acl1/bin/python
 test -f results/inference_cf/abts0_k1/plan_sealed.json
 case "$PHASE" in
   capture)
+    "$PY" experiments/abts0_k1_gate.py verify-amendments   # evaluator amendments sealed BEFORE any output exists
     "$PY" experiments/abts0_k1.py capture ;;
   score)
     test -f results/inference_cf/abts0_k1/run1/candidates_sealed.json
     git ls-files --error-unmatch results/inference_cf/abts0_k1/run1/candidates_sealed.json results/inference_cf/abts0_k1/run1/selection.json
+    "$PY" experiments/abts0_k1_gate.py verify   # G1 (report section 10): refuse to score unless the pre-score gate PASSed
     "$PY" experiments/abts0_k1.py score ;;
   *) echo "unknown PHASE $PHASE"; exit 2 ;;
 esac

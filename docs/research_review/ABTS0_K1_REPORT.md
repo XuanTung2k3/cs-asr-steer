@@ -441,3 +441,57 @@ original 24). No regression sweep was run.
 
 **Final K1 status: `READY_FOR_K1_CAPTURE`.** `k1_status.json` (`K1_BLOCKED`, pre-amendment) is kept as the historical
 record.
+
+## 11. K1 capture and G1 gate — 2026-10-12
+
+**Result: `K1_INSUFFICIENT` (STRUCTURAL).** The run stopped at the pre-score gate. No acoustic scoring was
+submitted, no reference was opened for K1 outputs, and K2 is not eligible.
+
+**Preflight:** clean tree at `00460218`; amendment seal verified; plan, config, design and all 13 source pins
+unchanged; 11/11 model files re-hashed, including the weights.
+
+**Capture: Slurm 58631, `mig` partition, MIG 3g.40gb.**
+- COMPLETED with exit code 0, in 7 min 42 s of wall time (457 s in the stage).
+- Peak VRAM was 3.42 GB allocated and 3.84 GB reserved.
+- No retry was needed.
+
+All of these checks passed:
+- 300/300 rows have the correct identity and plan hash.
+- B0 equals the historical B0M on 300/300.
+- The EN branch terminated on EOS for 300/300, and none hit the 200-token cap.
+- AUTO detection agrees with the lowest-ID tie convention on 300/300.
+- All 600 archived attention objects match their hashes (478 MB on `/mnt/data`, not committed).
+- Weights are unchanged, no grads were created, and none of the 928 opened paths is forbidden.
+
+`capture_seal.json` (`sha256:ccde0e0a…`) is the existing `seal` stage, taken before `select`.
+
+**Selection:** Slurm 58632, CPU only with no GPU requested, 27 s. The rules are unchanged and the firewall is clean.
+29/300 utterances got a chosen pair (MM 17, MIX 7, END 5), and all 29 are encoding-valid. The selection is
+`sha256:4e9e14c8…`.
+
+Rejections across the 5,800 proposals:
+
+| Status | Count |
+|---|---:|
+| Eligible | 60 |
+| `NOT_IN_R0_EN` | 2,781 |
+| `ONSET_MISMATCH` | 1,262 |
+| `PRESENT_IN_B0` | 1,047 |
+| `NO_HAN_OVERLAP` | 221 |
+| `CONTENT_T0` | 201 |
+| Other | 228 |
+
+**G1** (`gate_prescore.json`, `sha256:0b617c06…`): integrity PASS. Capacity FAIL:
+
+| MM capacity check | Observed | Needed | Result |
+|---|---:|---:|---|
+| Encoding-valid chosen pairs | 17 | ≥ 12 | pass |
+| Dialogues covered | 13 | ≥ 6 | pass |
+| Dialogues with ≥ 2 chosen pairs | 2 | ≥ 3 | **fail** |
+
+Only dialogues CSD0006 (4) and CSD0015 (2) have two or more. The frozen AUROC gate needs at least 3 dialogues holding
+both classes, so K1_PASS is unreachable whatever the acoustic scores turn out to be.
+
+**Interpretation:** this is a negative feasibility result for the reference-free candidate generator at FULL300
+size. It says nothing about the acoustic rule, which was never scored. Per the precedence rule, scoring is not
+run, and no threshold or rule was changed.

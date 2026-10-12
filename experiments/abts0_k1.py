@@ -11,8 +11,9 @@ select    (CPU) DTW timing, units, association, R0 region + unchanged S1 crops, 
           shuffled track); writes selection.json and candidates_sealed.json BEFORE any acoustic scoring.
 score     (GPU) only the sealed chosen pairs: hard-zero target / off-target encoders, cold matched-engine replays of the
           B0 prefix, F / A / C and the frozen accept rule; bitwise query-logit identity against capture.
-run       (GPU) capture + select + score in one allocation (the selection seal is written before scoring starts).
 seal      (CPU) immutable output seal over every run file and archive object, before any reference evaluation.
+Execution order: capture (GPU job A) -> select (CPU, pure-Python DTW parallelised over --workers) -> commit + push the
+candidate seal -> score (GPU job B) -> seal. Selection never runs inside a GPU allocation.
 
 No reference, evaluator target, stratum or outcome file is opened here; GPU stages log every opened path.
 """
@@ -290,7 +291,14 @@ def token_bytes_list(tok, byte_decoder, ids) -> list[bytes]:
     return [token_bytes(tok, i, byte_decoder) for i in ids]
 
 
-def select_rows(plan: dict, c: dict) -> dict:
+def _timing_job(a: tuple) -> tuple:
+    """Worker: frozen DTW timing of one branch from its archived cached attention (pure numpy / Python)."""
+    from csasr.inference_cf.abts0_k1 import token_intervals
+    ref, n, term, heard = a
+    return ref["sha256"], token_intervals(load_heads(ref), n, term, heard)
+
+
+def select_rows(plan: dict, c: dict, workers: int = 1) -> dict:
     from transformers import GenerationConfig
     from csasr.inference_cf import abts0_k1 as K
     from csasr.models.whisper import load_audio
@@ -299,11 +307,26 @@ def select_rows(plan: dict, c: dict) -> dict:
     sup = list(gen.suppress_tokens or [])
     eos = c["engine"]["eos"]
     s1cfg = json.loads((ROOT / c["inputs"]["s1_config"]["path"]).read_text())
-    out_rows = []
+    caps = []
     for r in plan["rows"]:
         cap = json.loads((ROOT / RUN / "capture" / f"{r['index']:03d}.json").read_text())
         if cap["plan_hash"] != plan["plan_hash"]:
             raise ValueError("stale capture row")
+        caps.append(cap)
+    jobs = [(cap[b]["heads"], len(cap[b]["tokens"]), cap[b]["terminated"], r["heard_samples"])
+            for cap, r in zip(caps, plan["rows"]) for b in ("B0", "EN")]
+    timings = None
+    if workers > 1:
+        from concurrent.futures import ProcessPoolExecutor
+        try:
+            with ProcessPoolExecutor(max_workers=workers) as ex:
+                timings = dict(ex.map(_timing_job, jobs, chunksize=4))
+        except OSError as exc:                       # e.g. no POSIX semaphores (/dev/shm full): identical serial path
+            print(f"select: process pool unavailable ({exc!r}); serial DTW", flush=True)
+    if timings is None:
+        timings = dict(map(_timing_job, jobs))
+    out_rows = []
+    for cap, r in zip(caps, plan["rows"]):
         heard = r["heard_samples"]
         x = load_audio(r["audio_path"], 16000)
         with np.load(ROOT / r["r0_arrays"]) as z:
@@ -311,8 +334,7 @@ def select_rows(plan: dict, c: dict) -> dict:
         b0_heads, en_heads = load_heads(cap["B0"]["heads"]), load_heads(cap["EN"]["heads"])
         b0 = K.content_units(token_bytes_list(tok, bdec, cap["B0"]["tokens"]))
         en = K.content_units(token_bytes_list(tok, bdec, cap["EN"]["tokens"]))
-        b0_t = K.token_intervals(b0_heads, len(cap["B0"]["tokens"]), cap["B0"]["terminated"], heard)
-        en_t = K.token_intervals(en_heads, len(cap["EN"]["tokens"]), cap["EN"]["terminated"], heard)
+        b0_t, en_t = timings[cap["B0"]["heads"]["sha256"]], timings[cap["EN"]["heads"]["sha256"]]
         row = {"index": r["index"], "utterance_id": r["utterance_id"], "dialogue_id": r["dialogue_id"], "heard": heard,
                "b0_timing_status": b0_t["status"], "en_timing_status": en_t["status"]}
         pools = K.structural_pools(en=en, en_timing=en_t, b0=b0, b0_timing=b0_t, heard=heard, b0_heads=b0_heads,
@@ -407,11 +429,9 @@ def gpu_stage(name: str) -> None:
     rt = runtime_open(name)
     bundle = load_model(c)
     w0 = weight_probe(bundle)
-    if name in ("capture", "run"):
+    if name == "capture":
         capture_rows(bundle, plan, c)
-    if name == "run":
-        select_rows(plan, c)
-    if name in ("score", "run"):
+    if name == "score":
         score_rows(bundle, plan, c)
     runtime_close(bundle, rt, name, w0)
 
@@ -438,7 +458,8 @@ def cmd_seal(args) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=("prepare", "forecast", "capture", "select", "score", "run", "seal"))
+    ap.add_argument("stage", choices=("prepare", "forecast", "capture", "select", "score", "seal"))
+    ap.add_argument("--workers", type=int, default=16, help="select: DTW worker processes (CPU)")
     ap.add_argument("--hash-model", action="store_true", help="prepare: hash all pinned model files (incl. weights)")
     args = ap.parse_args()
     if args.stage == "prepare":
@@ -449,7 +470,7 @@ def main() -> None:
         plan = load_plan()
         check_sources(plan)
         sys.addaudithook(_audit_open)
-        select_rows(plan, cfg())
+        select_rows(plan, cfg(), workers=args.workers)
         firewall_check()
     elif args.stage == "seal":
         cmd_seal(args)

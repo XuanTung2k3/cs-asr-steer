@@ -280,3 +280,31 @@ def test_evaluator_literal_labelling_uses_timing_overlap():
     lab = E.label_candidate(rc, st, "school", (9100, 11000))
     assert lab["label"] == "UNTIMED_SPAN" and not lab["literal"]
     assert E.label_candidate(rc, st, "school", (8100, 8900))["literal_pm200"] is True
+
+
+def test_structural_pools_end_to_end_with_unchanged_s1_crops():
+    s1cfg = json.loads((ROOT / "configs/inference_cf/s1_acoustic_evidence.json").read_text())
+    heard, F = 64000, 200
+    rng = np.random.default_rng(0)
+    x = (rng.standard_normal(80000) * 0.1).astype(np.float32)
+    track = np.array([[0, 16000, 2], [16000, 24000, 1], [24000, 64000, 2]])
+    b0 = K.content_units([b"\xe6\x88\x91", HAN_XUE, HAN_XIAO, "了".encode()])
+    b0_t = {"status": "OK", "n_timed": 4, "start": [0, 16000, 20000, 24000], "end": [16000, 20000, 24000, 64000]}
+    en = K.content_units([b" I", b" go", b" school", b" now"])
+    en_t = {"status": "OK", "n_timed": 4, "start": [0, 5000, 16100, 24100], "end": [5000, 16100, 23900, 40000]}
+    heads = np.full((5, 3, F), 1e-6, dtype=np.float32)
+    heads[:, :, 50:75] = 0.9 / 25                                      # every query attends to the EN region
+    out = K.structural_pools(en=en, en_timing=en_t, b0=b0, b0_timing=b0_t, heard=heard, b0_heads=heads, track=track,
+                             x=x, s1cfg=s1cfg)
+    st = {p["surface"]: p["status"] for p in out["proposals"]}
+    assert st["school"] == "ELIGIBLE" and st["I"] == "CONTENT_T0" and st["now"] == "NOT_IN_R0_EN"
+    ch = out["chosen"]
+    assert ch["surface"] == "school" and ch["t"] == 1 and ch["b_surface"] == "学校"
+    a, b = ch["target"]["bounds"]
+    assert 16000 <= a < b <= 24000 and ch["target"]["word_cover"] >= 0.5
+    oa, ob = ch["off_target"]["bounds"]
+    assert ob - oa == b - a and (ob <= a or oa >= b) and ch["off_target"]["en_fraction"] <= 0.1
+    assert {u["surface"] for u in out["U0"]} == {"I", "go", "school", "now"}
+    shuf = K.structural_pools(en=en, en_timing=en_t, b0=b0, b0_timing=b0_t, heard=heard, b0_heads=heads,
+                              track=K.shift_track(track, heard), x=x, s1cfg=s1cfg)
+    assert {p["surface"]: p["status"] for p in shuf["proposals"]}["school"] == "NOT_IN_R0_EN"

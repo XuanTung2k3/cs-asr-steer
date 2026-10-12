@@ -4,6 +4,9 @@
 cached alignment attention, and masked-audio rescoring. No saved artifact contains them. This is an engineering/data
 gate, **not** a scientific verdict. K2 is not eligible, and nothing in K2 was implemented or run.
 
+**Update 2026-10-12 (§10 governs):** after the final scientific preflight, the status is **`READY_FOR_K1_CAPTURE`**,
+pending GPU authorization and a yes/no on the evaluator-side amendments A1–A3/G1. Nothing has been submitted.
+
 Scope: design `docs/research_review/ABTS0_DESIGN.md` (pinned `sha256:bf6cf5c2…`); forensic base `5c504c4e`. Data:
 exposed D-dev-select FULL300 only (20 dialogues). No confirm/test/router-calib/P3/transfer access, no GPU job, no
 training, no edits to historical code, results or contracts. Every change since `5c504c4e` is a new file.
@@ -245,3 +248,169 @@ python -m pytest -q tests/test_abts0_k1.py
 
 Diagnostics in §2.2 and §4 (tie analysis, B0 DTW vs CTC, S1 rule preview) are short scratch scripts reading only the
 named sealed artifacts. Their outputs are quoted here; they are not K1 evidence.
+
+
+## 10. Final scientific preflight — 2026-10-12
+
+**Decision: `READY_FOR_K1_CAPTURE`, not submitted.** The runtime path (capture → select → score) is final. It is
+covered by the sealed plan `sha256:5f3c3ae7…`, and nothing below changes it.
+
+Two things are still required before the job runs:
+- **GPU authorization.**
+- **A yes/no on four evaluator-side amendments (A1–A3, G1, §10.3).** They touch no pinned file. This text, committed
+  before any K1 output exists, is their pre-registration. If they are rejected, the frozen v1 evaluator runs unchanged
+  and its timing bias (§10.1, item 3) is reported as a known limitation.
+
+K2 remains ineligible. Sections 1–9 are kept as the original record; where they differ, this section governs. An
+uncommitted draft of this section, from an earlier pass, was reviewed, verified and folded in here.
+
+### 10.1 Remaining problems and resolutions
+
+| # | Issue | Verified finding | Resolution |
+|---|---|---|---|
+| 1 | Denominators | The registry counts **maximal reference English runs**, not words. MM has 186 genuine, B0-wrong, heard runs. 43 have a Han-rendered onset and 39 are reachable (onset Han-substituted, aligned B0 index > 0, heard), in 13 dialogues. The ceiling of 14 utterances (30 words) is a *word*-level proxy. It uses the mismatched historical EN branch and CTC ±200 ms, so it is not a bound. | Separate denominators (§10.2). The frozen 0.20 gate applies to the 39 reachable onsets: **≥ 8 onset hits**, which is only 4.3% of 186. With one selection per utterance, the 14-utterance proxy would allow at most 14 hits (35.9% of 39). Hitting 8 uses 57% of that proxy. |
+| 2 | Preview precision (§4) | "5/14 ≈ 0.36" pooled two populations. On EN-confusion positions, 5/8 = 62.5% of literal candidates were accepted against 7/19 = 36.8% of other Latin candidates. Precision is 5/12 = 41.7% and the likelihood ratio is 1.70, so 75% precision would need a pre-acoustic literal rate of 63.9%. Adding the 3 ZH-correct candidates (2 accepted) gives 5/14 = 35.7%, a likelihood ratio of 1.53 and a required rate of 66.3%. | The definitions are corrected here. Units are single tokens on S1 queries, not whole-word K1 pairs. Only 3 dialogues are involved, so the result is descriptive only. **No threshold changes:** A_target(c) ≥ ln 2 and C ≥ ln 2 stay. |
+| 3 | Timing | Comparing B0 DTW to the CTC proxy over 11,534 Han units, the median absolute error is 0.222 s and 44.8% fall within 200 ms. The 0.389 s figure is the **mean signed** error. With the median absolute at 0.22 s, it reflects a skewed tail, not a constant offset. Runtime association compares **two DTW estimates** (EN against B0) from the same heads on the same audio. Shared bias cancels there, and their relative error is unmeasured. | **Keep the 200 ms runtime tolerance** (`ONSET_TOL = 3200`, design step 2). Widening it, or applying a 390 ms shift, would be an untested, post-design criterion change that admits more false associations. A tight tolerance only costs coverage, and low coverage now reports as INSUFFICIENT (A3/G1), not FAIL. As a descriptive sensitivity check only, report how many `ONSET_MISMATCH` proposals have \|onset_diff\| ≤ 6400. This is already recorded in `selection.json`, and those rows are neither scored nor used for the decision. |
+| 4 | Evaluator literal label | The v1 primary criterion requires the candidate's EN-word DTW interval to overlap the reference unit's CTC interval at tolerance 0. That interval carries the error from item 3 directly, so v1 under-counts literal candidates and biases toward K1_FAIL. The design defines precision **lexically**: "literal spoken-English word at the associated span … not merely appearing elsewhere". | **A1**: timing-free lexical labelling (§10.3). The v1 labels at 0 and ±200 ms become localization diagnostics. |
+| 5 | Onset recall | v1 credits a reachable run when *any* genuine literal word inside it is accepted. That is run coverage, but the design's gate is "reachable-onset recall". | **A2**: the numerator counts onset hits only. v1's run coverage is kept as a secondary metric. |
+| 6 | Opportunity count | v1 returns INSUFFICIENT only if reachable < 12 or < 6 dialogues, or if < 3 AUROC dialogues. With 39 reachable runs in 13 dialogues, a structurally thin candidate pool would read as FAIL. The design says "Missing classes/coverage means insufficient evidence". | **A3** (evaluator precedence) and **G1** (an enforced reference-free gate before scoring). |
+| 7 | Runtime stops | `capture` records `B0.equals_B0M` but does not stop on a mismatch. `score` checks only that the candidate seal exists. | **G1** enforces integrity and capacity before `PHASE=score`, and the sbatch score branch requires its PASS file. |
+| 8 | Reproducibility | Re-verified at HEAD `3c19e654`: all 13 source pins match; config `sha256:5befb72a…` and design `sha256:bf6cf5c2…` match the plan; the panel has 300 unique IDs (20 dialogues × 15); 11/11 model files were verified at prepare; `references_used = false`; no Slurm jobs. B0M equals the R0 baseline on 300/300, and B0M equals the matched engine on 300/300 by historical run-time checks. Neither is a fresh ABTS GPU replay. `processed_argmax` breaks ties to the lowest ID; `cached_greedy`'s `topk` does not (§2.2). | Capture must reproduce B0 tokens and termination on **300/300**. Any mismatch → `K1_BLOCKED`, with no exclusions. The evaluator is not in the plan pins, so A1–A3/G1 need no re-`prepare`. |
+| 9 | Stale config prose | `compute.job` says "one Slurm job, 2 h". The authorized sequence uses two allocations of ≤ 1.5 h. | Documented here, but the config is not edited: it is pinned, and editing would invalidate the plan. |
+
+### 10.2 K1 eligibility and recall definitions (MM is primary; MIX and END are reported separately)
+
+Each measurement below is kept separate.
+
+| Measurement | Definition | Reference-free? |
+|---|---|---|
+| **Structural eligibility** | The funnel of proposals by association/region status, then U0 ⊇ U1 ⊇ U2 ⊇ chosen, then encoding-valid chosen. | yes |
+| **Opportunity count** | MM encoding-valid chosen pairs, and their dialogues (G1, before scoring). After scoring: MM pairs with status `SCORED` and a finite rule (A3). | group label only |
+| **Candidate precision** | Primary: verified `LITERAL` / all accepted MM, with `AMBIGUOUS` counted as non-literal. Upper bound: (`LITERAL` + `AMBIGUOUS`) / accepted. Also: pre-acoustic precision of the chosen set; U0/U1/U2 pool precision; off-target-only and shuffled-track controls. | no |
+| **Reachable-onset recall** (gate) | Distinct reachable MM runs whose **first** reference unit is the aligned onset `i` of an accepted, `LITERAL`, genuine candidate, divided by the reachable count from captured B0. This should be 39; any other value means B0 changed, so `K1_BLOCKED`. | no |
+| All-genuine onset recall | The same numerator / genuine heard MM runs (186). Includes deletions and wrong-English runs, which are unaddressable by design. | no |
+| Reachable-run coverage | The v1 numerator (a genuine literal anywhere in the run) / 39. Secondary only. | no |
+
+### 10.3 Frozen rules
+
+**Selection (unchanged; pinned in the plan).** Design steps 1–5 and I1–I11 apply exactly as frozen:
+- regex units and association at ≥ 0.5 coverage and ≤ 200 ms onset;
+- reject words already present in B0; require t ≥ 1 and a complete UTF-8 prefix;
+- R0 EN fraction ≥ 0.5, S1 crops unchanged, crop word-cover ≥ 0.5;
+- one earliest eligible pair per utterance, abstaining if verification fails;
+- accept iff A_target(c) ≥ ln 2 and C ≥ ln 2.
+
+The runner opens no reference or evaluator file, and its firewall enforces this. Nothing in A1–A3/G1 can reach
+selection or threshold choice.
+
+**Evaluation (approval requested; additive `experiments/abts0_k1_evaluate_v2.py`, v1 kept and also reported):**
+
+- **A1, timing-free lexical label.** Let H be the chosen pair's B0 Han block.
+  1. Map H's raw K1 units to canonical B0 units (`segment_units(normalize_text(B0 text))`) by exact monotone surface
+     match. Any unmapped unit → `AMBIGUOUS_UNMAPPED`.
+  2. Let R be the reference indices that the frozen `csasr.evaluation.mer.align_tokens(reference, B0)` aligns
+     (MATCH/SUB) to H. This is the same alignment that defines "reachable", so numerator and denominator share it.
+     If R is empty → `AMBIGUOUS_NO_ALIGNMENT`.
+  3. Let `i = min(R)` and let `cu` be the candidate's canonical units. If `rt[i:i+|cu|] == cu` and all those units are
+     English → **`LITERAL`**. The frozen `unit_status` at `i` then gives the genuine/artifact flags and the B0
+     rendering. `LITERAL_ONSET` means `i` is the first unit of a reachable run.
+  4. Otherwise:
+     - `cu` starts at some j ∈ R or at i − 1 → `AMBIGUOUS_BOUNDARY`;
+     - else `cu` occurs elsewhere in the reference → `WRONG_OCCURRENCE`;
+     - else `rt[i]` is English → `WRONG_ENGLISH`;
+     - else → `EN_ON_MANDARIN_SPEECH` (translation or hallucination; translation cannot be told apart lexically).
+
+  No timing and no human adjudication enter the label. AUROC uses `LITERAL` against non-ambiguous non-literal pairs.
+  The v1 CTC-overlap labels (0 and ±200 ms) and their agreement with A1 are reported as diagnostics only.
+
+  Reference-side reporting stays separate. Genuine heard runs are split by B0 onset rendering: Han substitution
+  (addressable), deletion/omission (unaddressable), wrong-English, correct onset with a later error, and
+  boundary/other.
+- **A2, onset recall.** Use the numerator in §10.2. All numeric GO thresholds are unchanged: ≥ 12 accepted in
+  ≥ 6 dialogues; precision ≥ 0.75; ≥ 6 genuine recoverable words in ≥ 4 dialogues; onset recall ≥ 0.20; dialogue-macro
+  AUROC ≥ 0.65 over ≥ 3 dialogues.
+- **A3, precedence.** Checks run in order and the first match decides:
+  1. `K1_BLOCKED`: any integrity failure, `INVALID_ENGINE_IDENTITY`, a seal mismatch or a reachable count ≠ 39.
+  2. `K1_INSUFFICIENT`, with a reason code:
+     - `STRUCTURAL`: G1 failed;
+     - `COVERAGE`: < 12 scored MM pairs or < 6 such dialogues;
+     - `CLASSES`: < 3 MM dialogues with both A1 classes;
+     - `REACHABLE`: reachable < 12 or < 6 dialogues.
+  3. `K1_FAIL`: any GO condition fails.
+  4. `K1_PASS`: every GO condition holds. This makes K2 eligible for human review only.
+
+  The COVERAGE and STRUCTURAL thresholds are the logical minimum the frozen gates already need. Accepted pairs are a
+  subset of scored pairs, which are a subset of chosen pairs. An AUROC dialogue needs ≥ 2 scored pairs. So these are
+  not new tuning parameters. Both INSUFFICIENT and FAIL stop K2. INSUFFICIENT (STRUCTURAL/COVERAGE) is still a
+  negative feasibility finding for this candidate generator at panel size. It is simply not evidence about the
+  acoustic rule.
+- **G1, pre-score gate.** Additive `experiments/abts0_k1_gate.py`, CPU, writes `results/inference_cf/abts0_k1/gate_prescore.json`.
+  - **Integrity** (any failure → `K1_BLOCKED`):
+    - 300/300 ordered capture rows carry the plan hash;
+    - B0 `equals_B0M` holds on 300/300;
+    - all archived attention objects match their hashes;
+    - `runtime_capture.json` shows weights unchanged, no grads, no forbidden opens and no site hooks;
+    - the selection and candidate seal hashes match, and both are committed **and pushed**.
+  - **Capacity** (any failure → `K1_INSUFFICIENT/STRUCTURAL`, and **no scoring**):
+    - ≥ 12 MM encoding-valid chosen pairs;
+    - in ≥ 6 dialogues;
+    - ≥ 3 dialogues each holding ≥ 2 of them.
+
+  MM membership comes from `groups_prerun.json`, a per-utterance group and dialogue list written from references
+  **before capture** and committed with its hash. G1 opens no reference or label. The `PHASE=score` branch of the
+  sbatch script adds one `test` that the gate status is `PASS`.
+
+### 10.4 Execution sequence (not run; each step waits for the previous one)
+
+```bash
+cd /home/tungnx/cs-asr-steer-inf
+export PYTHONPATH="$PWD/src:$PWD" LD_LIBRARY_PATH="/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
+PY=/home/tungnx/miniconda3/envs/acl1/bin/python; R=results/inference_cf/abts0_k1
+# 0  CPU, before capture and only if A1–A3/G1 are approved: add abts0_k1_gate.py, abts0_k1_evaluate_v2.py (+ `groups`
+#    subcommand writing $R/groups_prerun.json) and the one-line sbatch guard; focused synthetic tests only; commit + push.
+"$PY" experiments/abts0_k1_evaluate_v2.py groups
+# 1  GPU capture (authorized). Resumes at row level if re-submitted after a wall-time stop.
+mkdir -p $R/run1
+sbatch --output=$R/run1/slurm-%j.out --error=$R/run1/slurm-%j.err --export=ALL,PHASE=capture slurm/abts0_k1.sbatch
+# 2  CPU selection (falls back to serial DTW automatically if /dev/shm is full), then seal the candidates in git.
+"$PY" experiments/abts0_k1.py select --workers 16
+git add $R/run1/capture $R/run1/runtime_capture.json $R/run1/selection.json $R/run1/candidates_sealed.json
+git commit -m "ABTS-0 K1: capture + sealed candidates (pre-scoring)" && git push origin research/steering-forensics
+# 3  Gate. If not PASS: record K1_BLOCKED / K1_INSUFFICIENT(STRUCTURAL) in k1_status, commit, STOP.
+"$PY" experiments/abts0_k1_gate.py && git add $R/gate_prescore.json && git commit -m "ABTS-0 K1: pre-score gate" && git push
+# 4  GPU scoring of sealed chosen pairs only (the sbatch refuses to score without gate PASS)
+sbatch --output=$R/run1/slurm-%j.out --error=$R/run1/slurm-%j.err --export=ALL,PHASE=score slurm/abts0_k1.sbatch
+# 5  Output seal (also re-verifies archive hashes), commit + push BEFORE opening references
+"$PY" experiments/abts0_k1.py seal
+git add $R/run1/scores $R/run1/runtime_score.json $R/output_seal.json && git commit -m "ABTS-0 K1: output seal" && git push
+# 6  Reference evaluation, v2 primary (approved) with v1 alongside; then a new sealed k1_status. STOP for human review.
+"$PY" experiments/abts0_k1_evaluate_v2.py evaluate
+```
+
+If A1–A3/G1 are rejected, skip step 0's new files. In that case, step 3 becomes the manual integrity/capacity
+checklist from G1 (over all 300 utterances, since no frozen group list exists), and step 6 runs
+`experiments/abts0_k1_evaluate.py evaluate`.
+
+### 10.5 GPU cost and stop conditions
+
+Both phases run on an H100 MIG 3g.40gb with a wall limit of 1.5 h each and a peak of about 4 GiB. The time
+estimates come from the saved forecast (15–30 ms per decoder step).
+
+| Phase | Work | Expected | Worst case |
+|---|---|---|---|
+| Capture | 300 encoders, B0 + EN with attention, plus AUTO; about 48,088 decoder steps; 0.3–0.6 GB archive on `/mnt/data` | 15–40 min, including I/O on the congested filesystem | Hard cap 180,000 steps, 45–90 min |
+| Select | CPU DTW over 600 branches | 30–50 min | Several hours, serial |
+| Score | Sealed chosen pairs only: 3 encoders + 6 cold replays each | 10–25 min | ≤ 102,966 steps, 26–52 min |
+
+The expected total is about 0.5–1 GPU-hour. At most 3 GPU-hours can be allocated.
+
+**Stop conditions.**
+- Any exception in a GPU phase stops the run. This covers source/plan/config pins, waveform hashes, eager attention,
+  alignment heads, masks changing bytes outside the crop, and the firewall.
+- A wall-time stop allows **one** resubmission of the same phase, with identical code and row-level resume. An
+  incomplete phase after that → `K1_BLOCKED`.
+- Any B0 mismatch, missing row, archive hash failure or changed weight probe → `K1_BLOCKED`. No exclusions.
+- If G1 capacity fails → `K1_INSUFFICIENT`, and scoring is not submitted.
+- Any `INVALID_ENGINE_IDENTITY` or seal mismatch → `K1_BLOCKED`.
+- Population, thresholds, 200 ms association, rules and the evaluator must not change after step 1.
+- No K2, entropy/RL, optimizer or layer sweep. A `K1_PASS` only queues human review.

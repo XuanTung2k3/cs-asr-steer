@@ -275,6 +275,11 @@ def failure(B, S, FILL):
             "_per_utt": per_utt}
 
 
+def json_keys(d):
+    """Amendment r2: str keys at the top level (seed ints next to "seed_mean" cannot be sorted by write_json)."""
+    return {str(k): v for k, v in d.items()}
+
+
 def dialogue_table(per_utt):
     t = collections.defaultdict(lambda: np.zeros(8))
     for u in per_utt:
@@ -350,7 +355,7 @@ def run_evaluate():
                                                      - runs[f"CE_seed{s}"]["epochs"][ep]["beam5"]["metrics"]["CS"]["mer"]}
               for ep in (1, 2, 3)} for s in SEEDS}
     write_json(out("evaluation.json"), {"schema": "reft_p2_1b_evaluation_v1", "utc": now(), "git": git_state(), "ce42_reused_from_p2_1": reuse,
-                                        "B0": {r: metrics(base[r]) for r in base}, "runs": runs, "paired_kl_minus_ce": pair,
+                                        "B0": {r: metrics(base[r]) for r in base}, "runs": runs, "paired_kl_minus_ce": json_keys(pair),
                                         "epoch_matched_kl_minus_ce": em, "note": "dev150 exposed; descriptive uncertainty"})
     print("evaluation written")
 

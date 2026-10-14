@@ -3,6 +3,7 @@
 
   freeze              -- write-once p2_1b/freeze.json (sources + pinned inputs; independent of the P2-0 freeze chain)
   freeze-r1           -- write-once p2_1b/freeze_r1.json: amendment r1 (docs/reft/P2_1B_AMENDMENT_R1.md), chained to freeze.json
+  freeze-r2           -- write-once p2_1b/freeze_r2.json: amendment r2 (docs/reft/P2_1B_AMENDMENT_R2.md), chained to freeze_r1.json
   smoke               -- GPU preflight (G1-G7): provenance, CE-equivalence (seed-42 epoch 1 vs P2-1 bitwise), KL objective
                          checks, training-set mask coverage, decoding parity, timing/VRAM -> p2_1b/preflight.json
   train --arm --seed  -- GPU: one write-once run p2_1b/training/{CE,KL}_seed{s}
@@ -40,7 +41,12 @@ FROZEN_INPUTS = ["p2_0/train_manifest.json", "p2_0/dev_manifest.json", "p2_0/fro
                  "p2_1d/utterance_summary_private.jsonl", "p1/targets.json", "p2_1b/prefix_audit/cases_private.json",
                  "p2_1b/AUTHORIZATION.json"]
 ARMS = ("CE", "KL")
-R1_SOURCES = FREEZE_SOURCES + ["docs/reft/P2_1B_AMENDMENT_R1.md"]
+AMENDMENTS = {1: FREEZE_SOURCES + ["docs/reft/P2_1B_AMENDMENT_R1.md"]}
+AMENDMENTS[2] = AMENDMENTS[1] + ["docs/reft/P2_1B_AMENDMENT_R2.md"]
+
+
+def freeze_path(rev: int) -> Path:
+    return out("freeze.json") if rev == 0 else out(f"freeze_r{rev}.json")
 
 
 def cb() -> dict:
@@ -91,28 +97,32 @@ def run_freeze():
     print(write_json(p, rec))
 
 
-def run_freeze_r1():
-    """Amendment r1: re-hash the sources after the documented smoke-check repair; the original freeze.json is kept and chained."""
-    p, p0 = out("freeze_r1.json"), out("freeze.json")
+def run_freeze_amend(rev: int):
+    """Amendment r<rev>: re-hash the sources after a documented repair; earlier freeze records are kept and chained."""
+    p, prev = freeze_path(rev), freeze_path(rev - 1)
     if p.exists():
         raise SystemExit(f"{p} exists; write-once")
-    rec0 = read_json(p0)
+    if not prev.exists() or any(freeze_path(r).exists() for r in range(rev + 1, rev + 5)):
+        raise SystemExit("amendments must extend the current chain head")
+    rec0 = read_json(prev)
     inputs = {i: sha(art(i)) for i in FROZEN_INPUTS}
-    assert inputs == rec0["inputs"], "frozen inputs changed since freeze.json"
-    rec = {"schema": "reft_p2_1b_freeze_amendment_v1", "amendment": "r1", "utc": now(), "git": git_state(),
-           "prev_freeze": "p2_1b/freeze.json", "prev_freeze_sha256": sha(p0), "amendment_doc": "docs/reft/P2_1B_AMENDMENT_R1.md",
-           "changed_sources": sorted(s for s in R1_SOURCES if rec0["sources"].get(s) != sha(ROOT / s)),
-           "sources": {s: sha(ROOT / s) for s in R1_SOURCES}, "inputs": inputs, "p2_0_chain_head": rec0["p2_0_chain_head"]}
+    assert inputs == rec0["inputs"], f"frozen inputs changed since {prev.name}"
+    rec = {"schema": "reft_p2_1b_freeze_amendment_v1", "amendment": f"r{rev}", "utc": now(), "git": git_state(),
+           "prev_freeze": f"p2_1b/{prev.name}", "prev_freeze_sha256": sha(prev), "amendment_doc": AMENDMENTS[rev][-1],
+           "changed_sources": sorted(s for s in AMENDMENTS[rev] if rec0["sources"].get(s) != sha(ROOT / s)),
+           "sources": {s: sha(ROOT / s) for s in AMENDMENTS[rev]}, "inputs": inputs, "p2_0_chain_head": rec0["p2_0_chain_head"]}
     print(write_json(p, rec))
 
 
 def check_freeze() -> dict:
-    """Verify the P2-1b freeze chain head: freeze_r1.json (chained to the unchanged freeze.json) if present, else freeze.json."""
-    p0, p1 = out("freeze.json"), out("freeze_r1.json")
-    p = p1 if p1.exists() else p0
+    """Verify the P2-1b freeze chain freeze.json -> freeze_r1.json -> ... and the sources/inputs of its head."""
+    rev = 0
+    while freeze_path(rev + 1).exists():
+        rev += 1
+        if read_json(freeze_path(rev))["prev_freeze_sha256"] != sha(freeze_path(rev - 1)):
+            raise SystemExit(f"P2-1b freeze chain broken at {freeze_path(rev).name}")
+    p = freeze_path(rev)
     rec = read_json(p)
-    if p == p1 and rec["prev_freeze_sha256"] != sha(p0):
-        raise SystemExit("P2-1b freeze chain broken: freeze.json changed after amendment r1")
     bad = [s for s, h in rec["sources"].items() if sha(ROOT / s) != h] + [i for i, h in rec["inputs"].items() if sha(art(i)) != h]
     if bad:
         raise SystemExit(f"P2-1b frozen sources/inputs changed: {bad}")
@@ -526,14 +536,15 @@ def run_verify():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["freeze", "freeze-r1", "smoke", "train", "verify"])
+    ap.add_argument("cmd", choices=["freeze", "freeze-r1", "freeze-r2", "smoke", "train", "verify"])
     ap.add_argument("--arm", choices=list(ARMS))
     ap.add_argument("--seed", type=int)
     a = ap.parse_args(argv)
     if a.cmd == "train":
         run_train(a.arm, a.seed)
     else:
-        {"freeze": run_freeze, "freeze-r1": run_freeze_r1, "smoke": run_smoke, "verify": run_verify}[a.cmd]()
+        {"freeze": run_freeze, "freeze-r1": lambda: run_freeze_amend(1), "freeze-r2": lambda: run_freeze_amend(2),
+         "smoke": run_smoke, "verify": run_verify}[a.cmd]()
 
 
 if __name__ == "__main__":

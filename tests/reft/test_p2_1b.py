@@ -8,7 +8,7 @@ import torch.nn.functional as F
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
-from reft.p2_1b_evaluate import correction_retained, decide, preservation_success, sb_units_from_events, seed_unstable  # noqa: E402
+from reft.p2_1b_evaluate import correction_retained, decide, json_keys, preservation_success, sb_units_from_events, seed_unstable  # noqa: E402
 from reft.p2_1b_prefix_audit import classify  # noqa: E402
 from reft.p2_1b_train import kl_masked, seed_config, teacher_mask  # noqa: E402
 
@@ -101,6 +101,14 @@ def test_orthogonal_base_follows_global_rng():
     ga, gb, gc = grads(a, gR), grads(b, gR), grads(c, gR)
     assert torch.equal(ga, gb) and not torch.allclose(ga, gc, atol=1e-4)
     assert torch.allclose(ga.norm(), gc.norm(), rtol=1e-5)  # same gradient, different orthonormal coordinates
+
+
+def test_paired_table_serializes(tmp_path):
+    """Amendment r2: the seed-keyed paired table with "seed_mean" must pass the deterministic write_json."""
+    from reft.common import read_json, write_json
+    pair = {42: {"mer": {"point": 0.1}}, 43: {"mer": {"point": 0.2}}, "seed_mean": {"mer": {"point": 0.15}}}
+    p = write_json(tmp_path / "x.json", {"paired_kl_minus_ce": json_keys(pair)})
+    assert set(read_json(p)["paired_kl_minus_ce"]) == {"42", "43", "seed_mean"}
 
 
 def ev(k, op, en=False, zh=False, tr="unchanged_correct"):

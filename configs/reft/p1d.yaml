@@ -1,0 +1,34 @@
+# P1-D conditional controllability audit (CPU only). Protocol: docs/reft/P1D_PROTOCOL.md. No sample-level data here.
+schema: reft_p1d_config_v1
+seed: 42
+source_dir: p1/l31
+output_dir: p1d
+expected_basis_sha256: "sha256:f020e93b7dfa5be003cc3cb0755ccaf6ef303ec0b881f67b2b77e89a069292c3"
+expected_layer: 31
+expected_rank: 4
+expected_counts:
+  construction: {A: 175, B: 586, P: 604}
+  audit: {A: 45, B: 149, P: 199}
+norm: {type: rms, eps: 1.0e-6}
+random_seeds: [42, 43, 44, 45, 46]
+cv_folds: 5
+d1:
+  C_grid_low: [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  C_grid_full: [0.0001, 0.001, 0.01, 0.1]
+  fpr_targets: [0.05, 0.10]
+  position_bins: [[0, 0], [1, 2], [3, 5], [6, 10], [11, 20], [21, 100000]]
+d2:
+  alpha_grid_low: [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+  alpha_grid_full: [1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0]
+  negligible_rel_norm: 1.0e-6
+  epsilon: 0.10
+bootstrap: {reps: 2000, seed: 42}
+gate:
+  d1_auroc_min: 0.65
+  d1_recall_at_fpr10_min: 0.25
+  d1_lodo_auroc_min: 0.60
+  d1_position_support_min_a: 20
+  d1_position_support_min_bins: 2
+  d1_position_stratified_auroc_min: 0.60
+  d1_incremental_over_nuisance_min: 0.02
+  d2_positive_fraction_min: 0.60

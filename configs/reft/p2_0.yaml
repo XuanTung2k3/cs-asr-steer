@@ -1,0 +1,18 @@
+# P2-0 engineering preflight constants (docs/reft/P2_0_PROTOCOL.md)
+schema: reft_p2_0_config_v1
+training:
+  max_target_tokens_incl_eos: 191
+smoke:
+  tf_rows: 4                       # deterministic tiny training mini-batch (first 4 manifest IDs in sorted order)
+  native_greedy_rows: 20
+  zero_lid_rows: 20
+  zero_greedy_rows: 20
+  cache_rows: 3
+  beam_rows: 2
+  random_scale_w: {R2: 0.01, L1: 0.05}
+  random_scale_b: 0.5
+  beam_score_tol: {max: 0.15, mean: 0.03}   # bf16 cache-vs-full rescoring noise (ACL-0 measured <= 0.058)
+  batch_argmax_agreement_min: 0.99
+  vram_limit_bytes: 38000000000
+  timing_reps: 3
+  job_limit_seconds: 9000          # projected P2-1 job must stay below 2.5 h (cluster limit 3 h)

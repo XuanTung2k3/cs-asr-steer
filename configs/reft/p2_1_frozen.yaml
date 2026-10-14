@@ -1,0 +1,55 @@
+# P2-1 frozen experiment design (docs/reft/P2_0_PROTOCOL.md). NOT authorized: `train` refuses to start unless the
+# project owner creates /mnt/data/tungnx/cs-asr-reft/p2_1/AUTHORIZATION.json (outside the frozen sources).
+schema: reft_p2_1_frozen_v1
+model: {ref: configs/reft/p0p1.yaml model, dtype: bfloat16, attn_implementation: eager, frozen: true}
+data:
+  train_manifest: p2_0/train_manifest.json            # 500 utterances (former P1 panel: 391 construction + 109 audit)
+  train_manifest_sha256: "sha256:db4a3d266f56e3871c0b79ef9a1f4bdce4843e47f3b630738b006d7f465a3a4b"
+  dev_manifest: p2_0/dev_manifest.json                # P0 dev150 (exposed; exploratory selection panel)
+  dev_manifest_sha256: "sha256:97f4d24e34a8753d8759ca7ce88d1dddb3b5a5f404397e51d1268266115cb728"
+auto_lid: "two-stage frozen Auto-LID: frozen-backbone argmax over language tokens at <|sot|> (adapters disabled), then generate(language=<detected>, task=transcribe)"
+methods:
+  R2:
+    type: loreft
+    site: "decoder layer 31 post-cross-attention residual, pre-FFN (h = q + u)"
+    layer: 31
+    rank: 2
+    start_pos: 3          # absolute decoder position of <|notimestamps|> (predicts content token 0) and every content state
+    init_seed: 42
+    init: "R orthonormal rows (QR of seeded Gaussian, orthogonal parametrization), W = R, b = 0 (exact identity)"
+    lr: 5.0e-4
+    expected_trainable_parameters: 5122
+  L1:
+    type: lora
+    layer: 31
+    targets: [encoder_attn.q_proj, encoder_attn.v_proj]
+    rank: 1
+    alpha: 1.0            # scale alpha / r = 1
+    dropout: 0.0
+    init_seed: 42
+    init: "A Kaiming-uniform bound 1/sqrt(fan_in) (PEFT default), B = 0; no adapted bias"
+    lr: 1.0e-4
+    expected_trainable_parameters: 5120
+training:
+  seed: 42
+  epochs: 3
+  micro_batch: 8
+  grad_accum: 2           # effective batch 16; final pending micro-batch of an epoch also steps -> 32 updates/epoch
+  optimizer: AdamW
+  betas: [0.9, 0.99]
+  eps: 1.0e-6
+  weight_decay: 0.0
+  schedule: constant
+  clip_norm: 1.0
+  order: "numpy default_rng(seed + epoch).permutation over the manifest order"
+  loss: "token-mean cross-entropy over content tokens + EOS (labels at decoder positions 3 + t), per micro-batch / grad_accum"
+  backbone_dtype: bfloat16
+  adapter_dtype: float32
+selection:
+  rule: "evaluate every epoch (1-3) on dev150 with frozen-LID beam-5; select lowest genuine-CS MER, then overall MER, then Mandarin CER, then earliest epoch; same rule for R2 and L1; all epochs reported"
+evaluation:
+  primary: "frozen-LID native beam-5 free decoding on dev150"
+  secondary: greedy
+  loop_units: 15
+  bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+compute: {max_job_seconds: 10800, partition: mig, gpu: "H100 MIG 3g.40gb"}

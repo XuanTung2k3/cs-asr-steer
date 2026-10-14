@@ -25,7 +25,7 @@ sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
 from reft.baseline_auto import FORBIDDEN, generate, language_scores, load_model, special_ids  # noqa: E402
 from reft.common import art, audio_hash_ok, cfg, fillers, firewall, firewall_off, read_json, read_jsonl, write_json, write_jsonl  # noqa: E402
-from reft.provenance import check_freeze, git_state, now, sha, slurm, weights_hash  # noqa: E402
+from reft.provenance import check_freeze, cublas_consistent, git_state, loaded_cuda_libs, now, sha, slurm, weights_hash  # noqa: E402
 from reft.site import Site, n_hooks  # noqa: E402
 from reft.text import (fd_category, first_divergence, is_han, script_of, tok_bytes_fn, token_is_lexical,  # noqa: E402
                        token_unit_map, tokens_format_equivalent, units, utterance_stratum)
@@ -305,13 +305,15 @@ def run_smoke():
     res["bool_checks_ok"] = {k: all(checks[k]) for k in bool_keys}
     w1 = weights_hash(b.model)
     res["weights_unchanged"] = w0 == w1
+    res["cuda_libs"] = loaded_cuda_libs()
+    res["cuda_libs_consistent"] = cublas_consistent(res["cuda_libs"])
     n = len(read_json(art("p1/panel.json"))["rows"])
     per_dec = sum(t_dec) / len(t_dec)
     per_tf = sum(t_tf) / len(t_tf)
     res["timing"] = {"beam5_decode_s_per_utt": per_dec, "tf_smoke_s_per_utt_incl_fd": per_tf,
                      "projected_capture_s": n * (per_dec + per_tf), "peak_gpu_bytes": int(torch.cuda.max_memory_allocated())}
     res["runtime_ok"] = res["timing"]["projected_capture_s"] < 2.5 * 3600
-    res["all_pass"] = bool(res["weights_equal_expected"] and res["indexing_ok"] and res["fd_ok"]
+    res["all_pass"] = bool(res["weights_equal_expected"] and res["indexing_ok"] and res["fd_ok"] and res["cuda_libs_consistent"]
                            and all(res["bool_checks_ok"].values()) and res["weights_unchanged"] and res["runtime_ok"])
     out = {"schema": "reft_p1_smoke_v1", "utc": now(), **fz, "git": git_state(), "env": env, "slurm": slurm(),
            "utterances": [r["utterance_id"] for r in rows], **res}
@@ -390,6 +392,8 @@ def run_capture():
             H.append(h.cpu())
             GS.append(gs.cpu())
     w1 = weights_hash(b.model)
+    libs = loaded_cuda_libs()
+    assert cublas_consistent(libs), libs
     Qt, Ht, Gt = torch.stack(Q), torch.stack(H), torch.stack(GS)
     for i, m in enumerate(meta):
         m["row"] = i
@@ -418,7 +422,7 @@ def run_capture():
           "orientation_note": "q stored unnormalized; norms (q_norm, h_norm, gs_norm) and orientation (cos_q_gs) recorded separately"}
     write_json(art("p1/gradient_manifest.json"), gm)
     man = {"schema": "reft_p1_capture_v1", "utc": now(), **fz, "git": git_state(), "env": env, "slurm": slurm(),
-           "smoke": sm.name, "weights_before": w0, "weights_after_bf16_cast": w1, "weights_unchanged": w0 == w1,
+           "smoke": sm.name, "cuda_libs": libs, "weights_before": w0, "weights_after_bf16_cast": w1, "weights_unchanged": w0 == w1,
            "weights_equal_expected": w0 == C["model"]["expected_weights_hash"], "audio_sha_ok": audio_ok, "n_panel": len(panel),
            "decode_seconds": t_decode, "capture_seconds": time.time() - t_start - t_decode, "wall_seconds": time.time() - t_start,
            "peak_gpu_bytes": int(torch.cuda.max_memory_allocated()), "compute_dtype": "float32 (bf16 weights upcast exactly)"}

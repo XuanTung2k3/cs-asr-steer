@@ -14,7 +14,10 @@ export TMPDIR=/mnt/data/tungnx/tmp/reft-$SLURM_JOB_ID
 mkdir -p "$TMPDIR"
 trap 'rm -rf "$TMPDIR"' EXIT
 export PYTHONPATH="$PWD/src:$PWD"
-export LD_LIBRARY_PATH="/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
+# amendment r4: the env lib/ holds older libcublasLt/libcudart 12.1 that would shadow torch's pip CUDA 12.8 libraries;
+# every pip nvidia/*/lib directory goes first, the env lib/ (libstdc++ for scipy) after it
+NVL=$(ls -d /home/tungnx/miniconda3/envs/acl1/lib/python3.11/site-packages/nvidia/*/lib | tr '\n' ':')
+export LD_LIBRARY_PATH="${NVL}/home/tungnx/miniconda3/envs/acl1/lib:${LD_LIBRARY_PATH:-}"
 export PYTHONFAULTHANDLER=1 SYMPY_GROUND_TYPES=python
 export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false

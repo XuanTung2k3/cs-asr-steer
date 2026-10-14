@@ -414,3 +414,26 @@ Only code, configs, tests and sanitized summaries are committed.
   on the GPU.
 - **What is not changed.** No quantity, row rule, budget, basis policy or threshold. The smoke's finite-difference and
   bitwise checks still validate the GPU numerics.
+
+### r4 — 2026-10-14T06:20:36Z — CUDA library shadowing in the P1 GPU environment (engineering only, before any P1 outcome)
+
+- **What happened.** Capture attempt 59129 completed the BF16 decode of all 500 rows. It then failed in the float32
+  backward with `CUBLAS_STATUS_NOT_INITIALIZED` (`cublasSgemm`), after a run of float32 cuBLASLt init warnings.
+- **Root cause.** The launcher prepends the env `lib/`, which is needed for libstdc++. That directory holds
+  `libcublasLt.so.12` and `libcudart.so.12` from CUDA 12.1. They shadow torch's pip CUDA 12.8 libraries:
+  `nvidia-cublas-cu12` 12.8.4.1 is the version gdb shows loaded as `libcublas`. The cuBLAS/cuBLASLt version mix
+  explains:
+  - the float32 Lt init failures;
+  - the `cublasSdot` SIGFPE (r3);
+  - this Sgemm failure.
+- **Fix.**
+  - `slurm/reft_p1.sbatch` puts every pip `nvidia/*/lib` directory before the env `lib/`.
+  - The smoke, capture and leverage steps record the mapped CUDA library paths.
+  - The smoke fails unless `libcublas` and `libcublasLt` (and every mapped CUDA library) resolve to a single path each,
+    from the same package tree.
+  - The smoke is rerun under the fixed environment, and the P1 decode is redone in the new capture job. The attempt-1
+    decode is kept as `p1/decode_attempt1_59129_libmismatch_SUPERSEDED.jsonl`; no reference-based quantity was computed
+    from it.
+- **P0 note.** P0 (59116) ran with the same library resolution as ACL-0 and reproduced sealed ACL-0 B0 beam-5 token for
+  token. P0 is not rerun.
+- **What is not changed.** No quantity, rule, budget, basis policy or threshold.

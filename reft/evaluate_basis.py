@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
 from reft.common import art, cfg, read_json, read_jsonl, write_json  # noqa: E402
-from reft.provenance import check_freeze, git_state, now, sha, slurm, weights_hash  # noqa: E402
+from reft.provenance import check_freeze, cublas_consistent, git_state, loaded_cuda_libs, now, sha, slurm, weights_hash  # noqa: E402
 
 CHUNK = 48
 
@@ -131,11 +131,13 @@ def run_leverage():
                    "results": res}
             (corr if m["source"] in ("A", "B") else pres).append(rec)
     w1 = weights_hash(b.model)
+    libs = loaded_cuda_libs()
+    assert cublas_consistent(libs), libs
     common = {"utc": now(), **fz, "git": git_state(), "slurm": slurm(), "basis_sha256": bm["basis_sha256"],
               "epsilons": P1["epsilons"], "primary_epsilon": P1["primary_epsilon"]}
     write_json(art("p1/local_leverage.json"), {"schema": "reft_p1_local_leverage_v1", **common, "rows": corr})
     write_json(art("p1/preservation_audit.json"), {"schema": "reft_p1_preservation_v1", **common, "rows": pres})
-    man = {"schema": "reft_p1_eval_gpu_v1", **common, "env": env, "weights_before": w0, "weights_after_bf16_cast": w1,
+    man = {"schema": "reft_p1_eval_gpu_v1", **common, "env": env, "cuda_libs": libs, "weights_before": w0, "weights_after_bf16_cast": w1,
            "weights_unchanged": w0 == w1, "seconds": time.time() - t0, "peak_gpu_bytes": int(torch.cuda.max_memory_allocated()),
            "n_correction_rows": len(corr), "n_preservation_rows": len(pres),
            "m0_reproduced": sum(r["m0_reproduced"] for r in corr + pres)}

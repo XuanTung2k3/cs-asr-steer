@@ -65,6 +65,29 @@ def environment() -> dict:
     return out
 
 
+def loaded_cuda_libs() -> dict:
+    """Paths of the CUDA libraries mapped into this process (call after the first GPU matmul)."""
+    import re
+    out = {}
+    try:
+        for line in open("/proc/self/maps"):
+            m = re.search(r"(/\S*/(lib(cublasLt|cublas|cudart|cudnn|cufft|nvJitLink)\.so[.\d]*))$", line.strip())
+            if m:
+                out.setdefault(m.group(3), set()).add(m.group(1))
+    except OSError:
+        pass
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def cublas_consistent(libs: dict) -> bool:
+    """libcublas and libcublasLt (and libcudart, when mapped) resolve from one pip package tree, one version each."""
+    import os
+    a, lt = libs.get("cublas", []), libs.get("cublasLt", [])
+    if len(a) != 1 or len(lt) != 1 or os.path.dirname(a[0]) != os.path.dirname(lt[0]):
+        return False
+    return all(len(v) == 1 for v in libs.values())
+
+
 def weights_hash(model) -> str:
     """Bit-exact hash of every parameter in its bfloat16 form (float32 copies of bf16 weights cast back exactly)."""
     import torch

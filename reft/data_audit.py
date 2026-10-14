@@ -40,7 +40,9 @@ def assignment() -> dict:
 
 
 def cross(a, b) -> dict:
-    return {k: len({r[k] for r in a} & {r[k] for r in b}) for k in KEYS}
+    """Shared identities on every key present in both row sets (the P0 panel rows carry no corpus_speaker_id)."""
+    keys = [k for k in KEYS if a and b and k in a[0] and k in b[0]]
+    return {k: len({r[k] for r in a} & {r[k] for r in b}) for k in keys}
 
 
 def acl0_repo_root() -> Path:

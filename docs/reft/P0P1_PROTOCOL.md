@@ -392,3 +392,12 @@ Only code, configs, tests and sanitized summaries are committed.
   `p0/error_inventory_attempt1_BLOCKED_audio_hash_convention.json`.
 - **Timing.** This amendment comes after the attempt-1 outcome was displayed. It is purely an integrity-instrument fix
   and cannot change any P0 quantity.
+
+### r2 — 2026-10-14T06:04:47Z — P1 data audit crashed on a missing key (engineering only, before any P1 outcome)
+
+- **What happened.** `data_audit.py p1` (Slurm 59123) raised `KeyError: 'corpus_speaker_id'` while comparing the new
+  panel with the P0 panel. The P0 panel file does not carry that column.
+- **Fix.** `cross()` compares only the keys present in both row sets. The P1 panel is still compared with the full
+  D-dev-select role on all six identity keys.
+- **What is not changed.** Sampling, split, gates and thresholds. No P1 output existed.
+

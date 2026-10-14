@@ -105,3 +105,56 @@ Each training job:
 | CPU jobs | | under 1 min total |
 
 No optimizer step beyond one per method in the smoke. No P2-1 training.
+
+---
+
+## Amendment r1 re-verification (appended; the blocked verdict above is the historical record)
+
+**Verdict under P2-0 amendment r1: `READY_FOR_P2_1_TRAINING`.**
+
+**Amendment.**
+- Owner-approved canonical CUDA 12.8 P2 environment and pinned frozen baseline.
+- Commit `d3710a1`.
+- Freeze `freeze/p2_0_r1.json`, sha256 `9b77ecba6c95e8378b002e0c4d3f9cd1cc2f332d90a8ae26851bf1be755180ed`. It is chained
+  to the unchanged original `freeze/p2_0.json` (`1574947e…`).
+- Protocol: an append-only diff (+53 / −0 lines).
+
+**Jobs.** Re-verification smoke: Slurm 59225 (15:53). Acceptance: Slurm 59226, which ran `afterok` on the smoke.
+
+| Gate | Result | Evidence under r1 (smoke 59225) |
+|---|---|---|
+| G1 | PASS | data audit valid; manifest hashes equal the frozen config |
+| G2 (amended) | PASS | Stage-A LID = native = manifest 150/150. Native = two-stage: beam-5 150/150, greedy 20/20. Training LIDs 500/500. **Pinned baseline reproduced by a fresh job: beam-5 150/150, greedy 150/150**, with the pinned files unchanged. CUDA libraries consistent (pip 12.8). Historical evidence, non-gating: two-stage = sealed P0 133/150 (identical to 59208). |
+| G3 | PASS | target audit valid; teacher-forcing CPU tests pass; one-step test passes |
+| G4 | PASS | R2 5,122 / L1 5,120 parameters; zero-update logits bitwise equal; gradients and effective update verified; backbone frozen |
+| G5 | PASS | zero-update beam-5 150/150 and greedy 20/20 (both methods); cache positions [0, 1, 2, 3] then +1 per step (greedy and beam-5); transition vs rescoring max 0.054 nats; X, Y, X leaks no state; batch vs single argmax agreement 1.0 |
+| G6 | PASS | peak 6.0 GB; projected about 24.5 min per P2-1 training job |
+| G7 | PASS | freeze chain verified; smoke produced under r1; save/load bitwise; 45/45 CPU tests (and 12/12 in the GPU job) |
+
+**Hashes.**
+
+| Artifact | sha256 |
+|---|---|
+| Pinned baseline, beam-5 | `734f02e23ca5418760155511bc55e7a7735b452ad4ee10ac733f24c9938f9107` |
+| Pinned baseline, greedy | `e689a2f523670599dfa34e4e9e47a1686bd5e9fa2aec08b4dda7d0f57e89a60f` |
+| Acceptance record `p2_0/acceptance_r1.json` | `58dbac8a…` |
+| Smoke `p2_0/smoke_59225.json` | `ebd551dc…` |
+
+Pinned baseline beam-5 metrics: MER 0.1199, CS MER 0.1227.
+
+**P2-1 execution plan (prepared; NOT executed; separate authorization required).**
+1. The owner creates `/mnt/data/tungnx/cs-asr-reft/p2_1/AUTHORIZATION.json`.
+2. Run `bash slurm/reft_p2_1_submit.sh`. `DRY_RUN=1` prints the plan without submitting. It submits, with
+   `--kill-on-invalid-dep=yes`:
+   - `train R2` and `train L1` (independent; MIG 3g.40gb; about 25 min each; about 6–8 GB);
+   - `select R2`, `afterok:train_R2`;
+   - `select L1`, `afterok:train_L1`;
+   - `evaluate R2 L1`, `afterok:select_R2:select_L1`.
+
+   So selection cannot start before its training job succeeds, evaluation cannot start before both selections succeed,
+   and any failure cancels its dependants. The resource specs validated with `sbatch --test-only`; nothing was
+   submitted.
+3. Each training job:
+   - re-verifies the freeze chain, the manifests, the pinned baseline hashes and the canonical CUDA environment;
+   - requires zero-init reproduction of the pinned baseline (150/150);
+   - then trains for 96 updates with per-epoch dev decodes.

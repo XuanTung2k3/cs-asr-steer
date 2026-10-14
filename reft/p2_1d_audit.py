@@ -513,5 +513,64 @@ def make_figures(A, d: Path):
     plt.close(fig)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and len(sys.argv) == 1:
     run()
+
+
+# ====================================================================== supplementary (added after the main run; disclosed)
+
+def deletion_runs(flags):
+    """Maximal runs of True in a per-reference-unit list: [(start, end_inclusive), ...]."""
+    runs, s = [], None
+    for k, f in enumerate(flags):
+        if f and s is None:
+            s = k
+        if not f and s is not None:
+            runs.append((s, k - 1))
+            s = None
+    if s is not None:
+        runs.append((s, len(flags) - 1))
+    return runs
+
+
+def run_supplement():
+    """D5 supplement: are Mandarin deletions contiguous spans, at the utterance tail (early termination) or internal
+    (skipped spans), and do they start right after English? Uses the private event table only."""
+    od = art(OUT)
+    ev = read_jsonl(od / "events_private.jsonl")
+    by = collections.defaultdict(list)
+    for e in ev:
+        by[e["utt"]].append(e)
+    rows = []
+    for u, es in by.items():
+        es.sort(key=lambda e: e["k"])
+        dmg = [e["zh_non_filler"] and e["transition"] == "corruption" and e["sys_op"] == "del" for e in es]
+        if not any(dmg):
+            continue
+        sys_del = [e["sys_op"] == "del" for e in es]
+        runs = deletion_runs(sys_del)
+        n = len(es)
+        for s, t in runs:
+            nd = sum(dmg[s:t + 1])
+            if not nd:
+                continue
+            prev = es[s - 1] if s > 0 else None
+            rows.append({"zh_deleted_in_run": nd, "run_len": t - s + 1, "tail": t == n - 1, "start_rel": s / max(1, n - 1),
+                         "preceded_by_substantive_en": bool(prev and prev["substantive_en"]),
+                         "en_in_run": sum(e["substantive_en"] for e in es[s:t + 1]), "b0_also_deleted": sum(not e["b0_ok"] for e in es[s:t + 1])})
+    tot = sum(r["zh_deleted_in_run"] for r in rows)
+    out = {"note": "supplementary D5 analysis added after the main P2-1D run; private event table only; reference-unit positions",
+           "zh_deletion_errors": tot, "runs": len(rows),
+           "in_runs_len_ge5": sum(r["zh_deleted_in_run"] for r in rows if r["run_len"] >= 5),
+           "in_tail_runs": sum(r["zh_deleted_in_run"] for r in rows if r["tail"]),
+           "in_internal_runs": sum(r["zh_deleted_in_run"] for r in rows if not r["tail"]),
+           "in_runs_preceded_by_english": sum(r["zh_deleted_in_run"] for r in rows if r["preceded_by_substantive_en"]),
+           "in_runs_containing_english": sum(r["zh_deleted_in_run"] for r in rows if r["en_in_run"]),
+           "runs_sorted": sorted(({k: r[k] for k in ("zh_deleted_in_run", "run_len", "tail", "preceded_by_substantive_en", "en_in_run")} for r in rows),
+                                 key=lambda r: -r["zh_deleted_in_run"])}
+    write_json(od / "analysis_supplement_deletions.json", out)
+    print(json.dumps(out, indent=1))
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "supplement":
+    run_supplement()

@@ -81,3 +81,9 @@ def test_utterance_events_reconcile_with_scorer():
     # mixed-error change = change in wrong reference units + change in insertions
     d_ref = sum(not e["sys_ok"] for e in ev) - sum(not e["b0_ok"] for e in ev)
     assert s["o"]["counts"][2] - b["o"]["counts"][2] == d_ref + sum(ins["sys"].values()) - sum(ins["b0"].values())
+
+
+def test_deletion_runs():
+    from reft.p2_1d_audit import deletion_runs
+    assert deletion_runs([False, True, True, False, True]) == [(1, 2), (4, 4)]
+    assert deletion_runs([]) == [] and deletion_runs([True, True]) == [(0, 1)]

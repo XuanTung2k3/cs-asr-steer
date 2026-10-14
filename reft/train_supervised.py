@@ -30,7 +30,7 @@ P20 = ROOT / "configs/reft/p2_0.yaml"
 P21 = ROOT / "configs/reft/p2_1_frozen.yaml"
 FREEZE_SOURCES = ["docs/reft/P2_0_PROTOCOL.md", "configs/reft/p2_0.yaml", "configs/reft/p2_1_frozen.yaml",
                   "reft/adapters.py", "reft/auto_policy.py", "reft/train_supervised.py", "reft/evaluate_supervised.py",
-                  "tests/reft/test_p2_0.py", "slurm/reft_p2.sbatch", "slurm/reft_p2_cpu.sbatch"]
+                  "tests/reft/test_p2_0.py", "slurm/reft_p2.sbatch", "slurm/reft_p2_cpu.sbatch", "slurm/reft_p2_1_submit.sh"]
 GPU_FORBIDDEN = ("role_", "p0/evaluation", "error_inventory", "p2_1/evaluation")
 
 
@@ -48,19 +48,48 @@ def jhash(obj) -> str:
 
 # ====================================================================== freeze
 
-def run_freeze():
+def freeze_chain() -> list[Path]:
+    """[p2_0.json, p2_0_r1.json, ...] in order (append-only amendment chain)."""
+    d = art("freeze")
+    return [d / "p2_0.json"] + sorted(d.glob("p2_0_r*.json"), key=lambda p: int(p.stem.split("_r")[1]))
+
+
+def chain_ok(records: list[dict], file_hashes: list[str]) -> bool:
+    """Every amendment names its predecessor and that predecessor's exact hash (no rewritten history)."""
+    for k in range(1, len(records)):
+        if records[k].get("supersedes_sha256") != file_hashes[k - 1] or records[k].get("amendment") != k:
+            return False
+    return True
+
+
+def run_freeze(note: str | None = None):
+    chain = [p for p in freeze_chain() if p.exists()]
     rec = {"schema": "reft_p2_0_freeze_v1", "utc": now(), "git": git_state(),
            "sources": {p: sha(ROOT / p) for p in FREEZE_SOURCES}}
-    print(write_json(art("freeze/p2_0.json"), rec))
+    if not chain:
+        print(write_json(art("freeze/p2_0.json"), rec))
+        return
+    if not note:
+        raise SystemExit("an amendment freeze needs --note (timestamped justification)")
+    prev = chain[-1]
+    prev_src = read_json(prev)["sources"]
+    k = len(chain)
+    rec.update(amendment=k, supersedes=prev.name, supersedes_sha256=sha(prev), amendment_note=note,
+               changed_sources=sorted(s for s in set(rec["sources"]) | set(prev_src) if rec["sources"].get(s) != prev_src.get(s)))
+    print(write_json(art(f"freeze/p2_0_r{k}.json"), rec))
 
 
 def check_freeze() -> dict:
-    p = art("freeze/p2_0.json")
-    rec = read_json(p)
+    chain = [p for p in freeze_chain() if p.exists()]
+    recs, hashes = [read_json(p) for p in chain], [sha(p) for p in chain]
+    if not chain_ok(recs, hashes):
+        raise SystemExit("P2 freeze chain broken (an amendment does not reference its predecessor's hash)")
+    rec = recs[-1]
     bad = [s for s, h in rec["sources"].items() if sha(ROOT / s) != h]
     if bad:
-        raise SystemExit(f"P2 sources changed since freeze: {bad}")
-    return {"freeze_sha256": sha(p), "freeze_git_head": rec["git"]["head"]}
+        raise SystemExit(f"P2 sources changed since {chain[-1].name}: {bad}")
+    return {"freeze": chain[-1].name, "freeze_sha256": hashes[-1], "freeze_git_head": rec["git"]["head"],
+            "freeze_chain": [{"file": p.name, "sha256": h} for p, h in zip(chain, hashes)]}
 
 
 # ====================================================================== audit (CPU, G1)
@@ -289,12 +318,27 @@ def run_smoke():
         par.append(d)
         base_b5.append({"id": r["utterance_id"], **two})
         base_gr.append({"id": r["utterance_id"], **gr})
-    write_jsonl(art("p2_0/frozen_baseline_dev150_beam5.jsonl"), base_b5)
-    write_jsonl(art("p2_0/frozen_baseline_dev150_greedy.jsonl"), base_gr)
+    pb5, pgr = art("p2_0/frozen_baseline_dev150_beam5.jsonl"), art("p2_0/frozen_baseline_dev150_greedy.jsonl")
+    if pb5.exists() or pgr.exists():
+        # amendment r1: the pinned baseline is never overwritten; this run must reproduce it token for token
+        job = slurm()["SLURM_JOB_ID"] or "local"
+        write_jsonl(art(f"p2_0/rerun_{job}_dev150_beam5.jsonl"), base_b5)
+        write_jsonl(art(f"p2_0/rerun_{job}_dev150_greedy.jsonl"), base_gr)
+        pin5, ping = {x["id"]: x for x in read_jsonl(pb5)}, {x["id"]: x for x in read_jsonl(pgr)}
+        rerun = {"beam5_equal_pinned": sum(x["tokens"] == pin5[x["id"]]["tokens"] for x in base_b5),
+                 "greedy_equal_pinned": sum(x["tokens"] == ping[x["id"]]["tokens"] for x in base_gr)}
+    else:
+        write_jsonl(pb5, base_b5)
+        write_jsonl(pgr, base_gr)
+        rerun = None
+    pinned = C1.get("frozen_baseline") or {}
+    pinned_ok = bool(pinned) and sha(pb5) == pinned.get("beam5_sha256") and sha(pgr) == pinned.get("greedy_sha256")
     agg = {k: sum(bool(x.get(k)) for x in par) for k in par[0]}
     agg.pop("id_index", None)
     agg["native_greedy_equals_two_stage"] = sum(bool(x.get("native_greedy_equals_two_stage")) for x in par)
-    R["G2"] = {"n": len(par), "counts": agg, "seconds": time.time() - t0,
+    R["G2"] = {"n": len(par), "counts": agg, "seconds": time.time() - t0, "rerun_vs_pinned": rerun, "pinned_baseline_hashes_ok": pinned_ok,
+               "p0_historical_comparison": {"two_stage_equals_sealed_p0": agg["two_stage_equals_p0_tokens"], "n": len(par),
+                                            "note": "evidence only (amendment r1): P0 ran with the shadowing cuBLASLt 12.1"},
                "mismatch_indices": [x["id_index"] for x in par if not (x["native_equals_two_stage"] and x["two_stage_equals_p0_tokens"])]}
     # training-population LID cache
     t0 = time.time()
@@ -455,7 +499,7 @@ def run_smoke():
         la2 = tf_forward(b, ad, encb, Xb)
         lf2 = tf_forward(b, None, encb, Xb)
         sdict = ad.state_dict()
-        ck = art(f"p2_0/smoke_{meth}_adapter.pt")
+        ck = art(f"p2_0/smoke_{slurm()['SLURM_JOB_ID'] or 'local'}_{meth}_adapter.pt")
         torch.save(sdict, ck)
         ad2 = make_adapter(meth, b.model, C1, b.device)
         ad2.load_state_dict(torch.load(ck))
@@ -500,10 +544,14 @@ def run_smoke():
     g["A_site"] = all(v for k, v in R["A"].items() if isinstance(v, bool) and k != "block_equals_h_plus_ffn_exact") and R["A"]["decoder_layers"] == 32 and R["A"]["d_model"] == 1280
     c = R["G2"]["counts"]
     n = R["G2"]["n"]
+    # amended G2 (P2-0 amendment r1): exact native Auto = two-stage frozen-LID parity inside the canonical P2 environment,
+    # reproduction of the pinned P2 baseline across jobs, consistent CUDA libraries; sealed-P0 equality is evidence only
+    rr = R["G2"]["rerun_vs_pinned"]
     g["G2_auto"] = (c["lid_equal_manifest"] == n and c["lid_equal_native_prompt"] == n and c["native_equals_two_stage"] == n
-                    and c["two_stage_equals_p0_tokens"] == n and c["termination_equal_p0"] == n and c["text_hash_equal_p0"] == n
                     and c["native_greedy_equals_two_stage"] == S["native_greedy_rows"]
-                    and R["G2"]["train_lid_recomputed_equal"][0] == len(train))
+                    and R["G2"]["train_lid_recomputed_equal"][0] == len(train)
+                    and R["G2"]["pinned_baseline_hashes_ok"] and rr is not None
+                    and rr["beam5_equal_pinned"] == n and rr["greedy_equal_pinned"] == n and R["F_libs"]["consistent"])
     g["B_zero_update"] = all(x["n_trainable"] == x["expected"] and x["backbone_trainable"] == 0 and x["tf_logits_bitwise_equal"]
                              and x["lid_unchanged_with_adapter_installed"][0] == S["zero_lid_rows"]
                              and x["beam5_tokens_equal_frozen"][0] == len(dev) and x["greedy_tokens_equal_frozen"][0] == S["zero_greedy_rows"]
@@ -547,6 +595,9 @@ def run_train(method: str):
     assert sha(art("p2_0/train_manifest.json")) == C1["data"]["train_manifest_sha256"]
     assert sha(art("p2_0/dev_manifest.json")) == C1["data"]["dev_manifest_sha256"]
     tm, dm = read_json(art("p2_0/train_manifest.json"))["rows"], read_json(art("p2_0/dev_manifest.json"))["rows"]
+    pb = C1["frozen_baseline"]
+    assert sha(art("p2_0/frozen_baseline_dev150_beam5.jsonl")) == pb["beam5_sha256"], "pinned P2 baseline changed"
+    assert sha(art("p2_0/frozen_baseline_dev150_greedy.jsonl")) == pb["greedy_sha256"], "pinned P2 baseline changed"
     base = {x["id"]: x for x in read_jsonl(art("p2_0/frozen_baseline_dev150_beam5.jsonl"))}
     out = art(f"p2_1/{method}")
     if out.exists():
@@ -556,6 +607,9 @@ def run_train(method: str):
     torch.manual_seed(tr["seed"])
     b, env = load_backbone()
     w0 = weights_hash(b.model)
+    libs0 = loaded_cuda_libs()
+    if not cublas_consistent(libs0) or "nvidia/cublas/lib" not in libs0["cublasLt"][0]:
+        raise SystemExit(f"not the canonical P2 CUDA environment (amendment r1): {libs0}")
     ad = make_adapter(method, b.model, C1, b.device)
     assert ad.n_trainable() == C1["methods"][method]["expected_trainable_parameters"]
     opt = torch.optim.AdamW(ad.parameters(), lr=C1["methods"][method]["lr"], betas=tuple(tr["betas"]), eps=tr["eps"],
@@ -624,15 +678,57 @@ def run_train(method: str):
     write_json(out / "manifest.json", man)
 
 
+# ====================================================================== acceptance (CPU)
+
+def run_acceptance():
+    """Compose G1-G7 under the latest freeze (P2-0 amendment r1) from the audit, the smoke produced under that freeze and
+    the scored pinned baseline. Writes p2_0/acceptance_r<k>.json; READY_FOR_P2_1_TRAINING only if every gate passes."""
+    C1 = c21()
+    fz = check_freeze()
+    audit = read_json(art("p2_0/data_audit.json"))
+    smokes = [p for p in sorted(art("p2_0").glob("smoke_*.json"), key=lambda p: p.stat().st_mtime)
+              if read_json(p).get("freeze_sha256") == fz["freeze_sha256"]]
+    if not smokes:
+        raise SystemExit("no smoke produced under the current freeze")
+    sm = read_json(smokes[-1])
+    g, R = sm["engineering_gates"], sm["results"]
+    pb = C1["frozen_baseline"]
+    bm = read_json(art("p2_0/frozen_baseline_metrics.json"))
+    baseline_scored = bm["regimes"]["beam5"]["sha256"] == pb["beam5_sha256"]
+    gates = {
+        "G1_data": audit["valid"] and audit["manifest_sha256"]["train"] == C1["data"]["train_manifest_sha256"]
+        and audit["manifest_sha256"]["dev"] == C1["data"]["dev_manifest_sha256"],
+        "G2_auto_lid": g["G2_auto"] and baseline_scored,
+        "G3_teacher_forcing": audit["checks"]["targets_valid_eos_once"] and audit["checks"]["targets_max_len_ok"] and g["E_one_step"],
+        "G4_adapters": g["B_zero_update"] and g["E_one_step"] and g["A_site"],
+        "G5_free_decoding": g["B_zero_update"] and g["C_alignment"] and g["D_beam_kv"],
+        "G6_compute": g["F_compute"],
+        "G7_reproducibility": all(x["save_load_bitwise"] for x in R["E"].values()) and len(fz["freeze_chain"]) >= 2
+        and sm["freeze_sha256"] == fz["freeze_sha256"],
+    }
+    verdict = "READY_FOR_P2_1_TRAINING" if all(gates.values()) else "P2_0_BLOCKED_" + "_".join(k for k, v in gates.items() if not v)
+    k = len(fz["freeze_chain"]) - 1
+    rec = {"schema": "reft_p2_0_acceptance_v1", "utc": now(), **fz, "git": git_state(), "verdict": verdict, "gates": gates,
+           "smoke": smokes[-1].name, "smoke_sha256": sha(smokes[-1]), "pinned_baseline": pb,
+           "baseline_metrics_beam5": {k_: bm["regimes"]["beam5"]["metrics"][s]["mer"] for k_, s in (("overall_mer", "overall"), ("cs_mer", "CS"))},
+           "p0_historical": {"two_stage_equals_sealed_p0": R["G2"]["p0_historical_comparison"],
+                             "first_smoke_59208_equal": "133/150 (17 near-tie flips; diag_g2_env_*.json)"}}
+    write_json(art(f"p2_0/acceptance_r{k}.json"), rec)
+    print(json.dumps({"verdict": verdict, "gates": gates, "smoke": smokes[-1].name}, indent=1))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["freeze", "audit", "smoke", "train"])
+    ap.add_argument("cmd", choices=["freeze", "audit", "smoke", "train", "acceptance"])
     ap.add_argument("--method", choices=["R2", "L1"])
+    ap.add_argument("--note")
     a = ap.parse_args(argv)
     if a.cmd == "train":
         run_train(a.method)
+    elif a.cmd == "freeze":
+        run_freeze(a.note)
     else:
-        {"freeze": run_freeze, "audit": run_audit, "smoke": run_smoke}[a.cmd]()
+        {"audit": run_audit, "smoke": run_smoke, "acceptance": run_acceptance}[a.cmd]()
 
 
 if __name__ == "__main__":

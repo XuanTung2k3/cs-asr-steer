@@ -177,3 +177,56 @@ repair. Thresholds are not lowered after a failure. Readiness is engineering onl
 ## 9. Amendments
 
 (none)
+
+### r1 — 2026-10-14T11:26:16Z — canonical P2 CUDA environment and re-anchored frozen baseline (project-owner approved)
+
+The "(none)" above records the state at the original freeze (`freeze/p2_0.json`, sha256 `1574947e…`, commit
+`f4bc3b7`). That file is preserved unchanged. This amendment is chained to it: `freeze/p2_0_r1.json` records its
+predecessor's name and hash, and every P2 command verifies the whole chain.
+
+**Evidence.**
+- The P2-0 smoke (Slurm 59208) failed only the original G2 requirement "two-stage = sealed P0 tokens": 133/150.
+- The controlled diagnostic (Slurm 59212, `p2_0/diag_g2_env_{p0env,p2env}.json`) decoded the 17 differing and 5 control
+  utterances under both library resolutions:
+  - native Auto = two-stage frozen-LID in both environments (22/22);
+  - with the conda env's `libcublasLt.so.12.1.0.26` (the P0 launcher) all 17 reproduce sealed P0;
+  - with torch's pip `libcublasLt` 12.8 all 17 equal the P2 decode.
+- The drift is therefore a BF16 cuBLASLt kernel difference at beam near-ties, not a decoding-policy difference.
+- Metric effect: MER 0.1178 → 0.1199; CS MER 0.1206 → 0.1227.
+
+**Decision (owner-approved).** The corrected CUDA 12.8 environment is the canonical P2 environment: pip
+`nvidia/*/lib` first, as in `slurm/reft_p2.sbatch`.
+- **Pinned baseline:** the P2 frozen baseline is the two-stage frozen-LID decode produced in that environment by
+  smoke 59208, pinned in `configs/reft/p2_1_frozen.yaml` (`frozen_baseline`):
+  - beam-5 `734f02e2…`;
+  - greedy `e689a2f5…`;
+  - scored beam-5 MER 0.1199, CS MER 0.1227.
+- **P0 artifacts:** all P0 artifacts, the P0 seal and the P0 verdict remain unchanged as the historical record. The
+  17/150 P0 mismatch stays documented evidence.
+
+**Amended G2 contract** (replaces the "two-stage = sealed P0" requirement; nothing else in G2 is relaxed). All of the
+following must hold in the canonical environment:
+1. Stage-A LID equals the native prompt and the manifest (150/150).
+2. Native `generate(language=None)` equals the two-stage frozen-LID decode: beam-5 150/150, greedy 20/20.
+3. The training LIDs are recomputed and equal (500/500).
+4. The pinned baseline files match their hashes, and a fresh run reproduces them token for token (beam-5 150/150,
+   greedy 150/150) without overwriting them.
+5. The CUDA libraries are consistent.
+6. The scored pinned baseline is on record.
+
+The equality counts against sealed P0 are still computed and reported, but they do not gate.
+
+**Code changes** (all listed in `changed_sources` of `freeze/p2_0_r1.json`):
+- the versioned, chained freeze and verification;
+- the smoke re-run mode, which writes `p2_0/rerun_<job>_*` and never touches the pinned baseline;
+- the amended G2 gate;
+- `train` refuses to run outside the canonical environment or if the pinned baseline hashes change;
+- `evaluate` checks the baseline hashes;
+- `acceptance` composes G1–G7 from the smoke produced under the current freeze;
+- `slurm/reft_p2_1_submit.sh`, the afterok submission chain;
+- a freeze-chain unit test.
+
+**Unchanged:** methods, adapters, data, objective, optimizer, selection rule, metrics and all other thresholds.
+
+**Re-verification.** A fresh P2-0 smoke and the acceptance step run under this amendment. `READY_FOR_P2_1_TRAINING` is
+set only if every gate passes there. P2-1 training still requires the separate `p2_1/AUTHORIZATION.json`.

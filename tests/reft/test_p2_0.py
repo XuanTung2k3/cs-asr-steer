@@ -200,3 +200,12 @@ def test_selection_rule():
     assert select_epoch(recs)["epoch"] == 2
     recs[1]["zh_cer"] = 0.09
     assert select_epoch(recs)["epoch"] == 1
+
+
+def test_freeze_chain_requires_predecessor_hash():
+    from reft.train_supervised import chain_ok
+    recs = [{"sources": {}}, {"amendment": 1, "supersedes_sha256": "h0"}, {"amendment": 2, "supersedes_sha256": "h1"}]
+    assert chain_ok(recs, ["h0", "h1", "h2"])
+    assert not chain_ok(recs, ["hX", "h1", "h2"])            # original freeze rewritten
+    assert not chain_ok(recs[:1] + recs[2:], ["h0", "h2"])  # amendment skipped / renumbered
+    assert chain_ok(recs[:1], ["h0"])

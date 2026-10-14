@@ -7,6 +7,20 @@ data:
   train_manifest_sha256: "sha256:db4a3d266f56e3871c0b79ef9a1f4bdce4843e47f3b630738b006d7f465a3a4b"
   dev_manifest: p2_0/dev_manifest.json                # P0 dev150 (exposed; exploratory selection panel)
   dev_manifest_sha256: "sha256:97f4d24e34a8753d8759ca7ce88d1dddb3b5a5f404397e51d1268266115cb728"
+# P2-0 amendment r1 (owner-approved): canonical P2 environment and pinned frozen baseline. The baseline below is the
+# two-stage frozen-LID decode of dev150 produced in that environment (smoke 59208), identical to native Auto there.
+# The sealed P0 outputs (cuBLASLt 12.1 shadowing) remain the historical P0 record; 17/150 differ (documented drift).
+environment:
+  canonical: "pip nvidia CUDA 12.8 libraries (cuBLAS/cuBLASLt 12.8.4.1) resolved before the conda env lib/ (slurm/reft_p2.sbatch)"
+  enforced_by: "train refuses to start unless libcublas and libcublasLt are mapped from site-packages/nvidia/cublas/lib"
+frozen_baseline:
+  beam5: p2_0/frozen_baseline_dev150_beam5.jsonl
+  beam5_sha256: "sha256:734f02e23ca5418760155511bc55e7a7735b452ad4ee10ac733f24c9938f9107"
+  greedy: p2_0/frozen_baseline_dev150_greedy.jsonl
+  greedy_sha256: "sha256:e689a2f523670599dfa34e4e9e47a1686bd5e9fa2aec08b4dda7d0f57e89a60f"
+  produced_by_slurm: 59208
+  metrics_beam5: {overall_mer: 0.1199, cs_mer: 0.1227}
+  p0_historical: {overall_mer: 0.1178, cs_mer: 0.1206, token_identical_utterances: "133/150"}
 auto_lid: "two-stage frozen Auto-LID: frozen-backbone argmax over language tokens at <|sot|> (adapters disabled), then generate(language=<detected>, task=transcribe)"
 methods:
   R2:

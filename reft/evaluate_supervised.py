@@ -196,6 +196,7 @@ def run_evaluate(run_dirs: list[str]):
     BS = C["evaluation"]["bootstrap"]
     res = {}
     for regime in ("beam5", "greedy"):
+        assert sha(art(f"p2_0/frozen_baseline_dev150_{regime}.jsonl")) == C["frozen_baseline"][f"{regime}_sha256"], "pinned baseline changed"
         base = score_system(meta, refs, {r["id"]: r for r in read_jsonl(art(f"p2_0/frozen_baseline_dev150_{regime}.jsonl"))},
                             FILL, C["evaluation"]["loop_units"])
         res[regime] = {"baseline": metrics(base)}

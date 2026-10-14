@@ -69,8 +69,15 @@ p0_gate:
   exclude_derailed_utterances: true
 
 p1:
-  layer: 24
-  site: "decoder layer 24 post-cross-attention residual, pre-FFN: h = q + encoder_attn(encoder_attn_layer_norm(q), H_enc); the input of final_layer_norm and the FFN residual"
+  # AMENDMENT L31 (project owner): single intervention site frozen at the final decoder layer. Layer 24 (original
+  # protocol) is historical; its artifacts stay in p1/ unchanged and are never mixed with layer-31 artifacts.
+  layer: 31
+  site: "decoder layer 31 (final, 0-indexed) post-cross-attention residual, pre-FFN: h = q + encoder_attn(encoder_attn_layer_norm(q), H_enc); the input of final_layer_norm and the FFN residual (not the block output, not decoder.layer_norm output, not logits)"
+  artifact_subdir: p1/l31
+  freeze_stage: p1_l31
+  historical_layer24: {artifact_dir: p1, freeze_stage: p1, status: "capture + basis complete; held-out evaluation never completed (leverage job 59137 crashed on JSON -inf before writing); no feasibility outcome exists"}
+  # layer-independent inputs shared with the historical layer-24 run (hash-verified before reuse)
+  shared_decode: {path: p1/decode.jsonl, sha256: "sha256:488d378348a7d8ecca5d16d1ca1a2c989dd6b66744de6eca6babbacfc9b521f2", slurm: 59135}
   rank: 4
   compute_dtype: float32   # local gradient/intervention passes; bf16 weights upcast exactly; decoding stays bf16
   source_b_max_per_utterance: 4

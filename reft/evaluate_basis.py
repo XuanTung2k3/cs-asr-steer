@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
-from reft.common import art, cfg, read_json, read_jsonl, write_json  # noqa: E402
+from reft.common import art, sdir, cfg, read_json, read_jsonl, write_json  # noqa: E402
 from reft.provenance import check_freeze, cublas_consistent, git_state, loaded_cuda_libs, now, sha, slurm, weights_hash  # noqa: E402
 
 CHUNK = 48
@@ -31,11 +31,11 @@ CHUNK = 48
 
 def load_bases():
     import torch
-    bm = read_json(art("p1/basis_manifest.json"))
+    bm = read_json(sdir("basis_manifest.json"))
     assert bm["checks"]["ok"], "basis checks failed"
-    assert sha(art("p1/basis_rank4.pt")) == bm["basis_sha256"] and sha(art("p1/controls.pt")) == bm["controls_sha256"]
-    B = torch.load(art("p1/basis_rank4.pt"))
-    K = torch.load(art("p1/controls.pt"))
+    assert sha(sdir("basis_rank4.pt")) == bm["basis_sha256"] and sha(sdir("controls.pt")) == bm["controls_sha256"]
+    B = torch.load(sdir("basis_rank4.pt"))
+    K = torch.load(sdir("controls.pt"))
     subs = {"V": B["V"], **{f"R{s}": R for s, R in K["random"].items()}, "PCA4": K["pca4"], "SCRIPT1": K["script1"]}
     cbar = {"V": B["V"] @ B["cbar"], **{f"R{s}": K["random"][s] @ c for s, c in K["cbar_random"].items()}}
     return subs, cbar, bm
@@ -75,12 +75,14 @@ def run_leverage():
     from reft.gradient_capture import P0, encode, masked, suppress_masks, tf_logits, to_float32
     C = cfg()
     P1 = C["p1"]
-    fz = check_freeze("p1")
+    fz = check_freeze(cfg()["p1"]["freeze_stage"])
     subs, cbar, bm = load_bases()
-    meta = read_jsonl(art("p1/gradients/rows.jsonl"))
-    T = torch.load(art("p1/gradients/tensors.pt"))
+    meta = read_jsonl(sdir("gradients/rows.jsonl"))
+    T = torch.load(sdir("gradients/tensors.pt"))
     panel = {r["utterance_id"]: r for r in read_json(art("p1/panel.json"))["rows"]}
-    dec = {d["id"]: d for d in read_jsonl(art("p1/decode.jsonl"))}
+    gm = read_json(sdir("gradient_manifest.json"))
+    assert sha(Path(gm["decode_path"])) == gm["decode_sha256"]
+    dec = {d["id"]: d for d in read_jsonl(Path(gm["decode_path"]))}
     tg = read_json(art("p1/targets.json"))["targets"]
     audit = [m for m in meta if m["partition"] == "audit"]
     b, env = load_model()
@@ -122,8 +124,10 @@ def run_leverage():
                     top = int(zz.argmax())
                     other = zz.clone()
                     other[c] = -torch.inf
+                    gb = float(zz[c] - other.max())  # -inf when the correct token is a Whisper-suppressed token
                     res[f"{tag}@{e}"] = {"m": float(z[j, c] - z[j, k]), "correct_argmax": top == c,
-                                         "gold_vs_best_other": float(zz[c] - other.max())}
+                                         "gold_vs_best_other": gb if gb == gb and abs(gb) != float("inf") else None,
+                                         "correct_suppressed": bool(zz[c] == -torch.inf)}
             base = res["BASE@0.0"]
             rec = {"row": m["row"], "id": uid, "dialogue": m["dialogue"], "source": m["source"], "category": m["category"],
                    "stratum": m["stratum"], "lang": m["lang"], "m0_capture": m["m0"], "m0_eval": base["m"],
@@ -135,13 +139,13 @@ def run_leverage():
     assert cublas_consistent(libs), libs
     common = {"utc": now(), **fz, "git": git_state(), "slurm": slurm(), "basis_sha256": bm["basis_sha256"],
               "epsilons": P1["epsilons"], "primary_epsilon": P1["primary_epsilon"]}
-    write_json(art("p1/local_leverage.json"), {"schema": "reft_p1_local_leverage_v1", **common, "rows": corr})
-    write_json(art("p1/preservation_audit.json"), {"schema": "reft_p1_preservation_v1", **common, "rows": pres})
+    write_json(sdir("local_leverage.json"), {"schema": "reft_p1_local_leverage_v1", **common, "rows": corr})
+    write_json(sdir("preservation_audit.json"), {"schema": "reft_p1_preservation_v1", **common, "rows": pres})
     man = {"schema": "reft_p1_eval_gpu_v1", **common, "env": env, "cuda_libs": libs, "weights_before": w0, "weights_after_bf16_cast": w1,
            "weights_unchanged": w0 == w1, "seconds": time.time() - t0, "peak_gpu_bytes": int(torch.cuda.max_memory_allocated()),
            "n_correction_rows": len(corr), "n_preservation_rows": len(pres),
            "m0_reproduced": sum(r["m0_reproduced"] for r in corr + pres)}
-    write_json(art("p1/manifest_eval.json"), man)
+    write_json(sdir("manifest_eval.json"), man)
     print(json.dumps({k: v for k, v in man.items() if k != "env"}, indent=1, default=str))
 
 
@@ -176,17 +180,17 @@ def run_analyze():
     C = cfg()
     P1, GT = C["p1"], C["p1_gate"]
     BS = C["evaluation"]["bootstrap"]
-    fz = check_freeze("p1")
+    fz = check_freeze(cfg()["p1"]["freeze_stage"])
     subs, cbar, bm = load_bases()
     seeds = [f"R{s}" for s in P1["random_seeds"]]
-    meta = read_jsonl(art("p1/gradients/rows.jsonl"))
-    T = torch.load(art("p1/gradients/tensors.pt"))
+    meta = read_jsonl(sdir("gradients/rows.jsonl"))
+    T = torch.load(sdir("gradients/tensors.pt"))
     Q = T["q"].double()
     rho = {}
     for name, S in subs.items():
         rho[name] = (((Q @ S) ** 2).sum(1) / (Q ** 2).sum(1)).tolist()
-    lev = read_json(art("p1/local_leverage.json"))["rows"]
-    prs = read_json(art("p1/preservation_audit.json"))["rows"]
+    lev = read_json(sdir("local_leverage.json"))["rows"]
+    prs = read_json(sdir("preservation_audit.json"))["rows"]
     eps = P1["primary_epsilon"]
     k, d = P1["rank"], Q.shape[1]
     thr = GT["retention_min_multiple_of_random_expectation"] * k / d
@@ -292,9 +296,9 @@ def run_analyze():
             pres_rho[lang] = {n: mean(rho[n][i] for i in rows_) for n in subs}
 
     # integrity
-    smokes = sorted(art("p1").glob("smoke_*.json"), key=lambda p: p.stat().st_mtime)
-    cap = read_json(art("p1/manifest_capture.json"))
-    ev = read_json(art("p1/manifest_eval.json"))
+    smokes = sorted(sdir().glob("smoke_*.json"), key=lambda p: p.stat().st_mtime)
+    cap = read_json(sdir("manifest_capture.json"))
+    ev = read_json(sdir("manifest_eval.json"))
     integ = {"smoke_all_pass": bool(smokes) and read_json(smokes[-1])["all_pass"], "capture_weights_unchanged": cap["weights_unchanged"],
              "capture_weights_expected": cap["weights_equal_expected"], "eval_weights_unchanged": ev["weights_unchanged"],
              "basis_checks_ok": bm["checks"]["ok"], "m0_reproduced_all": ev["m0_reproduced"] == len(lev) + len(prs),
@@ -340,14 +344,14 @@ def run_analyze():
            "groups": S, "preservation": P, "preservation_gradient_retention": pres_rho,
            "basis": {"sha256": bm["basis_sha256"], "policy": bm["policy"], "cos_V_with_script1": bm["cos_V_with_script1"]},
            "claim_boundary": "oracle local diagnostics on held-out training-audit rows; no free-decoding or deployable claim"}
-    write_json(art("p1/evaluation.json"), out)
-    write_json(art("p1/manifest.json"), {"schema": "reft_p1_manifest_v1", "utc": now(), **fz, "git": git_state(),
-                                         "verdict": verdict, "files": {f: sha(art(f)) for f in (
-                                             "p1/data_audit.json", "p1/panel.json", "p1/decode.jsonl", "p1/gradient_manifest.json",
-                                             "p1/gradients/rows.jsonl", "p1/gradients/tensors.pt", "p1/basis_rank4.pt",
-                                             "p1/basis_manifest.json", "p1/controls.pt", "p1/svd_spectrum.json",
-                                             "p1/local_leverage.json", "p1/preservation_audit.json", "p1/evaluation.json",
-                                             "p1/manifest_capture.json", "p1/manifest_eval.json")}})
+    write_json(sdir("evaluation.json"), out)
+    write_json(sdir("manifest.json"), {"schema": "reft_p1_manifest_v1", "utc": now(), **fz, "git": git_state(),
+                                         "verdict": verdict, "layer": P1["layer"], "files": {str(f): sha(f) for f in (
+                                             art("p1/data_audit.json"), art("p1/panel.json"), Path(read_json(sdir("gradient_manifest.json"))["decode_path"]),
+                                             *[sdir(x) for x in ("gradient_manifest.json", "gradients/rows.jsonl", "gradients/tensors.pt",
+                                                                 "basis_rank4.pt", "basis_manifest.json", "controls.pt", "svd_spectrum.json",
+                                                                 "local_leverage.json", "preservation_audit.json", "evaluation.json",
+                                                                 "manifest_capture.json", "manifest_eval.json")])}})
     brief = {g: {"n": S[g]["n"], "dialogues": S[g].get("dialogues"),
                  "rho_V": S[g]["retention"]["V"]["mean"] if S[g]["n"] else None,
                  "rho_Rmax": S[g]["retention"]["random_max_seed_mean"] if S[g]["n"] else None,

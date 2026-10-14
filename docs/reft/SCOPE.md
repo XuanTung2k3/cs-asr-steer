@@ -29,7 +29,7 @@ The ReFT experiment is a separate research question, and its contract is this fi
 | `target_text`, `first_divergence`, token bytes | `cs-asr-steer-inf/src/csasr/inference_cf/acl0.py`, `experiments/acl0.py` @ `3467db86` | copied into `reft/text.py` |
 | Unit alignment and error categories (`one`, `category`, `compare`, `ratios`) | `cs-asr-steer-inf/experiments/ttls_r1_independent_analysis.py` @ `3467db86` | copied into `reft/text.py` |
 | Loop detector | `cs-asr-steer-inf/experiments/acl0_evaluate.py` @ `3467db86` | copied into `reft/text.py` |
-| Layer-24 post-cross-attention site semantics | ACL-0 `SiteHook` (`experiments/acl0.py`), DG-02 `src/csasr/lss/sites.py` | re-implemented in `reft/site.py`, verified by tests and the smoke |
+| Post-cross-attention site semantics (active layer 31, AMENDMENT L31; layer 24 historical) | ACL-0 `SiteHook` (`experiments/acl0.py`), DG-02 `src/csasr/lss/sites.py` | re-implemented in `reft/site.py`, verified by tests and the smoke |
 | Fillers | `cs-asr-steer-inf/configs/research_review/iae1.json` | copied into `configs/reft/p0p1.yaml` |
 | Slurm pattern | `cs-asr-steer-inf/slurm/acl0_{gpu,cpu}.sbatch` | `slurm/reft_*.sbatch` |
 

@@ -22,6 +22,11 @@ def art(*parts) -> Path:
     return Path(cfg()["artifact_root"]).joinpath(*parts)
 
 
+def sdir(*parts) -> Path:
+    """Site-specific P1 artifact path (configs p1.artifact_subdir, e.g. p1/l31). Shared inputs stay in p1/."""
+    return art(cfg()["p1"]["artifact_subdir"], *parts)
+
+
 def write_json(path: Path, obj, overwrite: bool = False) -> Path:
     """Deterministic JSON. Write-once unless ``overwrite``: sealed artifacts are never silently replaced."""
     path = Path(path)

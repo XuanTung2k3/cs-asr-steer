@@ -24,6 +24,7 @@ FREEZE_SOURCES = {
 }
 FREEZE_SOURCES["p1"] = FREEZE_SOURCES["p0"] + [
     "reft/site.py", "reft/gradient_capture.py", "reft/build_basis.py", "reft/evaluate_basis.py", "slurm/reft_p1.sbatch"]
+FREEZE_SOURCES["p1_l31"] = FREEZE_SOURCES["p1"] + ["tests/reft/test_site_and_basis.py"]
 
 
 def sha(path) -> str:

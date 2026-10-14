@@ -6,6 +6,10 @@
 - Constants are in `configs/reft/p0p1.yaml`.
 - Amendments are appended in §12, timestamped and justified, and only before the outcome they could affect.
 
+> **Active P1 site: decoder layer 31 (final layer), post-cross-attention residual, pre-FFN — see AMENDMENT L31 (§12,
+> 2026-10-14T07:41:13Z).** The layer-24 text in §§4–5 is the original frozen specification, kept as a record. Every other P1 rule is
+> unchanged.
+
 ## 1. Research questions
 
 - **P0.** Does the unmodified Whisper-large-v3 Auto baseline (beam 5) still make enough genuine code-switching lexical
@@ -437,3 +441,114 @@ Only code, configs, tests and sanitized summaries are committed.
 - **P0 note.** P0 (59116) ran with the same library resolution as ACL-0 and reproduced sealed ACL-0 B0 beam-5 token for
   token. P0 is not rerun.
 - **What is not changed.** No quantity, rule, budget, basis policy or threshold.
+
+### AMENDMENT L31 — Single Final-Decoder-Layer Intervention (2026-10-14T07:41:13Z)
+
+**Decision (project owner).** The primary P1 representation-intervention site is frozen at Whisper-large-v3 decoder
+layer **31**, 0-indexed, the final decoder layer. The site is the post-cross-attention residual immediately before the
+FFN:
+
+`h = q + encoder_attn(encoder_attn_layer_norm(q), H_enc)`
+
+This is the tensor that enters `final_layer_norm` and also forms the FFN residual. The intervention is
+`h_new = h + δ`. It is not the layer-31 post-FFN block output, not the `decoder.layer_norm` output, and not the logits.
+This supersedes the layer-24 choice in §§4–5.
+
+**Why layer 31.** The final layer is closest to lexical token prediction and minimizes the downstream decoder
+transformation between intervention and logits. It is a research-design choice, not an empirically established
+optimum:
+- it has the same parameter count as layer 24 at equal width and rank;
+- a single late-layer intervention can fail despite strong local gradient leverage;
+- late-layer gradients may reflect token or language preference rather than recoverable acoustic information.
+
+No claim is made that layer 31 is optimal or more efficient.
+
+**Previous specification.** Layer 24, same site semantics, rank 4, same rows, weights, SVD, controls, budgets and gates.
+
+**Execution stage when the amendment was received.**
+- P0: complete (`P0_PASS_RELEVANT_OPPORTUNITIES`). It is unchanged and not rerun.
+- Layer-24 P1:
+  - smoke passed (59134);
+  - main capture complete (59135);
+  - basis built (59136, sha256 `c76b7566…`);
+  - held-out evaluation never completed. Leverage job 59137 crashed while serializing a `-inf` margin, after 13:46 of
+    GPU time, before writing any result. Analysis job 59138 never ran and was cancelled.
+
+**What had been observed.**
+- Seen: the layer-24 pre-evaluation quantities — row coverage and the construction-partition (in-sample) SVD spectrum.
+  The top-4 directions held 18% of the weighted energy, with an effective rank of about 104.
+- Not computed or observed: any held-out feasibility outcome (retention, leverage, preservation or verdict).
+
+Layer 31 is therefore **prospective with respect to every P1 feasibility outcome**. It is not a choice made after
+comparing layers. The layer-24 evaluation is **not completed**, so no 24-vs-31 comparison exists and none will be used
+for selection.
+
+**Artifacts.**
+- **Kept and valid (layer-independent, reused after hash checks):**
+  - P0 (all);
+  - `p1/data_audit.json`, `p1/panel.json`, `p1/targets.json`;
+  - the layer-independent F1 Auto beam-5 decode `p1/decode.jsonl` (sha256 `488d3783…`, Slurm 59135, consistent CUDA
+    libraries). The teacher-forced rows A/B/P depend only on that decode and the unmodified float32 forward, so the
+    layer-31 row population must equal layer 24's.
+- **Historical (layer 24, untouched in `p1/`):** `smoke_59128/59134.json`, `gradients/`, `gradient_manifest.json`,
+  `manifest_capture.json`, `basis_rank4.pt`, `basis_manifest.json`, `controls.pt`, `svd_spectrum.json`,
+  `random_controls.json`. These are never relabeled and never mixed into a layer-31 SVD.
+- **New (layer 31):** everything under `p1/l31/`. Freeze stage `p1_l31`.
+
+**Repeated checks for the site.** Layer-24 validation does not count for layer 31. The layer-31 smoke reruns every
+acceptance item at layer 31:
+- exact site identity;
+- placement immediately before the final FFN (block output = site + FFN(site); the block output, not the site, feeds
+  `decoder.layer_norm`);
+- zero-δ bitwise identity;
+- position locality (logits before t unchanged);
+- greedy cached-vs-teacher-forced indexing;
+- shape and finiteness;
+- autograd against finite difference;
+- ± gradient perturbation;
+- weights unchanged;
+- bitwise-repeatable gradients;
+- consistent CUDA libraries.
+
+A tiny-model CPU test covers the last-layer placement as well.
+
+**Engineering fix included.** In the leverage step, `gold_vs_best_other` is now serialized as null, with
+`correct_suppressed` flagged, when the correct token is in Whisper's suppress set (masked `-inf`). This is the 59137
+crash. No metric definition changes.
+
+**New jobs.** One layer-31 smoke, one capture that reuses the decode, so its GPU part is teacher-forced only, the basis
+(CPU), one leverage evaluation and the analysis (CPU). Estimated GPU time is about 20 minutes; the leverage step took
+about 14 minutes at layer 24. The extra GPU compute already spent on layer 24 was about 25 min (smoke 59134, capture
+59135, leverage 59137).
+
+**Unchanged.**
+- rank 4;
+- row eligibility;
+- competitor rules;
+- weighting and normalization;
+- basis policy;
+- controls (seeds 42–46, PCA4, SCRIPT1, FULL ceiling);
+- budgets ε ∈ {0.05, 0.10, 0.25}, primary 0.10;
+- all P1 gate thresholds;
+- seed and population.
+
+There is no layer or rank search. The gate is not changed because layer-31 gradients are stronger or weaker.
+
+**Final-layer diagnostic.** Already in the frozen analysis, it is reported explicitly for:
+- CS lexical errors;
+- EN_ONLY;
+- ZH_ONLY;
+- translation-like;
+- English→English substitutions;
+- correct EN and ZH controls.
+
+The SCRIPT1 language-direction dominance test decides whether leverage is a generic language-prior shift.
+
+**P2 consistency (recommendation only, not implemented).** If P1 passes, P2 uses exactly this site:
+- layer 31, post-cross-attention, pre-FFN;
+- frozen V₃₁, rank 4;
+- one projected-state controller.
+
+LoReFT is compared at the equivalent site. LoRA comparisons must document their target projections. Matched parameter
+counts alone do not establish a fair comparison.
+

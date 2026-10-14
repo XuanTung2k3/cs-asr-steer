@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""P1-A -- gradient capture at the frozen layer-24 post-cross-attention site.
+"""P1-A -- gradient capture at the frozen post-cross-attention, pre-FFN site (layer from configs p1.layer; 31 under AMENDMENT L31).
 
   smoke    -- GPU engineering acceptance on 4 construction utterances (no accuracy is evaluated; P1 stops on failure).
   capture  -- GPU: F1 Auto beam-5 decode of the P1 panel behind the reference firewall, then (training labels opened)
@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
 from reft.baseline_auto import FORBIDDEN, generate, language_scores, load_model, special_ids  # noqa: E402
-from reft.common import art, audio_hash_ok, cfg, fillers, firewall, firewall_off, read_json, read_jsonl, write_json, write_jsonl  # noqa: E402
+from reft.common import art, sdir, audio_hash_ok, cfg, fillers, firewall, firewall_off, read_json, read_jsonl, write_json, write_jsonl  # noqa: E402
 from reft.provenance import check_freeze, cublas_consistent, git_state, loaded_cuda_libs, now, sha, slurm, weights_hash  # noqa: E402
 from reft.site import Site, n_hooks  # noqa: E402
 from reft.text import (fd_category, first_divergence, is_han, script_of, tok_bytes_fn, token_is_lexical,  # noqa: E402
@@ -208,7 +208,7 @@ def run_smoke():
     import torch
     C = cfg()
     P1 = C["p1"]
-    fz = check_freeze("p1")
+    fz = check_freeze(cfg()["p1"]["freeze_stage"])
     panel = read_json(art("p1/panel.json"))["rows"]
     rows = [r for r in panel if r["partition"] == "construction"][:P1["smoke_utterances"]]
     firewall(FORBIDDEN)
@@ -263,6 +263,23 @@ def run_smoke():
         checks["zero_delta_bitwise"].append(bool(torch.equal(lg_plain, logits.detach())))
         checks["ffn_in_equals_q_plus_s"].append(bool(torch.equal(site.ffn_in.detach(), (site.q + site.s).detach())))
         checks["site_called_once"].append(site.calls == 1)
+        # site placement (AMENDMENT L31): final decoder layer; the site is the FFN input, block_out = site + FFN(site),
+        # and the block output (not the site) is what feeds decoder.layer_norm
+        lay, got = b.model.model.decoder.layers[P1["layer"]], {}
+        hk = [lay.register_forward_hook(lambda m_, a_, o_: got.__setitem__("block", o_[0] if isinstance(o_, tuple) else o_)),
+              b.model.model.decoder.layer_norm.register_forward_pre_hook(lambda m_, a_: got.__setitem__("final_ln_in", a_[0]))]
+        try:
+            with torch.no_grad():
+                _, s2 = tf_logits(b, enc, X, record=True)
+                hs_ = s2.ffn_in
+                ffn = lay.fc2(lay.activation_fn(lay.fc1(lay.final_layer_norm(hs_))))
+        finally:
+            for h_ in hk:
+                h_.remove()
+        checks["site_is_last_decoder_layer"].append(P1["layer"] == b.num_decoder_layers - 1)
+        checks["block_out_equals_site_plus_ffn"].append(bool(torch.allclose(got["block"], hs_ + ffn, atol=1e-5, rtol=1e-5)))
+        checks["site_differs_from_block_output"].append(not bool(torch.allclose(got["block"], hs_)))
+        checks["block_output_feeds_final_layer_norm"].append(bool(torch.equal(got["block"], got["final_ln_in"])))
         fd, rws = build_rows(uid, tgt, dec[uid]["tokens"], am, ru, tb, S["eos"], FILL, P1["source_b_max_per_utterance"],
                              P1["preservation_max_per_utterance"])
         if not rws:  # engineering fallback for the smoke only: first lexical gold position vs its runner-up
@@ -288,6 +305,13 @@ def run_smoke():
             fd_r = (fp - fm) / (2 * eta)
             checks["fd_along_q_rel_err"].append(abs(fd_q - qn) / qn)
             checks["fd_random_abs_err_over_qnorm"].append(abs(fd_r - float(q @ rv)) / qn)
+            dloc = torch.zeros(1, X.shape[1], b.d_model, device=b.device)
+            dloc[0, pos] = (0.05 * float(h.norm()) * qh).to(b.device)
+            with torch.no_grad():
+                lgp, _ = tf_logits(b, enc, X, delta=dloc)
+                lg0, _ = tf_logits(b, enc, X)
+            checks["only_positions_ge_t_affected"].append(bool(torch.equal(lgp[0, :pos], lg0[0, :pos]))
+                                                          and not bool(torch.equal(lgp[0, pos], lg0[0, pos])))
             checks["plus_increases"].append(mp > m00)
             checks["minus_decreases"].append(mm < m00)
             checks["m0_reproduced"].append(abs(m00 - m0) <= 1e-3 + 1e-3 * abs(m0))
@@ -300,7 +324,9 @@ def run_smoke():
     tol = P1["fd_rel_tol"]
     res.update({k: v for k, v in checks.items()})
     res["fd_ok"] = all(e <= tol for e in checks["fd_along_q_rel_err"]) and all(e <= tol for e in checks["fd_random_abs_err_over_qnorm"])
-    bool_keys = ["zero_delta_bitwise", "ffn_in_equals_q_plus_s", "site_called_once", "shape_1280", "finite", "nonzero",
+    bool_keys = ["zero_delta_bitwise", "ffn_in_equals_q_plus_s", "site_called_once", "site_is_last_decoder_layer",
+                 "block_out_equals_site_plus_ffn", "site_differs_from_block_output", "block_output_feeds_final_layer_norm",
+                 "only_positions_ge_t_affected", "shape_1280", "finite", "nonzero",
                  "plus_increases", "minus_decreases", "m0_reproduced", "repeat_bitwise", "param_grads_none", "hooks_removed"]
     res["bool_checks_ok"] = {k: all(checks[k]) for k in bool_keys}
     w1 = weights_hash(b.model)
@@ -315,9 +341,9 @@ def run_smoke():
     res["runtime_ok"] = res["timing"]["projected_capture_s"] < 2.5 * 3600
     res["all_pass"] = bool(res["weights_equal_expected"] and res["indexing_ok"] and res["fd_ok"] and res["cuda_libs_consistent"]
                            and all(res["bool_checks_ok"].values()) and res["weights_unchanged"] and res["runtime_ok"])
-    out = {"schema": "reft_p1_smoke_v1", "utc": now(), **fz, "git": git_state(), "env": env, "slurm": slurm(),
+    out = {"schema": "reft_p1_smoke_v1", "layer": P1["layer"], "site": P1["site"], "utc": now(), **fz, "git": git_state(), "env": env, "slurm": slurm(),
            "utterances": [r["utterance_id"] for r in rows], **res}
-    path = art(f"p1/smoke_{slurm()['SLURM_JOB_ID'] or 'local'}.json")
+    path = sdir(f"smoke_{slurm()['SLURM_JOB_ID'] or 'local'}.json")
     write_json(path, out)
     print(json.dumps({k: v for k, v in out.items() if k not in ("env",)}, indent=1, default=str))
     if not res["all_pass"]:
@@ -327,7 +353,7 @@ def run_smoke():
 # ====================================================================== capture
 
 def latest_smoke():
-    sm = sorted(art("p1").glob("smoke_*.json"), key=lambda p: p.stat().st_mtime)
+    sm = sorted(sdir().glob("smoke_*.json"), key=lambda p: p.stat().st_mtime)
     return sm[-1] if sm else None
 
 
@@ -335,7 +361,7 @@ def run_capture():
     import torch
     C = cfg()
     P1 = C["p1"]
-    fz = check_freeze("p1")
+    fz = check_freeze(cfg()["p1"]["freeze_stage"])
     sm = latest_smoke()
     assert sm and read_json(sm)["all_pass"], "smoke has not passed"
     audit = read_json(art("p1/data_audit.json"))
@@ -347,14 +373,23 @@ def run_capture():
     S = special_ids(b)
     torch.cuda.reset_peak_memory_stats()
     t_start = time.time()
-    # --- 1. F1 Auto beam-5 decode of the training panel (labels unopened)
-    dec, audio_ok = [], 0
-    for r in panel:
-        audio_ok += audio_hash_ok(r["audio_path"], r["audio_sha256"])
-        rec, inp = generate(b, r["audio_path"], None, C["decode"]["num_beams"])
-        rec.update(id=r["utterance_id"], language_top3=language_scores(b, inp["input_features"]))
-        dec.append(rec)
-    write_jsonl(art("p1/decode.jsonl"), dec)
+    # --- 1. F1 Auto beam-5 decode of the training panel (labels unopened). The decode is site-independent: a hash-verified
+    # shared decode (configs p1.shared_decode) is reused instead of decoding again; otherwise decode into the site dir.
+    sd = P1.get("shared_decode")
+    audio_ok = sum(audio_hash_ok(r["audio_path"], r["audio_sha256"]) for r in panel)
+    if sd and art(sd["path"]).exists() and sha(art(sd["path"])) == sd["sha256"]:
+        decode_path, decode_reused = art(sd["path"]), True
+        dec = read_jsonl(decode_path)
+        assert [d["id"] for d in dec] == [r["utterance_id"] for r in panel]
+    else:
+        decode_reused = False
+        dec = []
+        for r in panel:
+            rec, inp = generate(b, r["audio_path"], None, C["decode"]["num_beams"])
+            rec.update(id=r["utterance_id"], language_top3=language_scores(b, inp["input_features"]))
+            dec.append(rec)
+        decode_path = sdir("decode.jsonl")
+        write_jsonl(decode_path, dec)
     t_decode = time.time() - t_start
     # --- 2. training labels; float32 teacher-forced capture
     firewall_off()
@@ -397,9 +432,9 @@ def run_capture():
     Qt, Ht, Gt = torch.stack(Q), torch.stack(H), torch.stack(GS)
     for i, m in enumerate(meta):
         m["row"] = i
-    write_jsonl(art("p1/gradients/rows.jsonl"), meta)
-    write_jsonl(art("p1/gradients/utterances.jsonl"), utt)
-    tp = art("p1/gradients/tensors.pt")
+    write_jsonl(sdir("gradients/rows.jsonl"), meta)
+    write_jsonl(sdir("gradients/utterances.jsonl"), utt)
+    tp = sdir("gradients/tensors.pt")
     assert not tp.exists()
     torch.save({"q": Qt, "h": Ht, "gs": Gt, "latin_ids": latin, "han_ids": han}, tp)
 
@@ -417,16 +452,17 @@ def run_capture():
     fdc = {p: dict(collections.Counter(u["fd_class"] for u in utt if u["partition"] == p)) for p in ("construction", "audit")}
     gm = {"schema": "reft_p1_gradient_manifest_v1", "utc": now(), "n_rows": len(meta), "coverage": coverage,
           "first_divergence_classes": fdc, "languages": dict(collections.Counter(d["language"] for d in dec)),
-          "tensors_sha256": sha(tp), "rows_sha256": sha(art("p1/gradients/rows.jsonl")),
-          "decode_sha256": sha(art("p1/decode.jsonl")), "latin_ids": len(latin), "han_ids": len(han),
+          "tensors_sha256": sha(tp), "rows_sha256": sha(sdir("gradients/rows.jsonl")),
+          "decode_sha256": sha(decode_path), "decode_path": str(decode_path), "decode_reused": decode_reused,
+          "layer": P1["layer"], "site": P1["site"], "latin_ids": len(latin), "han_ids": len(han),
           "orientation_note": "q stored unnormalized; norms (q_norm, h_norm, gs_norm) and orientation (cos_q_gs) recorded separately"}
-    write_json(art("p1/gradient_manifest.json"), gm)
+    write_json(sdir("gradient_manifest.json"), gm)
     man = {"schema": "reft_p1_capture_v1", "utc": now(), **fz, "git": git_state(), "env": env, "slurm": slurm(),
            "smoke": sm.name, "cuda_libs": libs, "weights_before": w0, "weights_after_bf16_cast": w1, "weights_unchanged": w0 == w1,
            "weights_equal_expected": w0 == C["model"]["expected_weights_hash"], "audio_sha_ok": audio_ok, "n_panel": len(panel),
-           "decode_seconds": t_decode, "capture_seconds": time.time() - t_start - t_decode, "wall_seconds": time.time() - t_start,
+           "decode_seconds": t_decode, "decode_reused": decode_reused, "layer": P1["layer"], "capture_seconds": time.time() - t_start - t_decode, "wall_seconds": time.time() - t_start,
            "peak_gpu_bytes": int(torch.cuda.max_memory_allocated()), "compute_dtype": "float32 (bf16 weights upcast exactly)"}
-    write_json(art("p1/manifest_capture.json"), man)
+    write_json(sdir("manifest_capture.json"), man)
     print(json.dumps({"manifest": {k: v for k, v in man.items() if k != "env"}, "coverage": coverage, "fd": fdc}, indent=1, default=str))
 
 

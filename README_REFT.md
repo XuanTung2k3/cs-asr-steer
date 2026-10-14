@@ -2,7 +2,7 @@
 
 **Experiment:** Task-Aligned Frozen Subspace Adaptation for Efficient Code-Switching ASR. This sprint covers P0/P1 only:
 a feasibility test of whether a frozen rank-4 subspace, extracted from task gradients at Whisper-large-v3 decoder layer
-24 (post-cross-attention, pre-FFN), has local lexical-correction leverage beyond random directions. No controller is
+31 (final layer; post-cross-attention, pre-FFN; AMENDMENT L31 — layer 24 was the original choice), has local lexical-correction leverage beyond random directions. No controller is
 trained.
 
 **Documents:**

@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
-from reft.common import art, cfg, read_json, read_jsonl, write_json  # noqa: E402
+from reft.common import art, sdir, cfg, read_json, read_jsonl, write_json  # noqa: E402
 from reft.provenance import check_freeze, git_state, now, sha  # noqa: E402
 
 
@@ -79,10 +79,10 @@ def main():
     C = cfg()
     P1 = C["p1"]
     k = P1["rank"]
-    fz = check_freeze("p1")
-    meta = read_jsonl(art("p1/gradients/rows.jsonl"))
-    gm = read_json(art("p1/gradient_manifest.json"))
-    tp = art("p1/gradients/tensors.pt")
+    fz = check_freeze(cfg()["p1"]["freeze_stage"])
+    meta = read_jsonl(sdir("gradients/rows.jsonl"))
+    gm = read_json(sdir("gradient_manifest.json"))
+    tp = sdir("gradients/tensors.pt")
     assert sha(tp) == gm["tensors_sha256"], "gradient tensors changed"
     T = torch.load(tp)
     Q = T["q"].double()
@@ -146,7 +146,7 @@ def main():
     for s, R in rnd.items():
         c = (w[:, None] * (Qn @ R)).sum(0)
         cbar_r[s] = c / c.norm()
-    basis_path, ctrl_path = art("p1/basis_rank4.pt"), art("p1/controls.pt")
+    basis_path, ctrl_path = sdir("basis_rank4.pt"), sdir("controls.pt")
     for p in (basis_path, ctrl_path):
         assert not p.exists(), p
     torch.save({"V": V, "singular_values": sv, "cbar": cbar, "layer": P1["layer"], "rank": k,
@@ -158,7 +158,7 @@ def main():
             "energy_top4": float(energy[:k].sum()), **effective_rank(sv), "n_rows": len(rows),
             "in_sample_mean_rho": float(rho_in.mean()), "per_group_in_sample": per_stratum,
             "raw_gradient_diagnostic": raw}
-    write_json(art("p1/svd_spectrum.json"), spec)
+    write_json(sdir("svd_spectrum.json"), spec)
     man = {"schema": "reft_p1_basis_manifest_v1", "utc": now(), **fz, "git": git_state(), "policy": policy,
            "weights": {"normalization": "unit q", "per_utterance": "1/sqrt(n_rows)",
                        "stratum_caps": P1["basis_policy"]["stratum_energy_caps"], "energy_shares_after": shares},
@@ -167,8 +167,8 @@ def main():
            "svd": "torch.linalg.svd float64 on W*Q_hat (rows = gradients), V = Vh[:4].T",
            "cos_V_with_script1": cos_script, "cos_cbar_V_with_script1": float(V @ cbar @ dscript[:, 0]),
            "source_gradients_sha256": gm["tensors_sha256"]}
-    write_json(art("p1/basis_manifest.json"), man)
-    write_json(art("p1/random_controls.json"), {
+    write_json(sdir("basis_manifest.json"), man)
+    write_json(sdir("random_controls.json"), {
         "schema": "reft_p1_controls_v1", "random_seeds": P1["random_seeds"],
         "construction": "QR of N(0,1) 1280x4 float64 (torch.Generator(seed)), positive-diagonal R",
         "pca4": "top-4 principal components of centred site activations h of the basis rows",

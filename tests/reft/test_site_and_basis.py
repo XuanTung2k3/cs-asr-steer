@@ -150,3 +150,27 @@ def test_random_controls_orthonormal_deterministic_and_svd_recovers_planted_subs
     Q = torch.randn(300, 2, generator=g, dtype=torch.float64) @ basis.T * 5 + 0.1 * torch.randn(300, 64, generator=g, dtype=torch.float64)
     _, _, Vh = torch.linalg.svd(Q / Q.norm(dim=1, keepdim=True), full_matrices=False)
     assert min(principal_cosines(Vh[:2].T, basis)) > 0.99
+
+
+def test_last_layer_site_precedes_final_ffn_and_final_layer_norm(tiny):
+    """AMENDMENT L31: at the final decoder layer the site is the FFN input; the block output = site + FFN(site) and it
+    (not the site) feeds decoder.layer_norm; a zero delta is an identity and an update only moves positions >= t."""
+    m, enc, X = tiny
+    L = len(m.model.decoder.layers) - 1
+    lay, got = m.model.decoder.layers[L], {}
+    hk = [lay.register_forward_hook(lambda m_, a_, o_: got.__setitem__("block", o_[0] if isinstance(o_, tuple) else o_)),
+          m.model.decoder.layer_norm.register_forward_pre_hook(lambda m_, a_: got.__setitem__("ln_in", a_[0]))]
+    try:
+        plain, s = fwd(m, enc, X, layer=L, delta=torch.zeros(1, X.shape[1], 16), record=True)
+    finally:
+        for h in hk:
+            h.remove()
+    h = s.ffn_in
+    assert torch.equal(h, s.q + s.s)
+    assert torch.allclose(got["block"], h + lay.fc2(lay.activation_fn(lay.fc1(lay.final_layer_norm(h)))), atol=1e-6)
+    assert torch.equal(got["block"], got["ln_in"]) and not torch.allclose(got["block"], h)
+    assert torch.equal(plain, m(encoder_outputs=(enc,), decoder_input_ids=X, use_cache=False).logits)
+    d = torch.zeros(1, X.shape[1], 16)
+    d[0, 5] = torch.randn(16)
+    lg, _ = fwd(m, enc, X, layer=L, delta=d)
+    assert torch.equal(lg[0, :5], plain[0, :5]) and not torch.allclose(lg[0, 5], plain[0, 5])

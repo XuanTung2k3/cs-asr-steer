@@ -401,3 +401,16 @@ Only code, configs, tests and sanitized summaries are committed.
   D-dev-select role on all six identity keys.
 - **What is not changed.** Sampling, split, gates and thresholds. No P1 output existed.
 
+
+### r3 — 2026-10-14T06:08:17Z — float32 cuBLAS vector routines abort on the MIG slice (engineering only, before any P1 outcome)
+
+- **What happened.** The P1 smoke (Slurm 59126) aborted. A gdb rerun (Slurm 59127, diagnostic only, no outputs) shows
+  `SIGFPE` inside `cublasSdot_v2`, called from a 1-D CUDA `q @ r` in the finite-difference check.
+  - The same jobs log cuBLASLt `CUBLAS_STATUS_NOT_INITIALIZED` for float32 GEMMs, which fall back to the legacy path,
+    as ACL-0 also recorded.
+  - Full float32 forward and backward passes completed.
+- **Fix.** Gradients, site activations and every perturbation direction leave the GPU immediately. All vector algebra
+  (dots, projections, cosines, direction construction in float64) runs on CPU. Only full forward and backward passes run
+  on the GPU.
+- **What is not changed.** No quantity, row rule, budget, basis policy or threshold. The smoke's finite-difference and
+  bitwise checks still validate the GPU numerics.

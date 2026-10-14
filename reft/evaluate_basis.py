@@ -88,8 +88,9 @@ def run_leverage():
     to_float32(b)
     masks = suppress_masks(b, b.device)
     dev = b.device
-    subs_d = {k: v.float().to(dev) for k, v in subs.items()}
-    cbar_d = {k: v.float().to(dev) for k, v in cbar.items()}
+    # directions are built on CPU in float64 (cuBLAS level-1/2 SIGFPE on this MIG slice, amendment r3)
+    subs_d = {k: v.double() for k, v in subs.items()}
+    cbar_d = {k: v.double() for k, v in cbar.items()}
     torch.cuda.reset_peak_memory_stats()
     t0 = time.time()
     by_utt = collections.defaultdict(list)
@@ -101,7 +102,7 @@ def run_leverage():
         ids = tg[uid]["target_ids"]
         Xfull = torch.tensor([dec[uid]["prompt"] + ids[:-1]], device=dev)
         for m in rows:
-            q, h = T["q"][m["row"]].float().to(dev), T["h"][m["row"]].float().to(dev)
+            q, h = T["q"][m["row"]].double(), T["h"][m["row"]].double()
             pos, t = m["pos"], m["t"]
             X = Xfull[:, :pos + 1]
             items = [("BASE", 0.0, torch.zeros_like(q))] + perturbations(m, q, h, subs_d, cbar_d, P1["epsilons"])
@@ -111,7 +112,7 @@ def run_leverage():
                 Xb = X.expand(len(ch), -1).contiguous()
                 delta = torch.zeros(len(ch), X.shape[1], b.d_model, device=dev)
                 for j, (_, _, u) in enumerate(ch):
-                    delta[j, pos] = u
+                    delta[j, pos] = u.to(dev, torch.float32)
                 with torch.no_grad():
                     lg, _ = tf_logits(b, enc, Xb, delta=delta)
                 z = lg[:, pos].float()

@@ -183,18 +183,20 @@ def utterance_pass(b, enc, prompt, tgt, masks, latin, han, want_rows):
         pos = P0 - 1 + row["t"]
         zr = z[pos]
         m = zr[row["correct"]] - zr[row["competitor"]]
-        q = torch.autograd.grad(m, delta, retain_graph=True)[0][0, pos].detach().clone()
+        q = torch.autograd.grad(m, delta, retain_graph=True)[0][0, pos].detach().cpu()
         s = torch.logsumexp(zr[latin], 0) - torch.logsumexp(zr[han], 0)
-        gs = torch.autograd.grad(s, delta, retain_graph=True)[0][0, pos].detach().clone()
-        return float(m), q, h_site[pos].clone(), gs
+        gs = torch.autograd.grad(s, delta, retain_graph=True)[0][0, pos].detach().cpu()
+        # vectors leave the GPU here: cuBLAS level-1/2 calls (e.g. cublasSdot) raise SIGFPE on this MIG slice in
+        # float32 (amendment r3); all vector algebra runs on CPU
+        return float(m.detach()), q, h_site[pos].cpu(), gs
     return am, ru, grads, (X, logits, site, delta)
 
 
 def margin_at(b, enc, X, pos, correct, competitor, u):
-    """m after adding u at position pos only (no grad)."""
+    """m after adding u (CPU or device vector) at position pos only (no grad)."""
     import torch
     d = torch.zeros(1, X.shape[1], b.d_model, device=b.device)
-    d[0, pos] = u
+    d[0, pos] = u.to(b.device, torch.float32)
     with torch.no_grad():
         lg, _ = tf_logits(b, enc, X, delta=d)
     return float(lg[0, pos, correct] - lg[0, pos, competitor])
@@ -279,7 +281,7 @@ def run_smoke():
             mm = margin_at(b, enc, X, pos, row["correct"], row["competitor"], -eta * qh)
             m00 = margin_at(b, enc, X, pos, row["correct"], row["competitor"], torch.zeros_like(q))
             fd_q = (mp - mm) / (2 * eta)
-            rv = torch.randn(b.d_model, generator=gen, dtype=torch.float64).float().to(b.device)
+            rv = torch.randn(b.d_model, generator=gen, dtype=torch.float64).float()
             rv = rv / rv.norm()
             fp = margin_at(b, enc, X, pos, row["correct"], row["competitor"], eta * rv)
             fm = margin_at(b, enc, X, pos, row["correct"], row["competitor"], -eta * rv)

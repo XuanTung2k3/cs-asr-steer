@@ -1,0 +1,34 @@
+# P2-1b paired CE vs KL-preservation pilot (frozen; docs/reft/P2_1B_PROTOCOL.md, docs/reft/P2_1B_DECISION_RULES.md).
+# Everything not listed here is inherited unchanged from configs/reft/p2_1_frozen.yaml (method R2, data, optimizer,
+# training schedule, frozen Auto-LID, pinned baseline, canonical CUDA 12.8 environment).
+schema: reft_p2_1b_frozen_v1
+inherits: configs/reft/p2_1_frozen.yaml
+method: R2
+arms:
+  CE: {loss: "CE"}
+  KL: {loss: "CE + lambda_kl * KL(p0 || p_theta) on the teacher-correct mask", lambda_kl: 1.0}
+seeds: [42, 43, 44]
+seed_semantics: "seed s sets the LoReFT init seed (R = QR of a seed-s Gaussian; W = R; b = 0), torch.manual_seed(s), and the epoch order numpy default_rng(s + epoch).permutation"
+kl:
+  direction: "KL(p0 || p_theta) = sum_v p0 (log p0 - log p_theta), full vocabulary, float32 log-softmax"
+  teacher: "same Whisper forward with the adapter absent (frozen backbone), detached"
+  mask: "Y != -100 and argmax_v teacher_logits == Y (training-only teacher-forced correctness, content tokens and EOS)"
+  normalization: "sum over masked positions / max(1, mask count) per micro-batch; CE token-mean as in P2-1"
+  lambda_kl: 1.0
+historical_ce_seed42:
+  run: p2_1/R2
+  reuse_condition: "the new CE path reproduces p2_1/R2/epoch1/adapter.pt bitwise after one full epoch (32 updates) of seed-42 training"
+  otherwise: "fresh CE seed-42 control in p2_1b/training/CE_seed42 (disclosed)"
+max_new_training_runs: 6
+selection_rule: "per run: lowest dev150 beam-5 genuine-CS MER, then overall MER, then Mandarin CER, then earliest epoch (P2-1 rule, unchanged)"
+switchback:
+  long_run_min_units: 5
+  near_switch_max_distance: 7
+mask_coverage_stop: {min_switchback_token_coverage: 0.10}
+prefix_audit:
+  damaged_cases: "every P2-1D damaged switch-back run of R2-CE seed 42 epoch 2 (Mandarin deletion run of >= 5 reference units starting right after a substantive English unit)"
+  safe_cases: "same number of CS switch-backs (first Mandarin unit after a substantive English unit) in utterances with no new Mandarin error under R2-CE seed 42 epoch 2, one per utterance, sha256('p2_1b-safe:' + id + ':' + k) order"
+  type_a_drop_nats: 1.0
+  dominance_fraction: 0.60
+bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+compute: {max_job_seconds: 10800, partition: mig, gpu: "H100 MIG 3g.40gb"}

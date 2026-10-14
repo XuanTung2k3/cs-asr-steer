@@ -1,0 +1,40 @@
+# P1-E decoupled conditioning/correction subspace feasibility (CPU only). Protocol: docs/reft/P1E_PROTOCOL.md.
+schema: reft_p1e_config_v1
+seed: 42
+source_dir: p1/l31
+p1d_dir: p1d
+output_dir: p1e
+expected_basis_sha256: "sha256:f020e93b7dfa5be003cc3cb0755ccaf6ef303ec0b881f67b2b77e89a069292c3"
+# P1-D frozen full-state readers (reused unchanged; refit because coefficients were not serialized)
+p1d_full_reader:
+  when: {C: 0.001, cv_oof_auroc: 0.7766319772942288, train_auroc_in_sample: 0.9524597918637654}
+  how: {alpha: 1000.0, cv_oof_mean_cos: 0.28810415780344817}
+  reproduction_tol: 1.0e-9
+rank_u: 4
+norm: {type: rms, eps: 1.0e-6}
+random_seeds: [42, 43, 44, 45, 46]
+cv_folds: 5
+when_C_grid: [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+how_alpha_grid: [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
+joint:
+  lambda_grid: [0.0001, 0.001, 0.01, 0.1, 1.0]
+  class_weight: "A rows 0.5/n_A, P rows 0.5/n_P within each fitted set"
+  lbfgs_max_iter: 2000
+epsilon: 0.10
+position_bins: [[0, 0], [1, 2], [3, 5], [6, 10], [11, 20], [21, 100000]]
+bootstrap: {reps: 2000, seed: 42}
+gate:
+  e2_auroc_min: 0.65
+  e2_recall_at_fpr10_min: 0.25
+  e2_lodo_auroc_min: 0.60
+  e2_position_support_min_a: 20
+  e2_position_support_min_bins: 2
+  e2_position_stratified_auroc_min: 0.60
+  e2_incremental_over_nuisance_min: 0.02
+  e3_positive_fraction_min: 0.60
+  e4_recall_min: 0.25
+  e4_achieved_fpr_max: 0.15
+  e4_positive_fraction_min: 0.60
+  e4_recall_gain_vs_coupled_min: 0.10
+  e4_min_nontranslation_positive: 3
+  e4_min_dialogues: 3

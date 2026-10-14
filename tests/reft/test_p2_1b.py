@@ -81,6 +81,28 @@ def test_seed_config_changes_only_seeds():
     assert C["methods"]["R2"]["init_seed"] == 42
 
 
+def test_orthogonal_base_follows_global_rng():
+    """Amendment r1: R is fixed by the init seed, but the parametrization coordinates (`base`) follow the global RNG."""
+    from reft.adapters import LoReFTIntervention
+
+    def build(global_seed):
+        torch.manual_seed(global_seed)
+        return LoReFTIntervention(16, 2, 42)
+
+    def grads(m, gR):
+        (m.rot.weight * gR).sum().backward()
+        return m.rot.parametrizations.weight.original.grad
+
+    gR = torch.randn(2, 16, generator=torch.Generator().manual_seed(1))
+    a, b, c = build(0), build(0), build(1)
+    base = "parametrizations.weight.0.base"
+    assert torch.equal(a.rot.weight, c.rot.weight) and not torch.equal(a.rot.get_buffer(base), c.rot.get_buffer(base))
+    assert all(torch.equal(x, y) for x, y in zip(a.state_dict().values(), b.state_dict().values()))
+    ga, gb, gc = grads(a, gR), grads(b, gR), grads(c, gR)
+    assert torch.equal(ga, gb) and not torch.allclose(ga, gc, atol=1e-4)
+    assert torch.allclose(ga.norm(), gc.norm(), rtol=1e-5)  # same gradient, different orthonormal coordinates
+
+
 def ev(k, op, en=False, zh=False, tr="unchanged_correct"):
     return {"k": k, "sys_op": op, "substantive_en": en, "zh_non_filler": zh, "transition": tr}
 

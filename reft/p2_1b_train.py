@@ -2,6 +2,7 @@
 """P2-1b paired CE vs KL-preservation training for R2 LoReFT (docs/reft/P2_1B_PROTOCOL.md).
 
   freeze              -- write-once p2_1b/freeze.json (sources + pinned inputs; independent of the P2-0 freeze chain)
+  freeze-r1           -- write-once p2_1b/freeze_r1.json: amendment r1 (docs/reft/P2_1B_AMENDMENT_R1.md), chained to freeze.json
   smoke               -- GPU preflight (G1-G7): provenance, CE-equivalence (seed-42 epoch 1 vs P2-1 bitwise), KL objective
                          checks, training-set mask coverage, decoding parity, timing/VRAM -> p2_1b/preflight.json
   train --arm --seed  -- GPU: one write-once run p2_1b/training/{CE,KL}_seed{s}
@@ -39,6 +40,7 @@ FROZEN_INPUTS = ["p2_0/train_manifest.json", "p2_0/dev_manifest.json", "p2_0/fro
                  "p2_1d/utterance_summary_private.jsonl", "p1/targets.json", "p2_1b/prefix_audit/cases_private.json",
                  "p2_1b/AUTHORIZATION.json"]
 ARMS = ("CE", "KL")
+R1_SOURCES = FREEZE_SOURCES + ["docs/reft/P2_1B_AMENDMENT_R1.md"]
 
 
 def cb() -> dict:
@@ -89,16 +91,35 @@ def run_freeze():
     print(write_json(p, rec))
 
 
+def run_freeze_r1():
+    """Amendment r1: re-hash the sources after the documented smoke-check repair; the original freeze.json is kept and chained."""
+    p, p0 = out("freeze_r1.json"), out("freeze.json")
+    if p.exists():
+        raise SystemExit(f"{p} exists; write-once")
+    rec0 = read_json(p0)
+    inputs = {i: sha(art(i)) for i in FROZEN_INPUTS}
+    assert inputs == rec0["inputs"], "frozen inputs changed since freeze.json"
+    rec = {"schema": "reft_p2_1b_freeze_amendment_v1", "amendment": "r1", "utc": now(), "git": git_state(),
+           "prev_freeze": "p2_1b/freeze.json", "prev_freeze_sha256": sha(p0), "amendment_doc": "docs/reft/P2_1B_AMENDMENT_R1.md",
+           "changed_sources": sorted(s for s in R1_SOURCES if rec0["sources"].get(s) != sha(ROOT / s)),
+           "sources": {s: sha(ROOT / s) for s in R1_SOURCES}, "inputs": inputs, "p2_0_chain_head": rec0["p2_0_chain_head"]}
+    print(write_json(p, rec))
+
+
 def check_freeze() -> dict:
-    p = out("freeze.json")
+    """Verify the P2-1b freeze chain head: freeze_r1.json (chained to the unchanged freeze.json) if present, else freeze.json."""
+    p0, p1 = out("freeze.json"), out("freeze_r1.json")
+    p = p1 if p1.exists() else p0
     rec = read_json(p)
+    if p == p1 and rec["prev_freeze_sha256"] != sha(p0):
+        raise SystemExit("P2-1b freeze chain broken: freeze.json changed after amendment r1")
     bad = [s for s, h in rec["sources"].items() if sha(ROOT / s) != h] + [i for i, h in rec["inputs"].items() if sha(art(i)) != h]
     if bad:
         raise SystemExit(f"P2-1b frozen sources/inputs changed: {bad}")
     from reft.train_supervised import check_freeze as p20
     if p20()["freeze_sha256"] != rec["p2_0_chain_head"]:
         raise SystemExit("P2-0 freeze chain head changed")
-    return {"p2_1b_freeze_sha256": sha(p), "p2_0_chain_head": rec["p2_0_chain_head"]}
+    return {"p2_1b_freeze_sha256": sha(p), "p2_1b_freeze_record": p.name, "p2_0_chain_head": rec["p2_0_chain_head"]}
 
 
 # ====================================================================== shared GPU pieces
@@ -221,6 +242,9 @@ def run_smoke():
     lam = B["kl"]["lambda_kl"]
     # ---- G3 KL objective on the real model
     g3 = {}
+    # amendment r1: torch's orthogonal (Householder, trivialized) parametrization completes R to a square `base` with the
+    # global RNG, so both adapters compared below are built from the same global seed (as run_train does for both arms)
+    torch.manual_seed(42)
     ad = make_adapter("R2", b.model, seed_config(C1, 42), b.device)
     loss_kl, st, (zt, zs, X, Y) = kl_step(b, ad, tiny, lam)
     with torch.no_grad():
@@ -232,7 +256,12 @@ def run_smoke():
     g3["initial_kl_near_zero"] = abs(st["kl"]) <= 1e-6
     loss_kl.backward()
     g_kl = {n: p.grad.detach().clone() for n, p in ad.module.named_parameters()}
+    torch.manual_seed(42)
     ad2 = make_adapter("R2", b.model, seed_config(C1, 42), b.device)
+    sd1, sd2 = ad.state_dict(), ad2.state_dict()
+    g3["init_state_identical_incl_base"] = sd1.keys() == sd2.keys() and all(torch.equal(sd1[k], sd2[k]) for k in sd1)
+    g3["base_buffer_in_state_dict"] = any(k.endswith(".base") for k in sd1)
+    g3["p2_1_epoch1_adapter_has_base"] = any(k.endswith(".base") for k in torch.load(art("p2_1/R2/epoch1/adapter.pt")))
     loss_ce, _, _, _, _ = batch_loss(b, ad2, tiny, grad=True)
     loss_ce.backward()
     g_ce = {n: p.grad.detach().clone() for n, p in ad2.module.named_parameters()}
@@ -365,7 +394,7 @@ def run_smoke():
     g = {"G1_provenance": all(g1.values()),
          "G2_ce_equivalence_checked": "bitwise_equal_p2_1_epoch1" in R["G2"],
          "G3_kl_objective": all(g3[k] for k in ("teacher_equals_frozen_forward", "zero_init_student_equals_teacher", "initial_kl_near_zero",
-                                                 "ce_value_identical_to_p2_1_path", "init_grads_equal_ce_path", "backbone_grads_none",
+                                                 "ce_value_identical_to_p2_1_path", "init_state_identical_incl_base", "init_grads_equal_ce_path", "backbone_grads_none",
                                                  "perturbed_kl_positive", "kl_grads_nonzero_finite", "label_contract")) and g3["hooks_after"] == 0,
          "mask_switchback_coverage_ok": (cov["switchback_coverage"] or 0) >= B["mask_coverage_stop"]["min_switchback_token_coverage"],
          "G4_decoding": eq == 20 and all(x <= 1 for x in mism) and R["G4"]["hooks_after"] == 0,
@@ -497,14 +526,14 @@ def run_verify():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["freeze", "smoke", "train", "verify"])
+    ap.add_argument("cmd", choices=["freeze", "freeze-r1", "smoke", "train", "verify"])
     ap.add_argument("--arm", choices=list(ARMS))
     ap.add_argument("--seed", type=int)
     a = ap.parse_args(argv)
     if a.cmd == "train":
         run_train(a.arm, a.seed)
     else:
-        {"freeze": run_freeze, "smoke": run_smoke, "verify": run_verify}[a.cmd]()
+        {"freeze": run_freeze, "freeze-r1": run_freeze_r1, "smoke": run_smoke, "verify": run_verify}[a.cmd]()
 
 
 if __name__ == "__main__":

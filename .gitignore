@@ -28,3 +28,14 @@ environment.lock.txt
 
 # disposable smoke-test backup
 out/smoke/results_A.pre_42674_debug_residue.jsonl.bak
+
+# CS-ASR-ReFT: private artifacts live under /mnt/data/tungnx/cs-asr-reft (never versioned).
+# Guard against accidental local copies of sample-level outputs, gradients, bases or checkpoints.
+reft_artifacts/
+reft/**/*.pt
+reft/**/*.jsonl
+docs/reft/private/
+configs/reft/*.local.yaml
+*.pt
+*.safetensors
+*.ckpt

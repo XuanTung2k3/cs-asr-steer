@@ -1,5 +1,11 @@
 # CLAUDE.md — CS-ASR steering
 
+> **Independent experiment scope — CS-ASR-ReFT (branch `cs-asr-reft`).** Paths `reft/`, `configs/reft/`,
+> `tests/reft/`, `slurm/reft_*.sbatch` and `docs/reft/` belong to a separate research question governed by
+> `docs/reft/SCOPE.md` and `docs/reft/P0P1_PROTOCOL.md`. The steering contract below still governs every legacy path
+> unchanged; its method invariants (rank-one Δ⊥ direction, norm-preserving repair, layers {16, 24}) do not define the
+> ReFT method. Data-role locks (D-test, D-dev-confirm, router-calib) apply to both.
+
 **Start in `docs/current/`. Read `AGENTS.md` — it is the shared contract for every agent and
 applies to you in full.** The authoritative files:
 

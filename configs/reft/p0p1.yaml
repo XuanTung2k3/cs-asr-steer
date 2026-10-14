@@ -1,0 +1,97 @@
+# CS-ASR-ReFT P0/P1 frozen configuration. Protocol: docs/reft/P0P1_PROTOCOL.md (frozen before any P0/P1 outcome).
+# Contains no transcripts or sample-level data. Private artifacts are written under artifact_root (never versioned).
+schema: reft_p0p1_config_v1
+seed: 42
+artifact_root: /mnt/data/tungnx/cs-asr-reft
+
+model:
+  path: /mnt/data/tungnx/whisper-large-v3
+  hub_id: openai/whisper-large-v3
+  # identity anchors from ACL-0 (Slurm 59059): sha256 of model.safetensors and the bf16 parameter hash
+  expected_file_revision: "sha256:a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95"
+  expected_weights_hash: "sha256:0b2acef462086d27b205b951e2f5c0964bd75d671e0c68b91c58a215b75db055"
+  dtype: bfloat16
+  attn_implementation: eager
+  frozen: true
+
+decode:
+  # F1 = Whisper Auto: transformers generate(language=None) -> detect_language (argmax over the 100 language tokens at
+  # <|sot|>) -> prompt [sot, detected, <|transcribe|>, <|notimestamps|>]. No forced <|zh|>, no reference-derived language.
+  task: transcribe
+  language: null
+  num_beams: 5
+  do_sample: false
+  temperature: 0.0
+  max_new_tokens: 200
+  condition_on_prev_tokens: false
+  batch_size: 1
+  text: "processor.batch_decode(sequences, skip_special_tokens=True)[0].strip() (ACL-0 / DG-08 convention)"
+  determinism_repeats: 10
+  api_equivalence_rows: 10
+  engine_identity_rows: 3   # forced-<|zh|> beam-5 with the same engine must reproduce sealed ACL-0 B0 token for token
+
+data:
+  role_dir: /mnt/data/tungnx/cs-asr-steer/artifacts_dialogue_v2r3/manifests/roles
+  locked_roles_never_opened: [D-test, D-dev-confirm, router-calib]
+  acl0_dir: /home/tungnx/cs-asr-steer-inf/results/research_review/acl0
+  acl0_panels_sha256: "sha256:6741eb36d8c722cebdf03307d5eea8adc995f3397ad8a9ad81e7ca94cd0353c0"
+  acl0_output_seal_sha256: "sha256:8755001da3aafa3d48e781d16c9b51f8c24ccbf49df82ac48278a048126faa86"
+  dev_role: D-dev-select
+  dev_exposure: "A3-ACL0-DEV150: 150 utterances / 20 already-exposed D-dev-select dialogues; used for ACL-0 checkpoint selection. Exploratory diagnosis only."
+  train_roles: [loc-train, util-train]
+  duration_sec: [1.0, 30.0]
+  max_target_tokens: 190
+  p1_panel:
+    quota: {CS: 400, ZH_ONLY: 60, EN_ONLY: 40}
+    min_units: 3
+    exclude: "ACL-0 training panel (512 ids) -- keeps the basis population disjoint from the ACL-0 editors' training set"
+    sampling: "per stratum: numpy default_rng(seed) permutation within each dialogue (ids sorted), then round-robin over sorted dialogues"
+    audit_fraction: 0.20
+    split: "dialogue-disjoint: dialogues in sha256('reft-p1-split:'+dialogue_id) order go to audit until audit holds >= 20% of panel utterances"
+
+evaluation:
+  # fillers: copied from /home/tungnx/cs-asr-steer-inf/configs/research_review/iae1.json evaluation.fillers (ACL-0 evaluator)
+  fillers:
+    ZH: ["嗯", "哦", "啊", "呃", "额", "哎", "唉", "噢", "喔", "诶", "欸", "哈", "嘿", "哇", "呵", "嗨"]
+    EN: ["um", "uh", "er", "erm", "ah", "oh", "mm", "hmm", "mhm", "mm-hmm", "uh-huh", "yeah", "yes", "yep", "okay", "ok", "right", "wow"]
+  loop_units: 15
+  bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+
+p0_gate:
+  min_target_errors: 20
+  min_dialogues: 5
+  max_single_utterance_share: 0.40
+  target_kinds: [translation_like, lexical_substitution, omission, other]
+  excluded_kinds: [segmentation_artifact, boundary]
+  exclude_derailed_utterances: true
+
+p1:
+  layer: 24
+  site: "decoder layer 24 post-cross-attention residual, pre-FFN: h = q + encoder_attn(encoder_attn_layer_norm(q), H_enc); the input of final_layer_norm and the FFN residual"
+  rank: 4
+  compute_dtype: float32   # local gradient/intervention passes; bf16 weights upcast exactly; decoding stays bf16
+  source_b_max_per_utterance: 4
+  preservation_max_per_utterance: 4
+  basis_policy:
+    a_primary_min_examples: 100
+    a_primary_min_dialogues: 10
+    fallback: "A + B"
+    stratum_energy_caps: {EN_ONLY: 0.20, ZH_ONLY: 0.20}
+  random_seeds: [42, 43, 44, 45, 46]
+  epsilons: [0.05, 0.10, 0.25]
+  primary_epsilon: 0.10
+  smoke_utterances: 4
+  fd_rel_step: 1.0e-3
+  fd_rel_tol: 0.05
+
+p1_gate:
+  min_audit_a_examples: 30
+  min_audit_a_dialogues: 4
+  min_audit_cs_a_examples: 15
+  retention_min_multiple_of_random_expectation: 10
+  leverage_min_fraction_improved: 0.60
+  generalization_min_ratio: 0.50
+  narrow_min_non_translation_cs: 10
+  language_direction_dominance: 0.80
+  preservation_flip_abs: 0.10
+  preservation_flip_vs_random: 2.0

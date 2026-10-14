@@ -37,6 +37,9 @@ data:
   acl0_panels_sha256: "sha256:6741eb36d8c722cebdf03307d5eea8adc995f3397ad8a9ad81e7ca94cd0353c0"
   acl0_output_seal_sha256: "sha256:8755001da3aafa3d48e781d16c9b51f8c24ccbf49df82ac48278a048126faa86"
   dev_role: D-dev-select
+  # role-manifest audio_sha256 convention (amendment r1): csasr.utils.hashing.sha256_file(path, max_bytes=65536)
+  # = sha256(str(file size) + first 65,536 bytes) (configs/data/cs_dialogue.yaml audio_hash_bytes)
+  audio_hash_max_bytes: 65536
   dev_exposure: "A3-ACL0-DEV150: 150 utterances / 20 already-exposed D-dev-select dialogues; used for ACL-0 checkpoint selection. Exploratory diagnosis only."
   train_roles: [loc-train, util-train]
   duration_sec: [1.0, 30.0]

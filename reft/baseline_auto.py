@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
-from reft.common import art, cfg, fillers, firewall, jload_gz, read_json, read_jsonl, write_json, write_jsonl  # noqa: E402
+from reft.common import art, audio_hash_ok, cfg, fillers, firewall, jload_gz, read_json, read_jsonl, write_json, write_jsonl  # noqa: E402
 from reft.provenance import check_freeze, environment, git_state, now, sha, slurm, weights_hash  # noqa: E402
 
 FORBIDDEN = ("role_", "targets.json", "transcript", "p0/evaluation", "error_inventory", "panel_strata")
@@ -133,7 +133,7 @@ def run_decode():
     # 2. F1 Auto beam-5 on all rows
     out, audio_ok = [], 0
     for r in rows:
-        audio_ok += sha(r["audio_path"]).removeprefix("sha256:") == r["audio_sha256"].removeprefix("sha256:")
+        audio_ok += audio_hash_ok(r["audio_path"], r["audio_sha256"])
         rec, inp = generate(b, r["audio_path"], None, nb)
         top = language_scores(b, inp["input_features"])
         rec.update(id=r["utterance_id"], language_top3=top, detected_equals_own_argmax=top[0][0] == rec["language"],
@@ -172,6 +172,25 @@ def run_seal():
     write_json(art("p0/output_seal.json"), {"schema": "reft_p0_seal_v1", "utc": now(),
                                             "files": {f: sha(art(f)) for f in files}})
     print("sealed", files)
+
+
+def run_verify_audio():
+    """Amendment r1 (CPU): verify the decoded audio files in the manifest's hash convention and that none was modified
+    after the decode job started (mtime before decode start)."""
+    import datetime as dt
+    import os
+    man = read_json(art("p0/manifest.json"))
+    start = dt.datetime.fromisoformat(man["utc"]).timestamp() - man["wall_seconds"] - 600
+    rows = read_json(art("p0/panel.json"))["rows"]
+    res = [{"id": r["utterance_id"], "hash_ok": audio_hash_ok(r["audio_path"], r["audio_sha256"]),
+            "mtime_before_decode": os.stat(r["audio_path"]).st_mtime < start} for r in rows]
+    rec = {"schema": "reft_p0_audio_check_v1", "utc": now(), "convention": "sha256(str(size) + first 65536 bytes)",
+           "n": len(res), "hash_ok": sum(x["hash_ok"] for x in res), "mtime_before_decode": sum(x["mtime_before_decode"] for x in res),
+           "decode_manifest_audio_sha_ok_attempt1": man["audio_sha_ok"],
+           "note": "decode-time check compared a whole-file sha256 with the manifest prefix convention (implementation defect)",
+           "rows": res}
+    write_json(art("p0/audio_check.json"), rec)
+    print({k: v for k, v in rec.items() if k != "rows"})
 
 
 # ====================================================================== evaluate (CPU)
@@ -315,13 +334,18 @@ def run_evaluate():
     boot = {f"AUTO-{s}": {"mer_point": report["overall"]["AUTO"]["mer"] - report["overall"][s]["mer"],
                           "ci95": [float(np.quantile(acc[s], q)) for q in (0.025, 0.975)]} for s in ("B0", "H1", "A1")}
 
-    # ---- integrity and verdict
+    # ---- integrity and verdict (audio identity: amendment r1 check in the manifest convention, else the decode-time count)
+    ac = art("p0/audio_check.json")
+    audio_ok = man["audio_sha_ok"]
+    if ac.exists():
+        a_ = read_json(ac)
+        audio_ok = min(a_["hash_ok"], a_["mtime_before_decode"])
     integ = {"data_audit_valid": audit["valid"], "seal_ok": True, "weights_unchanged": man["weights_unchanged"],
              "weights_equal_acl0": man["weights_equal_acl0"], "requires_grad_params_zero": man["requires_grad_params"] == 0,
              "engine_identity": all(x["equal"] for x in man["engine_identity_forced_zh_vs_acl0_b0"]),
              "api_equivalence": all(x["equal"] for x in man["api_equivalence"]),
              "determinism": all(x["equal"] for x in man["determinism"]),
-             "audio_sha_ok": man["audio_sha_ok"] == len(ids), "detected_equals_own_argmax": man["detected_equals_own_argmax"] == len(ids),
+             "audio_sha_ok": audio_ok == len(ids), "detected_equals_own_argmax": man["detected_equals_own_argmax"] == len(ids),
              "num_beams_5": man["decode"]["num_beams"] == 5, "auto_language_not_forced": man["decode"]["language"] is None}
     integrity = all(integ.values())
     gate = {"target_errors_min": n_target >= G["min_target_errors"], "dialogues_min": dl_with >= G["min_dialogues"],
@@ -339,9 +363,9 @@ def run_evaluate():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["decode", "seal", "evaluate"])
+    ap.add_argument("cmd", choices=["decode", "seal", "verify-audio", "evaluate"])
     a = ap.parse_args(argv)
-    {"decode": run_decode, "seal": run_seal, "evaluate": run_evaluate}[a.cmd]()
+    {"decode": run_decode, "seal": run_seal, "verify-audio": run_verify_audio, "evaluate": run_evaluate}[a.cmd]()
 
 
 if __name__ == "__main__":

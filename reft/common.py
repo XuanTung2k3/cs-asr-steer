@@ -57,6 +57,13 @@ def jload_gz(path: Path):
         return json.loads(g.read())
 
 
+def audio_hash_ok(path: str, expected: str) -> bool:
+    """Audio identity in the role manifest's convention: sha256(str(size) + first ``audio_hash_max_bytes`` bytes)."""
+    from csasr.utils.hashing import sha256_file
+    got = sha256_file(path, max_bytes=cfg()["data"]["audio_hash_max_bytes"])
+    return got.removeprefix("sha256:") == str(expected).removeprefix("sha256:")
+
+
 def fillers() -> set[str]:
     f = cfg()["evaluation"]["fillers"]
     return set(f["ZH"]) | {w.lower() for w in f["EN"]}

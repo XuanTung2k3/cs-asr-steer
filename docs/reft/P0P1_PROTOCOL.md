@@ -373,4 +373,22 @@ Only code, configs, tests and sanitized summaries are committed.
 
 ## 12. Amendments
 
-(none)
+### r1 — 2026-10-14T06:02:22Z — P0 audio-identity check used the wrong hash convention (engineering only)
+
+- **What happened.** P0 evaluation attempt 1 (Slurm 59119) returned `P0_BLOCKED`. Every integrity check passed except
+  `audio_sha_ok`, which was 0/150. The decode-time check compared a whole-file sha256 with the role manifest's
+  `audio_sha256`. That field uses the `csasr.utils.hashing.sha256_file(path, max_bytes=65536)` convention:
+  sha256(str(size) + first 65,536 bytes), per `configs/data/cs_dialogue.yaml` `audio_hash_bytes`.
+- **Verification.** Recomputing one file in the manifest convention reproduces its manifest value. A uniform 0/150 is the
+  signature of a convention mismatch, not of changed audio.
+- **Change.**
+  - `audio_hash_ok` now uses the manifest convention (config `data.audio_hash_max_bytes`) in the P0 decode and the P1
+    capture.
+  - A CPU step `verify-audio` re-checks all 150 decoded files in that convention. It also checks that each file's mtime
+    predates the decode job. The evaluation uses this check for the audio-identity integrity item.
+- **What is not changed.** No decode is rerun, and no output, metric, threshold, gate or verdict rule changes.
+- **Records.** Attempt 1's evaluation and inventory are kept as
+  `p0/evaluation_attempt1_BLOCKED_audio_hash_convention.json` and
+  `p0/error_inventory_attempt1_BLOCKED_audio_hash_convention.json`.
+- **Timing.** This amendment comes after the attempt-1 outcome was displayed. It is purely an integrity-instrument fix
+  and cannot change any P0 quantity.

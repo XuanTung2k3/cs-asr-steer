@@ -10,7 +10,8 @@ sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
 from reft.p2_1c_continuation_audit import (aggregate_cells, anchor_at, anchor_inside, beam_equivalent, boundaries, cand_logps,  # noqa: E402
                                            decide, en_region, first_divergences, flags_for, hyp_after, hyp_before,
-                                           inference_manifest_clean, local_disfavor, seq_preference, status_of)
+                                           inference_manifest_clean, local_disfavor, seq_preference, status_of,
+                                           t1_ok_amended)
 from reft.text import alignment, tokenize  # noqa: E402
 
 R = {"recovered_min_retention": 0.8, "dropped_max_retention": 0.2, "local_drop_nats": 1.0, "seed_consistent_min": 2,
@@ -165,3 +166,18 @@ def test_inference_manifest_has_no_reference_fields():
     assert not inference_manifest_clean(bad)
     bad2 = {"cases": [dict(ok["cases"][0], b0_anchors={"post_en": "我"})]}
     assert not inference_manifest_clean(bad2)
+
+
+def test_t1_amended_uses_fp32_semantic_check():
+    """Amendment r1: a BF16 cached-vs-full |d log p| above 0.10 no longer fails T1 when the float32 check passes; every
+    other T1 item (and the BF16 positions/argmax/finiteness) still gates."""
+    T = {"incremental_vs_full_fp32_max_abs_logp": 1e-3, "beam_score_vs_teacher_forced": 0.05, "recorded_score_abs": 1e-3}
+    cv = lambda d, **kw: {"max_abs_logp_observed": d, "argmax_agree_where_sure": True, "positions_ok": True, "finite": True, **kw}  # noqa: E731
+    v = {"parity": {"B0": True}, "beam_vs_tf": {"B0": 0.002}, "recorded": {"B0": 1e-7}, "early_positions_untouched": True,
+         "deterministic": True, "hooks_clear": True, "cached_vs_full": {"B0": cv(0.03), "CE42": cv(0.123)}}
+    f32 = {n: cv(2e-5) for n in ("B0", "CE42", "CE43", "CE44", "KL42", "KL43", "KL44")}
+    assert t1_ok_amended(v, f32, T)
+    assert not t1_ok_amended(v, {**f32, "KL44": cv(0.01)}, T)
+    assert not t1_ok_amended(v, {k: f32[k] for k in list(f32)[:6]}, T)
+    assert not t1_ok_amended({**v, "parity": {"B0": False}}, f32, T)
+    assert not t1_ok_amended({**v, "cached_vs_full": {"CE42": cv(0.12, positions_ok=False)}}, f32, T)

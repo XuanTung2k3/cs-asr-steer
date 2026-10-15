@@ -48,6 +48,7 @@ SYSTEMS = ("B0", "CE42", "CE43", "CE44", "KL42", "KL43", "KL44")
 ADAPTED = SYSTEMS[1:]
 B0_ANCHORS = ("start", "pre_en", "post_en", "early_zh")
 INFERENCE_CASE_KEYS = {"key", "uid", "prompt", "b0_anchors", "own_anchors"}
+AMENDMENTS = {1: FREEZE_SOURCES + ["docs/reft/P2_1C_AMENDMENT_R1.md"]}
 STATUS = ("recovered", "partial", "dropped")
 FLAGS = ("H1_PREFIX_HISTORY", "H2_LOCAL_SWITCHBACK", "H3_SEQUENCE_PATH")
 
@@ -249,6 +250,19 @@ def decide(integrity_ok: bool, n_valid_damaged: int, cells: dict, R: dict) -> di
             "share": share}
 
 
+def t1_ok_amended(v: dict, f32: dict, T: dict) -> bool:
+    """Amendment r1: a case's T1 result with the cached-vs-full semantic check evaluated in float32 (|d log p| <=
+    incremental_vs_full_fp32_max_abs_logp, positions, finiteness, argmax where sure); the BF16 check keeps its positions,
+    finiteness and argmax-where-sure requirements, and its |d log p| becomes descriptive. All other T1 checks unchanged."""
+    bf = all(c["argmax_agree_where_sure"] and c["positions_ok"] and c["finite"] for c in v["cached_vs_full"].values())
+    fp = all(c["max_abs_logp_observed"] <= T["incremental_vs_full_fp32_max_abs_logp"] and c["argmax_agree_where_sure"]
+             and c["positions_ok"] and c["finite"] for c in f32.values()) and len(f32) == len(SYSTEMS)
+    return bool(all(v["parity"].values())
+                and all(x is not None and x <= T["beam_score_vs_teacher_forced"] for x in v["beam_vs_tf"].values())
+                and all(x <= T["recorded_score_abs"] for x in v["recorded"].values())
+                and v["early_positions_untouched"] and v["deterministic"] and v["hooks_clear"] and bf and fp)
+
+
 def inference_manifest_clean(m: dict) -> bool:
     """The GPU-side manifest holds only ids, prompts and token counts: no reference strings or reference-unit fields."""
     return all(set(c) == INFERENCE_CASE_KEYS and all(v is None or isinstance(v, int) for v in c["b0_anchors"].values())
@@ -311,10 +325,44 @@ def gpu_firewall():
     firewall(GPU_FORBIDDEN + GPU_FORBIDDEN_EXTRA)
 
 
+def freeze_path(rev: int) -> Path:
+    return out("freeze.json") if rev == 0 else out(f"freeze_r{rev}.json")
+
+
+def run_freeze_amend(rev: int):
+    """Amendment r<rev>: re-hash the sources after a documented repair; earlier records are kept and chained."""
+    p, prev = freeze_path(rev), freeze_path(rev - 1)
+    if p.exists():
+        raise SystemExit(f"{p} exists; write-once")
+    if not prev.exists() or freeze_path(rev + 1).exists():
+        raise SystemExit("amendments must extend the current chain head")
+    rec0 = read_json(prev)
+    inputs = {i: sha(art(i)) for i in rec0["inputs"]}
+    assert inputs == rec0["inputs"], f"frozen inputs changed since {prev.name}"
+    rec = {"schema": "reft_p2_1c_freeze_amendment_v1", "amendment": f"r{rev}", "utc": now(), "git": git_state(),
+           "prev_freeze": f"p2_1c/{prev.name}", "prev_freeze_sha256": sha(prev), "amendment_doc": AMENDMENTS[rev][-1],
+           "changed_sources": sorted(s for s in AMENDMENTS[rev] if rec0["sources"].get(s) != sha(ROOT / s)),
+           "sources": {s: sha(ROOT / s) for s in AMENDMENTS[rev]}, "inputs": inputs, "p2_1b_chain": rec0["p2_1b_chain"],
+           "outputs_at_amendment": {f: sha(out(f)) for f in ("integrity.json", "replay_private.jsonl",
+                                                            "continuation_private.jsonl", "candidate_scores_private.jsonl",
+                                                            "analysis.json") if out(f).exists()}}
+    print(write_json(p, rec))
+
+
+def chain_head() -> int:
+    rev = 0
+    while freeze_path(rev + 1).exists():
+        rev += 1
+        if read_json(freeze_path(rev))["prev_freeze_sha256"] != sha(freeze_path(rev - 1)):
+            raise SystemExit(f"P2-1c freeze chain broken at {freeze_path(rev).name}")
+    return rev
+
+
 def check_freeze(gpu: bool = False) -> dict:
-    """Sources and inputs unchanged; on CPU also the historical P2-1b -> P2-0 chain. In GPU (firewalled) mode the
-    reference-bearing inputs and the historical chain are not opened; the CPU steps verify them."""
-    p = out("freeze.json")
+    """Chain freeze.json -> freeze_r1.json -> ...; the head's sources and the inputs unchanged; on CPU also the historical
+    P2-1b -> P2-0 chain. In GPU (firewalled) mode the reference-bearing inputs and the historical chain are not opened;
+    the CPU steps verify them."""
+    p = freeze_path(chain_head())
     rec = read_json(p)
     skip = (lambda i: any(x in i for x in GPU_FORBIDDEN_EXTRA)) if gpu else (lambda i: False)
     bad = [s for s, h in rec["sources"].items() if sha(ROOT / s) != h] + \
@@ -325,7 +373,8 @@ def check_freeze(gpu: bool = False) -> dict:
         from reft.p2_1b_train import check_freeze as p21b
         if p21b() != rec["p2_1b_chain"]:
             raise SystemExit("P2-1b / P2-0 freeze chain changed")
-    return {"p2_1c_freeze_sha256": sha(p), **rec["p2_1b_chain"], "historical_chain_checked_here": not gpu}
+    return {"p2_1c_freeze_sha256": sha(p), "p2_1c_freeze_record": p.name, **rec["p2_1b_chain"],
+            "historical_chain_checked_here": not gpu}
 
 
 # ====================================================================== T0 anchors (CPU, reference-aware)
@@ -790,17 +839,66 @@ def run_replay():
     print(json.dumps({k: v for k, v in integ.items() if k != "validation"}, indent=1, default=str))
 
 
+def run_cvf32():
+    """Amendment r1 (GPU, firewalled): T1 cached-vs-full check in float32 for every case x system (no outcomes)."""
+    gpu_firewall()
+    fz = check_freeze(gpu=True)
+    if chain_head() < 1:
+        raise SystemExit("amendment r1 not frozen")
+    p = out("t1_cached_fp32_r1.json")
+    if p.exists():
+        raise SystemExit(f"{p} exists; write-once")
+    import torch
+    from csasr.models.whisper import batch_model_inputs
+    from reft.common import cfg
+    m = read_json(out("anchors_inference.json"))
+    t0 = time.time()
+    E = Engine()
+    w_ok = E.w0 == cfg()["model"]["expected_weights_hash"]
+    E.b.model.float()  # in-memory only, this job
+    res = {}
+    for c in m["cases"]:
+        inp = batch_model_inputs(E.b, [E.paths[c["uid"]]])
+        with torch.inference_mode():
+            E.enc = E.b.model.model.encoder(inp["input_features"].float()).last_hidden_state
+        X = c["prompt"] + E.outputs["B0"][c["uid"]]["tokens"][:-1]
+        res[c["key"]] = {n: E.cached_vs_full(n, X) for n in SYSTEMS}
+    T = cc()["tolerance"]
+    ok = all(x["max_abs_logp_observed"] <= T["incremental_vs_full_fp32_max_abs_logp"] and x["argmax_agree_where_sure"]
+             and x["positions_ok"] and x["finite"] for v in res.values() for x in v.values())
+    write_json(p, {"schema": "reft_p2_1c_t1_fp32_r1", "utc": now(), **fz, "slurm": slurm(), "cuda_libs": E.libs,
+                   "bf16_weights_expected_before_cast": w_ok, "hooks_clear": E.hooks_clear(), "results": res,
+                   "max_abs_logp_observed": max(x["max_abs_logp_observed"] for v in res.values() for x in v.values()),
+                   "all_ok": bool(ok and w_ok and E.hooks_clear()), "seconds": time.time() - t0, "tf_forwards": E.n_tf})
+    print(json.dumps({"all_ok": ok, "max": max(x["max_abs_logp_observed"] for v in res.values() for x in v.values())}))
+
+
 # ====================================================================== analysis (CPU, reference-aware)
 
-def run_analyze():
+def amended_integrity(integ: dict) -> dict:
+    """Amendment r1: integrity with T1 re-evaluated per t1_ok_amended; every other integrity item unchanged."""
+    f32 = read_json(out("t1_cached_fp32_r1.json"))
+    T = cc()["tolerance"]
+    per = {k: t1_ok_amended(v, f32["results"].get(k, {}), T) for k, v in integ["validation"].items()}
+    ok = bool(all(per.values()) and f32["all_ok"] and not integ["partial"] and integ["no_cross_case_leakage"]
+              and integ["weights_unchanged"] and all(integ["adapters_sha_ok"].values()) and integ["all_next_token_finite"])
+    bf = [c["max_abs_logp_observed"] for v in integ["validation"].values() for c in v["cached_vs_full"].values()]
+    return {"all_ok": ok, "per_case_t1_amended": per, "fp32_max_abs_logp": f32["max_abs_logp_observed"],
+            "bf16_max_abs_logp_descriptive": max(bf), "original_all_ok": integ["all_ok"]}
+
+
+def run_analyze(rev: int = 0):
     from transformers import WhisperTokenizer
     from reft.common import cfg, fillers
     from reft.evaluate_supervised import dev_refs, p21
     from reft.p2_1b_prefix_audit import script
     from reft.text import loops, one, tok_bytes_fn
     fz = check_freeze()
-    if out("analysis.json").exists():
-        raise SystemExit("analysis.json exists; write-once")
+    sfx = "" if rev == 0 else f"_r{rev}"
+    if rev and chain_head() < rev:
+        raise SystemExit(f"amendment r{rev} not frozen")
+    if out(f"analysis{sfx}.json").exists():
+        raise SystemExit(f"analysis{sfx}.json exists; write-once")
     C, R = cc(), cc()["rules"]
     tok = WhisperTokenizer.from_pretrained(cfg()["model"]["path"], local_files_only=True)
     tb, eos = tok_bytes_fn(tok), tok.eos_token_id
@@ -808,6 +906,9 @@ def run_analyze():
     A = {c["key"]: c for c in read_json(out("anchors_private.json"))["cases"]}
     MI = {c["key"]: c for c in read_json(out("anchors_inference.json"))["cases"]}
     integ = read_json(out("integrity.json"))
+    if rev == 1:
+        amend = amended_integrity(integ)
+        integ = {**integ, "all_ok": amend["all_ok"]}
     REP, CONT, CAND = (read_jsonl(out(f)) for f in ("replay_private.jsonl", "continuation_private.jsonl",
                                                      "candidate_scores_private.jsonl"))
     present = {c["case"] for c in CONT}
@@ -949,7 +1050,8 @@ def run_analyze():
     T6 = {g: {"all": grp(g), "CE": grp(g, "CE"), "KL": grp(g, "KL")} for g in ("recovered", "persistent", "safe")}
     pub = {"schema": "reft_p2_1c_analysis_v1", "utc": now(), **fz, "slurm": slurm(), "decision": dec,
            "integrity_ok": integ["all_ok"], "decode_text_reproduced": decode_ok, "n_valid_damaged_post_en": n_valid,
-           "cases_missing": missing,
+           "cases_missing": missing, "amendment": f"r{rev}" if rev else None,
+           "amended_integrity": amend if rev == 1 else None,
            "inventory": {k: {"kind": A[k]["kind"], "group": A[k]["group"], "span_len": len(A[k]["span_units"]),
                              "b0_span_retained": A[k]["b0_span_retained"],
                              "anchors_valid": {a: A[k]["b0_anchors"][a]["valid"] for a in B0_ANCHORS},
@@ -963,22 +1065,22 @@ def run_analyze():
            "inputs_sha256": {f: sha(out(f)) for f in ("anchors_private.json", "anchors_inference.json", "integrity.json",
                                                        "replay_private.jsonl", "continuation_private.jsonl",
                                                        "candidate_scores_private.jsonl")}}
-    write_json(out("case_analysis_private.json"), {"utc": now(), "rows": rows,
+    write_json(out(f"case_analysis_private{sfx}.json"), {"utc": now(), "rows": rows,
                                                    "candidates": [{k: v for k, v in x.items() if k != "tokens"} | {"n_tokens": len(x["tokens"])} for x in CAND]})
-    write_json(out("analysis.json"), pub)
-    figures(pub)
-    write_json(out("manifest.json"), {"utc": now(), **fz, "files": {p.name: sha(p) for p in sorted(out().glob("*.json*"))
-                                                                     if p.name != "manifest.json"},
-                                      "figures": {p.name: sha(p) for p in sorted(out("figures").glob("*.png"))}})
+    write_json(out(f"analysis{sfx}.json"), pub)
+    figures(pub, f"figures{sfx}")
+    write_json(out(f"manifest{sfx}.json"), {"utc": now(), **fz, "files": {p.name: sha(p) for p in sorted(out().glob("*.json*"))
+                                                                          if not p.name.startswith("manifest")},
+                                            "figures": {p.name: sha(p) for p in sorted(out(f"figures{sfx}").glob("*.png"))}})
     print(json.dumps({"decision": dec, "cells": cells, "n_valid": n_valid, "integrity_ok": integ["all_ok"],
                       "decode_ok": decode_ok}, indent=1))
 
 
-def figures(pub):
+def figures(pub, sub="figures"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fd = out("figures")
+    fd = out(sub)
     fd.mkdir(parents=True, exist_ok=True)
     rows = [r for r in pub["rows"] if r["kind"] == "damaged"]
     inv = pub["inventory"]
@@ -1082,9 +1184,10 @@ def figures(pub):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["freeze", "anchors", "smoke", "replay", "analyze"])
+    ap.add_argument("cmd", choices=["freeze", "anchors", "smoke", "replay", "analyze", "freeze-r1", "cvf32", "analyze-r1"])
     a = ap.parse_args(argv)
-    {"freeze": run_freeze, "anchors": run_anchors, "smoke": run_smoke, "replay": run_replay, "analyze": run_analyze}[a.cmd]()
+    {"freeze": run_freeze, "anchors": run_anchors, "smoke": run_smoke, "replay": run_replay, "analyze": run_analyze,
+     "freeze-r1": lambda: run_freeze_amend(1), "cvf32": run_cvf32, "analyze-r1": lambda: run_analyze(1)}[a.cmd]()
 
 
 if __name__ == "__main__":

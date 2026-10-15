@@ -31,6 +31,7 @@ tolerance:
   incremental_vs_full_argmax_margin: 0.20
   beam_score_vs_teacher_forced: 0.05
   recorded_score_abs: 0.001
+  incremental_vs_full_fp32_max_abs_logp: 0.001   # amendment r1 (docs/reft/P2_1C_AMENDMENT_R1.md)
 budget:
   target_gpu_minutes: 90
   hard_gpu_minutes: 170

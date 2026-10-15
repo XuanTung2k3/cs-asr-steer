@@ -154,14 +154,31 @@ def location_label_consistent(ref_units: list, prefix_bytes: bytes, prefix_units
     """Independent re-check from bytes: the joined prefix + supervised target decodes to the prefix's own units followed
     by reference units r, r+1, ... (all fully covered scope units; the last one may be cut by the token cap when
     `truncated`, in which case it must be a prefix of that reference unit)."""
+    raw, tail = prefix_bytes + target_bytes, b""
     try:
-        units = tokenize((prefix_bytes + target_bytes).decode("utf-8"))
+        text = raw.decode("utf-8")
     except UnicodeDecodeError:
-        return False
+        # amendment r1: a capped target may end inside one UTF-8 character (byte-level BPE); only then, the incomplete
+        # tail (<= 3 bytes) must begin the next reference unit's encoding
+        if not truncated:
+            return False
+        for cut in (1, 2, 3):
+            try:
+                text, tail = raw[:-cut].decode("utf-8"), raw[-cut:]
+                break
+            except UnicodeDecodeError:
+                continue
+        else:
+            return False
+    units = tokenize(text)
     h = len(prefix_units)
     if units[:h] != prefix_units:
         return False
     cont = units[h:]
+    if tail:
+        n = len(cont)
+        return (n < S and cont == ref_units[r:r + n] and r + n < len(ref_units)
+                and ref_units[r + n].encode("utf-8").startswith(tail))
     if not cont or len(cont) > S:
         return False
     if truncated:

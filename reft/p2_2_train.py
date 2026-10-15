@@ -34,6 +34,8 @@ FREEZE_SOURCES = ["docs/reft/P2_2_PROTOCOL.md", "docs/reft/P2_2_DECISION_RULES.m
                   "reft/p2_2_alignment.py", "reft/p2_2_train.py", "reft/p2_2_evaluate.py", "tests/reft/test_p2_2.py",
                   "slurm/reft_p2_2.sbatch", "slurm/reft_p2_2_cpu.sbatch", "slurm/reft_p2_2_submit.sh"]
 SEEDS = (42, 43, 44)
+AMENDMENTS = {1: FREEZE_SOURCES + ["docs/reft/P2_2_AMENDMENT_R1.md"]}
+AMENDMENTS[2] = AMENDMENTS[1] + ["docs/reft/P2_2_AMENDMENT_R2.md"]
 
 
 def c22() -> dict:
@@ -91,8 +93,41 @@ def run_freeze():
     print(p)
 
 
+def freeze_path(rev: int) -> Path:
+    return out("freeze.json") if rev == 0 else out(f"freeze_r{rev}.json")
+
+
+def run_freeze_amend(rev: int):
+    """Amendment r<rev>: re-hash the sources after a documented repair; earlier records are kept and chained."""
+    p, prev = freeze_path(rev), freeze_path(rev - 1)
+    if p.exists():
+        raise SystemExit(f"{p} exists; write-once")
+    if not prev.exists() or freeze_path(rev + 1).exists():
+        raise SystemExit("amendments must extend the current chain head")
+    rec0 = read_json(prev)
+    inputs = {i: sha(art(i)) for i in rec0["inputs"]}
+    assert inputs == rec0["inputs"], f"frozen inputs changed since {prev.name}"
+    rec = {"schema": "reft_p2_2_freeze_amendment_v1", "amendment": f"r{rev}", "utc": now(), "git": git_state(),
+           "prev_freeze": f"p2_2/{prev.name}", "prev_freeze_sha256": sha(prev), "amendment_doc": AMENDMENTS[rev][-1],
+           "changed_sources": sorted(x for x in AMENDMENTS[rev] if rec0["sources"].get(x) != sha(ROOT / x)),
+           "sources": {x: sha(ROOT / x) for x in AMENDMENTS[rev]}, "inputs": inputs, "p2_1b_chain": rec0["p2_1b_chain"],
+           "p2_1c_chain": rec0["p2_1c_chain"], "controls_match_recorded_sha": rec0["controls_match_recorded_sha"],
+           "preflights_at_amendment": {q.name: sha(q) for q in sorted(out().glob("preflight_*.json"))}}
+    print(write_json(p, rec))
+
+
+def chain_head() -> int:
+    rev = 0
+    while freeze_path(rev + 1).exists():
+        rev += 1
+        if read_json(freeze_path(rev))["prev_freeze_sha256"] != sha(freeze_path(rev - 1)):
+            raise SystemExit(f"P2-2 freeze chain broken at {freeze_path(rev).name}")
+    return rev
+
+
 def check_freeze() -> dict:
-    p = out("freeze.json")
+    """Chain freeze.json -> freeze_r1.json -> ...; the head's sources and the inputs are unchanged; P2-1b chain intact."""
+    p = freeze_path(chain_head())
     rec = read_json(p)
     bad = [s for s, h in rec["sources"].items() if sha(ROOT / s) != h] + [i for i, h in rec["inputs"].items() if sha(art(i)) != h]
     if bad:
@@ -100,7 +135,7 @@ def check_freeze() -> dict:
     from reft.p2_1b_train import check_freeze as p21b
     if p21b() != rec["p2_1b_chain"]:
         raise SystemExit("P2-1b / P2-0 chain changed")
-    return {"p2_2_freeze_sha256": sha(p), "p2_1b_freeze_sha256": rec["p2_1b_chain"]["p2_1b_freeze_sha256"],
+    return {"p2_2_freeze_sha256": sha(p), "p2_2_freeze_record": p.name, "p2_1b_freeze_sha256": rec["p2_1b_chain"]["p2_1b_freeze_sha256"],
             "p2_0_chain_head": rec["p2_1b_chain"]["p2_0_chain_head"], "p2_1c_freeze_sha256": rec["p2_1c_chain"]["p2_1c_freeze_sha256"]}
 
 
@@ -405,8 +440,10 @@ def run_preflight():
         a.load_state_dict(torch.load(ctl[n]["adapter"]))
         ads[n] = a
     rolls, tro = {}, {}
+    jid = str(slurm()["SLURM_JOB_ID"])
+    rdir = out("preflight_rollouts", jid)     # amendment r2: per-job, so a rerun never touches an earlier preflight
     for n, a in ads.items():
-        p = out("preflight_rollouts", f"{n}.jsonl")
+        p = rdir / f"{n}.jsonl"
         t0 = time.time()
         rolls[n] = {x["id"]: x for x in R.rollout(R.tm, a)}
         tro[n] = time.time() - t0
@@ -415,7 +452,7 @@ def run_preflight():
     for n in ("B0", "CE42", "KL42"):
         evs, st = R.build_events(R.tm, rolls[n], rolls["B0"], 42, 0)
         evs_all[n] = evs
-        write_jsonl(out("preflight_rollouts", f"{n}_events.jsonl"), evs)
+        write_jsonl(rdir / f"{n}_events.jsonl", evs)
         cov[n] = {**st, "rollout_seconds": tro[n], "gate": coverage_gate(st, C["coverage_gate"]) if n != "B0" else None}
     coverage_ok = all(cov[n]["gate"]["pass"] for n in ("CE42", "KL42"))
     # ---- zero-update checks: identity adapter reproduces B0 (training rollouts and dev beam-5/greedy)
@@ -529,10 +566,10 @@ def run_preflight():
         verdict = "P2_2_BLOCKED_" + "_".join(k for k, v in gates.items() if not v)
     else:
         verdict = "READY_FOR_P2_2_TRAINING"
-    rec = {"schema": "reft_p2_2_preflight_v1", "utc": now(), "git": git_state(), "slurm": slurm(), "env": R.env, "cuda_libs": R.libs,
+    rec = {"schema": "reft_p2_2_preflight_v1", "utc": now(), "rollouts_dir": str(rdir.relative_to(out())), "git": git_state(), "slurm": slurm(), "env": R.env, "cuda_libs": R.libs,
            "results": res, "coverage": cov, "gates": gates, "verdict": verdict, "wall_seconds": time.time() - t_all}
     write_json(out(f"preflight_{slurm()['SLURM_JOB_ID']}.json"), rec)
-    write_json(out("coverage_train.json"), {"utc": now(), "slurm": slurm(), "coverage": cov, "coverage_ok": coverage_ok,
+    write_json(out(f"coverage_train_{jid}.json"), {"utc": now(), "slurm": slurm(), "coverage": cov, "coverage_ok": coverage_ok,
                                             "gate_thresholds": C["coverage_gate"], "note": "training data only; dev150 not used"})
     print(json.dumps({"verdict": verdict, "gates": gates, "coverage": {n: {k: v for k, v in c.items() if k not in ("tokens_per_event",)} for n, c in cov.items()},
                       "G4": g, "G4_goldkl": res["G4_goldkl_reuse"], "G5": res["G5"], "G6": res["G6"]}, indent=1, default=str))
@@ -561,7 +598,7 @@ def run_train(seed: int):
     od = out("training", f"M2_seed{seed}")
     if od.exists():
         raise SystemExit(f"{od} exists; runs are write-once")
-    b0roll = {x["id"]: x for x in read_jsonl(out("preflight_rollouts", "B0.jsonl"))}
+    b0roll = {x["id"]: x for x in read_jsonl(out(read_json(pf)["rollouts_dir"], "B0.jsonl"))}
     torch.manual_seed(seed)           # same order as P2-1b run_train: seed -> backbone -> adapter
     R = RT()
     Cs = seed_config(R.C1, seed)
@@ -667,13 +704,14 @@ def run_verify():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["freeze", "preflight", "train", "verify"])
+    ap.add_argument("cmd", choices=["freeze", "freeze-r1", "freeze-r2", "preflight", "train", "verify"])
     ap.add_argument("--seed", type=int)
     a = ap.parse_args(argv)
     if a.cmd == "train":
         run_train(a.seed)
     else:
-        {"freeze": run_freeze, "preflight": run_preflight, "verify": run_verify}[a.cmd]()
+        {"freeze": run_freeze, "freeze-r1": lambda: run_freeze_amend(1),
+         "freeze-r2": lambda: run_freeze_amend(2), "preflight": run_preflight, "verify": run_verify}[a.cmd]()
 
 
 if __name__ == "__main__":

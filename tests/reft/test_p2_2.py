@@ -195,3 +195,16 @@ def test_span_fates():
     e = [ev(0, en=True), ev(1, zh=True), ev(2, zh=True), ev(3, en=True), ev(4, zh=True, tr="corruption"),
          ev(5, zh=True, tr="corruption"), ev(6, en=True), ev(7, zh=True, tr="corruption"), ev(8, zh=True), ev(9, zh=True, b0=False)]
     assert span_fates(e) == {"intact": 1, "dropped": 1, "partial": 1}
+
+
+def test_label_check_cap_inside_utf8_character():
+    """Amendment r1: a capped target ending inside a Han character's UTF-8 bytes is accepted only if those bytes begin the
+    next reference unit; an uncapped target with a broken character, or a wrong partial character, is rejected."""
+    ref = ["那", "个", "ielts", "ielts", "考", "试"]
+    pb, pu = "那个".encode(), ["那", "个"]
+    shi = "试".encode()
+    good = " IELTS IELTS考".encode() + shi[:2]
+    assert location_label_consistent(ref, pb, pu, good, 2, 4, True)
+    assert not location_label_consistent(ref, pb, pu, good, 2, 4, False)
+    assert not location_label_consistent(ref, pb, pu, " IELTS IELTS考".encode() + "你".encode()[:2], 2, 4, True)
+    assert not location_label_consistent(ref, pb, pu, " IELTS 考".encode() + shi[:2], 2, 4, True)

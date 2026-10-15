@@ -1,0 +1,49 @@
+# P2-2 on-policy continuation preservation (frozen; docs/reft/P2_2_PROTOCOL.md, docs/reft/P2_2_DECISION_RULES.md).
+# Everything not listed is inherited unchanged from configs/reft/p2_1_frozen.yaml and configs/reft/p2_1b_frozen.yaml
+# (R2 LoReFT layer 31 rank 2, data, AdamW, schedule, frozen Auto-LID, pinned baseline, canonical CUDA 12.8 environment).
+schema: reft_p2_2_frozen_v1
+inherits: [configs/reft/p2_1_frozen.yaml, configs/reft/p2_1b_frozen.yaml]
+method: R2
+arm: M2
+seeds: [42, 43, 44]
+lambda_gold_kl: 1.0      # P2-1b kl_step, teacher-correct mask, unchanged
+lambda_op: 1.0           # pilot coefficient, not tuned
+controls:                # reused, never retrained (P2-1b selected checkpoints)
+  C0: {CE42: p2_1/R2, CE43: p2_1b/training/CE_seed43, CE44: p2_1b/training/CE_seed44}
+  C1: {KL42: p2_1b/training/KL_seed42, KL43: p2_1b/training/KL_seed43, KL44: p2_1b/training/KL_seed44}
+rollout:
+  regime: beam5                     # canonical frozen-LID beam-5 (decode_frozen_lid), training audio only
+  refresh: start_of_each_epoch      # adapter frozen at the start of epoch e; 3 refreshes
+events:
+  categories: [SB, PRE, ZH]         # post-English switch-back, pre-English, Mandarin-region control
+  max_per_category_per_utterance: 1
+  zh_control_min_run: 6             # ZH control anchor = 3rd unit of a non-filler Mandarin run of >= 6 units
+  zh_control_offset: 2
+  context_units: 2                  # location: the <= 2 reference units before r are exact matches, and that context is unique in the reference
+  relevant_units: 8                 # teacher validity: B0's continuation reproduces the next <= 8 reference units exactly
+  scope_units: 4                    # supervised scope: the next <= 4 reference units
+  max_tokens_per_event: 8           # supervised tokens per event (cap)
+  teacher_max_new_tokens: 32        # B0 continuation from the own prefix: beam 5, at most 32 new tokens
+  order_salt: "p2_2-event"          # sha256(salt:seed:epoch:utt:category:r) order among located candidates
+replay:                             # P2-1c validated semantics (begin-suppression pinned at absolute position 4)
+  num_beams: 5
+  length_penalty: 1.0
+  early_stopping: false
+  begin_suppress_index: 4
+coverage_gate:                      # P2-2A, evaluated separately on the CE42 and KL42 training rollouts
+  min_valid_events: 30
+  min_utterances: 20
+  min_dialogues: 6
+  min_valid_sb_events: 20
+  min_valid_non_b0_prefix_events: 10
+  max_location_label_mismatches: 0
+exposure_gate:                      # decision rule D (epochs 2-3 of each M2 run)
+  min_active_non_identity_events: 30
+  min_valid_share_of_located: 0.5
+  min_seeds: 2
+compute:
+  max_job_seconds: 10800
+  projected_run_seconds_max: 9000
+  target_total_slice_hours: 6.0
+  partition: mig
+bootstrap: {unit: dialogue, reps: 2000, seed: 42}

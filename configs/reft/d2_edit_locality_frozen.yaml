@@ -1,0 +1,94 @@
+# D2 representation edit-locality pilot (frozen; docs/reft/D2_EDIT_LOCALITY_PROTOCOL.md, docs/reft/D2_EDIT_LOCALITY_DECISION_RULES.md).
+# Everything not listed is inherited unchanged from configs/reft/p2_1_frozen.yaml (R2 method, data, AdamW, schedule,
+# frozen Auto-LID, pinned baseline, canonical CUDA 12.8 environment) and configs/reft/p2_1b_frozen.yaml (GoldKL teacher,
+# teacher-correct mask, lambda_kl = 1, seed semantics, selection rule). One term is added: mu * L_edit.
+schema: reft_d2_edit_locality_frozen_v1
+inherits: [configs/reft/p2_1_frozen.yaml, configs/reft/p2_1b_frozen.yaml]
+method: {name: R2, layer: 31, rank: 2, start_pos: 3, d_model: 1280, expected_trainable_parameters: 5122}
+control:
+  name: R2-GoldKL (historical, never retrained)
+  runs: {42: p2_1b/training/KL_seed42, 43: p2_1b/training/KL_seed43, 44: p2_1b/training/KL_seed44}
+  reuse_condition: "the D2 training path with mu = 0 (edit observer installed) reproduces p2_1b/training/KL_seed42/epoch1/adapter.pt bitwise (32 updates)"
+new_runs: [D2_seed42, D2_seed43, D2_seed44]
+max_new_training_runs: 3
+seeds: [42, 43, 44]
+seed_semantics: "torch.manual_seed(s) -> backbone load -> R2 adapter (init seed s, identity: W = R, b = 0); epoch order numpy default_rng(s + epoch).permutation (P2-1b)"
+objective:
+  formula: "L = CE_all + lambda_kl * GoldKL + mu * L_edit, per micro-batch, / grad_accum"
+  lambda_kl: 1.0
+  goldkl: "P2-1b kl_masked unchanged: sum_t M_t KL(p0_t || p_theta_t) / sum_t M_t, M = teacher-correct mask (content tokens and EOS)"
+  edit: "L_edit = (1 / |R_M|) sum_{t in R_M} ||delta_h_t||_2^2 / 1280 over the micro-batch; empty R_M -> differentiable zero"
+  edit_tensor: "the float32 output of the R2 intervention module (R^T((W - R) h + b)) captured by a forward hook on that module inside the single adapted forward, times the adapter's own position mask (pos >= 3); the same tensor the adapter adds to the cross-attention output (cast to the backbone dtype)"
+  edit_mask: "R_M = teacher-correct mask AND static Mandarin-positive token mask at decoder position 3 + t"
+  mu: "frozen by the D2.0 calibration rule (mu_freeze.json); one value for all seeds"
+mask:
+  name: "R_M: teacher-correct substantive-Mandarin target-token positions under gold-prefix training"
+  units: "canonical reference units of target_text (reft.text.units): one Han character or one Latin word"
+  labels: "substantive ZH = tag_unit ZH and not a filler; substantive EN = tag_unit EN and not a filler; fillers, OTHER and UNKNOWN (mixed-script) units are non-lexical"
+  token_rule: "content token t (EOS excluded) is Mandarin-positive iff its unit set (reft.text.token_unit_map) is non-empty and every touched unit is substantive ZH"
+  ambiguous: "tokens touching a ZH unit and an EN unit (language_boundary) or a ZH unit and a non-lexical unit (nonlexical) are excluded from the edit mask and recorded; their CE and GoldKL are unchanged"
+  eos_special: "EOS, prompt and padding positions are never in the edit mask"
+  unmappable_utterance: "token_unit_map is None or bytes do not reconstruct target_text: no edit-mask positions, recorded"
+  decoder_shift: "target token t is predicted at decoder position 3 + t (Y[3 + t] = target_ids[t])"
+  switchback_diagnostic: "Mandarin-positive tokens inside D1 switch-back windows (K = 7) are tagged ZH_SB for diagnostics only; the objective does not use this tag"
+  integrity_block: {max_unmappable_fraction: 0.02, manifest_targets_must_equal_p1_targets: true}
+coverage_gate:
+  min_teacher_correct_zh_coverage: 0.10      # teacher-correct / Mandarin-positive tokens (engineering floor)
+  min_dialogues_with_edit_mask: 2
+  max_empty_microbatch_fraction: 0.05        # per seed x epoch training order: micro-batches of 8 without any teacher-correct edit-mask position
+calibration:
+  source: "p2_1b/training/KL_seed42/epoch1/adapter.pt (historical R2-GoldKL; sha256 must equal its manifest record)"
+  batch_rule: "training manifest rows sorted by sha256(utterance_id) hex digest; the first 64 rows form 8 micro-batches of 8 in that order"
+  n_batches: 8
+  rho: 0.20
+  rule: "mu = rho * median_b ||g_base_b||_2 / median_b ||g_edit_b||_2; g_base = grad(CE + lambda_kl * GoldKL), g_edit = grad(L_edit); raw pre-clipping gradients of one micro-batch (no accumulation scaling) over the trainable R2 tensors (rot.parametrizations.weight.original, learned.weight, learned.bias)"
+  passes: 2                                 # the whole calibration is computed twice; mu must reproduce
+  stop:
+    reproducibility_rtol: 1.0e-5            # |mu_pass2 - mu_pass1| / mu_pass1
+    min_edit_grad_norm: 1.0e-12             # every batch
+    max_ratio_spread: 10.0                  # max_b r_b / min_b r_b, r_b = ||g_base_b|| / ||g_edit_b||
+    max_scaled_ratio: 1.0                   # max_b mu ||g_edit_b|| / ||g_base_b|| (pathological dominance)
+    min_mask_positions_per_batch: 1
+  formal_init: "every formal run starts from its own seed-specific R2 identity initialization, never from the calibration state"
+training:
+  updates_per_run: 96
+  lr: 5.0e-4
+selection_rule: "per run: lowest dev150 beam-5 genuine-CS MER, then overall MER, then Mandarin CER, then earliest epoch (P2-1 rule, unchanged)"
+evaluation:
+  target_window: "first 7 substantive Mandarin reference units of each Mandarin run after an EN->ZH switch (D1 definition, dev references, canonical alignment)"
+  K: 7
+  long_switchback_min_units: 5
+  near_switch_max_distance: 7
+preflight:
+  tf_rows: 4
+  perturb: {scale_w: 0.01, scale_b: 0.5, seed: 7}
+  dev_rows: 20
+  cache_rows: 2
+  fp32_rows: 3
+  tolerances:
+    orth_max_abs: 1.0e-5
+    initial_kl_max: 1.0e-6
+    cached_greedy_vs_tf_max_mismatch: 1
+    fp32_cached_vs_full_max_abs_logp: 1.0e-3
+    fp32_argmax_margin: 0.20
+    rank2_identity_rtol: 1.0e-4              # ||delta_h||^2 vs ||(W - R) h + b||^2 (float32)
+    manual_edit_rtol: 1.0e-6                 # observer energy vs recomputation from the recorded site
+    edit_loss_rtol: 1.0e-6                   # L_edit vs explicit masked mean
+  max_projected_job_seconds: 9000
+decision:
+  preservation_margin_units: 5          # A1: mean new Mandarin errors lower by >= 5 units per seed
+  seed_consistency_min: 2               # A2: strictly fewer new Mandarin errors in >= 2 of 3 matched seeds
+  en_net_sum_ratio_min: 0.90            # B: sum_s EN_net(D2) / sum_s EN_net(GoldKL)
+  cs_mer_strict: true                   # C: mean CS MER(D2) <= mean CS MER(GoldKL), no tolerance
+  strong_zh_new_max: 49                 # E: retention >= 0.99 of 4,950 B0-correct units (reported only)
+  component_margin_units: 5             # MIXED: secondary preservation components (target window, long SB)
+bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+mechanism: {rows: "all 500 training utterances (training-only diagnostics, gold prefixes)", checkpoints: "selected and epoch 3, GoldKL and D2, every seed"}
+prefix_diagnostic:
+  cases: "training utterances with >= 1 Mandarin-positive token inside a switch-back window, sorted by sha256('d2-prefix:' + utterance_id), first 40"
+  n_cases: 40
+  systems: "frozen backbone, and the selected GoldKL and D2 checkpoints of every seed"
+  prefixes: "gold (training reference), B0 beam-5 generated (frozen model on the same training audio), own beam-5 generated (each adapted system)"
+  comparison: "within a row the audio and decoder prefix are identical; adapter off vs on next-token distributions at every content position (KL(p_off || p_on), top-1 change, Han-to-non-Han top-1 change); positions classed reference-free by the frozen top-1 token"
+  ineligible: "a generated prefix with no content token or without a final EOS is ineligible for that row"
+compute: {max_job_seconds: 10800, partition: mig, gpu: "H100 MIG 3g.40gb", max_concurrent_gpu_jobs: 2}

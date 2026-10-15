@@ -1,0 +1,55 @@
+# S0/S1 parameter-matched architecture screening: R3-GoldKL vs M1-GoldKL, R2-GoldKL historical reference (frozen;
+# docs/reft/ARCH_S0S1_PROTOCOL.md, docs/reft/ARCH_S0S1_DECISION_RULES.md). Everything not listed is inherited unchanged
+# from configs/reft/p2_1_frozen.yaml (data, AdamW, schedule, frozen Auto-LID, pinned baseline, canonical CUDA 12.8
+# environment) and configs/reft/p2_1b_frozen.yaml (GoldKL objective, seed semantics, selection rule).
+schema: reft_arch_s0s1_frozen_v1
+inherits: [configs/reft/p2_1_frozen.yaml, configs/reft/p2_1b_frozen.yaml]
+site: {layer: 31, start_pos: 3, d_model: 1280,
+       semantics: "h = q + u at decoder layer 31 (q: input of encoder_attn_layer_norm, u: encoder_attn output); update added to u inside the encoder_attn forward hook"}
+architectures:
+  R2: {role: historical reference (never retrained), type: loreft, rank: 2, expected_trainable_parameters: 5122,
+       runs: {42: p2_1b/training/KL_seed42, 43: p2_1b/training/KL_seed43, 44: p2_1b/training/KL_seed44}}
+  R3: {type: loreft, rank: 3, expected_trainable_parameters: 7683,
+       update: "h + R3^T (W3 h + b3 - R3 h)",
+       init: "R3 = orthonormal rows from QR of a seed-s Gaussian (d x 3), torch orthogonal parametrization; W3 = R3; b3 = 0"}
+  M1: {type: cross_attention_conditioned_loreft, rank: 2, expected_trainable_parameters: 7682,
+       update: "h + R^T (W_h h + W_u u + b - R h)",
+       init: "R, W_h, b exactly as R2 seed s (same constructor, same global RNG state, same base buffer); W_u = 0"}
+new_runs: [R3_seed42, R3_seed43, R3_seed44, M1_seed42, M1_seed43, M1_seed44]
+max_new_training_runs: 6
+seeds: [42, 43, 44]
+seed_semantics: "torch.manual_seed(s) -> backbone load -> adapter construction (init seed s); epoch order numpy default_rng(s + epoch).permutation (P2-1b)"
+objective:
+  implementation: reft.p2_1b_train.kl_step       # unchanged: token-mean CE + lambda * KL(p0 || p_theta) on the teacher-correct mask
+  lambda_gold_kl: 1.0
+training:
+  updates_per_run: 96            # 3 epochs x 32 optimizer steps (63 micro-batches of 8, accumulation 2, final partial step)
+  lr: 5.0e-4                     # P2-1 R2 learning rate, both arms (no per-arm tuning)
+selection_rule: "per run: lowest dev150 beam-5 genuine-CS MER, then overall MER, then Mandarin CER, then earliest epoch (P2-1 rule, unchanged)"
+preflight:
+  tf_rows: 4                     # training utterances (sorted ids) for the teacher-forced checks
+  smoke_steps: 5                 # bounded training-only loss-reduction check (one micro-batch of 8, AdamW at the frozen lr)
+  perturb: {scale_w: 0.01, scale_b: 0.5, seed: 7}
+  dev_rows: 20                   # zero-init beam-5 / greedy parity, LID, latency
+  cache_rows: 2                  # cached greedy vs teacher-forced argmax (perturbed adapters)
+  fp32_rows: 3                   # cached vs full forward in float32 (P2-1c amendment r1 check)
+  tolerances:
+    m1_r2_equivalence: exact     # update, logits and decoded tokens bitwise (W_u = 0 adds exact IEEE zeros)
+    orth_max_abs: 1.0e-5
+    initial_kl_max: 1.0e-6
+    cached_greedy_vs_tf_max_mismatch: 1          # per utterance (P2-1b G4)
+    fp32_cached_vs_full_max_abs_logp: 1.0e-3     # P2-1c amendment r1
+    fp32_argmax_margin: 0.20
+    init_grad_rtol: 1.0e-4                       # GoldKL vs CE gradient at zero init (KL gradient = softmax round-off)
+    init_grad_atol: 1.0e-7
+  max_projected_job_seconds: 9000
+decision:
+  preservation_margin_units: 5   # mean new Mandarin errors and mean long switch-back dropped units
+  seed_consistency_min: 2        # of 3 matched seeds
+  en_net_ratio_min: 0.75
+  cs_mer_tolerance: 0.005
+  worst_dialogue_tolerance: 10   # mixed errors, per seed, vs the comparison arm
+  loops_nonterm_tolerance: 1     # summed over seeds
+  strong_zh_new_max: 49          # Mandarin retention >= 0.99 of 4950 B0-correct units
+bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+compute: {max_job_seconds: 10800, partition: mig, gpu: "H100 MIG 3g.40gb", max_concurrent_gpu_jobs: 2}

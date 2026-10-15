@@ -1,0 +1,45 @@
+# P2-1c on-policy continuation and switch-back failure audit (frozen; docs/reft/P2_1C_PROTOCOL.md,
+# docs/reft/P2_1C_DECISION_RULES.md). No training, no adapter change, no new data. Everything not listed here is inherited
+# unchanged from configs/reft/p2_1_frozen.yaml and configs/reft/p2_1b_frozen.yaml.
+schema: reft_p2_1c_frozen_v1
+cases: p2_1b/prefix_audit/cases_private.json   # the ten P2-1b cases, unchanged (5 damaged, 5 safe)
+recovered_spans: [d1, d2]                      # KL-recovered in all three KL seeds (p2_1b/posthoc/span_recovery_59293)
+persistent_spans: [d0, d3, d4]
+systems:
+  B0: null
+  CE42: {run: p2_1/R2, seed: 42, expected_epoch: 2}
+  CE43: {run: p2_1b/training/CE_seed43, seed: 43}
+  CE44: {run: p2_1b/training/CE_seed44, seed: 44}
+  KL42: {run: p2_1b/training/KL_seed42, seed: 42}
+  KL43: {run: p2_1b/training/KL_seed43, seed: 43}
+  KL44: {run: p2_1b/training/KL_seed44, seed: 44}
+counterpart: {CE42: KL42, CE43: KL43, CE44: KL44, KL42: CE42, KL43: CE43, KL44: CE44}
+anchors:
+  b0: [start, pre_en, post_en, early_zh]       # start = empty content prefix (replay-parity check, = original decode)
+  early_zh_after_span_units: 2
+  boundary_rule: "largest clean content-token boundary whose prefix holds exactly the target number of canonical units"
+  candidate_pool_anchors: [pre_en, post_en]
+replay:
+  num_beams: 5
+  num_return_sequences: 5
+  total_max_length: 204          # 4 prompt tokens + 200 new tokens, the canonical absolute budget, kept for forced prefixes
+  length_penalty: 1.0
+  early_stopping: false
+  begin_suppress_index: 4        # begin-suppression stays at the first content position (never re-armed after a prefix)
+tolerance:
+  incremental_vs_full_max_abs_logp: 0.10
+  incremental_vs_full_argmax_margin: 0.20
+  beam_score_vs_teacher_forced: 0.05
+  recorded_score_abs: 0.001
+budget:
+  target_gpu_minutes: 90
+  hard_gpu_minutes: 170
+rules:
+  recovered_min_retention: 0.8
+  dropped_max_retention: 0.2
+  local_drop_nats: 1.0
+  premature_eos_fraction: 0.5
+  seed_consistent_min: 2
+  dominance_fraction: 0.60
+  dominance_min_cases: 3
+  min_valid_damaged_anchors: 3

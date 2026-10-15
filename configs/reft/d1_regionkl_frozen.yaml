@@ -1,0 +1,73 @@
+# D1 region-weighted GoldKL pilot (frozen; docs/reft/D1_REGIONKL_PROTOCOL.md, docs/reft/D1_REGIONKL_DECISION_RULES.md).
+# Everything not listed is inherited unchanged from configs/reft/p2_1_frozen.yaml (R2 method, data, AdamW, schedule,
+# frozen Auto-LID, pinned baseline, canonical CUDA 12.8 environment) and configs/reft/p2_1b_frozen.yaml (GoldKL teacher,
+# teacher-correct mask, seed semantics, selection rule). Only the KL aggregation changes.
+schema: reft_d1_regionkl_frozen_v1
+inherits: [configs/reft/p2_1_frozen.yaml, configs/reft/p2_1b_frozen.yaml]
+method: {name: R2, layer: 31, rank: 2, start_pos: 3, expected_trainable_parameters: 5122}
+control:
+  name: R2-GoldKL (historical, never retrained)
+  runs: {42: p2_1b/training/KL_seed42, 43: p2_1b/training/KL_seed43, 44: p2_1b/training/KL_seed44}
+  reuse_condition: "the D1 training path with every region weight = 1 reproduces p2_1b/training/KL_seed42/epoch1/adapter.pt bitwise (32 updates)"
+new_runs: [D1_seed42, D1_seed43, D1_seed44]
+max_new_training_runs: 3
+seeds: [42, 43, 44]
+seed_semantics: "torch.manual_seed(s) -> backbone load -> R2 adapter (init seed s); epoch order numpy default_rng(s + epoch).permutation (P2-1b)"
+objective:
+  formula: "L = CE_all + lambda_kl * sum_t M_t w_t KL(p0_t || p_theta_t) / sum_t M_t w_t, per micro-batch"
+  lambda_kl: 1.0
+  region_weight: 2.0
+  other_weight: 1.0
+  kl: "KL(p0 || p_theta), full vocabulary, float32 log-softmax, teacher = same forward with the adapter absent, detached"
+  mask: "M_t = (Y_t != -100) and argmax_v teacher_logits_t == Y_t (P2-1b teacher-correct mask, content tokens and EOS)"
+  denominator: "sum of masked weights within the micro-batch, as a Python float (exact integer); empty mask -> differentiable zero"
+  ce: "token-mean CE over content tokens + EOS (unchanged)"
+  accumulation: "loss / grad_accum (2); the final pending micro-batch of an epoch also steps (32 updates / epoch)"
+region:
+  name: "R_M^SB: target tokens of the first K substantive Mandarin reference units of each Mandarin run that follows an English->Mandarin switch"
+  units: "canonical reference units of target_text (reft.text.units): one Han character or one Latin word"
+  language_sequence: "substantive EN = tag_unit EN and not a filler; substantive ZH = tag_unit ZH and not a filler; all other units (fillers, OTHER, UNKNOWN/mixed-script) are skipped: they neither count, terminate a run, nor receive weight"
+  switch_back: "substantive ZH unit whose previous entry in the language sequence is substantive EN"
+  max_units_per_switch: 7
+  run_end: "the window stops at the next substantive EN unit or after 7 substantive ZH units, whichever is first"
+  token_rule: "token t (content token, EOS excluded) gets the region weight iff its unit set (reft.text.token_unit_map) is non-empty and contained in the union of windows; tokens touching a window unit and any unit outside the windows are ambiguous: weight 1, recorded"
+  eos_special: "EOS, prompt and padding positions never receive the region weight"
+  unmappable_utterance: "token_unit_map is None or bytes do not reconstruct target_text: all weights 1, recorded"
+  decoder_shift: "target token t is predicted at decoder position 3 + t (Y[3 + t] = target_ids[t]); weights are placed at 3 + t"
+  integrity_block: {max_unmappable_fraction: 0.02, manifest_targets_must_equal_p1_targets: true}
+coverage_gate:
+  min_teacher_correct_region_coverage: 0.10    # teacher-correct / unambiguous region tokens (engineering floor)
+  min_dialogues_with_teacher_correct_region: 2
+training:
+  updates_per_run: 96
+  lr: 5.0e-4
+selection_rule: "per run: lowest dev150 beam-5 genuine-CS MER, then overall MER, then Mandarin CER, then earliest epoch (P2-1 rule, unchanged)"
+evaluation:
+  target_window: "first 7 substantive Mandarin reference units of each Mandarin run after an EN->ZH switch (same language-sequence rule, dev references, canonical alignment)"
+  long_switchback_min_units: 5
+  near_switch_max_distance: 7
+preflight:
+  tf_rows: 4
+  perturb: {scale_w: 0.01, scale_b: 0.5, seed: 7}
+  dev_rows: 20
+  cache_rows: 2
+  fp32_rows: 3
+  tolerances:
+    orth_max_abs: 1.0e-5
+    initial_kl_max: 1.0e-6
+    cached_greedy_vs_tf_max_mismatch: 1
+    fp32_cached_vs_full_max_abs_logp: 1.0e-3
+    fp32_argmax_margin: 0.20
+    aggregation_rtol: 1.0e-6                     # explicit weighted mean of the same float32 per-token KL
+    float64_kl_rtol: 1.0e-3                      # float32 vs float64 KL of ~1e-4 nats (precision, not weighting)
+  max_projected_job_seconds: 9000
+decision:
+  preservation_margin_units: 5          # A1: mean new Mandarin errors lower by >= 5 units per seed
+  seed_consistency_min: 2               # A2: strictly fewer new Mandarin errors in >= 2 of 3 matched seeds
+  en_net_sum_ratio_min: 0.90            # B: sum_s EN_net(D1) / sum_s EN_net(GoldKL)
+  cs_mer_strict: true                   # C: mean CS MER(D1) <= mean CS MER(GoldKL), no tolerance
+  strong_zh_new_max: 49                 # E: retention >= 0.99 of 4,950 B0-correct units (reported only)
+  component_margin_units: 5             # MIXED: secondary preservation components (target window, long SB)
+bootstrap: {unit: dialogue, reps: 2000, seed: 42}
+mechanism: {rows: "all 500 training utterances (training-only diagnostics, gold prefixes)", checkpoints: "selected and epoch 3, GoldKL and D1, every seed"}
+compute: {max_job_seconds: 10800, partition: mig, gpu: "H100 MIG 3g.40gb", max_concurrent_gpu_jobs: 2}

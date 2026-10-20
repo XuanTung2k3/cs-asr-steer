@@ -52,3 +52,7 @@ whose completion depends on the GLOBAL RNG as well as the seeded QR. Tests now m
 global seed42 immediately before adapter construction and serialize all buffers. Both E-ReFT and LRA resumed
 optimizer trajectories match uninterrupted CPU trajectories exactly. The frozen primary runner already used
 this seed reset and full-buffer checkpoints; it required no change.
+
+Runner limit cases are tested: O2 lambda0 and O3 weight1 reduce to CE, with an unused auxiliary head allowed
+to have no gradient at lambda0. The auxiliary head uses an explicitly reset seed42 shared across methods,
+independent of adapter-construction RNG. No O2/O3 GPU experiment was run during the O1 campaign.

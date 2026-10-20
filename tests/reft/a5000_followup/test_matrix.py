@@ -89,3 +89,14 @@ def test_optimizer_boundary_resume_matches_uninterrupted(method,tmp_path):
     c.load_state_dict(state['adapter']);opc.load_state_dict(state['optimizer'])
     for _ in range(2):step(c,opc)
     assert all(torch.equal(v,c.state_dict()[k]) for k,v in a.state_dict().items())
+
+
+def test_lid_zero_and_weight_one_match_ce_with_unused_auxiliary_head():
+    z=torch.randn(1,4,7,requires_grad=True);y=torch.tensor([[-100,-100,3,5]])
+    g=torch.tensor([[-100,-100,0,1]]);s=torch.randn(1,4,4,requires_grad=True);head=LIDHead(4)
+    ce=weighted_ce(z,y)
+    o2=logical_loss(z,y,g,'O2',2,2,2,s,head,0.,1.)
+    o3=logical_loss(z,y,g,'O3',2,2,2,s,head,0.,1.)
+    assert torch.equal(ce,o2) and torch.equal(ce,o3)
+    o2.backward()
+    assert all(p.grad is None for p in head.parameters())

@@ -196,7 +196,10 @@ def run(args):
                             lid_lambda=args.lid_lambda,english_weight=args.english_weight)
                         assert torch.isfinite(loss);loss.backward();loss_sum+=float(loss.detach())
                         del o,loss
-                    assert all(p.grad is not None and torch.isfinite(p.grad).all() for p in params)
+                    active=[p for p in ad.parameters() if p.requires_grad]
+                    if head is not None and args.lid_lambda!=0:active+=list(head.parameters())
+                    assert all(p.grad is not None and torch.isfinite(p.grad).all() for p in active)
+                    assert all(p.grad is None or torch.isfinite(p.grad).all() for p in params)
                     torch.nn.utils.clip_grad_norm_(params,1.);opt.step();cursor=global_step
                     state=ad.adaptation_state() if args.method=='practical_weight_lora' else ad.state_dict()
                     save_torch(last,{'adapter':state,'head':head.state_dict() if head else {},'optimizer':opt.state_dict(),
@@ -230,6 +233,8 @@ def main():
     p.add_argument('--run-id');p.add_argument('--max-seconds',type=int,default=0)
     p.add_argument('--execute',action='store_true');p.add_argument('--resume',action='store_true')
     p.add_argument('--label-audit',action='store_true');args=p.parse_args()
+    if args.lid_lambda<0 or args.english_weight<1 or args.lr<=0 or args.epochs<1:
+        p.error('Require nonnegative LID lambda, weight>=1, positive LR and positive epoch count')
     if args.label_audit:label_audit()
     elif args.execute:run(args)
     else:print(json.dumps({'dry_run':True,'resolved':vars(args),'preservation':'beta0',

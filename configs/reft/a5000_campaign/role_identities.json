@@ -1,0 +1,21 @@
+{
+ "dataset_revision": "a84770fcdf14072252373a0227321227eaac7dc7",
+ "full_manifest_sha256": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+ "roles": {
+  "A5000_C500": {
+   "count": 500,
+   "membership_sha256": "3ab45e73bf7d451bdf726c349eb9ae7add71f95d9513755b6404cef03cb7d2f2"
+  },
+  "A5000_T2000": {
+   "count": 2000,
+   "membership_sha256": "14e032a443b4e2aad8f688a8ca5c8f1af054d6b16eab94dda358303f11ed94c5"
+  },
+  "A5000_V300": {
+   "count": 300,
+   "membership_sha256": "88a34b860168c2fa71d7c455549d2e9e8b1d06f09d0409e5c4d19a7673847d2b"
+  }
+ },
+ "sampling": "Prior 42/14/14 dialogue allocation preserved; seeded per-stratum dialogue round robin",
+ "source_manifest_sha256": "e6e0003ce32ade76e163b7e956a7ca737785de21bcafdf04330163c133aa1c64",
+ "historical_replication": false
+}

@@ -25,20 +25,38 @@ def report(root):
                 'examples':r['examples'],'steps':r['steps'],
                 'cost_limitation':'Per-arm residence excludes shared warm start/LR search; NOT total-method cost frontier'})
     if points:
+        # Aggregate BOTH LR candidates and all optimizer work, including failed
+        # or resumed attempts, not just a winning checkpoint's final epoch.
+        arms=[]
+        for runfile in (root/'runs').glob('*/run.json'):
+            usage=runfile.parent/'usage.json'
+            if usage.exists(): arms.append((read(runfile),read(usage)['allocated_seconds']))
+        for point in points:
+            base=point['method']; method=base if base in ['R','L','LP','LS'] else 'R'
+            objective=point['objective']; warm=0.; own=0.
+            for spec,seconds in arms:
+                if spec['seed']!=42: continue
+                if spec['method']!=method: continue
+                if point['stage']=='N1' and spec['tag'] is None and spec['omega']==1: own+=seconds
+                elif point['stage']=='N3' and spec['tag']=='N3_WCE' and spec['omega']!=1: own+=seconds
+                elif point['stage']=='N2':
+                    if spec['tag'] is None and spec['omega']==1: warm+=seconds
+                    if spec['tag']==base: own+=seconds
+            point['training_gpu_hours']=(warm+own)/3600
+            point['cost_limitation']='Includes both LR trials, fitting, normalization, validation, failed work and warm start; shared model-load/admission overhead reported once at campaign level'
         with (dest/'development_metrics.csv').open('w') as f:
             w=csv.DictWriter(f,fieldnames=list(points[0]));w.writeheader();w.writerows(points)
         # Capacity/memory/latency frontiers are legitimate per-arm measurements.
         # Full-method GPU efficiency cannot be computed from selected-arm cost
         # alone: retain points but mark total-cost Pareto unavailable.
-        frontiers={x:[p['method'] for p in pareto(points,x,'genuine_cs_mer')] for x in ['parameters','peak_reserved_bytes','decode_seconds']}
-        atomic(dest/'pareto.json',{'frontiers':frontiers,'total_gpu_hours_frontier':None,
-            'reason':'Warm-start/search/recovery overhead not yet aggregated per independent pipeline'})
+        frontiers={x:[p['method'] for p in pareto(points,x,'genuine_cs_mer')] for x in ['parameters','training_gpu_hours','peak_reserved_bytes','decode_seconds']}
+        atomic(dest/'pareto.json',{'frontiers':frontiers,'cost_scope':'Warm start and both LR trials included; shared admission/model-load overhead separate','campaign_allocated_seconds':read(root/'status.json').get('gpu_seconds',0) if (root/'status.json').exists() else None})
         try:
             import matplotlib
             matplotlib.use('Agg')
             import matplotlib.pyplot as plt
             figs=root/'figures';figs.mkdir(exist_ok=True)
-            for x in ['parameters','peak_reserved_bytes','decode_seconds']:
+            for x in ['parameters','training_gpu_hours','peak_reserved_bytes','decode_seconds']:
                 fig,ax=plt.subplots(figsize=(6,4))
                 for p in points:
                     ax.scatter(p[x],p['genuine_cs_mer']);ax.annotate(p['method']+' '+p['objective'],(p[x],p['genuine_cs_mer']),fontsize=7)
@@ -78,7 +96,7 @@ def report(root):
         'Verified linguistic PIER and Chinese word WER are unavailable. Script proxies are not PIER.',
         'No official locked test or external final evaluation was authorized or run.',
         'One-seed method selection is exploratory; no superiority/novelty conclusion is generated from engineering PASS.',
-        'D3 remains unimplemented; full cost aggregation and uncertainty-based primary claims remain limitations.',
+        'D3 remains unimplemented; independent final evaluation and unavailable PIER/word segmentation remain limitations.',
         '', '## Available selected results','', '|Method|Objective|CS-MER|MER|','|---|---|---|---|']
     lines += [f"|{p['method']}|{p['objective']}|{p['genuine_cs_mer']:.5f}|{p['mer']:.5f}|" for p in points]
     lines += ['','## Remaining evidence','',

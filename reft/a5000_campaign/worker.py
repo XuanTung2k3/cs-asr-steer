@@ -37,7 +37,7 @@ def stopping(signum,frame):
 class Runtime:
     def __init__(self,root):
         self.root=Path(root); self.plan=read(self.root/'frozen_plan.json'); self.C=self.plan['config']
-        self.start=time.monotonic(); self.offset=0
+        self.start=time.monotonic(); self.offset=0; self.arm_usage=None; self.arm_start=None; self.arm_prior=0.
         budget=self.root/'worker_usage.json'
         if budget.exists(): self.offset=read(budget)['resident_seconds']
         self.T=rows(self.C,self.root,'A5000_T2000'); self.V=rows(self.C,self.root,'A5000_V300')
@@ -71,6 +71,9 @@ class Runtime:
 
     def tick(self,**progress):
         seconds=self.offset+time.monotonic()-self.start
+        if self.arm_usage is not None:
+            atomic(self.arm_usage,{'allocated_seconds':self.arm_prior+time.monotonic()-self.arm_start,'utc':now(),
+                'scope':'full arm fitting+normalization+validation+checkpoint I/O, includes failed/interrupted work'})
         atomic(self.usage,{'resident_seconds':seconds,'utc':now(),'pid':os.getpid()})
         atomic(self.root/'worker_heartbeat.json',{'utc':now(),'pid':os.getpid(),**progress})
         if STOP or (self.root/'STOP').exists(): raise Halt('STOPPED_BY_USER')
@@ -229,7 +232,10 @@ class Runtime:
         dest=self.root/'runs'/identity(spec)[:20]; dest.mkdir(parents=True,exist_ok=True)
         meta=dest/'run.json'
         if meta.exists() and read(meta)!=spec: raise ValueError('Stale arm')
-        atomic(meta,spec); ad=self.factory(method,seed,gate)
+        atomic(meta,spec)
+        self.arm_usage=dest/'usage.json'; self.arm_start=time.monotonic()
+        self.arm_prior=read(self.arm_usage)['allocated_seconds'] if self.arm_usage.exists() else 0.
+        ad=self.factory(method,seed,gate)
         if warm:
             state=torch.load(warm,map_location='cpu',weights_only=True)
             missing,unexpected=ad.load_state_dict(state,strict=False)
@@ -306,6 +312,8 @@ class Runtime:
         if not history: raise ValueError('No complete epoch')
         selected=min(history,key=lambda h:(h['metrics']['genuine_cs_mer'],h['metrics']['mer'],h['metrics']['zh_cer'],h['epoch']))
         atomic(dest/'selection.json',selected)
+        self.tick(arm=dest.name,completed=True)
+        self.arm_usage=None
         del ad,opt; torch.cuda.empty_cache()
         return selected
 
@@ -532,6 +540,9 @@ def main():
         atomic(Path(args.root)/'stage_results'/(args.stage+'.json'),{'status':'FAILED','reason':type(e).__name__,'error':str(e)}); raise
     finally:
         if R is not None:
+            if R.arm_usage is not None:
+                atomic(R.arm_usage,{'allocated_seconds':R.arm_prior+time.monotonic()-R.arm_start,'utc':now(),
+                    'scope':'full arm including failed/interrupted work'})
             atomic(R.usage,{'resident_seconds':R.offset+time.monotonic()-R.start,'utc':now()})
 
 if __name__=='__main__': main()

@@ -28,6 +28,10 @@ def prepare(config,run_id):
         plan={'campaign_id':run_id,'created':now(),'created_epoch':time.time(),'config':cfg,'config_sha256':identity(cfg),
             'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=BASE,text=True).strip(),
             'source_path':str(BASE),'sources':source_manifest(),'data_sha256':sha(root/'data_manifest.json'),'admission_seal':{}}
+        if 'gpu_indices' in cfg:
+            from .parallel_jobs import graph,estimate_core
+            atomic(root/'resource_estimate.json',estimate_core(graph(cfg),len(cfg['gpu_indices'])))
+            atomic(root/'job_graph.json',graph(cfg));plan['job_graph_sha256']=sha(root/'job_graph.json')
         atomic(root/'frozen_plan.json',plan)
         atomic(root/'status.json',{'campaign_id':run_id,'status':'PREFLIGHT_PENDING','stages':{},'gpu_seconds':0})
         print(root)
@@ -59,6 +63,22 @@ def preflight(root):
         if result.returncode: raise RuntimeError('Actual GPU preflight failed; see '+str(log))
     report=read(root/'preflight/report.json')
     if not report['passed']: raise RuntimeError(report.get('blocker','Preflight rejected'))
+    fleet={}
+    if 'gpu_indices' in plan['config']:
+        import json
+        for index in plan['config']['gpu_indices']:
+            occupied=subprocess.check_output(['nvidia-smi','-i',str(index),'--query-compute-apps=pid','--format=csv,noheader'],text=True).strip()
+            if occupied:
+                fleet[str(index)]={'available':False,'reason':'Other workload present; no probe executed'};continue
+            started=time.monotonic()
+            code='import torch,json; torch.cuda.init(); p=torch.cuda.get_device_properties(0); x=torch.randn(128,128,device="cuda",dtype=torch.bfloat16); y=x@x; assert torch.isfinite(y).all(); print(json.dumps({"name":p.name,"total_memory":p.total_memory,"bf16":torch.cuda.is_bf16_supported()}))'
+            result=subprocess.run([sys.executable,'-c',code],env={**os.environ,'CUDA_VISIBLE_DEVICES':str(index)},capture_output=True,text=True,timeout=60)
+            if result.returncode: raise RuntimeError('Fleet CUDA admission failed: '+result.stderr)
+            fleet[str(index)]=json.loads(result.stdout)
+            if fleet[str(index)]['name']!='NVIDIA RTX A5000' or not fleet[str(index)]['bf16']:raise ValueError('Unexpected GPU class/precision')
+            ledger=root.parent/'admission_cost.json';cost=read(ledger);seconds=time.monotonic()-started
+            cost['seconds']+=seconds;cost['attempts'].append({'gpu':index,'seconds':seconds,'scope':'fleet_cuda_admission'});atomic(ledger,cost)
+        atomic(root/'fleet_admission.json',fleet)
     # CPU test evidence is generated on the actual remote environment.
     test=root/'cpu-tests.xml'
     result=subprocess.run([sys.executable,'-m','pytest','tests/reft/a5000_campaign','tests/reft/a5000','tests/reft/a5000_followup',
@@ -67,7 +87,7 @@ def preflight(root):
     import xml.etree.ElementTree as ET
     suites=ET.parse(test).getroot()
     if any(int(s.attrib.get(k,'0')) for s in suites.iter('testsuite') for k in ['errors','failures']): raise ValueError('CPU XML rejected')
-    plan['admission_seal']=seal(root,[root/'preflight/report.json',test]);atomic(root/'frozen_plan.json',plan)
+    plan['admission_seal']=seal(root,[root/'preflight/report.json',test]+([root/'fleet_admission.json'] if fleet else []));atomic(root/'frozen_plan.json',plan)
     atomic(root/'admitted.json',{'source_commit':plan['source_commit'],'config_sha256':plan['config_sha256'],
         'data_sha256':plan['data_sha256'],'plan_sha256':sha(root/'frozen_plan.json'),'passed':True,'utc':now()})
     atomic(root/'status.json',{'campaign_id':root.name,'status':'ADMITTED','gpu_seconds':read(root.parent/'admission_cost.json')['seconds'],'stages':
@@ -88,28 +108,33 @@ def launch(root,resume=False):
             print('Already finished; results preserved');return
         if resume: (root/'STOP').unlink(missing_ok=True)
         elif (root/'STOP').exists(): raise RuntimeError('Stopped; explicit resume required')
-        # GPU lock spans entire detached controller lifetime.
-        gpu=plan['config']['gpu_index']; wrapper=root/'supervise.py'
-        wrapper.write_text('import fcntl,os,subprocess,sys\n'
-            +'f=open('+repr('/home/ubuntu/tung.nx/a5000-campaign-gpu'+str(gpu)+'.lock')+',"a")\n'
-            +'fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)\n'
-            +'u=subprocess.check_output(["nvidia-smi","-i",'+repr(str(gpu))+',"--query-compute-apps=pid","--format=csv,noheader"],text=True).strip()\n'
-            +'assert not u,"GPU occupied: "+u\n'
-            +'import json,time\n'
-            +'code=1\n'
-            +'for attempt in range(2):\n'
-            +' code=subprocess.call([sys.executable,"-m","reft.a5000_campaign.controller","--root",'+repr(str(root))+'])\n'
-            +' if code==0: break\n'
-            +' state=json.load(open('+repr(str(root/'status.json'))+'))\n'
-            +' old=state.get("child_pid")\n'
-            +' deadline=time.monotonic()+'+repr(plan['config']['resources']['stage_seconds'])+'\n'
-            +' while old and time.monotonic()<deadline:\n'
-            +'  try: os.kill(old,0)\n'
-            +'  except ProcessLookupError: break\n'
-            +'  time.sleep(15)\n'
-            +' else:\n'
-            +'  if old: break\n'
-            +'sys.exit(code)\n')
+        parallel='gpu_indices' in plan['config']
+        module='reft.a5000_campaign.parallel_controller' if parallel else 'reft.a5000_campaign.controller'
+        wrapper=root/'supervise.py'
+        script='import fcntl,os,subprocess,sys,json,time\n'
+        if not parallel:
+            script+='f=open('+repr('/home/ubuntu/tung.nx/a5000-campaign-gpu'+str(plan['config']['gpu_index'])+'.lock')+',"a")\n'
+            script+='fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)\n'
+        script+='print("supervisor started",os.getpid(),flush=True)\n'
+        script+='code=1\nfor attempt in range(2):\n'
+        script+=' code=subprocess.call([sys.executable,"-m",'+repr(module)+',"--root",'+repr(str(root))+'])\n'
+        script+=' if code==0: break\n'
+        script+=' state=json.load(open('+repr(str(root/'status.json'))+'))\n'
+        script+=' pids=[r["pid"] for r in state.get("jobs",{}).values() if r.get("status")=="RUNNING" and r.get("pid")]\n'
+        script+=' if state.get("child_pid"): pids.append(state["child_pid"])\n'
+        script+=' deadline=time.monotonic()+'+repr(plan['config']['resources']['stage_seconds'])+'\n'
+        script+=' while pids and time.monotonic()<deadline:\n'
+        script+='  alive=[]\n'
+        script+='  for pid in pids:\n'
+        script+='   try: os.kill(pid,0);alive.append(pid)\n'
+        script+='   except ProcessLookupError: pass\n'
+        script+='  pids=alive\n'
+        script+='  if pids: time.sleep(15)\n'
+        script+=' if pids: break\n'
+        script+='sys.exit(code)\n'
+        import ast
+        ast.parse(script)
+        wrapper.write_text(script)
         cmd='cd '+shlex.quote(str(BASE))+' && PYTHONPATH='+shlex.quote(str(BASE)+':'+str(BASE/'src'))+' '+shlex.quote(sys.executable)+' '+shlex.quote(str(wrapper))+' >> '+shlex.quote(str(root/'campaign.log'))+' 2>&1'
         subprocess.run(['tmux','new-session','-d','-s',session,cmd],check=True)
         atomic(root/'launch.json',{'utc':now(),'session':session,'backend':'tmux','reboot_recovery':'manual_resume_only','command':cmd})

@@ -22,6 +22,7 @@ def source_manifest():
 def check_bound(root):
     plan=read(Path(root)/'frozen_plan.json')
     if identity(plan['config'])!=plan['config_sha256']: raise ValueError('Config changed')
+    if plan.get('job_graph_sha256') and sha(Path(root)/'job_graph.json')!=plan['job_graph_sha256']:raise ValueError('Frozen job graph changed')
     if source_manifest()!=plan['sources']: raise ValueError('Bound source changed')
     if sha(Path(root)/'data_manifest.json')!=plan['data_sha256']: raise ValueError('Data manifest changed')
     if not verify(root,plan['admission_seal']): raise ValueError('Admission evidence changed')

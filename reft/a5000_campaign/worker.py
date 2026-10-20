@@ -53,7 +53,7 @@ class Runtime:
         self.eos=self.b.processor.tokenizer.eos_token_id
         self.fp=identity({'model':self.C['model_sha256'],'processor':sha(Path(self.C['model_root'])/'tokenizer_config.json'),
             'data':self.plan['data_sha256'],'source':self.plan['source_commit']})
-        self.cache_root=self.root/'encoder_cache'; self.cache_root.mkdir(exist_ok=True)
+        self.cache_root=Path(self.C.get('shared_cache_root',self.root/'encoder_cache')); self.cache_root.mkdir(parents=True,exist_ok=True)
         # Deterministic frozen-model mode and explicit checkpoint wrappers preserve
         # all encoder dropout/SpecAugment semantics without forcing train() mode.
         self.original_encoder_forwards=[]
@@ -76,7 +76,12 @@ class Runtime:
                 'scope':'full arm fitting+normalization+validation+checkpoint I/O, includes failed/interrupted work'})
         atomic(self.usage,{'resident_seconds':seconds,'utc':now(),'pid':os.getpid()})
         atomic(self.root/'worker_heartbeat.json',{'utc':now(),'pid':os.getpid(),**progress})
-        if STOP or (self.root/'STOP').exists(): raise Halt('STOPPED_BY_USER')
+        campaign=Path(self.C.get('campaign_root',self.root))
+        if STOP or (self.root/'STOP').exists() or (campaign/'STOP').exists(): raise Halt('STOPPED_BY_USER')
+        if campaign!=self.root and (campaign/'status.json').exists():
+            current=read(campaign/'status.json').get('gpu_seconds',0)
+            if current>=(self.C['resources']['gpu_hours']-self.C['resources']['reserve_gpu_hours'])*3600:
+                raise Halt('STOPPED_BUDGET')
         # Controller accounts all subprocess residency including startup failures.
         if seconds>=(self.C['resources']['gpu_hours']-self.C['resources']['reserve_gpu_hours'])*3600:
             raise Halt('STOPPED_BUDGET')
@@ -87,6 +92,17 @@ class Runtime:
             raise Halt('BLOCKED_DISK')
 
     def cache(self,row):
+        import fcntl
+        p=self.cache_root/(row['utterance_id']+'.pt')
+        # Immutable completed cache files can be read concurrently. Missing
+        # entries have a per-utterance process lock around atomic creation.
+        if p.exists(): return self._cache(row)
+        with p.with_suffix('.lock').open('a') as handle:
+            fcntl.flock(handle,fcntl.LOCK_EX)
+            try: return self._cache(row)
+            finally: fcntl.flock(handle,fcntl.LOCK_UN)
+
+    def _cache(self,row):
         self.tick(utterance=row['utterance_id'])
         p=self.cache_root/(row['utterance_id']+'.pt')
         if p.exists():

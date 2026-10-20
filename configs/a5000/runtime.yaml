@@ -1,0 +1,14 @@
+# Standalone engineering validation; no historical freeze or approval is implied.
+model:
+  root: ~/shared/tung.nx/models/whisper-large-v3/06f233fe06e710322aca913c1bc4249a0d71fce1
+  source_cache: ~/shared/tung.nx/models--openai--whisper-large-v3/snapshots/06f233fe06e710322aca913c1bc4249a0d71fce1
+  revision: 06f233fe06e710322aca913c1bc4249a0d71fce1
+  sha256: a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95
+  dtype: bfloat16
+  attn_implementation: eager
+data:
+  root: ~/shared/tung.nx/CS-Dialogue
+  revision: a84770fcdf14072252373a0227321227eaac7dc7
+output_root: ~/shared/tung.nx/a5000-validation
+# Decoder ReFT is the implementation present at GitHub HEAD. Encoder ReFT/LRA are absent.
+adapter: {site: decoder_post_cross_attention_pre_ffn, layer: 31, rank: 2, start_pos: 3, seed: 42}

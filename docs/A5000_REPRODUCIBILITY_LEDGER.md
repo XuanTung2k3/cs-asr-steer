@@ -50,3 +50,16 @@ exact optimizer-resume tests, D1/D2 checks and confirmation access/hash gates. E
 1030 passed, one private historical-allocation check skipped/blocked, zero outstanding failures.
 A first resume-unit fixture used unmatched GLOBAL Householder RNG states; the fixture was corrected to
 match the already-seeded primary runner and both resume tests passed. No primary scientific code change.
+
+## Durable completion supervisor
+
+`scripts/a5000/finish_control.sh launch` starts server tmux session `a5000-e1-finish`.
+It waits for the primary worker, aggregates actual completed results, performs bounded objective
+engineering checks, conditionally runs the already authorized frozen paired C150 confirmation
+within the shared six-hour budget, checks contracts and generates the five reports under
+`/home/ubuntu/shared/tung.nx/a5000-e1-pilot-v1/reports`.
+It does not launch a full objective matrix. Failed stages are recorded without unlimited retries.
+The Mac and Codex can be closed. Use `status`, `logs`, `stop`, `resume`, or `fetch` with the same
+control script. Fetch downloads final reports to `../cs-asr-reft-reports/`, outside the source tree.
+Generated result reports do not modify tracked scientific source. Server shutdown still interrupts
+jobs; tmux protects against SSH/client disconnection, not machine power loss.

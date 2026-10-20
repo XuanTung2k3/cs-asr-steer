@@ -1,0 +1,55 @@
+schema: a5000_e1_reconstruction_v1
+runtime: configs/a5000/runtime.yaml
+output_root: ~/shared/tung.nx/a5000-e1-pilot-v1
+manifest: configs/reft/a5000_manifests/roles_v1.json
+seed: 42
+data:
+  official_partition: train
+  duration: [1.0, 30.0]
+  max_content_tokens: 190
+  dialogue_counts: {A5000_T394: 42, A5000_V106: 14, A5000_C150: 14}
+  quotas:
+    A5000_T394: {CS: 276, ZH_ONLY: 79, EN_ONLY: 39}
+    A5000_V106: {CS: 74, ZH_ONLY: 21, EN_ONLY: 11}
+    A5000_C150: {CS: 105, ZH_ONLY: 30, EN_ONLY: 15}
+model:
+  dtype: bfloat16
+  attention: eager
+  site: encoder_output_after_final_layer_norm
+  padded_frames: adapt_all_1500_frames
+  rank: 2
+  d: 1280
+  params: 5122
+  auto_lid: frozen_backbone_argmax_before_adaptation
+decode: {num_beams: 5, max_new_tokens: 200, do_sample: false, temperature: 0.0, condition_on_prev_tokens: false}
+training:
+  objective: O1_pure_CE
+  goldkl_coefficient: 0.0
+  lid_coefficient: 0.0
+  english_weight: 1.0
+  epochs: 3
+  microbatch: 1
+  effective_batch: 16
+  reduction: sum_token_nll_over_all_content_and_eos_tokens_in_logical_batch
+  optimizer: AdamW
+  betas: [0.9, 0.99]
+  eps: 1.0e-6
+  weight_decay: 0.0
+  clip_norm: 1.0
+  schedule: constant
+  learning_rates: {ereft: [0.0001, 0.0005], lra: [0.0001, 0.0005]}
+  lr_selection: equal_two_trials_one_epoch_each_then_continue_selected_trial_to_epoch3
+  checkpoint_rule: [genuine_cs_mer, mer, zh_cer, earliest_epoch]
+  lr_ties: candidate_order
+  order: numpy_default_rng_seed_plus_epoch_permutation
+  resume_interval: every_optimizer_step
+  encoder_cache: exact_frozen_bfloat16_after_final_layer_norm
+  augmentation: none
+budget: {gpu_hours: 6.0, preflight_seconds: 1200, max_gpus: 1}
+confirmation: reserved_not_in_initial_campaign
+followup:
+  methods: [ereft, lra, practical_weight_lora]
+  objectives: [O1, O2, O3]
+  o2: {lambda_candidates: [0.1, 1.0], site: decoder_final_predictive_state, labels: conservative_script_proxy}
+  o3: {weight_candidates: [2.0, 5.0], policy: english_targeted_not_inferred_embedded_language}
+  goldkl_bridge: {coefficient: 1.0, provenance: new_a5000_coefficient_matches_published_decoder_p2_1b_not_authenticated_encoder_recipe}

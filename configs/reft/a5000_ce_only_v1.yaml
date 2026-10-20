@@ -1,0 +1,21 @@
+{
+  "schema": "a5000_ce_only_admission_v1",
+  "implementation_status": "ADMISSION_ONLY_NOT_FULL_CAMPAIGN",
+  "model_root": "/home/ubuntu/shared/tung.nx/models/whisper-large-v3/06f233fe06e710322aca913c1bc4249a0d71fce1",
+  "model_weights_sha256": "a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+  "dataset_root": "/home/ubuntu/shared/tung.nx/CS-Dialogue",
+  "output_root": "a5000_experiments/ce_only_adaptive_reft_v1",
+  "required_roles": {
+    "Train394": {"count": 394, "path": null, "sha256": null},
+    "Inner106": {"count": 106, "path": null, "sha256": null},
+    "Full500": {"count": 500, "path": null, "sha256": null},
+    "Dev150": {"count": 150, "path": null, "sha256": null}
+  },
+  "objective": "standard_ASR_CE_only",
+  "frame_policy": "valid_encoder_frames_only",
+  "locked_test_access": false,
+  "provisional_caps_not_resource_admitted": {"gpus": 1, "gpu_hours": 24, "wall_hours": 36, "stage_hours": 4, "disk_gib": 100},
+  "resource_admitted": false,
+  "scientific_training_implemented": false,
+  "notes": "No fallback to A5000_T394/V106/C150. Missing identity artifacts are blockers. Caps are not authorization to launch an incomplete matrix."
+}

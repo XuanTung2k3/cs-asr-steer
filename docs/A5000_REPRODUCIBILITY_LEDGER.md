@@ -27,3 +27,12 @@ Engineering status is not scientific success. Do not claim completion before com
 Codex self-check is an internal check, not independent external scientific review. Check intended site,
 parameter budget, frozen gradients, CE-only source path, common decoder/scorer, disjoint roles, no C150 fitting,
 consistent native/cached semantics, no official test access and commit/manifest/checkpoint linkage.
+
+Primary experiment source: 61a380ff6d41c1d76005aa75bc1edf501b63366c.
+Primary freeze SHA256: fdeea9195a0c0b37953674f518096224c79b8ea206212c5a9a7d072c52b70f91.
+Role-manifest SHA256: ad43487483ab70fb717590cf1e7e805b771dce822cfad3bde4db7746f5c8eb2b.
+B0 predictions SHA256: 8aec79d61636a920f2760145844ad12d9926e3ecd0fcf0c8eeebb0f4e0762641.
+B0 seal retained across the actual graceful stop/resume exercise. PID initially3031, resumed3516;
+control status reports the live process rather than assuming those PIDs remain active.
+Follow-up code is separated from the frozen primary source; documentation/follow-up commits do not amend the
+primary methods, recipe, cache, checkpoint selection or scorer. No objective GPU sweep was started.

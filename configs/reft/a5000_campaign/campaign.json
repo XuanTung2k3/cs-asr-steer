@@ -1,0 +1,182 @@
+{
+ "schema": "a5000_energy_campaign_v1",
+ "model_root": "/home/ubuntu/shared/tung.nx/models/whisper-large-v3/06f233fe06e710322aca913c1bc4249a0d71fce1",
+ "model_sha256": "a8e94b85976e5864ba3e9525c7e6c83b2a1eca42d4b797a0c7c24d778e40fd95",
+ "dataset_revision": "a84770fcdf14072252373a0227321227eaac7dc7",
+ "original_manifest": "/home/ubuntu/shared/tung.nx/a5000-validation/e0/official_train.parquet",
+ "original_manifest_sha256": "e6e0003ce32ade76e163b7e956a7ca737785de21bcafdf04330163c133aa1c64",
+ "prior_roles": "configs/reft/a5000_manifests/roles_v1.json",
+ "prior_pilot_root": "/home/ubuntu/shared/tung.nx/a5000-e1-pilot-v1",
+ "output_base": "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v1",
+ "python": "/home/ubuntu/tung.nx/reft-a5000/bin/python",
+ "gpu_index": 0,
+ "data": {
+  "roles": {
+   "A5000_T2000": {
+    "prior": "A5000_T394",
+    "n": 2000,
+    "quotas": {
+     "CS": 1400,
+     "ZH_ONLY": 400,
+     "EN_ONLY": 200
+    }
+   },
+   "A5000_V300": {
+    "prior": "A5000_V106",
+    "n": 300,
+    "quotas": {
+     "CS": 210,
+     "ZH_ONLY": 60,
+     "EN_ONLY": 30
+    }
+   },
+   "A5000_C500": {
+    "prior": "A5000_C150",
+    "n": 500,
+    "quotas": {
+     "CS": 350,
+     "ZH_ONLY": 100,
+     "EN_ONLY": 50
+    }
+   }
+  },
+  "duration": [
+   1,
+   30
+  ],
+  "max_content_tokens": 190,
+  "seed": 42,
+  "holdout_sealed": true
+ },
+ "training": {
+  "epochs": 3,
+  "trial_epochs": 1,
+  "effective_batch": 16,
+  "microbatch": 1,
+  "optimizer": "AdamW",
+  "betas": [
+   0.9,
+   0.99
+  ],
+  "eps": 1e-06,
+  "weight_decay": 0,
+  "clip_norm": 1,
+  "lr": {
+   "R": [
+    0.0001,
+    0.0005
+   ],
+   "L": [
+    0.0001,
+    0.0005
+   ],
+   "LP": [
+    0.0001,
+    0.0005
+   ],
+   "LS": [
+    0.0001,
+    0.0005
+   ]
+  },
+  "seed": 42,
+  "selection": [
+   "genuine_cs_mer",
+   "mer",
+   "zh_cer",
+   "earliest_epoch"
+  ],
+  "augmentation": false,
+  "precision": "bfloat16",
+  "adapter_precision": "float32",
+  "scheduler": "constant",
+  "resume": "exact_optimizer_boundary_with_rng",
+  "weighted_omegas": [
+   2
+  ],
+  "weighted_policy": "Latin-script English proxy only inside genuine-CS training utterances; ambiguous/special/EOS weight1; audit required"
+ },
+ "gate": {
+  "block_seconds": 1,
+  "epsilon": 0.25,
+  "alpha": 1,
+  "feature_dim": 16,
+  "hidden_width": 16,
+  "lr": 0.001,
+  "epochs": 1,
+  "initial": [
+   "G3",
+   "G4",
+   "G5"
+  ],
+  "expanded": [
+   "G2",
+   "G6",
+   "G7"
+  ],
+  "scalar_grid": [
+   0,
+   0.5,
+   1,
+   1.5,
+   2
+  ],
+  "freeze_adapter": true,
+  "shuffle_seed": 314159
+ },
+ "pilot_rule": {
+  "cs_min_gain": 0.005,
+  "noncs_max_degradation": 0.01,
+  "min_cs_utterances": 100,
+  "min_noncs_utterances": 60,
+  "min_gain_dialogues": 3,
+  "max_positive_gain_dialogue_share": 0.5,
+  "min_allocation_std": 0.001,
+  "require_pier_if_verified": true,
+  "inconclusive": "no_gate_expansion_continue_N3_and_fallback_N4"
+ },
+ "resources": {
+  "gpu_hours": 72,
+  "wall_hours": 120,
+  "stage_seconds": 129600,
+  "preflight_seconds": 1200,
+  "disk_gib": 150,
+  "free_disk_min_gib": 30,
+  "reserve_gpu_hours": 3,
+  "max_gpus": 1,
+  "peak_reserved_fraction": 0.92,
+  "retry_infra": 1,
+  "heartbeat_seconds": 15
+ },
+ "decode": {
+  "num_beams": 5,
+  "max_new_tokens": 200,
+  "do_sample": false,
+  "temperature": 0.0,
+  "condition_on_prev_tokens": false
+ },
+ "metrics": {
+  "normalization": "reft.text.one",
+  "chinese_word_segmentation": "UNAVAILABLE; MER uses individual Han characters, not Chinese word WER",
+  "pier": "UNAVAILABLE without verified POI annotations",
+  "primary": "genuine_cs_mer",
+  "bootstrap_clusters": "dialogue",
+  "bootstrap_draws": 2000,
+  "bootstrap_seed": 42
+ },
+ "confirmation": {
+  "seeds": [
+   42,
+   43,
+   44
+  ],
+  "priority_methods": [
+   "R",
+   "L",
+   "LS"
+  ],
+  "holdout_once": true,
+  "official_test_authorized": false,
+  "external_test_authorized": false
+ }
+}

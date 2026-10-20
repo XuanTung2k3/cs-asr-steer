@@ -150,6 +150,8 @@ def run(args):
             R=FollowupRuntime(budget)
             torch.manual_seed(42)
             ad=(PracticalWeightLoRA(R.b.model) if args.method=='practical_weight_lora' else EncoderAdapter(args.method)).to('cuda')
+            # Same auxiliary-head initialization across parameterizations; adapter construction consumes different RNG.
+            torch.manual_seed(42)
             head=LIDHead(1280).to('cuda') if args.objective=='O2' else None
             params=[p for p in ad.parameters() if p.requires_grad]+(list(head.parameters()) if head else [])
             opt=torch.optim.AdamW(params,lr=args.lr,betas=(.9,.99),eps=1e-6,weight_decay=0.)

@@ -90,6 +90,8 @@ class Runtime:
             d=torch.load(p,map_location='cpu',weights_only=True)
             if d['fingerprint']!=self.fp or d['audio_sha256']!=row['audio_full_sha256']: raise ValueError('Stale cache')
             return d
+        if any(p.requires_grad for p in self.b.model.parameters()):
+            raise ValueError('Frozen cache creation attempted with installed weight adaptation')
         inp=batch_model_inputs(self.b,[row['audio_path']])
         with torch.no_grad():
             enc=self.b.model.model.encoder(inp['input_features'],attention_mask=inp['attention_mask']).last_hidden_state
@@ -184,7 +186,9 @@ class Runtime:
     def evaluate(self,ad,dest,checkpoint=None,population=None,baseline=None):
         dest=Path(dest); dest.mkdir(parents=True,exist_ok=True); pop=self.V if population is None else population
         ident={'fingerprint':self.fp,'checkpoint_sha256':sha(checkpoint) if checkpoint else None,
-            'population_ids':identity([r['utterance_id'] for r in pop]),'decode':self.C['decode']}
+            'population_ids':identity([r['utterance_id'] for r in pop]),'decode':self.C['decode'],
+            'control':{'alpha':getattr(ad,'alpha',None),'shuffle_seed':getattr(ad,'shuffle_seed',None),
+                'remove_mode':getattr(getattr(ad,'gate',None),'remove_mode',None)}}
         ip=dest/'identity.json'
         if ip.exists() and read(ip)!=ident: raise ValueError('Evaluation identity changed')
         atomic(ip,ident); predictions={}

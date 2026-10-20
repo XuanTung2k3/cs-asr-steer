@@ -70,7 +70,7 @@ def run(root,commands=None,skip_binding=False,heartbeat=15):
         state.update(pid=os.getpid(),status='RUNNING'); state.pop('child_pid',None)
         def persist(): atomic(sp,state);status_md(root,state)
         persist(); event(root,'controller_started',pid=os.getpid())
-        cfg=plan['config']; cap=cfg['resources']['gpu_hours']*3600; wall=cfg['resources']['wall_hours']*3600
+        cfg=plan['config']; cap=(cfg['resources']['gpu_hours']-cfg['resources'].get('reserve_gpu_hours',0))*3600; wall=cfg['resources']['wall_hours']*3600
         remaining=[s for s in STAGES if state['stages'][s]['status']!='COMPLETE']
         for stage in STAGES:
             rec=state['stages'][stage]
@@ -109,6 +109,8 @@ def run(root,commands=None,skip_binding=False,heartbeat=15):
                     if stage!='REPORT': state['gpu_seconds']=base_seconds+elapsed
                     state['heartbeat']=now();persist()
                     if not skip_binding:
+                        try: check_bound(root)
+                        except (ValueError,FileNotFoundError) as e: reason='INVALID_BOUND_IDENTITY: '+str(e)
                         sample=subprocess.run(['nvidia-smi','-i',str(cfg.get('gpu_index',0)),
                             '--query-gpu=memory.used,memory.total,utilization.gpu','--format=csv,noheader,nounits'],
                             capture_output=True,text=True,timeout=10)
@@ -139,6 +141,8 @@ def run(root,commands=None,skip_binding=False,heartbeat=15):
                 # optimizer-latest files, heartbeat/state/logs. Later validation
                 # regenerates identical metrics under bound identities.
                 paths=[result]
+                paths += [p for p in root.glob(stage+'*.json') if not p.name.endswith('.partial.json')]
+                paths += list((root/'B0').glob('SEALED.json')) if (root/'B0').exists() else []
                 paths+=list((root/'runs').glob('*/selection.json')) if (root/'runs').exists() else []
                 paths+=list((root/'runs').glob('*/epoch*/adapter.pt')) if (root/'runs').exists() else []
                 paths+=list((root/'runs').glob('*/epoch*/validation/SEALED.json')) if (root/'runs').exists() else []
@@ -152,7 +156,7 @@ def run(root,commands=None,skip_binding=False,heartbeat=15):
                 # optimizer checkpoints; infra-only retry is not currently enabled.
             persist();event(root,'stage_finished',stage=stage,status=rec['status'])
             if reason:
-                state['status']='STOPPED_BY_USER' if reason=='STOPPED_BY_USER' else 'A5000_CAMPAIGN_RESOURCE_LIMIT_REACHED'
+                state['status']=('STOPPED_BY_USER' if reason=='STOPPED_BY_USER' else 'A5000_CAMPAIGN_RESOURCE_LIMIT_REACHED' if reason in ['STOPPED_BUDGET','STAGE_TIMEOUT','ARTIFACT_DISK_CAP'] else 'A5000_CAMPAIGN_BLOCKED_ENGINEERING')
                 persist();break
         else:
             done=all(v['status']=='COMPLETE' for v in state['stages'].values())

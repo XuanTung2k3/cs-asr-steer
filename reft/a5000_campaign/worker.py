@@ -122,7 +122,7 @@ class Runtime:
 
     def encoder(self,ad,d,grad=True):
         if isinstance(ad,EncoderWeightLoRA):
-            with ad.active():
+            with (contextlib.nullcontext() if ad.installed else ad.active()):
                 features=d['features'].to('cuda')
                 if grad: features.requires_grad_(True)
                 enc=self.b.model.model.encoder(features,attention_mask=d['mask'].to('cuda')).last_hidden_state
@@ -151,17 +151,28 @@ class Runtime:
     def decode(self,ad,row):
         d=self.cache(row)
         with torch.no_grad():
-            enc=self.encoder(ad,d,False)
+            torch.cuda.synchronize(); start=time.monotonic()
+            # Timed model inference includes frozen encoder + Auto-LID + gate/
+            # adapted encoder + beam search. Disk/audio preprocessing is logged
+            # separately by cache construction and excluded from this model RTF.
+            frozen=self.b.model.model.encoder(d['features'].cuda(),attention_mask=d['mask'].cuda()).last_hidden_state
+            sot=self.b.model.generation_config.decoder_start_token_id
+            z=self.b.model(encoder_outputs=BaseModelOutput(last_hidden_state=frozen),
+                decoder_input_ids=torch.tensor([[sot]],device='cuda'),use_cache=False).logits[0,-1].float()
+            ids=sorted(self.b.model.generation_config.lang_to_id.values())
+            if ids[int(z[ids].argmax())]!=d['prompt'][1]: raise ValueError('Frozen Auto-LID changed')
+            if isinstance(ad,EncoderWeightLoRA): enc=self.encoder(ad,d,False)
+            elif ad is None: enc=frozen
+            else: ad.lengths=[d['valid']]; enc=ad(frozen)
             kw=dict(input_features=d['features'].cuda(),attention_mask=d['mask'].cuda(),
                 encoder_outputs=BaseModelOutput(last_hidden_state=enc),language=d['language'],task='transcribe',
                 return_dict_in_generate=True,**self.C['decode'])
-            torch.cuda.synchronize(); start=time.monotonic()
             seq=self.b.model.generate(**kw).sequences[0].tolist(); torch.cuda.synchronize()
             if seq[:4]!=d['prompt']: raise ValueError('Decode prompt mismatch')
             p={'id':row['utterance_id'],'dialogue_id':row['dialogue_id'],'tokens':seq[4:],
                 'text':self.b.processor.batch_decode([seq],skip_special_tokens=True)[0].strip(),
                 'terminated':self.eos in seq[4:],'prompt':seq[:4],'audio_sha256':row['audio_full_sha256'],
-                'seconds':time.monotonic()-start}
+                'seconds':time.monotonic()-start,'latency_scope':'encoder+frozen_AutoLID+adaptation+beam_search; audio_IO_preprocessing_excluded'}
             if isinstance(ad,RepresentationAdapter) and ad.gate is not None:
                 diag=ad.gate.last
                 coeff=diag['coefficients'][diag['counts']>0].cpu().tolist()
@@ -259,11 +270,15 @@ class Runtime:
                 opt.zero_grad(set_to_none=True); loss_value=0.
                 for i in idx:
                     self.tick(arm=str(dest.name),method=method,epoch=epoch,update=steps)
-                    row=self.T[int(i)]; o,Y,d=self.forward(ad,row)
-                    groups=self.weights(row,d,Y,omega)
-                    loss=weighted_ce(o.logits,Y,groups,omega,denominator=den)
-                    if not bool(torch.isfinite(loss)): raise FloatingPointError('Nonfinite objective')
-                    loss.backward(); loss_value+=float(loss.detach()); del loss,o,Y
+                    row=self.T[int(i)]
+                    # Checkpoint recomputation must see EXACTLY the installed
+                    # encoder LoRA modules used by the original forward.
+                    with (ad.active() if isinstance(ad,EncoderWeightLoRA) else contextlib.nullcontext()):
+                        o,Y,d=self.forward(ad,row)
+                        groups=self.weights(row,d,Y,omega)
+                        loss=weighted_ce(o.logits,Y,groups,omega,denominator=den)
+                        if not bool(torch.isfinite(loss)): raise FloatingPointError('Nonfinite objective')
+                        loss.backward(); loss_value+=float(loss.detach()); del loss,o,Y
                 if any(p.grad is not None for p in self.backbone): raise ValueError('Backbone gradient leakage')
                 if any(p.grad is None or not bool(torch.isfinite(p.grad).all()) for p in params): raise FloatingPointError('Invalid gradients')
                 grad=torch.nn.utils.clip_grad_norm_(params,self.C['training']['clip_norm'])
@@ -358,6 +373,12 @@ def n4(R):
         report['gated_LRA']=R.train('L',R.C['gate']['lr'],R.C['gate']['epochs'],warm=N1['L']['checkpoint'],gate='G5',tag='gated_LRA',baseline=b)
         ad=restore(R,N2['G5']); ad.shuffle_seed=R.C['gate']['shuffle_seed']
         report['G9']=R.evaluate(ad,R.root/'N4'/'energy_shuffle',N2['G5']['checkpoint'],baseline=b)[0]
+        ad.shuffle_seed=None
+        for mode in ['largest','random']:
+            ad.gate.remove_mode=mode
+            report['block_removal_'+mode]=R.evaluate(ad,R.root/'N4'/('block_removal_'+mode),N2['G5']['checkpoint'],baseline=b)[0]
+        ad.gate=None
+        report['gate_off']=R.evaluate(ad,R.root/'N4'/'gate_off',N2['G5']['checkpoint'],baseline=b)[0]
         del ad
     # Fallback D1/D2 use bounded predeclared 64 training /64 V300 utterances,
     # never C500. Readouts are proxy diagnostics, not recognition causality.
@@ -428,6 +449,13 @@ def n5(R):
 
 
 def preflight(R):
+    audit={'policy':R.C['training']['weighted_policy'],'targets':0,'embedded_proxy':0,'unknown':0,'cs_utterances':0}
+    for row in R.T:
+        target_ids=R.b.processor.tokenizer.encode(target_text(row['transcript_raw']),add_special_tokens=False)+[R.eos]
+        g=token_groups(R.b.processor.tokenizer,target_ids)
+        audit['targets']+=len(g);audit['unknown']+=int((g==-100).sum())
+        if row['stratum']=='CS':audit['cs_utterances']+=1;audit['embedded_proxy']+=int((g==EN).sum())
+    atomic(R.root/'preflight'/'label_audit.json',audit)
     out={}; target=max(R.T,key=lambda r:r['target_tokens_incl_eos']); long=max(R.T,key=lambda r:r['duration_sec'])
     for method in ['R','L','LP','LS']:
         ad=R.factory(method); params=[p for p in ad.parameters() if p.requires_grad]
@@ -437,7 +465,8 @@ def preflight(R):
         start=time.monotonic(); times=[]; torch.cuda.reset_peak_memory_stats()
         for row in [R.T[0],target,long]:
             t=time.monotonic(); opt.zero_grad(set_to_none=True)
-            o,Y,d=R.forward(ad,row); loss=weighted_ce(o.logits,Y); loss.backward()
+            with (ad.active() if isinstance(ad,EncoderWeightLoRA) else contextlib.nullcontext()):
+                o,Y,d=R.forward(ad,row); loss=weighted_ce(o.logits,Y); loss.backward()
             if not bool(torch.isfinite(loss)) or any(p.grad is None or not bool(torch.isfinite(p.grad).all()) for p in params): raise FloatingPointError('Preflight gradients')
             if any(p.grad is not None for p in R.backbone): raise ValueError('Backbone trainability')
             opt.step(); torch.cuda.synchronize(); times.append(time.monotonic()-t); del o,loss

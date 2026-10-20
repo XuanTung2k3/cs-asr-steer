@@ -44,9 +44,18 @@ def preflight(root):
         if used: raise RuntimeError('GPU occupied; no interference: '+used)
         env={**os.environ,'CUDA_VISIBLE_DEVICES':gpu,'PYTHONPATH':str(BASE)+':'+str(BASE/'src')}
         log=root/'preflight.log'
-        with log.open('a') as f:
-            result=subprocess.run([sys.executable,'-m','reft.a5000_campaign.worker','preflight','--root',str(root)],
-                env=env,stdout=f,stderr=subprocess.STDOUT,timeout=plan['config']['resources']['preflight_seconds'])
+        started=time.monotonic()
+        try:
+            with log.open('a') as f:
+                result=subprocess.run([sys.executable,'-m','reft.a5000_campaign.worker','preflight','--root',str(root)],
+                    env=env,stdout=f,stderr=subprocess.STDOUT,timeout=plan['config']['resources']['preflight_seconds'])
+        finally:
+            ledger=root.parent/'admission_cost.json'
+            with lock(root.parent/'admission_cost.lock'):
+                cost=read(ledger) if ledger.exists() else {'seconds':0.,'attempts':[]}
+                elapsed=time.monotonic()-started;cost['seconds']+=elapsed
+                cost['attempts'].append({'root':str(root),'source':plan['source_commit'],'seconds':elapsed,'utc':now()})
+                atomic(ledger,cost)
         if result.returncode: raise RuntimeError('Actual GPU preflight failed; see '+str(log))
     report=read(root/'preflight/report.json')
     if not report['passed']: raise RuntimeError(report.get('blocker','Preflight rejected'))
@@ -61,7 +70,7 @@ def preflight(root):
     plan['admission_seal']=seal(root,[root/'preflight/report.json',test]);atomic(root/'frozen_plan.json',plan)
     atomic(root/'admitted.json',{'source_commit':plan['source_commit'],'config_sha256':plan['config_sha256'],
         'data_sha256':plan['data_sha256'],'plan_sha256':sha(root/'frozen_plan.json'),'passed':True,'utc':now()})
-    atomic(root/'status.json',{'campaign_id':root.name,'status':'ADMITTED','gpu_seconds':0,'stages':
+    atomic(root/'status.json',{'campaign_id':root.name,'status':'ADMITTED','gpu_seconds':read(root.parent/'admission_cost.json')['seconds'],'stages':
         {s:{'status':'PENDING','attempts':0} for s in ['N1','N2','N3','N4','N5','REPORT']}})
 
 
@@ -86,7 +95,21 @@ def launch(root,resume=False):
             +'fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)\n'
             +'u=subprocess.check_output(["nvidia-smi","-i",'+repr(str(gpu))+',"--query-compute-apps=pid","--format=csv,noheader"],text=True).strip()\n'
             +'assert not u,"GPU occupied: "+u\n'
-            +'sys.exit(subprocess.call([sys.executable,"-m","reft.a5000_campaign.controller","--root",'+repr(str(root))+']))\n')
+            +'import json,time\n'
+            +'code=1\n'
+            +'for attempt in range(2):\n'
+            +' code=subprocess.call([sys.executable,"-m","reft.a5000_campaign.controller","--root",'+repr(str(root))+'])\n'
+            +' if code==0: break\n'
+            +' state=json.load(open('+repr(str(root/'status.json'))+'))\n'
+            +' old=state.get("child_pid")\n'
+            +' deadline=time.monotonic()+'+repr(plan['config']['resources']['stage_seconds'])+'\n'
+            +' while old and time.monotonic()<deadline:\n'
+            +'  try: os.kill(old,0)\n'
+            +'  except ProcessLookupError: break\n'
+            +'  time.sleep(15)\n'
+            +' else:\n'
+            +'  if old: break\n'
+            +'sys.exit(code)\n')
         cmd='cd '+shlex.quote(str(BASE))+' && PYTHONPATH='+shlex.quote(str(BASE)+':'+str(BASE/'src'))+' '+shlex.quote(sys.executable)+' '+shlex.quote(str(wrapper))+' >> '+shlex.quote(str(root/'campaign.log'))+' 2>&1'
         subprocess.run(['tmux','new-session','-d','-s',session,cmd],check=True)
         atomic(root/'launch.json',{'utc':now(),'session':session,'backend':'tmux','reboot_recovery':'manual_resume_only','command':cmd})

@@ -2,7 +2,7 @@
 import math
 import numpy as np
 from reft.a5000.runner import score
-from reft.text import ratios
+from reft.text import ratios,one,loops
 
 
 def metrics(rows,predictions,baseline=None):
@@ -16,8 +16,18 @@ def metrics(rows,predictions,baseline=None):
     for stratum in ['EN_ONLY','ZH_ONLY']:
         rr=[r['counts'] for r in m['per_utterance'] if r['stratum']==stratum]
         m[stratum.lower()]=ratios(np.sum(rr,axis=0)) if rr else None
+    for group in ['en_only','zh_only']:
+        if m[group] is not None: m[group].pop('pier',None)
     noncs=[r['counts'] for r in m['per_utterance'] if r['stratum']!='CS']
     m['noncs_mer']=ratios(np.sum(noncs,axis=0))['mer'] if noncs else None
+    if baseline is not None:
+        old={r['utterance_id']:one(r['transcript_raw'],baseline[r['utterance_id']]['text'])['counts'][2] for r in rows}
+        m['wrong_to_correct_utterances']=sum(old[r['id']]>0 and r['counts'][2]==0 for r in m['per_utterance'])
+        m['correct_to_wrong_utterances']=sum(old[r['id']]==0 and r['counts'][2]>0 for r in m['per_utterance'])
+    for r in m['per_utterance']:
+        p=predictions[r['id']];r['loop']=loops(one(next(x['transcript_raw'] for x in rows if x['utterance_id']==r['id']),p['text'])['hyp'])>=15
+    clean=[r['counts'] for r in m['per_utterance'] if not r['loop']]
+    m['loop_excluded_mer_sensitivity_only']=ratios(np.sum(clean,axis=0))['mer'] if clean else None
     m['audio_seconds']=sum(r['duration_sec'] for r in rows)
     m['rtf']=m['seconds']/m['audio_seconds']
     return m

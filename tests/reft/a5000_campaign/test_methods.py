@@ -133,3 +133,25 @@ def test_weighted_denominator_matches_logical_batch():
     full=weighted_ce(z,y,g,3)
     micro=sum(weighted_ce(z[i:i+1],y[i:i+1],g[i:i+1],3,denominator=den) for i in range(2))
     assert torch.allclose(full,micro)
+
+@pytest.mark.parametrize('mode',['largest','random'])
+def test_block_removal_preserves_energy(mode):
+    g=Allocation('G5',3);g.remove_mode=mode
+    h=torch.randn(1,10,16);d=torch.randn_like(h);p=torch.randn(1,10,2)
+    y=g(h,d,p,[9]);assert torch.allclose(y[:,:9].square().sum(),d[:,:9].square().sum(),rtol=1e-6)
+    assert (g.last['coefficients'][g.last['counts']>0]==0).sum()==1
+
+
+def test_encoder_lora_checkpoint_recompute_preserves_installed_modules():
+    from torch.utils.checkpoint import checkpoint
+    m=tiny();ad=EncoderWeightLoRA(m,strong=True)
+    for layer in m.model.encoder.layers:
+        original=layer.forward
+        def wrapped(*args,_forward=original,**kwargs):
+            return checkpoint(_forward,*args,use_reentrant=False,**kwargs)
+        layer.forward=wrapped
+    x=torch.randn(1,4,20,requires_grad=True)
+    with ad.active():
+        out=m.model.encoder(x).last_hidden_state
+        out.square().sum().backward()
+    assert all(w.B.grad is not None and w.B.grad.norm()>0 for w in ad.wrapped.values())

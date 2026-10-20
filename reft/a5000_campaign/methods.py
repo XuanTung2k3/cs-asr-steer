@@ -66,7 +66,7 @@ class Allocation(nn.Module):
         nn.init.zeros_(self.net[-1].weight); nn.init.zeros_(self.net[-1].bias)
         self.register_buffer('mean', torch.zeros(16)); self.register_buffer('std', torch.ones(16))
         self.register_buffer('normalization_fitted', torch.tensor(False))
-        self.last = {}
+        self.last = {}; self.remove_mode=None
 
     def features(self, h, delta, projected, lengths):
         mask = frame_mask(h,lengths)
@@ -115,6 +115,22 @@ class Allocation(nn.Module):
                 k=int((n[i]>0).sum()); order=torch.randperm(k,generator=gen).to(q.device)
                 q[i,:k]=q[i,:k][order]
         a=energy_coefficients(q,energy,n,self.epsilon,self.alpha,self.kind in ['G4','G5','G6','G7','G9'])
+        if self.remove_mode is not None:
+            a=a.clone()
+            for i in range(len(a)):
+                valid=torch.nonzero(n[i]>0).flatten()
+                if len(valid)<2: continue
+                if self.remove_mode=='largest': j=valid[a[i,valid].argmax()]
+                elif self.remove_mode=='random':
+                    gen=torch.Generator().manual_seed(271828)
+                    j=valid[int(torch.randint(len(valid),(1,),generator=gen))]
+                else: raise ValueError('Unknown removal control')
+                a[i,j]=0
+            target=energy.sum(-1,keepdim=True)*self.alpha**2
+            actual=(a.double().square()*energy).sum(-1,keepdim=True)
+            if bool(((target>0)&(actual<=0)).any()): raise ValueError('No energy remains after block removal')
+            scale=torch.where(target>0,target,torch.ones_like(target))/torch.where(actual>0,actual,torch.ones_like(actual))
+            a=a*scale.sqrt().to(a.dtype)
         c=a.repeat_interleave(self.block_frames,1)[:,:h.shape[1]]*mask
         update=delta*c[...,None]
         self.last={'energy':energy.detach(),'allocated_energy':(a.double().square()*energy).detach(),

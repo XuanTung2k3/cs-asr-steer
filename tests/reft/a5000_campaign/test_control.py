@@ -93,3 +93,19 @@ def test_actual_process_termination_restart(tmp_path):
     assert read(tmp_path/'status.json')['status']=='STOPPED_BY_USER'
     done=run(tmp_path,fake(tmp_path),True,.02)
     assert done['stages']['N1']['status']=='COMPLETE'
+
+
+def test_cluster_bootstrap_pairing_and_leave_one_dialogue_out():
+    from reft.a5000_campaign.statistics import paired_clusters
+    a={'per_utterance':[{'id':str(i),'dialogue':str(i),'stratum':'CS','counts':[0,0,3,10]} for i in range(5)]}
+    b={'per_utterance':[{'id':str(i),'dialogue':str(i),'stratum':'CS','counts':[0,0,2,10]} for i in range(5)]}
+    r=paired_clusters(a,b,draws=50)
+    assert r['interval']==[.1,.1] and len(r['leave_one_dialogue_out'])==5
+    b['per_utterance'].pop()
+    with pytest.raises(ValueError):paired_clusters(a,b)
+
+
+def test_pareto_actual_points_only():
+    from reft.a5000_campaign.evaluation import pareto
+    p=[{'x':1,'y':2},{'x':2,'y':3},{'x':3,'y':1},{'x':None,'y':0}]
+    assert pareto(p,'x','y')==[p[0],p[2]]

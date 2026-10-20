@@ -68,7 +68,7 @@ Actual worst-envelope forward/backward and beam5 throughput must admit N1+N2 wit
 No automatic recipe-changing OOM retry. Controller/child interruption replays incomplete logical batch from
 optimizer/RNG/cursor checkpoint. Constant scheduler/no scaler are explicit. No random/dropout data transforms.
 Exclusive campaign and GPU locks; tmux survives disconnect. Reboot recovery is explicit resume, not automatic.
-No infrastructure auto-retry currently enabled (zero <=allowed one); owner resume may recover valid checkpoints.
+One controller-infrastructure restart is allowed; a surviving child must finish before replacement. Scientific/numerical failures do not change recipes or automatically retry. Explicit resume recovers compatible checkpoints.
 
 ## Claim limits
 
@@ -76,3 +76,5 @@ Internal Codex review, not external audit. Energy identity is not a novelty proo
 not full pipeline efficiency. No superiority conclusion from single-seed selection, engineering PASS, or probes.
 PIER/Chinese-word WER are unavailable absent frozen valid annotations/segmentation. All insertion/loop outputs
 remain in primary MER. Reporting must expose missing analyses/contrast/resource truncations.
+
+E-ReFT and same-site affine LRA belong to closely related low-rank affine function families; no novelty or ReFT-specific superiority follows from their formulas. Internal code-path inspection checked post-LN placement, CE-only path, audio-only gate inputs, valid-frame energy, warm identity, frozen backbone, matched continuation and C500 firewall. This is an internal Codex self-review, not an external audit.

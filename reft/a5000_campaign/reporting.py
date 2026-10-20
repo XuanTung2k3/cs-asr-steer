@@ -48,6 +48,26 @@ def report(root):
         table=['\\begin{tabular}{llrr}','Method & Objective & CS-MER & MER \\\\','\\hline']
         table += [f"{p['method'].replace('_',' ')} & {p['objective']} & {p['genuine_cs_mer']:.4f} & {p['mer']:.4f} \\\\" for p in points]
         table+=['\\end{tabular}'];(dest/'development_table.tex').write_text('\n'.join(table)+'\n')
+    # Fixed primary holdout contrasts; Bonferroni family-wise percentile
+    # intervals. No significance language is inferred from seed42 selection.
+    heldpath=root/'confirmation/results.json'
+    if heldpath.exists():
+        from .statistics import paired_clusters
+        import numpy as np
+        held=read(heldpath); contrasts={}; pairs=[('B0','R'),('L','R'),('LS','R')]
+        for a,b in pairs:
+            if a in held and b in held:
+                contrasts[a+'_minus_'+b]=paired_clusters(held[a],held[b],alpha=.05/len(pairs))
+        atomic(dest/'paired_dialogue_intervals.json',contrasts)
+        groups={}
+        for name,m in held.items():
+            base=name.split('_seed')[0]
+            if base in ['R','L','LS','G3','G4','G5','G8']:
+                groups.setdefault(base,[]).append({'name':name,'genuine_cs_mer':m['genuine_cs_mer'],'mer':m['mer']})
+        summary={k:{'n':len(v),'mean_cs_mer':float(np.mean([x['genuine_cs_mer'] for x in v])),
+            'seed_sd':float(np.std([x['genuine_cs_mer'] for x in v],ddof=1)) if len(v)>1 else None,
+            'per_seed':v,'confirmation':len(v)==3} for k,v in groups.items()}
+        atomic(dest/'seed_summary.json',summary)
     decision=read(root/'N2_decision.json') if (root/'N2_decision.json').exists() else {'decision':'NOT_MEASURED'}
     confirmed=(root/'confirmation/results.json').exists()
     status=read(root/'status.json') if (root/'status.json').exists() else {}

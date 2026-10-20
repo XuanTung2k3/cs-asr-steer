@@ -52,3 +52,13 @@ At most one GPU and six aggregate resident GPU-hours, including failed/preflight
 Unknown historical details: exact encoder source/init mechanics, padded-frame convention, optimizer/reduction,
 GoldKL recipe, role membership and approvals. We reuse verified published orthogonal parameterization and
 CE/text/scoring primitives, and state all new choices above rather than implying historical equivalence.
+
+## Conditional post-selection confirmation (declared before C150 model evaluation)
+
+If both primary arms finish within the resource envelope with at least 1800 seconds of GPU budget remaining,
+run one paired confirmation event: frozen B0 plus each method's ALREADY selected LR/checkpoint on C150.
+No retraining, checkpoint/LR changes or C150 model selection. A separate immutable confirmation freeze binds
+selection SHA, both checkpoint hashes, source commit and role manifest before any C150 model forward.
+This is an original-TRAIN development holdout, not an official/external test. After this event C150 is exposed
+for these hypotheses and cannot be relabeled fresh for later objective studies. The primary campaign itself
+retains its C150 firewall. Conditional confirmation uses a separate guarded reader and shares the six-hour cap.

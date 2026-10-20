@@ -36,3 +36,17 @@ B0 seal retained across the actual graceful stop/resume exercise. PID initially3
 control status reports the live process rather than assuming those PIDs remain active.
 Follow-up code is separated from the frozen primary source; documentation/follow-up commits do not amend the
 primary methods, recipe, cache, checkpoint selection or scorer. No objective GPU sweep was started.
+
+Read-only result aggregation, paired descriptive dialogue bootstrap, versioned input audits and explicit
+post-selection confirmation tooling are in reft/a5000_followup/{summarize,audit_inputs,selfcheck,confirm}.py.
+Confirmation refuses unfinished primary arms or changed selected checkpoint hashes; source/selection is
+frozen before opening the C150 model-evaluation reader. No duplicate model or second GPU is required.
+Its separate process/status/exit files live under confirmation/; the primary RUN.lock also guards it.
+Do not start it until the primary tmux session exits and the selected GPU is free.
+
+The full-primary suite ran once at source61a380f: 1005 passed, 3 skips. Both real-tokenizer skipped tests then
+passed at the verified portable model path. Follow-up suite: 22 passed, including nine objective paths,
+exact optimizer-resume tests, D1/D2 checks and confirmation access/hash gates. Effective unique coverage:
+1029 passed, one private historical-allocation check skipped/blocked, zero outstanding failures.
+A first resume-unit fixture used unmatched GLOBAL Householder RNG states; the fixture was corrected to
+match the already-seeded primary runner and both resume tests passed. No primary scientific code change.

@@ -171,3 +171,6 @@ def main():
         sys.exit(75)
     except Exception as e:
         atomic(work/'result.json',{'status':'FAILED','reason':type(e).__name__,'error':str(e),'allocated_seconds':time.monotonic()-started,'finished':now()});raise
+
+
+if __name__=='__main__':main()

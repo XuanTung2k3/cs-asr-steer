@@ -122,7 +122,9 @@ def admission(root):
         with (root/'preflight.log').open('a') as f:
             result=subprocess.run([sys.executable,'-m','reft.a5000_lra_sprint.jobs','--root',str(root),'--arm','PREFLIGHT'],
                 cwd=BASE,env={**env,'CUDA_VISIBLE_DEVICES':'0'},stdout=f,stderr=subprocess.STDOUT,timeout=600)
-    if result.returncode or not read(dest/'result.json')['result']['passed']:raise RuntimeError('GPU admission failed; see preflight.log')
+    output=dest/'result.json'
+    if result.returncode or not output.exists() or read(output).get('status')!='COMPLETE' or not read(output)['result']['passed']:
+        raise RuntimeError('GPU admission failed or produced no completed evidence; see preflight.log')
     atomic(root/'admitted.json',{'passed':True,'utc':now(),'frozen_plan_sha256':sha(root/'frozen_plan.json'),
         'evidence':seal(root,[test,dest/'admission_report.json']),'fleet':fleet,'gpu0_admission_resident_seconds':time.monotonic()-start,
         'sprint_execution_window_has_not_started':True})

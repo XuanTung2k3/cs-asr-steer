@@ -133,3 +133,9 @@ def test_report_exports_real_points_and_keeps_loop(tmp_path,monkeypatch):
     assert '|R_CE|' in (tmp_path/'reports/combined.md').read_text()
     assert '1/1' in (tmp_path/'reports/combined.md').read_text()
     assert read(tmp_path/'reports/accounting.json')['sprint_controller_allocated_gpu_hours']==.5
+
+
+def test_worker_module_is_executable():
+    import subprocess
+    proc=subprocess.run([sys.executable,'-m','reft.a5000_lra_sprint.jobs','--help'],capture_output=True,text=True,check=True)
+    assert '--arm' in proc.stdout and 'PREFLIGHT' in proc.stdout

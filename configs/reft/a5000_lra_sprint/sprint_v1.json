@@ -1,19 +1,105 @@
 {
- "schema":"a5000_lra_gate_exploratory_sprint_v1",
- "campaign_id":"lra-gate-20261021-v1",
- "output_base":"/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/lra_gate_sprint_v1",
- "parent_root":"/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v2/core7h-20261020-v2",
- "parent_source":"2ca3c2da3bbc7916947c8fb265131c33dd052f98",
- "parent_plan_sha256":"c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
- "data_sha256":"fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
- "warm_checkpoint_sha256":"c531a22ab1a0fd00464eb4b39c9e2378078c4fc7fe99d046506efd90b67e742d",
- "gpu_assignment":{"L0":0,"L1":1,"L2":2,"L3":3,"L4":4,"AUDIT":5},
- "training":{"seed":42,"epochs":1,"effective_batch":16,"microbatch":1,"updates":125,"examples":2000,"lr":0.0005,"optimizer":"AdamW","betas":[0.9,0.99],"eps":0.000001,"weight_decay":0,"clip_norm":1,"scheduler":"constant","objective":"pure_transcription_CE","reduction":"sum_NLL_over_logical_batch_content_and_EOS_targets","checkpoint_rule":"final_epoch_only_no_trial_search","fresh_optimizer":true},
- "gate":{"block_seconds":1,"block_frames":50,"epsilon":0.25,"alpha":1,"feature_dimension":16,"hidden_width":16,"parameters":289,"freeze_base":true,"rank_rtol":0.000001,"rank_atol":0.0000000001,"normalization":"T2000_only","basis":"orthonormal_effective_affine_update_column_space"},
- "alpha_grid":[0,0.5,1,1.5,2],
- "decision":{"min_absolute_cs_gain":0.005,"max_noncs_mer_degradation":0.01,"require_no_additional_loop_or_nontermination":true,"minimum_allocation_std":0.001,"controls":["L0","L1","L2","L3"],"negative_action":"stop_gate_architecture_expansion"},
- "timing":{"preliminary_seconds":1800,"soft_stop_seconds":3300,"final_seconds":3540,"hard_window_seconds":3600,"resource_wait_seconds":120,"heartbeat_seconds":10},
- "restrictions":{"allowed_roles":["A5000_T2000","A5000_V300"],"C500":false,"official_test":false,"resume_N4_N5":false,"previous_N2_NO_GO_unchanged":true},
- "runtime_estimate":{"source":"archived G3/G4/G5 17-19min; previous scalar5grid61min; reuse alpha0/1 leaves3new V300 decodes","training_arms_minutes":[15,30],"scalar_minutes":[30,45],"admission_measurement_required":true},
- "cpu_python":"/home/ubuntu/tung.nx/reft-a5000/bin/python"
+ "schema": "a5000_lra_gate_exploratory_sprint_v1",
+ "campaign_id": "lra-gate-20261021-v2",
+ "output_base": "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/lra_gate_sprint_v1",
+ "parent_root": "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v2/core7h-20261020-v2",
+ "parent_source": "2ca3c2da3bbc7916947c8fb265131c33dd052f98",
+ "parent_plan_sha256": "c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
+ "data_sha256": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+ "warm_checkpoint_sha256": "c531a22ab1a0fd00464eb4b39c9e2378078c4fc7fe99d046506efd90b67e742d",
+ "gpu_assignment": {
+  "L0": 0,
+  "L1": 1,
+  "L2": 2,
+  "L3": 3,
+  "L4": 4,
+  "AUDIT": 5
+ },
+ "training": {
+  "seed": 42,
+  "epochs": 1,
+  "effective_batch": 16,
+  "microbatch": 1,
+  "updates": 125,
+  "examples": 2000,
+  "lr": 0.0005,
+  "optimizer": "AdamW",
+  "betas": [
+   0.9,
+   0.99
+  ],
+  "eps": 1e-06,
+  "weight_decay": 0,
+  "clip_norm": 1,
+  "scheduler": "constant",
+  "objective": "pure_transcription_CE",
+  "reduction": "sum_NLL_over_logical_batch_content_and_EOS_targets",
+  "checkpoint_rule": "final_epoch_only_no_trial_search",
+  "fresh_optimizer": true
+ },
+ "gate": {
+  "block_seconds": 1,
+  "block_frames": 50,
+  "epsilon": 0.25,
+  "alpha": 1,
+  "feature_dimension": 16,
+  "hidden_width": 16,
+  "parameters": 289,
+  "freeze_base": true,
+  "rank_rtol": 1e-06,
+  "rank_atol": 1e-10,
+  "normalization": "T2000_only",
+  "basis": "orthonormal_effective_affine_update_column_space"
+ },
+ "alpha_grid": [
+  0,
+  0.5,
+  1,
+  1.5,
+  2
+ ],
+ "decision": {
+  "min_absolute_cs_gain": 0.005,
+  "max_noncs_mer_degradation": 0.01,
+  "require_no_additional_loop_or_nontermination": true,
+  "minimum_allocation_std": 0.001,
+  "controls": [
+   "L0",
+   "L1",
+   "L2",
+   "L3"
+  ],
+  "negative_action": "stop_gate_architecture_expansion"
+ },
+ "timing": {
+  "preliminary_seconds": 1800,
+  "soft_stop_seconds": 3300,
+  "final_seconds": 3540,
+  "hard_window_seconds": 3600,
+  "resource_wait_seconds": 120,
+  "heartbeat_seconds": 10
+ },
+ "restrictions": {
+  "allowed_roles": [
+   "A5000_T2000",
+   "A5000_V300"
+  ],
+  "C500": false,
+  "official_test": false,
+  "resume_N4_N5": false,
+  "previous_N2_NO_GO_unchanged": true
+ },
+ "runtime_estimate": {
+  "source": "archived G3/G4/G5 17-19min; previous scalar5grid61min; reuse alpha0/1 leaves3new V300 decodes",
+  "training_arms_minutes": [
+   15,
+   30
+  ],
+  "scalar_minutes": [
+   30,
+   45
+  ],
+  "admission_measurement_required": true
+ },
+ "cpu_python": "/home/ubuntu/tung.nx/reft-a5000/bin/python"
 }

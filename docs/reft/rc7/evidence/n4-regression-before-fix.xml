@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="9" skipped="1" tests="12" time="0.907" timestamp="2026-10-26T11:33:43.604481+00:00" hostname="50c00b4c6d3a"><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_root_cause_bf16_tensor_has_no_numpy_dtype" time="0.043" /><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_probe_array_casts_bf16_exactly_and_preserves_shape" time="0.002"><failure message="ImportError: cannot import name 'probe_array' from 'reft.a5000.diagnostics' (/home/ubuntu/tung.nx/rc7-0-work/repo/reft/a5000/diagnostics.py)">def test_probe_array_casts_bf16_exactly_and_preserves_shape():
+        x = torch.randn(5, 3).to(torch.bfloat16)
+&gt;       a = probe_array(x)
+
+tests/reft/a5000/test_diagnostics_bf16.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = tensor([[-1.0703, -0.2793,  0.2891],
+        [ 0.0175,  1.0078,  1.3281],
+        [-0.1787, -0.6445, -1.0547],
+        [-0.0713, -0.6094,  0.3184],
+        [ 0.6094, -0.2559, -0.6133]], dtype=torch.bfloat16)
+
+    def probe_array(x):
+&gt;       from reft.a5000.diagnostics import probe_array as f  # RC7-0C helper; absent before the repair
+E       ImportError: cannot import name 'probe_array' from 'reft.a5000.diagnostics' (/home/ubuntu/tung.nx/rc7-0-work/repo/reft/a5000/diagnostics.py)
+
+tests/reft/a5000/test_diagnostics_bf16.py:10: ImportError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_probe_array_leaves_integer_tensors_untouched" time="0.000"><failure message="ImportError: cannot import name 'probe_array' from 'reft.a5000.diagnostics' (/home/ubuntu/tung.nx/rc7-0-work/repo/reft/a5000/diagnostics.py)">def test_probe_array_leaves_integer_tensors_untouched():
+        y = torch.tensor([0, 1, -100])
+&gt;       assert probe_array(y).dtype == np.int64
+
+tests/reft/a5000/test_diagnostics_bf16.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+x = tensor([   0,    1, -100])
+
+    def probe_array(x):
+&gt;       from reft.a5000.diagnostics import probe_array as f  # RC7-0C helper; absent before the repair
+E       ImportError: cannot import name 'probe_array' from 'reft.a5000.diagnostics' (/home/ubuntu/tung.nx/rc7-0-work/repo/reft/a5000/diagnostics.py)
+
+tests/reft/a5000/test_diagnostics_bf16.py:10: ImportError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_fit_probe_bf16_matches_its_exact_fp32_cast" time="0.729"><failure message="TypeError: Got unsupported ScalarType BFloat16">def test_fit_probe_bf16_matches_its_exact_fp32_cast():
+        x, y = _states()
+        xb = x.to(torch.bfloat16)
+&gt;       a, b = fit_probe(xb, y), fit_probe(xb.float(), y)
+
+tests/reft/a5000/test_diagnostics_bf16.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[-1.1250e+00, -1.1562e+00, -2.5000e-01, -4.3359e-01,  8.4766e-01,
+          6.9141e-01, -3.1641e-01, -2.1094e+...750e-01,  1.0156e+00,  2.2754e-01,  1.3281e+00,
+          2.0469e+00,  1.3203e+00,  1.2656e+00]], dtype=torch.bfloat16)
+labels = tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_controlled_readout_bf16_identical_to_fp32" time="0.001"><failure message="TypeError: Got unsupported ScalarType BFloat16">def test_controlled_readout_bf16_identical_to_fp32():
+        tb, ty = _states(seed=1); ta = tb + 0.1; tp = torch.zeros_like(tb) + 0.01 * torch.randn(tb.shape)
+        hb, hy = _states(seed=2); ha = hb + 0.1; hp = torch.zeros_like(hb) + 0.01 * torch.randn(hb.shape)
+        args = lambda f: (f(tb), f(ta), ty, f(hb), f(ha), hy, f(tp), f(hp), ['d1'], ['d2'])
+&gt;       bf = controlled_readout(*args(lambda t: t.to(torch.bfloat16)))
+
+tests/reft/a5000/test_diagnostics_bf16.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+reft/a5000/diagnostics.py:38: in controlled_readout
+    base = fit_probe(train_base, train_y)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[-1.5234e+00, -7.5000e-01, -6.5234e-01, -1.6094e+00, -1.0010e-01,
+         -6.0938e-01, -9.8047e-01, -1.6094e+...797e+00,  1.3125e+00,  9.2188e-01,  2.1875e+00,
+          1.9219e+00,  4.7852e-01,  2.4844e+00]], dtype=torch.bfloat16)
+labels = tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_masked_labels_are_excluded" time="0.001"><failure message="TypeError: Got unsupported ScalarType BFloat16">def test_masked_labels_are_excluded():
+        x, y = _states(n=40)
+        y2 = y.clone(); y2[::5] = -100
+&gt;       p = fit_probe(x.to(torch.bfloat16), y2)
+
+tests/reft/a5000/test_diagnostics_bf16.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[-1.1250e+00, -1.1562e+00, -2.5000e-01, -4.3359e-01,  8.4766e-01,
+          6.9141e-01, -3.1641e-01, -2.1094e+...766e+00,  2.6953e-01,  1.2988e-01,  3.0469e+00,
+          1.4688e+00,  1.0781e+00,  1.2422e+00]], dtype=torch.bfloat16)
+labels = tensor([-100,    1,    0,    1,    0, -100,    0,    1,    0,    1, -100,    1,
+           0,    1,    0, -100,    0, ...    1,
+           0, -100,    0,    1,    0,    1, -100,    1,    0,    1,    0, -100,
+           0,    1,    0,    1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_zero_energy_states_are_finite_and_scoreable" time="0.000"><failure message="TypeError: Got unsupported ScalarType BFloat16">def test_zero_energy_states_are_finite_and_scoreable():
+        x = torch.zeros(20, 4, dtype=torch.bfloat16); y = torch.arange(20) % 2
+&gt;       p = fit_probe(x, y)
+
+tests/reft/a5000/test_diagnostics_bf16.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0... [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [0., 0., 0., 0.]], dtype=torch.bfloat16)
+labels = tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_nonfinite_states_raise_valueerror_for_blocked_path[nan]" time="0.001"><failure message="TypeError: Got unsupported ScalarType BFloat16">bad = nan
+
+    @pytest.mark.parametrize('bad', [float('nan'), float('inf')])
+    def test_nonfinite_states_raise_valueerror_for_blocked_path(bad):
+        x, y = _states(); x[3, 1] = bad
+        with pytest.raises(ValueError, match='non-finite'):
+&gt;           fit_probe(x.to(torch.bfloat16), y)
+
+tests/reft/a5000/test_diagnostics_bf16.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[-1.1250e+00, -1.1562e+00, -2.5000e-01, -4.3359e-01,  8.4766e-01,
+          6.9141e-01, -3.1641e-01, -2.1094e+...750e-01,  1.0156e+00,  2.2754e-01,  1.3281e+00,
+          2.0469e+00,  1.3203e+00,  1.2656e+00]], dtype=torch.bfloat16)
+labels = tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_nonfinite_states_raise_valueerror_for_blocked_path[inf]" time="0.001"><failure message="TypeError: Got unsupported ScalarType BFloat16">bad = inf
+
+    @pytest.mark.parametrize('bad', [float('nan'), float('inf')])
+    def test_nonfinite_states_raise_valueerror_for_blocked_path(bad):
+        x, y = _states(); x[3, 1] = bad
+        with pytest.raises(ValueError, match='non-finite'):
+&gt;           fit_probe(x.to(torch.bfloat16), y)
+
+tests/reft/a5000/test_diagnostics_bf16.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([[-1.1250e+00, -1.1562e+00, -2.5000e-01, -4.3359e-01,  8.4766e-01,
+          6.9141e-01, -3.1641e-01, -2.1094e+...750e-01,  1.0156e+00,  2.2754e-01,  1.3281e+00,
+          2.0469e+00,  1.3203e+00,  1.2656e+00]], dtype=torch.bfloat16)
+labels = tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_empty_or_single_group_still_raises_valueerror" time="0.000"><failure message="TypeError: Got unsupported ScalarType BFloat16">def test_empty_or_single_group_still_raises_valueerror():
+        with pytest.raises(ValueError, match='both groups'):
+&gt;           fit_probe(torch.zeros(0, 3, dtype=torch.bfloat16), torch.zeros(0, dtype=torch.long))
+
+tests/reft/a5000/test_diagnostics_bf16.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+states = tensor([], size=(0, 3), dtype=torch.bfloat16)
+labels = tensor([], dtype=torch.int64), seed = 42
+
+    def fit_probe(states, labels, seed=42):
+        from sklearn.linear_model import LogisticRegression
+&gt;       x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+E       TypeError: Got unsupported ScalarType BFloat16
+
+reft/a5000/diagnostics.py:23: TypeError</failure></testcase><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_dialogue_overlap_guard_unchanged" time="0.000" /><testcase classname="tests.reft.a5000.test_diagnostics_bf16" name="test_cuda_bf16_states" time="0.000"><skipped type="pytest.skip" message="CUDA not visible">/home/ubuntu/tung.nx/rc7-0-work/repo/tests/reft/a5000/test_diagnostics_bf16.py:88: CUDA not visible</skipped></testcase></testsuite></testsuites>

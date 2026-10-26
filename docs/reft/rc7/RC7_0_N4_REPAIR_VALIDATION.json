@@ -1,0 +1,120 @@
+{
+ "schema": "rc7_0_n4_repair_validation_v1",
+ "decision": "N4_REPAIRED_DIAGNOSTICS_COMPLETE",
+ "archived": {
+  "campaign": "core7h-20261020-v2",
+  "source_commit": "2ca3c2da3bbc7916947c8fb265131c33dd052f98",
+  "plan_sha256": "c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
+  "config_sha256": "09ca42e57fe8667862ae2a6fa67a5582a0b57f5f643580a709c2bdbefc161481",
+  "data_sha256": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+  "failure": "TypeError: Got unsupported ScalarType BFloat16 at reft/a5000/diagnostics.py:23",
+  "failure_record": "jobs/N4/result.json (unchanged)"
+ },
+ "repair": {
+  "commit": "500eaedcfafabbcf6b1fbcfa88cb84072b748381",
+  "files": [
+   "reft/a5000/diagnostics.py"
+  ],
+  "diagnostics_py_sha256": "11eddb4b40f7bbefa357882fcd1dde246cd5315355821c7140914c3de16485e7",
+  "continuation_runner": "reft/rc7/n4_continuation.py",
+  "continuation_runner_sha256": "f954f5552d56b77913747592218bfbed6688b9c7d1a81ad8ebc5a98b5d630385"
+ },
+ "tests": {
+  "before_fix": {
+   "tests": 12,
+   "failures": 9,
+   "skipped": 1,
+   "junit_sha256": "4e40133a2b86876bdf46e03fd89d555c29b05760ab6b0be74d41c59789293bde"
+  },
+  "after_fix_cpu_suite": {
+   "commit": "500eaed",
+   "tests": 133,
+   "failures": 0,
+   "errors": 0,
+   "skipped": 1,
+   "junit_sha256": "790bf2927b4f903f30e87faf06b3100e404feacb0b59748284978c2f44ac3208"
+  },
+  "after_fix_gpu_visible": {
+   "tests": 12,
+   "failures": 0,
+   "skipped": 0,
+   "junit_sha256": "e644e4ecbbb74a03935636d1a7578c85ebe2f337e2e7f87e342d7abba59c0ec8"
+  },
+  "baseline_b18dd0c": {
+   "tests": 115,
+   "failures": 0,
+   "skipped": 0,
+   "junit_sha256": "95f93b56145a267f4edb46a113d88917675ad438af33c9c1ef08244a53d169e2"
+  }
+ },
+ "continuation": {
+  "executing_source_commit": "500eaedcfafabbcf6b1fbcfa88cb84072b748381",
+  "executing_source_dirty": false,
+  "started_utc": "2026-10-26T11:37:39Z",
+  "finished_utc": "2026-10-26T11:38:58Z",
+  "resident_seconds": 79.73630215693265,
+  "allocated_gpu_hours": 0.02214897282137018,
+  "peak_allocated_bytes": 3258399232,
+  "peak_reserved_bytes": 3619684352,
+  "backbone_unchanged": true,
+  "archived_root_unchanged": true,
+  "overrides": {
+   "config.campaign_root": [
+    "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v2/core7h-20261020-v2",
+    "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/rc7_0/n4-continuation-20261026-v1"
+   ],
+   "config.resources.gpu_hours": [
+    72,
+    1.0
+   ],
+   "config.resources.reserve_gpu_hours": [
+    3,
+    0
+   ],
+   "config.resources.wall_hours": [
+    120,
+    2.0
+   ],
+   "created_epoch": [
+    1792513440.5912724,
+    1793014648.4778137
+   ]
+  },
+  "copied_inputs_sha256": {
+   "N1_selection.json": "3d41732893e98177e48c960929ef13398c5751aa12e58dac5bc5297682443e80",
+   "N2_decision.json": "7ba5a8eed62cf036425c3da1715e48432ae3aa19ff4888b7628e8371af62f1b3",
+   "N2_selection.json": "37b8bc5541211bfb7af4479bf1d5b6a11e917f799a0e564b6f99a0688116cd1a",
+   "data_manifest.json": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08"
+  },
+  "B0_sealed_sha256": "b975769796391fbd8116adc312ca48422dfde030581cd5c3890ecfc4354b6acf",
+  "N4_analysis_sha256": "843995bfcf93f65f47ffb190b51d35b66b56c45b9a2d6b6f043c892ec1842a99",
+  "id": "n4-continuation-20261026-v1",
+  "record_sha256": "551a4f7f8fc9bfa8281ffd8941f517569db2f2a8c74668a8bac0f1a6c6b641e3",
+  "log_sha256": "c1bae7d954f9767ec662386a7cb4a19eb6728da4db4587a99e984fa89b395223",
+  "transfer": "git bundle b18dd0c..500eaed sha256 ef89a163c2e820b91717396ee35033df8e518aaba8e65e44a3772b24b82506e7"
+ },
+ "outputs": {
+  "D2": {
+   "base_heldout": 0.9819367787255394,
+   "claim": "held-out script readout; not causality",
+   "fixed_probe_on_adapted": 0.9869543401906673,
+   "prefix_only": 0.8660311088810838,
+   "refitted_probe_on_adapted": 0.9929754139488208
+  },
+  "D3": {
+   "reason": "No frozen matched-random causal intervention recipe admitted in this version",
+   "status": "BLOCKED"
+  },
+  "D1_panel_sizes": {
+   "held": 64,
+   "train": 64
+  }
+ },
+ "scope_checks": {
+  "training_launched": false,
+  "C500_accessed": false,
+  "official_test_accessed": false,
+  "historical_artifacts_modified": false,
+  "N5_status": "BLOCKED (requires authorization)"
+ }
+}

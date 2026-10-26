@@ -1,0 +1,171 @@
+{
+ "B0_sealed_sha256": "b975769796391fbd8116adc312ca48422dfde030581cd5c3890ecfc4354b6acf",
+ "N4_analysis_sha256": "843995bfcf93f65f47ffb190b51d35b66b56c45b9a2d6b6f043c892ec1842a99",
+ "allocated_gpu_hours": 0.02214897282137018,
+ "archived_campaign": "core7h-20261020-v2",
+ "archived_config_sha256": "09ca42e57fe8667862ae2a6fa67a5582a0b57f5f643580a709c2bdbefc161481",
+ "archived_fingerprint_after": {
+  "B0/SEALED.json": [
+   "b975769796391fbd8116adc312ca48422dfde030581cd5c3890ecfc4354b6acf",
+   1792514505659674351
+  ],
+  "B0/identity.json": [
+   "f954a3e57eb0854f40524ace6cb1e51b73125bd8a36e33cb26a4e465fd485597",
+   1792527411791680609
+  ],
+  "B0/metrics.json": [
+   "f64dd51aae573aaa8ea8d55c09fabe1635b03a79b71f3ab2f878554869006189",
+   1792514505643674351
+  ],
+  "B0/predictions_count": 300,
+  "N1_selection.json": [
+   "3d41732893e98177e48c960929ef13398c5751aa12e58dac5bc5297682443e80",
+   1792520685383677348
+  ],
+  "N2_decision.json": [
+   "7ba5a8eed62cf036425c3da1715e48432ae3aa19ff4888b7628e8371af62f1b3",
+   1792527342247680576
+  ],
+  "N2_selection.json": [
+   "37b8bc5541211bfb7af4479bf1d5b6a11e917f799a0e564b6f99a0688116cd1a",
+   1792527342239680576
+  ],
+  "N4_analysis.json": false,
+  "data_manifest.json": [
+   "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+   1792513437835673834
+  ],
+  "environment.json": [
+   "b82cd8cf471d2bcac23ec6e6cd3f43aab9288a258fc8387352c50f3571da466d",
+   1792527411775680609
+  ],
+  "frozen_plan.json": [
+   "c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
+   1792513518047673873
+  ],
+  "jobs/N4/result.json": [
+   "d387ad3a5f9d656a9769dc5d3a52a08799c2f46a3f24085ef2d92a384e34dee0",
+   1792527434531680620
+  ],
+  "logs/N4.log": [
+   "6965dc1966bf1eca189413702fc23bce2e7c7600ca6882ca98e17ddce53a9a54",
+   1792527434539680620
+  ],
+  "status.json": [
+   "8428e5e190b24a62eda1ec63f6a3266836e6909f919e1a08de2be3aab22c5d8a",
+   1792527438383680622
+  ],
+  "worker_heartbeat.json": [
+   "1ff54f9af6f4814554d49e3c5654e9311889df7eae09fe5f9e7b5988c76507ea",
+   1792527434527680620
+  ],
+  "worker_usage.json": [
+   "c5f9d06e5bf3e4e5945cc2577bc648b624e174940896f9179d71a9164d154a40",
+   1792527434523680620
+  ]
+ },
+ "archived_fingerprint_before": {
+  "B0/SEALED.json": [
+   "b975769796391fbd8116adc312ca48422dfde030581cd5c3890ecfc4354b6acf",
+   1792514505659674351
+  ],
+  "B0/identity.json": [
+   "f954a3e57eb0854f40524ace6cb1e51b73125bd8a36e33cb26a4e465fd485597",
+   1792527411791680609
+  ],
+  "B0/metrics.json": [
+   "f64dd51aae573aaa8ea8d55c09fabe1635b03a79b71f3ab2f878554869006189",
+   1792514505643674351
+  ],
+  "B0/predictions_count": 300,
+  "N1_selection.json": [
+   "3d41732893e98177e48c960929ef13398c5751aa12e58dac5bc5297682443e80",
+   1792520685383677348
+  ],
+  "N2_decision.json": [
+   "7ba5a8eed62cf036425c3da1715e48432ae3aa19ff4888b7628e8371af62f1b3",
+   1792527342247680576
+  ],
+  "N2_selection.json": [
+   "37b8bc5541211bfb7af4479bf1d5b6a11e917f799a0e564b6f99a0688116cd1a",
+   1792527342239680576
+  ],
+  "N4_analysis.json": false,
+  "data_manifest.json": [
+   "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+   1792513437835673834
+  ],
+  "environment.json": [
+   "b82cd8cf471d2bcac23ec6e6cd3f43aab9288a258fc8387352c50f3571da466d",
+   1792527411775680609
+  ],
+  "frozen_plan.json": [
+   "c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
+   1792513518047673873
+  ],
+  "jobs/N4/result.json": [
+   "d387ad3a5f9d656a9769dc5d3a52a08799c2f46a3f24085ef2d92a384e34dee0",
+   1792527434531680620
+  ],
+  "logs/N4.log": [
+   "6965dc1966bf1eca189413702fc23bce2e7c7600ca6882ca98e17ddce53a9a54",
+   1792527434539680620
+  ],
+  "status.json": [
+   "8428e5e190b24a62eda1ec63f6a3266836e6909f919e1a08de2be3aab22c5d8a",
+   1792527438383680622
+  ],
+  "worker_heartbeat.json": [
+   "1ff54f9af6f4814554d49e3c5654e9311889df7eae09fe5f9e7b5988c76507ea",
+   1792527434527680620
+  ],
+  "worker_usage.json": [
+   "c5f9d06e5bf3e4e5945cc2577bc648b624e174940896f9179d71a9164d154a40",
+   1792527434523680620
+  ]
+ },
+ "archived_plan_sha256": "c0f56c6fc891cfbac3a2b5f2c49566bb66be1098ec3d82eb2a3bc484d2206fdc",
+ "archived_root": "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v2/core7h-20261020-v2",
+ "archived_root_unchanged": true,
+ "archived_source_commit": "2ca3c2da3bbc7916947c8fb265131c33dd052f98",
+ "backbone_unchanged": true,
+ "copied_inputs_sha256": {
+  "N1_selection.json": "3d41732893e98177e48c960929ef13398c5751aa12e58dac5bc5297682443e80",
+  "N2_decision.json": "7ba5a8eed62cf036425c3da1715e48432ae3aa19ff4888b7628e8371af62f1b3",
+  "N2_selection.json": "37b8bc5541211bfb7af4479bf1d5b6a11e917f799a0e564b6f99a0688116cd1a",
+  "data_manifest.json": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08"
+ },
+ "data_sha256": "fc170e10c6d1b10d3d9ae8514d488ba2a159118786a7a4bca0fc6144aa063d08",
+ "executing_source_commit": "500eaedcfafabbcf6b1fbcfa88cb84072b748381",
+ "executing_source_dirty": false,
+ "finished_utc": "2026-10-26T11:38:58Z",
+ "overrides": {
+  "config.campaign_root": [
+   "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/energy_v2/core7h-20261020-v2",
+   "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments/rc7_0/n4-continuation-20261026-v1"
+  ],
+  "config.resources.gpu_hours": [
+   72,
+   1.0
+  ],
+  "config.resources.reserve_gpu_hours": [
+   3,
+   0
+  ],
+  "config.resources.wall_hours": [
+   120,
+   2.0
+  ],
+  "created_epoch": [
+   1792513440.5912724,
+   1793014648.4778137
+  ]
+ },
+ "peak_allocated_bytes": 3258399232,
+ "peak_reserved_bytes": 3619684352,
+ "resident_seconds": 79.73630215693265,
+ "schema": "rc7_0_n4_continuation_v1",
+ "scope": "N4 D1/D2 diagnostics only; no training; no C500; no official test",
+ "started_utc": "2026-10-26T11:37:39Z",
+ "status": "COMPLETE"
+}

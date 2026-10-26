@@ -1,0 +1,105 @@
+{
+ "role_counts": {
+  "A5000_C500": 500,
+  "A5000_T2000": 2000,
+  "A5000_V300": 300,
+  "A5000_C150": 150,
+  "A5000_T394": 394,
+  "A5000_V106": 106
+ },
+ "C150_subset_of_C500": true,
+ "C500_membership_sha256_of_sorted_ids": "3ab45e73bf7d451bdf726c349eb9ae7add71f95d9513755b6404cef03cb7d2f2",
+ "official_splits": {
+  "A5000_C500": [
+   "train"
+  ],
+  "A5000_T2000": [
+   "train"
+  ],
+  "A5000_V300": [
+   "train"
+  ],
+  "A5000_C150": [
+   "train"
+  ],
+  "A5000_T394": [
+   "train"
+  ],
+  "A5000_V106": [
+   "train"
+  ]
+ },
+ "pairwise_overlap": {
+  "A5000_C150&A5000_C500": {
+   "ids": 150,
+   "audio": 150
+  },
+  "A5000_C150&A5000_T2000": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C150&A5000_T394": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C150&A5000_V106": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C150&A5000_V300": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C500&A5000_T2000": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C500&A5000_T394": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C500&A5000_V106": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_C500&A5000_V300": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_T2000&A5000_T394": {
+   "ids": 394,
+   "audio": 394
+  },
+  "A5000_T2000&A5000_V106": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_T2000&A5000_V300": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_T394&A5000_V106": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_T394&A5000_V300": {
+   "ids": 0,
+   "audio": 0
+  },
+  "A5000_V106&A5000_V300": {
+   "ids": 106,
+   "audio": 106
+  }
+ },
+ "scan_roots": [
+  "/home/ubuntu/tung.nx/cs-asr-reft/a5000_experiments",
+  "/home/ubuntu/shared/tung.nx/a5000-e1-pilot-v1",
+  "/home/ubuntu/shared/tung.nx/a5000-validation",
+  "/home/ubuntu/tung.nx/a5000-bootstrap"
+ ],
+ "text_files_scanned": 21319,
+ "holdout_named_files_by_dir": {},
+ "holdout_mentions_by_file": {
+  "/home/ubuntu/shared/tung.nx/a5000-e1-pilot-v1/audits/data_and_target_integrity.json": 150
+ }
+}

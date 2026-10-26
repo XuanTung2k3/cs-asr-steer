@@ -1,0 +1,130 @@
+{
+ "job_a_D-dev-confirm_subset_decoded": {
+  "files": [
+   "results/job_a/F0_hypotheses.jsonl",
+   "results/job_a/F1_hypotheses.jsonl",
+   "results/job_a/F2_hypotheses.jsonl",
+   "results/job_a/F3_hypotheses.jsonl",
+   "results/job_a/F4_hypotheses.jsonl",
+   "results/job_a/F5_hypotheses.jsonl"
+  ],
+  "distinct_ids": 150,
+  "by_A5000_role": {
+   "A5000_T2000": 48,
+   "A5000_C500": 17,
+   "A5000_V300": 2
+  },
+  "C500_utterances": 17,
+  "C150_utterances": 6,
+  "C500_dialogues": 3,
+  "C500_strata": {
+   "CS": 17
+  }
+ },
+ "round1_D-dev-select_subset_decoded": {
+  "files": [
+   "results/round1/job_a/baseline_beam5.json",
+   "out/_determinism_probe_L16_a1.0_b1.json",
+   "out/_determinism_probe_L16_a1.0_b5.json"
+  ],
+  "distinct_ids": 300,
+  "by_A5000_role": {
+   "A5000_T2000": 84,
+   "A5000_V300": 25,
+   "A5000_C500": 13
+  },
+  "C500_utterances": 13,
+  "C150_utterances": 3,
+  "C500_dialogues": 2,
+  "C500_strata": {
+   "CS": 13
+  }
+ },
+ "job_b_loc_util_train_steering_training_list": {
+  "files": [
+   "results/job_b/train_utterance_ids.json"
+  ],
+  "distinct_ids": 500,
+  "by_A5000_role": {
+   "A5000_T2000": 36,
+   "A5000_V300": 4,
+   "A5000_C500": 11
+  },
+  "C500_utterances": 11,
+  "C150_utterances": 3,
+  "C500_dialogues": 5,
+  "C500_strata": {
+   "CS": 9,
+   "EN_ONLY": 1,
+   "ZH_ONLY": 1
+  }
+ },
+ "docs_mentions": {
+  "files": [
+   "docs/A5000_E0_SCIENTIFIC_SETUP.md",
+   "docs/A5000_E1_IMPLEMENTATION_REPORT.md",
+   "docs/A5000_E1_PILOT_RESULTS.md",
+   "docs/A5000_ENVIRONMENT.md",
+   "docs/A5000_OBJECTIVE_MATRIX_READINESS.md",
+   "docs/A5000_REFT_READINESS.md",
+   "docs/A5000_REPRODUCIBILITY_LEDGER.md",
+   "docs/A5000_SETUP_REPORT.md",
+   "docs/CS_ASR_E1_E5_AI_Guide.md",
+   "docs/CS_ASR_E1_E5_Current_Implementation.md",
+   "docs/CS_ASR_E1_E5_Current_Pipeline_Runbook.md",
+   "docs/CS_ASR_E1_E5_Job31574_Result_Analysis.md",
+   "docs/CS_ASR_E1_E5_Latest_Status.md",
+   "docs/IDENTITY_BINDING_NARROWED_2026-08-15.md",
+   "docs/RESULTS_RUN_7DAYS.md",
+   "docs/RUNBOOK_V2_2026-08-14.md",
+   "docs/RUN_A_CONVENTION_DIAGNOSTIC_RESULTS_2026-08-14.md",
+   "docs/SESSION8_V2R3_HEADROOM_AND_RUNA_2026-08-15.md",
+   "docs/STEERING_EXPERIMENT_FULL_RECORD_2026-08-17.md",
+   "docs/V2R3_BASELINE_POI_2026-08-15.md",
+   "docs/V2R3_CANDIDATE_GENERATION_2026-08-14.md",
+   "docs/V2R3_CROSS_ATTENTION_SPANS_2026-08-15.md",
+   "docs/V2R3_DAY5_EXPANSION_2026-08-16.md",
+   "docs/V2R3_DIRECTIONS_2026-08-16.md",
+   "docs/V2R3_GATE_B_2026-08-16.md",
+   "docs/V2R3_HYPOTHESIS_SUBSTITUTION_2026-08-17.md",
+   "docs/V2R3_ORACLE_SCREEN_2026-08-16.md"
+  ],
+  "distinct_ids": 11,
+  "by_A5000_role": {
+   "A5000_T2000": 3
+  },
+  "C500_utterances": 0,
+  "C150_utterances": 0,
+  "C500_dialogues": 0,
+  "C500_strata": {}
+ },
+ "C500_union": {
+  "utterances": 41,
+  "fraction": 0.082,
+  "dialogues": 10,
+  "C150_utterances": 12
+ },
+ "A5000_dialogues_by_inferred_steering_source": {
+  "A5000_T2000": {
+   "job_a_D-dev-confirm_subset_decoded": 5,
+   "round1_D-dev-select_subset_decoded": 9,
+   "job_b_loc_util_train_steering_training_list": 15
+  },
+  "A5000_C500": {
+   "job_a_D-dev-confirm_subset_decoded": 3,
+   "round1_D-dev-select_subset_decoded": 2,
+   "job_b_loc_util_train_steering_training_list": 5
+  },
+  "A5000_V300": {
+   "job_a_D-dev-confirm_subset_decoded": 2,
+   "round1_D-dev-select_subset_decoded": 5,
+   "job_b_loc_util_train_steering_training_list": 3
+  }
+ },
+ "A5000_dialogues_without_any_historical_utterance": {
+  "A5000_C500": 4,
+  "A5000_T2000": 13,
+  "A5000_V300": 4
+ },
+ "dialogues_with_multiple_steering_sources": 0
+}

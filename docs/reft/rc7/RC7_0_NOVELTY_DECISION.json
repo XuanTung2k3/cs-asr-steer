@@ -1,0 +1,66 @@
+{
+ "schema": "rc7_0_novelty_decision_v1",
+ "date": "2026-10-26",
+ "decision": "PARTIAL_OVERLAP_ABLATION_ONLY",
+ "rc7_2_admission": "NOT_ADMITTED_AS_NOVEL_METHOD_PILOT",
+ "basis": "source comparison of reft/a5000_campaign/methods.py@2ca3c2d (G5) and reft/a5000_lra_sprint/method.py@b18dd0c (L4); see RC7_0_GATE_IMPLEMENTATION_COMPARISON.md",
+ "identical_to_historical": [
+  "allocation operator energy_coefficients at c=1 (methods.py:23-47)",
+  "defaults alpha=1, epsilon=0.25, 1 s blocks",
+  "current-state features",
+  "neighbour contrasts (+-1 block)",
+  "edit norm and state-edit alignment (G5, L4)",
+  "update-direction variation (L4)",
+  "T2000-only z-score normalization",
+  "frozen parent, gate-only training",
+  "parent DiReFT CE c531a22a (same as L4)",
+  "289-parameter 16-16-1 tanh MLP (if kept)",
+  "audio-side gate inputs"
+ ],
+ "genuinely_new": [
+  "causal multi-block EMA predictor residual nu_b (rho=0.8); rho=0 reduces to the existing normalized left contrast",
+  "causal (left-only) receptive field beyond one neighbouring block",
+  "evaluation-time dose parameter c (c=0 uniform parent)"
+ ],
+ "unsupported_or_unspecified": [
+  "definition and dimension of s_b",
+  "v_train and delta definition",
+  "feature budget (add vs replace; 16 inputs / 289 params)",
+  "predictor initialization at utterance start",
+  "optimizer/lr/updates/checkpoint rule",
+  "whether c is swept (V300 selection)"
+ ],
+ "historical_evidence": {
+  "G5_minus_G4_pp": -0.0535,
+  "G5_minus_G8_pp": -0.0749,
+  "L4_minus_L3_pp": -0.0107,
+  "L4_minus_L0_pp": -0.0428,
+  "screening_minimum_pp": 0.5,
+  "allocation_std": {
+   "G3": 0.01098,
+   "G4": 0.009,
+   "G5": 0.01036,
+   "L2": 0.01348,
+   "L3": 0.00831,
+   "L4": 0.01062
+  },
+  "best_global_alpha": {
+   "G1": 1,
+   "L1": 1
+  },
+  "decisions_unchanged": [
+   "N2_NO_GO",
+   "NO_MEANINGFUL_L4_BENEFIT"
+  ]
+ },
+ "falsifiable_question_if_run": "Does replacing the lag-1 neighbour contrast with a causal EMA predictor residual (rho=0.8) in the L4 gate, at matched parent, capacity, operator and budget, change genuine-CS MER by >=0.5 pp versus L4 (and versus rho=0)?",
+ "classification_if_run": "feature ablation of the historical L4 gate; not a novel method; exploratory (V300 exposed, post-hoc)",
+ "prior_art_verified": {
+  "ReFT (LoReFT, DiReFT)": "Wu et al., NeurIPS 2024 (arXiv:2404.03592)",
+  "Grft": "Zeng et al., ACL 2025 long, 2025.acl-long.506",
+  "TARE": "Wang and Zhao, ACL 2026 long, 2026.acl-long.841",
+  "GateRA": "Ou et al., AAAI 2026 (arXiv:2511.17582)"
+ },
+ "prior_art_verification_limit": "titles/venues/abstracts verified by web search on 2026-10-26; full texts not read",
+ "recommendation": "Skip controller expansion; prioritize compact-adaptation and functional analysis (RC7-1 baseline confirmation, then RC7-3 functional diagnostics). Any EMA-residual run must be labelled an L4 feature ablation and needs the admission blockers resolved first."
+}

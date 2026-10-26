@@ -1,4 +1,5 @@
 """D1/D2 foundations; script groups are proxies and probe accuracy is not causal evidence."""
+import numpy as np
 import torch
 
 
@@ -18,9 +19,22 @@ def decompose(logits, labels, vocab_groups):
             'target_group': g}
 
 
+def probe_array(states):
+    """NumPy boundary for probe inputs. NumPy has no bfloat16, so floating states are cast to float32
+    (exact for bf16/fp16); shape and row order are unchanged. Non-finite rows raise ValueError, which
+    N4 already records as a BLOCKED readout instead of letting sklearn fail later."""
+    x = states.detach()
+    if x.is_floating_point():
+        x = x.to(dtype=torch.float32)
+    x = x.cpu().numpy()
+    if x.dtype.kind == 'f' and not np.isfinite(x).all():
+        raise ValueError('non-finite probe states')
+    return x
+
+
 def fit_probe(states, labels, seed=42):
     from sklearn.linear_model import LogisticRegression
-    x, y = states.detach().cpu().numpy(), labels.detach().cpu().numpy()
+    x, y = probe_array(states), labels.detach().cpu().numpy()
     keep = y >= 0
     if len(set(y[keep])) < 2:
         raise ValueError('probe fitting needs both groups')
@@ -41,7 +55,7 @@ def controlled_readout(train_base, train_adapted, train_y, held_base, held_adapt
     y = held_y.cpu().numpy()
     keep = y >= 0
     def acc(p, x):
-        return float(p.score(x.detach().cpu().numpy()[keep], y[keep]))
+        return float(p.score(probe_array(x)[keep], y[keep]))
     return {'base_heldout': acc(base, held_base), 'fixed_probe_on_adapted': acc(base, held_adapted),
             'refitted_probe_on_adapted': acc(refit, held_adapted), 'prefix_only': acc(prefix, held_prefix),
             'claim': 'held-out script readout; not causality'}

@@ -1,0 +1,183 @@
+{
+ "schema": "rc7_0_efficiency_availability_v1",
+ "sources": [
+  "a5000:energy_v2/core7h-20261020-v2/reports/development_metrics.csv",
+  "a5000:energy_v2/core7h-20261020-v2/status.json",
+  "a5000:lra_gate_sprint_v1/lra-gate-20261021-v2/reports/combined.csv",
+  "a5000:lra_gate_sprint_v1/lra-gate-20261021-v2/reports/accounting.json"
+ ],
+ "fields": {
+  "adapter_trainable_parameters": {
+   "status": "MEASURED",
+   "values": {
+    "L": 5122,
+    "R": 5122,
+    "LP": 5120,
+    "LS": 1310720
+   }
+  },
+  "controller_parameters": {
+   "status": "MEASURED",
+   "values": {
+    "G3": 289,
+    "G4": 289,
+    "G5": 289,
+    "L2": 289,
+    "L3": 289,
+    "L4": 289
+   }
+  },
+  "full_pipeline_training_gpu_hours_attributed": {
+   "status": "MEASURED",
+   "non_additive": true,
+   "values": {
+    "L_CE": 1.677,
+    "R_CE": 1.668,
+    "LP_CE": 2.369,
+    "LS_CE": 2.481,
+    "L_WCE": 1.652,
+    "R_WCE": 1.589,
+    "LP_WCE": 2.39,
+    "LS_WCE": 2.434,
+    "L0": 1.926,
+    "L2": 1.941,
+    "L3": 1.942,
+    "L4": 1.945
+   }
+  },
+  "parent_adapter_cost": {
+   "status": "MEASURED",
+   "note": "included in attributed totals; DiReFT CE parent 1.677 GPU-h"
+  },
+  "additional_gate_cost": {
+   "status": "MEASURED",
+   "values_allocated_gpu_hours": {
+    "L2": 0.264,
+    "L3": 0.265,
+    "L4": 0.268,
+    "L0": 0.249
+   },
+   "values_incremental_fit_gpu_hours": {
+    "L2": 0.0849,
+    "L3": 0.0846,
+    "L4": 0.0866,
+    "L0": 0.0841
+   },
+   "core_gates_elapsed_job_hours": {
+    "G3": 0.294,
+    "G4": 0.308,
+    "G5": 0.308,
+    "G8": 0.291
+   }
+  },
+  "actual_gpu_allocation": {
+   "status": "MEASURED",
+   "values": {
+    "core7h_recorded_gpu_hours": 19.05,
+    "core7h_sum_job_elapsed_hours": 17.56,
+    "lra_sprint_gpu_hours": 1.7,
+    "rc7_0_n4_continuation_gpu_hours": 0.0221
+   }
+  },
+  "wall_clock": {
+   "status": "MEASURED",
+   "values": {
+    "core7h_core_hours_since_freeze": 3.87,
+    "lra_sprint_window_seconds": 3600,
+    "rc7_0_n4_continuation_seconds": 79.7
+   }
+  },
+  "peak_allocated_vram": {
+   "status": "MEASURED",
+   "scope": "sprint arms only (combined.csv)",
+   "values": {
+    "L_CE": 3926992384,
+    "L4": 3932013056
+   }
+  },
+  "peak_reserved_vram": {
+   "status": "REQUIRES_VERIFICATION",
+   "note": "per-row scope (training vs decode) not documented in development_metrics.csv"
+  },
+  "cached_encoder_feature_preparation_cost": {
+   "status": "DERIVED",
+   "value_seconds_approx": 422,
+   "note": "B0 bootstrap 953.8 s minus V300 decode 531.8 s; not separately timed"
+  },
+  "checkpoint_bytes": {
+   "status": "MEASURED",
+   "values": {
+    "L": 22588,
+    "R": 6576571,
+    "LP": 22907,
+    "LS": 5281809,
+    "G_on_R": 6579701,
+    "L_gates": 36533,
+    "L0": 33338
+   }
+  },
+  "minimal_deployable_adapter_bytes": {
+   "status": "MISSING",
+   "lower_bound_fp32_raw_bytes": {
+    "L": 20488,
+    "R": 20488,
+    "LP": 20480,
+    "LS": 5242880
+   }
+  },
+  "inference_rtf": {
+   "status": "MEASURED",
+   "scope": "encoder+frozen AutoLID+adaptation+beam5; audio IO excluded",
+   "values": {
+    "B0": 0.139,
+    "L_CE": 0.1401,
+    "R_CE": 0.1422,
+    "LP_CE": 0.142,
+    "LS_CE": 0.1468,
+    "L4": 0.1359
+   }
+  },
+  "decode_latency": {
+   "status": "MEASURED",
+   "values_v300_seconds": {
+    "B0": 531.8,
+    "L_CE": 535.9,
+    "R_CE": 543.9,
+    "LP_CE": 543.3,
+    "LS_CE": 561.5
+   },
+   "adapter_only_latency": "MISSING"
+  },
+  "failure_loop_counts": {
+   "status": "MEASURED",
+   "values": {
+    "B0": [
+     1,
+     1
+    ],
+    "R_CE": [
+     1,
+     1
+    ],
+    "LS_CE": [
+     0,
+     1
+    ],
+    "others": [
+     0,
+     0
+    ]
+   },
+   "campaign_failures": {
+    "N4": "FAILED",
+    "auto_recoveries": 1
+   }
+  }
+ },
+ "audit_issues": [
+  "LoReFT checkpoint carries 1280x1280 fp32 orthogonal-parametrization base buffer (6,553,600 B); minimal export not implemented",
+  "cached (ReFT/gates) vs uncached (weight-LoRA) training not like-for-like",
+  "parameter count does not imply proportional memory/latency reduction",
+  "attributed GPU-hours share parent/screening cost and must not be summed"
+ ]
+}
